@@ -1,0 +1,9 @@
+.venv
+results
+__pycache__
+.pytest_cache
+*.sqlite3*
+.git
+dist/
+MUJOCO_LOG.TXT
+*.pyc

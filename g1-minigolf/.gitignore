@@ -1,0 +1,5 @@
+.venv/
+menagerie/
+runtime/
+__pycache__/
+course.xml

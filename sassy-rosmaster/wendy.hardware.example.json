@@ -1,0 +1,17 @@
+{
+  "appId": "sassy-rosmaster-hardware",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "frameworks": {
+    "ros2": {"distro": "jazzy", "rmw": "rmw_cyclonedds_cpp", "domainId": 0, "discoveryScope": "host"}
+  },
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "http", "port": 8096},
+    {"type": "audio"},
+    {"type": "persist", "name": "sassy-rosmaster-hardware-map", "path": "/data"}
+  ],
+  "env": {"ROVER_MODE": "hardware", "ROVER_CONFIG": "/app/hardware.json", "HOST": "127.0.0.1", "PORT": "8096", "ROBOT_AUDIO": "1", "ROVER_DATA": "/data"},
+  "readiness": {"tcpSocket": {"port": 8096}, "timeoutSeconds": 30}
+}

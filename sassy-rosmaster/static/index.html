@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#171916">
+  <title>ROSMaster, with attitude · WendyOS</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="ROSMaster home"><span class="monogram">RM</span><span>ROSMASTER<span class="brand-caption">WITH ATTITUDE · WENDYOS</span></span></a>
+      <div class="header-right"><span class="connection"><i id="connection-dot"></i><span id="connection-label">CONNECTING</span></span><span class="header-divider"></span><span class="version">EST. 2026 <span>／</span> V.01</span></div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div><p class="eyebrow"><span></span> AUTONOMOUS EXPLORATION, ZERO PATIENCE</p><h1 id="page-title">A little rover.<br><em>A big attitude.</em></h1></div>
+        <div class="intro-copy"><p>Meet ROSMaster. It maps the room, dodges the furniture,<br class="desktop-break"> and has a few words for anyone in its way.</p><div class="intro-meta"><span id="mode-badge">SIMULATION</span><span><i></i> WENDYOS READY</span></div></div>
+      </section>
+
+      <section class="workspace" aria-label="Simulator and live map">
+        <div class="scene-panel">
+          <div class="panel-heading"><div><span class="section-number">01</span><h2>The test arena</h2></div><div class="scene-tools"><button id="follow-button" class="icon-button" title="Follow rover" aria-label="Follow rover" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v5m0 10v5M2 12h5m10 0h5"/></svg></button><button id="camera-button" class="icon-button" title="Switch to overhead view" aria-label="Switch to overhead view"><svg viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg></button><button id="lidar-button" class="icon-button active" aria-pressed="true" title="Show lidar" aria-label="Show lidar"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l3 3m8 8 3 3M5 19l3-3m8-8 3-3"/></svg></button><span class="tool-label">LIVE VIEW</span></div></div>
+          <div id="scene" class="scene-viewport"><div id="scene-error" hidden></div><div class="scene-topline"><span id="run-status" class="status-chip"><i></i> STANDING BY</span><span class="room-dimensions">14 × 12 M</span></div><div class="speech-bubble" id="speech-bubble" hidden><span class="quote-mark">“</span><span id="speech-text"></span></div><div class="scene-bottomline"><span><i class="key-dot car-dot"></i> ROSMASTER</span><span><i class="key-dot lidar-dot"></i> LIDAR FIELD</span><span class="coordinates" id="coordinates">X 0.00 · Y 0.00</span></div><div class="orientation"><span>N</span><svg viewBox="0 0 28 28"><path d="m14 3 6 20-6-4-6 4 6-20Z"/></svg></div></div>
+          <div class="telemetry"><div><span>PACE</span><strong id="speed">0.00 <small>m/s</small></strong></div><div><span>TRAVELLED</span><strong id="distance">0.0 <small>m</small></strong></div><div><span>HEADING</span><strong id="heading">0 <small>°</small></strong></div><div><span>CONTACTS</span><strong id="collisions">0</strong></div></div>
+        </div>
+
+        <aside class="map-panel" aria-label="Room mapping"><div class="panel-heading"><div><span class="section-number">02</span><h2>Learning the room</h2></div></div><div class="map-topline"><span>OCCUPANCY MAP</span><span id="map-resolution">LIDAR · 0.20 M</span></div><div class="map-wrap"><canvas id="map" aria-label="Live lidar occupancy map"></canvas><div class="map-no-data" id="map-no-data">The room awaits.</div></div><div class="coverage-row"><div><span>ROOM DISCOVERED</span><strong id="coverage">0<small>%</small></strong></div><svg class="coverage-ring" viewBox="0 0 60 60" aria-hidden="true"><circle class="ring-track" cx="30" cy="30" r="24"/><circle id="ring-progress" cx="30" cy="30" r="24"/><text x="30" y="33">MAP</text></svg></div><div class="coverage-track"><span id="coverage-progress"></span></div><div class="map-legend"><span><i class="mapped"></i> Explored</span><span><i class="occupied"></i> Obstacle</span><span><i class="unknown"></i> Unknown</span></div><a href="/api/map" class="download-button" download="rosmaster-map.json">Download room map<svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></svg></a></aside>
+      </section>
+
+      <section class="command-bar" aria-label="Simulation controls"><div class="drive-controls"><button id="start-button" class="primary-button"><svg id="play-icon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg><span id="start-label">Let it roam</span></button><button id="stop-button" class="stop-button" title="Immediately stop all motion"><span></span> STOP</button></div><div class="scenario-controls"><button id="person-button" class="text-button"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3m3-15v6m-3-3h6"/></svg>Get in its way</button><button id="clear-button" class="text-button" title="Remove people from the room">Clear people</button><button id="reset-button" class="icon-button" title="Reset exploration" aria-label="Reset exploration"><svg viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 9M3 4v6h6"/></svg></button></div><div class="sound-controls"><button id="sound-button" class="text-button" aria-pressed="false"><svg id="sound-icon" viewBox="0 0 24 24"><path d="M3 9h4l5-4v14l-5-4H3V9Zm13 0 5 6m0-6-5 6"/></svg><span id="sound-label">Enable sound</span></button></div></section>
+      <p class="hardware-note" id="hardware-note" hidden></p>
+      <p class="error-message" id="control-error" role="alert" hidden></p>
+
+      <section class="live-sensors" aria-label="Live perception and decisions">
+        <div class="camera-card">
+          <div class="panel-heading"><div><span class="section-number">03</span><h2>The rover's camera</h2></div><span id="camera-status" class="sensor-state">WARMING UP</span></div>
+          <div class="camera-view"><img id="camera-image" alt="Live camera image with detected people" hidden><p id="camera-placeholder">Waiting for a camera frame.</p></div>
+          <div class="sensor-caption"><span id="person-count">No current detections</span><span id="vision-model">Camera inference</span></div>
+        </div>
+        <div class="decision-card">
+          <p class="eyebrow">WHAT IT DECIDED</p><h2 id="decision-text">Waiting to explore.</h2>
+          <p id="decision-detail">Goals come from the space the rover has actually observed.</p>
+          <div class="model-status"><span>EXPLORER</span><strong id="explorer-status">CONNECTING</strong></div>
+          <div class="model-status"><span>VOICE</span><strong id="voice-status">CONNECTING</strong></div>
+          <p id="model-detail" class="model-detail">Remarks are generated from the current encounter.</p>
+          <p id="last-remark" class="last-remark" hidden></p>
+        </div>
+      </section>
+
+      <section class="lower-panels"><div class="sass-panel"><div class="sass-title"><p class="eyebrow">PERSONALITY CONTROL</p><h2>How much attitude?</h2></div><div class="sass-input"><div class="sass-labels"><span>Polite</span><span>Impatient</span><span>Unfiltered</span></div><input id="sass" type="range" min="1" max="3" step="1" value="2" aria-label="Sass level"><p id="sass-description">A sharp horn. A pointed remark. No apologies.</p></div></div><div class="log-panel"><div class="log-title"><p class="eyebrow">OVERHEARD IN THE TEST ARENA</p><span id="event-count">00 REMARKS</span></div><div id="event-log" class="event-log"><p class="empty-log">Waiting for a generated remark.<span>ROSMASTER, STANDING BY</span></p></div></div></section>
+    </main>
+    <footer><span>A little rover. A lot of lidar.</span><span>Built on WendyOS <i>·</i> Simulation & hardware</span></footer>
+  </div>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

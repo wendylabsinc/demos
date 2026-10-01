@@ -1,0 +1,28 @@
+{
+  "source": "https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CesiumMan",
+  "source_model": "CesiumMan",
+  "copyright": "Copyright 2017 Cesium",
+  "license": "CC-BY-4.0; see LICENSE.md including trademark exclusion",
+  "conversion": "OBJ is the existing normalized Z-up 1.7m local conversion from sassy-rosmaster/scripts/convert_person.py; no network fetch required",
+  "files": {
+    "person.obj": {
+      "sha256": "3b3b7f50e042c8daecb42599b80ef531f85808ea0f22a7686486d253673eb677",
+      "size": 321379
+    },
+    "LICENSE.md": {
+      "sha256": "709e02749c7c904c480d98f883cae63046f589031b5f22249544b13c159eedf6",
+      "size": 858
+    },
+    "person.png": {
+      "sha256": "37f437d66d0b76489c5a0d662ae13e13f3459ae21cf6b5c9125b76e1305adfdc",
+      "size": 405274
+    },
+    "person_body.obj": {
+      "sha256": "ccbe76998b684b7b4ef2105a76f4c4420b8eec202886f58fd6484442c2a7586a",
+      "size": 196468
+    }
+  },
+  "derivatives": {
+    "person_body.obj": "Geometry-only derivative of person.obj: removes faces crossing z>1.4m, rotates arm vertices toward resting sides. Original UV texture retained. Anatomical head is procedural simulator geometry."
+  }
+}

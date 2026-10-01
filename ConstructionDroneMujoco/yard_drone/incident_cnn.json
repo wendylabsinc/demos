@@ -1,0 +1,976 @@
+{
+  "version": 1,
+  "classes": [
+    "fire",
+    "oil",
+    "other"
+  ],
+  "imageSize": 96,
+  "architecture": "Conv16/32/64 + ReLU + MaxPool + adaptive 2x2 average + linear3",
+  "normalization": "Float RGB [0,255], divide by 255 inside exported graph",
+  "modelSha256": "5847d2eb4940ecfcb488a68fb889da423495bb47af04077bdcb58788ddef14f5",
+  "seed": 314159,
+  "trainingEpochs": 120,
+  "selectedEpoch": 107,
+  "checkpointSelection": "Minimum loss on train-only internal selection images",
+  "trainingDevice": "mps",
+  "learningRate": 0.001,
+  "fitExamples": 360,
+  "selectionExamples": 90,
+  "classBalance": {
+    "method": "Inverse class frequency in training fit images",
+    "counts": {
+      "fire": 120,
+      "oil": 120,
+      "other": 210
+    },
+    "lossWeights": [
+      1.1666666269302368,
+      1.1666666269302368,
+      0.6666666865348816
+    ]
+  },
+  "negativeAugmentation": {
+    "train": {
+      "version": 1,
+      "examples": 90,
+      "seed": 941273,
+      "cameras": "Actual survey RGB at random height 3.5..5.7m and yaw -pi..pi",
+      "sampling": "Equal random, image-edge and visible worker-centered crops; 20..200 pixels",
+      "runtimeTestFramesUsed": false,
+      "originalExamplesUnchanged": true
+    },
+    "validation": {
+      "version": 1,
+      "examples": 45,
+      "seed": 1051387,
+      "cameras": "Actual survey RGB at random height 3.5..5.7m and yaw -pi..pi",
+      "sampling": "Equal random, image-edge and visible worker-centered crops; 20..200 pixels",
+      "runtimeTestFramesUsed": false,
+      "originalExamplesUnchanged": true
+    }
+  },
+  "dataset": {
+    "generator": "generate_rgb_incidents.py",
+    "rendererBackend": "osmesa",
+    "fieldAgeRangesSeconds": {
+      "fire": [
+        0.0,
+        90.0
+      ],
+      "oil": [
+        0.0,
+        90.0
+      ]
+    },
+    "trainingSeed": 601117,
+    "validationSeed": 703219,
+    "cameraOffsets": "Near +/-0.9m, wide +/-2.6m and calibrated FOV-edge poses; fixed/cardinal/random yaw",
+    "contextPixels": [
+      8,
+      18,
+      36
+    ],
+    "contextProbabilities": [
+      0.25,
+      0.5,
+      0.25
+    ],
+    "poseJitter": {
+      "probability": 0.65,
+      "translationMaxMeters": [
+        0.025,
+        0.025,
+        0.01
+      ],
+      "rotationMaxRadians": 0.002
+    },
+    "groundTruth": "Offline scene-generation labels; positive diff components must match projected release and same-pose rendered support",
+    "runtimeTestFramesUsed": false,
+    "scope": "Fresh simulator crops only; shared yard/renderer, disjoint checkerboard release cells"
+  },
+  "temperature": 0.75,
+  "abstention": {
+    "confidenceThreshold": 0.6,
+    "marginThreshold": 0.05,
+    "basis": "Maximum coverage with at least 90% accepted accuracy on train-only internal selection images"
+  },
+  "calibration": {
+    "basis": "Maximum coverage with at least 90% accepted accuracy on train-only internal selection images",
+    "temperatureSelection": "Minimum NLL on train-only internal selection images",
+    "selection": {
+      "examples": 90,
+      "accuracy": 0.8555555555555555,
+      "classes": [
+        "fire",
+        "oil",
+        "other"
+      ],
+      "confusionMatrix": [
+        [
+          22,
+          0,
+          2
+        ],
+        [
+          0,
+          20,
+          4
+        ],
+        [
+          1,
+          6,
+          35
+        ]
+      ],
+      "acceptedExamples": 80,
+      "coverage": 0.8888888888888888,
+      "outOfDomainExamples": 0,
+      "acceptedAccuracy": 0.9,
+      "perClassRecall": {
+        "fire": 0.9166666666666666,
+        "oil": 0.8333333333333334,
+        "other": 0.8333333333333334
+      }
+    }
+  },
+  "training": {
+    "examples": 450,
+    "accuracy": 0.8844444444444445,
+    "classes": [
+      "fire",
+      "oil",
+      "other"
+    ],
+    "confusionMatrix": [
+      [
+        105,
+        0,
+        15
+      ],
+      [
+        0,
+        108,
+        12
+      ],
+      [
+        2,
+        23,
+        185
+      ]
+    ],
+    "acceptedExamples": 411,
+    "coverage": 0.9133333333333333,
+    "outOfDomainExamples": 0,
+    "acceptedAccuracy": 0.9221411192214112,
+    "perClassRecall": {
+      "fire": 0.875,
+      "oil": 0.9,
+      "other": 0.8809523809523809
+    }
+  },
+  "validation": {
+    "examples": 225,
+    "accuracy": 0.8844444444444445,
+    "classes": [
+      "fire",
+      "oil",
+      "other"
+    ],
+    "confusionMatrix": [
+      [
+        57,
+        0,
+        3
+      ],
+      [
+        1,
+        51,
+        8
+      ],
+      [
+        1,
+        13,
+        91
+      ]
+    ],
+    "acceptedExamples": 202,
+    "coverage": 0.8977777777777778,
+    "outOfDomainExamples": 0,
+    "acceptedAccuracy": 0.9207920792079208,
+    "perClassRecall": {
+      "fire": 0.95,
+      "oil": 0.85,
+      "other": 0.8666666666666667
+    }
+  },
+  "inputDomain": {
+    "aspectMax": 3.9,
+    "trainingAspectMax": 3.8095238095238093,
+    "basis": "Observed training and internal-selection crop aspect ratios, rounded upward to 0.1 before external validation"
+  },
+  "trainingRgbSha256": "d4b3e2d1bc4ee5802f9dcd6428c8a347f07f9b955c8b3023cbdf8cc65bcd8323",
+  "validationRgbSha256": "a5a838742e0fa069931023e738e3e2adc45ac1f250118e21185a7eb496e76f28",
+  "releaseCellsDisjoint": true,
+  "trainingCells": [
+    [
+      -8,
+      -6
+    ],
+    [
+      -8,
+      -4
+    ],
+    [
+      -8,
+      2
+    ],
+    [
+      -8,
+      4
+    ],
+    [
+      -8,
+      6
+    ],
+    [
+      -7,
+      -7
+    ],
+    [
+      -7,
+      -5
+    ],
+    [
+      -7,
+      -3
+    ],
+    [
+      -7,
+      3
+    ],
+    [
+      -6,
+      -6
+    ],
+    [
+      -6,
+      -4
+    ],
+    [
+      -6,
+      -2
+    ],
+    [
+      -6,
+      0
+    ],
+    [
+      -6,
+      2
+    ],
+    [
+      -6,
+      4
+    ],
+    [
+      -6,
+      6
+    ],
+    [
+      -5,
+      -7
+    ],
+    [
+      -5,
+      -5
+    ],
+    [
+      -5,
+      -3
+    ],
+    [
+      -5,
+      -1
+    ],
+    [
+      -5,
+      1
+    ],
+    [
+      -5,
+      3
+    ],
+    [
+      -4,
+      -6
+    ],
+    [
+      -4,
+      -4
+    ],
+    [
+      -4,
+      -2
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      -4,
+      2
+    ],
+    [
+      -4,
+      4
+    ],
+    [
+      -4,
+      6
+    ],
+    [
+      -3,
+      -7
+    ],
+    [
+      -3,
+      -5
+    ],
+    [
+      -3,
+      -3
+    ],
+    [
+      -3,
+      -1
+    ],
+    [
+      -3,
+      1
+    ],
+    [
+      -3,
+      3
+    ],
+    [
+      -3,
+      5
+    ],
+    [
+      -2,
+      -6
+    ],
+    [
+      -2,
+      -4
+    ],
+    [
+      -2,
+      -2
+    ],
+    [
+      -2,
+      0
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      -2,
+      4
+    ],
+    [
+      -2,
+      6
+    ],
+    [
+      -1,
+      -7
+    ],
+    [
+      -1,
+      -5
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -1,
+      3
+    ],
+    [
+      -1,
+      5
+    ],
+    [
+      0,
+      -6
+    ],
+    [
+      0,
+      -4
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      0,
+      6
+    ],
+    [
+      1,
+      -7
+    ],
+    [
+      1,
+      -5
+    ],
+    [
+      1,
+      -3
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      3
+    ],
+    [
+      1,
+      5
+    ],
+    [
+      2,
+      -6
+    ],
+    [
+      2,
+      -4
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      2,
+      2
+    ],
+    [
+      2,
+      4
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      3,
+      -7
+    ],
+    [
+      3,
+      -5
+    ],
+    [
+      3,
+      -3
+    ],
+    [
+      3,
+      -1
+    ],
+    [
+      3,
+      1
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      3,
+      5
+    ],
+    [
+      4,
+      -6
+    ],
+    [
+      4,
+      -4
+    ],
+    [
+      4,
+      -2
+    ],
+    [
+      4,
+      0
+    ],
+    [
+      4,
+      2
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      4,
+      6
+    ],
+    [
+      5,
+      -7
+    ],
+    [
+      5,
+      -5
+    ],
+    [
+      5,
+      -3
+    ],
+    [
+      5,
+      -1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      6,
+      -4
+    ],
+    [
+      6,
+      2
+    ],
+    [
+      6,
+      4
+    ],
+    [
+      6,
+      6
+    ],
+    [
+      7,
+      -7
+    ],
+    [
+      7,
+      -5
+    ],
+    [
+      7,
+      -3
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      7,
+      5
+    ]
+  ],
+  "validationCells": [
+    [
+      -8,
+      -7
+    ],
+    [
+      -8,
+      -5
+    ],
+    [
+      -8,
+      -3
+    ],
+    [
+      -8,
+      3
+    ],
+    [
+      -7,
+      -6
+    ],
+    [
+      -7,
+      -4
+    ],
+    [
+      -7,
+      2
+    ],
+    [
+      -7,
+      4
+    ],
+    [
+      -7,
+      6
+    ],
+    [
+      -6,
+      -5
+    ],
+    [
+      -6,
+      -3
+    ],
+    [
+      -6,
+      -1
+    ],
+    [
+      -6,
+      1
+    ],
+    [
+      -6,
+      3
+    ],
+    [
+      -5,
+      -6
+    ],
+    [
+      -5,
+      -4
+    ],
+    [
+      -5,
+      -2
+    ],
+    [
+      -5,
+      0
+    ],
+    [
+      -5,
+      4
+    ],
+    [
+      -5,
+      6
+    ],
+    [
+      -4,
+      -7
+    ],
+    [
+      -4,
+      -5
+    ],
+    [
+      -4,
+      -3
+    ],
+    [
+      -4,
+      1
+    ],
+    [
+      -4,
+      3
+    ],
+    [
+      -3,
+      -6
+    ],
+    [
+      -3,
+      -2
+    ],
+    [
+      -3,
+      0
+    ],
+    [
+      -3,
+      2
+    ],
+    [
+      -3,
+      4
+    ],
+    [
+      -3,
+      6
+    ],
+    [
+      -2,
+      -7
+    ],
+    [
+      -2,
+      -3
+    ],
+    [
+      -2,
+      -1
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -2,
+      3
+    ],
+    [
+      -2,
+      5
+    ],
+    [
+      -1,
+      -6
+    ],
+    [
+      -1,
+      -4
+    ],
+    [
+      -1,
+      -2
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      -1,
+      6
+    ],
+    [
+      0,
+      -7
+    ],
+    [
+      0,
+      -5
+    ],
+    [
+      0,
+      -3
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      0,
+      5
+    ],
+    [
+      1,
+      -6
+    ],
+    [
+      1,
+      -4
+    ],
+    [
+      1,
+      -2
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      6
+    ],
+    [
+      2,
+      -7
+    ],
+    [
+      2,
+      -5
+    ],
+    [
+      2,
+      -3
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      -4
+    ],
+    [
+      3,
+      -2
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      4,
+      -7
+    ],
+    [
+      4,
+      -5
+    ],
+    [
+      4,
+      -3
+    ],
+    [
+      4,
+      -1
+    ],
+    [
+      4,
+      3
+    ],
+    [
+      4,
+      5
+    ],
+    [
+      5,
+      -6
+    ],
+    [
+      5,
+      -4
+    ],
+    [
+      5,
+      -2
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      5,
+      4
+    ],
+    [
+      6,
+      -7
+    ],
+    [
+      6,
+      -3
+    ],
+    [
+      6,
+      3
+    ],
+    [
+      7,
+      -6
+    ],
+    [
+      7,
+      -4
+    ],
+    [
+      7,
+      2
+    ],
+    [
+      7,
+      4
+    ],
+    [
+      7,
+      6
+    ]
+  ],
+  "augmentation": "Training fit only: horizontal reflection, rotation +/-25 degrees, brightness factor 0.8..1.2",
+  "runtimeInputs": "RGB pixels only; no simulator state or pose features",
+  "scope": "Held-out actual MuJoCo construction-yard camera crops; no real-world accuracy validation",
+  "elapsedSeconds": 388.05,
+  "torchVersion": "2.8.0"
+}

@@ -1,0 +1,25 @@
+{
+  "appId": "robot-vacuum",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {
+      "type": "network",
+      "mode": "host"
+    },
+    {
+      "type": "http",
+      "port": 18881
+    },
+    {
+      "type": "persist",
+      "name": "robot-vacuum-media",
+      "path": "/data"
+    }
+  ],
+  "readiness": {
+    "tcpSocket": {"port": 18881},
+    "timeoutSeconds": 30
+  }
+}

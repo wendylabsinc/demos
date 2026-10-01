@@ -1,0 +1,13 @@
+{
+  "appId": "sh.wendy.warehouse-localization",
+  "version": "0.1.0",
+  "platform": "linux",
+  "frameworks": {"ros2": {"distro": "jazzy", "rmw": "rmw_cyclonedds_cpp", "domainId": 0, "discoveryScope": "host"}},
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "http", "port": 8790},
+    {"type": "persist", "name": "warehouse-localization-maps", "path": "/data"}
+  ],
+  "env": {"LOCALIZATION_MODE": "mapping", "ODOM_TOPIC": "/utlidar/robot_odom", "CLOUD_TOPIC": "/utlidar/cloud_base"},
+  "readiness": {"tcpSocket": {"port": 8790}, "timeoutSeconds": 60}
+}

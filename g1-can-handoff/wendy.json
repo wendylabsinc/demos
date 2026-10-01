@@ -1,0 +1,12 @@
+{
+  "appId": "g1-can-handoff",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {
+      "type": "network"
+    }
+  ],
+  "python": {}
+}

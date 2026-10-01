@@ -1,0 +1,21 @@
+[project]
+name = "g1-can-handoff"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "mujoco==3.14.0",
+    "numpy>=2.2,<3",
+    "scipy>=1.15,<2",
+    "pillow>=11,<13",
+    "onnxruntime==1.23.2",
+    "pyyaml==6.0.3",
+    "osqp==1.0.5",
+]
+
+[project.scripts]
+g1_can_handoff = "g1_can_handoff:main"
+g1_can_probe = "g1_can_handoff.hardware:main"
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"

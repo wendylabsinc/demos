@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#202b29">
+  <title>Yardwatch | WendyOS drone inspection</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="importmap">{"imports":{"three":"/three/three.module.js"}}</script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Yardwatch home"><span class="brand-mark" aria-hidden="true">Y</span><span>yardwatch<span class="brand-sub">WENDYOS / FIELD OPERATIONS</span></span></a>
+      <div class="site-label"><span class="eyebrow">INSPECTION SITE 01</span><h1>Construction yard</h1><p>Compare each flight with the previous survey.</p></div>
+      <section class="mission-panel" aria-labelledby="mission-heading">
+        <div class="section-title"><h2 id="mission-heading">Flight missions</h2><span class="tiny-badge" id="mission-kind">STANDBY</span></div>
+        <div class="mission-step"><span class="step-number">01</span><div><h3>Record the benchmark</h3><p>Record camera views across a clear yard.</p></div><span class="step-check" id="baseline-check">○</span></div>
+        <button class="button button-primary full-width" data-command="baseline" id="baseline-button"><span aria-hidden="true">↗</span> Run baseline flight</button>
+        <div class="baseline-meta" id="benchmark-status">No benchmark recorded yet</div>
+        <div class="mission-step second"><span class="step-number">02</span><div><h3>Change the scene</h3><p>Introduce an incident for the next flight.</p></div></div>
+        <div class="hazard-buttons"><button class="button button-dark" data-incident="fire" id="fire-button"><span class="hazard-dot fire"></span>Place fire</button><button class="button button-dark" data-incident="oil" id="oil-button"><span class="hazard-dot oil"></span>Place oil leak</button></div>
+        <div class="baseline-meta" id="placement-help">Choose an incident, then click its location in the yard.</div>
+        <div class="mission-step second"><span class="step-number">03</span><div><h3>Inspect what changed</h3><p>Compare a new flight with the benchmark.</p></div></div>
+        <button class="button button-outline full-width" data-command="start mission" id="scan-button" disabled>Scan current mission <span aria-hidden="true">→</span></button>
+        <div class="progress-head"><span id="mission-status">Waiting for flight</span><span id="mission-progress">0 camera views</span></div>
+        <div class="progress-track"><div id="progress-fill"></div></div>
+        <div class="zone-progress" aria-label="Surveyed zones"><span data-zone-progress="A">A</span><span data-zone-progress="B">B</span><span data-zone-progress="C">C</span><span data-zone-progress="D">D</span></div>
+      </section>
+      <section class="flight-panel" aria-labelledby="flight-heading">
+        <div class="section-title"><h2 id="flight-heading">Flight control</h2><span class="eyebrow dim">DRONE 01</span></div>
+        <div class="control-grid"><button class="button button-dark" data-command="takeoff">Take off</button><button class="button button-dark" data-command="hover">Hold position</button><button class="button button-dark" data-command="return home">Return home</button><button class="button button-dark" data-command="land">Land</button></div>
+        <div class="zone-buttons" aria-label="Fly to zone"><span>Go to zone</span><button data-command="go to zone A">A</button><button data-command="go to zone B">B</button><button data-command="go to zone C">C</button><button data-command="go to zone D">D</button></div>
+        <button class="button button-dark full-width" data-command="follow me" id="follow-button"><span aria-hidden="true">◎</span> Follow site worker</button>
+        <div class="worker-control"><span>Walk the worker</span><div aria-label="Worker walking controls"><button data-worker="0,1" aria-label="Walk worker north">↑</button><button data-worker="-1,0" aria-label="Walk worker west">←</button><button data-worker="0,-1" aria-label="Walk worker south">↓</button><button data-worker="1,0" aria-label="Walk worker east">→</button></div></div>
+        <div class="baseline-meta">Hold an arrow to walk. Release to stop.</div>
+      </section>
+      <div class="sidebar-foot"><span class="status-dot" id="connection-dot"></span><span id="connection-label">Connecting to simulator</span><span class="os-label">WendyOS</span></div>
+    </aside>
+    <main>
+      <header class="topbar"><div class="breadcrumb">FIELD OPERATIONS <span>/</span> LIVE INSPECTION</div><div class="topbar-right"><span class="engine-badge"><span></span> MuJoCo physics</span><span class="live-badge" id="live-badge">CONNECTING</span></div></header>
+      <section class="stage" aria-label="Live 3D construction yard simulation">
+        <div id="viewport"></div>
+        <div class="stage-heading"><span class="eyebrow">MISSION CONTROL</span><h2>Live yard inspection</h2><p>Inspect the yard. Spot the change.</p></div>
+        <div class="view-controls"><button class="view-button active" id="orbit-view" title="Orbit the construction yard">Yard view</button><button class="view-button" id="top-view" title="Look down on the construction yard">Top view</button><button class="view-button" id="follow-view" title="Follow the drone camera">Follow drone</button></div>
+        <div class="telemetry"><div class="telemetry-heading"><span class="status-dot"></span><span>DRONE 01</span><span id="flight-mode">OFFLINE</span></div><div class="telemetry-numbers"><div><strong id="altitude">--</strong><span>ALTITUDE / m</span></div><div><strong id="speed">--</strong><span>SPEED / m/s</span></div></div><div class="telemetry-footer"><span>REAL TIME FACTOR</span><strong id="rtf">--</strong></div></div>
+        <div class="camera-panel"><div class="camera-heading"><span class="status-dot"></span><span>ONBOARD RGB CAMERA</span><span id="camera-age">WAITING</span></div><div class="camera-image"><img id="camera-feed" alt="Live image rendered by the drone's onboard camera" hidden><div id="camera-placeholder">Waiting for the onboard camera</div></div><div class="camera-caption"><span id="perception-status">No camera observations yet</span><span id="camera-inference">--</span></div></div>
+        <div class="stage-legend"><span><i class="legend-line"></i>Flight path</span><span><i class="legend-planned"></i>Planned route</span><span><i class="legend-scan"></i>Survey footprint</span><span><i class="legend-worker"></i>Site worker</span></div>
+        <div class="compass" aria-hidden="true"><span>N</span><i>↑</i></div>
+        <div class="stage-status"><span class="status-dot"></span><span id="stage-status">Waiting for simulator state</span><span id="sim-time">00:00</span></div>
+        <div class="loading-state" id="loading-state"><div class="loader"></div><strong>Connecting to the yard</strong><span>Waiting for the WendyOS simulator</span></div>
+        <div class="render-error" id="render-error" hidden><strong>The 3D view could not start</strong><span>Enable WebGL in your browser. Mission controls and evidence remain available.</span></div>
+      </section>
+      <section class="voice-bar" aria-label="Voice and text flight commands">
+        <button class="mic-button" id="mic-button" aria-label="Start voice command"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M6 10v2a6 6 0 0 0 12 0v-2M12 18v3M8 21h8"/></svg></button>
+        <div class="voice-copy"><strong id="voice-title">Tell the drone what to do</strong><span id="voice-help">Audio is transcribed inside the WendyOS VM.</span></div>
+        <form id="command-form"><label class="sr-only" for="command-input">Flight request</label><input id="command-input" placeholder="Check the fuel depot and come back…" autocomplete="off"><button type="submit" aria-label="Send flight request">↗</button></form>
+        <button id="sound-button" class="sound-button" aria-pressed="false" title="Enable spoken command acknowledgments">Voice replies off</button>
+      </section>
+      <section class="evidence-section" aria-labelledby="evidence-heading">
+        <div class="evidence-header"><div><span class="eyebrow">MISSION COMPARISON</span><h2 id="evidence-heading">Changes that need attention</h2></div><div class="evidence-tools"><span id="incident-count">No incidents reported</span><button id="clear-button" data-command="clear incidents">Clear scene</button></div></div>
+        <div class="evidence-empty" id="evidence-empty"><div class="empty-icon" aria-hidden="true">◎</div><div><h3 id="evidence-empty-title">A clear yard starts with a baseline.</h3><p id="evidence-empty-text">Record a benchmark flight, add a fire or oil leak, then scan again to see the evidence.</p></div><span class="comparison-caption">PREVIOUS FLIGHT → CURRENT FLIGHT</span></div>
+        <div id="incident-list" class="incident-list"></div>
+      </section>
+      <footer class="main-foot"><span>Live onboard RGB · Mission-to-mission visual comparison</span><span>Drag to orbit · Scroll to zoom · Hold arrow keys to walk</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/viewer.js"></script>
+</body>
+</html>

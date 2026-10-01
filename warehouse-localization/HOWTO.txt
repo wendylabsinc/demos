@@ -1,0 +1,72 @@
+Wendy warehouse localization
+
+This is a ROS 2 Jazzy localization app, not a robot motion controller.
+Its default configuration joins host DDS domain 0 with CycloneDDS. Verify
+the actual device's middleware and domain before deployment.
+It subscribes to /utlidar/robot_odom and /utlidar/cloud_base with sensor QoS.
+It never publishes Unitree commands or cmd_vel.
+
+Modes
+mapping: SLAM Toolbox uses odometry and LiDAR to build a map and correct drift.
+localization: Nav2 AMCL aligns LiDAR to a supplied occupancy map, with particle
+uncertainty. MAP_FILE must name a real map.yaml, with its accompanying image.
+The synthetic evidence/map.yaml is only for simulation validation.
+
+Coordinate frames
+INPUT_ODOM_FRAME, INPUT_BASE_FRAME and INPUT_CLOUD_FRAME default to odom,
+base_link and base_link. These are commissioning requirements, not observed
+hardware facts. Wrong frames are rejected and named in /status. A different
+cloud frame requires a measured base-frame transform upstream; never rename
+an arbitrary sensor frame to bypass this check.
+Outputs use wendy_map -> wendy_odom -> wendy_base to avoid overwriting other
+apps' transforms. Fixed cameras must be calibrated in wendy_map before their
+target coordinates can be used by a robot in that map.
+
+HTTP on port 8790
+GET /status: ready, estimated x/y/yaw, covariance, input faults and freshness.
+The pose is null until localization and observation checks pass. Mapping
+reports mapping with ready=false; it does not claim an AMCL map pose.
+POST /initialpose in localization mode: an operator's approximate map pose,
+in metres/radians, and x/y/yaw variances. Example body:
+{"x":0.3,"y":-0.25,"yaw":0.12,"variance":[0.25,0.25,0.09]}
+This seeds particles; it is not treated as a measured pose.
+
+Hardware
+Deploy with Wendy to the explicitly chosen device. Mapping is the default.
+Advertised Go2 topics alone do not establish working input. Require fresh
+odometry and LiDAR samples before commissioning localization.
+Once live frames pass /status, move the robot under operator control to map
+the room. Save into /data/map with Nav2's map_saver_cli and an explicit
+map:=/wendy_localization/map topic remapping. The app publishes no global /map.
+Restart this app in localization mode using that saved map and initialize its
+approximate position. Verify wall/scan alignment and pose error at surveyed
+points before enabling any navigation application.
+
+Simulation validation
+make_sim_map.py makes the simulated surveyed warehouse map.
+Run the image with ALLOW_SIMULATED_INPUT=true, LOCALIZATION_MODE=localization,
+MAP_FILE=/data/map.yaml and evidence mounted at /data. Simulation measurements
+are only accepted when that explicit opt-in is set, never by the hardware
+configuration. sim_sensors.py generates virtual LiDAR and deliberately drifting
+odometry from the physical Go2. AMCL runs in a separate ROS container without
+MuJoCo access. The warehouse search receives only validated AMCL x/y/yaw.
+MuJoCo truth is reserved for sensor generation and the error report.
+
+The real bark remains tied to the arrival event. Real-world localization and
+warehouse camera registration require hardware validation; simulation success
+cannot establish those facts.
+
+Observed validation results
+AMCL-driven warehouse search succeeded with one arrival/bark. Final robot
+position error was 3.35 cm, mean 8.26 cm, versus 49.24 cm final raw odometry
+error. This uses simulated sensors and the surveyed simulation map.
+SLAM Toolbox mapping started, accepted sensor observations, and saved a
+partial stationary map as map.pgm/map.yaml. A stationary observation is not
+a complete room map; operator-guided motion is still needed for coverage.
+Historical hardware inspection found simulated_input=false, ready=false,
+pose=null, and missing=[odom,scan]. No physical localization result is claimed.
+Inspect /status on the chosen device for its current state.
+
+Start the local AMCL validation container on 127.0.0.1:18790 as documented
+in README.md. New warehouse runs require that localization endpoint and
+have no ground-truth pose fallback.

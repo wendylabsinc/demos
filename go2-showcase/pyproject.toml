@@ -1,0 +1,19 @@
+[project]
+name = "sh.wendy.go2-showcase"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = ["numpy==1.26.4", "mujoco==3.3.7", "onnxruntime==1.23.2", "Pillow==11.3.0", "PyYAML==6.0.3"]
+
+[project.scripts]
+go2-showcase = "showcase.server:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["showcase*", "sim*"]
+
+[tool.setuptools.package-data]
+showcase = ["dashboard.html"]
+sim = ["assets.lock.json", "assets/**/*"]

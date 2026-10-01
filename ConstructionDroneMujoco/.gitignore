@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+data/
+yard_drone/static/three/
+deploy.json
+models/
+training/

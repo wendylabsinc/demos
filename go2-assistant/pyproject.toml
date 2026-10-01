@@ -1,0 +1,26 @@
+[project]
+name = "go2-assistant"
+version = "0.1.0"
+description = "Voice and text room assistant with a torque-driven Go2 simulator and a commissioned Nav2 adapter"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "mujoco==3.3.7", "numpy==1.26.4", "onnxruntime==1.23.2",
+  "Pillow==11.3.0", "PyYAML==6.0.3", "fastapi==0.135.3", "uvicorn>=0.34,<1",
+  "opencv-python-headless==4.11.0.86"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<9", "httpx>=0.28,<1"]
+
+[project.scripts]
+go2_assistant = "go2_assistant.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["go2_assistant"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

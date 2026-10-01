@@ -1,0 +1,21 @@
+FROM ros:jazzy-ros-base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-venv \
+    ros-jazzy-ackermann-msgs ros-jazzy-nav-msgs ros-jazzy-sensor-msgs \
+    ros-jazzy-std-msgs ros-jazzy-rmw-cyclonedds-cpp espeak-ng alsa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Keep apt's rclpy visible while isolating web dependencies from system Python.
+RUN python3 -m venv --system-site-packages /opt/rover \
+    && /opt/rover/bin/pip install --no-cache-dir fastapi==0.136.0 uvicorn==0.45.0 \
+        numpy==2.5.1 onnxruntime==1.30.0 Pillow==12.3.0
+
+WORKDIR /app
+COPY . .
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 \
+    RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+# ros_entrypoint.sh sources the installed ROS environment before Python runs.
+# Supply the server's hardware CLI flags and a calibrated config at deployment.
+CMD ["/opt/rover/bin/python", "-m", "sassy_rosmaster"]

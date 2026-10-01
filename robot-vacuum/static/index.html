@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ed">
+  <title>Sweep · Maple House</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232f5144'/%3E%3Cpath d='M17 36c0-12 22-12 22-4s-15 3-15 10 22 7 22-5' fill='none' stroke='%23f6f3e9' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/style.css">
+  <script type="importmap">{"imports":{"three":"/static/vendor/three.module.js"}}</script>
+</head>
+<body>
+  <svg class="icon-definitions" aria-hidden="true"><defs>
+    <symbol id="i-sweep" viewBox="0 0 28 28"><path d="M5 15c0-8 15-8 15-3s-10 2-10 7 15 5 15-3"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 9a8 8 0 1 1 0 7M4 4v5h5"/></symbol>
+    <symbol id="i-dock" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7M5 8v13h14V8M9 21v-7h6v7"/></symbol>
+    <symbol id="i-view" viewBox="0 0 24 24"><path d="m3 8 9-5 9 5-9 5zM3 8v9l9 5 9-5V8M12 13v9"/></symbol>
+    <symbol id="i-top" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h10V4M14 10v10"/></symbol>
+    <symbol id="i-follow" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+    <symbol id="i-record" viewBox="0 0 24 24"><rect x="3" y="5" width="13" height="14" rx="3"/><path d="m16 9 5-3v12l-5-3z"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 17C1 8 11 3 21 3c0 10-4 18-13 15M4 21 16 9"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="6" width="18" height="12" rx="3"/><path d="M23 10v4M6 10v4M10 10v4M14 10v4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+  </defs></svg>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Sweep home"><span class="brand-mark"><svg><use href="#i-sweep"/></svg></span><span>sweep<span class="brand-period">.</span></span></a>
+    <div class="header-divider"></div><span class="header-label">Home simulation</span>
+    <div class="header-right"><span class="connection" id="connection"><span></span>Connecting</span><span class="project-pill">Powered by <strong>Wendy</strong></span></div>
+  </header>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="home-heading"><div class="eyebrow">YOUR SPACE</div><h1 id="home-name">Maple House</h1><p><span id="home-area">108</span> m² <span class="mid-dot">·</span> 4 rooms <span class="mid-dot">·</span> 1 little helper</p></div>
+      <div class="mission-card">
+        <div class="mission-title"><span class="live-dot" id="status-dot"></span><span id="status-text">Ready when you are</span><span class="mission-tag" id="mission-tag">STANDBY</span></div>
+        <div class="coverage"><span id="coverage">0</span><span class="percent">%</span><svg viewBox="0 0 52 52" class="coverage-ring"><circle cx="26" cy="26" r="22"/><circle id="ring-progress" cx="26" cy="26" r="22"/></svg></div>
+        <div class="coverage-label">of accessible floor cleaned</div><div class="progress-track"><div id="progress-bar"></div></div>
+        <div class="mission-detail"><span id="mission-detail">Ready to clean the virtual home.</span><span class="check-label"><svg><use href="#i-leaf"/></svg> Autonomous</span></div>
+      </div>
+      <div class="stats-grid"><div><div class="stat-label">RUN TIME</div><div class="stat-value" id="elapsed">00:00</div></div><div><div class="stat-label">DISTANCE</div><div class="stat-value"><span id="distance">0.0</span><span class="stat-unit"> m</span></div></div></div>
+      <div class="vacuum-card"><div class="vacuum-avatar"><div class="vacuum-avatar-top"></div><div class="vacuum-avatar-light"></div></div><div class="vacuum-info"><strong>Sweep One</strong><span id="robot-location">At the charging dock</span></div><span class="battery"><svg><use href="#i-battery"/></svg><span id="battery">100</span>%</span></div>
+      <div class="section-label">CLEANING CONTROLS</div>
+      <button class="primary-button" id="start-button"><svg id="start-icon"><use href="#i-play"/></svg><span id="start-label">Start cleaning</span></button>
+      <div class="secondary-buttons"><button id="dock-button"><svg><use href="#i-dock"/></svg>Return to dock</button><button id="reset-button" title="Reset the house and start a new mission"><svg><use href="#i-reset"/></svg>Reset</button></div>
+      <div class="speed-heading"><span class="section-label">SIMULATION SPEED</span><span class="speed-value" id="speed-label">Real time</span></div>
+      <div class="segmented speed-options" aria-label="Simulation speed"><button class="active" data-speed="1">1×</button><button data-speed="4">4×</button><button data-speed="12">12×</button><button data-speed="32">32×</button></div>
+      <div class="room-section"><div class="section-label">AROUND THE HOUSE</div><div id="room-list" class="room-list"></div></div>
+      <div class="sidebar-footer"><div class="footer-mark"><svg><use href="#i-info"/></svg></div><p>A real Wendy app.<br>Running inside a virtual home.</p></div>
+    </aside>
+    <main class="scene-section">
+      <div class="scene-heading"><div><span class="eyebrow">3D HOME SIMULATION</span><h2>Live home view</h2></div><div class="scene-badge"><span></span>LIVE SIMULATION</div></div>
+      <div id="viewport" class="viewport"><div class="scene-loader" id="loader"><span class="loader-spinner"></span><strong>Loading the home simulation.</strong><span>Loading your virtual home</span></div><div id="room-labels" aria-hidden="true"></div></div>
+      <div class="scene-caption"><span class="caption-key"><i class="dust-key"></i>Dust to collect</span><span class="caption-key"><i class="path-key"></i>Cleaning path</span><span class="caption-hint">Drag to orbit <span>·</span> Scroll to zoom</span></div>
+      <div class="scene-toolbar"><div class="view-switcher"><button class="active" data-view="isometric" title="Isometric view"><svg><use href="#i-view"/></svg><span>Isometric</span></button><button data-view="top" title="Top view"><svg><use href="#i-top"/></svg><span>Top view</span></button><button data-view="follow" title="Follow the vacuum"><svg><use href="#i-follow"/></svg><span>Follow</span></button></div><div class="toolbar-divider"></div><label class="trail-toggle"><input id="trail-toggle" type="checkbox" checked><span class="toggle-track"></span>Path</label><div class="toolbar-spacer"></div><button class="record-button" id="record-button"><svg><use href="#i-record"/></svg><span>Record clip</span></button><button class="cinema-button" id="cinema-button" title="Cinema mode, press Escape to exit"><svg><use href="#i-expand"/></svg></button></div>
+      <div class="bottom-note"><span><span class="quiet-dot"></span>Drag to orbit · Scroll to zoom</span><span>MAPLE HOUSE <span class="mid-dot">/</span> VIRTUAL HOME 01</span></div>
+      <div class="toast" id="toast" role="status"></div>
+      <button class="exit-cinema" id="exit-cinema"><svg><use href="#i-expand"/></svg>Exit cinema</button>
+      <div class="cinema-brand">sweep<span>.</span><small>MAPLE HOUSE</small></div>
+    </main>
+  </div>
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

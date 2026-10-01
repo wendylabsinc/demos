@@ -1,0 +1,7 @@
+.git
+.venv
+__pycache__
+media
+tests
+.DS_Store
+.runtime

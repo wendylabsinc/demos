@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/wendylabsinc/wendyos",
+  "commit": "2d100db3cad4d5e6c7addeeedfda3f0beaae2931",
+  "source_paths": [
+    "go/simulator/go2/go2_sim/policy.py",
+    "go/simulator/go2/go2_sim/simulation.py",
+    "go/simulator/go2/go2_sim/sensors.py"
+  ],
+  "license": "Apache-2.0",
+  "modifications": "None. Home scene, planner and camera perception are implemented separately in sim.py."
+}

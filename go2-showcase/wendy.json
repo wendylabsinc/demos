@@ -1,0 +1,16 @@
+{
+  "appId": "sh.wendy.go2-showcase",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {
+      "type": "network", "mode": "host"
+    },
+    {
+      "type": "http", "port": 8788
+    }
+  ],
+  "env": {"GO2_PROFILE": "sim", "GO2_HTTP_HOST": "0.0.0.0", "GO2_HTTP_PORT": "8788", "MUJOCO_GL": "egl", "GO2_AI_URL": "http://10.0.2.2:11434", "GO2_AI_MODEL": "qwen3-vl:4b", "GO2_AI_PROVIDER": "ollama"},
+  "readiness": {"tcpSocket": {"port": 8788}, "timeoutSeconds": 60}
+}

@@ -1,0 +1,12 @@
+.git
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+tests/
+# Fetched and verified inside the image instead.
+yard_drone/static/three/
+data/
+deploy.json
+models/
+training/

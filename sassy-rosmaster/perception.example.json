@@ -1,0 +1,18 @@
+{
+  "calibration_verified": false,
+  "rgb_rectified": false,
+  "depth_registered_to_rgb": false,
+  "fixed_camera_mount": false,
+  "rgb_topic": "/SET_RECTIFIED_RGB_TOPIC",
+  "depth_topic": "/SET_DEPTH_REGISTERED_TO_RGB_TOPIC",
+  "camera_info_topic": "/SET_RECTIFIED_RGB_CAMERA_INFO_TOPIC",
+  "people_topic": "/sassy_rosmaster/people",
+  "optical_frame": "SET_DELIVERED_RGB_OPTICAL_FRAME",
+  "base_frame": "base_link",
+  "camera_to_base": null,
+  "camera_info_static": false,
+  "use_sim_time": false,
+  "sync_slop": 0.025,
+  "max_age": 0.3,
+  "inference_interval": 0.1
+}

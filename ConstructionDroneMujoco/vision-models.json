@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "models": [
+    {
+      "directory": "mobileclip-s0",
+      "repository": "Xenova/mobileclip_s0",
+      "revision": "757d59c9c6870a76a4b0306f05f5061bca15c39f",
+      "source": "https://github.com/apple-aiml-research/ml-mobileclip",
+      "files": [
+        {
+          "remote": "onnx/text_model_quantized.onnx",
+          "local": "text_model.onnx",
+          "sha256": "b8557b10e5c23a0126c6d2e6eba48d240484979007917d128953b31618a04211"
+        },
+        {
+          "remote": "onnx/vision_model_quantized.onnx",
+          "local": "vision_model.onnx",
+          "sha256": "fcbd153d1aa1314fb72ea39b20c37e0572e7e7b05359b51f3efee5d682658472"
+        },
+        {
+          "remote": "tokenizer.json",
+          "local": "tokenizer.json",
+          "sha256": "72ed5c96db5729294468543e4bc75fce14ca63f58e37300290189ba1c1e52b85"
+        },
+        {
+          "remote": "tokenizer_config.json",
+          "local": "tokenizer_config.json",
+          "sha256": "a7d9d24f248071b792e4a3b56ab0539c2f40eec8da56d6fd91fb3a50058acebd"
+        },
+        {
+          "remote": "config.json",
+          "local": "config.json",
+          "sha256": "8e33c1f2634a33de3e38715f9809ef86742aacbe31c310c66fc2636755458d56"
+        },
+        {
+          "remote": "preprocessor_config.json",
+          "local": "preprocessor_config.json",
+          "sha256": "b031f09fbd69e22a605b6cc7433993249ee893b7fc1b79321f669cd015493dd4"
+        },
+        {
+          "remote": "LICENSE",
+          "local": "LICENSE",
+          "sha256": "18e4e6b95d7272051fabdad125ba0467549c181ef20b7fa0eafbac3825471483"
+        }
+      ]
+    },
+    {
+      "directory": "yolos-tiny",
+      "repository": "Xenova/yolos-tiny",
+      "revision": "e2f9c7673f0fa61849efe2b56a0d7774779ebb9d",
+      "source": "https://huggingface.co/hustvl/yolos-tiny",
+      "files": [
+        {
+          "remote": "onnx/model_quantized.onnx",
+          "local": "model.onnx",
+          "sha256": "82b5c1de8aaaffd763c67d67b09b742a1c53628acfee3077af3fa59233e86b6b"
+        },
+        {
+          "remote": "config.json",
+          "local": "config.json",
+          "sha256": "ce8640ba6bd97a7b36ccf2d0dba9a6ac233211e2dc0c5dc4c63d922e80338c08"
+        },
+        {
+          "remote": "preprocessor_config.json",
+          "local": "preprocessor_config.json",
+          "sha256": "b010730968cdbccf8767b61b0a8e903396d831fd97f3c44cc9f0c0437deb7b7f"
+        },
+        {
+          "remote": "README.md",
+          "local": "README.md",
+          "sha256": "c59adbed4be53a455627a6fc3c026c3a719d49f0ce993e9939348aa6f57caa9e"
+        }
+      ]
+    }
+  ]
+}

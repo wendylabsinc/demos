@@ -1,0 +1,66 @@
+# Workstation files and credentials
+.DS_Store
+._*
+.idea/
+.vscode/
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+.aws/
+.codex/
+.agents/
+
+# Python environments, caches and build output
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.uv-cache/
+node_modules/
+*.egg-info/
+build/
+dist/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local simulator state and generated evidence
+runtime/
+.runtime/
+results/
+evidence/
+data/
+training/
+*.log
+MUJOCO_LOG.TXT
+*.sqlite3*
+
+# Marketing materials, recordings and renders stay local.
+/wendy-promo/
+marketing/
+promo/
+media/
+render/
+recordings/
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.mp4
+*.webm
+*.mov
+*.gif
+
+# Downloaded robot/policy bundle. Its checksummed manifest stays in Git.
+/go2-showcase/sim/assets/
+
+# Local hardware configuration. Commit the example configurations instead.
+/sassy-rosmaster/hardware.json
+/sassy-rosmaster/perception.json

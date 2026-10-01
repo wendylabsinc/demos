@@ -1,0 +1,20 @@
+{
+  "appId": "sassy-rosmaster",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {
+      "type": "network", "mode": "host"
+    },
+    {
+      "type": "http", "port": 8096
+    },
+    {
+      "type": "persist", "name": "sassy-rosmaster-map", "path": "/data"
+    }
+  ],
+  "python": {},
+  "env": {"ROVER_DATA": "/data", "ROVER_MODE": "simulation", "ROVER_LLM_URL": "http://10.0.2.2:11434", "ROVER_LLM_MODEL": "qwen3:1.7b"},
+  "readiness": {"tcpSocket": {"port": 8096}, "timeoutSeconds": 30}
+}

@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Warehouse search | Wendy</title><style>
+body{margin:0;background:#101820;color:#edf4f4;font:16px system-ui;padding:30px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:30px;margin:0}p{color:#9cabb5}button{background:#b8f77b;border:0;border-radius:6px;padding:12px 20px;cursor:pointer;font-weight:650}main{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;margin-top:24px}.cams{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:#1a2630;border:1px solid #33424c;border-radius:10px;overflow:hidden}.card h3{font-size:14px;margin:14px}.card img{width:100%;display:block}.info{padding:22px}#phase{font-size:28px;color:#b8f77b}canvas{width:100%;margin:15px 0;background:#13212a}#events{font:13px monospace;white-space:pre-wrap;color:#b2c5cf;height:150px;overflow:auto}.sub{font-size:13px}#detail{line-height:1.8}</style></head><body>
+<header><div><h1>Warehouse camera search</h1><p>Four IP cameras · YOLO vision · Digital twin · Unitree Go2</p></div><div><button id="sound">Enable bark audio</button> <button onclick="fetch('/api/reset',{method:'POST'})">Run again</button></div></header>
+<main><section class="cams">
+<div class="card"><h3>CAM 01 · Southwest</h3><img src="/camera/cam1/snapshot.jpg"></div>
+<div class="card"><h3>CAM 02 · Southeast</h3><img src="/camera/cam2/snapshot.jpg"></div>
+<div class="card"><h3>CAM 03 · Northeast</h3><img src="/camera/cam3/snapshot.jpg"></div>
+<div class="card"><h3>CAM 04 · Northwest</h3><img src="/camera/cam4/snapshot.jpg"></div>
+</section><section class="card info"><div id="phase">Loading</div><p class="sub">Target: sports ball. Camera pixels determine the destination.</p><div id="detail"></div><canvas width="600" height="500" id="map"></canvas><div id="events"></div></section></main>
+<script>
+setInterval(()=>{for(let img of document.querySelectorAll('.cams img'))img.src=img.src.split('?')[0]+'?t='+Date.now()},1000);
+let enabled=false,lastBark=0;let audio=new Audio('/bark.wav');document.querySelector('#sound').onclick=()=>{enabled=true;audio.play();document.querySelector('#sound').textContent='Bark audio on'};
+const canvas=document.querySelector('#map'),c=canvas.getContext('2d');function point(x,y){return [300+x*45,250-y*45]}function rect(x,y,w,h,color){let p=point(x-w,y+h);c.fillStyle=color;c.fillRect(p[0],p[1],w*90,h*90)}
+setInterval(async()=>{let s=await(await fetch('/api/status')).json();document.querySelector('#phase').textContent=s.phase==='found'?'Found it. WOOF!':s.phase.charAt(0).toUpperCase()+s.phase.slice(1);document.querySelector('#detail').textContent=(s.camera?`${s.camera.toUpperCase()} · YOLO ${(100*s.confidence).toFixed(1)}% · `:'Scanning cameras · ')+`Go2 [${s.position.map(x=>x.toFixed(2)).join(', ')}]`;
+c.clearRect(0,0,600,500);c.strokeStyle='#54717f';c.strokeRect(30,25,540,450);for(let x of [-1.7,1.7])rect(x,0,.55,2,'#638296');for(let p of [[-5.7,-4.7],[5.7,-4.7],[5.7,4.7],[-5.7,4.7]]){let xy=point(...p);c.fillStyle='#e5bf67';c.fillRect(xy[0]-6,xy[1]-6,12,12)}
+if(s.route?.length){c.strokeStyle='#b8f77b';c.lineWidth=3;c.beginPath();c.moveTo(...point(...s.position));for(let p of s.route)c.lineTo(...point(...p));c.stroke()}
+if(s.destination){c.fillStyle='#fa9c50';c.beginPath();c.arc(...point(...s.destination),10,0,7);c.fill()}
+c.fillStyle='#b8f77b';c.beginPath();c.arc(...point(...s.position),8,0,7);c.fill();c.fillStyle='#92abb8';c.font='14px system-ui';c.fillText('Digital twin · 12 × 10 m · shelves + planned route',30,490);
+document.querySelector('#events').textContent=(s.events||[]).slice(-7).map(e=>e.kind.replaceAll('_',' ')+(e.camera?' · '+e.camera:'')+(e.confidence?' · '+(e.confidence*100).toFixed(1)+'%':'')).join('\n');if(s.bark>lastBark){if(enabled)audio.play();lastBark=s.bark}
+},500);
+</script></body></html>

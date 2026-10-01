@@ -1,0 +1,2 @@
+cyclonedds==0.10.2
+# Dockerfile installs pinned SDK with --no-deps to retain one OpenCV package.

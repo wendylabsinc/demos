@@ -1,0 +1,23 @@
+* text=auto
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.lock text eol=lf
+*.onnx binary
+*.npz binary
+*.pt binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.wav binary
+*.mp3 binary
+*.glb binary
+*.STL binary
+*.stl binary
+
+# Keep upstream formatting in vendored browser assets.
+**/static/vendor/** -whitespace

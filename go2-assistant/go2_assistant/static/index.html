@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#102b33">
+  <title>Wendy Go2 assistant</title>
+  <style>
+    :root { color-scheme: light; --ink:#17333b; --muted:#64747a; --paper:#fff7ec; --line:#e0ddd3; --teal:#227d70; --red:#bc3b45; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.5 system-ui,-apple-system,sans-serif; }
+    button,input,textarea { font:inherit; } button { cursor:pointer; } button:disabled { opacity:.5; cursor:default; }
+    button:focus-visible,input:focus-visible,textarea:focus-visible { outline:3px solid #58b9a6; outline-offset:2px; }
+    .shell { max-width:1440px; margin:auto; padding:26px 32px; } header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
+    .brand { display:flex; align-items:center; gap:13px; } .mark { display:grid; place-items:center; width:46px; height:46px; border-radius:15px; background:var(--ink); color:white; }
+    h1 { font-size:22px; line-height:1.2; letter-spacing:-.6px; margin:0; } .subtitle { color:var(--muted); font-size:13px; margin-top:3px; }
+    .connection { font-size:12px; display:flex; align-items:center; gap:7px; } .dot { width:8px; height:8px; border-radius:50%; background:#9ba8a8; } .dot.online { background:#2c9679; }
+    .layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(340px,.85fr); gap:24px; }
+    .panel { background:white; border:1px solid var(--line); border-radius:22px; overflow:hidden; }
+    .view-head { padding:14px 18px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:1.4px; color:var(--muted); font-weight:650; }
+    .tabs { display:flex; padding:3px; background:#edf1ee; border-radius:9px; } .tab { border:0; background:transparent; border-radius:7px; font-size:12px; padding:5px 12px; color:var(--muted); }
+    .tab.active { background:white; color:var(--ink); box-shadow:0 1px 4px #102b3314; }
+    .viewport { background:#172d35; aspect-ratio:16/10; position:relative; display:grid; place-items:center; overflow:hidden; }
+    .viewport img { width:100%; height:100%; object-fit:contain; display:none; } .view-placeholder { position:absolute; color:#bfd0d1; text-align:center; padding:30px; font-size:14px; }
+    .view-label { position:absolute; top:14px; left:14px; border:1px solid #ffffff30; background:#0d252bd9; color:#dfefeb; font-size:11px; border-radius:7px; padding:5px 9px; }
+    .view-footer { padding:15px 18px; display:flex; justify-content:space-between; align-items:center; gap:15px; }
+    .task-name { font-weight:650; font-size:16px; } .task-detail { font-size:12px; color:var(--muted); }
+    .stop { border:0; background:var(--red); color:white; border-radius:10px; padding:10px 20px; font-weight:700; min-height:44px; }
+    .memory { margin-top:20px; } .section-line { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; } .section-line h2 { font-size:15px; margin:0; } .count { color:var(--muted); font-size:12px; }
+    .rooms { display:flex; flex-wrap:wrap; gap:8px; } .room { background:white; border:1px solid var(--line); border-radius:10px; padding:9px 13px; min-height:42px; text-transform:capitalize; } .room:hover { border-color:var(--teal); }
+    .empty { color:var(--muted); font-size:13px; } .observations { margin-top:13px; color:var(--muted); font-size:12px; }
+    .play { margin-top:18px; padding:16px; background:#fffcf6; border:1px solid var(--line); border-radius:18px; }
+    .play h2 { margin:0 0 11px; font-size:15px; } .quick-actions { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+    .quick-action { min-height:65px; padding:10px 6px; border:1px solid #f0d5bd; background:#ffecd9; border-radius:14px; font-weight:600; font-size:12px; color:var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+    .quick-action:nth-child(2) { background:#e7f2df; border-color:#cfdfc4; } .quick-action:nth-child(3) { background:#ede7fa; border-color:#d9ceee; }
+    .quick-action:nth-child(4) { background:#fce6e6; border-color:#efcaca; } .quick-action:nth-child(5) { background:#e0eff9; border-color:#c8dce9; }
+    .quick-action svg { width:20px; height:20px; } .quick-action:hover { filter:brightness(.97); }
+    .sim-person { margin-top:15px; padding-top:14px; border-top:1px dashed #d8d1c2; } .sim-person h3 { font-size:13px; margin:0; }
+    .person-description { color:var(--muted); font-size:12px; margin:4px 0 11px; } .person-row { display:flex; align-items:center; gap:15px; }
+    .person-pad { display:grid; grid-template-columns:repeat(3,36px); grid-template-rows:repeat(3,33px); gap:4px; }
+    .person-move { border:1px solid #dcc4dc; color:#67446b; background:#f5eafa; border-radius:9px; font-size:17px; padding:0; }
+    .person-up { grid-area:1/2; } .person-left { grid-area:2/1; } .person-reset { grid-area:2/2; font-size:10px; } .person-right { grid-area:2/3; } .person-down { grid-area:3/2; }
+    .person-status { max-width:270px; color:var(--muted); font-size:12px; } .person-status strong { color:#765383; font-weight:600; }
+    .chat { display:flex; flex-direction:column; height:min(760px,calc(100dvh - 132px)); min-height:570px; }
+    .chat-head { border-bottom:1px solid var(--line); padding:18px; display:flex; justify-content:space-between; gap:10px; align-items:center; } .chat-head h2 { font-size:16px; margin:0; }
+    .mode { border-radius:7px; padding:4px 8px; font-size:11px; background:#edf3ee; color:#466b5c; white-space:nowrap; }
+    .messages { flex:1; overflow:auto; padding:20px 18px 12px; display:flex; flex-direction:column; gap:15px; }
+    .message { max-width:95%; } .message.user { align-self:flex-end; max-width:88%; } .who { font-size:11px; margin:0 0 4px 3px; color:var(--muted); }
+    .bubble { background:#edf2ef; border-radius:4px 14px 14px 14px; padding:11px 14px; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .user .bubble { background:var(--ink); color:#f3f8f5; border-radius:14px 4px 14px 14px; } .user .who { text-align:right; }
+    .thinking { color:var(--muted); font-size:12px; display:none; padding:0 20px 8px; }
+    .suggestions { display:flex; gap:7px; overflow:auto; padding:0 17px 13px; } .suggestion { background:white; border:1px solid var(--line); color:var(--muted); padding:6px 10px; border-radius:10px; font-size:12px; white-space:nowrap; }
+    .composer { padding:14px 17px 13px; border-top:1px solid var(--line); background:#fcfcf9; } .input-line { display:flex; gap:8px; }
+    textarea { resize:none; flex:1; width:0; min-height:48px; max-height:120px; padding:11px 12px; border:1px solid #cdd8d3; background:white; border-radius:10px; color:var(--ink); }
+    .send { background:var(--teal); color:white; border:0; border-radius:10px; min-width:60px; padding:0 13px; font-weight:650; }
+    .voice-row { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:10px; } .voice { background:transparent; border:1px solid var(--line); border-radius:7px; padding:5px 9px; font-size:12px; } .voice.active { background:#fff0e5; border-color:#d59f6d; }
+    .speak { margin-left:auto; color:var(--muted); font-size:12px; display:flex; align-items:center; gap:4px; } .voice-note { color:var(--muted); font-size:11px; line-height:1.4; margin:8px 0 0; }
+    .notice { margin:0 0 16px; border:1px solid #ddc895; background:#fff7df; padding:11px 14px; border-radius:10px; font-size:13px; display:none; }
+    .token-box { display:none; gap:8px; align-items:center; margin-bottom:18px; padding:14px; background:white; border:1px solid var(--line); border-radius:12px; }
+    .token-box label { font-size:13px; } .token-box input { flex:1; min-width:100px; padding:8px 10px; border:1px solid var(--line); border-radius:7px; } .token-box button { padding:8px 12px; border:0; background:var(--teal); color:white; border-radius:7px; }
+    .footnote { color:var(--muted); font-size:11px; margin-top:20px; } [hidden] { display:none !important; }
+    @media (max-width:900px) { .shell { padding:19px; } .layout { gap:16px; grid-template-columns:minmax(0,1fr) minmax(320px,1fr); } .chat { min-height:570px; } }
+    @media (max-width:700px) { .shell { padding:15px 12px max(15px,env(safe-area-inset-bottom)); } header { margin-bottom:14px; } h1 { font-size:19px; } .mark { width:39px; height:39px; border-radius:12px; } .connection { font-size:11px; } .layout { display:flex; flex-direction:column; gap:16px; } .viewport { aspect-ratio:16/9; max-height:290px; } .view-head { padding:10px 13px; } .view-footer { padding:11px 13px; } .memory { margin-top:13px; } .play { margin-top:12px; padding:12px; } .quick-actions { grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; } .quick-action { font-size:11px; padding:8px 3px; min-height:62px; } .chat { height:530px; min-height:460px; } .rooms { flex-wrap:nowrap; overflow:auto; padding-bottom:3px; } .room { white-space:nowrap; } .footnote { margin-top:13px; } }
+    @media (prefers-reduced-motion:no-preference) { button { transition:background .15s,border-color .15s; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand"><div class="mark" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 11h15l3-4h3v8h-4l-2 8h-3l-1-8H9l-2 8H4l1-12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="23" cy="10" r="1" fill="currentColor"/></svg></div><div><h1>Wendy Go2 assistant</h1><div class="subtitle">Your curious robot buddy.</div></div></div>
+      <div class="connection"><span class="dot" id="connection-dot"></span><span id="connection">Connecting</span></div>
+    </header>
+    <div class="notice" id="notice" role="status"></div>
+    <form class="token-box" id="token-box"><label for="token">Access token</label><input id="token" type="password" autocomplete="off" placeholder="Server access token"><button>Connect</button></form>
+    <div class="layout">
+      <section>
+        <div class="panel">
+          <div class="view-head"><span class="eyebrow">Robot view</span><div class="tabs" role="group" aria-label="Camera view"><button type="button" class="tab" data-view="map">Sensor map</button><button type="button" class="tab active" data-view="overview">Simulator</button><button type="button" class="tab" data-view="camera">Camera</button></div></div>
+          <div class="viewport"><img id="frame" alt="Live robot view"><div class="view-placeholder" id="view-placeholder">Waiting for the robot view</div><span class="view-label" id="backend-label">Physics simulator</span></div>
+          <div class="view-footer"><div><div class="task-name" id="task-name">Ready when you are</div><div class="task-detail" id="task-detail">Send a message to get started.</div></div><button class="stop" id="stop" type="button" aria-label="Stop robot immediately">Stop</button></div>
+        </div>
+        <section class="play" aria-label="Simple robot commands">
+          <h2>What shall we do?</h2>
+          <div class="quick-actions">
+            <button class="quick-action" type="button" data-prompt="Follow me"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="5" r="2"/><path d="m7 20 3-7 3 3 1 4M4 12l4-4 4 2 2 4m2-6h5m-2-2 2 2-2 2"/></svg>Follow me</button>
+            <button class="quick-action" type="button" data-prompt="Come here"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h14m-5-5 5 5-5 5M20 5v14"/></svg>Come here</button>
+            <button class="quick-action" type="button" data-prompt="Spin"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M19 8a8 8 0 1 0 1 7M19 3v5h-5"/></svg>Spin</button>
+            <button class="quick-action" type="button" data-prompt="Lie down"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 19h18M5 16h14l1-6h-4l-2 3H7l-2 3ZM7 13V9m0 0h4"/></svg>Lie down</button>
+            <button class="quick-action" type="button" data-prompt="Stand up"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 10h12l3-4h2v8h-4l-2 6h-2l-1-6H9l-2 6H5l1-10ZM3 21h18"/></svg>Stand up</button>
+          </div>
+          <div class="sim-person" id="sim-person-controls" hidden>
+            <h3>Take your buddy for a walk</h3>
+            <p class="person-description">Let the camera recognize the person, tap Follow me, then move them with the arrows.</p>
+            <div class="person-row">
+              <div class="person-pad" role="group" aria-label="Move the simulator person">
+                <button class="person-move person-up" type="button" data-person-y="0.35" aria-label="Move person forward">↑</button>
+                <button class="person-move person-left" type="button" data-person-x="-0.35" aria-label="Move person left">←</button>
+                <button class="person-move person-reset" type="button" data-person-reset="true" aria-label="Reset person to the starting position">Reset</button>
+                <button class="person-move person-right" type="button" data-person-x="0.35" aria-label="Move person right">→</button>
+                <button class="person-move person-down" type="button" data-person-y="-0.35" aria-label="Move person backward">↓</button>
+              </div>
+              <div class="person-status"><strong>Simulator person</strong><div id="person-position">Waiting for the person controls.</div><div>Arrows move the test person by 35 cm. Wendy follows through its camera.</div></div>
+            </div>
+          </div>
+        </section>
+        <div class="memory"><div class="section-line"><h2>Remembered rooms</h2><span class="count" id="room-count"></span></div><div class="rooms" id="rooms"><span class="empty">Room memory will appear here.</span></div><div class="observations" id="observations"></div></div>
+        <p class="footnote">The map comes from lidar. Room names come from camera suggestions or names you teach. Select a saved room to send it there.</p>
+      </section>
+      <section class="panel chat" aria-label="Chat with Go2">
+        <div class="chat-head"><h2>Talk to your buddy</h2><span class="mode" id="mode">Connecting</span></div>
+        <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation"></div>
+        <div class="thinking" id="thinking" role="status">Thinking...</div>
+        <div class="suggestions"><button class="suggestion" data-prompt="Explore the house">Explore the house</button><button class="suggestion" data-prompt="Find a cup">Find a cup</button><button class="suggestion" data-prompt="Remember this as kitchen">Remember this room</button></div>
+        <form class="composer" id="composer">
+          <div class="input-line"><textarea id="message" aria-label="Message Go2" rows="1" maxlength="2000" placeholder="Ask Go2 to do something..."></textarea><button class="send" id="send" aria-label="Send message">Send</button></div>
+          <div class="voice-row"><button class="voice" id="dictate" type="button">Dictate</button><button class="voice" id="record" type="button" hidden>Record</button><label class="voice" id="upload-label" hidden>Upload audio<input type="file" id="audio-file" accept="audio/*" hidden></label><label class="speak"><input type="checkbox" id="speak">Speak replies</label></div>
+          <p class="voice-note" id="voice-note">Type a message or use voice input in a supported browser.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+  <script>
+    'use strict';
+    const byId = id => document.getElementById(id);
+    const appBase = new URL('.', window.location.href);
+    function endpoint(path) { return new URL(path.replace(/^\/+/, ''), appBase).href; }
+    let token = sessionStorage.getItem('go2-token') || '', view = 'overview', pending = false;
+    let frameBusy = false, statusBusy = false, frameUrl = null, loadedHistory = false, latest = {}, statusNotice = null;
+    const FRAME_TIMEOUT = 4000;
+    let frameInterval = 50;
+    let frameTimer = null, frameController = null, frameGeneration = 0, frameNextAt = 0;
+    let frameErrors = 0, frameAuthBlocked = false, frameDisposed = false, frameConfigReady = false, statusTimer = null;
+    let config = {}, recording = null, recordingStream = null, recordingTimer = null, recordingChunks = [];
+    let person = null, personBusy = false;
+    let resultBaseline = false, lastResultKey = null, waitingCompletion = null, stopping = false;
+    const shownCompletions = new Set();
+    function notice(message) { byId('notice').textContent = message; byId('notice').style.display = message ? 'block' : 'none'; }
+    function headers(extra = {}) { return { ...extra, ...(token ? { Authorization:'Bearer ' + token } : {}) }; }
+    async function api(path, options = {}) {
+      const response = await fetch(endpoint(path), { ...options, headers:headers(options.headers), cache:'no-store' });
+      if (!response.ok) {
+        let detail = 'Request failed (' + response.status + ').';
+        try { const body = await response.json(); if (typeof body.detail === 'string') detail = body.detail; } catch (_) {}
+        if (response.status === 401) { byId('token-box').style.display = 'flex';frameAuthBlocked=true;pauseFrames(); }
+        const failure=new Error(detail);failure.status=response.status;throw failure;
+      }
+      return response;
+    }
+    function addMessage(role, content) {
+      const item = document.createElement('div'); item.className = 'message ' + (role === 'user' ? 'user' : 'assistant');
+      const who = document.createElement('div'); who.className = 'who'; who.textContent = role === 'user' ? 'You' : 'Go2';
+      const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.textContent = content;
+      item.append(who,bubble); byId('messages').append(item); byId('messages').scrollTop = byId('messages').scrollHeight;
+    }
+    function say(text) {
+      if (!byId('speak').checked || !('speechSynthesis' in window)) return;
+      speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(text); utterance.rate = 1; speechSynthesis.speak(utterance);
+    }
+    function completionKey(result) { return result && result.id && result.state ? result.id + ':' + result.state : null; }
+    function markCompletion(result) { const key=completionKey(result);if(key){shownCompletions.add(key);if(shownCompletions.size>100)shownCompletions.delete(shownCompletions.values().next().value);} }
+    function markReply(result,force=false) {
+      const completed=(result.status || {}).last_result;
+      if(force || (completed && completed.reply === result.reply))markCompletion(completed);
+      if(result.result)markCompletion(result.result);
+      (result.tools || []).forEach(tool => {if(tool.result && tool.result.result)markCompletion(tool.result.result);});
+    }
+    function flushCompletion() {
+      if(!waitingCompletion || pending || stopping)return;
+      const completed=waitingCompletion;waitingCompletion=null;
+      if(!shownCompletions.has(completed.key)){markCompletion(completed.result);addMessage('assistant',completed.result.reply);say(completed.result.reply);}
+    }
+    function commandButtons() { document.querySelectorAll('[data-prompt]').forEach(button => {button.disabled=pending;}); }
+    async function sendMessage(message) {
+      message = message.trim(); if (!message || pending) return;
+      pending = true; commandButtons();byId('send').disabled = true; byId('thinking').style.display = 'block';
+      addMessage('user',message); byId('message').value = ''; notice('');
+      try { const result = await (await api('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})})).json();markReply(result);addMessage('assistant',result.reply);say(result.reply); }
+      catch (error) { notice(error.message); addMessage('assistant','I could not handle that message. ' + error.message); }
+      finally { pending = false;commandButtons();byId('send').disabled = false;byId('thinking').style.display = 'none';flushCompletion();refreshStatus(); }
+    }
+    byId('composer').addEventListener('submit',event => {event.preventDefault();sendMessage(byId('message').value);});
+    byId('message').addEventListener('keydown',event => {if(event.key === 'Enter' && !event.shiftKey){event.preventDefault();sendMessage(byId('message').value);}});
+    document.querySelectorAll('[data-prompt]').forEach(button => button.addEventListener('click',() => sendMessage(button.dataset.prompt)));
+    function personButtons() { document.querySelectorAll('.person-move').forEach(button => { button.disabled=personBusy || !person; }); }
+    async function movePerson(dx,dy,reset) {
+      if(personBusy || !config.simulator || !person)return;
+      const position=reset ? {x:2,y:-.8} : {x:person.x+dx,y:person.y+dy};personBusy=true;personButtons();
+      try{const result=await (await api('/api/sim/person',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(position)})).json();person=result.person;notice('');await refreshFrame();}
+      catch(error){notice(error.message);}
+      finally{personBusy=false;personButtons();refreshStatus();}
+    }
+    document.querySelectorAll('.person-move').forEach(button => button.addEventListener('click',() => movePerson(Number(button.dataset.personX || 0),Number(button.dataset.personY || 0),button.dataset.personReset === 'true')));
+    byId('token-box').addEventListener('submit',event => {event.preventDefault();token=byId('token').value.trim();sessionStorage.setItem('go2-token',token);frameAuthBlocked=false;frameErrors=0;frameNextAt=performance.now();pauseFrames();refreshStatus();refreshFrame();});
+    byId('stop').addEventListener('click',async () => {
+      stopping=true;
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      try { const result=await (await api('/api/stop',{method:'POST'})).json();markReply(result,true);addMessage('assistant',result.reply || 'Stopped.');refreshStatus(); }
+      catch(error){notice('Stop request failed. ' + error.message);}
+      finally{stopping=false;flushCompletion();}
+    });
+    document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click',() => {
+      if(view === button.dataset.view)return;
+      view=button.dataset.view;document.querySelectorAll('[data-view]').forEach(item => item.classList.toggle('active',item === button));
+      pauseFrames();frameErrors=0;frameNextAt=performance.now();byId('frame').style.display='none';byId('view-placeholder').textContent='Loading ' + (view === 'camera' ? 'camera' : 'room view') + '...';byId('view-placeholder').style.display='block';refreshFrame();
+    }));
+    function describeStatus(state) {
+      const task=state.task || state.activity || state.mode || 'idle';
+      if(task && typeof task === 'object') {
+        const kind=task.kind || task.type;
+        const friendly={follow_person:'Tagging along',come_here:'Coming over',go_to_room:'Off on an adventure',find_room:'Looking for your room',find_object:'On the lookout',explore:'Exploring and mapping'};
+        if(kind === 'perform_action')return {spin:'Taking a spin',lie_down:'Getting comfy',stand_up:'Up on my paws'}[(task.args || {}).action] || 'Trying your command';
+        return friendly[kind] || String(task.description || task.message || kind || 'Ready').replaceAll('_',' ');
+      }
+      if(task === 'idle')return 'Ready to play';
+      return String(task).replaceAll('_',' ');
+    }
+    async function refreshStatus() {
+      if(statusBusy || frameDisposed || document.hidden || frameAuthBlocked || (config.token_required && !token))return;statusBusy=true;
+      try {
+        latest=await (await api('/api/status')).json();const state=latest.status || {};
+        if(statusNotice && byId('notice').textContent === statusNotice)notice('');statusNotice=null;
+        const completed=state.last_result,currentKey=completionKey(completed);
+        if(!resultBaseline){resultBaseline=true;lastResultKey=currentKey;markCompletion(completed);}
+        else if(currentKey && currentKey !== lastResultKey && typeof completed.reply === 'string'){lastResultKey=currentKey;waitingCompletion={key:currentKey,result:completed};}
+        if(!personBusy)person=latest.simulator_person || null;personButtons();
+        byId('person-position').textContent=person ? 'Test position ' + person.x.toFixed(2) + ', ' + person.y.toFixed(2) + ' m' : 'Person controls are unavailable.';
+        byId('connection').textContent='Connected';byId('connection-dot').classList.add('online');byId('token-box').style.display='none';
+        byId('mode').textContent=latest.mode === 'llm' ? 'LLM connected' : 'Offline commands';
+        byId('task-name').textContent=describeStatus(state);
+        const pose=state.pose || state.position;let detail=state.message || state.detail || (state.task && state.task.args && (state.task.args.room || state.task.args.object)) || (state.last_result && state.last_result.reply) || state.last_event || '';
+        if(typeof detail !== 'string') detail=JSON.stringify(detail);
+        if(!detail && pose) detail='Position ' + (Array.isArray(pose) ? pose.slice(0,2).map(n => Number(n).toFixed(1)).join(', ') : [pose.x,pose.y].filter(n => n !== undefined).map(n => Number(n).toFixed(1)).join(', ')) + ' m';
+        byId('task-detail').textContent=detail || 'Ready for your next command.';
+        const backend=state.backend || state.runtime || 'simulator';
+        const vision=backend.vision || {}, mapping=backend.mapping || {};
+        byId('backend-label').textContent=view === 'map' ? 'Lidar map · dark areas unknown' : view === 'overview' ? 'Simulator scene · observer view' : (vision.model ? vision.model + (vision.pending ? ' · observing' : vision.error ? ' · unavailable' : ' · camera') : 'Live camera');
+        if(mapping.localization && !mapping.localization.valid) byId('task-detail').textContent='Waiting for lidar localization before moving.';
+        const rooms=latest.rooms || [];byId('room-count').textContent=rooms.length + ' saved';byId('rooms').replaceChildren();
+        rooms.forEach(room => {const name=room.name || room.room; if(!name)return;const button=document.createElement('button');button.className='room';button.textContent=name;button.disabled=pending;button.addEventListener('click',() => sendMessage('Go to ' + name));byId('rooms').append(button);});
+        if(!rooms.length){const empty=document.createElement('span');empty.className='empty';empty.textContent="Say 'remember this as kitchen' to save a room.";byId('rooms').append(empty);}
+        const objects=latest.objects || [];byId('observations').textContent=objects.length ? 'Last observed: ' + [...new Set(objects.map(item => item.label || item.name || item.object || 'object'))].slice(0,5).join(', ') : '';
+        if(!loadedHistory){loadedHistory=true;byId('messages').replaceChildren();const history=latest.history || [];history.forEach(item => {if(['user','assistant'].includes(item.role) && typeof item.content === 'string')addMessage(item.role,item.content);});if(!history.length)addMessage('assistant',"Hi! Want to take a walk, find something, or try a little spin? Say 'follow me' or tap a command.");}
+        if(latest.error)notice(latest.error);
+        flushCompletion();
+      } catch(error){byId('connection').textContent='Disconnected';byId('connection-dot').classList.remove('online');statusNotice=error.message;notice(statusNotice);}
+      finally{statusBusy=false;}
+    }
+    function framesAllowed() { return frameConfigReady && !frameDisposed && !document.hidden && !frameAuthBlocked && !(config.token_required && !token); }
+    function clearFrameTimer() { if(frameTimer !== null){clearTimeout(frameTimer);frameTimer=null;} }
+    function pauseFrames() { clearFrameTimer();frameGeneration++;if(frameController)frameController.abort(); }
+    function refreshFrame() {
+      clearFrameTimer();
+      if(frameBusy || !framesAllowed())return;
+      const delay=Math.max(0,frameNextAt-performance.now());
+      if(delay>0){frameTimer=setTimeout(()=>{frameTimer=null;pullFrame();},delay);return;}
+      return pullFrame();
+    }
+    async function decodeFrame(url,signal) {
+      const decoded=new Image();
+      let rejectCancellation;
+      const cancellation=new Promise((_,reject)=>{rejectCancellation=reject;});
+      const cancelled=()=>{decoded.removeAttribute('src');rejectCancellation(new DOMException('Frame cancelled','AbortError'));};
+      signal.addEventListener('abort',cancelled,{once:true});
+      try {
+        if(signal.aborted)throw new DOMException('Frame cancelled','AbortError');
+        decoded.src=url;await Promise.race([decoded.decode(),cancellation]);
+        if(signal.aborted)throw new DOMException('Frame cancelled','AbortError');
+      } finally { signal.removeEventListener('abort',cancelled); }
+    }
+    async function pullFrame() {
+      if(frameBusy || !framesAllowed())return;
+      frameBusy=true;const requestedView=view,generation=frameGeneration,started=performance.now();
+      const controller=new AbortController();frameController=controller;
+      let candidate=null,timedOut=false;
+      const timeout=setTimeout(()=>{timedOut=true;controller.abort();},FRAME_TIMEOUT);
+      try {
+        const response=await api('/api/frame/' + requestedView,{signal:controller.signal});
+        candidate=URL.createObjectURL(await response.blob());
+        await decodeFrame(candidate,controller.signal);
+        if(generation !== frameGeneration || requestedView !== view || !framesAllowed())return;
+        const old=frameUrl;frameUrl=candidate;candidate=null;
+        byId('frame').src=frameUrl;byId('frame').style.display='block';byId('view-placeholder').style.display='none';
+        if(old)URL.revokeObjectURL(old);
+        frameErrors=0;frameNextAt=started+frameInterval;
+      } catch(error) {
+        if((controller.signal.aborted && !timedOut) || generation !== frameGeneration)return;
+        if(error.status === 401 || error.status === 403)frameAuthBlocked=true;
+        frameErrors=Math.min(frameErrors+1,6);frameNextAt=performance.now()+Math.min(3000,250*2**(frameErrors-1));
+        byId('view-placeholder').textContent=timedOut ? 'Robot view timed out. Retrying...' : error.message;
+        byId('view-placeholder').style.display='block';
+      } finally {
+        clearTimeout(timeout);if(candidate)URL.revokeObjectURL(candidate);
+        if(frameController === controller)frameController=null;
+        frameBusy=false;refreshFrame();
+      }
+    }
+    document.addEventListener('visibilitychange',()=>{pauseFrames();if(!document.hidden){frameNextAt=performance.now();refreshFrame();refreshStatus();}});
+    window.addEventListener('pagehide',()=>{frameDisposed=true;pauseFrames();if(statusTimer !== null){clearInterval(statusTimer);statusTimer=null;}if(frameUrl){URL.revokeObjectURL(frameUrl);frameUrl=null;byId('frame').removeAttribute('src');}});
+    window.addEventListener('pageshow',()=>{if(frameDisposed){frameDisposed=false;frameNextAt=performance.now();refreshFrame();refreshStatus();if(statusTimer === null)statusTimer=setInterval(refreshStatus,1000);}});
+    const Recognition=window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(Recognition){const recognition=new Recognition();recognition.lang=navigator.language || 'en-US';recognition.continuous=false;recognition.interimResults=false;recognition.onresult=event => {byId('message').value=event.results[0][0].transcript;sendMessage(byId('message').value);};recognition.onend=() => {byId('dictate').classList.remove('active');byId('dictate').textContent='Dictate';};recognition.onerror=event => {notice('Dictation failed: ' + event.error + '. Use text or upload a recording.');};byId('dictate').addEventListener('click',() => {try{recognition.start();byId('dictate').classList.add('active');byId('dictate').textContent='Listening';}catch(error){notice(error.message);}});}
+    else{byId('dictate').disabled=true;}
+    async function uploadAudio(blob,name) {
+      notice('Transcribing recording...');
+      try{const result=await (await api('/api/transcribe',{method:'POST',headers:{'Content-Type':blob.type || 'audio/webm','X-Filename':name},body:blob})).json();byId('message').value=result.text;notice('Transcript ready. Review it and press Send.');}
+      catch(error){notice(error.message);}
+    }
+    byId('audio-file').addEventListener('change',event => {const file=event.target.files[0];if(file)uploadAudio(file,file.name);event.target.value='';});
+    byId('record').addEventListener('click',async () => {
+      if(recording && recording.state === 'recording'){recording.stop();return;}
+      try{recordingStream=await navigator.mediaDevices.getUserMedia({audio:true});recordingChunks=[];recording=new MediaRecorder(recordingStream);recording.ondataavailable=event => recordingChunks.push(event.data);recording.onstop=() => {clearTimeout(recordingTimer);recordingStream.getTracks().forEach(track => track.stop());byId('record').textContent='Record';byId('record').classList.remove('active');const blob=new Blob(recordingChunks,{type:recording.mimeType});uploadAudio(blob,recording.mimeType.includes('mp4') ? 'recording.mp4' : 'recording.webm');};recording.start();byId('record').textContent='Finish recording';byId('record').classList.add('active');recordingTimer=setTimeout(() => {if(recording.state === 'recording')recording.stop();},30000);}
+      catch(error){if(recordingStream)recordingStream.getTracks().forEach(track => track.stop());notice('Microphone unavailable. ' + error.message);}
+    });
+    async function initialize(){
+      try{config=await (await fetch(endpoint('/api/config'),{cache:'no-store'})).json();frameConfigReady=true;frameInterval=1000/Math.min(20,Math.max(1,Number(config.frame_rate) || 20));byId('sim-person-controls').hidden=!config.simulator;byId('mode').textContent=config.mode === 'llm' ? 'LLM connected' : 'Offline commands';if(config.token_required && !token)byId('token-box').style.display='flex';byId('upload-label').hidden=!config.transcription;byId('record').hidden=!config.transcription;byId('record').disabled=!(window.isSecureContext && navigator.mediaDevices && window.MediaRecorder);byId('voice-note').textContent='Browser dictation needs a supported browser and microphone permission, usually on HTTPS or localhost. ' + (config.transcription ? 'Record or upload audio for provider transcription. Recordings go to your configured provider.' : 'Text works without a microphone.');refreshStatus();await refreshFrame();}
+      catch(error){notice('Could not connect. ' + error.message);}
+    }
+    initialize();statusTimer=setInterval(refreshStatus,1000);
+  </script>
+</body>
+</html>

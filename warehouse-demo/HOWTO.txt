@@ -1,0 +1,68 @@
+Localization update
+The warehouse controller now requires the ROS AMCL endpoint at
+http://127.0.0.1:18790, override with LOCALIZATION_URL. It stops and reports
+localization_waiting when no trustworthy pose is available. The simulator
+pose is only used by the virtual sensor adapter and validation oracle.
+See ../warehouse-localization/HOWTO.txt for the mapping/localization stack,
+hardware state, and sensor validation.
+
+Warehouse camera search demo
+
+Open the live camera dashboard at http://127.0.0.1:18992/.
+Enable bark audio once, then use Run again to replay the search.
+The Wendy desktop app displays the live physics scene in its Sim tab.
+Pause, single-step and reset are supported in Wendy.
+
+Start from this folder with ./run.sh. Stop with Ctrl+C.
+Run .venv/bin/python verify.py after the Go2 reaches the ball.
+Verification results are saved in runtime/verification.json.
+Event evidence is saved in runtime/events.jsonl.
+
+Architecture
+The warehouse is a 12 x 10 metre MuJoCo world containing the Menagerie
+Unitree Go2, two collidable racks with shelves and crates, an oversized
+basketball, and a calibrated camera in each corner.
+The Go2 uses Wendy's existing pretrained ONNX velocity-tracking policy.
+The controller applies joint torques to 200 Hz physics, at 50 Hz control.
+Its position is never teleported during navigation.
+
+The robot patrols while it scans camera images sequentially with YOLO11n.
+YOLO receives actual 960 x 720 MuJoCo renders and searches for COCO class
+32, sports ball. No ground-truth object positions enter perception.
+The bottom centre of a detected bounding box defines a calibrated camera
+ray. That ray intersects the static digital twin, with camera housings and
+the target object excluded. A floor intersection provides the destination.
+A* routes around rack collision footprints inflated by 43 cm for clearance.
+The Go2 follows waypoints, stops short of the ball, and triggers an audio
+bark event. The dashboard plays a synthesized bark sound. Cameras are
+simulated IP endpoints, not physical hardware. No hardware was deployed.
+
+Camera endpoints
+/camera/cam1/snapshot.jpg and /camera/cam1/stream.mjpg
+/camera/cam2/snapshot.jpg and /camera/cam2/stream.mjpg
+/camera/cam3/snapshot.jpg and /camera/cam3/stream.mjpg
+/camera/cam4/snapshot.jpg and /camera/cam4/stream.mjpg
+
+All endpoints bind to the local machine at 127.0.0.1:18992.
+The dashboard uses refreshed JPEGs for reliable in-app browser playback.
+MJPEG endpoints are available for other IP-camera clients.
+
+Wendy viewer
+Launch a compatible Wendy desktop build with WENDY_LOCAL_SIM_PORT=18992.
+Set WENDY_SIM_RUNTIME to the licensed Wendy Sandbox image/sim directory.
+The local simulation requires no network extension activation.
+
+Scope
+This is a simulator demonstration for a stationary floor-level sports ball
+and a calibrated static map. Camera feeds render at about 0.5 Hz, and
+YOLO checks one feed every two seconds of simulation time. The object and
+scene can be changed in make_scene(). New object classes need corresponding
+YOLO classes or custom weights. Real RTSP cameras, calibration drift,
+moving targets and physical robot deployment need additional integration.
+
+Sources
+MuJoCo Python API: https://mujoco.readthedocs.io/en/stable/python.html
+YOLO prediction API: https://docs.ultralytics.com/modes/predict/
+Robot model: https://github.com/google-deepmind/mujoco_menagerie
+Model license: menagerie/unitree_go2/LICENSE
+Walking policy and viewer: ../../wendy-sandbox/image/sim/

@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+media/map.json
+media/map.tmp
+.DS_Store

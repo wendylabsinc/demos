@@ -1,0 +1,6 @@
+.venv
+.git
+__pycache__
+**/__pycache__
+media
+*.log

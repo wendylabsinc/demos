@@ -1,0 +1,10 @@
+FROM python:3.11-slim-bookworm
+ENV PYTHONUNBUFFERED=1 MUJOCO_GL=egl GO2_PROFILE=sim GO2_HTTP_HOST=0.0.0.0
+RUN apt-get update && apt-get install -y --no-install-recommends libegl1 libgl1 libgles2 libglib2.0-0 libgomp1 && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY showcase ./showcase
+COPY sim ./sim
+EXPOSE 8788
+CMD ["python", "-m", "showcase.server"]

@@ -1,0 +1,14 @@
+{
+  "appId": "construction-drone-mujoco",
+  "version": "0.2.0",
+  "platform": "linux",
+  "entitlements": [
+    { "type": "network", "mode": "host" },
+    { "type": "http", "port": 8895 },
+    { "type": "persist", "name": "construction-drone-missions", "path": "/data" }
+  ],
+  "readiness": {
+    "tcpSocket": { "port": 8895 },
+    "timeoutSeconds": 180
+  }
+}

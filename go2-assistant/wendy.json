@@ -1,0 +1,12 @@
+{
+  "appId": "go2-assistant",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "http", "port": 8787},
+    {"type": "persist", "name": "go2-assistant-memory", "path": "/data"}
+  ],
+  "readiness": {"tcpSocket": {"port": 8787}, "timeoutSeconds": 30}
+}

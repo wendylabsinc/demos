@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+media/*.mp4
+media/*.webm
+media/*.json
+media/*.png
+.pytest_cache/
+dist/
+build/
+.runtime/

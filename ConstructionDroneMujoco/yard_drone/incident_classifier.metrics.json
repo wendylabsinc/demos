@@ -1,0 +1,538 @@
+{
+  "architecture": "Frozen MobileCLIP-S0 normalized 512D embedding + regularized multinomial linear probe",
+  "cameraResolution": [
+    320,
+    240
+  ],
+  "classes": [
+    "fire",
+    "oil",
+    "other"
+  ],
+  "cropMethod": "Image-change connected components with 18px context, matching MissionTracker",
+  "elapsedSeconds": 170.01,
+  "encoderSha256": "fcbd153d1aa1314fb72ea39b20c37e0572e7e7b05359b51f3efee5d682658472",
+  "epochs": 1200,
+  "mujocoVersion": "3.3.7",
+  "regularization": 0.04,
+  "runtimeInputs": "Normalized image embedding only; simulator metadata is never a feature",
+  "scope": "Held-out rendered construction-yard views only; no real-world recognition validation",
+  "scoreMeaning": "Linear-probe softmax score; uncalibrated outside this simulator",
+  "training": {
+    "examples": 90,
+    "accuracy": 1.0,
+    "classes": [
+      "fire",
+      "oil",
+      "other"
+    ],
+    "confusionMatrix": [
+      [
+        30,
+        0,
+        0
+      ],
+      [
+        0,
+        30,
+        0
+      ],
+      [
+        0,
+        0,
+        30
+      ]
+    ],
+    "confusionRows": "true class",
+    "confusionColumns": "predicted class",
+    "recall": {
+      "fire": 1.0,
+      "oil": 1.0,
+      "other": 1.0
+    },
+    "runtimeEvaluation": {
+      "confidenceThreshold": 0.7,
+      "marginThreshold": 0.2,
+      "accepted": 90,
+      "abstained": 0,
+      "confusionColumns": [
+        "fire",
+        "oil",
+        "other",
+        "abstained"
+      ],
+      "confusionMatrix": [
+        [
+          30,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          30,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          30,
+          0
+        ]
+      ],
+      "acceptedAccuracy": 1.0,
+      "acceptedHazardRecall": {
+        "fire": 1.0,
+        "oil": 1.0
+      }
+    }
+  },
+  "trainingCells": [
+    [
+      -8,
+      4
+    ],
+    [
+      -8,
+      6
+    ],
+    [
+      -7,
+      -5
+    ],
+    [
+      -7,
+      -3
+    ],
+    [
+      -7,
+      3
+    ],
+    [
+      -6,
+      -2
+    ],
+    [
+      -6,
+      0
+    ],
+    [
+      -6,
+      4
+    ],
+    [
+      -5,
+      -7
+    ],
+    [
+      -5,
+      -3
+    ],
+    [
+      -5,
+      -1
+    ],
+    [
+      -5,
+      1
+    ],
+    [
+      -5,
+      3
+    ],
+    [
+      -4,
+      -6
+    ],
+    [
+      -4,
+      0
+    ],
+    [
+      -4,
+      2
+    ],
+    [
+      -4,
+      6
+    ],
+    [
+      -3,
+      -3
+    ],
+    [
+      -3,
+      -1
+    ],
+    [
+      -3,
+      1
+    ],
+    [
+      -2,
+      2
+    ],
+    [
+      -2,
+      4
+    ],
+    [
+      -2,
+      6
+    ],
+    [
+      -1,
+      -7
+    ],
+    [
+      -1,
+      -5
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -1,
+      3
+    ],
+    [
+      -1,
+      5
+    ],
+    [
+      0,
+      -6
+    ],
+    [
+      0,
+      -2
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      1,
+      -7
+    ],
+    [
+      1,
+      -5
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      2,
+      -2
+    ],
+    [
+      2,
+      0
+    ],
+    [
+      3,
+      -5
+    ],
+    [
+      3,
+      3
+    ],
+    [
+      4,
+      -4
+    ],
+    [
+      4,
+      -2
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      5,
+      -7
+    ],
+    [
+      5,
+      -5
+    ],
+    [
+      5,
+      -3
+    ],
+    [
+      5,
+      -1
+    ],
+    [
+      5,
+      1
+    ],
+    [
+      5,
+      3
+    ],
+    [
+      6,
+      -4
+    ],
+    [
+      7,
+      -7
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      7,
+      5
+    ]
+  ],
+  "trainingRgbSha256": "8832ac293dcbfe6c2ad80fc1cf0761bc3634f7429ceca01578780fabf72658b5",
+  "trainingSeed": 1729,
+  "validation": {
+    "examples": 45,
+    "accuracy": 0.6444444444444445,
+    "classes": [
+      "fire",
+      "oil",
+      "other"
+    ],
+    "confusionMatrix": [
+      [
+        9,
+        4,
+        2
+      ],
+      [
+        5,
+        8,
+        2
+      ],
+      [
+        1,
+        2,
+        12
+      ]
+    ],
+    "confusionRows": "true class",
+    "confusionColumns": "predicted class",
+    "recall": {
+      "fire": 0.6,
+      "oil": 0.5333333333333333,
+      "other": 0.8
+    },
+    "runtimeEvaluation": {
+      "confidenceThreshold": 0.7,
+      "marginThreshold": 0.2,
+      "accepted": 37,
+      "abstained": 8,
+      "confusionColumns": [
+        "fire",
+        "oil",
+        "other",
+        "abstained"
+      ],
+      "confusionMatrix": [
+        [
+          9,
+          2,
+          2,
+          2
+        ],
+        [
+          4,
+          6,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          11,
+          3
+        ]
+      ],
+      "acceptedAccuracy": 0.7027027027027027,
+      "acceptedHazardRecall": {
+        "fire": 0.6,
+        "oil": 0.4
+      }
+    }
+  },
+  "validationCells": [
+    [
+      -8,
+      -7
+    ],
+    [
+      -8,
+      -5
+    ],
+    [
+      -7,
+      -6
+    ],
+    [
+      -7,
+      4
+    ],
+    [
+      -6,
+      -7
+    ],
+    [
+      -6,
+      -1
+    ],
+    [
+      -6,
+      1
+    ],
+    [
+      -5,
+      -2
+    ],
+    [
+      -5,
+      0
+    ],
+    [
+      -5,
+      6
+    ],
+    [
+      -4,
+      -3
+    ],
+    [
+      -4,
+      -1
+    ],
+    [
+      -4,
+      1
+    ],
+    [
+      -3,
+      -6
+    ],
+    [
+      -3,
+      -2
+    ],
+    [
+      -3,
+      2
+    ],
+    [
+      -3,
+      6
+    ],
+    [
+      -2,
+      -7
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -1,
+      -4
+    ],
+    [
+      -1,
+      -2
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      0,
+      -3
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      -6
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      -5
+    ],
+    [
+      2,
+      -3
+    ],
+    [
+      2,
+      3
+    ],
+    [
+      3,
+      0
+    ],
+    [
+      3,
+      6
+    ],
+    [
+      4,
+      -3
+    ],
+    [
+      5,
+      -2
+    ],
+    [
+      5,
+      2
+    ],
+    [
+      7,
+      4
+    ]
+  ],
+  "validationRgbSha256": "932ab6c5e5d68d675757f40b0200a6d0252f5d9675485672a12af1b35eca4864",
+  "validationSeed": 2718,
+  "version": 1,
+  "releaseCellsDisjoint": true,
+  "splitScope": "Disjoint incident release-center cells and independent random seeds; backgrounds and adjacent camera footprints share this yard",
+  "preprocessorSha256": "b031f09fbd69e22a605b6cc7433993249ee893b7fc1b79321f669cd015493dd4",
+  "abstention": {
+    "confidenceThreshold": 0.7,
+    "marginThreshold": 0.2,
+    "basis": "Fixed conservative settings chosen before held-out evaluation; not calibrated"
+  }
+}

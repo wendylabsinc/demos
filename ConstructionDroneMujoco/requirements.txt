@@ -1,0 +1,8 @@
+mujoco==3.3.7
+numpy==1.26.4
+Pillow==12.3.0
+onnxruntime==1.22.1
+opencv-python-headless==4.11.0.86
+faster-whisper==1.2.1
+av==15.1.0
+tokenizers==0.23.2
