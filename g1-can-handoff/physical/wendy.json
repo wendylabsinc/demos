@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.1-tracked-coke-yolo",
+  "version": "0.3.2-workspace-message",
   "entitlements": [
     {
       "type": "network",

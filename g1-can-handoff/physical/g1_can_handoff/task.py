@@ -11,7 +11,12 @@ def plan(plant, observation, validate=None, include_offer=True):
         raise ValueError("Invalid observed can pose")
     if time.monotonic()-observation.timestamp>.5: raise ValueError("Observation expired before planning")
     if not (.645<=observation.table_height<=.955): raise ValueError("Table height is outside the supported 65–95 cm range")
-    if not (.27<=c[0]<=.45 and .09<=c[1]<=.29): raise ValueError("Can is outside the left-hand pickup area")
+    if not (.27<=c[0]<=.45 and .09<=c[1]<=.29):
+        raise ValueError(
+            'Can is outside the left-hand pickup area: '
+            f'measured forward={c[0]*100:.1f} cm, robot-left={c[1]*100:.1f} cm; '
+            'requires forward=27–45 cm and robot-left=9–29 cm. '
+            'Reposition the can inside that area and recheck perception before starting.')
     # The cylinder permits yaw changes. A downward approach expands the
     # reachable workspace on lower tables without changing the can location.
     deadline=time.monotonic()+30.
