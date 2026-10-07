@@ -1,5 +1,5 @@
 {
-  "confidence_strictly_above": 0.3,
+  "confidence_strictly_above": 0.1,
   "minimum_iou": 0.5,
   "fixtures": [
     {

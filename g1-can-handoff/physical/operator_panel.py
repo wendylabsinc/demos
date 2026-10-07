@@ -25,7 +25,7 @@ PAGE = r'''<!doctype html><html><head><meta charset="utf-8"><title>G1 operator c
 <script>const button=document.querySelector('#release'),state=document.querySelector('#state'),video=document.querySelector('#video'),videoState=document.querySelector('#video-state'),cameraHealth=document.querySelector('#camera-health');let busy=false,lastImage=0,imagePending=false,imageStarted=0;
 async function call(path,data){let r=await fetch(path,{method:data?'POST':'GET',headers:{'Content-Type':'application/json','X-Operator-Token':'TOKEN_VALUE'},body:data?JSON.stringify(data):undefined});let s=await r.json();if(!r.ok)throw Error(s.error||'Controller request failed');return s;}
 const start=document.querySelector('#start'),stop=document.querySelector('#stop');let starting=false,polling=false;
-function show(s){start.disabled=starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
+function show(s){start.disabled=starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'')+(s.yolo_confidence_strictly_above?'\nYOLO confidence: above '+Math.round(s.yolo_confidence_strictly_above*100)+'%':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
 start.onclick=async()=>{if(starting)return;starting=true;start.disabled=true;state.textContent='Starting one pickup attempt…';try{show(await call('/start',{}));}catch(e){state.textContent=e.message;}finally{starting=false;poll();}};
 stop.onclick=async()=>{state.textContent='Stopping and holding…';try{show(await call('/stop',{}));}catch(e){state.textContent=e.message;}};
 button.onclick=async()=>{if(busy)return;busy=true;button.disabled=true;state.textContent='Releasing upper body and fingers…';try{show(await call('/release',{can_supported:true}));}catch(e){state.textContent=e.message;}finally{busy=false;button.disabled=false;}};
@@ -77,7 +77,7 @@ url='http://127.0.0.1:8102/"""+paths[action]+"""'
 request=urllib.request.Request(url"""+data+""")
 try:
  response=urllib.request.urlopen(request,timeout=12);s=json.load(response)
- print(json.dumps({k:s.get(k) for k in ['phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','camera_max_age_ms','demo_running','demo_result','demo_error']}))
+ print(json.dumps({k:s.get(k) for k in ['phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','camera_max_age_ms','yolo_confidence_strictly_above','demo_running','demo_result','demo_error']}))
 except urllib.error.HTTPError as e:
  print(json.dumps({'error':json.load(e).get('error')}))
 """

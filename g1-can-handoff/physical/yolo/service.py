@@ -3,6 +3,7 @@
 Accepts BGR bytes from the handoff's leased RGB-D frame. It never opens a
 camera, reads DDS, constructs a motor adapter, or substitutes a later image.
 """
+from confidence import MIN_CONFIDENCE
 import hashlib
 import json
 import os
@@ -100,8 +101,8 @@ class Detector:
                 self.graph.replay()
                 packed = self.static_output.cpu().numpy()
             candidates = packed[:-1].reshape(128, 5)
-            saturated = bool(packed[-1] > .30)
-            boxes=decode_one_class_candidates(candidates,confidence=.15,nms_iou=.7,max_detections=21,
+            saturated = bool(packed[-1] > MIN_CONFIDENCE)
+            boxes=decode_one_class_candidates(candidates,confidence=MIN_CONFIDENCE,nms_iou=.7,max_detections=21,
                 frame_width=image.shape[1],frame_height=image.shape[0],scale=scale,pad_x=pad_x,pad_y=pad_y)
             return [dict(xyxy=[b['x1'],b['y1'],b['x2'],b['y2']],confidence=b['conf'],
                          class_id=0,class_name='Coca-Cola') for b in boxes],saturated
@@ -127,7 +128,8 @@ class Detector:
         return dict(healthy=True, backend='pytorch_cuda', model_sha256=MODEL_SHA256,
                     class_names=self.model.names, gpu=self.device, camera_owned=False,
                     motion_commands_sent=0, execution=self.execution, input_size=640,
-                    qualification=self.qualification,camera_max_age_ms=frame_age_limit_s()*1000)
+                    qualification=self.qualification,camera_max_age_ms=frame_age_limit_s()*1000,
+                    confidence_strictly_above=MIN_CONFIDENCE)
 
 
 class Handler(BaseHTTPRequestHandler):

@@ -6,6 +6,8 @@ import unittest
 from unittest.mock import Mock, patch
 from pathlib import Path
 import json
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 # Runtime import creates only its event directory; no device connections.
 os.environ.setdefault('HANDOFF_DATA',tempfile.mkdtemp(prefix='handoff-test-'))
@@ -129,6 +131,30 @@ class RuntimeLifecycleTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'cancelled before demo preparation'):
             runtime.run(True,preserve_cancel=True)
         runtime.camera.acquire.assert_not_called()
+        runtime.arm.shutdown.assert_not_called()
+
+    def test_failed_geometry_retains_exact_detection_and_archives_frame(self):
+        runtime=self.runtime();runtime.camera=Mock();runtime.archive_frame=Mock()
+        frame={'meta':{'frame_id':17},'timestamp':time.monotonic()}
+        runtime.camera.frame.return_value=frame
+        detection={'source':{'frame_id':17,'image_sha256':'exact'},'model_sha256':'pinned',
+                   'detections':[{'confidence':.29,'xyxy':[1,2,3,4]}],'inference_ms':25}
+        def failed_geometry(exact,config,**kwargs):
+            kwargs['detector'].detect(exact)
+            raise RuntimeError('Coke YOLO target absent/ambiguous')
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            runtime.archive_executor=executor
+            with patch('runtime.geometry',side_effect=failed_geometry),\
+                 patch('yolo_client.YoloClient.detect',return_value=detection):
+                with self.assertRaisesRegex(RuntimeError,'absent/ambiguous'):
+                    runtime.observe_frame({},'planning',True)
+        runtime.archive_frame.assert_called_once_with(frame,'planning')
+        row=runtime.event.call_args
+        self.assertEqual(row.args,('perception_result',))
+        self.assertEqual(row.kwargs['source'],detection['source'])
+        self.assertEqual(row.kwargs['detections'],detection['detections'])
+        self.assertEqual(row.kwargs['error'],'RuntimeError: Coke YOLO target absent/ambiguous')
+        self.assertIsNone(row.kwargs['geometry'])
         runtime.arm.shutdown.assert_not_called()
 
 if __name__=='__main__':unittest.main()

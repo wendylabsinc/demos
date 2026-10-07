@@ -1,4 +1,5 @@
 """Saved-frame semantic recognition and optimized decoding parity; no robot IO."""
+from confidence import MIN_CONFIDENCE
 import hashlib
 import json
 from pathlib import Path
@@ -25,7 +26,7 @@ def main():
     checks = []
     for row, image in fixtures(root/'fixtures'):
         result = model.predict(image, device='cpu', imgsz=640, rect=False,
-                               conf=.15, iou=.7, verbose=False)[0]
+                               conf=MIN_CONFIDENCE, iou=.7, verbose=False)[0]
         reference = [dict(xyxy=b.xyxy[0].tolist(), confidence=float(b.conf[0])) for b in result.boxes]
         report = check(row, reference)
         chw, scale, pad_x, pad_y = letterbox_bgr(image, 640)
@@ -36,13 +37,13 @@ def main():
         if tuple(raw.shape) != (1, 5, 8400):
             raise RuntimeError('Unexpected raw one-class output')
         values, indices = raw[0, 4].topk(129, largest=True, sorted=True)
-        decoded = decode_one_class_candidates(raw[0, :, indices[:128]].T.numpy(), confidence=.15,
+        decoded = decode_one_class_candidates(raw[0, :, indices[:128]].T.numpy(), confidence=MIN_CONFIDENCE,
             nms_iou=.7, max_detections=21, frame_width=image.shape[1], frame_height=image.shape[0],
             scale=scale, pad_x=pad_x, pad_y=pad_y)
         optimized = [dict(xyxy=[b[k] for k in ('x1', 'y1', 'x2', 'y2')], confidence=b['conf']) for b in decoded]
-        check(row, optimized, bool(values[-1] > .30))
-        ref = [b for b in reference if b['confidence'] > .30]
-        opt = [b for b in optimized if b['confidence'] > .30]
+        check(row, optimized, bool(values[-1] > MIN_CONFIDENCE))
+        ref = [b for b in reference if b['confidence'] > MIN_CONFIDENCE]
+        opt = [b for b in optimized if b['confidence'] > MIN_CONFIDENCE]
         for a, b in zip(ref, opt):
             if np.max(np.abs(np.asarray(a['xyxy'])-b['xyxy'])) > 1 or abs(a['confidence']-b['confidence']) > .01:
                 raise RuntimeError('Optimized decoding parity failed: '+row['image'])

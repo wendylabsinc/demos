@@ -1,8 +1,10 @@
 {
   "appId": "DEV-g1-handoff-coke-yolo",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "platform": "linux",
-  "env": {"HANDOFF_CAMERA_MAX_AGE_MS": "400"},
+  "env": {
+    "HANDOFF_CAMERA_MAX_AGE_MS": "400"
+  },
   "entitlements": [
     {
       "type": "network",

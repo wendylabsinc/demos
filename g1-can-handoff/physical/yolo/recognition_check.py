@@ -1,4 +1,5 @@
 """Exact saved-frame recognition regression; never accesses a robot."""
+from confidence import MIN_CONFIDENCE
 import argparse
 import json
 from pathlib import Path
@@ -26,8 +27,8 @@ def main():
                                     rect=False, conf=.001, verbose=False)[0]
     boxes = [dict(confidence=float(b.conf[0]), xyxy=b.xyxy[0].tolist(),
                   iou=iou(b.xyxy[0].numpy(), args.box)) for b in result.boxes]
-    matches = [b for b in boxes if b['confidence'] > .30 and b['iou'] >= .5]
-    passed = len(matches) == 1 and sum(b['confidence'] > .30 for b in boxes) == 1
+    matches = [b for b in boxes if b['confidence'] > MIN_CONFIDENCE and b['iou'] >= .5]
+    passed = len(matches) == 1 and sum(b['confidence'] > MIN_CONFIDENCE for b in boxes) == 1
     print(json.dumps(dict(passed=passed, input_size=args.size, detections=boxes[:5],
                          physical_motion=False), indent=2))
     raise SystemExit(0 if passed else 1)

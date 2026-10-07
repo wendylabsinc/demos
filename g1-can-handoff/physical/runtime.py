@@ -88,10 +88,12 @@ class Runtime:
         return result
 
     def status(self):
+        from yolo.confidence import confidence_threshold
         result={'phase':self.phase,'error':self.error,'motion_commands_sent':self.motion_commands_sent,
                 'adapter_initialized':self.arm is not None,'automatic_home':False,'events':str(EVENTS),
                 'calibration_present':(DATA/'calibration.json').is_file(),'lowstate':self.hub.status(),
-                'camera_max_age_ms':frame_age_limit_s()*1000}
+                'camera_max_age_ms':frame_age_limit_s()*1000,
+                'yolo_confidence_strictly_above':confidence_threshold()}
         result.update(demo_running=getattr(self,'demo_running',False),demo_result=getattr(self,'demo_result',None),
                       demo_error=getattr(self,'demo_error',None))
         try:
@@ -154,11 +156,30 @@ class Runtime:
         # Join the single archive job before returning any usable observation;
         # IO failure or excess exposure age still blocks the next motor action.
         archived=self.archive_executor.submit(self.archive_frame,frame,phase)
+        detection={};started=time.monotonic();error=None
+        from types import SimpleNamespace
+        from yolo_client import YoloClient
+        def detect(exact_frame):
+            result=YoloClient().detect(exact_frame)
+            detection.update(result)
+            return result
         try:
             result=geometry(frame,config,require_table=require_table,
-                            expected_center_xy=expected_center_xy)
+                            expected_center_xy=expected_center_xy,
+                            detector=SimpleNamespace(detect=detect))
+            archived.result()
+            fresh(frame)
+        except Exception as exc:
+            error=f'{type(exc).__name__}: {exc}'
+            raise
         finally:
             archived.result()
+            self.event('perception_result',phase_name=phase,frame_id=frame['meta']['frame_id'],
+                       source=detection.get('source'),model_sha256=detection.get('model_sha256'),
+                       detections=detection.get('detections'),inference_ms=detection.get('inference_ms'),
+                       geometry=None if error else result[1],error=error,
+                       processing_ms=(time.monotonic()-started)*1000,
+                       exposure_age_ms=(time.monotonic()-frame['timestamp'])*1000)
         fresh(frame)
         return result
 

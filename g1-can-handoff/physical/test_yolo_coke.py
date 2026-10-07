@@ -87,17 +87,23 @@ class CokeGeometryTests(FrameFixture, unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'ambiguous'):
             geometry(self.frame(),self.config(),require_table=False,detector=detector)
     def test_low_confidence_cannot_enable_grasp(self):
-        detector=Detector();detector.boxes[0]['confidence']=.30
+        detector=Detector();detector.boxes[0]['confidence']=.10
         with self.assertRaisesRegex(RuntimeError,'absent'):
             geometry(self.frame(),self.config(),require_table=False,detector=detector)
-    def test_confidence_just_above_30_percent_is_eligible(self):
-        detector=Detector();detector.boxes[0]['confidence']=.3001
+    def test_confidence_just_above_10_percent_is_eligible(self):
+        detector=Detector();detector.boxes[0]['confidence']=.1001
         _,vision=geometry(self.frame(),self.config(),require_table=False,detector=detector)
-        self.assertEqual(vision['box']['confidence'],.3001)
+        self.assertEqual(vision['box']['confidence'],.1001)
 
-    def test_threshold_cannot_be_lowered_below_user_required_30_percent(self):
-        with patch.dict('os.environ',{'HANDOFF_YOLO_MIN_CONFIDENCE':'0.29'}):
-            with self.assertRaisesRegex(ValueError,'0.30'):
+    def test_second_target_between_10_and_15_percent_blocks_ambiguity(self):
+        detector=Detector()
+        detector.boxes.append(dict(detector.boxes[0],xyxy=[110,25,150,85],confidence=.11))
+        with self.assertRaisesRegex(RuntimeError,'ambiguous'):
+            geometry(self.frame(),self.config(),require_table=False,detector=detector)
+
+    def test_threshold_cannot_be_lowered_below_user_required_10_percent(self):
+        with patch.dict('os.environ',{'HANDOFF_YOLO_MIN_CONFIDENCE':'0.09'}):
+            with self.assertRaisesRegex(ValueError,'0.10'):
                 geometry(self.frame(),self.config(),require_table=False,detector=Detector())
 
     def test_clipped_box_rejected_even_with_tracking_roi(self):

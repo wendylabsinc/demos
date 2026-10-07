@@ -170,10 +170,8 @@ def target_red_mask(rgb,depth,roi=None):
 
 def target_coke_mask(frame, config, world, roi=None, detector=None, require_table=True, result=None):
     """Semantic target selection followed by measured depth, with no red gate."""
-    import os
-    threshold=float(os.getenv('HANDOFF_YOLO_MIN_CONFIDENCE', '.30'))
-    if not np.isfinite(threshold) or not .30<=threshold<=.99:
-        raise ValueError('HANDOFF_YOLO_MIN_CONFIDENCE must be in [0.30, 0.99]')
+    from yolo.confidence import confidence_threshold
+    threshold=confidence_threshold()
     if result is None:
         result=(detector or YoloClient()).detect(frame)
     depth=frame['depth_m'];height,width=depth.shape

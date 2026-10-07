@@ -1,4 +1,5 @@
 """Saved-frame recognition gates shared by offline replay and CUDA readiness."""
+from confidence import MIN_CONFIDENCE
 import hashlib
 import json
 from pathlib import Path
@@ -23,7 +24,7 @@ def fixtures(root):
 
 
 def check(row, boxes, saturated=False):
-    good = [b for b in boxes if b['confidence'] > .30]
+    good = [b for b in boxes if b['confidence'] > MIN_CONFIDENCE]
     expected = row['bbox_xyxy']
     if saturated or len(good) != (0 if expected is None else 1):
         raise RuntimeError('Coke recognition qualification failed: '+row['image'])
