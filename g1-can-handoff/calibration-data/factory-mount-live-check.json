@@ -1,0 +1,59 @@
+{
+  "estimated_only": true,
+  "commissioned": false,
+  "camera_serial": "338622073335",
+  "frame_id": 31175,
+  "source": "Unitree unitree_ros g1_29dof_with_hand.urdf d435_joint",
+  "factory_mount_xyz_m": [
+    0.0576235,
+    0.01753,
+    0.41987
+  ],
+  "factory_mount_pitch_deg": 47.6,
+  "camera_optical_to_pelvis_candidate": [
+    [
+      0.01144982069752644,
+      -0.7384069338847199,
+      0.6742581861549486,
+      0.05345576715797325
+    ],
+    [
+      -0.9999344486545079,
+      -0.008455181243297182,
+      0.007720641433747611,
+      0.018143248263542792
+    ],
+    [
+      0,
+      -0.6743023875837233,
+      -0.7384553406258838,
+      0.47387000000000007
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "assumptions": [
+    "d435_link origin coincides with aligned color optical origin; RGB-depth translation not yet resolved",
+    "standard ROS camera optical axis rotation",
+    "body IMU attitude represents pelvis orientation",
+    "horizontal tabletop"
+  ],
+  "table_plane_normal_camera": [
+    -0.006047382019460201,
+    -0.571136474609375,
+    -0.8208328485488892
+  ],
+  "predicted_up_camera": [
+    -0.0032068725343268522,
+    -0.6491492014121978,
+    -0.7606543434927943
+  ],
+  "orientation_difference_deg": 5.649774650645871,
+  "table_plane_rmse_m": 0.0013908977853134274,
+  "plane_points": 9002,
+  "motion_commands_sent": 0
+}

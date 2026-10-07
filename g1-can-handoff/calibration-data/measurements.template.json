@@ -1,0 +1,36 @@
+{
+  "camera_serial": "338622073335",
+  "frame_id": 2889,
+  "points": [
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": false
+    },
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": false
+    },
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": false
+    },
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": false
+    },
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": true
+    },
+    {
+      "pixel_uv": null,
+      "world_xyz_m": null,
+      "validation": true
+    }
+  ]
+}

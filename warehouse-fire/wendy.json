@@ -1,0 +1,12 @@
+{
+  "appId": "warehouse-fire",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "http", "port": 8788},
+    {"type": "persist", "name": "warehouse-fire", "path": "/data"}
+  ],
+  "readiness": {"tcpSocket": {"port": 8788}, "timeoutSeconds": 60}
+}

@@ -13,4 +13,7 @@ if [ ! -f menagerie/unitree_go2/go2.xml ]; then
   git -C menagerie checkout 4d038b3feae26ec82b46a4d586379114012a8ac7
   git -C menagerie sparse-checkout set unitree_go2
 fi
+if [ ! -f runtime/items-yolo.pt ]; then
+  .venv/bin/python train_items.py
+fi
 exec .venv/bin/python demo.py

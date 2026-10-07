@@ -1,0 +1,30 @@
+{
+  "adapter_source": "wendyos/go/simulator/g1/g1_sim/policy.py",
+  "upstream_commit": "4960b84732b0c2ec593dccbfe963fda1bcd7b1e3",
+  "files": [
+    {
+      "path": "policy/policy.onnx",
+      "url": "https://raw.githubusercontent.com/unitreerobotics/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3/deploy/robots/g1_29dof/config/policy/velocity/v0/exported/policy.onnx",
+      "sha256": "610c27e463a8f666aa50a06346678c00b4df3859f10b54bcc1f817c28251406f",
+      "size": 1658204,
+      "source": "unitree_rl_lab",
+      "upstream_path": "deploy/robots/g1_29dof/config/policy/velocity/v0/exported/policy.onnx"
+    },
+    {
+      "path": "policy/deploy.yaml",
+      "url": "https://raw.githubusercontent.com/unitreerobotics/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3/deploy/robots/g1_29dof/config/policy/velocity/v0/params/deploy.yaml",
+      "sha256": "64b04c0596a7010f39f8ac6e9ec46dc750141063cdcf2d42c83ecc444e57bc63",
+      "size": 2403,
+      "source": "unitree_rl_lab",
+      "upstream_path": "deploy/robots/g1_29dof/config/policy/velocity/v0/params/deploy.yaml"
+    },
+    {
+      "path": "licenses/unitree_rl_lab.LICENSE",
+      "url": "https://raw.githubusercontent.com/unitreerobotics/unitree_rl_lab/4960b84732b0c2ec593dccbfe963fda1bcd7b1e3/LICENCE",
+      "sha256": "ff28cacaef7b9919a0fb905136cf4ccffba5191522bf5d024c4339932c0edc28",
+      "size": 11362,
+      "source": "unitree_rl_lab",
+      "upstream_path": "LICENCE"
+    }
+  ]
+}

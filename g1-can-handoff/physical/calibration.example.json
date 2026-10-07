@@ -1,0 +1,17 @@
+{
+  "commissioned": false,
+  "device": "unitree-g1-nx-2.local",
+  "camera_serial": "338622073335",
+  "measurement_evidence": null,
+  "position_validation_rmse_m": null,
+  "camera_to_world": null,
+  "pelvis_to_world": null,
+  "table_height_m": null,
+  "table_center_xy_m": null,
+  "table_half_size_xy_m": null,
+  "can_radius_m": null,
+  "can_height_m": null,
+  "operator_with_stop": false,
+  "support": null,
+  "arm_limits_rad": null
+}

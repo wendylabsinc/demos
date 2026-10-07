@@ -8,6 +8,7 @@ inference, or a Wendy deployment configuration.
 
 | Demo | What it does | Requirements beyond Python |
 | --- | --- | --- |
+| [Autonomous city taxi](autonomous-taxi/README.md) | Drives a MuJoCo taxi through city traffic with passenger trips, LiDAR and six cameras | uv; Wendy native app for the 3D view |
 | [Robot vacuum](robot-vacuum/README.md) | Cleans a furnished MuJoCo home and returns to its dock | uv; Wendy CLI and QEMU for VM deployment |
 | [Construction yard drone](ConstructionDroneMujoco/README.md) | Surveys a simulated yard, compares camera evidence, and follows a tagged worker | Provisioned speech and language models; container builder for Wendy deployment |
 | [G1 can handoff](g1-can-handoff/README.md) | Grasps a can with a simulated Dex3 hand and waits for supervised release | uv; bundled G1 geometry and policy |
@@ -16,6 +17,7 @@ inference, or a Wendy deployment configuration.
 | [Go2 vision agent](go2-showcase/README.md) | Lets a vision-language model choose bounded Go2 actions | Ollama or a compatible vision inference endpoint; downloaded simulator assets |
 | [Sassy ROSMASTER](sassy-rosmaster/README.md) | Explores a simulated room and responds to camera-observed people | uv and Ollama |
 | [Warehouse camera search](warehouse-demo/README.md) | Finds a ball through fixed-camera detection and guides a simulated Go2 | Wendy Sandbox runtime, Menagerie assets, and a separate localization service |
+| [Warehouse thermal fire watch](warehouse-fire/README.md) | Locates heat through 88 thermal cameras and activates local sprinklers in a 40 × 40 m MuJoCo twin | Supported browser for Web Push; Wendy native app for the 3D view |
 | [Warehouse localization](warehouse-localization/README.md) | Runs ROS 2 mapping or AMCL localization with observation checks | ROS 2 Jazzy in its container; Wendy CLI or Docker |
 
 Physical robot adapters have their own commissioning requirements and limits.

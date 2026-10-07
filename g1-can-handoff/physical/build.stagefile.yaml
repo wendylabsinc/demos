@@ -1,0 +1,63 @@
+version: 1
+stages:
+  - name: native
+    from: python:3.12-slim
+    env:
+      CYCLONEDDS_HOME: /usr/local
+    install:
+      apt:
+        packages: [build-essential, cmake, git]
+      cmake:
+        - repository: https://github.com/eclipse-cyclonedds/cyclonedds.git
+          commit: 2cdd114cbd18340c606573b4cc8dc20cc161ec5a
+          prefix: /usr/local
+          buildType: Release
+          defines:
+            BUILD_DDSPERF: "OFF"
+            BUILD_EXAMPLES: "OFF"
+            BUILD_TESTING: "OFF"
+          jobs: 2
+  - name: sdk
+    from: native
+    env:
+      CYCLONEDDS_HOME: /usr/local
+      LD_LIBRARY_PATH: /usr/local/lib
+    install:
+      pip:
+        - packages:
+            - "orjson==3.11.3"
+            - "cyclonedds==0.10.2"
+            - "git+https://github.com/unitreerobotics/unitree_sdk2_python.git@e4cd91f051aaa77a70600e3d2bf7f50889db1980"
+          buildPackages: [git, build-essential]
+  - name: physical-native
+    from: sdk
+    install:
+      apt:
+        packages: [libosmesa6, libgl1, libglfw3]
+  - name: physical
+    from: physical-native
+    workdir: /app
+    env:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      MUJOCO_GL: osmesa
+      CYCLONEDDS_HOME: /usr/local
+      LD_LIBRARY_PATH: /usr/local/lib
+      G1_CONTROL_HZ: "100"
+    install:
+      pip:
+        - packages: ["numpy==2.2.6", "scipy==1.15.3", "mujoco==3.14.0", "pillow==11.3.0"]
+    copy:
+      - from: local
+        paths: [adapter]
+        dest: /app/adapter/
+      - from: local
+        paths: [g1_can_handoff]
+        dest: /app/g1_can_handoff/
+      - from: local
+        paths: [runtime.py, scene_refresh.py, factory_table_candidate.py, physical_core.py, camera_input.py, pickup.py, staging.py, sim_runtime.py, calibration_points.py, fit_camera_calibration.py, test_physical_core.py, diagnose_head_alignment.py, shadow_approach.py, shadow_staging.py, test_camera_input.py]
+        dest: /app/
+      - from: local
+        paths: [sdk_native]
+        dest: /usr/local/lib/python3.12/site-packages/unitree_sdk2py/utils/lib/
+    cmd: [python3, /app/runtime.py]

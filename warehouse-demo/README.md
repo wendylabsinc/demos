@@ -1,7 +1,7 @@
 # Warehouse camera search
 
 A simulated Unitree Go2 searches a warehouse using four rendered camera feeds,
-YOLO11n sports-ball detection, calibrated camera rays and a route around the
+a YOLO11n detector trained on ten simulated objects, calibrated camera rays and a route around the
 shelves. A pretrained ONNX walking policy applies joint torques in MuJoCo.
 The dashboard plays a recorded bark when the robot reaches the detected target.
 
@@ -40,8 +40,23 @@ them on first use; keep network access available or supply those weights before
 starting. Weights, downloaded robot models and generated runtime files stay
 outside Git.
 
-Open <http://127.0.0.1:18992/>. Enable bark audio once, then use **Run again**
-to replay the search. Stop the process with Ctrl+C.
+On the first run, the launcher renders shuffled object layouts and fine-tunes
+YOLO11n. Training uses simulator segmentation labels; live searches use only
+camera images and the requested class. Weights are saved to `runtime/items-yolo.pt`.
+This detector is trained for the simulated props and has not been validated on
+real warehouse objects. To retrain, run `.venv/bin/python train_items.py`.
+
+Open <http://127.0.0.1:18992/>. Choose **ball, bottle, cup, bowl, banana, apple,
+orange, chair, suitcase, or backpack**, then click **Find it**. You can also type
+“find the backpack” in the request box. The robot waits for a request, searches
+the four camera feeds, and barks on arrival. Asking for another item cancels the
+previous route without teleporting the robot. **Reset robot** resets the robot
+and returns it to waiting. Enable bark audio once to hear arrivals.
+Stop the process with Ctrl+C. Set `PORT` to use a different local HTTP port.
+
+Requests can also be sent to `POST /api/search` with JSON
+`{"query":"find the bottle"}`. `GET /api/items` returns the available names.
+Invalid or ambiguous requests return HTTP 422 without changing the active search.
 
 For Wendy's native Sim view, launch a compatible desktop build with
 `WENDY_LOCAL_SIM_PORT=18992`. Its Sim controls support pause, single-step and
@@ -54,6 +69,18 @@ other checkout locations.
 
 ## Verify
 
+Validate all ten labels and camera-to-floor estimates in the default layout
+and a held-out shuffled layout:
+
+```sh
+./.venv/bin/python validate_items.py
+```
+
+Results and annotated camera snapshots go to `runtime/items-validation*`.
+This check uses known positions exclusively to score the detector and ray
+estimates. The live controller does not read those positions.
+
+
 After the robot arrives, keep the demo running and use another terminal:
 
 ```sh
@@ -65,6 +92,13 @@ arrival, upright motion, camera snapshots and the bark event. Results go to
 `runtime/verification.json`; events go to `runtime/events.jsonl`.
 These checks validate the simulated run, not a hardware controller.
 
+The route planner uses the digital twin's collision volumes for shelves and
+props, without their semantic labels. The requested destination comes from
+YOLO's pixel box and the calibrated camera ray. The virtual LiDAR localizes
+against the surveyed static warehouse geometry; movable props are excluded
+from its AMCL scan in this simulation.
+
+The live detector reads camera JPEGs through the local HTTP camera endpoint.
 The live camera endpoints are `/camera/cam1/snapshot.jpg` through
 `/camera/cam4/snapshot.jpg`. Each camera also has a `/stream.mjpg` endpoint.
 

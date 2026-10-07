@@ -1,0 +1,319 @@
+"""Run the physical pickup code against a supported MuJoCo G1.
+
+Only device I/O, clock and calibration provenance differ. The physical plant,
+planner, visual geometry, obstruction proxy and pickup sequence are unchanged.
+Simulation truth is recorded separately and never fed to grasp verification.
+"""
+import argparse
+import json
+import hashlib
+import importlib.metadata
+import time
+import xml.etree.ElementTree as ET
+from pathlib import Path
+import mujoco
+import numpy as np
+from camera_input import geometry
+from physical_core import BODY_NAMES, PhysicalPlant, SIM_TO_BRIDGE
+from pickup import prepare, execute
+from g1_can_handoff.sim import scene, FINGERS
+
+
+class SimulationIO:
+    def __init__(self, world, force_zero_feedforward=False):
+        self.world = world
+        self.origin = time.monotonic()
+        self.commands = 0
+        self.imu_rpy = [0.,0.,0.]
+        self.body_ids = np.array([world.model.joint(n).id for n in BODY_NAMES])
+        self.hand_ids = {side: np.array([world.model.joint(n.replace('left_',side+'_')).id
+                                        for n in FINGERS]) for side in ('left','right')}
+        self.actuators = {n: world.model.actuator(n).id for n in BODY_NAMES[15:]}
+        self.arm_ids=np.array(list(self.actuators.values()))
+        self.all_hand_ids=np.array([i for i in range(world.model.nu) if 'hand' in world.model.actuator(i).name])
+        self.arm_kp=np.array([40. if 'wrist' in name else 80. for name in BODY_NAMES[15:]])
+        self.arm_kd=np.array([1.5 if 'wrist' in name else 3. for name in BODY_NAMES[15:]])
+        self.arm_feedforward=np.zeros(14)
+        self.force_zero_feedforward=force_zero_feedforward
+        self.arm_reference=None
+        self.wire_arm_q=None
+        self.servo_ticks=0
+        self.max_abs_feedforward=np.zeros(14)
+        self.arm_limits=world.model.jnt_range[self.body_ids[15:]].copy()
+
+    def monotonic(self):
+        return self.origin+self.world.data.time
+
+    def sleep(self, seconds):
+        from adapter.arm_reference import ArmReference
+        m,d=self.world.model,self.world.data
+        for _ in range(round(max(0,seconds)/m.opt.timestep)):
+            measured=d.qpos[self.world.qadr[self.arm_ids]]
+            if self.arm_reference is None:
+                self.arm_reference=ArmReference(measured)
+                self.arm_reference.max_velocity=.25
+                self.arm_reference.max_acceleration=1.
+                self.wire_arm_q=measured.copy()
+            # The real SDK writer advances ArmReference at G1_CONTROL_HZ=100.
+            if self.servo_ticks%5==0:
+                self.wire_arm_q=self.arm_reference.advance(self.world.targets[self.arm_ids],measured,.01,
+                                                          limits=self.arm_limits)
+            error=self.world.targets-d.qpos[self.world.qadr]
+            velocity=d.qvel[self.world.dadr]
+            effort=self.world.kp*error-self.world.kd*velocity+d.qfrc_bias[self.world.dadr]
+            # Actual arm packets carry kp/kd, zero desired velocity and the
+            # supplied second ctrl_dual_arm argument as feedforward torque.
+            effort[self.arm_ids]=(self.arm_kp*(self.wire_arm_q-measured)
+                                      -self.arm_kd*velocity[self.arm_ids]+self.arm_feedforward)
+            # Dex3 packets have no model gravity feedforward either.
+            effort[self.all_hand_ids]=(self.world.kp[self.all_hand_ids]*error[self.all_hand_ids]
+                                       -self.world.kd[self.all_hand_ids]*velocity[self.all_hand_ids])
+            d.ctrl[:]=np.clip(effort,-self.world.torque,self.world.torque)
+            mujoco.mj_step(m,d)
+            self.servo_ticks+=1
+            if self.world.frame_callback:self.world.frame_callback(self.world)
+
+    def read(self):
+        m, d = self.world.model, self.world.data
+        def sample(ids, order=None):
+            q=d.qpos[m.jnt_qposadr[ids]];dq=d.qvel[m.jnt_dofadr[ids]]
+            tau=d.qfrc_actuator[m.jnt_dofadr[ids]]
+            if order is not None:q,dq,tau=q[order],dq[order],tau[order]
+            return dict(q=q.tolist(),dq=dq.tolist(),tau_est=tau.tolist(),
+                        time=self.monotonic(),temperature_max=25.,faults=[0]*len(ids),imu_rpy=self.imu_rpy)
+        # SDK raw ordering is thumb,middle,index on the left; right state is
+        # thumb,index,middle. PhysicalPlant performs the existing conversions.
+        return dict(body=sample(self.body_ids), left=sample(self.hand_ids['left'],SIM_TO_BRIDGE),
+                    right=sample(self.hand_ids['right']))
+
+    def ctrl_dual_arm(self, q, tau_ff):
+        self.commands += 1
+        torque=np.asarray(tau_ff,dtype=float)
+        if torque.shape!=(14,) or not np.isfinite(torque).all():
+            raise ValueError('Expected fourteen finite feedforward torques')
+        self.arm_feedforward=np.zeros(14) if self.force_zero_feedforward else torque.copy()
+        self.max_abs_feedforward=np.maximum(self.max_abs_feedforward,np.abs(self.arm_feedforward))
+        for n,v in zip(BODY_NAMES[15:],q):self.world.targets[self.actuators[n]]=v
+
+    def ctrl_dual_hand(self, left, right):
+        self.commands += 1
+        for side,values in [('left',left),('right',right)]:
+            for name,value in zip(FINGERS,np.asarray(values)[SIM_TO_BRIDGE]):
+                self.world.targets[self.world.model.actuator(name.replace('left_',side+'_')).id]=value
+
+    def hold_arm_measured(self):
+        measured=np.asarray(self.read()['body']['q'][15:])
+        self.ctrl_dual_arm(measured,np.zeros(14))
+        if self.arm_reference is not None:self.arm_reference.reset(measured)
+        self.wire_arm_q=measured.copy()
+
+
+class SimulationCamera:
+    def __init__(self, world, name='observe', intrinsics=None, serial='mujoco-synthetic'):
+        self.world=world
+        self.serial=serial
+        self.renderer=mujoco.Renderer(world.model, height=480, width=640)
+        self.camera=world.model.camera(name).id
+        self.counter=0
+        f=240/np.tan(np.deg2rad(world.model.cam_fovy[self.camera])/2)
+        y,x=np.mgrid[:480,:640]
+        if intrinsics is None:
+            self.rays=np.stack([(x-319.5)/f,(y-239.5)/f,np.ones_like(x)],axis=-1)
+        else:
+            self.rays=np.stack([(x-intrinsics['ppx'])/intrinsics['fx'],
+                                (y-intrinsics['ppy'])/intrinsics['fy'],np.ones_like(x)],axis=-1)
+        self.transform=np.eye(4)
+        self.transform[:3,:3]=world.data.cam_xmat[self.camera].reshape(3,3)@np.diag([1,-1,-1])
+        self.transform[:3,3]=world.data.cam_xpos[self.camera]
+
+    def frame(self):
+        self.renderer.disable_depth_rendering()
+        self.renderer.update_scene(self.world.data,camera=self.camera)
+        rgb=self.renderer.render().copy()
+        self.renderer.enable_depth_rendering()
+        depth=self.renderer.render().copy()
+        self.counter+=1
+        return dict(color_bgr=rgb[...,::-1],depth_m=depth,rays=self.rays,
+                    timestamp=time.monotonic(),meta=dict(camera_serial=self.serial,frame_id=self.counter))
+
+    def close(self):self.renderer.close()
+
+
+def setup_scene(setup):
+    """Apply supplied setup geometry to a supported-base model, without fitting it."""
+    config=setup['config'];intrinsics=setup['camera_intrinsics']
+    from physical_core import rigid, calibrated_scene
+    optical=rigid(config['camera_to_world'])
+    if (intrinsics['width'],intrinsics['height'])!=(640,480):
+        raise ValueError('Setup renderer currently requires 640x480 intrinsics')
+    if any(intrinsics.get('coeffs',[0]*5)):
+        raise ValueError('Setup renderer requires zero optical distortion coefficients')
+    center=np.asarray(setup['can_center_world_m'],dtype=float)
+    if center.shape!=(3,) or not np.isfinite(center).all():
+        raise ValueError('Expected finite three-dimensional initial can center')
+    def decorate(root):
+        quat=np.empty(4)
+        if setup.get('stationary_lower_body_support',False):
+            equality=root.find('equality')
+            if equality is None:equality=ET.SubElement(root,'equality')
+            for name,value in zip(BODY_NAMES[:15],setup['measured']['body']['q'][:15]):
+                ET.SubElement(equality,'joint',joint1=name,polycoef=f'{value} 0 0 0 0',
+                              solref='.002 1',solimp='.9999 .9999 .001')
+        can=root.find(".//body[@name='can']")
+        can.set('pos',' '.join(map(str,center)))
+        shell=can.find("geom[@name='can_shell']")
+        shell.set('size',f"{config['can_radius_m']} {config['can_height_m']/2}")
+        top=can.find("geom[@name='can_top']")
+        top.set('pos',f"0 0 {config['can_height_m']/2}")
+        top.set('size',f"{config['can_radius_m']-.001} .0005")
+        rotation=optical[:3,:3]@np.diag([1,-1,-1])
+        mujoco.mju_mat2Quat(quat,rotation.ravel())
+        # MuJoCo principal offsets have opposite X sign to pixel coordinates.
+        # Verified by projecting known optical-axis and off-axis sphere points.
+        ET.SubElement(root.find('worldbody'),'camera',name='setup-camera',
+            pos=' '.join(map(str,optical[:3,3])),quat=' '.join(map(str,quat)),
+            resolution='640 480',sensorsize='640 480',
+            focalpixel=f"{intrinsics['fx']} {intrinsics['fy']}",
+            principalpixel=f"{319.5-intrinsics['ppx']} {239.5-intrinsics['ppy']}")
+    return calibrated_scene(config,x=center[0],y=center[1],decorate=decorate)
+
+
+def apply_measured_state(world, io, measured):
+    body=np.asarray(measured['body']['q'],dtype=float)
+    if body.shape!=(29,) or not np.isfinite(body).all():
+        raise ValueError('Expected twenty-nine measured body joint angles')
+    for name,value in zip(BODY_NAMES,measured['body']['q']):
+        jid=world.model.joint(name).id
+        world.data.qpos[world.model.jnt_qposadr[jid]]=value
+        world.targets[world.model.actuator(name).id]=value
+    for side in ('left','right'):
+        values=np.asarray(measured[side]['q'])
+        if values.shape!=(7,) or not np.isfinite(values).all():
+            raise ValueError('Expected seven measured hand joint angles')
+        if side=='left':values=values[SIM_TO_BRIDGE]
+        for name,value in zip(FINGERS,values):
+            name=name.replace('left_',side+'_');jid=world.model.joint(name).id
+            world.data.qpos[world.model.jnt_qposadr[jid]]=value
+            world.targets[world.model.actuator(name).id]=value
+    io.imu_rpy=list(measured['body']['imu_rpy'])
+    mujoco.mj_forward(world.model,world.data)
+
+
+def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False):
+    if setup is not None:height=setup['config']['table_height_m']
+    world=scene(height=height) if setup is None else setup_scene(setup)
+    # Match the physical hand's configured kp=2, kd=.2; body support and the
+    # simulated torque servo are explicit backend assumptions.
+    for i in range(world.model.nu):
+        if 'hand' in world.model.actuator(i).name:world.kp[i]=hand_kp
+    io=SimulationIO(world,force_zero_feedforward=force_zero_feedforward)
+    if initial_arm_q14 is not None:
+        initial=np.asarray(initial_arm_q14,dtype=float)
+        if initial.shape!=(14,) or not np.all(np.isfinite(initial)):
+            raise ValueError('Initial arm state must contain fourteen finite joint angles')
+        world.data.qpos[world.model.jnt_qposadr[io.body_ids[15:]]]=initial
+        for name,value in zip(BODY_NAMES[15:],initial):world.targets[io.actuators[name]]=value
+        mujoco.mj_forward(world.model,world.data)
+    if setup is not None:
+        apply_measured_state(world,io,setup['measured'])
+        sensor=SimulationCamera(world,'setup-camera',setup['camera_intrinsics'],setup['config']['camera_serial'])
+    else:sensor=SimulationCamera(world,camera)
+    rows=[];counts={};worst_tracking=0.
+    def event(phase,**fields):
+        nonlocal worst_tracking
+        counts[phase]=counts.get(phase,0)+1
+        if phase=='target':
+            worst_tracking=max(worst_tracking,fields['tracking_error_rad'])
+            return
+        if phase=='hand_target':return
+        rows.append(dict(phase=phase,simulation_time_s=float(world.data.time),**fields))
+    config=dict(staging_enabled=staging_enabled,camera_serial='mujoco-synthetic',camera_to_world=sensor.transform.tolist(),
+                can_radius_m=.033,can_height_m=.122,table_height_m=height,
+                arm_limits_rad=world.model.jnt_range[io.body_ids[15:]].tolist())
+    # Distinct model state prevents FK/collision queries from overwriting the
+    # dynamics state, as on hardware.
+    if setup is not None:
+        config=dict(setup['config'],staging_enabled=staging_enabled)
+    io.arm_limits=np.asarray(config['arm_limits_rad'],dtype=float)
+    model=scene(height=height) if setup is None else setup_scene(setup)
+    plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+    contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
+    def audit_contacts(world):
+        if plant.ik.contact_phase not in ('pregrasp','staging','approach','align'):return
+        for contact in world.data.contact:
+            names=[world.model.body(world.model.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
+            if 'can' not in names:continue
+            other=names[1] if names[0]=='can' else names[0]
+            if other=='world':continue
+            previous=contact_audit['minimum_pregrasp_contact_distance_m']
+            contact_audit['minimum_pregrasp_contact_distance_m']=float(contact.dist) if previous is None else min(previous,float(contact.dist))
+            if contact.dist<=0:
+                contact_audit['pregrasp_contact_steps']+=1
+                if other not in contact_audit['bodies']:contact_audit['bodies'].append(other)
+    world.frame_callback=audit_contacts
+    def observe(phase,require_table,expected_center_xy=None):
+        frame=sensor.frame()
+        try:observation,vision=geometry(frame,config,require_table=require_table,expected_center_xy=expected_center_xy)
+        except Exception:
+            if output:
+                from PIL import Image
+                Image.fromarray(frame['color_bgr'][...,::-1]).save(Path(output).with_suffix('.png'))
+            raise
+        event('camera',phase_name=phase,vision=vision)
+        return observation,vision
+    try:
+        prepared=prepare(plant,observe,event)
+        result=execute(plant,prepared,observe,event)
+        result.update(simulation_only=True,physical_pickup_verified=False)
+    except Exception as exc:
+        if io.commands:plant.freeze()
+        event('error',error=f'{type(exc).__name__}: {exc}')
+        result=dict(lift_verified=False,error=str(exc),simulation_only=True,physical_pickup_verified=False)
+    finally:sensor.close()
+    result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
+                  truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,
+                  max_tracking_error_rad=worst_tracking,
+                  max_abs_commanded_feedforward_nm=io.max_abs_feedforward.tolist(),
+                  backend_assumptions=dict(supported_base=True,hand_kp=hand_kp,hand_kd=.2,camera=camera,table_height_m=height,can_xy_m=[.35,.18],
+                                           initial_arm_q14=None if initial_arm_q14 is None else list(initial_arm_q14),
+                                           staging_enabled=staging_enabled,
+                                           force_zero_feedforward=force_zero_feedforward,
+                                           arm_kp=io.arm_kp.tolist(),arm_kd=io.arm_kd.tolist(),
+                                           arm_reference='actual adapter ArmReference at100Hz,velocity.25,acceleration1',
+                                           implicit_arm_gravity_compensation=False,implicit_hand_gravity_compensation=False),
+                  dependency_versions={name:importlib.metadata.version(name)
+                                       for name in ('mujoco','numpy','scipy','pillow')})
+    if setup is not None:
+        result['setup_input']=setup
+        result['backend_assumptions'].update(camera='setup-camera',camera_intrinsics=setup['camera_intrinsics'],
+            optical_extrinsic_source='supplied model-based estimate, not independently validated',
+            can_xy_m=setup['can_center_world_m'][:2],measured_joint_positions_used=True,
+            measured_joint_velocities_used=False,temperature_and_fault_feedback='synthetic healthy',
+            stationary_lower_body_equality_support=setup.get('stationary_lower_body_support',False),
+            supplied_camera_transform_error=float(np.max(np.abs(sensor.transform-np.asarray(config['camera_to_world'])))))
+    root=Path(__file__).parent
+    result['source_sha256']={name:hashlib.sha256((root/name).read_bytes()).hexdigest()
+        for name in ('physical_core.py','pickup.py','staging.py','camera_input.py',
+                     'runtime.py','sim_runtime.py','g1_can_handoff/sim.py','g1_can_handoff/task.py',
+                     'adapter/arm_reference.py','adapter/g1_arm.py')}
+    if output:
+        Path(output).write_text(json.dumps(result,indent=2)+'\n')
+        if result['lift_verified']:Path(output).with_suffix('.png').unlink(missing_ok=True)
+    return result
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',default='sim-physical-pickup.json')
+    parser.add_argument('--hand-kp',type=float,default=2.)
+    parser.add_argument('--camera',choices=['observe','head'],default='observe')
+    parser.add_argument('--height',type=float,default=.75,help='Measured tabletop height in metres')
+    parser.add_argument('--initial-arm-q',type=float,nargs=14,help='Measured left then right seven-joint arm angles')
+    parser.add_argument('--disable-staging',action='store_true',help='Regression: require the direct approach path')
+    parser.add_argument('--setup-json',help='Supplied setup geometry, camera intrinsics and measured joint snapshot')
+    parser.add_argument('--force-zero-feedforward',action='store_true',help='Diagnostic regression: discard commanded arm feedforward')
+    args=parser.parse_args()
+    result=run(args.output,args.hand_kp,args.camera,args.height,args.initial_arm_q,not args.disable_staging,
+               None if args.setup_json is None else json.loads(Path(args.setup_json).read_text()),args.force_zero_feedforward)
+    print(json.dumps({k:v for k,v in result.items() if k!='events'},indent=2))
+    raise SystemExit(0 if result['lift_verified'] else 1)

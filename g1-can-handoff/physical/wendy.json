@@ -1,0 +1,21 @@
+{
+  "appId": "DEV-g1-handoff-physical",
+  "version": "0.2.9-retry-from-hold",
+  "entitlements": [
+    {
+      "type": "network",
+      "mode": "host"
+    },
+    {
+      "type": "persist",
+      "name": "g1-handoff-physical",
+      "path": "/data"
+    }
+  ],
+  "readiness": {
+    "tcpSocket": {
+      "port": 8102
+    },
+    "timeoutSeconds": 60
+  }
+}

@@ -28,7 +28,8 @@ class LocalizedRobot:
         self.odom[2]+=dt*(velocity[2]+.008)
         c,s=math.cos(self.odom[2]),math.sin(self.odom[2])
         self.odom[:2]+=dt*1.08*np.array([c*velocity[3]-s*velocity[4],s*velocity[3]+c*velocity[4]])
-        if self.tick%1==0:
+        # The ROS bridge consumes at 10 Hz; leave headroom in its bounded queue.
+        if self.tick%6==0:
             # Range generation belongs to the simulator's sensor model. Truth is not
             # sent to AMCL or made available through this robot's navigation properties.
             origin=np.array([*self.dog.base_xy,.8]);heading=self.dog.base_yaw

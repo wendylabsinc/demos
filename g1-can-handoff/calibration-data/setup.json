@@ -1,0 +1,15 @@
+{
+  "source": "operator statements in session",
+  "table_height_m": 0.762,
+  "can_kind": "standard wide 330 ml Coke",
+  "can_radius_nominal_m": 0.033,
+  "can_height_nominal_m": 0.122,
+  "can_dimensions_measured": false,
+  "belly_surface_to_near_table_edge_m": 0.2032,
+  "distance_reference": "belly surface, not pelvis origin",
+  "camera_serial": "338622073335",
+  "camera_to_world": null,
+  "pelvis_to_world": null,
+  "commissioned": false,
+  "physical_pickup_verified": false
+}

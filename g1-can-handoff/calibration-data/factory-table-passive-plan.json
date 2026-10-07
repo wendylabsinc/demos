@@ -1,0 +1,161 @@
+{
+  "config": {
+    "commissioned": false,
+    "calibration_method": "factory_mount_and_table_plane_candidate",
+    "camera_serial": "338622073335",
+    "device": "unitree-g1-nx-2.local",
+    "camera_to_world": [
+      [
+        0.009936520543743345,
+        -0.8115591424670576,
+        0.5841857785307834,
+        0.06520201059579976
+      ],
+      [
+        -0.9999054851058268,
+        -0.002512675590038765,
+        0.013516927042053688,
+        0.016616668992464355
+      ],
+      [
+        -0.009501916373276782,
+        -0.5842648754969897,
+        -0.8115074052932123,
+        1.2639958019256592
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "pelvis_to_world": [
+      [
+        0.9996927434044492,
+        0.0000774891264539848,
+        0.024787351208246326,
+        0
+      ],
+      [
+        0,
+        0.9999951136101787,
+        -0.0031261407143062083,
+        0
+      ],
+      [
+        -0.02478747232949881,
+        0.0031251801869531188,
+        0.9996878585160035,
+        0.7915425687629893
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "table_height_m": 0.762,
+    "table_center_xy_m": [
+      5.234063469747814,
+      0
+    ],
+    "table_half_size_xy_m": [
+      5,
+      5
+    ],
+    "table_near_edge_conservative_x_m": 0.2340634697478142,
+    "table_extent_source": "conservative extension beyond reachable workspace",
+    "can_radius_m": 0.033,
+    "can_height_m": 0.122,
+    "arm_limits_rad": [
+      [
+        -3.0892,
+        2.6704
+      ],
+      [
+        -1.5882,
+        2.2515
+      ],
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        -1.0472,
+        2.0944
+      ],
+      [
+        -1.97222,
+        1.97222
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -3.0892,
+        2.6704
+      ],
+      [
+        -2.2515,
+        1.5882
+      ],
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        -1.0472,
+        2.0944
+      ],
+      [
+        -1.97222,
+        1.97222
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -1.61443,
+        1.61443
+      ]
+    ],
+    "source_frame_id": 38098,
+    "tilt_correction_deg": 5.240278067145836,
+    "table_plane_rmse_m": 0.0012531080283224583,
+    "independent_validation": false,
+    "assumptions": [
+      "operator confirms factory mount position and stationary base",
+      "camera tilt adjusted; pivot translation not modeled",
+      "horizontal 0.762 m table; nearest yellow tape marks near edge",
+      "factory d435 frame approximates aligned RGB optical origin",
+      "model arm limits; body IMU describes pelvis orientation"
+    ]
+  },
+  "passive_plan_passed": false,
+  "vision": {
+    "top_quantile_z_m": 0.8783885143370472,
+    "center_xy_m": [
+      0.34802545011331215,
+      0.07328609250580537
+    ],
+    "fit_error_m": 0.0024600293086466866,
+    "pixels": 1704,
+    "frame_id": 38115
+  },
+  "can_center_world_m": [
+    0.34802545011331215,
+    0.07328609250580537,
+    0.823
+  ],
+  "planning_error": "Can is outside the left-hand pickup area",
+  "events": [],
+  "new_motion_commands": 0
+}

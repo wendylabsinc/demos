@@ -1,0 +1,57 @@
+FROM python:3.12-slim@sha256:f77ac9e44ae96ef2c90b8053ea08c31f8be030f824196b0ae4db6d462c84e51f AS native
+ENV CYCLONEDDS_HOME="/usr/local"
+RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-093aa1a0fb927d0b,target=/var/lib/apt/lists \
+    --mount=type=cache,sharing=locked,id=stagefile-apt-archives-093aa1a0fb927d0b,target=/var/cache/apt \
+    rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'build-essential' 'cmake' 'git'
+RUN --mount=type=cache,sharing=locked,id=stagefile-cmake-c051c4af2452bf40,target=/tmp/stagefile-cmake-0/build git init '/tmp/stagefile-cmake-0/source' \
+    && git -C '/tmp/stagefile-cmake-0/source' remote add origin 'https://github.com/eclipse-cyclonedds/cyclonedds.git' \
+    && git -C '/tmp/stagefile-cmake-0/source' fetch --depth 1 origin '2cdd114cbd18340c606573b4cc8dc20cc161ec5a' \
+    && git -C '/tmp/stagefile-cmake-0/source' checkout --detach FETCH_HEAD \
+    && cmake -S '/tmp/stagefile-cmake-0/source' -B '/tmp/stagefile-cmake-0/build' '-DCMAKE_BUILD_TYPE=Release' '-DCMAKE_INSTALL_PREFIX=/usr/local' '-DBUILD_DDSPERF=OFF' '-DBUILD_EXAMPLES=OFF' '-DBUILD_TESTING=OFF' \
+    && cmake --build '/tmp/stagefile-cmake-0/build' --parallel 2 \
+    && cmake --install '/tmp/stagefile-cmake-0/build' \
+    && rm -rf '/tmp/stagefile-cmake-0/source'
+
+FROM native AS stagefile-pip-deps-1
+ENV CYCLONEDDS_HOME="/usr/local"
+ENV LD_LIBRARY_PATH="/usr/local/lib"
+RUN if command -v pip >/dev/null 2>&1; then apt-get update && apt-get install -y --no-install-recommends 'git' 'build-essential'; else apt-get update && apt-get install -y --no-install-recommends 'python3-pip' 'git' 'build-essential'; fi \
+    && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,sharing=locked,id=stagefile-pip-e3ffd1ff7ab7fb83,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' 'orjson==3.11.3' 'cyclonedds==0.10.2' 'git+https://github.com/unitreerobotics/unitree_sdk2_python.git@e4cd91f051aaa77a70600e3d2bf7f50889db1980'
+
+FROM native AS sdk
+ENV CYCLONEDDS_HOME="/usr/local"
+ENV LD_LIBRARY_PATH="/usr/local/lib"
+COPY --link --from=stagefile-pip-deps-1 /opt/stagefile/pip/root/ /
+
+FROM sdk AS physical-native
+RUN apt-get update && apt-get install -y --no-install-recommends 'libosmesa6' 'libgl1' 'libglfw3' \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM physical-native AS stagefile-pip-deps-3
+ENV CYCLONEDDS_HOME="/usr/local"
+ENV G1_CONTROL_HZ="100"
+ENV LD_LIBRARY_PATH="/usr/local/lib"
+ENV MUJOCO_GL="osmesa"
+ENV PYTHONDONTWRITEBYTECODE="1"
+ENV PYTHONUNBUFFERED="1"
+WORKDIR /app
+RUN command -v pip >/dev/null 2>&1 || (apt-get update && apt-get install -y --no-install-recommends 'python3-pip') \
+    && rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,sharing=locked,id=stagefile-pip-96a296d224f285c6,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' 'numpy==2.2.6' 'scipy==1.15.3' 'mujoco==3.14.0' 'pillow==11.3.0'
+
+FROM physical-native AS physical
+ENV CYCLONEDDS_HOME="/usr/local"
+ENV G1_CONTROL_HZ="100"
+ENV LD_LIBRARY_PATH="/usr/local/lib"
+ENV MUJOCO_GL="osmesa"
+ENV PYTHONDONTWRITEBYTECODE="1"
+ENV PYTHONUNBUFFERED="1"
+WORKDIR /app
+COPY --link --from=stagefile-pip-deps-3 /opt/stagefile/pip/root/ /
+COPY adapter /app/adapter/
+COPY g1_can_handoff /app/g1_can_handoff/
+COPY runtime.py scene_refresh.py factory_table_candidate.py physical_core.py camera_input.py pickup.py staging.py sim_runtime.py calibration_points.py fit_camera_calibration.py test_physical_core.py diagnose_head_alignment.py shadow_approach.py shadow_staging.py test_camera_input.py /app/
+COPY sdk_native /usr/local/lib/python3.12/site-packages/unitree_sdk2py/utils/lib/
+CMD ["python3", "/app/runtime.py"]
+USER 65532

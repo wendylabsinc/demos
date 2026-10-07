@@ -1,0 +1,18 @@
+{
+  "appId": "DEV-g1-handoff-recorder",
+  "version": "0.2.0",
+  "env": {
+    "RECORDER_INTERFACE": "enP8p1s0",
+    "RECORDER_DOMAIN": "0",
+    "RECORDER_PORT": "8101",
+    "RECORDER_ROOT": "/records",
+    "RECORDER_SEGMENT_SECONDS": "60",
+    "RECORDER_MIN_FREE_MB": "2048",
+    "RECORDER_MAX_SESSION_MB": "10240"
+  },
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "persist", "name": "g1-handoff-recordings", "path": "/records"}
+  ],
+  "readiness": {"tcpSocket": {"port": 8101}, "timeoutSeconds": 60}
+}
