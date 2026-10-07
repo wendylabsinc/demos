@@ -7,23 +7,24 @@ import urllib.request
 import urllib.error
 
 import numpy as np
+from yolo.frame_limits import frame_age_limit_s
 
 MODEL_SHA256 = '74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862'
 SCHEMA = 'wendy.handoff.coke-yolo.v1'
 
 
-def identity(frame):
+def identity(frame,raw=None):
     image = np.asarray(frame['color_bgr'])
     if image.dtype != np.uint8 or image.ndim != 3 or image.shape[2] != 3:
         raise RuntimeError('YOLO requires uint8 HWC BGR from the exact RGB-D frame')
     return dict(frame_id=frame['meta']['frame_id'], camera_serial=frame['meta']['camera_serial'],
                 timestamp=frame['timestamp'], shape=list(image.shape),
-                image_sha256=hashlib.sha256(image.tobytes()).hexdigest())
+                image_sha256=hashlib.sha256(image.tobytes() if raw is None else raw).hexdigest())
 
 
 def fresh(frame):
     age=time.monotonic()-frame['timestamp']
-    if not 0 <= age <= .3:
+    if not 0 <= age <= frame_age_limit_s():
         raise RuntimeError(f'YOLO RGB-D exposure timestamp invalid/stale after inference ({age*1000:.1f} ms)')
 
 
@@ -57,8 +58,9 @@ class YoloClient:
 
     def detect(self, frame):
         fresh(frame)
-        source = identity(frame)
-        request = urllib.request.Request(self.url + '/detect', data=frame['color_bgr'].tobytes(),
+        raw = frame['color_bgr'].tobytes()
+        source = identity(frame,raw)
+        request = urllib.request.Request(self.url + '/detect', data=raw,
                     headers={'Content-Type': 'application/octet-stream',
                              'X-Frame-Identity': json.dumps(source)}, method='POST')
         try:

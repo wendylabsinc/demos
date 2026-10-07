@@ -1,0 +1,227 @@
+{
+  "schema": "wendy.g1.coke-perception-update.v1",
+  "date": "2026-10-07",
+  "device": "10.10.20.238:50052",
+  "device_name": "unitree-g1-nx-2",
+  "camera_serial": "338622073335",
+  "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+  "versions": {
+    "physical": "0.2.23-coke-yolo",
+    "inference": "0.2.1"
+  },
+  "camera_max_age_ms": 400,
+  "focused_tests": {
+    "total": 53,
+    "passed": 53
+  },
+  "deployed_source_sha256": {
+    "runtime.py": "de185c69128d9bcbbe314f55282989ef4e79b6d8b8476ef7639692f5127b18ea",
+    "camera_input.py": "5735f0f047b23fbdd82181d41163dfa30a5c1867e5ad4a147e733c0aa77ff1f7",
+    "yolo_client.py": "ce4e03c77704eeaa0e29f37160102922d86b074d8932f9a7cdfc87a0108cd976",
+    "yolo/frame_limits.py": "5a149f883a910c1b888bc9013ff80482c1500af99e547202f510f43d0b29c663"
+  },
+  "prior_trial": {
+    "reached": "approach",
+    "error": "YOLO RGB-D exposure timestamp invalid/stale after inference (341.2 ms)",
+    "grasp_started": false,
+    "control_retained": true,
+    "subsequently_operator_released": true
+  },
+  "after_deployment": {
+    "phase": "PASSIVE",
+    "adapter_initialized": false,
+    "motion_commands_sent": 0,
+    "telemetry_healthy": true,
+    "recorder_healthy": true,
+    "recorder_dropped": {},
+    "last_arm_sdk_age_s": 106.584629464
+  },
+  "detection_benchmark": {
+    "passed": true,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": false,
+    "p95_total_ms": 124.68296769980043,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 88680,
+        "total_ms": 118.25794000014866,
+        "exposure_age_ms": 243.76340869093838,
+        "timings_ms": {
+          "fetch": 62.32026899942866,
+          "decode": 17.51923100073327
+        },
+        "vision": {
+          "inference_ms": 25.869,
+          "confidence": 0.63623046875
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88683,
+        "total_ms": 102.02258899971639,
+        "exposure_age_ms": 212.76569232486509,
+        "timings_ms": {
+          "fetch": 50.490750000790285,
+          "decode": 13.852717999725428
+        },
+        "vision": {
+          "inference_ms": 25.211,
+          "confidence": 0.64404296875
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88685,
+        "total_ms": 97.43444600007933,
+        "exposure_age_ms": 243.88848559920007,
+        "timings_ms": {
+          "fetch": 46.016498999961186,
+          "decode": 15.4575679998743
+        },
+        "vision": {
+          "inference_ms": 24.997,
+          "confidence": 0.6806640625
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88688,
+        "total_ms": 98.39719599949603,
+        "exposure_age_ms": 209.26178058107325,
+        "timings_ms": {
+          "fetch": 46.532451999155455,
+          "decode": 14.47961700068845
+        },
+        "vision": {
+          "inference_ms": 25.216,
+          "confidence": 0.669921875
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88690,
+        "total_ms": 91.57356099967728,
+        "exposure_age_ms": 234.51062515869125,
+        "timings_ms": {
+          "fetch": 39.70523099997081,
+          "decode": 16.060081999967224
+        },
+        "vision": {
+          "inference_ms": 25.082,
+          "confidence": 0.66015625
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88693,
+        "total_ms": 113.73447200003284,
+        "exposure_age_ms": 215.2087509557532,
+        "timings_ms": {
+          "fetch": 60.454738999396795,
+          "decode": 15.908397000202967
+        },
+        "vision": {
+          "inference_ms": 25.277,
+          "confidence": 0.658203125
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88696,
+        "total_ms": 128.14259799961292,
+        "exposure_age_ms": 210.30373442681594,
+        "timings_ms": {
+          "fetch": 76.566886999899,
+          "decode": 13.886670999454509
+        },
+        "vision": {
+          "inference_ms": 25.202,
+          "confidence": 0.68505859375
+        },
+        "error": null
+      },
+      {
+        "frame_id": 88698,
+        "total_ms": 79.26309799950104,
+        "exposure_age_ms": 223.26229105146922,
+        "timings_ms": {
+          "fetch": 37.74808299931465,
+          "decode": 7.508905000577215
+        },
+        "vision": {
+          "inference_ms": 25.218,
+          "confidence": 0.638671875
+        },
+        "error": null
+      }
+    ]
+  },
+  "geometry_benchmark": {
+    "passed": false,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": true,
+    "p95_total_ms": 192.9357902999982,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 89236,
+        "total_ms": 186.1420619998171,
+        "exposure_age_ms": 301.6588625487202,
+        "timings_ms": {
+          "fetch": 83.71869300026447,
+          "decode": 18.021838999629836
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 89240,
+        "total_ms": 161.62255000017467,
+        "exposure_age_ms": 263.54606175209483,
+        "timings_ms": {
+          "fetch": 62.03241999992315,
+          "decode": 17.55820899961691
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 89243,
+        "total_ms": 193.6906490000183,
+        "exposure_age_ms": 324.21691764193383,
+        "timings_ms": {
+          "fetch": 93.57730200008518,
+          "decode": 14.727241000400682
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      }
+    ]
+  },
+  "limitations": [
+    "Benchmarks exclude runtime evidence archival and motion policy.",
+    "Full geometry rejects existing table calibration above 5 mm; 180 ms performance target remains unmet.",
+    "No pickup trial issued after update."
+  ],
+  "final_controller_update": {
+    "version": "0.2.24-coke-yolo",
+    "runtime_sha256": "4f00af35d9449c81624940ab0a357855d9e0d8da3d8d10f8dcc73459bc01a8cd",
+    "focused_tests": {
+      "total": 56,
+      "passed": 56
+    },
+    "buttons": [
+      "Start demo",
+      "Stop and hold",
+      "Release upper body + fingers to Unitree"
+    ],
+    "starts_only_on_operator_click": true
+  }
+}

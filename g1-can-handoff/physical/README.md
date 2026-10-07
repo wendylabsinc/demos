@@ -105,7 +105,7 @@ The handoff runtime keeps the existing `g1-can-camera` owner and renewable
 camera lease. It sends **the exact decoded BGR image paired with its depth** to
 loopback `POST /detect` on port 8112. The response must match camera serial,
 frame ID, exposure time, dimensions, image checksum, model checksum and CUDA
-backend. The 300 ms exposure-age limit is enforced before and after inference
+backend. The 400 ms exposure-age limit is enforced before and after inference
 and after geometric fitting. It never consumes a latest-box feed or silently
 falls back to red pixels when YOLO is unavailable.
 
@@ -114,8 +114,37 @@ The physical runtime reserves a 180 ms acquisition budget, trying at most three
 complete acquisitions before rejecting the observation. Inference overlaps the
 ray transform; normalized NPZ generation and evidence writes overlap fitting.
 The archive worker must finish successfully before any observation returns,
-and the final 300 ms freshness check still applies after that join. There is
+and the final 400 ms freshness check still applies after that join. There is
 one archive worker and no pending evidence backlog between observations.
+
+`HANDOFF_CAMERA_MAX_AGE_MS` defaults to 400 milliseconds and accepts only finite
+values from 50 through 400. The physical controller exposes a loopback-only
+`POST /perception-config` with `{"camera_max_age_ms":400}` for future tuning
+without rebuilding or restarting an owned arm. It requires no active operation,
+persists the accepted value in `/data/perception-config.json`, and never resumes
+motion. The inference service retains its independent 400 ms hard ceiling.
+
+On the operator Mac, `python3 physical/operator_panel.py` opens a local control
+server at `http://127.0.0.1:8197/`. Its enabled Release button returns this demo's
+upper-body override to Unitree and relaxes both Dex3 hands via native Wendy MCP.
+Pressing it confirms that the can and raised arms are supported. Loading the page
+only reads status; it cannot issue a release or start a pickup. The color image
+refreshes directly from the camera without the legacy aiming guide or detector
+dashboard. The server binds only to loopback with a per-run operator token.
+
+Start demo issues one asynchronous `POST /demo/start` on the controller. It
+retains the full planning, confidence, depth, freshness, ownership and recorder
+gates. A second start is refused while the job runs, and Stop remains reachable
+throughout preparation and motion. Cancellation is latched before the worker
+starts, so an early Stop cannot be cleared by the queued demo. Stop holds the
+measured pose; Release cancels first and requires the operation to finish before
+relaxing both hands and relinquishing the upper-body override. If cancellation
+is still pending, it keeps the hold and asks the operator to retry release.
+
+Measured camera/decode/geometry changes and remaining latency limits are recorded
+in `PERCEPTION_PERFORMANCE.md`. Inside the physical container,
+`python3 /app/benchmark_perception.py --samples 8` runs a bounded passive check
+without acquiring a camera lease or creating motor adapters.
 
 A Coke detection strictly above 30% confidence (or a higher configured
 threshold) selects a box; exactly 30% is rejected. Measured depth

@@ -1,0 +1,603 @@
+{
+  "schema": "wendy.handoff.perception-performance.v1",
+  "date": "2026-10-07",
+  "device": "unitree-g1-nx-2",
+  "selector": "10.10.20.238:50052",
+  "camera_serial": "338622073335",
+  "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+  "method": "Bounded passive subprocesses on NX2, public immutable exact-frame payloads, no lease acquisition, no motion, no running-service mutation; candidate sources executed only in subprocess RAM.",
+  "cold_decode": {
+    "pillow_png_first_ms": 58.801791,
+    "pillow_png_warm_range_ms": [
+      7.343715,
+      9.133723
+    ],
+    "change": "Image.init before acquiring camera lease"
+  },
+  "paired_decode": {
+    "pixel_parity": true,
+    "rows": [
+      {
+        "sequential_decode_ms": 16.79796099961095,
+        "parallel_decode_ms": 10.827214999153512
+      },
+      {
+        "sequential_decode_ms": 17.262518999814347,
+        "parallel_decode_ms": 8.45965500047896
+      },
+      {
+        "sequential_decode_ms": 17.620898000132,
+        "parallel_decode_ms": 9.051544000612921
+      },
+      {
+        "sequential_decode_ms": 13.673350999852119,
+        "parallel_decode_ms": 9.912243000144372
+      },
+      {
+        "sequential_decode_ms": 15.00270599990472,
+        "parallel_decode_ms": 10.372929000368458
+      },
+      {
+        "sequential_decode_ms": 13.652423000166891,
+        "parallel_decode_ms": 10.925202999715111
+      },
+      {
+        "sequential_decode_ms": 15.594532000250183,
+        "parallel_decode_ms": 10.424482999951579
+      },
+      {
+        "sequential_decode_ms": 13.620806000290031,
+        "parallel_decode_ms": 11.23596399975213
+      }
+    ]
+  },
+  "detection_candidate": {
+    "passed": true,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": false,
+    "p95_total_ms": 131.89402474995404,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 85194,
+        "total_ms": 102.67095899962442,
+        "exposure_age_ms": 216.62025969817478,
+        "timings_ms": {
+          "fetch": 50.979597000150534,
+          "decode": 15.185462999397714
+        },
+        "vision": {
+          "inference_ms": 25.214,
+          "confidence": 0.68505859375
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85196,
+        "total_ms": 128.9542699996673,
+        "exposure_age_ms": 279.25392648467096,
+        "timings_ms": {
+          "fetch": 77.50653099992633,
+          "decode": 14.954512000258546
+        },
+        "vision": {
+          "inference_ms": 25.23,
+          "confidence": 0.681640625
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85199,
+        "total_ms": 132.87394300004962,
+        "exposure_age_ms": 279.0849488637832,
+        "timings_ms": {
+          "fetch": 82.65622699946107,
+          "decode": 16.100947000268206
+        },
+        "vision": {
+          "inference_ms": 22.456,
+          "confidence": 0.67822265625
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85203,
+        "total_ms": 69.44448900048883,
+        "exposure_age_ms": 148.76684950831986,
+        "timings_ms": {
+          "fetch": 30.59374900021794,
+          "decode": 7.694158000049356
+        },
+        "vision": {
+          "inference_ms": 24.246,
+          "confidence": 0.69580078125
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85204,
+        "total_ms": 97.48868699989544,
+        "exposure_age_ms": 246.62867016922974,
+        "timings_ms": {
+          "fetch": 49.5292799996605,
+          "decode": 16.95156500045414
+        },
+        "vision": {
+          "inference_ms": 24.131,
+          "confidence": 0.689453125
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85207,
+        "total_ms": 107.83876699952089,
+        "exposure_age_ms": 221.42681849982182,
+        "timings_ms": {
+          "fetch": 60.45192199962912,
+          "decode": 15.813867000360915
+        },
+        "vision": {
+          "inference_ms": 24.129,
+          "confidence": 0.6767578125
+        },
+        "error": null
+      }
+    ]
+  },
+  "geometry_before_worker_reuse": {
+    "passed": false,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": true,
+    "p95_total_ms": 180.14799240054344,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 85468,
+        "total_ms": 169.5369050003137,
+        "exposure_age_ms": 253.52075588489242,
+        "timings_ms": {
+          "fetch": 64.762103999783,
+          "decode": 13.292059999912453
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8698128827614542,
+          "center_xy_m": [
+            0.4911971112719785,
+            0.0535770295457713
+          ],
+          "fit_error_m": 0.0013541450276617027,
+          "pixels": 1967,
+          "frame_id": 85468,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.1875,
+              117.25,
+              335.3125,
+              261.25
+            ],
+            "confidence": 0.68505859375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "4bc57a7087d494e817179ba314716d53b3879da44f3020b0be6d6acd91f718bc"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85471,
+        "total_ms": 174.6329669995248,
+        "exposure_age_ms": 295.1296889614241,
+        "timings_ms": {
+          "fetch": 78.223737999906,
+          "decode": 14.98596799956431
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8697500790258026,
+          "center_xy_m": [
+            0.49170593646197325,
+            0.05330781902250551
+          ],
+          "fit_error_m": 0.0014072587506611903,
+          "pixels": 2000,
+          "frame_id": 85471,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.125,
+              117.3125,
+              333.875,
+              260.6875
+            ],
+            "confidence": 0.689453125,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "4e8b17879a2911682048d92ff1dd0bb2a6e1d107f8961ee11e74ba2e046d007b"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 85475,
+        "total_ms": 180.76077300065663,
+        "exposure_age_ms": 276.1322407914122,
+        "timings_ms": {
+          "fetch": 69.69025699982012,
+          "decode": 19.996716000605375
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8696554789143917,
+          "center_xy_m": [
+            0.4916646708499698,
+            0.05311295524493518
+          ],
+          "fit_error_m": 0.0013466333131768918,
+          "pixels": 1992,
+          "frame_id": 85475,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              241.6875,
+              117.375,
+              335.3125,
+              260.625
+            ],
+            "confidence": 0.69775390625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "7446e05e35dbe0629fe5fc14dd159a94be40b400cd94b1d49a8dab2ed2ea5618"
+        },
+        "error": null
+      }
+    ]
+  },
+  "geometry_after_worker_reuse": {
+    "passed": false,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": true,
+    "p95_total_ms": 202.9897745001108,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 86219,
+        "total_ms": 143.4257280006932,
+        "exposure_age_ms": 230.14554081146343,
+        "timings_ms": {
+          "fetch": 35.85023100004037,
+          "decode": 12.556773999676807
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8698922126105981,
+          "center_xy_m": [
+            0.49152764959199047,
+            0.05336322991131922
+          ],
+          "fit_error_m": 0.0014870764695028723,
+          "pixels": 1977,
+          "frame_id": 86219,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.0625,
+              117.25,
+              334.9375,
+              261.25
+            ],
+            "confidence": 0.6806640625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "e8acdb6e32ccbbe43b34b26ca710503ee807dbb6a458330ce60ad0e7867e1162"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 86222,
+        "total_ms": 173.11535199951322,
+        "exposure_age_ms": 270.23238242145453,
+        "timings_ms": {
+          "fetch": 63.83077999998932,
+          "decode": 15.39430100001482
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8696497830851523,
+          "center_xy_m": [
+            0.4916801432165272,
+            0.052910845501338045
+          ],
+          "fit_error_m": 0.001312779539295175,
+          "pixels": 1984,
+          "frame_id": 86222,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              241.75,
+              116.875,
+              335.25,
+              261.125
+            ],
+            "confidence": 0.70068359375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "610469572c6400b573ce1ccc042462f1d3d9600b5025a34f1bc94975005c6e9c"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 86225,
+        "total_ms": 206.20495399998617,
+        "exposure_age_ms": 343.4254571720885,
+        "timings_ms": {
+          "fetch": 88.58121100001881,
+          "decode": 15.70371899924794
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8696675806073668,
+          "center_xy_m": [
+            0.4914835635685347,
+            0.05339270598035662
+          ],
+          "fit_error_m": 0.0012699549236095929,
+          "pixels": 1976,
+          "frame_id": 86225,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.125,
+              117.4375,
+              335.875,
+              261.0625
+            ],
+            "confidence": 0.67724609375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "5d88c9f89fedb3d5bb4c1896591fb3f05a8807d3d941d9110292b2863d0cbef9"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 86230,
+        "total_ms": 162.2961690000011,
+        "exposure_age_ms": 239.2476742679719,
+        "timings_ms": {
+          "fetch": 53.18264099969383,
+          "decode": 15.440127000147186
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8694549124279034,
+          "center_xy_m": [
+            0.4914595084494983,
+            0.05346548862131499
+          ],
+          "fit_error_m": 0.0013792585140116097,
+          "pixels": 1958,
+          "frame_id": 86230,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.375,
+              117.25,
+              335.625,
+              261.25
+            ],
+            "confidence": 0.6806640625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "91472cc4d06dfca6184b63bfd0c832c38c8dfa60b8f79dea96867dac73cf71ef"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 86233,
+        "total_ms": 193.34423600048467,
+        "exposure_age_ms": 299.5636185769399,
+        "timings_ms": {
+          "fetch": 87.2379379998165,
+          "decode": 16.214614000091387
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8698393482370288,
+          "center_xy_m": [
+            0.4916533574963758,
+            0.05315118801441138
+          ],
+          "fit_error_m": 0.0014622845871591,
+          "pixels": 1935,
+          "frame_id": 86233,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.0625,
+              117.375,
+              334.9375,
+              260.625
+            ],
+            "confidence": 0.6943359375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "05f49a4f2804dd85e9644d4eff5b5e0be75cc8a395c15532e47aa00c82f45acf"
+        },
+        "error": null
+      },
+      {
+        "frame_id": 86237,
+        "total_ms": 183.87878999965324,
+        "exposure_age_ms": 283.70526831440657,
+        "timings_ms": {
+          "fetch": 68.5239479998927,
+          "decode": 15.916141999696265
+        },
+        "vision": {
+          "top_quantile_z_m": 0.8697221934472543,
+          "center_xy_m": [
+            0.4913279687501033,
+            0.05339209436109241
+          ],
+          "fit_error_m": 0.0013392073735186967,
+          "pixels": 1948,
+          "frame_id": 86237,
+          "detector": "coke_yolo",
+          "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              242.0625,
+              117.125,
+              334.9375,
+              260.875
+            ],
+            "confidence": 0.67041015625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "404f6309b38ea9540847015a487a75d21160603774ac412406955593b3347875"
+        },
+        "error": null
+      }
+    ]
+  },
+  "crop_mask_parity": {
+    "mask_parity": true,
+    "pairs": [
+      {
+        "full_mask_ms": 19.528220999745827,
+        "crop_mask_ms": 8.660300999508763
+      },
+      {
+        "full_mask_ms": 17.305495999607956,
+        "crop_mask_ms": 8.901971999875968
+      },
+      {
+        "full_mask_ms": 17.144980000011856,
+        "crop_mask_ms": 8.370851000108814
+      },
+      {
+        "full_mask_ms": 16.477854999720876,
+        "crop_mask_ms": 8.617227999820898
+      },
+      {
+        "full_mask_ms": 16.81408999957057,
+        "crop_mask_ms": 8.348483000190754
+      },
+      {
+        "full_mask_ms": 16.476638999847637,
+        "crop_mask_ms": 8.28742500016233
+      }
+    ]
+  },
+  "geometry_final": {
+    "passed": false,
+    "passive": true,
+    "motion_commands_sent": 0,
+    "lease_acquired": false,
+    "includes_geometry": true,
+    "p95_total_ms": 181.8575037498249,
+    "max_age_ms": 400,
+    "max_p95_ms": 180,
+    "samples": [
+      {
+        "frame_id": 86904,
+        "total_ms": 133.08102399969357,
+        "exposure_age_ms": 280.2895766644724,
+        "timings_ms": {
+          "fetch": 47.08779600059643,
+          "decode": 12.405504999151162
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 86907,
+        "total_ms": 155.2910560003511,
+        "exposure_age_ms": 302.5587589263523,
+        "timings_ms": {
+          "fetch": 56.17966200043156,
+          "decode": 17.76330299981055
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 86911,
+        "total_ms": 172.5400390005234,
+        "exposure_age_ms": 275.3658496394564,
+        "timings_ms": {
+          "fetch": 69.26806799947371,
+          "decode": 20.691777999672922
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 86915,
+        "total_ms": 184.21198499981983,
+        "exposure_age_ms": 259.84773651543946,
+        "timings_ms": {
+          "fetch": 80.32876299967029,
+          "decode": 14.922350999768241
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 86918,
+        "total_ms": 168.48570499951165,
+        "exposure_age_ms": 295.30200003409846,
+        "timings_ms": {
+          "fetch": 70.67025600008492,
+          "decode": 14.698791999762761
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      },
+      {
+        "frame_id": 86922,
+        "total_ms": 174.7940599998401,
+        "exposure_age_ms": 270.3436967494781,
+        "timings_ms": {
+          "fetch": 68.72897900029784,
+          "decode": 17.324313999779406
+        },
+        "vision": null,
+        "error": "RuntimeError: Table plane differs by over 5 mm"
+      }
+    ]
+  },
+  "limits": {
+    "complete_archive_and_hardware_trial_tested": false,
+    "aggregate_latency_improvement_proven": false,
+    "isolated_pixel_decode_and_mask_improvements_proven": true,
+    "scene_table_guard_failed_in_final_probe": true
+  },
+  "tests": "35 camera pipeline, semantic geometry, lease renewal and HTTP service contracts passed locally"
+}

@@ -14,6 +14,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import numpy as np
 
 from preprocessing import letterbox_bgr
+from frame_limits import frame_age_limit_s
 from postprocessing import decode_one_class_candidates
 
 MODEL_SHA256 = '74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862'
@@ -31,7 +32,7 @@ def decode_frame(source, raw):
         raise ValueError('Invalid camera/frame identity')
     if hashlib.sha256(raw).hexdigest() != source['image_sha256']:
         raise ValueError('BGR checksum mismatch')
-    if not 0 <= time.monotonic() - source['timestamp'] <= .3:
+    if not 0 <= time.monotonic() - source['timestamp'] <= frame_age_limit_s():
         raise ValueError('Stale/invalid exposure timestamp')
     return np.frombuffer(raw, dtype=np.uint8).reshape(shape)
 
@@ -116,7 +117,7 @@ class Detector:
         image = decode_frame(source, raw)
         start = time.monotonic()
         boxes,saturated = self.predict(image)
-        if not 0 <= time.monotonic() - source['timestamp'] <= .3:
+        if not 0 <= time.monotonic() - source['timestamp'] <= frame_age_limit_s():
             raise ValueError('Exposure became stale during inference')
         return dict(schema=SCHEMA, source=source, model_sha256=MODEL_SHA256,
                     backend='pytorch_cuda', detections=boxes[:20], truncated=len(boxes)>20 or saturated,
@@ -126,7 +127,7 @@ class Detector:
         return dict(healthy=True, backend='pytorch_cuda', model_sha256=MODEL_SHA256,
                     class_names=self.model.names, gpu=self.device, camera_owned=False,
                     motion_commands_sent=0, execution=self.execution, input_size=640,
-                    qualification=self.qualification)
+                    qualification=self.qualification,camera_max_age_ms=frame_age_limit_s()*1000)
 
 
 class Handler(BaseHTTPRequestHandler):

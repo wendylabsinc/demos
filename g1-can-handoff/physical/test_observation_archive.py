@@ -40,7 +40,7 @@ class ObservationArchiveTests(unittest.TestCase):
         with patch.object(runtime,'geometry',side_effect=geometry),patch.object(runtime,'fresh',side_effect=fresh):
             self.assertEqual(self.subject.observe_frame({},'planning',True),('observation','vision'))
     def test_exposure_becoming_stale_during_archive_is_rejected(self):
-        def archive(frame,phase):frame['timestamp']=time.monotonic()-.31
+        def archive(frame,phase):frame['timestamp']=time.monotonic()-.401
         self.subject.archive_frame=archive
         with patch.object(runtime,'geometry',return_value=('observation','vision')):
             with self.assertRaisesRegex(RuntimeError,'stale'):

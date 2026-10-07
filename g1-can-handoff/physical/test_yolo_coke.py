@@ -144,7 +144,7 @@ class ExactFrameTests(FrameFixture, unittest.TestCase):
             bad=copy.deepcopy(good);bad[key]=value
             with self.subTest(key=key),self.assertRaises(RuntimeError):validate_result(frame,bad)
     def test_stale_or_future_frame_rejected(self):
-        for age in (.31,-.1):
+        for age in (.401,-.1):
             frame=self.frame();frame['timestamp']=time.monotonic()-age
             with self.assertRaisesRegex(RuntimeError,'stale'):Detector().detect(frame)
     def test_invalid_box_and_wrong_class_rejected(self):

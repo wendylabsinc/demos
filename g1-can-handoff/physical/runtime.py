@@ -16,7 +16,7 @@ import numpy as np
 sys.path.insert(0,str(Path(__file__).parent/'adapter'))
 from physical_core import calibration,calibration_start_guard,calibrated_scene,PhysicalPlant,snapshot_guard
 from camera_input import Camera,geometry,materialize_rgbd
-from yolo_client import fresh
+from yolo_client import fresh, frame_age_limit_s
 
 DATA=Path(os.getenv('HANDOFF_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
 EVENTS=DATA/('events-'+time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'.jsonl')
@@ -33,6 +33,10 @@ class Runtime:
         ChannelFactoryInitialize(0,'enP8p1s0')
         self.operation_lock=threading.Lock();self.cancel=threading.Event();self.lock=threading.RLock();self.phase='PASSIVE';self.error=None;self.plant=None;self.arm=None;self.hand=None
         self.grasp_started=False
+        self.demo_running=False;self.demo_result=None;self.demo_error=None
+        saved=DATA/'perception-config.json'
+        if saved.exists():
+            os.environ['HANDOFF_CAMERA_MAX_AGE_MS']=str(frame_age_limit_s(json.loads(saved.read_text())['camera_max_age_ms'])*1000)
         self.camera=Camera();self.latest={};self.motion_commands_sent=0;self.active=False
         self.archive_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='camera-evidence')
         self.body=ChannelSubscriber('rt/lowstate',LowState_);self.body.Init()
@@ -86,7 +90,10 @@ class Runtime:
     def status(self):
         result={'phase':self.phase,'error':self.error,'motion_commands_sent':self.motion_commands_sent,
                 'adapter_initialized':self.arm is not None,'automatic_home':False,'events':str(EVENTS),
-                'calibration_present':(DATA/'calibration.json').is_file(),'lowstate':self.hub.status()}
+                'calibration_present':(DATA/'calibration.json').is_file(),'lowstate':self.hub.status(),
+                'camera_max_age_ms':frame_age_limit_s()*1000}
+        result.update(demo_running=getattr(self,'demo_running',False),demo_result=getattr(self,'demo_result',None),
+                      demo_error=getattr(self,'demo_error',None))
         try:
             snap=self.read();result['measured']=snap
             snapshot_guard(snap);result['telemetry_healthy']=True
@@ -107,6 +114,17 @@ class Runtime:
         calibration_start_guard(config,self.read())
         return config
 
+    def configure_perception(self,max_age_ms):
+        if self.active:raise RuntimeError('Cannot change camera limits during an active trial')
+        if max_age_ms is None or isinstance(max_age_ms,bool):raise ValueError('camera_max_age_ms must be provided in milliseconds')
+        value=frame_age_limit_s(max_age_ms)*1000
+        pending=DATA/'perception-config.pending.json'
+        pending.write_text(json.dumps({'camera_max_age_ms':value})+'\n')
+        pending.replace(DATA/'perception-config.json')
+        os.environ['HANDOFF_CAMERA_MAX_AGE_MS']=str(value)
+        self.event('perception_configured',camera_max_age_ms=value,automatic_resume=False)
+        return self.status()
+
     def archive_guard(self):
         s=http_json(8101)
         if (not s['recording'] or s['error'] or sum(s['dropped'].values()) or
@@ -124,7 +142,7 @@ class Runtime:
                    metadata=frame['meta'],color_codec=frame['color_codec'])
 
     def observe_frame(self,config,phase,require_table,expected_center_xy=None):
-        # Reserve processing time within the unchanged 300 ms final deadline.
+        # Reserve processing time within the configured final exposure deadline.
         # Discard an old acquisition before it can become a motor observation.
         for attempt in range(3):
             frame=self.camera.frame(materialize=False)
@@ -134,7 +152,7 @@ class Runtime:
             raise RuntimeError('Camera could not supply an exposure within the 180 ms acquisition budget')
         # Persist this exact frame while inference/geometric fitting runs.
         # Join the single archive job before returning any usable observation;
-        # IO failure or >300 ms age still blocks the next motor action.
+        # IO failure or excess exposure age still blocks the next motor action.
         archived=self.archive_executor.submit(self.archive_frame,frame,phase)
         try:
             result=geometry(frame,config,require_table=require_table,
@@ -278,12 +296,30 @@ class Runtime:
             raise
         finally:self.camera.close()
 
-    def run(self,actuate=False):
+    def start_demo(self):
+        # Admit one operator-requested job; its HTTP response never waits for
+        # motion, so Stop and Release remain reachable throughout planning.
+        if not self.operation_lock.acquire(blocking=False):raise RuntimeError('A demo/planning operation is already running')
+        if self.active or (self.arm is not None and (self.phase!='FROZEN' or self.grasp_started)):
+            self.operation_lock.release()
+            raise RuntimeError('Complete the current pickup/handoff before starting another demo')
+        self.cancel.clear();self.demo_running=True;self.demo_result=None;self.demo_error=None
+        def work():
+            try:self.demo_result=self.run(True,preserve_cancel=True)
+            except Exception as exc:self.demo_error=f'{type(exc).__name__}: {exc}'
+            finally:self.demo_running=False;self.operation_lock.release()
+        try:threading.Thread(target=work,daemon=True,name='operator-demo').start()
+        except Exception:
+            self.demo_running=False;self.operation_lock.release();raise
+        return self.status()
+
+    def run(self,actuate=False,*,preserve_cancel=False):
         from pickup import prepare, execute
         resuming=self.arm is not None
         if self.active or (resuming and (self.phase!='FROZEN' or getattr(self,'grasp_started',True))):
             raise RuntimeError('Retry requires a pregrasp failure hold; complete handoff before a new pickup')
-        self.cancel.clear()
+        if not preserve_cancel:self.cancel.clear()
+        if self.cancel.is_set():raise RuntimeError('Operator cancelled before demo preparation')
         grasp_started=False
         self.archive_guard();snapshot_guard(self.read())
         self.camera.acquire()
@@ -395,7 +431,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.client_address[0] not in ('127.0.0.1','::1'):
             self.respond({'error':'Control endpoints are loopback-only'},403);return
-        operation=self.path in ('/plan','/trial','/capture','/hold-check','/rest-arm','/rest-arm-plan')
+        operation=self.path in ('/plan','/trial','/capture','/hold-check','/rest-arm','/rest-arm-plan','/perception-config')
         acquired=False
         try:
             if operation:
@@ -410,7 +446,9 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path=='/plan':result=runtime.run(False)
             elif self.path=='/trial':
                 result=runtime.run(True)
+            elif self.path=='/demo/start':result=runtime.start_demo()
             elif self.path=='/stop':result=runtime.stop()
+            elif self.path=='/perception-config':result=runtime.configure_perception(data.get('camera_max_age_ms'))
             elif self.path=='/release':result=runtime.release(data.get('can_supported'))
             else:raise ValueError('Unknown endpoint')
             self.respond(result)

@@ -11,13 +11,22 @@ import numpy as np
 from scipy.ndimage import binary_erosion,maximum_filter,minimum_filter,label
 from scipy.optimize import least_squares
 from g1_can_handoff.perception import Observation
-from yolo_client import YoloClient, fresh
+from yolo_client import YoloClient, fresh, frame_age_limit_s
+
+# A bounded inference worker avoids per-observation Python thread joins.
+# Each caller joins its exact-frame result; the client checks age when queued
+# work starts and after it returns, so queuing cannot admit an old frame.
+_geometry_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='exact-frame-yolo')
 
 
 class Camera:
     def __init__(self):
         self.base='http://127.0.0.1:8001';self.token=None;self.rays=None;self.intrinsics=None;self.serial=None
         self.lease_stop=threading.Event();self.lease_thread=None;self.lease_error=None
+        self.frame_executor=None
+        # Pillow otherwise loads its decoder plugins during the first bounded
+        # observation. Warm them before acquiring a camera lease or moving.
+        Image.init()
     def request(self,path,data=None):
         headers={'Content-Type':'application/json'}
         if self.token: headers['X-Camera-Lease']=self.token
@@ -47,7 +56,11 @@ class Camera:
         if self.token:
             try:self.request('/lease/release',{})
             finally:self.token=None
+        if self.frame_executor is not None:
+            self.frame_executor.shutdown(wait=True,cancel_futures=True)
+            self.frame_executor=None
     def frame(self, *, materialize=True):
+        start=time.perf_counter()
         self.request('/lease/renew',{})
         health=json.loads(self.request('/health'))
         if self.rays is None or health['serial'] != self.serial:
@@ -61,17 +74,23 @@ class Camera:
         fid=health['frame_id']
         # Both bundles address the same immutable frame ID. Fetch independent
         # payloads concurrently, then retain all identity/skew/freshness checks.
-        with ThreadPoolExecutor(max_workers=2) as requests:
-            timing_request=requests.submit(self.request,'/frame.policy-rgbd?frame_id='+str(fid))
-            compact_request=requests.submit(self.request,'/frame.recorder-rgbd?frame_id='+str(fid))
-            timing=timing_request.result()
-            compact=compact_request.result()
+        if self.frame_executor is None:
+            self.frame_executor=ThreadPoolExecutor(max_workers=2,thread_name_prefix='camera-frame')
+        timing_request=self.frame_executor.submit(self.request,'/frame.policy-rgbd?frame_id='+str(fid))
+        compact_request=self.frame_executor.submit(self.request,'/frame.recorder-rgbd?frame_id='+str(fid))
+        timing=timing_request.result()
         with np.load(io.BytesIO(timing),allow_pickle=False) as f:
             meta=json.loads(str(f['metadata_json']))
+        compact=compact_request.result()
+        fetched=time.perf_counter()
         with zipfile.ZipFile(io.BytesIO(compact)) as z:
             cm=json.loads(z.read('metadata.json'))
-            depth=np.asarray(Image.open(io.BytesIO(z.read('depth.png'))),dtype=np.float32)*cm['calibration']['depth_scale_m']
-            color=np.asarray(Image.open(io.BytesIO(z.read('color.jpg'))).convert('RGB'))[...,::-1].copy()
+            png=z.read('depth.png');jpg=z.read('color.jpg')
+        # Both C decoders release the GIL. Decode the immutable paired payloads
+        # concurrently, retaining exactly the same Pillow pixels and scale.
+        depth_request=self.frame_executor.submit(decode_depth,png,cm['calibration']['depth_scale_m'])
+        color_request=self.frame_executor.submit(decode_color,jpg)
+        depth=depth_request.result();color=color_request.result()
         if cm['source_frame_id'] != fid or meta['frame_id'] != fid or cm['captured_at_unix_ns'] != meta['captured_at_unix_ns']:
             raise RuntimeError('Camera color/depth exact-frame identity mismatch')
         if meta['intrinsics'] != self.intrinsics or meta['camera_serial'] != self.serial:
@@ -81,14 +100,25 @@ class Camera:
         if cm['calibration']['intrinsics']!=self.intrinsics:
             raise RuntimeError('Camera compact-frame intrinsics disagree with cached rays')
         timestamp=meta['depth_time']
-        if not meta.get('timestamp_valid') or not 0<=time.monotonic()-timestamp<=.3:
+        if not meta.get('timestamp_valid') or not 0<=time.monotonic()-timestamp<=frame_age_limit_s():
             raise RuntimeError('Camera exposure timestamp invalid/stale')
         if abs(meta['color_time']-timestamp)>.012:raise RuntimeError('Camera RGB/depth exposure skew exceeds 12 ms')
         frame={'color_bgr':color,'depth_m':depth,'rays':self.rays,'meta':meta,'timestamp':timestamp,
-               'color_codec':'jpeg_exact_source_frame','source_rgbd_zip':compact,'source_timing_npz':timing}
+               'color_codec':'jpeg_exact_source_frame','source_rgbd_zip':compact,'source_timing_npz':timing,
+               'timings_ms':{'fetch':(fetched-start)*1000,'decode':(time.perf_counter()-fetched)*1000}}
         if materialize:
             frame['raw']=materialize_rgbd(frame)
         return frame
+
+
+def decode_depth(png,scale):
+    with Image.open(io.BytesIO(png)) as image:
+        return np.asarray(image,dtype=np.float32)*scale
+
+
+def decode_color(jpg):
+    with Image.open(io.BytesIO(jpg)) as image:
+        return np.asarray(image.convert('RGB'))[...,::-1].copy()
 
 
 def materialize_rgbd(frame):
@@ -156,13 +186,13 @@ def target_coke_mask(frame, config, world, roi=None, detector=None, require_tabl
         x1,y1,x2,y2=box['xyxy']
         # Inset the detection to exclude background at the box boundary.
         dx=(x2-x1)*.1;dy=(y2-y1)*.1
-        inside=np.zeros(depth.shape,dtype=bool)
-        inside[int(np.ceil(y1+dy)):int(np.floor(y2-dy)),
-               int(np.ceil(x1+dx)):int(np.floor(x2-dx))]=True
-        selected=inside&valid
-        if roi is not None:selected &= roi
+        ys=slice(int(np.ceil(y1+dy)),int(np.floor(y2-dy)))
+        xs=slice(int(np.ceil(x1+dx)),int(np.floor(x2-dx)))
+        local_world=world[ys,xs];local_depth=depth[ys,xs]
+        selected=valid[ys,xs].copy()
+        if roi is not None:selected &= roi[ys,xs]
         if require_table:
-            selected &= (world[:,:,2]>config['table_height_m']+.012)&(world[:,:,2]<config['table_height_m']+config['can_height_m']+.02)
+            selected &= (local_world[:,:,2]>config['table_height_m']+.012)&(local_world[:,:,2]<config['table_height_m']+config['can_height_m']+.02)
         if selected.sum()<40:
             continue
         # Reject the complete selected box before cropping to the tracking ROI.
@@ -171,24 +201,28 @@ def target_coke_mask(frame, config, world, roi=None, detector=None, require_tabl
         # YOLO includes the silver lid. Its interior is a disk, not a cylinder
         # sidewall, and must not enter the radial fit. Remove the top 10 mm
         # before estimating foreground depth, so the lid cannot dominate it.
-        z=world[selected,2]
+        z=local_world[selected,2]
+        z95=float(np.quantile(z,.95));span=z95-np.quantile(z,.05)
         if require_table:
             top=config['table_height_m']+config['can_height_m']
-            if np.quantile(z,.95)-np.quantile(z,.05)>.03:
-                top=min(top,float(np.quantile(z,.95)))
-        elif np.quantile(z,.95)-np.quantile(z,.05)>.03:
-            top=float(np.quantile(z,.95))
+            if span>.03:
+                top=min(top,z95)
+        elif span>.03:
+            top=z95
         else:
             top=None
         if top is not None:
-            selected &= world[:,:,2]<top-.01
+            selected &= local_world[:,:,2]<top-.01
         if selected.sum()<40:
             continue
-        foreground_depth=float(np.median(depth[selected]))
-        selected &= np.abs(depth-foreground_depth)<=config['can_radius_m']+.01
+        foreground_depth=float(np.median(local_depth[selected]))
+        selected &= np.abs(local_depth-foreground_depth)<=config['can_radius_m']+.01
         selected=binary_erosion(selected,iterations=2)
         if selected.sum()>=40:
-            masks.append(selected);selected_boxes.append(box)
+            # Pixels outside this exact inset were false in the full-image
+            # mask. The crop's false border preserves the original erosion.
+            target=np.zeros(depth.shape,dtype=bool);target[ys,xs]=selected
+            masks.append(target);selected_boxes.append(box)
     if len(masks)!=1:
         raise RuntimeError('Coke YOLO depth target absent/ambiguous')
     return masks[0],{'detector':'coke_yolo','model_sha256':result['model_sha256'],
@@ -207,11 +241,10 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
     else:
         # HTTP inference and the independent ray transform can overlap. The
         # detector still sees the same frame and validates its exact identity.
-        with ThreadPoolExecutor(max_workers=1) as requests:
-            detection=requests.submit((detector or YoloClient()).detect,frame)
-            pts=frame['rays']*depth[...,None]
-            t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
-            result=detection.result()
+        detection=_geometry_executor.submit((detector or YoloClient()).detect,frame)
+        pts=frame['rays']*depth[...,None]
+        t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+        result=detection.result()
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
     roi=None
     if expected_center_xy is not None:

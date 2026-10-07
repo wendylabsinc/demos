@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.2.22-coke-yolo",
+  "version": "0.2.24-coke-yolo",
   "entitlements": [
     {
       "type": "network",
@@ -20,6 +20,7 @@
   },
   "env": {
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
-    "HANDOFF_YOLO_MIN_CONFIDENCE": "0.30"
+    "HANDOFF_YOLO_MIN_CONFIDENCE": "0.30",
+    "HANDOFF_CAMERA_MAX_AGE_MS": "400"
   }
 }

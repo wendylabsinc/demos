@@ -32,6 +32,6 @@ stages:
     from: fixtures
     copy:
       - from: local
-        paths: [service.py, preprocessing.py, postprocessing.py, qualification.py]
+        paths: [service.py, preprocessing.py, postprocessing.py, qualification.py, frame_limits.py]
         dest: /app/
     cmd: [python3, /app/service.py]

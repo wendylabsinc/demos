@@ -31,6 +31,6 @@ FROM weights AS fixtures
 COPY fixtures/ /fixtures/
 
 FROM fixtures AS inference
-COPY service.py preprocessing.py postprocessing.py qualification.py /app/
+COPY service.py preprocessing.py postprocessing.py qualification.py frame_limits.py /app/
 CMD ["python3", "/app/service.py"]
 USER 65532

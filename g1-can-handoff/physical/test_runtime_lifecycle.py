@@ -92,4 +92,43 @@ class RuntimeLifecycleTests(unittest.TestCase):
             runtime.camera.acquire.assert_not_called()
             runtime.arm.shutdown.assert_not_called()
 
+    def test_camera_limit_tuning_preserves_hold_and_persists_without_resume(self):
+        with tempfile.TemporaryDirectory() as directory,patch('runtime.DATA',Path(directory)),patch.dict('os.environ',{}):
+            runtime=self.runtime();arm=runtime.arm;hand=runtime.hand
+            runtime.configure_perception(400)
+            self.assertEqual(json.loads((Path(directory)/'perception-config.json').read_text())['camera_max_age_ms'],400)
+            self.assertEqual(os.environ['HANDOFF_CAMERA_MAX_AGE_MS'],'400.0')
+            self.assertEqual(runtime.phase,'FROZEN')
+            arm.shutdown.assert_not_called();hand.relax.assert_not_called()
+            runtime.event.assert_called_once_with('perception_configured',camera_max_age_ms=400,automatic_resume=False)
+    def test_active_or_invalid_camera_limit_does_not_mutate_runtime(self):
+        with tempfile.TemporaryDirectory() as directory,patch('runtime.DATA',Path(directory)):
+            runtime=self.runtime()
+            for value in [None,True,401,float('nan')]:
+                with self.subTest(value=value),self.assertRaises(ValueError):runtime.configure_perception(value)
+            runtime.active=True
+            with self.assertRaisesRegex(RuntimeError,'active trial'):runtime.configure_perception(400)
+            self.assertFalse((Path(directory)/'perception-config.json').exists())
+            runtime.event.assert_not_called()
+
+    def test_demo_start_is_single_job_and_stop_remains_latched_before_worker(self):
+        runtime=self.runtime();runtime.run=Mock(return_value={'physical_lift_verified':False})
+        with patch('runtime.threading.Thread') as thread:
+            runtime.start_demo()
+            self.assertTrue(runtime.operation_lock.locked())
+            with self.assertRaisesRegex(RuntimeError,'already running'):runtime.start_demo()
+            runtime.stop()
+            self.assertTrue(runtime.cancel.is_set())
+            thread.call_args.kwargs['target']()
+        runtime.run.assert_called_once_with(True,preserve_cancel=True)
+        self.assertTrue(runtime.cancel.is_set())
+        self.assertFalse(runtime.demo_running)
+        self.assertFalse(runtime.operation_lock.locked())
+    def test_cancelled_async_demo_cannot_reacquire_camera_or_arm(self):
+        runtime=self.runtime();runtime.camera=Mock();runtime.cancel.set()
+        with self.assertRaisesRegex(RuntimeError,'cancelled before demo preparation'):
+            runtime.run(True,preserve_cancel=True)
+        runtime.camera.acquire.assert_not_called()
+        runtime.arm.shutdown.assert_not_called()
+
 if __name__=='__main__':unittest.main()
