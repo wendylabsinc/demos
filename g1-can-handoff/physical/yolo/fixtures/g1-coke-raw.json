@@ -1,0 +1,8 @@
+{
+  "image": "g1-coke-raw.jpg",
+  "width": 640,
+  "height": 480,
+  "label": "Coca-Cola",
+  "bbox_xyxy": [256, 76, 323, 199],
+  "annotation": "Manual visible-can silhouette box on the saved G1 color frame."
+}

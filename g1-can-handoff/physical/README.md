@@ -86,6 +86,70 @@ independent recorder session. Raw complete telemetry stays in the recorder's
 separate persistent volume. Controller publications and actual measured motion
 remain distinct in both evidence streams.
 
+## Coke-trained YOLO on G1 NX2
+
+The physical detector uses the existing Coke-trained YOLOv8n checkpoint from
+`wendylabsinc/g1-bartending-demo`, pinned by commit and SHA-256 in
+[yolo/model/SOURCE.json](yolo/model/SOURCE.json). It runs in the separate
+`DEV-g1-handoff-coke-yolo` Wendy app on JetPack 6.2 / Orin NX. CUDA PyTorch FP16
+is required; missing CUDA, an incorrect checkpoint, or failed warm-up prevents
+startup. This version uses PyTorch CUDA, not the old app's TensorRT engine.
+The detector reuses the older detector's fixed-square letterbox and bounded
+one-class CPU NMS around its CUDA model forward. Inference stays on the
+same warmed CUDA thread to meet the exact-frame exposure budget. Its saved Coke fixture must
+pass semantic/box qualification before readiness. The detector has no
+USB/camera/DDS access or command publisher.
+
+The handoff runtime keeps the existing `g1-can-camera` owner and renewable
+camera lease. It sends **the exact decoded BGR image paired with its depth** to
+loopback `POST /detect` on port 8112. The response must match camera serial,
+frame ID, exposure time, dimensions, image checksum, model checksum and CUDA
+backend. The 300 ms exposure-age limit is enforced before and after inference
+and after geometric fitting. It never consumes a latest-box feed or silently
+falls back to red pixels when YOLO is unavailable.
+
+A Coke detection strictly above 30% confidence (or a higher configured
+threshold) selects a box; exactly 30% is rejected. Measured depth
+inside its inset region supplies the cylinder points, with finite-depth,
+foreground-depth, upright/table, 6 mm fit, and 6-pixel image-boundary guards.
+There must be exactly one qualifying initial target. During lift/hold, only
+boxes with measured points in the existing expected-cylinder region can match;
+multiple matches remain ambiguous, and the fitted center must stay within
+40 mm. Finger occlusion may cause YOLO/depth rejection; color cannot rescue a
+missing semantic detection. Repeated observations retain the existing distinct
+frame and vertical-rise checks. YOLO confidence does not authorize motion.
+
+| Runtime variable | Default | Units / allowed range |
+| --- | --- | --- |
+| `HANDOFF_YOLO_URL` | `http://127.0.0.1:8112` | Same-host inference URL; timestamps use the NX2 monotonic clock |
+| `HANDOFF_YOLO_MIN_CONFIDENCE` | `0.30` | Probability, `0.30..0.99`; geometry and motion gates remain required |
+| `YOLO_MODEL_PATH` (detector app) | `/models/coke-can.pt` | Checksum-pinned checkpoint file |
+
+Build/deploy the isolated detector first from `physical/yolo`, then deploy the
+physical app from `physical` using native Wendy with an explicit NX2 selector.
+On this workspace, operator deployments use
+`python3 /Users/olivertaylor/Documents/Wendy/scripts/wendy-run-timed --device
+10.10.20.238:50052 --builder docker --dockerfile build.stagefile.yaml --detach
+--yes --chunking off`. Each app has its own build context; a detector change cannot replace
+the physical controller. No existing camera service is deployed by either
+project. Check `http://127.0.0.1:8112/health` **on the NX2** for the checkpoint,
+CUDA backend and GPU; TCP readiness is available only after model warm-up.
+The physical app still starts PASSIVE and requires the existing commissioned
+calibration, recorder, ownership, telemetry and explicit trial gates.
+
+From the repository root, using the project's Python environment:
+
+```sh
+PYTHONPATH=g1-can-handoff/physical python -m unittest discover -s g1-can-handoff/physical -p test_yolo_coke.py -v
+python g1-can-handoff/physical/yolo/replay.py
+```
+
+The offline replay requires `ultralytics==8.4.123`. It intentionally runs on CPU
+and requires one Coke detection at confidence >0.30 with IoU >=0.50 against
+the archived real-camera annotation. CPU replay is not the physical service's
+backend or a hardware qualification. Model/runtime licensing and source
+provenance are recorded in the manifest.
+
 ## Shared simulation regression
 
 `runtime.py` and `sim_runtime.py` call the same `pickup.prepare` and
@@ -93,7 +157,10 @@ remain distinct in both evidence streams.
 checks, trajectory limits, finger ordering, tracking, obstruction candidates
 and cancellation. MuJoCo replaces device commands, telemetry and sleeping.
 A separate model handles FK so planning cannot alter the dynamics state.
-Rendered RGB-D passes through the physical `camera_input.geometry`.
+Rendered RGB-D passes through the same `camera_input.geometry` depth fitter,
+with an explicit `synthetic_red=True` mask for the untextured MuJoCo can. The
+simulation camera marks these frames `synthetic_rgbd: true`; physical frames
+cannot use that path. Simulation does not qualify the new YOLO perception.
 
 Run the pinned Linux regression from the repository root:
 
@@ -129,7 +196,8 @@ seconds to settle. It then requires five distinct camera frames over one
 second to retain at least .11m vertical rise and at most .04m center error.
 Replayed frames, immediate slips and off-target red objects fail.
 
-During lift and hold only, the detector can merge red label fragments split
+In the synthetic simulation mask, during lift and hold only, the detector can
+merge red label fragments split
 by fingers inside the expected cylinder's candidate region. That search
 radius includes the can radius, the existing .04m center tolerance and a
 .01m depth/pixel margin. Acceptance still requires a cylinder fit within

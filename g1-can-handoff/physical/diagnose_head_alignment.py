@@ -2,7 +2,7 @@
 import json,io,urllib.request
 import numpy as np
 from scipy.optimize import least_squares
-from camera_input import Camera,target_red_mask
+from camera_input import Camera,target_coke_mask
 from g1_can_handoff.sim import scene
 from physical_core import BODY_NAMES
 from scipy.ndimage import binary_erosion,label
@@ -17,14 +17,12 @@ def diagnose():
     camera=Camera();camera.acquire()
     try: frame=camera.frame()
     finally: camera.close()
-    rgb=frame["color_bgr"][...,::-1].astype(float)
-    r,g,b=np.moveaxis(rgb,-1,0)
     depth=frame["depth_m"];points=frame["rays"]*depth[...,None]
     valid=(depth>.1)&(depth<2)
-    red=target_red_mask(rgb,depth)
-    target=points[red]
+    target_mask,detection=target_coke_mask(frame,{'can_radius_m':.033},points,require_table=False)
+    target=points[target_mask]
     # Fit only desk points below target in image. Report conditioning and inliers.
-    rows,cols=np.indices(depth.shape);uv=np.argwhere(red)
+    rows,cols=np.indices(depth.shape);uv=np.argwhere(target_mask)
     roi=valid&(rows>uv[:,0].max()+15)&(rows<450)&(cols>70)&(cols<570)
     cloud=points[roi][::5]
     best=None
@@ -46,6 +44,6 @@ def diagnose():
     world=target@rotation.T+translation
     fit=least_squares(lambda c:np.linalg.norm(world[:,:2]-c,axis=1)-.033,world[:,:2].mean(0),loss="soft_l1",f_scale=.002)
     table=float(up@center+translation[2])
-    out={"estimated_only":True,"camera_mount":"operator confirms rigid head mount","assumptions":["model head camera origin","camera image right follows robot right","horizontal table"],"camera_to_world_hypothesis":np.block([[rotation,translation[:,None]],[np.array([[0,0,0,1]])]]).tolist(),"table_height_hypothesis_m":table,"target_xy_hypothesis_m":fit.x.tolist(),"target_cylinder_rmse_m":float(np.sqrt(np.mean(fit.fun**2))),"table_plane_rmse_m":float(np.sqrt(np.mean(((fitted-center)@up)**2))),"table_inlier_fraction":float(best[0].mean()),"up_camera":up.tolist(),"left_workspace_match":bool(.27<=fit.x[0]<=.45 and .09<=fit.x[1]<=.29),"frame_id":frame["meta"]["frame_id"],"motion_commands_sent":status["motion_commands_sent"],"physical_pickup_verified":False}
+    out={"estimated_only":True,"detection":detection,"camera_mount":"operator confirms rigid head mount","assumptions":["model head camera origin","camera image right follows robot right","horizontal table"],"camera_to_world_hypothesis":np.block([[rotation,translation[:,None]],[np.array([[0,0,0,1]])]]).tolist(),"table_height_hypothesis_m":table,"target_xy_hypothesis_m":fit.x.tolist(),"target_cylinder_rmse_m":float(np.sqrt(np.mean(fit.fun**2))),"table_plane_rmse_m":float(np.sqrt(np.mean(((fitted-center)@up)**2))),"table_inlier_fraction":float(best[0].mean()),"up_camera":up.tolist(),"left_workspace_match":bool(.27<=fit.x[0]<=.45 and .09<=fit.x[1]<=.29),"frame_id":frame["meta"]["frame_id"],"motion_commands_sent":status["motion_commands_sent"],"physical_pickup_verified":False}
     print(json.dumps(out))
 if __name__=="__main__":diagnose()

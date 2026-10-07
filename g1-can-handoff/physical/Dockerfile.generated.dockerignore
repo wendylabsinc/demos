@@ -20,6 +20,9 @@
 !camera_input.py
 !camera_input.py/
 !camera_input.py/**
+!yolo_client.py
+!yolo_client.py/
+!yolo_client.py/**
 !pickup.py
 !pickup.py/
 !pickup.py/**

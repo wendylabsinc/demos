@@ -10,6 +10,7 @@ import numpy as np
 from scipy.ndimage import binary_erosion,maximum_filter,minimum_filter,label
 from scipy.optimize import least_squares
 from g1_can_handoff.perception import Observation
+from yolo_client import YoloClient, fresh
 
 
 class Camera:
@@ -125,13 +126,53 @@ def target_red_mask(rgb,depth,roi=None):
     if selected.sum()<40:raise RuntimeError('Target has too few valid red depth points')
     return selected
 
-def geometry(frame,config,require_table=True,expected_center_xy=None):
+def target_coke_mask(frame, config, world, roi=None, detector=None, require_table=True):
+    """Semantic target selection followed by measured depth, with no red gate."""
+    import os
+    threshold=float(os.getenv('HANDOFF_YOLO_MIN_CONFIDENCE', '.30'))
+    if not np.isfinite(threshold) or not .30<=threshold<=.99:
+        raise ValueError('HANDOFF_YOLO_MIN_CONFIDENCE must be in [0.30, 0.99]')
+    result=(detector or YoloClient()).detect(frame)
+    depth=frame['depth_m'];height,width=depth.shape
+    valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)&np.isfinite(world).all(axis=2)
+    boxes=[b for b in result['detections'] if b['confidence']>threshold]
+    if not boxes or (roi is None and len(boxes)!=1):
+        raise RuntimeError('Coke YOLO target absent/ambiguous')
+    masks=[];selected_boxes=[]
+    for box in boxes:
+        x1,y1,x2,y2=box['xyxy']
+        # Inset the detection to exclude background at the box boundary.
+        dx=(x2-x1)*.1;dy=(y2-y1)*.1
+        inside=np.zeros(depth.shape,dtype=bool)
+        inside[int(np.ceil(y1+dy)):int(np.floor(y2-dy)),
+               int(np.ceil(x1+dx)):int(np.floor(x2-dx))]=True
+        selected=inside&valid
+        if roi is not None:selected &= roi
+        if require_table:
+            selected &= (world[:,:,2]>config['table_height_m']+.012)&(world[:,:,2]<config['table_height_m']+config['can_height_m']+.02)
+        if selected.sum()<40:
+            continue
+        # Reject the complete selected box before cropping to the tracking ROI.
+        if x1<6 or y1<6 or x2>width-6 or y2>height-6:
+            raise RuntimeError('Coke YOLO target is clipped by the camera image boundary')
+        foreground_depth=float(np.median(depth[selected]))
+        selected &= np.abs(depth-foreground_depth)<=config['can_radius_m']+.01
+        selected=binary_erosion(selected,iterations=2)
+        if selected.sum()>=40:
+            masks.append(selected);selected_boxes.append(box)
+    if len(masks)!=1:
+        raise RuntimeError('Coke YOLO depth target absent/ambiguous')
+    return masks[0],{'detector':'coke_yolo','model_sha256':result['model_sha256'],
+                     'backend':result['backend'],'box':selected_boxes[0],
+                     'image_sha256':result['source']['image_sha256']}
+
+
+def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False):
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
-    rgb=frame['color_bgr'][...,::-1].astype(float);depth=frame['depth_m']
+    depth=frame['depth_m']
     # Exact distortion-corrected RealSense rays, not simulated pinhole geometry.
     pts=frame['rays']*depth[...,None]
     t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
-    r,g,b=np.moveaxis(rgb,-1,0)
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
     roi=None
     if expected_center_xy is not None:
@@ -143,8 +184,16 @@ def geometry(frame,config,require_table=True,expected_center_xy=None):
         # the cylinder radius and 10 mm depth/pixel margin. Acceptance still
         # requires the fitted cylinder center within 40 mm, below.
         roi=np.linalg.norm(world[:,:,:2]-expected,axis=2)<=config['can_radius_m']+.04+.01
-    red=target_red_mask(rgb,depth,roi=roi)
-    points=world[red]
+    if synthetic_red:
+        # Explicitly reserved for untextured MuJoCo regression fixtures. The
+        # physical runtime never passes this flag and has no color fallback.
+        if frame['meta'].get('synthetic_rgbd') is not True:
+            raise ValueError('Synthetic red detection requires a MuJoCo camera')
+        target=target_red_mask(frame['color_bgr'][...,::-1],depth,roi=roi)
+        detection={'detector':'synthetic_red'}
+    else:
+        target,detection=target_coke_mask(frame,config,world,roi,detector,require_table)
+    points=world[target]
     if len(points)<40:raise RuntimeError('Target has too few valid depth points')
     points=points[::max(1,len(points)//1500)]
     fit=least_squares(lambda c:np.linalg.norm(points[:,:2]-c,axis=1)-config['can_radius_m'],points[:,:2].mean(axis=0),loss='soft_l1',f_scale=.002)
@@ -154,12 +203,13 @@ def geometry(frame,config,require_table=True,expected_center_xy=None):
         raise RuntimeError('Tracked target center differs by over 40 mm')
     table=config['table_height_m']
     if require_table:
-        near=valid&~red&(np.linalg.norm(world[:,:,:2]-fit.x,axis=2)<.22)
+        near=valid&~target&(np.linalg.norm(world[:,:,:2]-fit.x,axis=2)<.22)
         z=world[near,2];plane=z[np.abs(z-table)<.008]
         if len(plane)<100:raise RuntimeError('Independent measured table height disagrees with camera')
         if abs(np.median(plane)-table)>.005:raise RuntimeError('Table plane differs by over 5 mm')
         if np.quantile(points[:,2],.05)>table+.06 or np.quantile(points[:,2],.95)<table+.07:
             raise RuntimeError('Can is not upright on the measured table')
+    if not synthetic_red:fresh(frame)
     obs=Observation(np.r_[fit.x,table+config['can_height_m']/2],table,frame['timestamp'],residual,len(points))
     return obs,{'top_quantile_z_m':float(np.quantile(points[:,2],.95)), 'center_xy_m':fit.x.tolist(),
-                'fit_error_m':residual,'pixels':len(points),'frame_id':frame['meta']['frame_id']}
+                'fit_error_m':residual,'pixels':len(points),'frame_id':frame['meta']['frame_id'],**detection}

@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/wendylabsinc/g1-bartending-demo",
+  "commit": "2dcc7f82ad67388927a9b843a7412b6b9ee65d26",
+  "path": "coke-detector-yolo/model/coke-can.pt",
+  "sha256": "87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7",
+  "architecture": "YOLOv8n",
+  "class_names": {
+    "0": "Coca-Cola"
+  },
+  "inference_runtime": "ultralytics==8.4.123; JetPack 6.2 CUDA PyTorch FP16",
+  "fixture_source": "coke-detector-yolo/tests/fixtures/g1-coke-raw.jpg",
+  "license_note": "Ultralytics runtime uses AGPL-3.0 or an Ultralytics Enterprise license. This manifest records internal model provenance, not an additional license grant.",
+  "reused_runtime_sources": [
+    "coke-detector-yolo/src/coke_detector/preprocessing.py",
+    "coke-detector-yolo/src/coke_detector/postprocessing.py"
+  ]
+}

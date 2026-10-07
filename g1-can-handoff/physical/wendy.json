@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.2.12-checked-arm-rest",
+  "version": "0.2.13-coke-yolo",
   "entitlements": [
     {
       "type": "network",
@@ -17,5 +17,9 @@
       "port": 8102
     },
     "timeoutSeconds": 60
+  },
+  "env": {
+    "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
+    "HANDOFF_YOLO_MIN_CONFIDENCE": "0.30"
   }
 }

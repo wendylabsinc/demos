@@ -1,0 +1,37 @@
+version: 1
+stages:
+  - name: dependencies
+    from: dustynv/pytorch:2.7-r36.4.0-cu128-24.04
+    workdir: /app
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+      PATH: /opt/venv/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      LD_LIBRARY_PATH: /usr/lib/aarch64-linux-gnu:/usr/lib/aarch64-linux-gnu/nvidia:/usr/lib/aarch64-linux-gnu/tegra:/usr/local/cuda/compat:/usr/local/cuda/lib64
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    install:
+      apt:
+        packages: [libglib2.0-0, libgl1]
+      pip:
+        - packages: ["numpy==2.2.6", "opencv-python==4.11.0.86", "ultralytics==8.4.123"]
+          index: https://pypi.org/simple/
+  - name: weights
+    from: dependencies
+    copy:
+      - from: local
+        paths: [model/coke-can.pt]
+        dest: /models/coke-can.pt
+  - name: fixtures
+    from: weights
+    copy:
+      - from: local
+        paths: [fixtures/g1-coke-raw.jpg]
+        dest: /fixtures/g1-coke-raw.jpg
+  - name: inference
+    from: fixtures
+    copy:
+      - from: local
+        paths: [service.py, preprocessing.py, postprocessing.py]
+        dest: /app/
+    cmd: [python3, /app/service.py]

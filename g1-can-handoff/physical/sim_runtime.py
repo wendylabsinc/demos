@@ -134,7 +134,7 @@ class SimulationCamera:
         depth=self.renderer.render().copy()
         self.counter+=1
         return dict(color_bgr=rgb[...,::-1],depth_m=depth,rays=self.rays,
-                    timestamp=time.monotonic(),meta=dict(camera_serial=self.serial,frame_id=self.counter))
+                    timestamp=time.monotonic(),meta=dict(camera_serial=self.serial,frame_id=self.counter,synthetic_rgbd=True))
 
     def close(self):self.renderer.close()
 
@@ -253,7 +253,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     world.frame_callback=audit_contacts
     def observe(phase,require_table,expected_center_xy=None):
         frame=sensor.frame()
-        try:observation,vision=geometry(frame,config,require_table=require_table,expected_center_xy=expected_center_xy)
+        try:observation,vision=geometry(frame,config,require_table=require_table,expected_center_xy=expected_center_xy,synthetic_red=True)
         except Exception:
             if output:
                 from PIL import Image
