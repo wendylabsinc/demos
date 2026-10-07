@@ -190,6 +190,70 @@ class Runtime:
         p=calibrated_scene(config)
         return PhysicalPlant(p,self.arm,self.hand,self.read,config,self.event,cancel=self.cancel)
 
+    def rest_arm(self,actuate=False):
+        """Explicit checked return to the recorded relaxed left-arm pose."""
+        from staging import joint_path
+        from types import SimpleNamespace
+        import mujoco
+        if self.active or getattr(self,'grasp_started',False):
+            raise RuntimeError('Cannot lower while active or possibly holding the can')
+        self.cancel.clear();self.camera.acquire()
+        try:
+            config=self.config(refresh=True)
+            archive=self.archive_guard()
+            if self.arm is None:
+                age=archive['age_s'].get('rt/arm_sdk')
+                if age is not None and age<2:raise RuntimeError('Another arm SDK publisher is active')
+                try:http_json(8090)
+                except Exception:pass
+                else:raise RuntimeError('Existing onboard controller is still running')
+            plant=self.make_plant(config)
+            observation,_=geometry(self.camera.frame(),config)
+            plant.observe_can(observation);plant.set_contact_phase('pregrasp')
+            original=plant.ik.data.qpos.copy()
+            start=original[plant.ik.qadr[plant.ik.arm]].copy()
+            target=np.array([.25,.27,-.08,.82,0.,0.,0.])
+            path,metadata=joint_path(plant.ik,target,np.asarray(config['arm_limits_rad'])[:7],check=plant.check)
+            try:
+                for waypoint in path:
+                    plant._joint_poses(waypoint)
+                    plant.ik.data.qpos[plant.ik.qadr[plant.ik.arm]]=waypoint
+                    mujoco.mj_forward(plant.ik.model,plant.ik.data)
+            finally:
+                plant.ik.data.qpos[:]=original;mujoco.mj_forward(plant.ik.model,plant.ik.data)
+            self.event('rest_arm_planned',target_q=target.tolist(),waypoints=path,**metadata)
+            if not actuate:return {'planned':True,'hand_commands_sent':0}
+            calibration_start_guard(config,self.read())
+            if np.max(np.abs(np.asarray(self.read()['body']['q'][15:22])-start))>.04:
+                raise RuntimeError('Arm moved during rest planning')
+            if self.cancel.is_set():raise RuntimeError('Operator cancelled rest motion')
+            if self.arm is None:
+                from g1_arm import G1_29_ArmController
+                self.arm=G1_29_ArmController(motion_mode=True,simulation_mode=False,lowstate_hub=self.hub,record_lowcmd=self.command_written)
+                self.arm.set_arm_motion_limits({'max_velocity_rad_s':.25,'max_acceleration_rad_s2':1.})
+            self.arm.set_arm_position_limits(config['arm_limits_rad'])
+            plant.adapter=self.arm
+            plant.sender=SimpleNamespace(ctrl_dual_hand=lambda *args:None)
+            self.plant=plant;self.active=True;self.phase='LOWERING_ARM';self.trial_deadline=time.monotonic()+60
+            for waypoint in path:
+                plant.sync(plant.check());goal,poses=plant._joint_poses(waypoint)
+                plant._execute_poses(goal,poses)
+            measured=self.read()['body']['q'][15:22]
+            error=float(np.max(np.abs(np.asarray(measured)-target)))
+            if error>.04:raise RuntimeError('Resting arm pose not reached')
+            self.active=False;self.arm.hold_arm_measured();self.phase='RESTING_ARM'
+            self.event('rest_arm_verified',measured_q=measured,max_error_rad=error)
+            self.relax_owned_arms('verified_rest_pose')
+            return {'arm_lowered':True,'max_error_rad':error,'hand_commands_sent':0,'control_released':True}
+        except Exception as exc:
+            self.error=str(exc);self.active=False
+            if self.plant:self.plant.freeze()
+            elif self.arm:self.arm.hold_arm_measured()
+            self.phase='FROZEN' if self.arm else 'BLOCKED'
+            self.event('rest_arm_error',error=str(exc))
+            raise
+        finally:self.camera.close()
+
     def run(self,actuate=False):
         from pickup import prepare, execute
         resuming=self.arm is not None
@@ -308,7 +372,7 @@ class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         if self.client_address[0] not in ('127.0.0.1','::1'):
             self.respond({'error':'Control endpoints are loopback-only'},403);return
-        operation=self.path in ('/plan','/trial','/capture','/hold-check')
+        operation=self.path in ('/plan','/trial','/capture','/hold-check','/rest-arm','/rest-arm-plan')
         acquired=False
         try:
             if operation:
@@ -316,7 +380,9 @@ class Handler(BaseHTTPRequestHandler):
                 if not acquired:raise RuntimeError('A planning/capture/trial operation is already running')
             size=int(self.headers.get('Content-Length','0'))
             data=json.loads(self.rfile.read(size) or b'{}')
-            if self.path=='/hold-check':result=runtime.hold_check()
+            if self.path=='/rest-arm':result=runtime.rest_arm(True)
+            elif self.path=='/rest-arm-plan':result=runtime.rest_arm(False)
+            elif self.path=='/hold-check':result=runtime.hold_check()
             elif self.path=='/capture':result=runtime.capture()
             elif self.path=='/plan':result=runtime.run(False)
             elif self.path=='/trial':

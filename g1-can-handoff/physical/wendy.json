@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.2.9-retry-from-hold",
+  "version": "0.2.12-checked-arm-rest",
   "entitlements": [
     {
       "type": "network",

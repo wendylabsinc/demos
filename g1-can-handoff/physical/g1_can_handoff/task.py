@@ -5,7 +5,7 @@ import numpy as np
 OPEN = [0,0,0,0,0,0,0]
 CLOSED = [0,.5,1.,-1.,-1.,-1.,-1.]
 
-def plan(plant, observation, validate=None):
+def plan(plant, observation, validate=None, include_offer=True):
     c = np.asarray(observation.center,dtype=float)
     if c.shape!=(3,) or not np.all(np.isfinite(c)) or not np.isfinite(observation.table_height):
         raise ValueError("Invalid observed can pose")
@@ -15,14 +15,17 @@ def plan(plant, observation, validate=None):
     # The cylinder permits yaw changes. A downward approach expands the
     # reachable workspace on lower tables without changing the can location.
     deadline=time.monotonic()+30.
-    for pitch,yaw in [(0,0),(0,.5),(0,1.),(-.4,0),(-.4,.5),(.4,0),(.4,.5),(.7,0),(.7,.5),(.7,1.)]:
+    orientations=[(0,0),(0,.5),(0,1.),(-.4,0),(-.4,.5),(.4,0),(.4,.5),(.7,0),(.7,.5),(.7,1.)]
+    heights=(0.,) if include_offer else (0.,.01,.02)
+    for pitch,yaw,height in [(p,y,h) for p,y in orientations for h in heights]:
         if time.monotonic()>deadline:raise ValueError('Grasp orientation search time limit reached')
         cp,sp,cy,sy=np.cos(pitch),np.sin(pitch),np.cos(yaw),np.sin(yaw)
         rotation=np.array([[cy,-sy,0],[sy,cy,0],[0,0,1]])@np.array([[cp,0,sp],[0,1,0],[-sp,0,cp]])
         offset=rotation@np.array([0,.10,0])
-        waypoints=[c+offset+[0,0,.16],c+offset,c,c+[0,0,.15],c+[.02,0,.15]]
+        grasp=c+np.array([0,0,height])
+        waypoints=[grasp+offset+[0,0,.16],grasp+offset,grasp,grasp+[0,0,.15],grasp+[.02,0,.15]]
         try:
-            for phase,target in zip(('approach','align','reach','lift','offer'),waypoints):
+            for phase,target in zip(('approach','align','reach','lift','offer'),waypoints[:5 if include_offer else 4]):
                 plant.set_contact_phase(phase)
                 plant.solve(target,rotation)
         except ValueError:continue

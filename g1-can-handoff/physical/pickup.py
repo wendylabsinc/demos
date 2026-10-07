@@ -29,7 +29,7 @@ def prepare(plant, observe, event):
             if not str(exc).startswith(geometric):raise
             event('grasp_candidate_rejected',rotation=rotation.tolist(),reason=str(exc))
             return False
-    points, rotation = plan(plant, observation,validate=validate_candidate)
+    points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
     refreshed, track = observe('plan-refresh', True)
     if (np.linalg.norm(refreshed.center-observation.center) > .01 or
             abs(refreshed.table_height-observation.table_height) > .005):

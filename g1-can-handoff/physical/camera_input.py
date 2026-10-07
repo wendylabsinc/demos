@@ -7,7 +7,7 @@ import urllib.request
 import zipfile
 from PIL import Image
 import numpy as np
-from scipy.ndimage import binary_erosion,binary_closing,label
+from scipy.ndimage import binary_erosion,maximum_filter,minimum_filter,label
 from scipy.optimize import least_squares
 from g1_can_handoff.perception import Observation
 
@@ -86,6 +86,14 @@ class Camera:
 
 
 
+def close_red_label(mask):
+    # Rectangular max/min filters give the same binary closing with separable
+    # passes, avoiding a 121-pixel footprint scan for every camera pixel.
+    padded=np.pad(mask,5)
+    dilated=maximum_filter(padded,size=11,mode='constant',cval=0)
+    return minimum_filter(dilated,size=11,mode='constant',cval=0)[5:-5,5:-5]
+
+
 def target_red_mask(rgb,depth,roi=None):
     r,g,b=np.moveaxis(rgb.astype(float),-1,0)
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
@@ -94,16 +102,24 @@ def target_red_mask(rgb,depth,roi=None):
     if roi is not None:original &= roi
     # Printed white stripes may divide one label. Closing groups adjacent
     # label islands; retain only originally red measured pixels for fitting.
-    grouped=binary_closing(original,structure=np.ones((11,11),dtype=bool))
+    grouped=close_red_label(original)
     cc,count=label(grouped);sizes=np.bincount(cc.ravel());sizes[0]=0
     candidates=np.flatnonzero(sizes>100)
     if not len(candidates) or (roi is None and len(candidates)!=1):
         raise RuntimeError('Target red component absent/ambiguous')
     component = np.isin(cc,candidates)
-    # Closing erodes the image boundary. Check the un-eroded source label
-    # near the boundary too, so a partially off-screen can cannot look whole.
-    if (source_red[:6].any() or source_red[-6:].any() or
-            source_red[:,:6].any() or source_red[:,-6:].any()):
+    # Only the selected target component can establish target clipping.
+    # Preserve edge pixels while closing, then follow source connectivity even
+    # outside a tracking ROI so ROI cropping cannot hide an offscreen label.
+    if roi is None:
+        target_source=component
+    else:
+        source_grouped=close_red_label(source_red)
+        source_cc,_=label(source_grouped)
+        ids=np.unique(source_cc[component & original]);ids=ids[ids!=0]
+        target_source=np.isin(source_cc,ids)
+    if (target_source[:6].any() or target_source[-6:].any() or
+            target_source[:,:6].any() or target_source[:,-6:].any()):
         raise RuntimeError('Red target is clipped by the camera image boundary')
     selected=binary_erosion(original,iterations=2)&component
     if selected.sum()<40:raise RuntimeError('Target has too few valid red depth points')

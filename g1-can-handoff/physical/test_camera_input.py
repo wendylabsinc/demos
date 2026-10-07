@@ -2,6 +2,15 @@ import unittest
 import numpy as np
 from camera_input import target_red_mask
 class RedLabelTests(unittest.TestCase):
+    def test_fast_closing_matches_original_on_edges_and_random_masks(self):
+        from scipy.ndimage import binary_closing
+        from camera_input import close_red_label
+        rng=np.random.default_rng(12)
+        for probability in (.01,.1,.5):
+            mask=rng.random((60,80))<probability
+            expected=binary_closing(np.pad(mask,5),structure=np.ones((11,11),dtype=bool))[5:-5,5:-5]
+            np.testing.assert_array_equal(close_red_label(mask),expected)
+
     def test_white_label_stripes_preserve_only_red_measurements(self):
         rgb=np.zeros((100,150,3));rgb[20:80,30:70,0]=200
         rgb[43:49,30:70]=255
@@ -11,6 +20,12 @@ class RedLabelTests(unittest.TestCase):
     def test_separate_cans_remain_ambiguous(self):
         rgb=np.zeros((100,150,3));rgb[20:80,20:50,0]=200;rgb[20:80,90:120,0]=200
         with self.assertRaisesRegex(RuntimeError,'ambiguous'):target_red_mask(rgb,np.ones((100,150))*.5)
+    def test_unrelated_boundary_speckles_do_not_clip_the_can(self):
+        rgb=np.zeros((100,150,3));rgb[20:80,30:70,0]=200
+        rgb[0,0,0]=200;rgb[-1,-1,0]=200
+        mask=target_red_mask(rgb,np.ones((100,150))*.5)
+        self.assertGreater(mask.sum(),100)
+        self.assertFalse(mask[0,0])
     def test_partially_offscreen_red_can_is_rejected(self):
         rgb=np.zeros((100,150,3));rgb[65:,55:90,0]=200
         with self.assertRaisesRegex(RuntimeError,'clipped'):
@@ -60,6 +75,7 @@ class TrackedCylinderTests(unittest.TestCase):
     def test_tracking_preserves_clipped_label_guard(self):
         from camera_input import geometry
         frame=self.frame();frame['color_bgr'][0:5,60:100]=[0,0,200]
+        frame['rays'][0:5,60:100,:2]=[.35,.18]
         with self.assertRaisesRegex(RuntimeError,'clipped'):
             geometry(frame,self.config(),require_table=False,expected_center_xy=[.35,.18])
 

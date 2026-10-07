@@ -33,7 +33,7 @@ class SharedPickupTests(unittest.TestCase):
         events=[]
         result=prepare(plant,self.observe,lambda phase,**kw:events.append(phase))
         self.assertEqual(plant.preflight.call_count,2)
-        self.assertFalse(np.allclose(result[3],np.eye(3)))
+        self.assertGreater(result[2][2][2],self.obs.center[2])
         self.assertIn('grasp_candidate_rejected',events)
         plant.move.assert_not_called()
 
@@ -48,7 +48,7 @@ class SharedPickupTests(unittest.TestCase):
         self.obs.timestamp=time.monotonic()
         plant=Mock();plant.preflight.side_effect=RuntimeError('Interpolated physical trajectory intersects robot/table')
         with self.assertRaisesRegex(ValueError,'No reachable'):prepare(plant,self.observe,lambda *a,**k:None)
-        self.assertEqual(plant.preflight.call_count,10)
+        self.assertEqual(plant.preflight.call_count,30)
         plant.move.assert_not_called()
     def test_lift_requires_camera_evidence_even_with_finger_obstructions(self):
         plant=Plant()

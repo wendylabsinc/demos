@@ -274,3 +274,9 @@ raw results, logs, camera images, and recorded physics states, including failed
 cases. The evidence video replays those states with cuts at the original
 movement speed. The detailed report is in `report.json`; `results.csv` lists
 all 39 short-trial outcomes.
+
+## Physical controller and shared simulation
+
+The physical pickup work is in [physical/](physical/README.md), on this checkout's current branch. Its MuJoCo replay uses the same `PhysicalPlant`, pickup sequence, perception, and staging planner as the robot. The original demo commands above continue to use the original package.
+
+Use [physical/DEVELOPMENT_STATUS.md](physical/DEVELOPMENT_STATUS.md) for the deployed version, current blocker, test commands, and where work continues. Passive DDS recording is in `recorder/`; captured validation results are in `evidence/`.

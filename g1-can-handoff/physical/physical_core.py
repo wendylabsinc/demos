@@ -248,16 +248,37 @@ class PhysicalPlant:
             raise RuntimeError('Cartesian lift must ascend by at most 0.20 m')
         count=max(1,int(np.ceil(distance/.01)))
         poses=[]
+        pending=[(start+(target-start)*(index/count),duration/count,0)
+                 for index in range(count,0,-1)]
+        attempts=0
+        completed=0
         try:
-            for index in range(1,count+1):
+            while pending:
                 self.check()
-                waypoint=start+(target-start)*(index/count)
-                goal=self._continuous_lift_ik(waypoint,rotation)
-                goal,segment=self._joint_poses(goal,duration/count)
+                waypoint,segment_duration,depth=pending.pop()
+                attempts+=1
+                if attempts>100:
+                    raise RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose: subdivision budget exhausted')
+                try:
+                    goal=self._continuous_lift_ik(waypoint,rotation)
+                except RuntimeError as exc:
+                    if not str(exc).startswith('Continuous Cartesian lift IK cannot preserve'):
+                        raise
+                    current=self.ik.data.site_xpos[self.ik.site].copy()
+                    if depth>=4 or np.linalg.norm(waypoint-current)<=.001:
+                        raise
+                    # Retry a shorter step from the last accepted IK state.
+                    # Collision, telemetry and cancellation errors never trigger retries.
+                    pending.append((waypoint,segment_duration/2,depth+1))
+                    pending.append(((current+waypoint)/2,segment_duration/2,depth+1))
+                    continue
+                goal,segment=self._joint_poses(goal,segment_duration)
                 poses.extend(segment)
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
-            self.event('cartesian_lift_planned',waypoints=count,start=start.tolist(),target=target.tolist())
+                completed+=1
+            self.event('cartesian_lift_planned',waypoints=completed,ik_attempts=attempts,
+                       start=start.tolist(),target=target.tolist())
             return goal,poses
         finally:
             self.ik.data.qpos[:]=original
@@ -283,6 +304,10 @@ class PhysicalPlant:
         result=least_squares(error,np.clip(start,lo,hi),bounds=(lo,hi),max_nfev=250)
         error(result.x)
         if np.linalg.norm(result.fun[:3])>.008 or np.linalg.norm(result.fun[3:])>.02:
+            self.event('continuous_lift_ik_failed',position_error_m=float(np.linalg.norm(result.fun[:3])),
+                       rotation_error=float(np.linalg.norm(result.fun[3:])),target_position=np.asarray(position).tolist(),
+                       start_q=start.tolist(),solution_q=result.x.tolist(),
+                       local_bound_active=bool(np.any(np.abs(result.x-start)>.199)))
             raise RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose')
         return result.x
 
