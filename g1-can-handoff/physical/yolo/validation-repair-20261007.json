@@ -1,0 +1,532 @@
+{
+  "date_utc": "2026-10-07",
+  "device": "unitree-g1-nx-2",
+  "address": "10.10.20.238:50052",
+  "camera_serial": "338622073335",
+  "apps": {
+    "detector": "0.2.0",
+    "physical": "0.2.22-coke-yolo"
+  },
+  "health": {
+    "healthy": true,
+    "backend": "pytorch_cuda",
+    "model_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+    "class_names": {
+      "0": "Coca-Cola"
+    },
+    "gpu": "Orin",
+    "camera_owned": false,
+    "motion_commands_sent": 0,
+    "execution": "cuda_graph_fp16",
+    "input_size": 640,
+    "qualification": [
+      {
+        "image": "g1-coke-raw.jpg",
+        "role": "held_out_archived",
+        "detections": [
+          {
+            "xyxy": [
+              249.875,
+              70.5,
+              329.125,
+              207
+            ],
+            "confidence": 0.708984375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "iou": 0.7618123201719417
+      },
+      {
+        "image": "nx2-missed.jpg",
+        "role": "training_positive",
+        "detections": [
+          {
+            "xyxy": [
+              169.4375,
+              240.625,
+              290.5625,
+              386.375
+            ],
+            "confidence": 0.49609375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "iou": 0.6882305147390725
+      },
+      {
+        "image": "nx2-rotated.jpg",
+        "role": "held_out_rotated",
+        "detections": [
+          {
+            "xyxy": [
+              163,
+              232.25,
+              283,
+              377.25
+            ],
+            "confidence": 0.57373046875,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "iou": 0.7162068965517241
+      },
+      {
+        "image": "g1-calibration.jpg",
+        "role": "held_out_archived",
+        "detections": [
+          {
+            "xyxy": [
+              202.875,
+              218,
+              317.125,
+              361.5
+            ],
+            "confidence": 0.341552734375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "iou": 0.7057083387339032
+      },
+      {
+        "image": "nx2-empty-0.jpg",
+        "role": "training_negative_crop",
+        "detections": [],
+        "iou": null
+      },
+      {
+        "image": "nx2-empty-1.jpg",
+        "role": "training_negative_crop",
+        "detections": [],
+        "iou": null
+      }
+    ]
+  },
+  "live_inference_samples": [
+    {
+      "frame_id": 75305,
+      "acquire_ms": 457.10740699996677,
+      "request_ms": 32.89323999979388,
+      "inference_ms": 25.183,
+      "exposure_age_ms": 236.74142916661367,
+      "detections": [
+        {
+          "xyxy": [
+            161.75,
+            231.625,
+            282.25,
+            376.375
+          ],
+          "confidence": 0.56982421875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75307,
+      "acquire_ms": 69.14367300032609,
+      "request_ms": 36.22163099953468,
+      "inference_ms": 25.099,
+      "exposure_age_ms": 208.69762288384663,
+      "detections": [
+        {
+          "xyxy": [
+            162.25,
+            231.875,
+            282.5,
+            377.125
+          ],
+          "confidence": 0.5361328125,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75309,
+      "acquire_ms": 68.3606080001482,
+      "request_ms": 36.32592299982207,
+      "inference_ms": 25.015,
+      "exposure_age_ms": 179.97426118290605,
+      "detections": [
+        {
+          "xyxy": [
+            162.75,
+            231.625,
+            281.5,
+            376.375
+          ],
+          "confidence": 0.5244140625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75310,
+      "acquire_ms": 55.12858300062362,
+      "request_ms": 35.64298999936,
+      "inference_ms": 25.159,
+      "exposure_age_ms": 204.05285405286122,
+      "detections": [
+        {
+          "xyxy": [
+            163.5,
+            231.75,
+            281.75,
+            376.75
+          ],
+          "confidence": 0.55712890625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75312,
+      "acquire_ms": 74.41503599966381,
+      "request_ms": 36.24614399996062,
+      "inference_ms": 24.999,
+      "exposure_age_ms": 181.3015930028996,
+      "detections": [
+        {
+          "xyxy": [
+            161.9375,
+            231.875,
+            282.0625,
+            378.125
+          ],
+          "confidence": 0.5380859375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75313,
+      "acquire_ms": 53.73247699935746,
+      "request_ms": 36.32953800024552,
+      "inference_ms": 25.142,
+      "exposure_age_ms": 204.67335280318366,
+      "detections": [
+        {
+          "xyxy": [
+            162.25,
+            232,
+            282.25,
+            377
+          ],
+          "confidence": 0.546875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75315,
+      "acquire_ms": 77.82502899954125,
+      "request_ms": 36.30969799996819,
+      "inference_ms": 24.959,
+      "exposure_age_ms": 185.3953454274233,
+      "detections": [
+        {
+          "xyxy": [
+            163.0625,
+            231.75,
+            281.9375,
+            377.75
+          ],
+          "confidence": 0.556640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75316,
+      "acquire_ms": 73.9097400000901,
+      "request_ms": 36.43459799968696,
+      "inference_ms": 25.145,
+      "exposure_age_ms": 229.0442920420901,
+      "detections": [
+        {
+          "xyxy": [
+            162,
+            231.375,
+            282.5,
+            379.625
+          ],
+          "confidence": 0.5546875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75318,
+      "acquire_ms": 53.97872399953485,
+      "request_ms": 36.66286099996796,
+      "inference_ms": 25.091,
+      "exposure_age_ms": 186.2760803405763,
+      "detections": [
+        {
+          "xyxy": [
+            162,
+            231.75,
+            282.75,
+            376.75
+          ],
+          "confidence": 0.52734375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75319,
+      "acquire_ms": 85.55269199950999,
+      "request_ms": 36.424582000108785,
+      "inference_ms": 25.167,
+      "exposure_age_ms": 241.5577555366326,
+      "detections": [
+        {
+          "xyxy": [
+            162.75,
+            232,
+            282.25,
+            377.5
+          ],
+          "confidence": 0.537109375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75321,
+      "acquire_ms": 76.24917199973424,
+      "request_ms": 36.811345999922196,
+      "inference_ms": 25.304,
+      "exposure_age_ms": 221.20872967207106,
+      "detections": [
+        {
+          "xyxy": [
+            162.75,
+            231.75,
+            282.5,
+            376.75
+          ],
+          "confidence": 0.556640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75323,
+      "acquire_ms": 65.54199400034122,
+      "request_ms": 36.10921200015582,
+      "inference_ms": 24.97,
+      "exposure_age_ms": 189.45019564580434,
+      "detections": [
+        {
+          "xyxy": [
+            162.75,
+            231.875,
+            282.5,
+            378.125
+          ],
+          "confidence": 0.5537109375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75324,
+      "acquire_ms": 99.22847399957391,
+      "request_ms": 37.67994900044869,
+      "inference_ms": 25.069,
+      "exposure_age_ms": 259.6640687488616,
+      "detections": [
+        {
+          "xyxy": [
+            162.25,
+            232,
+            282.5,
+            377
+          ],
+          "confidence": 0.56787109375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75326,
+      "acquire_ms": 74.30156099962915,
+      "request_ms": 36.29644900047424,
+      "inference_ms": 25.016,
+      "exposure_age_ms": 236.85114346608316,
+      "detections": [
+        {
+          "xyxy": [
+            162.5,
+            231.75,
+            282,
+            377.75
+          ],
+          "confidence": 0.537109375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75328,
+      "acquire_ms": 78.60031699965475,
+      "request_ms": 38.75969399996393,
+      "inference_ms": 26.441,
+      "exposure_age_ms": 220.8026778571366,
+      "detections": [
+        {
+          "xyxy": [
+            163,
+            231.625,
+            282,
+            378.375
+          ],
+          "confidence": 0.5361328125,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    },
+    {
+      "frame_id": 75330,
+      "acquire_ms": 62.20112200026051,
+      "request_ms": 38.38512200036348,
+      "inference_ms": 25.969,
+      "exposure_age_ms": 187.98088515632116,
+      "detections": [
+        {
+          "xyxy": [
+            162.4375,
+            231.5,
+            282.5625,
+            376
+          ],
+          "confidence": 0.5302734375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ]
+    }
+  ],
+  "live_summary": {
+    "first_warm_sample_excluded_from_summary": true,
+    "distinct_frames": 15,
+    "failed_samples": 0,
+    "confidence_min": 0.5244140625,
+    "confidence_max": 0.56787109375,
+    "inference_p50_ms": 25.099,
+    "inference_p95_ms": 26.1106,
+    "request_p50_ms": 36.32953800024552,
+    "acquire_p50_ms": 73.9097400000901,
+    "sequential_capture_plus_detection_hz": 9.266071886954652
+  },
+  "last_passive_plan": {
+    "http_status": 200,
+    "response": {
+      "planned": true,
+      "motion_commands_sent": 0
+    }
+  },
+  "trial_request": {
+    "http_status": 409,
+    "error": "Physical target cylinder fit exceeds 6 mm",
+    "status": {
+      "phase": "BLOCKED",
+      "error": "RuntimeError: Physical target cylinder fit exceeds 6 mm",
+      "motion_commands_sent": 0,
+      "adapter_initialized": false
+    }
+  },
+  "final": {
+    "status": {
+      "phase": "PASSIVE",
+      "error": "RuntimeError: Physical target cylinder fit exceeds 6 mm",
+      "motion_commands_sent": 0,
+      "adapter_initialized": false,
+      "telemetry_healthy": true,
+      "lowstate": {
+        "poll_hz": 200,
+        "rate_hz": 198.1,
+        "samples": 49124,
+        "age_s": 0.0034,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      }
+    },
+    "sources": {
+      "runtime.py": "22a3a92745a3fb1a0abd31ef4c8724c9804389b67eaf2f0c5cb3b1e8040911fa",
+      "camera_input.py": "f94bf7866cdcec4c017e2777da7f8b56b973b7c3c716e11d6505fb67427adc5d",
+      "yolo_client.py": "f36351ea5688481c3b1558cf28c29c156e4eb46c27df628a634add5a68b56a85"
+    },
+    "recorder": {
+      "session": "20261007T210142Z-692fd2b1",
+      "recording": true,
+      "error": null,
+      "dropped": {},
+      "queue_depth": 0,
+      "age_s": {
+        "rt/lowstate": 0.001873626,
+        "rt/dex3/left/state": 0.001852505,
+        "rt/dex3/right/state": 0.001835705,
+        "rt/lf/dex3/left/state": 0.094665007,
+        "rt/lf/dex3/right/state": 0.014886252,
+        "rt/arm_sdk": null,
+        "rt/dex3/left/cmd": null,
+        "rt/dex3/right/cmd": null
+      },
+      "last_written_age_s": {
+        "rt/dex3/left/state": 0.001852505,
+        "rt/lf/dex3/left/state": 0.094665007,
+        "rt/dex3/right/state": 0.001835705,
+        "rt/lf/dex3/right/state": 0.014886252,
+        "rt/lowstate": 0.001873626
+      },
+      "missing_or_stale_required": []
+    },
+    "sealed_segments": [
+      {
+        "file": "samples-000082.jsonl.gz",
+        "bytes": 37484938,
+        "sha256": "73f8498d31a2fd56b1e81da6c316050e4fe5133175aec56df48be5ba98fae61e"
+      },
+      {
+        "file": "samples-000083.jsonl.gz",
+        "bytes": 37272661,
+        "sha256": "2876b15a62e25d908c59daa7e1bb809c3bf33c99740b8d0731d356b458c32712"
+      }
+    ]
+  },
+  "physical_pickup_verified": false,
+  "limitations": [
+    "One unique NX2 training view plus two empty crop regions; repeated sampling is not independent data.",
+    "One held-out rotated capture and two archived G1 images; broad scene generalization unqualified.",
+    "Detector-only live replay passed all 16 frames. Full perception/evidence timing and cylinder fit still reject trial preflight intermittently. A passive plan passed; no motion or physical pickup was verified.",
+    "Initial cold probe also rejected an exposure after it became older than 300 ms."
+  ],
+  "motion_zero_trial_requests": 3
+}

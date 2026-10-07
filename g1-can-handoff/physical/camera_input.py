@@ -5,6 +5,7 @@ import time
 import threading
 import urllib.request
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 import numpy as np
 from scipy.ndimage import binary_erosion,maximum_filter,minimum_filter,label
@@ -46,7 +47,7 @@ class Camera:
         if self.token:
             try:self.request('/lease/release',{})
             finally:self.token=None
-    def frame(self):
+    def frame(self, *, materialize=True):
         self.request('/lease/renew',{})
         health=json.loads(self.request('/health'))
         if self.rays is None or health['serial'] != self.serial:
@@ -58,10 +59,15 @@ class Camera:
             self.intrinsics=meta['intrinsics'];self.serial=meta['camera_serial']
             health=json.loads(self.request('/health'))
         fid=health['frame_id']
-        timing=self.request('/frame.policy-rgbd?frame_id='+str(fid))
+        # Both bundles address the same immutable frame ID. Fetch independent
+        # payloads concurrently, then retain all identity/skew/freshness checks.
+        with ThreadPoolExecutor(max_workers=2) as requests:
+            timing_request=requests.submit(self.request,'/frame.policy-rgbd?frame_id='+str(fid))
+            compact_request=requests.submit(self.request,'/frame.recorder-rgbd?frame_id='+str(fid))
+            timing=timing_request.result()
+            compact=compact_request.result()
         with np.load(io.BytesIO(timing),allow_pickle=False) as f:
             meta=json.loads(str(f['metadata_json']))
-        compact=self.request('/frame.recorder-rgbd?frame_id='+str(fid))
         with zipfile.ZipFile(io.BytesIO(compact)) as z:
             cm=json.loads(z.read('metadata.json'))
             depth=np.asarray(Image.open(io.BytesIO(z.read('depth.png'))),dtype=np.float32)*cm['calibration']['depth_scale_m']
@@ -80,10 +86,16 @@ class Camera:
         if abs(meta['color_time']-timestamp)>.012:raise RuntimeError('Camera RGB/depth exposure skew exceeds 12 ms')
         frame={'color_bgr':color,'depth_m':depth,'rays':self.rays,'meta':meta,'timestamp':timestamp,
                'color_codec':'jpeg_exact_source_frame','source_rgbd_zip':compact,'source_timing_npz':timing}
-        bundle=io.BytesIO()
-        np.savez(bundle,color_bgr=color,depth_m=depth,rays=self.rays,metadata_json=json.dumps({**meta,'color_codec':frame['color_codec']}))
-        frame['raw']=bundle.getvalue()
+        if materialize:
+            frame['raw']=materialize_rgbd(frame)
         return frame
+
+
+def materialize_rgbd(frame):
+    bundle=io.BytesIO()
+    np.savez(bundle,color_bgr=frame['color_bgr'],depth_m=frame['depth_m'],rays=frame['rays'],
+             metadata_json=json.dumps({**frame['meta'],'color_codec':frame['color_codec']}))
+    return bundle.getvalue()
 
 
 
@@ -126,13 +138,14 @@ def target_red_mask(rgb,depth,roi=None):
     if selected.sum()<40:raise RuntimeError('Target has too few valid red depth points')
     return selected
 
-def target_coke_mask(frame, config, world, roi=None, detector=None, require_table=True):
+def target_coke_mask(frame, config, world, roi=None, detector=None, require_table=True, result=None):
     """Semantic target selection followed by measured depth, with no red gate."""
     import os
     threshold=float(os.getenv('HANDOFF_YOLO_MIN_CONFIDENCE', '.30'))
     if not np.isfinite(threshold) or not .30<=threshold<=.99:
         raise ValueError('HANDOFF_YOLO_MIN_CONFIDENCE must be in [0.30, 0.99]')
-    result=(detector or YoloClient()).detect(frame)
+    if result is None:
+        result=(detector or YoloClient()).detect(frame)
     depth=frame['depth_m'];height,width=depth.shape
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)&np.isfinite(world).all(axis=2)
     boxes=[b for b in result['detections'] if b['confidence']>threshold]
@@ -155,6 +168,22 @@ def target_coke_mask(frame, config, world, roi=None, detector=None, require_tabl
         # Reject the complete selected box before cropping to the tracking ROI.
         if x1<6 or y1<6 or x2>width-6 or y2>height-6:
             raise RuntimeError('Coke YOLO target is clipped by the camera image boundary')
+        # YOLO includes the silver lid. Its interior is a disk, not a cylinder
+        # sidewall, and must not enter the radial fit. Remove the top 10 mm
+        # before estimating foreground depth, so the lid cannot dominate it.
+        z=world[selected,2]
+        if require_table:
+            top=config['table_height_m']+config['can_height_m']
+            if np.quantile(z,.95)-np.quantile(z,.05)>.03:
+                top=min(top,float(np.quantile(z,.95)))
+        elif np.quantile(z,.95)-np.quantile(z,.05)>.03:
+            top=float(np.quantile(z,.95))
+        else:
+            top=None
+        if top is not None:
+            selected &= world[:,:,2]<top-.01
+        if selected.sum()<40:
+            continue
         foreground_depth=float(np.median(depth[selected]))
         selected &= np.abs(depth-foreground_depth)<=config['can_radius_m']+.01
         selected=binary_erosion(selected,iterations=2)
@@ -171,8 +200,18 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
     depth=frame['depth_m']
     # Exact distortion-corrected RealSense rays, not simulated pinhole geometry.
-    pts=frame['rays']*depth[...,None]
-    t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+    if synthetic_red:
+        result=None
+        pts=frame['rays']*depth[...,None]
+        t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+    else:
+        # HTTP inference and the independent ray transform can overlap. The
+        # detector still sees the same frame and validates its exact identity.
+        with ThreadPoolExecutor(max_workers=1) as requests:
+            detection=requests.submit((detector or YoloClient()).detect,frame)
+            pts=frame['rays']*depth[...,None]
+            t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+            result=detection.result()
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
     roi=None
     if expected_center_xy is not None:
@@ -192,7 +231,7 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         target=target_red_mask(frame['color_bgr'][...,::-1],depth,roi=roi)
         detection={'detector':'synthetic_red'}
     else:
-        target,detection=target_coke_mask(frame,config,world,roi,detector,require_table)
+        target,detection=target_coke_mask(frame,config,world,roi,detector,require_table,result)
     points=world[target]
     if len(points)<40:raise RuntimeError('Target has too few valid depth points')
     points=points[::max(1,len(points)//1500)]
@@ -203,7 +242,10 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         raise RuntimeError('Tracked target center differs by over 40 mm')
     table=config['table_height_m']
     if require_table:
-        near=valid&~target&(np.linalg.norm(world[:,:,:2]-fit.x,axis=2)<.22)
+        # Avoid a full HxWx2 temporary and square root for the table-neighbor
+        # test. Squared distance retains the identical 220 mm boundary.
+        distance2=(world[:,:,0]-fit.x[0])**2+(world[:,:,1]-fit.x[1])**2
+        near=valid&~target&(distance2<.22**2)
         z=world[near,2];plane=z[np.abs(z-table)<.008]
         if len(plane)<100:raise RuntimeError('Independent measured table height disagrees with camera')
         if abs(np.median(plane)-table)>.005:raise RuntimeError('Table plane differs by over 5 mm')

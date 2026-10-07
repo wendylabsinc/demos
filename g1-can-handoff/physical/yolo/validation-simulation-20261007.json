@@ -1,0 +1,23 @@
+{
+  "total_tests": 108,
+  "passed": 103,
+  "failed": 5,
+  "failures_match_parent_branch": true,
+  "parent": "602fa18df8e0273edaecefdd34695a1b27411908",
+  "failures": {
+    "failures": [
+      "test_75cm_scene_tracks_finger_split_label_during_hold (test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold)",
+      "test_head_camera_tracks_finger_split_label_during_hold (test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold)",
+      "test_measured_arms_down_stages_then_lifts_and_holds (test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds)",
+      "test_measured_arms_down_start_rejects_interpolated_collision (test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_start_rejects_interpolated_collision)",
+      "test_shared_physical_sequence_lifts_with_measured_table_height (test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height)"
+    ],
+    "errors": [
+      "False is not true : Measured starting arm posture changed after planning; replan required",
+      "False is not true : Measured starting arm posture changed after planning; replan required",
+      "False is not true : Can or table moved during final reach; refusing to close",
+      "'trajectory intersects' not found in 'No reachable grasp and offer path for this can position'",
+      "False is not true : Measured starting arm posture changed after planning; replan required"
+    ]
+  }
+}

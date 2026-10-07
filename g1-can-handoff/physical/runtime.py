@@ -11,10 +11,12 @@ import traceback
 import urllib.request
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 sys.path.insert(0,str(Path(__file__).parent/'adapter'))
 from physical_core import calibration,calibration_start_guard,calibrated_scene,PhysicalPlant,snapshot_guard
-from camera_input import Camera,geometry
+from camera_input import Camera,geometry,materialize_rgbd
+from yolo_client import fresh
 
 DATA=Path(os.getenv('HANDOFF_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
 EVENTS=DATA/('events-'+time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'.jsonl')
@@ -32,6 +34,7 @@ class Runtime:
         self.operation_lock=threading.Lock();self.cancel=threading.Event();self.lock=threading.RLock();self.phase='PASSIVE';self.error=None;self.plant=None;self.arm=None;self.hand=None
         self.grasp_started=False
         self.camera=Camera();self.latest={};self.motion_commands_sent=0;self.active=False
+        self.archive_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='camera-evidence')
         self.body=ChannelSubscriber('rt/lowstate',LowState_);self.body.Init()
         self.hub=LowstateHub(self.body.Read,hz=200).start()
         self.subs={side:ChannelSubscriber(f'rt/dex3/{side}/state',HandState_) for side in ('left','right')}
@@ -114,11 +117,32 @@ class Runtime:
 
     def archive_frame(self,frame,phase):
         path=DATA/f"camera-{frame['meta']['frame_id']}-{phase}.npz"
-        path.write_bytes(frame['raw'])
+        path.write_bytes(frame['raw'] if 'raw' in frame else materialize_rgbd(frame))
         path.with_suffix('.source.zip').write_bytes(frame['source_rgbd_zip'])
         path.with_suffix('.timing.npz').write_bytes(frame['source_timing_npz'])
         self.event('phase_camera_evidence',phase_name=phase,path=str(path),
                    metadata=frame['meta'],color_codec=frame['color_codec'])
+
+    def observe_frame(self,config,phase,require_table,expected_center_xy=None):
+        # Reserve processing time within the unchanged 300 ms final deadline.
+        # Discard an old acquisition before it can become a motor observation.
+        for attempt in range(3):
+            frame=self.camera.frame(materialize=False)
+            if 0<=time.monotonic()-frame['timestamp']<=.18:
+                break
+        else:
+            raise RuntimeError('Camera could not supply an exposure within the 180 ms acquisition budget')
+        # Persist this exact frame while inference/geometric fitting runs.
+        # Join the single archive job before returning any usable observation;
+        # IO failure or >300 ms age still blocks the next motor action.
+        archived=self.archive_executor.submit(self.archive_frame,frame,phase)
+        try:
+            result=geometry(frame,config,require_table=require_table,
+                            expected_center_xy=expected_center_xy)
+        finally:
+            archived.result()
+        fresh(frame)
+        return result
 
     def capture(self):
         self.camera.acquire()
@@ -266,8 +290,7 @@ class Runtime:
         try:
             config=self.config(refresh=True)
             def observe(phase, require_table, expected_center_xy=None):
-                frame=self.camera.frame();self.archive_frame(frame,phase)
-                return geometry(frame,config,require_table=require_table,expected_center_xy=expected_center_xy)
+                return self.observe_frame(config,phase,require_table,expected_center_xy)
             def phase_event(phase, **fields):
                 nonlocal grasp_started
                 if phase=='close':

@@ -44,6 +44,8 @@ stages:
       CYCLONEDDS_HOME: /usr/local
       LD_LIBRARY_PATH: /usr/local/lib
       G1_CONTROL_HZ: "100"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
     install:
       pip:
         - packages: ["numpy==2.2.6", "scipy==1.15.3", "mujoco==3.14.0", "pillow==11.3.0"]

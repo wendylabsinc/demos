@@ -8,7 +8,7 @@ import urllib.error
 
 import numpy as np
 
-MODEL_SHA256 = '87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7'
+MODEL_SHA256 = '74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862'
 SCHEMA = 'wendy.handoff.coke-yolo.v1'
 
 
@@ -22,8 +22,9 @@ def identity(frame):
 
 
 def fresh(frame):
-    if not 0 <= time.monotonic() - frame['timestamp'] <= .3:
-        raise RuntimeError('YOLO RGB-D exposure timestamp invalid/stale after inference')
+    age=time.monotonic()-frame['timestamp']
+    if not 0 <= age <= .3:
+        raise RuntimeError(f'YOLO RGB-D exposure timestamp invalid/stale after inference ({age*1000:.1f} ms)')
 
 
 def validate_result(frame, result):

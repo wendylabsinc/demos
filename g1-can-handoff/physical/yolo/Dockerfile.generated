@@ -28,9 +28,9 @@ FROM dependencies AS weights
 COPY model/coke-can.pt /models/coke-can.pt
 
 FROM weights AS fixtures
-COPY fixtures/g1-coke-raw.jpg /fixtures/g1-coke-raw.jpg
+COPY fixtures/ /fixtures/
 
 FROM fixtures AS inference
-COPY service.py preprocessing.py postprocessing.py /app/
+COPY service.py preprocessing.py postprocessing.py qualification.py /app/
 CMD ["python3", "/app/service.py"]
 USER 65532

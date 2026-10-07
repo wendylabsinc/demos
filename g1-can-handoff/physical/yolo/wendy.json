@@ -1,10 +1,20 @@
 {
   "appId": "DEV-g1-handoff-coke-yolo",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "platform": "linux",
   "entitlements": [
-    {"type": "network", "mode": "host"},
-    {"type": "gpu"}
+    {
+      "type": "network",
+      "mode": "host"
+    },
+    {
+      "type": "gpu"
+    }
   ],
-  "readiness": {"tcpSocket": {"port": 8112}, "timeoutSeconds": 180}
+  "readiness": {
+    "tcpSocket": {
+      "port": 8112
+    },
+    "timeoutSeconds": 180
+  }
 }

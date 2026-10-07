@@ -2,7 +2,7 @@
   "repository": "https://github.com/wendylabsinc/g1-bartending-demo",
   "commit": "2dcc7f82ad67388927a9b843a7412b6b9ee65d26",
   "path": "coke-detector-yolo/model/coke-can.pt",
-  "sha256": "87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7",
+  "sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
   "architecture": "YOLOv8n",
   "class_names": {
     "0": "Coca-Cola"
@@ -13,5 +13,51 @@
   "reused_runtime_sources": [
     "coke-detector-yolo/src/coke_detector/preprocessing.py",
     "coke-detector-yolo/src/coke_detector/postprocessing.py"
-  ]
+  ],
+  "parent_sha256": "87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7",
+  "adaptation": {
+    "only_changed_state_prefix": "model.22.cv3.",
+    "frozen_features_and_box_regression_verified": true,
+    "unique_positive_views": 1,
+    "unique_negative_regions": 2,
+    "original_training_images": 453,
+    "original_validation_images": 42,
+    "original_test_images": 24,
+    "positive_sha256": "4edf0c03989a3c761ac10c4be6cdc39dab8991288eaf4343a1cab1802a863a2b",
+    "positive_bbox_xyxy": [
+      184,
+      244,
+      274,
+      379
+    ],
+    "runtime": "ultralytics==8.4.123; torch==2.14.1; Apple MPS",
+    "seed": 7,
+    "bitwise_training_reproducibility_claimed": false,
+    "phase_1": {
+      "epochs": 12,
+      "positive_sampling_weight": 24,
+      "lr0": 0.0001,
+      "geometry_augmentation": true,
+      "checkpoint": "last.pt",
+      "checkpoint_sha256": "c90ccb3a366fb316b13d96e870721274d7d6309e85dad19622d872df4c5fe9ba"
+    },
+    "phase_2": {
+      "completed_epochs": 5,
+      "positive_sampling_weight": 120,
+      "lr0": 0.0001,
+      "geometry_augmentation": false,
+      "checkpoint": "last.pt",
+      "planned_epochs": 16,
+      "stop_after": 5,
+      "checkpoint_sha256": "a9a80044e918e7fc70cd2b11daa212e5b970bb7aeac8342341a879b810a279b4"
+    },
+    "class_branch_interpolation": {
+      "phase_1_weight": 0.5,
+      "phase_2_weight": 0.5
+    },
+    "metrics_at_confidence_strictly_above": 0.3,
+    "validation_recall": 0.7777777777777778,
+    "test_recall": 0.9436619718309859,
+    "held_out_note": "One rotated capture and two archived G1 views. Nearby rotated frames are not independent poses."
+  }
 }

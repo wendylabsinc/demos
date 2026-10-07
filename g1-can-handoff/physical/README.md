@@ -88,16 +88,17 @@ remain distinct in both evidence streams.
 
 ## Coke-trained YOLO on G1 NX2
 
-The physical detector uses the existing Coke-trained YOLOv8n checkpoint from
-`wendylabsinc/g1-bartending-demo`, pinned by commit and SHA-256 in
+The physical detector adapts the Coke-trained YOLOv8n checkpoint from
+`wendylabsinc/g1-bartending-demo`, with parent and adapted SHA-256 recorded in
 [yolo/model/SOURCE.json](yolo/model/SOURCE.json). It runs in the separate
 `DEV-g1-handoff-coke-yolo` Wendy app on JetPack 6.2 / Orin NX. CUDA PyTorch FP16
 is required; missing CUDA, an incorrect checkpoint, or failed warm-up prevents
 startup. This version uses PyTorch CUDA, not the old app's TensorRT engine.
 The detector reuses the older detector's fixed-square letterbox and bounded
 one-class CPU NMS around its CUDA model forward. Inference stays on the
-same warmed CUDA thread to meet the exact-frame exposure budget. Its saved Coke fixture must
-pass semantic/box qualification before readiness. The detector has no
+same warmed CUDA thread, with a fixed 640-pixel FP16 CUDA graph by default.
+Four saved Coke views and two empty regions must pass semantic/box qualification
+before readiness. The detector has no
 USB/camera/DDS access or command publisher.
 
 The handoff runtime keeps the existing `g1-can-camera` owner and renewable
@@ -108,10 +109,21 @@ backend. The 300 ms exposure-age limit is enforced before and after inference
 and after geometric fitting. It never consumes a latest-box feed or silently
 falls back to red pixels when YOLO is unavailable.
 
+Timing and RGB-D payloads are fetched concurrently for the same frame ID.
+The physical runtime reserves a 180 ms acquisition budget, trying at most three
+complete acquisitions before rejecting the observation. Inference overlaps the
+ray transform; normalized NPZ generation and evidence writes overlap fitting.
+The archive worker must finish successfully before any observation returns,
+and the final 300 ms freshness check still applies after that join. There is
+one archive worker and no pending evidence backlog between observations.
+
 A Coke detection strictly above 30% confidence (or a higher configured
 threshold) selects a box; exactly 30% is rejected. Measured depth
 inside its inset region supplies the cylinder points, with finite-depth,
 foreground-depth, upright/table, 6 mm fit, and 6-pixel image-boundary guards.
+The cylinder fit uses sidewall points: the upper 10 mm below the measured lid
+is excluded before estimating foreground depth. Initial lid height is bounded
+by the commissioned can/table height; tracked height follows measured depth.
 There must be exactly one qualifying initial target. During lift/hold, only
 boxes with measured points in the existing expected-cylinder region can match;
 multiple matches remain ambiguous, and the fitted center must stay within
@@ -124,6 +136,7 @@ frame and vertical-rise checks. YOLO confidence does not authorize motion.
 | `HANDOFF_YOLO_URL` | `http://127.0.0.1:8112` | Same-host inference URL; timestamps use the NX2 monotonic clock |
 | `HANDOFF_YOLO_MIN_CONFIDENCE` | `0.30` | Probability, `0.30..0.99`; geometry and motion gates remain required |
 | `YOLO_MODEL_PATH` (detector app) | `/models/coke-can.pt` | Checksum-pinned checkpoint file |
+| `YOLO_CUDA_GRAPH` (detector app) | `1` | `1`: captured FP16 forward; `0`: eager FP16 comparison |
 
 Build/deploy the isolated detector first from `physical/yolo`, then deploy the
 physical app from `physical` using native Wendy with an explicit NX2 selector.
@@ -149,6 +162,40 @@ and requires one Coke detection at confidence >0.30 with IoU >=0.50 against
 the archived real-camera annotation. CPU replay is not the physical service's
 backend or a hardware qualification. Model/runtime licensing and source
 provenance are recorded in the manifest.
+
+### Model repair and measured timing, 7 October 2026
+
+The parent checkpoint recognized the archived can but scored the initial NX2
+view at only 12.7%. The repair changes only `model.22.cv3.*` (the class branch);
+all feature and box-regression state remains exactly equal to the parent.
+Training adds one manually annotated NX2 view and two empty table/cable crops
+to the original 453 training images. Weighted copies are sampling weights,
+not additional independent views. A rotated view and two archived G1 views
+remain held out. The unchanged >30% gate reports validation precision/recall
+86.8%/77.8% and test precision/recall 97.1%/94.4%; parent values were
+87.1%/79.9% and 86.1%/95.8%. Scene generalization remains narrowly qualified.
+
+Use `adapt_model.py --model <parent.pt>` for the first 12-epoch rehearsal
+phase. Continue from its last checkpoint with `--epochs 16 --stop-after 5
+--positive-weight 120 --fixed-view` and a fresh output directory. Blend those
+two last checkpoints using `blend_model.py --adapted-weight .5`, then run
+`check_dataset.py` against the original untouched validation/test splits and
+`replay.py` against every fixture. The manifest records the recipe; MPS
+training is not claimed to be bitwise reproducible.
+
+On the NX2, 16 consecutive live frames produced one Coke box above 30%:
+52.4–57.0% confidence, inference median 25.1 ms / p95 26.1 ms. Excluding the
+first ray-cache warm-up, sequential camera acquisition plus detection ran
+at 9.27 Hz; this is separate from the 15 Hz camera and ~40 FPS model capacity.
+A controlled comparison on the parent checkpoint reduced median prediction
+time from 27.7 to 20.3 ms with identical boxes using the CUDA graph.
+
+The final passive plan passed. Trial requests still stopped before creating
+motor adapters: camera acquisition/final freshness and cylinder residual
+checks rejected some frames. The last rejection was a cylinder residual above
+6 mm. Motor commands remained zero, and the runtime was returned to PASSIVE.
+This is not a verified physical pickup. See the dated `yolo/validation-*.json`
+files for exact artifacts, samples, dataset metrics, and simulation failures.
 
 ## Shared simulation regression
 

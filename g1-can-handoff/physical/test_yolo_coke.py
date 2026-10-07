@@ -43,6 +43,35 @@ class FrameFixture:
 
 
 class CokeGeometryTests(FrameFixture, unittest.TestCase):
+    def test_lid_interior_does_not_enter_cylinder_sidewall_fit(self):
+        frame=self.frame();config=self.config()
+        # Background is the measured table, with an upright cylinder below
+        # a broad flat lid. Grey pixels throughout prevent a color shortcut.
+        frame['rays'][:,:,0]=.35
+        frame['rays'][:,:,1]=.18
+        frame['rays'][:,:,2]=.762
+        ys,xs=np.mgrid[25:85,60:100]
+        angle=np.linspace(2.,4.2,40)[None,:]
+        frame['rays'][ys,xs,0]=(.35+.033*np.cos(angle))/.95
+        frame['rays'][ys,xs,1]=(.18+.033*np.sin(angle))/.95
+        frame['rays'][ys,xs,2]=np.linspace(.884,.782,60)[:,None]/.95
+        ys,xs=np.mgrid[25:53,60:100]
+        frame['rays'][ys,xs,0]=(.35+np.linspace(-.02,.02,40)[None,:])/.95
+        frame['rays'][ys,xs,1]=(.18+np.linspace(-.02,.02,28)[:,None])/.95
+        frame['rays'][ys,xs,2]=.884/.95
+        frame['rays'][53:85,60:100,2]=np.linspace(.874,.782,32)[:,None]/.95
+        _,vision=geometry(frame,config,detector=Detector())
+        np.testing.assert_allclose(vision['center_xy_m'],[.35,.18],atol=1e-6)
+        self.assertLess(vision['fit_error_m'],.006)
+        # The same cap exclusion must continue after lift, where table-relative
+        # height is no longer the can's top.
+        frame['timestamp']=time.monotonic()
+        frame['rays'][25:85,60:100,2]+=.15/.95
+        _,lifted=geometry(frame,config,require_table=False,
+                          expected_center_xy=[.35,.18],detector=Detector())
+        self.assertLess(lifted['fit_error_m'],.006)
+        self.assertGreater(lifted['top_quantile_z_m']-vision['top_quantile_z_m'],.13)
+
     def test_nonred_coke_label_fits_measured_cylinder(self):
         frame=self.frame()
         _,vision=geometry(frame,self.config(),require_table=False,detector=Detector())

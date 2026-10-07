@@ -26,12 +26,12 @@ stages:
     from: weights
     copy:
       - from: local
-        paths: [fixtures/g1-coke-raw.jpg]
-        dest: /fixtures/g1-coke-raw.jpg
+        paths: [fixtures/]
+        dest: /fixtures/
   - name: inference
     from: fixtures
     copy:
       - from: local
-        paths: [service.py, preprocessing.py, postprocessing.py]
+        paths: [service.py, preprocessing.py, postprocessing.py, qualification.py]
         dest: /app/
     cmd: [python3, /app/service.py]

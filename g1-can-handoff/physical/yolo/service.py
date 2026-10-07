@@ -16,7 +16,7 @@ import numpy as np
 from preprocessing import letterbox_bgr
 from postprocessing import decode_one_class_candidates
 
-MODEL_SHA256 = '87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7'
+MODEL_SHA256 = '74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862'
 SCHEMA = 'wendy.handoff.coke-yolo.v1'
 MAX_BYTES = 1920 * 1080 * 3
 
@@ -51,11 +51,40 @@ class Detector:
         self.torch=torch
         self.network=self.model.model.fuse(verbose=False).eval().to('cuda:0').half()
         self.lock = threading.Lock()
+        self.graph = None
+        self.static_input = torch.zeros((1, 3, 640, 640), device='cuda:0', dtype=torch.float16)
+        use_graph = os.getenv('YOLO_CUDA_GRAPH', '1')
+        if use_graph not in ('0', '1'):
+            raise ValueError('YOLO_CUDA_GRAPH must be 0 or 1')
         self.predict(np.zeros((480, 640, 3), dtype=np.uint8))
+        if use_graph == '1':
+            with torch.inference_mode():
+                for _ in range(3):
+                    self.packed_forward(self.static_input)
+                torch.cuda.synchronize()
+                self.graph = torch.cuda.CUDAGraph()
+                with torch.cuda.graph(self.graph):
+                    self.static_output = self.packed_forward(self.static_input)
+            self.execution = 'cuda_graph_fp16'
+        else:
+            self.execution = 'eager_fp16'
         if next(self.model.model.parameters()).device.type != 'cuda':
             raise RuntimeError('YOLO warm-up did not place model on CUDA')
         self.device = torch.cuda.get_device_name(0)
         self.qualify()
+
+    def packed_forward(self, tensor):
+        raw = self.network(tensor)
+        if isinstance(raw, (tuple, list)):
+            raw = raw[0]
+        if tuple(raw.shape) != (1, 5, 8400):
+            raise RuntimeError('Unexpected one-class YOLO output shape')
+        prediction = raw[0]
+        values, indices = prediction[4].topk(129, largest=True, sorted=True)
+        candidates = prediction[:, indices[:128]].transpose(0, 1).float()
+        # One small host transfer includes the saturation score. Retain the
+        # 129th score so a hidden target cannot escape the ambiguity guard.
+        return self.torch.cat((candidates.flatten(), values[-1:].float()))
 
     def predict(self, image):
         # Reuse the bartending detector's fixed-shape preprocessing and small
@@ -63,31 +92,25 @@ class Detector:
         with self.lock, self.torch.inference_mode():
             chw,scale,pad_x,pad_y=letterbox_bgr(image,640)
             tensor=self.torch.from_numpy(chw).to('cuda:0').half().div_(255).unsqueeze(0)
-            raw=self.network(tensor)
-            if isinstance(raw,(tuple,list)):raw=raw[0]
-            if tuple(raw.shape)!=(1,5,8400):raise RuntimeError('Unexpected one-class YOLO output shape')
-            prediction=raw[0]
-            values,indices=prediction[4].topk(129,largest=True,sorted=True)
-            candidates=prediction[:,indices[:128]].transpose(0,1).float().cpu().numpy()
-            saturated=bool(values[-1].item()>.30)
+            if self.graph is None:
+                packed = self.packed_forward(tensor).cpu().numpy()
+            else:
+                self.static_input.copy_(tensor)
+                self.graph.replay()
+                packed = self.static_output.cpu().numpy()
+            candidates = packed[:-1].reshape(128, 5)
+            saturated = bool(packed[-1] > .30)
             boxes=decode_one_class_candidates(candidates,confidence=.15,nms_iou=.7,max_detections=21,
                 frame_width=image.shape[1],frame_height=image.shape[0],scale=scale,pad_x=pad_x,pad_y=pad_y)
             return [dict(xyxy=[b['x1'],b['y1'],b['x2'],b['y2']],confidence=b['conf'],
                          class_id=0,class_name='Coca-Cola') for b in boxes],saturated
 
     def qualify(self):
-        # A real saved Coke frame must retain its semantic result through the
-        # optimized path before the service binds its readiness port.
-        from PIL import Image
-        image=np.asarray(Image.open('/fixtures/g1-coke-raw.jpg').convert('RGB'))[:,:,::-1].copy()
-        boxes,saturated=self.predict(image)
-        expected=np.asarray([256,76,323,199],dtype=float)
-        good=[b for b in boxes if b['confidence']>.30]
-        if len(good)!=1 or saturated:raise RuntimeError('Saved Coke recognition qualification failed')
-        observed=np.asarray(good[0]['xyxy'])
-        intersection=np.maximum(0,np.minimum(observed[2:],expected[2:])-np.maximum(observed[:2],expected[:2])).prod()
-        union=np.prod(observed[2:]-observed[:2])+np.prod(expected[2:]-expected[:2])-intersection
-        if intersection/union<.5:raise RuntimeError('Saved Coke box qualification failed')
+        from qualification import fixtures, check
+        self.qualification = []
+        for row, image in fixtures('/fixtures'):
+            boxes, saturated = self.predict(image)
+            self.qualification.append(check(row, boxes, saturated))
 
     def detect(self, source, raw):
         image = decode_frame(source, raw)
@@ -102,7 +125,8 @@ class Detector:
     def health(self):
         return dict(healthy=True, backend='pytorch_cuda', model_sha256=MODEL_SHA256,
                     class_names=self.model.names, gpu=self.device, camera_owned=False,
-                    motion_commands_sent=0)
+                    motion_commands_sent=0, execution=self.execution, input_size=640,
+                    qualification=self.qualification)
 
 
 class Handler(BaseHTTPRequestHandler):

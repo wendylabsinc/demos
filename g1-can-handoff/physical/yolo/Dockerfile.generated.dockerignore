@@ -4,9 +4,8 @@
 !model/coke-can.pt/
 !model/coke-can.pt/**
 !fixtures/
-!fixtures/g1-coke-raw.jpg
-!fixtures/g1-coke-raw.jpg/
-!fixtures/g1-coke-raw.jpg/**
+!fixtures//
+!fixtures//**
 !service.py
 !service.py/
 !service.py/**
@@ -16,3 +15,6 @@
 !postprocessing.py
 !postprocessing.py/
 !postprocessing.py/**
+!qualification.py
+!qualification.py/
+!qualification.py/**
