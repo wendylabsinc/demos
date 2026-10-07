@@ -21,3 +21,6 @@
 !frame_limits.py
 !frame_limits.py/
 !frame_limits.py/**
+!confidence.py
+!confidence.py/
+!confidence.py/**

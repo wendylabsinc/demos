@@ -1,0 +1,181 @@
+{
+  "adaptation": {
+    "parent_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+    "epochs": 3,
+    "original_train_images": 453,
+    "unique_positive_rehearsal_views": 1,
+    "positive_sampling_weight": 24,
+    "unique_negative_regions": 2,
+    "negative_sampling_weight": 48,
+    "held_out_val_images": 42,
+    "held_out_test_images": 24,
+    "training_bitwise_reproducibility_claimed": false,
+    "candidates": [
+      {
+        "path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-yolo/.runtime/yolo-repair/ten-percent-negatives/runs/negative-rehearsal/weights/last.pt",
+        "sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "only_class_branch_changed": true,
+        "changed_tensors": [
+          "model.22.cv3.0.0.conv.weight",
+          "model.22.cv3.0.0.bn.weight",
+          "model.22.cv3.0.0.bn.bias",
+          "model.22.cv3.0.0.bn.running_mean",
+          "model.22.cv3.0.0.bn.running_var",
+          "model.22.cv3.0.1.conv.weight",
+          "model.22.cv3.0.1.bn.weight",
+          "model.22.cv3.0.1.bn.bias",
+          "model.22.cv3.0.1.bn.running_mean",
+          "model.22.cv3.0.1.bn.running_var",
+          "model.22.cv3.0.2.weight",
+          "model.22.cv3.0.2.bias",
+          "model.22.cv3.1.0.conv.weight",
+          "model.22.cv3.1.0.bn.weight",
+          "model.22.cv3.1.0.bn.bias",
+          "model.22.cv3.1.0.bn.running_mean",
+          "model.22.cv3.1.0.bn.running_var",
+          "model.22.cv3.1.1.conv.weight",
+          "model.22.cv3.1.1.bn.weight",
+          "model.22.cv3.1.1.bn.bias",
+          "model.22.cv3.1.1.bn.running_mean",
+          "model.22.cv3.1.1.bn.running_var",
+          "model.22.cv3.1.2.weight",
+          "model.22.cv3.1.2.bias",
+          "model.22.cv3.2.0.conv.weight",
+          "model.22.cv3.2.0.bn.weight",
+          "model.22.cv3.2.0.bn.bias",
+          "model.22.cv3.2.0.bn.running_mean",
+          "model.22.cv3.2.0.bn.running_var",
+          "model.22.cv3.2.1.conv.weight",
+          "model.22.cv3.2.1.bn.weight",
+          "model.22.cv3.2.1.bn.bias",
+          "model.22.cv3.2.1.bn.running_mean",
+          "model.22.cv3.2.1.bn.running_var",
+          "model.22.cv3.2.2.weight",
+          "model.22.cv3.2.2.bias"
+        ]
+      },
+      {
+        "path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-yolo/.runtime/yolo-repair/ten-percent-negatives/runs/negative-rehearsal/weights/best.pt",
+        "sha256": "2cbaa4a3f61f268525bf864387248867cc31b0336f1894b1d935b3f6f7b18718",
+        "only_class_branch_changed": true,
+        "changed_tensors": [
+          "model.22.cv3.0.0.conv.weight",
+          "model.22.cv3.0.0.bn.bias",
+          "model.22.cv3.0.0.bn.running_mean",
+          "model.22.cv3.0.0.bn.running_var",
+          "model.22.cv3.0.1.conv.weight",
+          "model.22.cv3.0.1.bn.weight",
+          "model.22.cv3.0.1.bn.bias",
+          "model.22.cv3.0.1.bn.running_mean",
+          "model.22.cv3.0.1.bn.running_var",
+          "model.22.cv3.0.2.weight",
+          "model.22.cv3.0.2.bias",
+          "model.22.cv3.1.0.conv.weight",
+          "model.22.cv3.1.0.bn.weight",
+          "model.22.cv3.1.0.bn.bias",
+          "model.22.cv3.1.0.bn.running_mean",
+          "model.22.cv3.1.0.bn.running_var",
+          "model.22.cv3.1.1.conv.weight",
+          "model.22.cv3.1.1.bn.bias",
+          "model.22.cv3.1.1.bn.running_mean",
+          "model.22.cv3.1.1.bn.running_var",
+          "model.22.cv3.1.2.weight",
+          "model.22.cv3.1.2.bias",
+          "model.22.cv3.2.0.conv.weight",
+          "model.22.cv3.2.0.bn.weight",
+          "model.22.cv3.2.0.bn.bias",
+          "model.22.cv3.2.0.bn.running_mean",
+          "model.22.cv3.2.0.bn.running_var",
+          "model.22.cv3.2.1.conv.weight",
+          "model.22.cv3.2.1.bn.bias",
+          "model.22.cv3.2.1.bn.running_mean",
+          "model.22.cv3.2.1.bn.running_var",
+          "model.22.cv3.2.2.weight",
+          "model.22.cv3.2.2.bias"
+        ]
+      }
+    ],
+    "candidate_only": true,
+    "hardware_io": false
+  },
+  "heldout_dataset": {
+    "confidence_strictly_above": 0.1,
+    "baseline640": {
+      "valid": {
+        "tp": 117,
+        "fp": 28,
+        "fn": 27,
+        "precision": 0.8068965517241379,
+        "recall": 0.8125
+      },
+      "test": {
+        "tp": 68,
+        "fp": 12,
+        "fn": 3,
+        "precision": 0.85,
+        "recall": 0.9577464788732394
+      }
+    },
+    "baseline_same_size": {
+      "valid": {
+        "tp": 117,
+        "fp": 28,
+        "fn": 27,
+        "precision": 0.8068965517241379,
+        "recall": 0.8125
+      },
+      "test": {
+        "tp": 68,
+        "fp": 12,
+        "fn": 3,
+        "precision": 0.85,
+        "recall": 0.9577464788732394
+      }
+    },
+    "candidate": {
+      "valid": {
+        "tp": 114,
+        "fp": 21,
+        "fn": 30,
+        "precision": 0.8444444444444444,
+        "recall": 0.7916666666666666
+      },
+      "test": {
+        "tp": 67,
+        "fp": 8,
+        "fn": 4,
+        "precision": 0.8933333333333333,
+        "recall": 0.9436619718309859
+      }
+    },
+    "regression_gate_passed": true
+  },
+  "heldout_crops": {
+    "same_scene_correlated_crops": true,
+    "training_source_excluded": true,
+    "passed": true,
+    "frames": [
+      {
+        "image": ".runtime/yolo-repair/ten-percent-heldout/empty-95373-right.png",
+        "max_confidence": 0,
+        "eligible_count": 0
+      },
+      {
+        "image": ".runtime/yolo-repair/ten-percent-heldout/empty-95373-top.png",
+        "max_confidence": 0,
+        "eligible_count": 0
+      },
+      {
+        "image": ".runtime/yolo-repair/ten-percent-heldout/empty-99003-right.png",
+        "max_confidence": 0,
+        "eligible_count": 0
+      },
+      {
+        "image": ".runtime/yolo-repair/ten-percent-heldout/empty-99003-top.png",
+        "max_confidence": 0.001051835366524756,
+        "eligible_count": 0
+      }
+    ]
+  },
+  "selected_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9"
+}

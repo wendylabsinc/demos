@@ -19,6 +19,10 @@ class RuntimeLifecycleTests(unittest.TestCase):
         runtime=Runtime.__new__(Runtime)
         runtime.cancel=threading.Event();runtime.operation_lock=threading.Lock()
         runtime.plant=Mock();runtime.arm=Mock();runtime.hand=Mock()
+        runtime.camera=Mock();runtime.lock=threading.RLock()
+        runtime.observation_lock=threading.RLock();runtime.tracker=None
+        runtime.tracking_stop=threading.Event();runtime.tracking_thread=None
+        runtime.tracking_error=None;runtime.tracking_observation=None
         runtime.status=Mock(return_value={});runtime.event=Mock()
         runtime.phase='FROZEN';runtime.active=False;runtime.grasp_started=False
         return runtime
@@ -79,6 +83,7 @@ class RuntimeLifecycleTests(unittest.TestCase):
         runtime.archive_guard=Mock(return_value={'age_s':{'rt/arm_sdk':0},'session':'test'})
         runtime.config=Mock(return_value={'arm_limits_rad':[]})
         runtime.make_plant=Mock();plant=runtime.make_plant.return_value
+        runtime.start_tracking=Mock()
         result={'lift_verified':True,'visual_rise_m':.13,'hold_verified_s':1}
         with patch('runtime.snapshot_guard'),patch('runtime.calibration_start_guard'),patch('runtime.http_json',side_effect=ConnectionError),patch('pickup.prepare'),patch('pickup.execute',return_value=result):
             self.assertTrue(runtime.run(True)['physical_lift_verified'])

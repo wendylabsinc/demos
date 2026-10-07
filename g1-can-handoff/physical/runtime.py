@@ -34,6 +34,10 @@ class Runtime:
         self.operation_lock=threading.Lock();self.cancel=threading.Event();self.lock=threading.RLock();self.phase='PASSIVE';self.error=None;self.plant=None;self.arm=None;self.hand=None
         self.grasp_started=False
         self.demo_running=False;self.demo_result=None;self.demo_error=None
+        self.observation_lock=threading.RLock();self.tracker=None
+        self.tracking_stop=threading.Event();self.tracking_thread=None
+        self.frame_prefetch=None;self.pending_frame=None
+        self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
         saved=DATA/'perception-config.json'
         if saved.exists():
             os.environ['HANDOFF_CAMERA_MAX_AGE_MS']=str(frame_age_limit_s(json.loads(saved.read_text())['camera_max_age_ms'])*1000)
@@ -94,6 +98,10 @@ class Runtime:
                 'calibration_present':(DATA/'calibration.json').is_file(),'lowstate':self.hub.status(),
                 'camera_max_age_ms':frame_age_limit_s()*1000,
                 'yolo_confidence_strictly_above':confidence_threshold()}
+        observation=getattr(self,'tracking_observation',None)
+        result.update(perception_mode='yolo_visual_depth',tracking_error=getattr(self,'tracking_error',None),
+                      tracking_exposure_age_ms=None if observation is None else (time.monotonic()-observation.timestamp)*1000,
+                      tracking_vision=getattr(self,'tracking_vision',None))
         result.update(demo_running=getattr(self,'demo_running',False),demo_result=getattr(self,'demo_result',None),
                       demo_error=getattr(self,'demo_error',None))
         try:
@@ -144,14 +152,29 @@ class Runtime:
                    metadata=frame['meta'],color_codec=frame['color_codec'])
 
     def observe_frame(self,config,phase,require_table,expected_center_xy=None):
-        # Reserve processing time within the configured final exposure deadline.
-        # Discard an old acquisition before it can become a motor observation.
+        from contextlib import nullcontext
+        with getattr(self,'observation_lock',nullcontext()):
+            return self._observe_frame(config,phase,require_table,expected_center_xy)
+
+    def _observe_frame(self,config,phase,require_table,expected_center_xy=None):
+        # Reserve a quarter of the final deadline for tracking/fit/archive.
+        # The final freshness check still rejects any completed observation
+        # beyond the configured deadline; acquisition is not the decision gate.
+        acquisition_budget=frame_age_limit_s()*.75
+        attempts=[]
         for attempt in range(3):
-            frame=self.camera.frame(materialize=False)
-            if 0<=time.monotonic()-frame['timestamp']<=.18:
+            frame=self.next_tracking_frame()
+            previous=getattr(getattr(self,'tracker',None),'state',None)
+            distinct=previous is None or frame['meta']['frame_id']>previous['frame_id']
+            age=time.monotonic()-frame['timestamp']
+            attempts.append({'frame_id':frame['meta']['frame_id'],'exposure_age_ms':age*1000,
+                             'timings_ms':frame.get('timings_ms'),'distinct':distinct})
+            if distinct and 0<=age<=acquisition_budget:
                 break
+            time.sleep(.02)
         else:
-            raise RuntimeError('Camera could not supply an exposure within the 180 ms acquisition budget')
+            self.event('camera_acquisition_rejected',attempts=attempts,budget_ms=acquisition_budget*1000)
+            raise RuntimeError(f'Camera could not supply an exposure within the {acquisition_budget*1000:.0f} ms acquisition budget')
         # Persist this exact frame while inference/geometric fitting runs.
         # Join the single archive job before returning any usable observation;
         # IO failure or excess exposure age still blocks the next motor action.
@@ -163,10 +186,12 @@ class Runtime:
             result=YoloClient().detect(exact_frame)
             detection.update(result)
             return result
+        tracker=getattr(self,'tracker',None)
+        if tracker is not None:tracker.detector=SimpleNamespace(detect=detect)
         try:
             result=geometry(frame,config,require_table=require_table,
                             expected_center_xy=expected_center_xy,
-                            detector=SimpleNamespace(detect=detect))
+                            detector=SimpleNamespace(detect=detect),tracker=tracker)
             archived.result()
             fresh(frame)
         except Exception as exc:
@@ -181,7 +206,68 @@ class Runtime:
                        processing_ms=(time.monotonic()-started)*1000,
                        exposure_age_ms=(time.monotonic()-frame['timestamp'])*1000)
         fresh(frame)
+        if tracker is not None:tracker.accept(result[0],result[1],frame)
         return result
+
+    def next_tracking_frame(self):
+        pool=getattr(self,'frame_prefetch',None)
+        if pool is None:return self.camera.frame(materialize=False)
+        if self.pending_frame is None:
+            self.pending_frame=pool.submit(self.camera.frame,materialize=False)
+        frame=self.pending_frame.result()
+        # One bounded prefetch overlaps camera IO with fitting the current
+        # frame. No queue grows, and both frames retain their real exposures.
+        self.pending_frame=pool.submit(self.camera.frame,materialize=False)
+        return frame
+
+    def tracking_guard(self):
+        with self.lock:
+            error=self.tracking_error;observation=self.tracking_observation
+        if error:raise RuntimeError('Visual/depth tracking uncertain: '+error)
+        if observation is None:raise RuntimeError('Visual/depth tracking has no accepted observation')
+        age=time.monotonic()-observation.timestamp
+        if not 0<=age<=frame_age_limit_s():
+            raise RuntimeError(f'Visual/depth tracking exposure stale ({age*1000:.1f} ms)')
+
+    def start_tracking(self,config,baseline):
+        self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
+        if self.cancel.is_set():raise RuntimeError('Operator cancelled before tracking')
+        self.tracking_stop.clear()
+        self.frame_prefetch=ThreadPoolExecutor(max_workers=1,thread_name_prefix='tracking-frame')
+        self.pending_frame=None
+        def sample():
+            require_table=not self.grasp_started
+            observation,vision=self.observe_frame(config,'motion-tracking',require_table,
+                 None if require_table else baseline.center[:2])
+            tolerance=.01 if require_table else .04
+            if np.linalg.norm(observation.center[:2]-baseline.center[:2])>tolerance:
+                raise RuntimeError('Tracked can moved outside the checked pickup path')
+            with self.lock:self.tracking_observation=observation;self.tracking_vision=vision
+        sample();self.tracking_guard()
+        def work():
+            while not self.tracking_stop.wait(.01):
+                try:sample()
+                except Exception as exc:
+                    with self.lock:self.tracking_error=f'{type(exc).__name__}: {exc}'
+                    self.event('tracking_failed',error=self.tracking_error)
+                    if self.active and self.plant:
+                        self.plant.freeze();self.active=False;self.phase='FROZEN';self.error=self.tracking_error
+                    break
+        self.tracking_thread=threading.Thread(target=work,daemon=True,name='visual-depth-tracking')
+        self.tracking_thread.start()
+
+    def stop_tracking(self):
+        stop=getattr(self,'tracking_stop',None)
+        if stop is not None:stop.set()
+        worker=getattr(self,'tracking_thread',None)
+        if worker is not None and worker is not threading.current_thread():
+            worker.join(timeout=6)
+            if worker.is_alive():raise RuntimeError('Tracking worker has not stopped; retain controller ownership')
+        self.tracking_thread=None
+        pool=getattr(self,'frame_prefetch',None)
+        if pool is not None:
+            pool.shutdown(wait=True,cancel_futures=True)
+            self.frame_prefetch=None;self.pending_frame=None
 
     def capture(self):
         self.camera.acquire()
@@ -342,10 +428,13 @@ class Runtime:
         if not preserve_cancel:self.cancel.clear()
         if self.cancel.is_set():raise RuntimeError('Operator cancelled before demo preparation')
         grasp_started=False
+        self.grasp_started=False
         self.archive_guard();snapshot_guard(self.read())
         self.camera.acquire()
         try:
             config=self.config(refresh=True)
+            from target_tracker import TargetTracker
+            self.tracker=TargetTracker(recheck_interval_s=1.)
             def observe(phase, require_table, expected_center_xy=None):
                 return self.observe_frame(config,phase,require_table,expected_center_xy)
             def phase_event(phase, **fields):
@@ -365,6 +454,8 @@ class Runtime:
             if not actuate:
                 if resuming:self.phase='FROZEN'
                 return {'planned':True,'motion_commands_sent':self.motion_commands_sent}
+            self.start_tracking(config,prepared[0])
+            plant.perception_guard=self.tracking_guard
             # Old teleop service must be stopped, not merely STANDBY, before a
             # separate publisher can take ownership. Refuse any reachable service.
             try:http_json(8090)
@@ -403,7 +494,9 @@ class Runtime:
             self.event('failure_hold',grasp_started=grasp_started,
                        control_retained=self.arm is not None,automatic_release=False)
             raise
-        finally:self.camera.close()
+        finally:
+            if self.phase!='HOLDING_CAN':
+                self.stop_tracking();self.camera.close()
 
     def watchdog(self):
         last_archive=0
@@ -422,11 +515,14 @@ class Runtime:
 
     def stop(self):
         self.cancel.set()
+        tracking_stop=getattr(self,'tracking_stop',None)
+        if tracking_stop is not None:tracking_stop.set()
         if self.plant:self.plant.freeze()
         self.active=False;self.phase='FROZEN' if self.arm else 'PASSIVE'
         return self.status()
 
     def relax_owned_arms(self,reason):
+        self.stop_tracking();self.camera.close()
         if self.hand:self.hand.relax()
         if self.arm:self.arm.shutdown(ramp_s=1.)
         self.hand=None;self.arm=None;self.plant=None;self.active=False;self.phase='PASSIVE';self.grasp_started=False

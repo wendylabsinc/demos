@@ -9,7 +9,7 @@ import urllib.error
 import numpy as np
 from yolo.frame_limits import frame_age_limit_s
 
-MODEL_SHA256 = '74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862'
+MODEL_SHA256 = 'fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9'
 SCHEMA = 'wendy.handoff.coke-yolo.v1'
 
 

@@ -228,11 +228,11 @@ def target_coke_mask(frame, config, world, roi=None, detector=None, require_tabl
                      'image_sha256':result['source']['image_sha256']}
 
 
-def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False):
+def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False,tracker=None):
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
     depth=frame['depth_m']
     # Exact distortion-corrected RealSense rays, not simulated pinhole geometry.
-    if synthetic_red:
+    if synthetic_red or tracker is not None:
         result=None
         pts=frame['rays']*depth[...,None]
         t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
@@ -262,7 +262,10 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         target=target_red_mask(frame['color_bgr'][...,::-1],depth,roi=roi)
         detection={'detector':'synthetic_red'}
     else:
-        target,detection=target_coke_mask(frame,config,world,roi,detector,require_table,result)
+        if tracker is None:
+            target,detection=target_coke_mask(frame,config,world,roi,detector,require_table,result)
+        else:
+            target,detection=tracker.select(frame,config,world,require_table,expected_center_xy)
     points=world[target]
     if len(points)<40:raise RuntimeError('Target has too few valid depth points')
     points=points[::max(1,len(points)//1500)]

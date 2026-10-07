@@ -2,7 +2,7 @@
   "repository": "https://github.com/wendylabsinc/g1-bartending-demo",
   "commit": "2dcc7f82ad67388927a9b843a7412b6b9ee65d26",
   "path": "coke-detector-yolo/model/coke-can.pt",
-  "sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+  "sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
   "architecture": "YOLOv8n",
   "class_names": {
     "0": "Coca-Cola"
@@ -59,5 +59,69 @@
     "validation_recall": 0.7777777777777778,
     "test_recall": 0.9436619718309859,
     "held_out_note": "One rotated capture and two archived G1 views. Nearby rotated frames are not independent poses."
+  },
+  "negative_rehearsal": {
+    "parent_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+    "epochs": 3,
+    "unique_positive_rehearsal_views": 1,
+    "positive_sampling_weight": 24,
+    "unique_negative_regions": 2,
+    "negative_sampling_weight": 48,
+    "only_changed_state_prefix": "model.22.cv3.",
+    "frozen_features_and_box_regression_verified": true,
+    "confidence_strictly_above": 0.1,
+    "original_heldout_comparison": {
+      "confidence_strictly_above": 0.1,
+      "baseline640": {
+        "valid": {
+          "tp": 117,
+          "fp": 28,
+          "fn": 27,
+          "precision": 0.8068965517241379,
+          "recall": 0.8125
+        },
+        "test": {
+          "tp": 68,
+          "fp": 12,
+          "fn": 3,
+          "precision": 0.85,
+          "recall": 0.9577464788732394
+        }
+      },
+      "baseline_same_size": {
+        "valid": {
+          "tp": 117,
+          "fp": 28,
+          "fn": 27,
+          "precision": 0.8068965517241379,
+          "recall": 0.8125
+        },
+        "test": {
+          "tp": 68,
+          "fp": 12,
+          "fn": 3,
+          "precision": 0.85,
+          "recall": 0.9577464788732394
+        }
+      },
+      "candidate": {
+        "valid": {
+          "tp": 114,
+          "fp": 21,
+          "fn": 30,
+          "precision": 0.8444444444444444,
+          "recall": 0.7916666666666666
+        },
+        "test": {
+          "tp": 67,
+          "fp": 8,
+          "fn": 4,
+          "precision": 0.8933333333333333,
+          "recall": 0.9436619718309859
+        }
+      },
+      "regression_gate_passed": true
+    },
+    "heldout_negative_note": "Four crops of correlated same-scene frames not used in training; not independent new scenes."
   }
 }

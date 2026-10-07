@@ -22,10 +22,15 @@ def payload(result):
 
 
 def snapshot(client,since_ns):
-    script="""import json,pathlib,urllib.request
+    script="""import collections,json,pathlib,urllib.request
 s=json.load(urllib.request.urlopen('http://127.0.0.1:8102/status',timeout=5))
 events=[json.loads(x) for x in pathlib.Path(s['events']).read_text().splitlines()]
-print(json.dumps({'status':s,'events':[e for e in events if e['unix_ns']>=SINCE]}))
+events=[e for e in events if e['unix_ns']>=SINCE]
+frequent={'target','hand_target','phase_camera_evidence','perception_result'}
+print(json.dumps({'status':s,'native_event_file':s['events'],
+ 'event_counts':dict(collections.Counter(e['phase'] for e in events)),
+ 'events':[e for e in events if e['phase'] not in frequent],
+ 'perception_tail':[e for e in events if e['phase'] in {'phase_camera_evidence','perception_result'}][-20:]}))
 """.replace('SINCE',str(since_ns))
     return payload(client.tool('container_exec',{'app_name':'DEV-g1-handoff-physical',
         'command':['python3','-c',script],'timeout_seconds':15,'max_bytes':1000000}))

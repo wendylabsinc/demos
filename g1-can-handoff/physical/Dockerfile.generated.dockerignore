@@ -9,6 +9,9 @@
 !yolo/frame_limits.py
 !yolo/frame_limits.py/
 !yolo/frame_limits.py/**
+!yolo/confidence.py
+!yolo/confidence.py/
+!yolo/confidence.py/**
 !runtime.py
 !runtime.py/
 !runtime.py/**
@@ -24,6 +27,9 @@
 !camera_input.py
 !camera_input.py/
 !camera_input.py/**
+!target_tracker.py
+!target_tracker.py/
+!target_tracker.py/**
 !yolo_client.py
 !yolo_client.py/
 !yolo_client.py/**

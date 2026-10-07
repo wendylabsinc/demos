@@ -57,6 +57,30 @@
       "bbox_xyxy": null,
       "role": "training_negative_crop",
       "sha256": "ce1033ebe84e0390aa15efbe5f6430479d5375480c5ee277709a5105d71f8824"
+    },
+    {
+      "image": "nx2-heldout-empty-95373-right.png",
+      "bbox_xyxy": null,
+      "role": "held_out_same_scene_negative_crop",
+      "sha256": "9645908f935938294ec3d43664c1587f9d9fba7625121f40f84b45d72ba1043c"
+    },
+    {
+      "image": "nx2-heldout-empty-95373-top.png",
+      "bbox_xyxy": null,
+      "role": "held_out_same_scene_negative_crop",
+      "sha256": "1a003baf5ae9b0d8c71a91f6d82da0c684ac77db124cd1960567da5b8eb13c46"
+    },
+    {
+      "image": "nx2-heldout-empty-99003-right.png",
+      "bbox_xyxy": null,
+      "role": "held_out_same_scene_negative_crop",
+      "sha256": "bc4969d9db01ba349fa2d72b9452825fc61cbaaff37ce8b1a00f08348ef6fc85"
+    },
+    {
+      "image": "nx2-heldout-empty-99003-top.png",
+      "bbox_xyxy": null,
+      "role": "held_out_same_scene_negative_crop",
+      "sha256": "78cb449bfce118e799365fbd65a06908f4bf2d36e86cdd7f0b9f3180571a0eb6"
     }
   ]
 }

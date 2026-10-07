@@ -153,6 +153,7 @@ class PhysicalPlant:
         self.command_lock = threading.RLock()
         self.clock = clock
         self.cancel = cancel
+        self.perception_guard = None
         self.ik = model_plant
         self.adapter, self.sender, self.read = adapter, hand, read
         self.config, self.event = config, event
@@ -215,6 +216,7 @@ class PhysicalPlant:
     def check(self):
         if self.cancelled or (self.cancel is not None and self.cancel.is_set()):
             raise RuntimeError('Operator cancelled trial')
+        if self.perception_guard is not None:self.perception_guard()
         snap=snapshot_guard(self.read(), now=self.clock.monotonic())
         if np.max(np.abs(np.array(snap['body']['q'][:15])-self.base_joints))>.06:
             raise RuntimeError('Base/waist posture moved beyond fixed-frame calibration tolerance')

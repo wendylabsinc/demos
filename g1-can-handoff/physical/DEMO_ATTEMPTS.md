@@ -63,3 +63,39 @@ Offline replay preserves original archived timestamps and never calls hardware:
   --events .runtime/demo-debug/events-20261007T224339Z.jsonl \
   --confidence .10 --output .runtime/demo-debug/replay.json
 ```
+
+## Visual/depth tracking version
+
+Initial recognition uses YOLO at strictly above 10%. Between semantic checks,
+a fresh RGB-D tracker selects the previously identified object using its
+measured depth, bounded world position and visual appearance. YOLO rechecks
+identity at least once per second and immediately when the tracker has
+insufficient support, ambiguous components or uncertain visual agreement.
+Every proposed track still passes the existing cylinder/table geometry and
+400 ms exposure checks before its state is accepted.
+
+During movement a background worker updates the track continuously. Every
+arm/finger command tick checks the latest accepted exposure; stale or failed
+tracking freezes the measured pose. The worker cannot issue motion commands.
+The pre-close path retains the 10 mm object-motion limit, and post-close
+tracking retains the 40 mm center limit. The final lift still requires five
+fresh observations showing the measured rise and hold.
+
+The 10% classifier update rehearses the two known empty crops while retaining
+the original training images. All feature and box-regression tensors remain
+unchanged. Its original validation recall changes from 81.25% to 79.17%, and
+test recall from 95.77% to 94.37%; precision improves on both splits. The
+negative crop qualification and four additional correlated same-scene crops
+pass. These are bounded qualification results, not broad scene generalization.
+
+82 focused tests pass, including tracker identity/reacquisition, geometry,
+stale-frame command blocking, archive completion, cancellation and release.
+The prior deployed version and the pre-tracker source snapshot are preserved
+on GitHub; see `ROLLBACK.md`.
+
+The first deployed tracker attempt completed the geometric plan but stopped
+before arm ownership because the old 180 ms acquisition budget rejected a
+frame. Measured acquisition age varied from 163 to 213 ms. The revised
+acquisition budget reserves one quarter of the configured final deadline
+(300 ms acquisition at a 400 ms final limit); all completed observations and
+every movement tick still require exposure age at or below 400 ms.
