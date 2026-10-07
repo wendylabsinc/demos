@@ -39,6 +39,7 @@ print(json.dumps({'status':s,'native_event_file':s['events'],
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--start',action='store_true',help='Explicitly issue one authorized pickup request')
+    parser.add_argument('--resume-pregrasp',action='store_true',help='Allow an explicitly reviewed FROZEN hold; controller still rejects any begun grasp')
     parser.add_argument('--output',type=Path,default=Path(__file__).parents[2]/'.runtime/demo-attempts')
     args=parser.parse_args()
     args.output.mkdir(parents=True,exist_ok=True)
@@ -49,7 +50,8 @@ def main():
         evidence['before']=snapshot(client,started_ns)
         before=evidence['before']['status']
         if args.start:
-            if before['demo_running'] or before['adapter_initialized']:
+            resume=args.resume_pregrasp and before.get('phase')=='FROZEN'
+            if before['demo_running'] or (before['adapter_initialized'] and not resume):
                 raise RuntimeError('Existing demo or arm ownership requires operator review before another attempt')
             # A failed response does not prove the command was unaccepted.
             accepted=True

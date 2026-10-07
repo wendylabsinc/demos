@@ -88,7 +88,7 @@ test recall from 95.77% to 94.37%; precision improves on both splits. The
 negative crop qualification and four additional correlated same-scene crops
 pass. These are bounded qualification results, not broad scene generalization.
 
-82 focused tests pass, including tracker identity/reacquisition, geometry,
+86 focused tests pass, including tracker identity/reacquisition, geometry,
 stale-frame command blocking, archive completion, cancellation and release.
 The prior deployed version and the pre-tracker source snapshot are preserved
 on GitHub; see `ROLLBACK.md`.
@@ -99,3 +99,39 @@ frame. Measured acquisition age varied from 163 to 213 ms. The revised
 acquisition budget reserves one quarter of the configured final deadline
 (300 ms acquisition at a 400 ms final limit); all completed observations and
 every movement tick still require exposure age at or below 400 ms.
+
+The final continuous passive probe accepted 45 observations: 41 visual/depth
+tracks and four semantic checks. The maximum exposure age sampled every
+10 ms was 382.19 ms. This includes exact-frame archive writes and one-frame
+prefetch; no motor adapter or camera lease was acquired by the probe.
+
+
+## Deployed 0.3.1 physical attempts
+
+Commit `a863c066670957859f244cdf91e1dc69bc08fed4` was deployed to NX2.
+The 23:07:10 UTC attempt passed planning, but a tracking observation reached
+488 ms during controller initialization. It froze before any `target` or
+`hand_target` event. SDK measured-hold packets were emitted; their count is
+not a count of physical movements. Heavy SDK initialization is a suspected
+source of the startup stall, not a proved sole cause.
+
+The 23:08:26 UTC explicit pregrasp retry reused the initialized controllers
+and reran fresh recognition and the complete path check. It emitted five
+opening-hand target events, then froze before arm travel or closing. The
+last accepted frame was 281 ms old, and its replacement completed about
+160 ms later at 375 ms old. Thus the accepted observation could cross the
+400 ms deadline while its replacement was still processing. The watchdog
+currently overwrites its initial fault with `Operator cancelled trial` in
+the execution loop, so the exact triggering guard was not retained. This is
+a diagnostic limitation; no user cancellation or successful pickup is inferred.
+
+The controller retained ownership with `grasp_started=false` in both failure
+journals. Do not restart/redeploy while joints remain held. Another attempt
+requires reviewed evidence and a new explicit invocation; the local runner's
+`--start --resume-pregrasp` permits a FROZEN hold while the native controller
+still refuses any active trial or previously begun grasp.
+
+Full attempt files are `.runtime/demo-attempts/20261007T230710Z.json` and
+`20261007T230826Z.json`; compact evidence is included in the tracker validation
+report. Next work is reducing the under-control processing tail and recording
+the first watchdog fault. No completed physical pickup has been verified.
