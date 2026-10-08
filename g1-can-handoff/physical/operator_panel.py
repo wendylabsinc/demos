@@ -45,11 +45,15 @@ class Wendy:
             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True, bufsize=1)
         self.responses=queue.Queue();self.lock=threading.Lock();self.sequence=0
         threading.Thread(target=self.read,daemon=True).start()
-        self.rpc('initialize',{'protocolVersion':'2024-11-05','capabilities':{},
-                              'clientInfo':{'name':'g1-operator-release','version':'1'}})
-        self.process.stdin.write(json.dumps({'jsonrpc':'2.0','method':'notifications/initialized'})+'\n');self.process.stdin.flush()
-        self.tool('wendy_status',{})
-        self.tool('device_connect',{'device':DEVICE})
+        try:
+            self.rpc('initialize',{'protocolVersion':'2024-11-05','capabilities':{},
+                                  'clientInfo':{'name':'g1-operator-release','version':'1'}})
+            self.process.stdin.write(json.dumps({'jsonrpc':'2.0','method':'notifications/initialized'})+'\n');self.process.stdin.flush()
+            self.tool('wendy_status',{})
+            self.tool('device_connect',{'device':DEVICE})
+        except Exception:
+            self.process.terminate()
+            raise
     def read(self):
         for line in self.process.stdout:
             try:self.responses.put(json.loads(line))

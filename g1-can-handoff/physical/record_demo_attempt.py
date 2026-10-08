@@ -9,8 +9,20 @@ import datetime
 import json
 from pathlib import Path
 import time
+import uuid
 
 from operator_panel import Wendy
+from trial_evidence import export_trial, recorder_status
+
+
+def require_recording(state):
+    """Fail before Start when independent body/hand recording is unproven."""
+    ages=state.get('last_written_age_s',{})
+    required=('rt/lowstate','rt/dex3/left/state','rt/dex3/right/state')
+    if (state.get('recording') is not True or state.get('error') or
+        state.get('missing_or_stale_required') or any(state.get('dropped',{}).values()) or
+        any(not 0<=ages.get(topic,float('inf'))<=.2 for topic in required)):
+        raise RuntimeError('Recorder is unhealthy or required feedback is not being persisted')
 
 
 def payload(result):
@@ -43,13 +55,16 @@ def main():
     parser.add_argument('--output',type=Path,default=Path(__file__).parents[2]/'.runtime/demo-attempts')
     args=parser.parse_args()
     args.output.mkdir(parents=True,exist_ok=True)
-    started_ns=time.time_ns();name=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    started_ns=time.time_ns();name=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:8]
     evidence={'started_unix_ns':started_ns,'device':'10.10.20.238:50052','start_requested':args.start}
-    client=Wendy();accepted=False;finished=False
+    client=None;accepted=False;finished=False
     try:
+        client=Wendy()
         evidence['before']=snapshot(client,started_ns)
+        evidence['recorder_before']=recorder_status(client)
         before=evidence['before']['status']
         if args.start:
+            require_recording(evidence['recorder_before'])
             resume=args.resume_pregrasp and before.get('phase')=='FROZEN'
             if before['demo_running'] or (before['adapter_initialized'] and not resume):
                 raise RuntimeError('Existing demo or arm ownership requires operator review before another attempt')
@@ -72,19 +87,43 @@ def main():
             try:evidence['error_stop']=client.request(action='stop')
             except Exception as stop_error:evidence['stop_error']=str(stop_error)
     finally:
-        try:evidence['after']=snapshot(client,started_ns)
+        evidence['start_attempted']=accepted
+        try:
+            if client is None:raise RuntimeError('Native Wendy connection was not established')
+            evidence['after']=snapshot(client,started_ns)
         except Exception as exc:evidence['snapshot_error']=str(exc)
-        client.process.terminate()
         evidence['finished_unix_ns']=time.time_ns()
+        try:
+            if client is None:raise RuntimeError('Native Wendy connection was not established')
+            evidence['recorder_after']=recorder_status(client)
+            require_recording(evidence['recorder_after'])
+            if evidence.get('recorder_before',{}).get('session')!=evidence['recorder_after'].get('session'):
+                raise RuntimeError('Recorder session changed during trial')
+        except Exception as exc:evidence['recording_error']=str(exc)
+        # Save the status/error record before attempting the larger transfer.
         path=args.output/(name+'.json');path.write_text(json.dumps(evidence,indent=2)+'\n')
+        try:
+            if client is None:raise RuntimeError('Native Wendy connection was not established')
+            evidence['artifact']=export_trial(client,evidence['after'],started_ns,evidence['finished_unix_ns'],path.with_suffix('.tar.gz'))
+        except Exception as exc:evidence['artifact_error']=str(exc)
+        finally:
+            if client is not None:client.process.terminate()
+        path.write_text(json.dumps(evidence,indent=2)+'\n')
         state=evidence.get('after',{}).get('status',{})
+        prior=evidence.get('before',{}).get('status',{}).get('motion_commands_sent')
+        current=state.get('motion_commands_sent')
+        delta=current-prior if isinstance(current,int) and isinstance(prior,int) and current>=prior else None
         summary={'evidence':str(path),'phase':state.get('phase'),'error':(state.get('first_failure') or {}).get('error') or state.get('demo_error') or state.get('error'),
                  'physical_lift_verified':(state.get('demo_result') or {}).get('physical_lift_verified',False),
-                 'motion_commands_sent':state.get('motion_commands_sent'),'adapter_initialized':state.get('adapter_initialized'),
+                 'motion_commands_sent':current,'motion_commands_this_attempt':delta,'adapter_initialized':state.get('adapter_initialized'),
+                 'evidence_verified':evidence.get('artifact',{}).get('verified',False) and not evidence.get('recording_error'),
+                 'artifact':evidence.get('artifact',{}).get('local_path'),
+                 'artifact_error':evidence.get('artifact_error'),'recording_error':evidence.get('recording_error'),
                  'runner_error':evidence.get('runner_error')}
+        if not accepted and evidence.get('runner_error'):summary['error']=evidence['runner_error']
         with (args.output/'attempts.jsonl').open('a') as f:f.write(json.dumps(summary)+'\n')
         print(json.dumps(summary,indent=2))
-    if evidence.get('runner_error') or (args.start and not summary['physical_lift_verified']):raise SystemExit(1)
+    if evidence.get('runner_error') or not summary['evidence_verified'] or (args.start and not summary['physical_lift_verified']):raise SystemExit(1)
 
 
 if __name__=='__main__':main()

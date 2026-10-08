@@ -7,10 +7,12 @@ from pathlib import Path
 import statistics
 
 parser=argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--attempt',help='E.g. 20261008T004101Z; omit for all ten')
+parser.add_argument('--attempt',help='E.g. 20261008T004101Z; omit for all archived attempts')
 parser.add_argument('--events',action='store_true',help='Print full ordered events instead of summary')
 args=parser.parse_args()
 trials=json.loads(gzip.decompress((Path(__file__).parent/'trial-events.json.gz').read_bytes()))
+for path in (Path(__file__).parent/'evidence').glob('*/events.jsonl.gz'):
+    trials[path.parent.name]={'events':[json.loads(line) for line in gzip.decompress(path.read_bytes()).splitlines()]}
 if args.attempt:trials={args.attempt:trials[args.attempt]}
 rows=[]
 for name,trial in trials.items():

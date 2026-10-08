@@ -1,0 +1,80 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791421155115557000,
+  "end_unix_ns": 1791421205005957000,
+  "native_event_file": "/data/events-20261008T004007Z.jsonl",
+  "events": 1023,
+  "camera_events": 137,
+  "selected_frames": [
+    "/data/camera-61556-scene_refresh.npz",
+    "/data/camera-61599-planning.npz",
+    "/data/camera-62256-motion-tracking.npz",
+    "/data/camera-62257-motion-tracking.npz",
+    "/data/camera-62259-motion-tracking.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 153927,
+      "sha256": "c13e510a5488ed65e7c7942b92e6ac0b2cb2ffd29986aa91c3ac7e60591c3753"
+    },
+    "rgbd/camera-61556-scene_refresh.source.zip": {
+      "bytes": 106287,
+      "sha256": "e1691a462029e06767a64a59a6ec50583a942ffc9a52b568823285647aa00616"
+    },
+    "rgbd/camera-61556-scene_refresh.timing.npz": {
+      "bytes": 542000,
+      "sha256": "6d9522940379dce327e515313396276a7d774ed4480c978084144a51c140bdd5"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938110,
+      "sha256": "81c0db0f736af48e6386fadfe079fef8ae9aa4553f97b9f727fc30cd6ec04200"
+    },
+    "rgbd/camera-61599-planning.source.zip": {
+      "bytes": 106525,
+      "sha256": "d6ff82275e08155fe5617f9c3a07e7841dccdd217907560ea7f759bdb6d8b3ee"
+    },
+    "rgbd/camera-61599-planning.timing.npz": {
+      "bytes": 542000,
+      "sha256": "eb84cb4fd6de85e99d2b68789fe775e1b44298e9c3af23d4c09e34c120934df3"
+    },
+    "rgbd/camera-62256-motion-tracking.source.zip": {
+      "bytes": 108376,
+      "sha256": "7c0b3b6fcc497f7e6ab3da6a4a6066bb8f29fb52eae0b6057bc1defda8eb1db4"
+    },
+    "rgbd/camera-62256-motion-tracking.timing.npz": {
+      "bytes": 542000,
+      "sha256": "3b06552b07ef8bb8113a0dacb6a0a0a18dfc65053684f9533b042058a7df65db"
+    },
+    "rgbd/camera-62257-motion-tracking.source.zip": {
+      "bytes": 108730,
+      "sha256": "7a266553fcc5410f72b5e27a31d2ff2514ee4d7b5352e027a028e336c2e3ba08"
+    },
+    "rgbd/camera-62257-motion-tracking.timing.npz": {
+      "bytes": 541996,
+      "sha256": "16dc855f05ea0f41504dbe5cb7e46351afdec234623ce70d01e996ddb28e0130"
+    },
+    "rgbd/camera-62259-motion-tracking.source.zip": {
+      "bytes": 108636,
+      "sha256": "0d5bad71f8533630dec89f608268410ddff741d627ca040edc121901d12ae3d5"
+    },
+    "rgbd/camera-62259-motion-tracking.timing.npz": {
+      "bytes": 542000,
+      "sha256": "68c489601001fa808e925cb6237c1ab0a46c6ae730f342e9de7cfb2253412a61"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "909ee14e25ee6f0b79b2124eb7cd37929216a594d806cb5e35ff9ce29d21bd2e",
+    "camera_input.py": "b9d6b15f68706645c97b13d36fb4b0a7df8fd1d32bec1d5cd13d37aa97ae6a62",
+    "physical_core.py": "acbd40b6d053ce9d600ea72bdffe45e84ad65dfbf8e21765557a9c30c34e9db5",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "ed430eea7d9423a20e00f0f9b48e0bb7b9a684981b1369e0ac531467ae07a379",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791421203611555246,
+    "monotonic_ns": 4173330383598,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+    "source": "execution"
+  }
+}

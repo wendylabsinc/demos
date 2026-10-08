@@ -52,7 +52,44 @@
     "offline/evidence/table-plane-audit.json": "0b704ffed49fed75fe666827f215f5e92537f11132449014cae6bd2cd6dcb047",
     "offline/evidence/latest-planner-stop.json.gz": "4a63d7339bd40ee2f92c09a87f8fe333499887b59a4628de7fa5e0d89feb0b0c",
     "offline/evidence/rgbd/camera-51053-planning.timing.npz": "521e1b14d2e37e4c94382bc1066792586fd6c0381ca9321b543601e12de25a6b",
-    "offline/evidence/rgbd/camera-51053-planning.source.zip": "8dbbfa5babc547945e89a8529fc4134a3d1ff24cbb70dd8576f31dd1cf844088"
+    "offline/evidence/rgbd/camera-51053-planning.source.zip": "8dbbfa5babc547945e89a8529fc4134a3d1ff24cbb70dd8576f31dd1cf844088",
+    "offline/attempts/20261008T005915Z.json": "d3e4cfd7f62caf1513fc21e045ae40723005ddd05909dbfc0b001a85495d1e4a",
+    "offline/evidence/20261008T005915Z/export-manifest.json": "146818c8201e26dfb7cd1b6dcd026d178d526a65e7f9fc3417559652887fb977",
+    "offline/evidence/20261008T005915Z/events.jsonl.gz": "c13e510a5488ed65e7c7942b92e6ac0b2cb2ffd29986aa91c3ac7e60591c3753",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62259-motion-tracking.source.zip": "0d5bad71f8533630dec89f608268410ddff741d627ca040edc121901d12ae3d5",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62259-motion-tracking.timing.npz": "68c489601001fa808e925cb6237c1ab0a46c6ae730f342e9de7cfb2253412a61",
+    "offline/evidence/20261008T005915Z/rgbd/camera-61599-planning.timing.npz": "eb84cb4fd6de85e99d2b68789fe775e1b44298e9c3af23d4c09e34c120934df3",
+    "offline/evidence/20261008T005915Z/rgbd/camera-61599-planning.source.zip": "d6ff82275e08155fe5617f9c3a07e7841dccdd217907560ea7f759bdb6d8b3ee",
+    "offline/evidence/20261008T005915Z/rgbd/rays.npz": "81c0db0f736af48e6386fadfe079fef8ae9aa4553f97b9f727fc30cd6ec04200",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62256-motion-tracking.timing.npz": "3b06552b07ef8bb8113a0dacb6a0a0a18dfc65053684f9533b042058a7df65db",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62256-motion-tracking.source.zip": "7c0b3b6fcc497f7e6ab3da6a4a6066bb8f29fb52eae0b6057bc1defda8eb1db4",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62257-motion-tracking.timing.npz": "16dc855f05ea0f41504dbe5cb7e46351afdec234623ce70d01e996ddb28e0130",
+    "offline/evidence/20261008T005915Z/rgbd/camera-62257-motion-tracking.source.zip": "7a266553fcc5410f72b5e27a31d2ff2514ee4d7b5352e027a028e336c2e3ba08",
+    "offline/evidence/20261008T005915Z/rgbd/camera-61556-scene_refresh.source.zip": "e1691a462029e06767a64a59a6ec50583a942ffc9a52b568823285647aa00616",
+    "offline/evidence/20261008T005915Z/rgbd/camera-61556-scene_refresh.timing.npz": "6d9522940379dce327e515313396276a7d774ed4480c978084144a51c140bdd5",
+    "offline/attempts/20261008T010351Z-85369a28.json": "3c48da5818f40c494574255d9800d4059118dc39dc2f5cc65aa9dc4352689ddf",
+    "offline/evidence/20261008T010351Z-85369a28/export-manifest.json": "587cd9f929e35ed89a86c5df612ddfe05b2b2af130183c1bae4d3b951894bdfe",
+    "offline/evidence/20261008T010351Z-85369a28/events.jsonl.gz": "36e728ef975ef8b467ceaeb704eb6c9bca4c07c218de9727af71e97c3e87871e",
+    "offline/evidence/20261008T010351Z-85369a28/source/camera_input.py": "b9d6b15f68706645c97b13d36fb4b0a7df8fd1d32bec1d5cd13d37aa97ae6a62",
+    "offline/evidence/20261008T010351Z-85369a28/source/table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "offline/evidence/20261008T010351Z-85369a28/source/runtime.py": "909ee14e25ee6f0b79b2124eb7cd37929216a594d806cb5e35ff9ce29d21bd2e",
+    "offline/evidence/20261008T010351Z-85369a28/source/target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2",
+    "offline/evidence/20261008T010351Z-85369a28/source/physical_core.py": "acbd40b6d053ce9d600ea72bdffe45e84ad65dfbf8e21765557a9c30c34e9db5",
+    "offline/evidence/20261008T010351Z-85369a28/source/pickup.py": "ed430eea7d9423a20e00f0f9b48e0bb7b9a684981b1369e0ac531467ae07a379",
+    "offline/evidence/20261008T010351Z-85369a28/rgbd/camera-65714-scene_refresh.source.zip": "c1f599e54cf7a664f1d58215259dac06c0c2c25d4ef68000f0a82c8ccdd0e319",
+    "offline/evidence/20261008T010351Z-85369a28/rgbd/camera-65714-scene_refresh.timing.npz": "fab31dd9c525918c16198ab77b7e1b38296ae497aeb63f76775bb9b891d732c8",
+    "offline/evidence/20261008T010351Z-85369a28/rgbd/camera-65759-planning.timing.npz": "1d9f7926e677a15d42d222c9b9cd99ef4a886c3f1711624860be115da009b6d3",
+    "offline/evidence/20261008T010351Z-85369a28/rgbd/camera-65759-planning.source.zip": "895a27f23e0aa9fbbcf4b5bd9f3cd938ceb89e0a2d62ecff1f0a5052cc892468",
+    "offline/evidence/20261008T010351Z-85369a28/rgbd/rays.npz": "7d65849effaff58209ff8a98b5a04408c6af31ba060a22f7ec7e5f3e75606336",
+    "offline/attempts/20261008T014242Z-9da0b844.json": "9ddab83c3257f0eebbedb12aa0dfc78ae0d75a5de78d791f5bf6403b12b4c897"
   },
-  "archive_runtime_commit": "1538fd1"
+  "archive_runtime_commit": "1538fd1",
+  "additional_attempts": [
+    "20261008T005915Z",
+    "20261008T010351Z-85369a28"
+  ],
+  "additional_events": 1034,
+  "connection_failure_records": [
+    "20261008T014242Z-9da0b844"
+  ]
 }

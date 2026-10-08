@@ -18,7 +18,7 @@ python -m pip install -r offline/requirements.txt
 python offline/run.py
 ```
 
-The default profile runs **184 regression tests**, verifies captured evidence
+The default profile runs **200 regression tests**, verifies captured evidence
 checksums, and writes `offline/reports/latest.json`. Each module runs in a fresh
 process with temporary runtime storage, fixed random/hash seeds, a 400 ms
 exposure limit, and bounded execution. Reports retain individual test IDs,
@@ -48,12 +48,15 @@ native execution is also tested; the portable reference uses Python 3.12/Linux.
 python offline/run.py --list
 python offline/run.py --test test_recorded_failures
 python offline/run.py --test test_perception_timing
+python offline/run.py --test test_latest_trial_replay
+python offline/run.py --test test_record_demo_attempt
 python offline/run.py --test test_target_tracker.TrackerTests
 python offline/run.py --profile open --report offline/reports/open.json
 python offline/run.py --profile simulation --report offline/reports/simulation.json
 python offline/run.py --profile all --report offline/reports/all.json
 python offline/inspect_trace.py --attempt 20261008T004101Z
 python offline/inspect_trace.py --attempt 20261008T004012Z --events
+python offline/inspect_trace.py --attempt 20261008T005915Z --events
 ```
 
 `regression` covers fixed defects and required rejection behavior. `open` is an
@@ -102,7 +105,7 @@ independent estimate of general detection accuracy.
 ## Saved evidence and provenance
 
 - `attempts/`: all ten original trial snapshots, including start response,
-  before/after status, calibration, and reported error.
+  before/after status, calibration, and reported error, plus later labeled trial snapshots.
 - `trial-events.json.gz`: 4,204 full ordered controller events from the same ten
   attempt intervals, including commands, first faults, poses, geometry,
   processing time, and exposure age. Absolute `/data` paths inside are provenance,
@@ -128,6 +131,13 @@ independent estimate of general detection accuracy.
   manually annotated recognition fixtures, and recorded qualification reports.
 - `evidence/latest-planner-stop.json.gz`: additional later planning failure,
   including rejected continuous-lift IK/collision candidates and its first fault. Frame 51053 is also saved for geometric replay.
+- `evidence/20261008T005915Z/`: the next live attempt's complete 1,023-event
+  timeline, five exact RGB-D/timing pairs and ray map. A periodic YOLO result
+  arrived about 9 ms after the 401.7 ms exposure stop. The replay checks the
+  actual motor write gate and cancellation latch; latency remains unresolved.
+- `evidence/20261008T010351Z-85369a28/`: the following attempt was cancelled
+  by a Release request during planning, before any motion. Its full timeline,
+  RGB-D samples, source snapshot, and recorder status are preserved.
 - `manifest.json`: SHA-256 of all captured artifacts; source collection used
   controller commit `1538fd1`. Trials span several earlier fixes; this does not
   claim every trial ran the same commit.
@@ -154,3 +164,47 @@ fixture when new evidence changes the expectation.
 No trial in this archive verified a physical lift. Simulation, fake transport,
 and saved-image inference do not prove a live grasp, thermal behavior, balance,
 release response, or pickup success; those require later hardware validation.
+
+## Recording further hardware trials
+
+On the operator machine, while connected to the authorized NX2, run one attempt:
+
+```sh
+python record_demo_attempt.py --start --output ../../.runtime/demo-attempts
+```
+
+`--start` issues real motion through the normal controller. Each invocation checks
+independent recording before Start, polls one bounded attempt, and writes a
+uniquely named status JSON and summary row. It exports the full controller event
+timeline and up to five exact camera source/timing pairs, calibrated rays, and
+deployed source files into a local tar archive. Both the archive and each member
+must pass SHA-256 verification. Transfer failure is saved explicitly and returns
+nonzero. First faults and per-attempt command counts remain separate from later
+cancellation and cumulative controller counters. A failed pickup also returns
+nonzero even when its evidence was successfully archived.
+
+Recorder before/after health, persisted sample counters, session identity, and
+sealed raw DDS segment hashes are retained in the JSON. The independent recorder
+keeps all delivered body/hand feedback and commands on the robot; the tar archive
+contains controller events and a bounded image subset, not every raw DDS message
+or every camera frame. Upstream DDS loss cannot be proven absent by recorder
+counters. Review each terminal failure before another invocation; the runner
+never releases arms, restarts the controller, or repeats an uncertain Start.
+
+To copy a trial's raw DDS records after its recorder segments have sealed:
+
+```sh
+python archive_trial_recording.py ../../.runtime/demo-attempts/TRIAL.json
+```
+
+This read-only command verifies sealed segment hashes, preserves the original
+base64 CDR records from the trial interval and adjacent rotation boundaries, and
+verifies the local archive and members. It requires the original recorder
+session and refuses an unsealed tail. The recorder's exact `export_cdr.py` is
+included for later decoding with its SDK dependencies. The export code passes
+offline tests for interval boundaries, all topic retention, checksum failures,
+and reordered callbacks. The attempted live raw export failed because the NX2
+became unreachable; raw DDS transfer is **not yet hardware-verified**. The
+controller event/image archives were already transferred and verified locally.
+Connection failures also produce local error records, with Start marked as
+unattempted when Wendy initialization fails.

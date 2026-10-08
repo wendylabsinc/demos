@@ -1,0 +1,31 @@
+{
+  "macOS": {
+    "tests_run": 200,
+    "successful": true,
+    "seconds": 70.56133633304853,
+    "hardware_used": false,
+    "physical_success_verified": false
+  },
+  "linux_read_only_no_network": {
+    "tests_run": 200,
+    "successful": true,
+    "seconds": 20.844671422004467,
+    "hardware_used": false,
+    "physical_success_verified": false
+  },
+  "physical_attempts": [
+    {
+      "id": "20261008T005915Z",
+      "error": "Visual/depth tracking exposure stale (401.7 ms)",
+      "command_delta": 1148,
+      "evidence_sha256": "97c32a0bda3ed34b27bb35d41d09f1e5ecbc28a6111bcbeb105a46da64847412"
+    },
+    {
+      "id": "20261008T010351Z-85369a28",
+      "error": "Operator cancelled trial (Release requested during planning)",
+      "command_delta": 0
+    }
+  ],
+  "raw_dds_export_verified": false,
+  "physical_lift_verified": false
+}

@@ -9,6 +9,14 @@ import record_demo_attempt as runner
 
 
 class AttemptTests(unittest.TestCase):
+    def setUp(self):
+        self.recording={'recording':True,'error':None,'missing_or_stale_required':[],
+                        'dropped':{},'last_written_age_s':{'rt/lowstate':.01,'rt/dex3/left/state':.01,'rt/dex3/right/state':.01},
+                        'session':'test-session'}
+        self.recorder=patch.object(runner,'recorder_status',return_value=self.recording,create=True).start()
+        self.export=patch.object(runner,'export_trial',return_value={'verified':True,'local_path':'test.tar.gz'},create=True).start()
+        self.addCleanup(patch.stopall)
+
     def snapshot(self):
         return {'status':{'demo_running':False,'adapter_initialized':False,'phase':'PASSIVE',
                           'motion_commands_sent':0,'demo_result':None},'events':[]}
@@ -59,6 +67,49 @@ class AttemptTests(unittest.TestCase):
              patch.object(runner,'Wendy',return_value=client),patch.object(runner,'snapshot',return_value=self.snapshot()):
             with self.assertRaises(SystemExit):runner.main()
         self.assertEqual([call.kwargs for call in client.request.call_args_list],[{'action':'start'},{'action':'stop'}])
+
+    def test_unhealthy_recorder_blocks_start_and_saves_reason(self):
+        self.recording['recording']=False;client=Mock()
+        with tempfile.TemporaryDirectory() as directory,patch('sys.argv',['runner','--start','--output',directory]),\
+             patch.object(runner,'Wendy',return_value=client),patch.object(runner,'snapshot',return_value=self.snapshot()):
+            with self.assertRaises(SystemExit):runner.main()
+            evidence=json.loads(next(Path(directory).glob('20*.json')).read_text())
+            self.assertIn('Recorder',evidence['runner_error'])
+        client.request.assert_not_called()
+
+    def test_archive_failure_is_recorded_and_never_reported_complete(self):
+        client=Mock();self.export.side_effect=RuntimeError('checksum mismatch')
+        with tempfile.TemporaryDirectory() as directory,patch('sys.argv',['runner','--output',directory]),\
+             patch.object(runner,'Wendy',return_value=client),patch.object(runner,'snapshot',return_value=self.snapshot()):
+            with self.assertRaises(SystemExit):runner.main()
+            evidence=json.loads(next(Path(directory).glob('20*.json')).read_text())
+            self.assertIn('checksum mismatch',evidence['artifact_error'])
+            summary=json.loads((Path(directory)/'attempts.jsonl').read_text())
+            self.assertFalse(summary['evidence_verified'])
+        client.request.assert_not_called()
+
+    def test_summary_records_first_failure_and_per_trial_command_delta(self):
+        client=Mock();client.request.return_value={'demo_running':False}
+        before=self.snapshot();before['status']['motion_commands_sent']=500
+        after=self.snapshot();after['status'].update(motion_commands_sent=507,first_failure={'error':'exposure stale (401.7 ms)'},error='cancelled')
+        with tempfile.TemporaryDirectory() as directory,patch('sys.argv',['runner','--start','--output',directory]),\
+             patch.object(runner,'Wendy',return_value=client),patch.object(runner,'snapshot',side_effect=[before,after]):
+            with self.assertRaises(SystemExit):runner.main()
+            summary=json.loads((Path(directory)/'attempts.jsonl').read_text())
+            self.assertEqual(summary['motion_commands_this_attempt'],7)
+            self.assertEqual(summary['error'],'exposure stale (401.7 ms)')
+            self.assertTrue(summary['evidence_verified'])
+
+    def test_connection_failure_still_creates_a_durable_error_record(self):
+        with tempfile.TemporaryDirectory() as directory,patch('sys.argv',['runner','--start','--output',directory]),\
+             patch.object(runner,'Wendy',side_effect=RuntimeError('DEVICE_UNREACHABLE')):
+            with self.assertRaises(SystemExit):runner.main()
+            evidence=json.loads(next(Path(directory).glob('20*.json')).read_text())
+            self.assertIn('DEVICE_UNREACHABLE',evidence['runner_error'])
+            self.assertFalse(evidence['start_attempted'])
+            summary=json.loads((Path(directory)/'attempts.jsonl').read_text())
+            self.assertFalse(summary['evidence_verified'])
+            self.assertIn('DEVICE_UNREACHABLE',summary['error'])
 
 
 if __name__=='__main__':unittest.main()
