@@ -41,6 +41,12 @@ were zero before and after this profile. The normal Start button was restored
 after verification; this optimization session did not start a physical trial.
 
 These are passive comparisons, not physical pickup or motion-watchdog
+qualification. The final regression run passed 269 cases, including three
+user-local viewer tests outside this PR (266 PR-tracked cases). All 140 captured
+evidence hashes in the offline manifest were verified. Full results are saved
+in `regressions-final.json`.
+
+These measurements alone do not provide motion-watchdog
 qualification. Demo 4's recorded watchdog failure occurred between accepted
 observations, so individually fresh passive observations do not prove the
 400 ms bound will hold during motion. The exposure limit, exact frame identity,
