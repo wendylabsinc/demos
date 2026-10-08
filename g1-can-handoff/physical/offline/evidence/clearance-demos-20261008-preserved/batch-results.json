@@ -1,0 +1,24 @@
+[
+  {
+    "trial": 1,
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "terminal_phase": "BLOCKED",
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "events": 37,
+    "frames": 2,
+    "archive_verified": true,
+    "archive_sha256": "ee843e2843dc5d02209b84e90d6a9673091b8be0437e5389fd942af34eb7fb9f"
+  },
+  {
+    "trial": 2,
+    "error": "ValueError: Can is outside the left-hand pickup area: measured forward=36.8 cm, robot-left=6.8 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+    "terminal_phase": "BLOCKED",
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "events": 10,
+    "frames": 2,
+    "archive_verified": true,
+    "archive_sha256": "12bc565ac4d8480b2498eaed77ae5590cba23fa4d4962c306a669e181b278c1e"
+  }
+]

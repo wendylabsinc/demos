@@ -1,0 +1,77 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791484559823239031,
+  "end_unix_ns": 1791484564518069657,
+  "native_event_file": "/data/events-20261008T182744Z.jsonl",
+  "events": 10,
+  "camera_events": 2,
+  "selected_frames": [
+    "/data/camera-10123-scene_refresh.npz",
+    "/data/camera-10169-planning.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 3514,
+      "sha256": "d15325eaab2946fbcc1edeb7ab49d0343ad53632ffbab3e893ed7129f106577d"
+    },
+    "rgbd/camera-10123-scene_refresh.source.zip": {
+      "bytes": 112935,
+      "sha256": "47dc3e0360ec5115adf0be8f7423c2654210660966e68be68fc62b9916035c97"
+    },
+    "rgbd/camera-10123-scene_refresh.timing.npz": {
+      "bytes": 3892,
+      "sha256": "be399e46f684fc6f35a46a978288b8f6b5701b4907ba4842d9efcc331a49045d"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938120,
+      "sha256": "bae903f15c36e995c92b49a21bdeef8b5e89640adf03a9af20108a6765b7bd92"
+    },
+    "rgbd/camera-10169-planning.source.zip": {
+      "bytes": 113738,
+      "sha256": "bf4764bf56121caa9595f9d2a504674ca63a32cdaccbcfb02fb59f36db6d9ef4"
+    },
+    "rgbd/camera-10169-planning.timing.npz": {
+      "bytes": 3896,
+      "sha256": "64c7efb7a35dc48f91e7cd676905f3918b71c3522402ba0e5b5a585ad61b26f1"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 32970,
+      "sha256": "6e2c7229fd6b8a88d9cd04000f74ac1044361767dcacadd3de8f6607d9c59048"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "6e2c7229fd6b8a88d9cd04000f74ac1044361767dcacadd3de8f6607d9c59048",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791484564068583775,
+    "monotonic_ns": 698637303071,
+    "phase": "primary_failure",
+    "error": "ValueError: Can is outside the left-hand pickup area: measured forward=36.8 cm, robot-left=6.8 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+    "source": "execution"
+  }
+}
