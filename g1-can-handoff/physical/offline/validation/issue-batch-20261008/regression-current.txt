@@ -1,0 +1,566 @@
+Running test_arm_gravity
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.380s
+
+OK
+Running test_attitude_plant
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.259s
+
+OK
+Running test_calibration_points
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.015s
+
+OK
+Running test_camera_input
+..........
+----------------------------------------------------------------------
+Ran 10 tests in 0.023s
+
+OK
+Running test_camera_lease
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.547s
+
+OK
+Running test_camera_pipeline
+..............
+----------------------------------------------------------------------
+Ran 14 tests in 0.136s
+
+OK
+Running test_cartesian_lift
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.354s
+
+OK
+Running test_clearance_planning
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 12.676s
+
+OK
+Running test_compact_tracking
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.049s
+
+OK
+Running test_control_settle
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 1.513s
+
+OK
+Running test_cylinder_fit
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.008s
+
+OK
+Running test_dex3_packaging
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Running test_frame_age_limit
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.670s
+
+OK
+Running test_geometry_parallel
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.010s
+
+OK
+Running test_latest_frame
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.079s
+
+OK
+Running test_latest_trial_replay
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.039s
+
+OK
+Running test_model_calibration
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.473s
+
+OK
+Running test_motion_tracking
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
+Running test_observation_archive
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.076s
+
+OK
+Running test_offline_pack
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.046s
+
+OK
+Running test_offline_yolo_build
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.123s
+
+OK
+Running test_operator_panel
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 3.568s
+
+OK
+Running test_operator_state
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+Running test_operator_transport
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Running test_passive_deployment
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.010s
+
+OK
+Running test_perception_timing
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+OK
+Running test_perception_worker
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 0.813s
+
+OK
+Running test_physical_core
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.015s
+
+OK
+Running test_pickup
+............
+----------------------------------------------------------------------
+Ran 12 tests in 0.004s
+
+OK
+Running test_pickup_area_acceptance
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 5.165s
+
+OK
+Running test_pickup_area_viewer
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+Running test_pickup_workspace
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.037s
+
+OK
+Running test_placement_overlay
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+Running test_planning_acceptance
+....
+----------------------------------------------------------------------
+Ran 4 tests in 19.030s
+
+OK
+Running test_planning_deadline
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Running test_pose_alignment
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+OK
+Running test_pregrasp_collision
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.176s
+
+OK
+Running test_record_demo_attempt
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.023s
+
+OK
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpu5rib7qx/20261008T200754Z-6b4b8461.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": false,
+  "artifact": null,
+  "artifact_error": "checksum mismatch",
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpgu_bj30n/20261008T200754Z-ac49c446.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpukkourk2/20261008T200754Z-5086feb5.json",
+  "phase": null,
+  "error": "RuntimeError: DEVICE_UNREACHABLE",
+  "physical_lift_verified": false,
+  "motion_commands_sent": null,
+  "motion_commands_this_attempt": null,
+  "adapter_initialized": null,
+  "evidence_verified": false,
+  "artifact": null,
+  "artifact_error": "Native Wendy connection was not established",
+  "recording_error": "Native Wendy connection was not established",
+  "runner_error": "RuntimeError: DEVICE_UNREACHABLE"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmp43gbqiwg/20261008T200754Z-7d79de15.json",
+  "phase": "FROZEN",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": true,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpwpn_wyek/20261008T200754Z-586fd8b9.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: start response lost"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpujzcdkl3/20261008T200754Z-a6840d30.json",
+  "phase": "HOLDING_CAN",
+  "error": "RuntimeError: Existing demo or arm ownership requires operator review before another attempt",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": true,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: Existing demo or arm ownership requires operator review before another attempt"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpqdyr406e/20261008T200754Z-73f8cb60.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: transport lost"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpubn3d0u7/20261008T200754Z-cce8f8b7.json",
+  "phase": "PASSIVE",
+  "error": "exposure stale (401.7 ms)",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 507,
+  "motion_commands_this_attempt": 7,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpv_6gnnpj/20261008T200754Z-f6bf6b00.json",
+  "phase": "PASSIVE",
+  "error": "RuntimeError: Recorder is unhealthy or required feedback is not being persisted",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": false,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": "Recorder is unhealthy or required feedback is not being persisted",
+  "runner_error": "RuntimeError: Recorder is unhealthy or required feedback is not being persisted"
+}
+Running test_recorded_failures
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.841s
+
+OK
+Running test_recorder_export
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.013s
+
+OK
+Running test_replay_perception
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.059s
+
+OK
+Running test_rest_arm
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.291s
+
+OK
+Running test_runtime_lifecycle
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.020s
+
+OK
+Running test_runtime_packaging
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.038s
+
+OK
+Running test_scene_refresh
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+OK
+Running test_staging
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.240s
+
+OK
+Running test_stale_trial_replay
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.520s
+
+OK
+Running test_supervised_demo_trials
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+OK
+Running test_table_geometry_acceptance
+./Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+..
+----------------------------------------------------------------------
+Ran 3 tests in 2.563s
+
+OK
+Running test_table_plane
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul
+  check_error=(check_points-center)@normal
+../Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+./Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: divide by zero encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: overflow encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: invalid value encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: divide by zero encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: overflow encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: invalid value encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: divide by zero encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: overflow encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: invalid value encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: divide by zero encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: overflow encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: invalid value encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: divide by zero encountered in matmul
+  errors=(table-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: overflow encountered in matmul
+  errors=(table-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: invalid value encountered in matmul
+  errors=(table-center)@normal
+.
+----------------------------------------------------------------------
+Ran 4 tests in 0.100s
+
+OK
+Running test_target_tracker
+.........
+----------------------------------------------------------------------
+Ran 9 tests in 0.031s
+
+OK
+Running test_tracking_camera_owner
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.281s
+
+OK
+Running test_tracking_position_replay
+....
+----------------------------------------------------------------------
+Ran 4 tests in 25.902s
+
+OK
+Running test_trial_evidence
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.019s
+
+OK
+Running test_yolo_coke
+......................
+----------------------------------------------------------------------
+Ran 22 tests in 0.604s
+
+OK
+Running offline.open_cases
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.018s
+
+OK
+307 tests; PASS; report: offline/validation/issue-batch-20261008/regression-current.json
+Live camera timing, ownership settling, and a physical pickup remain unverified.

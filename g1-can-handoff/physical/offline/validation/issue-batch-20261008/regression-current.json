@@ -1,0 +1,2167 @@
+{
+  "profile": "regression",
+  "tests_run": 307,
+  "successful": true,
+  "seconds": 96.24126483302098,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_arm_gravity",
+      "tests_run": 6,
+      "seconds": 0.3798691250849515,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_cancelled_planning_never_enters_ik_search",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_different_or_stopped_controller_cannot_supply_a_hold",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_disabled_compensation_sends_zero_torque",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_feedforward_is_nonzero_capped_and_slew_limited",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_hand_open_and_hold_refresh_the_same_arm_reference_and_feedforward",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_arm_gravity.ArmGravityTests.test_recalibrated_model_inherits_torque_and_reference_without_another_ramp",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.380s\n\nOK\n"
+    },
+    {
+      "module": "test_attitude_plant",
+      "tests_run": 1,
+      "seconds": 0.2591952088987455,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_attitude_plant.AttitudePlantTests.test_fk_and_gravity_match_a_scene_built_at_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.259s\n\nOK\n"
+    },
+    {
+      "module": "test_calibration_points",
+      "tests_run": 2,
+      "seconds": 0.014643374946899712,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_calibration_points.MarkerFreeCalibrationTests.test_marker_free_points_fit_but_never_commission",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_calibration_points.MarkerFreeCalibrationTests.test_wrong_frame_and_depth_discontinuities_rejected",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.015s\n\nOK\n"
+    },
+    {
+      "module": "test_camera_input",
+      "tests_run": 10,
+      "seconds": 0.023171250009909272,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_camera_input.RedLabelTests.test_fast_closing_matches_original_on_edges_and_random_masks",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.RedLabelTests.test_partially_offscreen_red_can_is_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.RedLabelTests.test_separate_cans_remain_ambiguous",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.RedLabelTests.test_unrelated_boundary_speckles_do_not_clip_the_can",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.RedLabelTests.test_white_label_stripes_preserve_only_red_measurements",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.TrackedCylinderTests.test_candidate_roi_accepts_shifted_cylinder_but_not_wider_grip",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.TrackedCylinderTests.test_finger_split_label_merges_only_with_expected_cylinder",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.TrackedCylinderTests.test_fragment_tracking_cannot_enable_initial_detection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.TrackedCylinderTests.test_off_target_red_is_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_input.TrackedCylinderTests.test_tracking_preserves_clipped_label_guard",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.023s\n\nOK\n"
+    },
+    {
+      "module": "test_camera_lease",
+      "tests_run": 1,
+      "seconds": 0.5469536670716479,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_camera_lease.CameraLeaseTests.test_lease_renews_without_frames_and_stops_before_release",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.547s\n\nOK\n"
+    },
+    {
+      "module": "test_camera_pipeline",
+      "tests_run": 14,
+      "seconds": 0.1358983749523759,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_both_decoders_run_before_either_is_joined",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_accepts_configured_freshness_boundary_without_retimestamping",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_invalidates_ray_cache_on_timing_calibration_change",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_calibration_serial_mismatch",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_intrinsics_and_dimensions_mismatch",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_policy_frame_and_capture_time_mismatch",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_positive_and_negative_rgb_depth_skew",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_stale_future_and_invalid_exposure",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_paired_decode_matches_original_pixels_and_reuses_workers",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.CameraPipelineTests.test_parallel_decode_retains_exact_frame_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.WorldTransformTests.test_parallel_transform_propagates_bad_input_instead_of_partial_results",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.WorldTransformTests.test_parallel_transform_retains_every_pixel_and_original_arithmetic",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_camera_pipeline.WorldTransformTests.test_worker_configuration_is_bounded_and_serial_is_available",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..............\n----------------------------------------------------------------------\nRan 14 tests in 0.136s\n\nOK\n"
+    },
+    {
+      "module": "test_cartesian_lift",
+      "tests_run": 7,
+      "seconds": 0.35407824988942593,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_descent_cannot_be_requested_during_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_downward_alignment_is_continuous_checked_and_read_only",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_failed_segment_restores_model_and_never_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_ik_failure_subdivides_then_checks_every_accepted_segment",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_local_ik_keeps_previous_branch_for_small_displacement",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_persistent_ik_failure_is_bounded",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cartesian_lift.CartesianLiftTests.test_rejects_downward_or_unbounded_lift",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.354s\n\nOK\n"
+    },
+    {
+      "module": "test_clearance_planning",
+      "tests_run": 11,
+      "seconds": 12.676288041984662,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_align_and_reach_use_continuous_cartesian_paths",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_all_saved_frames_events_and_sources_are_hash_verified",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_clearance_changes_proximity_checks_without_changing_measured_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_infeasible_lift_does_not_spend_staging_search_budget",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_invalid_clearance_cannot_disable_table_checks",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_near_centre_hardware_failure_replans_without_elbow_torso_collision",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_positive_table_gap_under_clearance_is_rejected_in_every_phase",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_recorded_table_collision_still_rejected_with_clearance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_saved_head_camera_offset_is_still_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_saved_scene_replans_all_four_phases_with_positive_clearance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_table_gap_above_clearance_passes",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...........\n----------------------------------------------------------------------\nRan 11 tests in 12.676s\n\nOK\n"
+    },
+    {
+      "module": "test_compact_tracking",
+      "tests_run": 5,
+      "seconds": 0.048842750024050474,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_compact_tracking.CompactTrackingTests.test_all_world_points_match_previous_arithmetic_exactly",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_compact_tracking.CompactTrackingTests.test_mismatched_identity_scale_and_calibration_still_fail",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_compact_tracking.CompactTrackingTests.test_next_request_demands_a_newer_frame_in_the_same_stream",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_compact_tracking.CompactTrackingTests.test_single_bundle_preserves_decoded_pixels_and_original_exposure",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_compact_tracking.CompactTrackingTests.test_stale_future_invalid_and_skewed_frames_still_fail",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.049s\n\nOK\n"
+    },
+    {
+      "module": "test_control_settle",
+      "tests_run": 9,
+      "seconds": 1.5127043339889497,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_control_settle.ControlSettleTests.test_cancellation_and_unhealthy_motor_samples_abort_immediately",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_duplicate_samples_do_not_establish_a_stable_window",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_environment_can_lower_limit_but_invalid_values_fail_closed",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_every_joint_below_one_can_settle_if_positions_are_stable",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_ongoing_motion_times_out_even_when_feedback_is_fresh",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_only_returns_after_half_second_of_advancing_stable_feedback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_speed_limit_is_strict_and_applies_to_every_joint",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_stable_positions_with_recorded_leg_velocity_noise_can_settle",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settle.ControlSettleTests.test_transition_discards_moving_history_before_stable_window",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 1.513s\n\nOK\n"
+    },
+    {
+      "module": "test_cylinder_fit",
+      "tests_run": 2,
+      "seconds": 0.007832208997569978,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_cylinder_fit.CylinderFitTests.test_analytic_derivative_matches_finite_difference",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_cylinder_fit.CylinderFitTests.test_captured_arc_avoids_mirrored_local_minimum",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.008s\n\nOK\n"
+    },
+    {
+      "module": "test_dex3_packaging",
+      "tests_run": 1,
+      "seconds": 0.002706750063225627,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_dex3_packaging.Dex3PackagingTests.test_constructor_mapping_and_thermal_dependency",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n"
+    },
+    {
+      "module": "test_frame_age_limit",
+      "tests_run": 5,
+      "seconds": 0.6698609578888863,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_frame_age_limit.FrameAgeLimitTests.test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_frame_age_limit.FrameAgeLimitTests.test_bad_or_unbounded_configuration_fails_closed",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_frame_age_limit.FrameAgeLimitTests.test_motion_tracking_guard_uses_the_same_bounded_budget",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_frame_age_limit.FrameAgeLimitTests.test_saved_341ms_fault_is_accepted_but_401ms_and_future_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_frame_age_limit.FrameAgeLimitTests.test_stricter_override_rejects_saved_fault",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.670s\n\nOK\n"
+    },
+    {
+      "module": "test_geometry_parallel",
+      "tests_run": 4,
+      "seconds": 0.010559375048615038,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_geometry_parallel.ParallelGeometryTests.test_initial_semantic_runs_in_parallel",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_geometry_parallel.ParallelGeometryTests.test_parallel_response_keeps_exact_frame_validation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_geometry_parallel.ParallelGeometryTests.test_periodic_semantic_runs_in_parallel",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_geometry_parallel.ParallelGeometryTests.test_strong_visual_track_geometry_does_not_call_yolo",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.010s\n\nOK\n"
+    },
+    {
+      "module": "test_latest_frame",
+      "tests_run": 4,
+      "seconds": 0.07958320796024054,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_latest_frame.LatestFrameTests.test_processing_pause_consumes_newest_not_parked_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_latest_frame.LatestFrameTests.test_reader_failure_is_latched_even_with_a_cached_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_latest_frame.LatestFrameTests.test_readiness_rejects_future_frame_and_stall",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_latest_frame.LatestFrameTests.test_readiness_waits_for_a_fresh_decoded_frame_without_consuming_it",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.079s\n\nOK\n"
+    },
+    {
+      "module": "test_latest_trial_replay",
+      "tests_run": 2,
+      "seconds": 0.03905129199847579,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_latest_trial_replay.LatestTrialTests.test_latest_rgb_depth_gap_fits_500ms_without_disabling_uncertainty_or_future_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_latest_trial_replay.LatestTrialTests.test_recorded_recheck_arrives_after_timeout_and_cannot_resume_motor_writes",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.039s\n\nOK\n"
+    },
+    {
+      "module": "test_model_calibration",
+      "tests_run": 5,
+      "seconds": 0.47317008301615715,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_model_calibration.ModelCalibrationTests.test_explicit_model_acceptance_preserves_estimated_provenance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_model_calibration.ModelCalibrationTests.test_extended_table_collides_beyond_old_table_bounds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_model_calibration.ModelCalibrationTests.test_imu_heading_wrap_is_not_a_pose_change",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_model_calibration.ModelCalibrationTests.test_posture_change_requires_new_calibration",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_model_calibration.ModelCalibrationTests.test_refuses_missing_acceptance_false_precision_and_bad_scene",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.473s\n\nOK\n"
+    },
+    {
+      "module": "test_motion_tracking",
+      "tests_run": 4,
+      "seconds": 0.0021739169023931026,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_motion_tracking.MotionTrackingTests.test_fresh_observation_passes_and_stale_future_or_uncertain_blocks",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_motion_tracking.MotionTrackingTests.test_one_frame_prefetch_overlaps_processing_without_rewriting_exposure",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_motion_tracking.MotionTrackingTests.test_stale_tracking_blocks_arm_and_finger_writes_at_next_command_tick",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_motion_tracking.MotionTrackingTests.test_synchronous_phase_observation_updates_watchdog_after_full_validation",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "module": "test_observation_archive",
+      "tests_run": 5,
+      "seconds": 0.07621129101607949,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_observation_archive.ObservationArchiveTests.test_213_ms_acquisition_is_usable_only_if_final_observation_is_fresh",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_observation_archive.ObservationArchiveTests.test_archive_error_prevents_returning_successful_vision",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_observation_archive.ObservationArchiveTests.test_archive_overlaps_geometry_and_is_joined_before_freshness",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_observation_archive.ObservationArchiveTests.test_exposure_becoming_stale_during_archive_is_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_observation_archive.ObservationArchiveTests.test_old_acquisitions_are_bounded_and_never_sent_to_inference",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.076s\n\nOK\n"
+    },
+    {
+      "module": "test_offline_pack",
+      "tests_run": 2,
+      "seconds": 0.0465277920011431,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_offline_pack.OfflinePackTests.test_missing_or_modified_fixture_fails_integrity_check",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_pack.OfflinePackTests.test_spawned_child_rejects_robot_and_existing_loopback_connections_and_real_dds",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.046s\n\nOK\n"
+    },
+    {
+      "module": "test_offline_yolo_build",
+      "tests_run": 12,
+      "seconds": 0.12318954197689891,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_archive_escape_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_cached_artifact_reuses_bytes_without_network",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_corrupted_cache_rejected_before_unpack_or_build",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_missing_cache_does_not_try_vm_package_network",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_no_cpu_torch_or_cuda_replacement_allowed",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_original_rpc_failure_has_distinct_native_workaround",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_source_pins_match_real_saved_configuration",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_source_version_change_requires_new_lock",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_ubuntu_package_version_checked_without_running_maintainer_scripts",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_unapproved_source_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_wheel_metadata_version_must_match_lock",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_yolo_build.OfflineBuildTests.test_wheel_unpack_promotes_exact_arm64_bytes_and_metadata",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.123s\n\nOK\n"
+    },
+    {
+      "module": "test_operator_panel",
+      "tests_run": 7,
+      "seconds": 3.568319167010486,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_backend_start_failure_reaches_page_and_is_not_reported_as_success",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_cached_overlay_does_not_issue_a_control_request",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_explicit_supported_release_calls_backend_once",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_missing_support_or_wrong_local_token_cannot_release",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_page_load_only_exposes_enabled_operator_button",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_start_and_stop_are_explicit_separate_operator_requests",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_panel.OperatorPanelTests.test_start_is_blocked_during_deployment_but_stop_remains_available",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 3.568s\n\nOK\n"
+    },
+    {
+      "module": "test_operator_state",
+      "tests_run": 4,
+      "seconds": 0.00019462499767541885,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_operator_state.OperatorStateTests.test_hold_is_visibly_distinct_from_released_even_with_same_error",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_state.OperatorStateTests.test_planning_motion_and_finger_closing_have_distinct_labels",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_state.OperatorStateTests.test_previous_verified_lift_does_not_claim_demo_holds_after_release",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_operator_state.OperatorStateTests.test_unknown_ownership_and_unhealthy_feedback_are_not_ready",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+    },
+    {
+      "module": "test_operator_transport",
+      "tests_run": 1,
+      "seconds": 0.0014547089813277125,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_operator_transport.OperatorTransportTests.test_failed_device_connection_terminates_created_mcp_process",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+    },
+    {
+      "module": "test_passive_deployment",
+      "tests_run": 2,
+      "seconds": 0.009632374974898994,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_passive_deployment.PassiveDeploymentTests.test_persistent_transport_failure_stops_at_the_attempt_limit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_passive_deployment.PassiveDeploymentTests.test_startup_transport_gap_retries_then_accepts_the_verified_read",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.010s\n\nOK\n"
+    },
+    {
+      "module": "test_perception_timing",
+      "tests_run": 3,
+      "seconds": 0.005910250009037554,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_contended_phase_observation_refreshes_watchdog_before_next_background_response",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_parked_prefetch_is_discarded_using_exposure_age_before_geometry",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_repeated_frames_abort_after_bounded_attempts_without_inference_or_archive",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.006s\n\nOK\n"
+    },
+    {
+      "module": "test_perception_worker",
+      "tests_run": 7,
+      "seconds": 0.8130501250270754,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_perception_worker.WorkerTests.test_child_can_request_exact_exposure_pose_without_another_dds_reader",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_error_is_not_converted_to_success",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_publish_checked_result_before_event_relay_but_never_publish_stale",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_real_worker_reports_ready_only_after_camera_warmup",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_spawn_round_trip_and_shutdown",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_stale_and_future_observations_are_rejected_in_parent",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_stalled_request_expires_before_tracking_join_deadline",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.813s\n\nOK\n"
+    },
+    {
+      "module": "test_physical_core",
+      "tests_run": 8,
+      "seconds": 0.01456141599919647,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_physical_core.PhysicalGuards.test_all_motors_accept_below_75_but_reject_at_75",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_calibration_uses_held_out_points_and_rejects_bad_measurement",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_finger_mapping_is_not_hidden_by_symmetric_grip",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_missing_or_stale_feedback_fails_before_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_motor_fault_and_heat_fail_before_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_nonfinite_temperature_velocity_and_attitude_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_nonrigid_and_reflected_camera_frames_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_uncommissioned_and_other_camera_calibration_rejected",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.015s\n\nOK\n"
+    },
+    {
+      "module": "test_pickup",
+      "tests_run": 12,
+      "seconds": 0.0037279590032994747,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup.SharedPickupTests.test_can_motion_aborts_before_first_arm_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_can_pushed_during_reach_stops_before_closing",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_full_path_rejection_searches_another_orientation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_lift_requires_camera_evidence_even_with_finger_obstructions",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_missing_obstruction_aborts_before_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_orientation_candidates_are_bounded",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_orientation_search_never_swallows_operational_faults",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_replayed_camera_frame_does_not_report_held_can",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_shifted_grip_outside_40mm_fails_shared_hold_verifier",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_slip_after_initial_lift_does_not_report_success",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_transient_finger_obstructions_do_not_authorize_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_verified_lift_holds_without_offer_or_release",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "............\n----------------------------------------------------------------------\nRan 12 tests in 0.004s\n\nOK\n"
+    },
+    {
+      "module": "test_pickup_area_acceptance",
+      "tests_run": 7,
+      "seconds": 5.165400249999948,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_controls_read_and_project_actual_deployed_task_bounds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_far_capture_remains_outside_bounded_admission",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_original_three_captures_reproduce_area_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_two_reachable_captures_pass_complete_real_clock_preflight",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_hides_active_stale_mismatched_and_unsupported_projection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_projects_all_four_workspace_corners_on_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_uses_camera_translation_and_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 5.165s\n\nOK\n"
+    },
+    {
+      "module": "test_pickup_area_viewer",
+      "tests_run": 3,
+      "seconds": 0.001457874896004796,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup_area_viewer.PickupAreaTests.test_hides_active_stale_mismatched_and_unsupported_projection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_viewer.PickupAreaTests.test_projects_all_four_workspace_corners_on_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_viewer.PickupAreaTests.test_uses_camera_translation_and_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nOK\n"
+    },
+    {
+      "module": "test_pickup_workspace",
+      "tests_run": 3,
+      "seconds": 0.03659091703593731,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup_workspace.WorkspaceTests.test_each_outside_boundary_still_rejects",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_workspace.WorkspaceTests.test_exact_boundaries_and_interior_reach_planner",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_workspace.WorkspaceTests.test_historical_near_forward_placement_uses_backend_workspace",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.037s\n\nOK\n"
+    },
+    {
+      "module": "test_placement_overlay",
+      "tests_run": 3,
+      "seconds": 0.0016249159816652536,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_hides_active_stale_mismatched_and_unsupported_projection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_projects_all_four_workspace_corners_on_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_uses_camera_translation_and_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "module": "test_planning_acceptance",
+      "tests_run": 4,
+      "seconds": 19.03004070802126,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_full_path_rejection_never_returns_a_plan",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_recorded_scene_is_red_with_original_planner_and_green_with_current",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_without_full_path_validator_unreachable_endpoints_still_reject",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 19.030s\n\nOK\n"
+    },
+    {
+      "module": "test_planning_deadline",
+      "tests_run": 1,
+      "seconds": 0.0014517090748995543,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_planning_deadline.PlanningDeadlineTests.test_recorded_orientation_timeout_is_bounded_before_any_motion",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+    },
+    {
+      "module": "test_pose_alignment",
+      "tests_run": 8,
+      "seconds": 0.001710625016130507,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_attitude_and_unmodeled_waist_changes_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_history_bounded_and_timestamps_advance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_identity_and_original_accepted_config_unchanged",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_known_rotation_about_pelvis_pivot_updates_both_transforms",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_nearest_uses_exposure_not_wall_clock_and_copies_sample",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_nonfinite_data_and_wrong_calibration_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_old_and_future_samples_outside_twenty_ms_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pose_alignment.PoseAlignmentTests.test_yaw_is_relative_and_wraps",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.002s\n\nOK\n"
+    },
+    {
+      "module": "test_pregrasp_collision",
+      "tests_run": 5,
+      "seconds": 0.17586762504652143,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pregrasp_collision.PregraspCollisionTests.test_camera_updates_collision_proxy_without_moving_simulated_object",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pregrasp_collision.PregraspCollisionTests.test_diagnostic_identifies_can_clearance_and_phase",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pregrasp_collision.PregraspCollisionTests.test_intentional_finger_contact_only_allowed_in_grasp_phases",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pregrasp_collision.PregraspCollisionTests.test_positive_finger_clearance_below_10mm_is_rejected_before_grasp",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pregrasp_collision.PregraspCollisionTests.test_wrist_contact_is_not_exempt_even_during_grasp",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.176s\n\nOK\n"
+    },
+    {
+      "module": "test_record_demo_attempt",
+      "tests_run": 9,
+      "seconds": 0.02326762501616031,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_archive_failure_is_recorded_and_never_reported_complete",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_capture_without_start_never_requests_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_connection_failure_still_creates_a_durable_error_record",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_explicit_pregrasp_retry_uses_controller_admission",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_lost_start_response_also_requests_stop_without_replaying_start",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_retry_flag_never_starts_from_holding_can",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_start_is_never_repeated_after_accepted_command_transport_failure",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_summary_records_first_failure_and_per_trial_command_delta",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_record_demo_attempt.AttemptTests.test_unhealthy_recorder_blocks_start_and_saves_reason",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpu5rib7qx/20261008T200754Z-6b4b8461.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": null,\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": false,\n  \"artifact\": null,\n  \"artifact_error\": \"checksum mismatch\",\n  \"recording_error\": null,\n  \"runner_error\": null\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpgu_bj30n/20261008T200754Z-ac49c446.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": null,\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": null\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpukkourk2/20261008T200754Z-5086feb5.json\",\n  \"phase\": null,\n  \"error\": \"RuntimeError: DEVICE_UNREACHABLE\",\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": null,\n  \"motion_commands_this_attempt\": null,\n  \"adapter_initialized\": null,\n  \"evidence_verified\": false,\n  \"artifact\": null,\n  \"artifact_error\": \"Native Wendy connection was not established\",\n  \"recording_error\": \"Native Wendy connection was not established\",\n  \"runner_error\": \"RuntimeError: DEVICE_UNREACHABLE\"\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmp43gbqiwg/20261008T200754Z-7d79de15.json\",\n  \"phase\": \"FROZEN\",\n  \"error\": null,\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": true,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": null\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpwpn_wyek/20261008T200754Z-586fd8b9.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": null,\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": \"RuntimeError: start response lost\"\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpujzcdkl3/20261008T200754Z-a6840d30.json\",\n  \"phase\": \"HOLDING_CAN\",\n  \"error\": \"RuntimeError: Existing demo or arm ownership requires operator review before another attempt\",\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": true,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": \"RuntimeError: Existing demo or arm ownership requires operator review before another attempt\"\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpqdyr406e/20261008T200754Z-73f8cb60.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": null,\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": \"RuntimeError: transport lost\"\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpubn3d0u7/20261008T200754Z-cce8f8b7.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": \"exposure stale (401.7 ms)\",\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 507,\n  \"motion_commands_this_attempt\": 7,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": true,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": null,\n  \"runner_error\": null\n}\n{\n  \"evidence\": \"/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpv_6gnnpj/20261008T200754Z-f6bf6b00.json\",\n  \"phase\": \"PASSIVE\",\n  \"error\": \"RuntimeError: Recorder is unhealthy or required feedback is not being persisted\",\n  \"physical_lift_verified\": false,\n  \"motion_commands_sent\": 0,\n  \"motion_commands_this_attempt\": 0,\n  \"adapter_initialized\": false,\n  \"evidence_verified\": false,\n  \"artifact\": \"test.tar.gz\",\n  \"artifact_error\": null,\n  \"recording_error\": \"Recorder is unhealthy or required feedback is not being persisted\",\n  \"runner_error\": \"RuntimeError: Recorder is unhealthy or required feedback is not being persisted\"\n}\n",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.023s\n\nOK\n"
+    },
+    {
+      "module": "test_recorded_failures",
+      "tests_run": 5,
+      "seconds": 0.8408590409671888,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_recorded_failures.RecordedFailureTests.test_153_measured_table_frames_reproduce_uncorrected_drift_and_corrected_stability",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorded_failures.RecordedFailureTests.test_all_ten_trial_traces_retain_primary_error_and_never_claim_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorded_failures.RecordedFailureTests.test_captured_jpeg_depth_rays_yolo_identity_and_cylinder_reproduce_planning",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorded_failures.RecordedFailureTests.test_cold_ownership_shift_is_reproduced_and_rejected_without_moving_baseline",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorded_failures.RecordedFailureTests.test_recorded_411ms_gap_blocks_next_arm_and_finger_tick",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.841s\n\nOK\n"
+    },
+    {
+      "module": "test_recorder_export",
+      "tests_run": 6,
+      "seconds": 0.01310891704633832,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_exports_every_recorded_topic_in_interval_and_retains_raw_bytes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_missing_start_and_corrupted_sealed_segment_are_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_out_of_order_callbacks_across_rotation_are_kept_in_original_order",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_periodic_status_rows_survive_export_without_being_counted_as_dds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_unknown_rows_without_topic_still_fail_visibly",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_recorder_export.RecorderExportTests.test_unsealed_tail_is_rejected_rather_than_silently_truncated",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.013s\n\nOK\n"
+    },
+    {
+      "module": "test_replay_perception",
+      "tests_run": 3,
+      "seconds": 0.05936766695231199,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_replay_perception.ReplayPerceptionTests.test_decoded_camera_pixels_and_exposure_bind_every_uncertainty_recheck",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_replay_perception.ReplayPerceptionTests.test_replayed_previous_yolo_response_cannot_replace_current_decoded_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_replay_perception.ReplayPerceptionTests.test_uncertain_camera_view_with_absent_yolo_keeps_prior_identity_uncommitted",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.059s\n\nOK\n"
+    },
+    {
+      "module": "test_rest_arm",
+      "tests_run": 5,
+      "seconds": 0.29133241693489254,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_rest_arm.RestArmTests.test_failed_collision_preflight_never_executes_or_releases",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_rest_arm.RestArmTests.test_plan_sends_no_commands_and_does_not_release",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_rest_arm.RestArmTests.test_possible_held_can_or_active_task_rejects_before_camera",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_rest_arm.RestArmTests.test_unverified_arrival_retains_control",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_rest_arm.RestArmTests.test_verified_arrival_releases_without_hand_commands",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.291s\n\nOK\n"
+    },
+    {
+      "module": "test_runtime_lifecycle",
+      "tests_run": 13,
+      "seconds": 0.02046712499577552,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_active_or_invalid_camera_limit_does_not_mutate_runtime",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_camera_limit_tuning_preserves_hold_and_persists_without_resume",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_cancelled_async_demo_cannot_reacquire_camera_or_arm",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_demo_start_is_single_job_and_stop_remains_latched_before_worker",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failed_geometry_retains_exact_detection_and_archives_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failure_holds_measured_pose_and_retains_control",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_first_failure_survives_later_cancellation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_frame_evidence_is_persisted_without_stdout_or_state_lock",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_plan_refresh_is_saved_only_after_success_without_adapter",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_cancels_but_never_relaxes_while_trial_running",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_requires_supported_can_and_finishes_after_trial",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_refuses_possible_held_can_or_active_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_reuses_held_controller_and_never_releases",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.020s\n\nOK\n"
+    },
+    {
+      "module": "test_runtime_packaging",
+      "tests_run": 1,
+      "seconds": 0.03788612503558397,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_runtime_packaging.RuntimePackagingTests.test_stagefile_copies_every_transitive_local_runtime_module",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.038s\n\nOK\n"
+    },
+    {
+      "module": "test_scene_refresh",
+      "tests_run": 6,
+      "seconds": 0.005534290918149054,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_bad_new_geometry_and_wrong_camera_are_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_expired_scene_replaced_by_new_observation_and_current_pose",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_exposure_pose_does_not_bypass_live_snapshot_health",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_exposure_pose_rejects_skew_or_nonfinite_before_candidate",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_reference_and_candidate_use_exposure_pose_without_mutating_live_snapshot",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_scene_refresh.SceneRefreshTests.test_refresh_does_not_create_operator_authorization",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.005s\n\nOK\n"
+    },
+    {
+      "module": "test_staging",
+      "tests_run": 5,
+      "seconds": 0.24029545788653195,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_staging.NarrowObstacleTests.test_narrow_wall_is_avoided_by_tree_edges_and_shortcuts",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_deadline_and_cancellation_are_enforced",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_node_limit_bounds_obstructed_search",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_out_of_limits_goal_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_starting_model_is_preserved",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.240s\n\nOK\n"
+    },
+    {
+      "module": "test_stale_trial_replay",
+      "tests_run": 4,
+      "seconds": 0.5200935420580208,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_stale_trial_replay.NativeStaleReplayTests.test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stale_trial_replay.NativeStaleReplayTests.test_archived_frame_with_failed_geometry_cannot_publish_to_motion_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stale_trial_replay.NativeStaleReplayTests.test_fixed_budget_preserves_future_uncertainty_staleness_and_no_resume_at_write_gate",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stale_trial_replay.NativeStaleReplayTests.test_packet_availability_never_precedes_validated_result_or_geometry_completion",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.520s\n\nOK\n"
+    },
+    {
+      "module": "test_supervised_demo_trials",
+      "tests_run": 5,
+      "seconds": 0.003918458009138703,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_budget_must_match_verified_controller_and_yolo_release",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_duplicate_run_never_constructs_transport_or_reissues_start",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_no_automatic_second_start_without_operator_reset",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_reset_acknowledgement_cannot_skip_a_running_previous_trial",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_retained_ownership_requires_release_even_if_reset_was_acknowledged",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.004s\n\nOK\n"
+    },
+    {
+      "module": "test_table_geometry_acceptance",
+      "tests_run": 3,
+      "seconds": 2.5633482499979436,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_exposure_pose_correction_accepts_both_original_faults_repeatably",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_native_calibration_frames_keep_disjoint_table_validation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_original_frozen_pose_reproduces_both_native_table_errors",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "./Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n..\n----------------------------------------------------------------------\nRan 3 tests in 2.563s\n\nOK\n"
+    },
+    {
+      "module": "test_table_plane",
+      "tests_run": 4,
+      "seconds": 0.09975020796991885,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_table_plane.TablePlaneTests.test_disagreeing_heldout_plane_is_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_plane.TablePlaneTests.test_narrow_surface_support_is_rejected_despite_low_tape_residual",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_plane.TablePlaneTests.test_objects_and_invalid_depth_do_not_rotate_the_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_plane.TablePlaneTests.test_recorded_calibrations_explain_the_wide_table",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul\n  check_error=(check_points-center)@normal\n../Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n./Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: divide by zero encountered in matmul\n  distance=held@reference\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: overflow encountered in matmul\n  distance=held@reference\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: invalid value encountered in matmul\n  distance=held@reference\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: divide by zero encountered in matmul\n  offset=np.median(tape@reference)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: overflow encountered in matmul\n  offset=np.median(tape@reference)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: invalid value encountered in matmul\n  offset=np.median(tape@reference)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: divide by zero encountered in matmul\n  old=np.array(old_normals[fid]);offset=np.median(tape@old)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: overflow encountered in matmul\n  old=np.array(old_normals[fid]);offset=np.median(tape@old)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: invalid value encountered in matmul\n  old=np.array(old_normals[fid]);offset=np.median(tape@old)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: divide by zero encountered in matmul\n  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: overflow encountered in matmul\n  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: invalid value encountered in matmul\n  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: divide by zero encountered in matmul\n  errors=(table-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: overflow encountered in matmul\n  errors=(table-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: invalid value encountered in matmul\n  errors=(table-center)@normal\n.\n----------------------------------------------------------------------\nRan 4 tests in 0.100s\n\nOK\n"
+    },
+    {
+      "module": "test_target_tracker",
+      "tests_run": 9,
+      "seconds": 0.03060462500434369,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_target_tracker.TrackerTests.test_acceptance_rejects_unchecked_frame_and_large_center_shift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_clipped_tracking_forces_semantic_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_initial_semantic_identity_and_pending_commit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_periodic_identity_recheck_uses_current_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_stale_future_or_repeated_frame_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_uncertain_empty_or_ambiguous_identity_never_returns_old_mask",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_depth_frames_do_not_requery_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_uncertainty_forces_same_frame_semantic_confirmation",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".........\n----------------------------------------------------------------------\nRan 9 tests in 0.031s\n\nOK\n"
+    },
+    {
+      "module": "test_tracking_camera_owner",
+      "tests_run": 3,
+      "seconds": 0.2811459170188755,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_newest_bundle_contains_unchanged_exposure_metadata_and_depth",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_same_frame_waits_for_capture_notification_instead_of_replaying",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_stream_restart_and_missing_progress_fail",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.281s\n\nOK\n"
+    },
+    {
+      "module": "test_tracking_position_replay",
+      "tests_run": 4,
+      "seconds": 25.90171033295337,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_genuine_displacement_after_owned_preflight_blocks_pickup_sink",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_new_samples_never_rebase_and_invalid_position_never_publishes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_start_tracking_copies_the_path_reference",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 25.902s\n\nOK\n"
+    },
+    {
+      "module": "test_trial_evidence",
+      "tests_run": 6,
+      "seconds": 0.019293332938104868,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_archive_keeps_every_event_and_exact_boundary_images",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_checksum_mismatch_rejects_even_a_complete_sized_transfer",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_export_rejects_camera_evidence_outside_native_directory",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_native_transfer_is_verified_before_publishing_local_artifact",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_native_truncation_and_failed_exec_are_not_valid_evidence",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_trial_evidence.EvidenceTests.test_short_chunk_never_leaves_an_apparently_complete_artifact",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.019s\n\nOK\n"
+    },
+    {
+      "module": "test_yolo_coke",
+      "tests_run": 22,
+      "seconds": 0.6036193750333041,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_clipped_box_rejected_even_with_tracking_roi",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_confidence_just_above_10_percent_is_eligible",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_cylinder_fit_still_blocks_noncan_geometry",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_lid_interior_does_not_enter_cylinder_sidewall_fit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_low_confidence_cannot_enable_grasp",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_multiple_cokes_cannot_choose_highest_confidence",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_no_depth_cannot_enable_geometry",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_nonred_coke_label_fits_measured_cylinder",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_off_target_detection_cannot_replace_lifted_coke",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_physical_default_calls_yolo_and_does_not_fallback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_physical_source_cannot_use_simulation_red_mode",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_red_object_without_semantic_detection_fails",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_second_target_between_10_and_15_percent_blocks_ambiguity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_table_mismatch_still_blocks_semantic_target",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_threshold_cannot_be_lowered_below_user_required_10_percent",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.CokeGeometryTests.test_tracking_cannot_skip_initial_ambiguity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ExactFrameTests.test_invalid_box_and_wrong_class_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ExactFrameTests.test_rejected_response_identity_and_backend",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ExactFrameTests.test_stale_or_future_frame_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ServiceContractTests.test_http_roundtrip_preserves_exact_bgr_and_identity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ServiceContractTests.test_pinned_artifact_matches_manifest_and_bytes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_yolo_coke.ServiceContractTests.test_request_decoding_checks_pixels_dimensions_and_age",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......................\n----------------------------------------------------------------------\nRan 22 tests in 0.604s\n\nOK\n"
+    },
+    {
+      "module": "offline.open_cases",
+      "tests_run": 4,
+      "seconds": 0.017713499953970313,
+      "successful": true,
+      "cases": [
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_cancel_after_settling_cannot_start_owned_replanning",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_failed_owned_perception_cannot_execute_the_preview_plan",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_pickup_execution_uses_a_plan_measured_after_sdk_ownership",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_unstable_ownership_holds_without_executing_or_releasing",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.018s\n\nOK\n"
+    }
+  ]
+}
