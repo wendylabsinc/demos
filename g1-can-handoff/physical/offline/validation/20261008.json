@@ -1,0 +1,82 @@
+{
+  "schema": "wendy.g1.offline-validation.v1",
+  "date_utc": "2026-10-08",
+  "pack_commit": "c2294bc",
+  "runtime_deployed_commit": "1538fd1",
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "clean_checkout": true,
+  "linux_container": {
+    "python": "3.12",
+    "network": "none",
+    "filesystem": "read-only",
+    "tests_run": 198,
+    "seconds": 73.46167004400195,
+    "regressions_passed": 184,
+    "simulation_tests": 13,
+    "simulation_failures": 5,
+    "open_acceptance_failures": 1,
+    "evidence_verified": 47
+  },
+  "cpu_checkpoint": {
+    "tests_run": 10,
+    "passed": true,
+    "runtime": "Python 3.11 macOS, Torch 2.14.1, Ultralytics 8.4.123; CPU float32"
+  },
+  "focused_table_old_normal_comparison": {
+    "tests": 4,
+    "passed": true
+  },
+  "red_proofs": [
+    {
+      "source_commit": "a217a77",
+      "test": "test_perception_timing",
+      "expected_failure": "stale 460 ms",
+      "artifact": "historical-watchdog-red.txt"
+    },
+    {
+      "source_commit": "1538fd1",
+      "test": "test_camera_pipeline",
+      "expected_failure": "wrong serial, invalid scale, NaN exposure admitted",
+      "artifact": "previous-camera-guards-red.txt"
+    }
+  ],
+  "failures": [
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 123, in test_75cm_scene_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 128, in test_head_camera_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 115, in test_measured_arms_down_stages_then_lifts_and_holds\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Can or table moved during final reach; refusing to close\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_start_rejects_interpolated_collision",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 107, in test_measured_arms_down_start_rejects_interpolated_collision\n    self.assertIn('trajectory intersects',result['error'])\nAssertionError: 'trajectory intersects' not found in 'No reachable grasp and offer path for this can position'\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 92, in test_shared_physical_sequence_lifts_with_measured_table_height\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "offline.open_cases.ColdOwnershipAcceptance.test_pickup_execution_uses_a_plan_measured_after_sdk_ownership",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/offline/open_cases.py\", line 41, in test_pickup_execution_uses_a_plan_measured_after_sdk_ownership\n    self.assertTrue(planned[-1],'Final plan was measured before cold SDK ownership changed robot pose')\nAssertionError: False is not true : Final plan was measured before cold SDK ownership changed robot pose\n"
+    }
+  ],
+  "unresolved": [
+    "camera pipeline headroom under live motion",
+    "cold SDK ownership final planning",
+    "full simulated pickup scenarios",
+    "planning search timeout / valid lift path"
+  ]
+}

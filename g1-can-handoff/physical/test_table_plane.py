@@ -1,5 +1,6 @@
 """Archived tape fits must generalize to unseen pixels on the tabletop."""
 from pathlib import Path
+import json
 import unittest
 import numpy as np
 from table_plane import fit_table_plane
@@ -37,6 +38,8 @@ class TablePlaneTests(unittest.TestCase):
         references={20903:[-.01062727,-.59383839,-.80451417],
                     38920:[-.00210495,-.60784334,-.79405421],
                     41836:[-.01090847,-.57688212,-.81675458]}
+        audit=json.loads((Path(__file__).parent/'offline/evidence/table-plane-audit.json').read_text())
+        old_normals={row['frame_id']:row['oldnormal'] for row in audit}
         with np.load(Path(__file__).parent/'fixtures/table-plane.npz') as data:
             for fid,reference in references.items():
                 with self.subTest(frame=fid):
@@ -47,6 +50,11 @@ class TablePlaneTests(unittest.TestCase):
                     offset=np.median(tape@reference)
                     table=held[np.abs(distance-offset)<.006]
                     self.assertGreater(len(table),1000)
+                    if fid in (20903,41836):
+                        # Original tape normal passes its strip but fails these
+                        # independent broad-table pixels before the repair.
+                        old=np.array(old_normals[fid]);offset=np.median(tape@old)
+                        self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
                     errors=(table-center)@normal
                     self.assertLess(np.sqrt(np.mean(errors**2)),.004)
                     self.assertLess(np.quantile(np.abs(errors),.95),.006)
