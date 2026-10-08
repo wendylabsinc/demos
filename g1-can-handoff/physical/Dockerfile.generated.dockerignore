@@ -21,6 +21,9 @@
 !latest_frame.py
 !latest_frame.py/
 !latest_frame.py/**
+!perception_policy.py
+!perception_policy.py/
+!perception_policy.py/**
 !perception_worker.py
 !perception_worker.py/
 !perception_worker.py/**

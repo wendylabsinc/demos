@@ -43,3 +43,5 @@ Rollback: deploy the previous controller commit `af58078`, or set
 The model and inference service need no change for this policy update.
 
 Final clean Git-index export: **331 tests pass**, including all 13 simulation tests, with all 140 original evidence hashes verified. The earlier focused index reports precede the pre-lift correction; `clean-index-full-tests.json` is the final combined result. No robot motion was used for these tests.
+
+NX2 deployment completed with controller `0.3.14-phase-perception`. The saved passive readiness result verifies all 49 source hashes, policy `phase_boundary`, no periodic YOLO recheck, healthy paired camera/inference and recorder, PASSIVE state, no arm ownership and zero startup commands. Advancing camera images were 47.3 and 57.3 ms old. `deployment-timing.json` records native build/deploy/readiness; no physical demo was started.
