@@ -238,5 +238,14 @@ not an independently measured extrinsic calibration.
 An initial passive probe stopped before observations because body motor 11
 reported 78 C. No motor adapters were created by the probe. After the operator
 reset, the controller reported PASSIVE, no arm adapter, healthy telemetry,
-and a maximum body temperature of 64 C (then 60 C). Live validation of the
-candidate and a physical pickup remain pending.
+and a maximum body temperature of 64 C (then 60 C).
+
+The repaired live passive probe accepted 164 observations in 12 seconds with
+no errors, zero motion commands, maximum exposure age 382.16 ms, and maximum
+exposure/pose skew 8.48 ms. Native Wendy deployed `a217a77` as version
+`0.3.4-exposure-attitude`, and all five changed runtime source hashes matched.
+The 00:34:03 UTC trial detected the can at (0.5025, 0.1257, 0.8230) m and
+stopped before ownership/motion because forward reach exceeds the existing
+0.45 m pickup bound. The robot remained released with zero motion commands.
+The operator was asked to reposition the can. Physical lift remains unverified.
+See `yolo/validation-exposure-attitude-20261008.json`.

@@ -1,0 +1,40 @@
+{
+  "deployed_commit": "a217a77fbb4ab63009892f688fe3750e215de762",
+  "passive": {
+    "failure": null,
+    "motion_commands_sent": 0,
+    "motor_adapters_created": false,
+    "max_age_ms": 382.1627069710303,
+    "observations": 164,
+    "exposure_pose_samples": 164,
+    "max_pose_skew_ms": 8.475974434077216
+  },
+  "replay": {
+    "frames": 153,
+    "max_pose_skew_ms": 1.861339,
+    "old_table_range_mm": [
+      -0.6254179466,
+      5.1666340083
+    ],
+    "corrected_table_range_mm": [
+      -0.8931813947,
+      0.4560215591
+    ]
+  },
+  "trial": {
+    "file": ".runtime/demo-attempts/20261008T003403Z.json",
+    "result": "blocked_before_motion",
+    "error": "Can outside left-hand pickup area",
+    "can_xyz_m": [
+      0.50245027375,
+      0.12573811881,
+      0.823
+    ],
+    "motion_commands_sent": 0,
+    "physical_lift_verified": false
+  },
+  "limitations": [
+    "Attitude correction assumes stationary pelvis position and fixed waist.",
+    "Operator-accepted factory/table calibration remains an estimate."
+  ]
+}

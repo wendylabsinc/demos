@@ -12,6 +12,9 @@
 !yolo/confidence.py
 !yolo/confidence.py/
 !yolo/confidence.py/**
+!pose_alignment.py
+!pose_alignment.py/
+!pose_alignment.py/**
 !perception_worker.py
 !perception_worker.py/
 !perception_worker.py/**
