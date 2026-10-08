@@ -1,0 +1,47 @@
+{
+  "profile": "regression",
+  "tests_run": 4,
+  "successful": true,
+  "seconds": 19.31517062499188,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_planning_acceptance",
+      "tests_run": 4,
+      "seconds": 19.087326542008668,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_full_path_rejection_never_returns_a_plan",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_recorded_scene_is_red_with_original_planner_and_green_with_current",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planning_acceptance.PlanningAcceptanceTests.test_without_full_path_validator_unreachable_endpoints_still_reject",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 19.087s\n\nOK\n"
+    }
+  ]
+}

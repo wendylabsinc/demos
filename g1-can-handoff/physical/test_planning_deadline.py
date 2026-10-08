@@ -16,7 +16,7 @@ class PlanningDeadlineTests(unittest.TestCase):
         self.assertFalse(trace['status']['adapter_initialized'])
         self.assertFalse(any(e['phase']=='target' for e in trace['events']))
         state={'time':100.}
-        plant=Mock()
+        plant=Mock(spec=['solve','set_contact_phase','move','hand'])
         def blocked_candidate(*args):
             # Reproduce expensive failed IK/preflight, advancing virtual time.
             state['time']+=30.001

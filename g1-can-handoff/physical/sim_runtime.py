@@ -18,6 +18,7 @@ from physical_core import BODY_NAMES, PhysicalPlant, SIM_TO_BRIDGE
 from pickup import prepare, execute
 from g1_can_handoff.sim import scene, FINGERS
 from simulation_position_noise import PositionNoise
+from stochastic_position_noise import StochasticPositionNoise
 
 
 class SimulationIO:
@@ -211,8 +212,13 @@ def apply_measured_state(world, io, measured):
 
 def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False,
         *, identity_mode='synthetic_red', fault=None, capture_animation=False,
-        position_noise='recorded', noise_seed=7, noise_scale=1., noise_trace=None):
-    noise = PositionNoise(position_noise, seed=noise_seed, scale=noise_scale, trace=noise_trace)
+        position_noise='stochastic', noise_seed=7, noise_scale=1., noise_trace=None, noise_profile=None, planner_profile=None, planner_mode='legacy'):
+    if planner_mode not in ('legacy','tuned'):raise ValueError('Planner mode must be legacy or tuned')
+    if planner_profile is None and planner_mode=='tuned':
+        planner_profile=json.loads((Path(__file__).parent/'g1_can_handoff/noise_aware_planner.json').read_text())
+    if position_noise == 'stochastic' and noise_trace is not None:position_noise='recorded'
+    noise = (StochasticPositionNoise(seed=noise_seed,scale=noise_scale,profile=noise_profile) if position_noise=='stochastic'
+             else PositionNoise(position_noise, seed=noise_seed, scale=noise_scale, trace=noise_trace))
     if identity_mode not in ('synthetic_red','color_depth'):
         raise ValueError('Simulation identity mode must be synthetic_red or color_depth')
     if fault is not None and (fault.get('kind') not in ('stale','missing_target') or not fault.get('phase')):
@@ -275,6 +281,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     # dynamics state, as on hardware.
     if setup is not None:
         config=dict(setup['config'],staging_enabled=staging_enabled)
+    if planner_profile is not None:config.update(planner_profile)
     io.arm_limits=np.asarray(config['arm_limits_rad'],dtype=float)
     model=scene(height=height) if setup is None else setup_scene(setup)
     plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
@@ -283,8 +290,12 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         from planning_snapshot import PlanningRecorder
         planning_recorder=PlanningRecorder(Path(output).with_suffix('.planning'),event)
         plant.planning_recorder=planning_recorder
+    initial_support=None
     contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
     def audit_contacts(world):
+        if isinstance(noise,StochasticPositionNoise) and world.data.time-noise.last_update >= .02-1e-9:
+            speed=float(np.max(np.abs(world.data.qvel[world.model.jnt_dofadr[io.body_ids[15:]]])))
+            noise.advance(float(world.data.time),moving=speed>.04)
         capture()
         if plant.ik.contact_phase not in ('pregrasp','staging','approach','align'):return
         for contact in world.data.contact:
@@ -299,7 +310,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                 if other not in contact_audit['bodies']:contact_audit['bodies'].append(other)
     world.frame_callback=audit_contacts
     def observe(phase,require_table,expected_center_xy=None):
-        nonlocal fault_record,observation_phase,display_phase
+        nonlocal fault_record,observation_phase,display_phase,initial_support
         observation_phase=phase;display_phase=phase
         frame=sensor.frame()
         if fault is not None and phase==fault['phase'] and fault_record is None:
@@ -310,6 +321,10 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         try:
             observation,vision=geometry(frame,config,require_table=require_table,
                 expected_center_xy=expected_center_xy,synthetic_red=identity_mode=='synthetic_red',tracker=tracker)
+            if isinstance(noise,StochasticPositionNoise):
+                if initial_support is None:initial_support=vision['pixels']
+                speed=float(np.max(np.abs(world.data.qvel[world.model.jnt_dofadr[io.body_ids[15:]]])))
+                noise.advance(float(world.data.time),moving=speed>.04,occluded=vision['pixels']<.65*initial_support)
             observation,vision=noise.apply(observation,vision,phase,frame['meta']['frame_id'],
                                           expected_center_xy=expected_center_xy)
             if tracker is not None:tracker.accept(observation,vision,frame)
@@ -323,7 +338,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                     metadata_json=json.dumps(dict(meta=frame['meta'],timestamp=frame['timestamp'],
                         config=config,phase=phase,require_table=require_table,
                         expected_center_xy=None if expected_center_xy is None else np.asarray(expected_center_xy).tolist(),
-                        synthetic_fixture=True)),
+                        synthetic_fixture=True,simulation_position_noise=noise.last_metadata)),
                     truth_can_position=world.can_position(),
                     truth_can_quaternion=world.data.xquat[world.can_id].copy())
             raise
@@ -359,7 +374,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                                   duration=200,loop=0,optimize=False)
                 result['animation']=animation_path.name
     result.update(perception=dict(identity_mode=identity_mode,yolo_calls=detector.calls,tracking_modes=sorted(tracking_modes)),
-                  position_noise=noise.description,
+                  position_noise=dict(noise.description,generated_jumps=getattr(noise,'jump_events',[])),planner_profile=planner_profile,noise_profile_input=noise_profile,
+                  planner_settings={key:config[key] for key in ('ik_reference_weight_m_per_rad','ik_position_tolerance_m','ik_variable_scale','grasp_candidate_budget','grasp_orientation_step_rad','planning_position_cov_m2')},
                   fault=fault_record,failure_phase=observation_phase if result.get('error') else None)
     result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
                   truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,trajectory=trajectory,
@@ -386,7 +402,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     root=Path(__file__).parent
     result['source_sha256']={name:hashlib.sha256((root/name).read_bytes()).hexdigest()
         for name in ('physical_core.py','pickup.py','staging.py','camera_input.py','target_tracker.py','perception_policy.py',
-                     'runtime.py','sim_runtime.py','simulation_position_noise.py','g1_can_handoff/position_noise_profile.json',
+                     'runtime.py','sim_runtime.py','planner_tuning.py','simulation_position_noise.py','stochastic_position_noise.py',
+                     'g1_can_handoff/position_noise_profile.json','g1_can_handoff/stochastic_noise_profile.json','g1_can_handoff/noise_aware_planner.json',
                      'g1_can_handoff/sim.py','g1_can_handoff/task.py',
                      'adapter/arm_reference.py','adapter/g1_arm.py')}
     if output:
@@ -408,10 +425,13 @@ if __name__=='__main__':
     parser.add_argument('--identity-mode',choices=['color_depth','synthetic_red'],default='color_depth',
                         help='Default runs the deployed color/depth tracker; synthetic_red is the legacy simulation baseline')
     parser.add_argument('--capture-animation',action='store_true',help='Save a sampled 5 fps GIF beside the JSON result')
-    parser.add_argument('--position-noise',choices=['recorded','none'],default='recorded',
-                        help='Replay measured correlated XY estimate drift; none retains the ideal baseline')
-    parser.add_argument('--noise-seed',type=int,default=7,help='Repeatable whole-recording selection')
-    parser.add_argument('--noise-scale',type=float,default=1.,help='1 reproduces recorded drift; other values are stress tests')
+    parser.add_argument('--position-noise',choices=['stochastic','recorded','none'],default='stochastic',
+                        help='Sample fitted jitter/drift/jumps; recorded replays fixed regressions; none retains the ideal baseline')
+    parser.add_argument('--noise-seed',type=int,default=7,help='Repeatable fresh stochastic sequence or fixed-recording selection')
+    parser.add_argument('--noise-scale',type=float,default=1.,help='1 uses the fitted distribution or original recorded offsets; other values are stress tests')
+    parser.add_argument('--planner-mode',choices=['legacy','tuned'],default='tuned',help='Tuned sim controller by default; legacy retains deployed controller settings')
+    parser.add_argument('--planner-profile-json',help='Bounded candidate IK/planner settings for offline evaluation')
+    parser.add_argument('--noise-profile-json',help='Alternative fitted stochastic profile for offline evaluation')
     parser.add_argument('--noise-trace',choices=['handover','approach-drift'],help='Select one recorded pattern explicitly')
     parser.add_argument('--fault',choices=['stale-align','missing-can-align'],help='Inject a perception fault before alignment')
     args=parser.parse_args()
@@ -419,6 +439,8 @@ if __name__=='__main__':
     result=run(args.output,args.hand_kp,args.camera,args.height,args.initial_arm_q,not args.disable_staging,
                None if args.setup_json is None else json.loads(Path(args.setup_json).read_text()),args.force_zero_feedforward,
                identity_mode=args.identity_mode,fault=fault,capture_animation=args.capture_animation,
-               position_noise=args.position_noise,noise_seed=args.noise_seed,noise_scale=args.noise_scale,noise_trace=args.noise_trace)
+               position_noise=args.position_noise,noise_seed=args.noise_seed,noise_scale=args.noise_scale,noise_trace=args.noise_trace,
+               noise_profile=None if args.noise_profile_json is None else json.loads(Path(args.noise_profile_json).read_text()),
+               planner_profile=None if args.planner_profile_json is None else json.loads(Path(args.planner_profile_json).read_text()),planner_mode=args.planner_mode)
     print(json.dumps({k:v for k,v in result.items() if k!='events'},indent=2))
     raise SystemExit(0 if result['lift_verified'] else 1)

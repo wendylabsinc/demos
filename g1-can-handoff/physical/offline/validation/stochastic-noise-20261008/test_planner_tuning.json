@@ -1,0 +1,52 @@
+{
+  "profile": "regression",
+  "tests_run": 5,
+  "successful": true,
+  "seconds": 0.42737820895854384,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_planner_tuning",
+      "tests_run": 5,
+      "seconds": 0.0022596250055357814,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_planner_tuning.PlannerTuningTests.test_defaults_preserve_existing_policy_and_snapshots_capture_effective_settings",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planner_tuning.PlannerTuningTests.test_final_revalidation_cannot_overrun_original_planning_deadline",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planner_tuning.PlannerTuningTests.test_final_revalidation_failure_and_cancellation_do_not_return_a_path",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planner_tuning.PlannerTuningTests.test_invalid_settings_never_relax_bounds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_planner_tuning.PlannerTuningTests.test_selects_and_revalidates_lowest_sensitivity_candidate",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.002s\n\nOK\n"
+    }
+  ]
+}

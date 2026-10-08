@@ -171,6 +171,8 @@ class PhysicalPlant:
             else self.planning_recorder.call(self,kind,request,fn))
         self.adapter, self.sender, self.read = adapter, hand, read
         self.config, self.event = config, event
+        from planner_tuning import configure
+        configure(self,config)
         limits=np.asarray(config['arm_limits_rad'],dtype=float)
         if limits.shape!=(14,2) or not np.isfinite(limits).all() or np.any(limits[:,0]>=limits[:,1]):
             raise ValueError('Expected fourteen measured arm limit pairs')
@@ -351,7 +353,8 @@ class PhysicalPlant:
             mujoco.mj_forward(model,data)
             pose=np.r_[data.site_xpos[self.ik.site]-position,
                        .15*(data.site_xmat[self.ik.site].reshape(3,3)-rotation).ravel()]
-            if not avoid_torso:return pose
+            reference_weight=getattr(self.ik,'ik_reference_weight',0.)
+            if not avoid_torso:return np.r_[pose,reference_weight*(q-start)] if reference_weight else pose
             gaps=np.array([mujoco.mj_geomDistance(model,data,a,b,.1,None)
                            for a,b in self.elbow_torso_pairs])
             # Pose-only IK can curl the redundant elbow into the torso during
@@ -398,6 +401,10 @@ class PhysicalPlant:
                 raise RuntimeError(f'Interpolated physical trajectory intersects robot/table: {details}')
         return goal, poses
 
+    def grasp_noise_score(self):
+        from planner_tuning import grasp_noise_score
+        return grasp_noise_score(self)
+
     def preflight(self, points, rotation):
         """Check open, reach, close and lift paths without any command output."""
         self.sync(self.check())
@@ -412,6 +419,7 @@ class PhysicalPlant:
         self.staging_waypoints=[]
         self.path_preflight_ok=False
         staging_goal=None
+        self.candidate_joint_goals=[]
         def fingers(target):
             start=self.ik.data.qpos[self.ik.qadr[self.ik.fingers]].copy()
             for alpha in np.linspace(0,1,51):
@@ -439,6 +447,8 @@ class PhysicalPlant:
                     # Check reach, close and lift before spending the staging
                     # search budget on a grasp that may already be infeasible.
                     staging_goal=goal.copy()
+                self.candidate_joint_goals.append(goal.copy())
+                if index==2:self.candidate_grasp_q=goal.copy()
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
             if staging_goal is not None:

@@ -104,19 +104,23 @@ class Plant:
         lo,hi = m.jnt_range[self.joints[self.arm]].T
         lo,hi = lo+.025,hi-.025
         rotation = np.eye(3) if rotation is None else rotation
+        reference=self.data.qpos[adr].copy()
+        reference_weight=getattr(self,'ik_reference_weight',0.)
+        position_tolerance=getattr(self,'ik_position_tolerance',.012)
         def error(q):
             d.qpos[adr] = q
             mujoco.mj_forward(m,d)
-            return np.r_[d.site_xpos[self.site]-position, .15*(d.site_xmat[self.site].reshape(3,3)-rotation).ravel()]
+            pose=np.r_[d.site_xpos[self.site]-position, .15*(d.site_xmat[self.site].reshape(3,3)-rotation).ravel()]
+            return np.r_[pose,reference_weight*(q-reference)] if reference_weight else pose
         seeds = [np.clip(self.data.qpos[adr],lo,hi), np.clip([-1.2,.2,0,1.2,0,0,0],lo,hi), np.clip([-.5,.2,1.3,1.4,.7,-.9,-.5],lo,hi)]
         candidates = [least_squares(error,s,bounds=(lo,hi),**self.IK_SETTINGS) for s in seeds]
         valid=[]
         for r in candidates:
             error(r.x)
-            if np.linalg.norm(r.fun[:3]) < .008 and np.linalg.norm(r.fun[3:]) < .02 and not self.pose_collision(d): valid.append(r)
+            if np.linalg.norm(r.fun[:3]) < min(.008,position_tolerance) and np.linalg.norm(r.fun[3:12]) < .02 and not self.pose_collision(d): valid.append(r)
         best = min(valid,key=lambda r: np.linalg.norm(r.x-self.data.qpos[adr])) if valid else min(candidates,key=lambda r: np.linalg.norm(r.fun))
         error(best.x)
-        if np.linalg.norm(d.site_xpos[self.site]-position) > .012 or np.linalg.norm(d.site_xmat[self.site].reshape(3,3)-rotation) > .18:
+        if np.linalg.norm(d.site_xpos[self.site]-position) > position_tolerance or np.linalg.norm(d.site_xmat[self.site].reshape(3,3)-rotation) > .18:
             raise ValueError("Target cannot be reached with the required grasp orientation")
         collision=self.collision_details(d)
         if collision: raise ValueError(f"Target pose collision: {collision}")

@@ -29,7 +29,7 @@ class PlanningAcceptanceTests(unittest.TestCase):
 
     def test_without_full_path_validator_unreachable_endpoints_still_reject(self):
         from g1_can_handoff.task import plan
-        plant=Mock()
+        plant=Mock(spec=['solve','set_contact_phase','move','hand'])
         plant.solve.side_effect=ValueError('Target cannot be reached')
         observation=SimpleNamespace(center=np.array([.35,.18,.823]),table_height=.762,timestamp=time.monotonic())
         with self.assertRaisesRegex(ValueError,'No reachable grasp'):
@@ -39,7 +39,7 @@ class PlanningAcceptanceTests(unittest.TestCase):
 
     def test_full_path_rejection_never_returns_a_plan(self):
         from g1_can_handoff.task import plan
-        plant=Mock()
+        plant=Mock(spec=['solve','set_contact_phase','move','hand'])
         observation=SimpleNamespace(center=np.array([.35,.18,.823]),table_height=.762,timestamp=time.monotonic())
         validate=Mock(return_value=False)
         with self.assertRaisesRegex(ValueError,'No reachable grasp'):

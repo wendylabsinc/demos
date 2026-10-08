@@ -30,11 +30,16 @@ def plan(plant, observation, validate=None, include_offer=True):
     # reachable workspace on lower tables without changing the can location.
     deadline=time.monotonic()+30.
     orientations=[(0,0),(0,.5),(0,1.),(-.4,0),(-.4,.5),(.4,0),(.4,.5),(.7,0),(.7,.5),(.7,1.)]
+    step=getattr(plant,'grasp_orientation_step_rad',0.)
+    if step:orientations=[(0,0),(0,step),(0,-step)]+orientations[1:]
     # Prefer the cylinder centre; raising the grasp increases slip leverage.
     # Higher candidates are still checked against the positive table margin.
     heights=(0.,) if include_offer else (0.,.01,.02)
+    candidate_budget=getattr(plant,'grasp_candidate_budget',1) if validate is not None else 1
+    feasible=[];seen_orientations=set()
     for pitch,yaw,height in [(p,y,h) for p,y in orientations for h in heights]:
         if time.monotonic()>deadline:raise ValueError('Grasp orientation search time limit reached')
+        if candidate_budget>1 and (pitch,yaw) in seen_orientations:continue
         cp,sp,cy,sy=np.cos(pitch),np.sin(pitch),np.cos(yaw),np.sin(yaw)
         rotation=np.array([[cy,-sy,0],[sy,cy,0],[0,0,1]])@np.array([[cp,0,sp],[0,1,0],[-sp,0,cp]])
         offset=rotation@np.array([0,.10,0])
@@ -53,6 +58,18 @@ def plan(plant, observation, validate=None, include_offer=True):
             except ValueError:continue
         plant.set_contact_phase('pregrasp')
         if validate is not None and not validate(waypoints,rotation):continue
+        if candidate_budget==1:return waypoints,rotation
+        feasible.append((plant.grasp_noise_score(),waypoints,rotation))
+        seen_orientations.add((pitch,yaw))
+        if len(feasible)>=candidate_budget:break
+    if feasible:
+        if time.monotonic()>deadline:raise ValueError('Grasp orientation search time limit reached')
+        score,waypoints,rotation=min(feasible,key=lambda candidate:candidate[0])
+        # A later candidate may have replaced staging/collision state. Revalidate
+        # the selected path before returning; no unvalidated cached path is reused.
+        if not validate(waypoints,rotation):raise ValueError('Selected noise-aware grasp failed final path validation')
+        if time.monotonic()>deadline:raise ValueError('Grasp orientation search time limit reached')
+        if hasattr(plant,'event'):plant.event('noise_aware_grasp_selected',candidate_count=len(feasible),predicted_joint_noise_rms_rad=score)
         return waypoints,rotation
     raise ValueError("No reachable grasp and offer path for this can position")
 

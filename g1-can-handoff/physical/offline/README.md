@@ -352,7 +352,7 @@ unattempted when Wendy initialization fails.
 
 ## Recorded position noise in simulation
 
-`sim_runtime.py` now defaults to `--position-noise recorded`. A seeded whole-trace
+`--position-noise recorded --planner-mode legacy` retains the fixed regressions. A seeded whole-trace
 selection replays the XY offsets from sixteen phase observations in two October 8
 trials, preserving millimetre jitter, the 10.4 mm control-handover shift, and the
 11.6 mm approach drift. Noise is applied to the geometry result before the
@@ -363,8 +363,8 @@ lift height are not fabricated.
 
 ```sh
 mkdir -p offline/reports/position-noise
-HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --noise-trace approach-drift --output offline/reports/position-noise/drift.json
-HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --position-noise none --output offline/reports/position-noise/ideal.json
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --position-noise recorded --noise-trace approach-drift --planner-mode legacy --output offline/reports/position-noise/drift.json
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --position-noise none --planner-mode legacy --output offline/reports/position-noise/ideal.json
 python offline/run.py --test test_simulation_position_noise
 python offline/run.py --test test_sim_position_noise
 ```
@@ -397,3 +397,68 @@ python offline/fit_position_noise.py --real-directory offline/validation/sim-rea
 
 See [the paired simulation report](validation/position-noise-20261008/README.md)
 for current ideal/noisy runs and the comparison with the real estimates.
+
+## Stochastic position noise and planner tuning
+
+The CLI defaults are now `--position-noise stochastic --planner-mode tuned`.
+Each seed produces fresh frame jitter, elapsed-time correlated drift and
+persistent jumps from `g1_can_handoff/stochastic_noise_profile.json`. The fit uses
+all available chronological real recordings: 46 exports, merged into 26 trial
+groups and 1,993 pregrasp observations. Duplicate frames are removed before
+fitting or splitting. Stationary, moving-arm and reduced-support regimes use
+measured arm speed where available, otherwise command-speed and mask-support
+proxies. There is no independently verified stationary can or can ground truth;
+this fits combined estimate variability. Postgrasp use is explicitly extrapolated.
+
+The sampler advances during simulated movement, not only at camera checkpoints.
+It leaves the physical can, RGB-D pixels, timestamps, Z and quality scores intact.
+Existing freshness, identity, movement, feedback and collision gates remain in
+force. The simulation does not model camera latency, YOLO failures, depth-pixel
+noise, calibration error or the real actuator tracking gap.
+
+Refit from the portable chronological corpus, validate each held-out trial group
+with 64 fresh draws, and run a tuned simulation from the captured real setup:
+
+```sh
+python offline/fit_stochastic_noise.py --corpus-json-gz offline/validation/stochastic-noise-20261008/corpus.json.gz --output-directory offline/reports/stochastic-refit
+python offline/validate_stochastic_noise.py --directory offline/reports/stochastic-refit --seeds 64
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --setup-json offline/validation/position-noise-20261008/setup.json --noise-seed 200 --output offline/reports/stochastic-refit/tuned.json
+python offline/run.py --test test_stochastic_position_noise
+python offline/run.py --test test_planner_tuning
+python offline/run.py --test test_stochastic_sim_runtime
+```
+
+Without `--corpus-json-gz`, the fitter rescans the original local archives and
+records their checksums. Published-corpus refitting reproduces the checked-in
+profile byte for byte. `--noise-profile-json` and `--planner-profile-json` select
+alternative offline profiles. Different seeds sample new sequences; the same
+seed, source and settings reproduce a sequence. The Python `run()` API retains
+`planner_mode='legacy'` by default so callers can compare the baseline explicitly.
+
+The tuned profile ranks up to three fully validated grasp orientations by the
+worst predicted joint sensitivity across the approach, reach, grasp and lift
+goals. It adds a +/-0.1 rad local yaw search and tightens endpoint IK tolerance to
+5 mm. It revalidates the selected path and retains the 30-second search deadline.
+Reference regularization and Jacobian variable scaling did not improve the
+sweep, so their original settings remain. The bounded settings are recorded in
+planning snapshots; physical defaults remain unchanged until configured:
+
+| Environment variable | Physical default | Allowed values | Tuned sim |
+| --- | --- | --- | --- |
+| `HANDOFF_IK_POSITION_TOLERANCE_MM` | 12 | 1-12 mm | 5 |
+| `HANDOFF_IK_REFERENCE_WEIGHT_M_PER_RAD` | 0 | 0-0.005 m/rad | 0 |
+| `HANDOFF_IK_VARIABLE_SCALE` | `unit` | `unit`, `jac` | `unit` |
+| `HANDOFF_GRASP_CANDIDATE_BUDGET` | 1 | Integer 1-3 | 3 |
+| `HANDOFF_GRASP_ORIENTATION_STEP_RAD` | 0 | 0-0.3 rad | 0.1 |
+
+Position covariance is stored in the selected JSON profile. It ranks candidates;
+it cannot waive path validation. The 5 mm setting tightens global endpoint IK;
+the separate continuous-path pose and collision checks retain their bounds.
+
+Held-out validation matches short-time correlation, but three of fourteen dense
+trial groups fall outside the generated p95 envelope, and longer-time correlation
+remains too high. Only two short-time jumps identify the empirical jump pool.
+The planner candidate reduced joint-target sensitivity by 2.5% on 24 held-out
+fresh draws. Both policies lifted in all four paired full simulations. These are
+offline results, not physical pickup evidence. See
+[the comparison and archived results](validation/stochastic-noise-20261008/README.md).

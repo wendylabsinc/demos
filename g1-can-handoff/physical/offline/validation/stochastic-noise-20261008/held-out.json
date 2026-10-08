@@ -1,0 +1,2060 @@
+{
+  "schema": 1,
+  "method": "leave-one-session-out; overlapping exports merged before fitting",
+  "seeds": 64,
+  "data_limitations": "No independent can ground truth or operator stationary labels. All pregrasp data is combined estimate variability; postgrasp data is excluded. Arm speed (measured when available; commanded otherwise) and support ratio provide observable regime proxies.",
+  "sessions": [
+    {
+      "session": "0c797c41083162a8",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 0.0,
+      "generated_phase_boundary_stop_probability": 0.109375
+    },
+    {
+      "session": "1cb16686bbd524f7",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T004012Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.7914919305851029,
+          "p90": 2.143139128490487,
+          "p95": 2.6187974402859266,
+          "p99": 3.0085621197376757
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.6106110781081938,
+          "p90": 7.915440097027486,
+          "p95": 9.277470504726502,
+          "p99": 10.104288263360559
+        },
+        "correlation_over_time": {
+          ".2s": 0.6180612748128643,
+          "1s": null,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.8817127447658144,
+        "large_step_count": 1,
+        "observed_duration_s": 1.1341562271118164,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.3865927807434045,
+          0.5495937168669417,
+          0.8635180313889148
+        ],
+        "p90": [
+          0.630362231217094,
+          0.9313550507640848,
+          1.371927769548981
+        ],
+        "p95": [
+          0.7432083087231703,
+          1.0305650243523976,
+          1.4885171058751756
+        ],
+        "p99": [
+          0.817515643136414,
+          1.0939139242041174,
+          1.6405412288657824
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.4113952949640178,
+          0.749549709017375,
+          1.4668605112691033
+        ],
+        "p90": [
+          0.7678318973073753,
+          1.2994512409150831,
+          2.446281258854486
+        ],
+        "p95": [
+          0.8023088745170328,
+          1.3851960682420041,
+          2.6690324045220297
+        ],
+        "p99": [
+          0.8382442849771944,
+          1.4987229934105493,
+          2.8023984116574954
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          -0.2601901975484373,
+          0.1591936384646484,
+          0.6132634558316128
+        ],
+        "1s": null,
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.0,
+      "p95_step_within_generated_90pct_interval": false
+    },
+    {
+      "session": "4009b2ee84e4d214",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T001246Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.5067912772902474,
+          "p90": 0.9563858746206045,
+          "p95": 1.1607740103161897,
+          "p99": 1.6292525643109386
+        },
+        "baseline_displacement_mm": {
+          "p50": 4.148953938034161,
+          "p90": 4.410350042067954,
+          "p95": 4.499942246682599,
+          "p99": 4.558125123077726
+        },
+        "correlation_over_time": {
+          ".2s": 0.7213638364962224,
+          "1s": 0.11340698783643915,
+          "5s": -0.23029541689379532
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 9.744387447681902,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.35150076503112776,
+          0.45769081995591226,
+          0.7178060860104892
+        ],
+        "p90": [
+          0.6527659729922158,
+          0.867008652082914,
+          1.3281502904757299
+        ],
+        "p95": [
+          0.7516391460729589,
+          1.004185347251585,
+          1.4869364856077405
+        ],
+        "p99": [
+          0.9600785717297627,
+          1.2904784052692273,
+          2.1231474814219844
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.7923835395236543,
+          1.6617096751842104,
+          4.368404268163717
+        ],
+        "p90": [
+          1.4259889552528007,
+          3.149137506342919,
+          6.723839288475195
+        ],
+        "p95": [
+          1.6465726145886044,
+          3.355054275064759,
+          7.127570825309343
+        ],
+        "p99": [
+          1.9599758456371827,
+          3.7754325179841657,
+          7.673778232134374
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.653027843822119,
+          0.8801578653785334,
+          0.9570264374151534
+        ],
+        "1s": [
+          0.08581311294705889,
+          0.6035623072603786,
+          0.8215983432873001
+        ],
+        "5s": [
+          -0.7926782294786158,
+          -0.5438231308564103,
+          -0.16999607080356538
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.015625,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "41f9c3afaba4b319",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 1.0,
+      "generated_phase_boundary_stop_probability": 0.03125
+    },
+    {
+      "session": "44c4a09789783385",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 0.0,
+      "generated_phase_boundary_stop_probability": 0.203125
+    },
+    {
+      "session": "4c763e987e108301",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/20261008T173157Z/events.jsonl.gz",
+        "offline/validation/start-button-20261008/trial.tar.gz:events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.5253098996101055,
+          "p90": 1.0473133168598294,
+          "p95": 1.1057142741441452,
+          "p99": 1.4597241931469054
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.5366956999788798,
+          "p90": 1.1609212598738008,
+          "p95": 1.2666902947084056,
+          "p99": 1.345457877855966
+        },
+        "correlation_over_time": {
+          ".2s": 0.37955594033806345,
+          "1s": 0.23365699620244582,
+          "5s": -0.6797595778054881
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 6.605034828186035,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.3925013722709344,
+          0.5109191107686745,
+          0.8046085279144778
+        ],
+        "p90": [
+          0.7434964610561221,
+          0.9826477713799797,
+          1.4339794702912483
+        ],
+        "p95": [
+          0.8597835368274933,
+          1.134926767087658,
+          1.720448913014276
+        ],
+        "p99": [
+          1.0497534294990312,
+          1.4439326704680364,
+          2.154276645553148
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          1.0466863680555671,
+          2.5589339106891673,
+          5.980572489867821
+        ],
+        "p90": [
+          1.7134028409935627,
+          5.1490354054380685,
+          13.800676033618572
+        ],
+        "p95": [
+          1.984492779026303,
+          5.483097532868964,
+          14.474873539705767
+        ],
+        "p99": [
+          2.2472946301566368,
+          5.733529304982223,
+          15.260357433799667
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.690798951577892,
+          0.925790787102593,
+          0.9837738453498149
+        ],
+        "1s": [
+          0.3232918745133957,
+          0.6861571163917579,
+          0.7965082140984435
+        ],
+        "5s": [
+          -0.9832479723180538,
+          -0.8922511220887386,
+          -0.14821247250751915
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.12868970748991992
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.3125,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "52fc59ceb690b3f5",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 0.0,
+      "generated_phase_boundary_stop_probability": 0.140625
+    },
+    {
+      "session": "5817f9dc8c7c3a94",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T003513Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.4444210015992255,
+          "p90": 0.900066985623694,
+          "p95": 1.0992250165485373,
+          "p99": 1.395451285504666
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.8284215923050805,
+          "p90": 2.1202766894333682,
+          "p95": 2.353635836122688,
+          "p99": 2.7552033754857588
+        },
+        "correlation_over_time": {
+          ".2s": 0.8266609407391048,
+          "1s": 0.6378219267263039,
+          "5s": -0.42393347481897886
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 13.676849126815796,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.4290294144290898,
+          0.5947926954682097,
+          0.8464691964538364
+        ],
+        "p90": [
+          0.8166399691614763,
+          1.1133229509971736,
+          1.5879338524423692
+        ],
+        "p95": [
+          0.9167344942257588,
+          1.2821943365832926,
+          1.8543477692087544
+        ],
+        "p99": [
+          1.1344627536029623,
+          1.6650459345179143,
+          2.3887513796327418
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.8404616125934672,
+          1.9351561993917132,
+          3.6046274965342797
+        ],
+        "p90": [
+          1.4757550863118332,
+          3.04273373715802,
+          5.6362194066937406
+        ],
+        "p95": [
+          1.6819079219503208,
+          3.261242743515255,
+          6.028361656557485
+        ],
+        "p99": [
+          2.1034668106338112,
+          3.7839084740286104,
+          6.437979443722563
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.5509211618951465,
+          0.7557516376936508,
+          0.9068529986135367
+        ],
+        "1s": [
+          0.2524564189357388,
+          0.5471552521782087,
+          0.7955412019401089
+        ],
+        "5s": [
+          -0.4380318391862148,
+          -0.11936532820594967,
+          0.021147288975614055
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.07311625585160031
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.015625,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "5af0edf5464ec73b",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/exposure-restart-20261008-preserved/trial-01/events.jsonl.gz",
+        "offline/evidence/exposure-restart-20261008/trial-01.tar.gz:events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.41478991381210045,
+          "p90": 0.6675401140687766,
+          "p95": 0.7653239955721204,
+          "p99": 0.9350380516455519
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.9174483084537665,
+          "p90": 1.4364816845036512,
+          "p95": 1.5910535341950485,
+          "p99": 1.7658636452114043
+        },
+        "correlation_over_time": {
+          ".2s": -0.08578115243787625,
+          "1s": 0.24847698694830525,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 3.4691250324249268,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.46837958683605524,
+          0.6162305835120223,
+          0.8971731014910739
+        ],
+        "p90": [
+          0.853609606066645,
+          1.0968692689714472,
+          1.6335950084577495
+        ],
+        "p95": [
+          1.0141236071740398,
+          1.2579302390740144,
+          1.877456817399871
+        ],
+        "p99": [
+          1.1251406184372408,
+          1.5033897662957456,
+          2.3149693184511015
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.550912801804205,
+          1.1449069012549917,
+          2.755782104833579
+        ],
+        "p90": [
+          1.0951341412901014,
+          1.948041061602965,
+          4.053009821910445
+        ],
+        "p95": [
+          1.224327899823552,
+          2.031568296419469,
+          4.3454917391995656
+        ],
+        "p99": [
+          1.4718980622205637,
+          2.39947201977678,
+          4.785895801439602
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.04491719482101663,
+          0.49200217524861434,
+          0.8324722893475467
+        ],
+        "1s": [
+          -0.36193278436631254,
+          -0.04693906116957337,
+          0.1970287184467494
+        ],
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.8499999999999943
+      ],
+      "generated_phase_boundary_stop_probability": 0.0625,
+      "p95_step_within_generated_90pct_interval": false
+    },
+    {
+      "session": "5e2ed72ed585530e",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T004101Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.3516187895296863,
+          "p90": 0.7663715432705436,
+          "p95": 0.9566397396076108,
+          "p99": 1.0792535432121249
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.5349207836154442,
+          "p90": 1.148988091443459,
+          "p95": 1.2538610457964636,
+          "p99": 1.4162899418688903
+        },
+        "correlation_over_time": {
+          ".2s": 0.14088632010770114,
+          "1s": -0.12281159149257916,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 4.202972888946533,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.4236707550765168,
+          0.563566684475276,
+          0.8723917527909754
+        ],
+        "p90": [
+          0.7431222892976405,
+          1.0538185791043058,
+          1.4894163331163845
+        ],
+        "p95": [
+          0.8745706273117306,
+          1.1815949786659945,
+          1.7262999643685988
+        ],
+        "p99": [
+          1.0124363129052827,
+          1.4849676008123467,
+          2.2723055786719817
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.6810429018654888,
+          1.3521850413786898,
+          3.4483811720143227
+        ],
+        "p90": [
+          1.2451311554215132,
+          2.6143011817450033,
+          5.336575941893968
+        ],
+        "p95": [
+          1.4095064354627391,
+          2.8408608200495893,
+          5.9660968458132615
+        ],
+        "p99": [
+          1.5561875513810381,
+          3.3281999187091804,
+          6.410706252406182
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.37460976061135554,
+          0.7492736691787816,
+          0.9244220163593603
+        ],
+        "1s": [
+          -0.1672348576392728,
+          0.13706250306774181,
+          0.4234980251112026
+        ],
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.109375,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "74b9b88f77684051",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T001402Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.6735061728298164,
+          "p90": 1.176045470142619,
+          "p95": 1.457484806225815,
+          "p99": 1.7875404835349813
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.6190915641495197,
+          "p90": 4.485553796127663,
+          "p95": 4.775453142731378,
+          "p99": 4.911751890183669
+        },
+        "correlation_over_time": {
+          ".2s": null,
+          "1s": null,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 1.2041157582766573,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.3578098467762537,
+          0.512305181796644,
+          0.9879996527615774
+        ],
+        "p90": [
+          0.5960096547234738,
+          0.8944049867638395,
+          1.5010968037556134
+        ],
+        "p95": [
+          0.6550488382371994,
+          1.0196827727626794,
+          1.6793290094068731
+        ],
+        "p99": [
+          0.7594049790238468,
+          1.1567302602373402,
+          1.992603212785593
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.3644620359751549,
+          0.7964556723082726,
+          1.8914939780272007
+        ],
+        "p90": [
+          0.7851309357656397,
+          1.3328870990171349,
+          2.898368671673841
+        ],
+        "p95": [
+          0.8363470631104845,
+          1.488568120457791,
+          3.325825754059336
+        ],
+        "p99": [
+          0.8948482082468526,
+          1.7074620705149335,
+          3.652307641765267
+        ]
+      },
+      "generated_correlation": {
+        ".2s": null,
+        "1s": null,
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.015625,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "7f42de8a93081fb3",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 0.0,
+      "generated_phase_boundary_stop_probability": 0.109375
+    },
+    {
+      "session": "8c2d29895ff6c465",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/20261008T005915Z/events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.6364158609339,
+          "p90": 1.228399048188484,
+          "p95": 1.3105411012182555,
+          "p99": 1.5495445217517736
+        },
+        "baseline_displacement_mm": {
+          "p50": 3.4465583548069034,
+          "p90": 4.165728323776356,
+          "p95": 4.241449254983247,
+          "p99": 4.482861665628153
+        },
+        "correlation_over_time": {
+          ".2s": 0.7187765721935278,
+          "1s": 0.22408462592049105,
+          "5s": -0.5024507260873141
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 11.275543451309204,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.35211507414191534,
+          0.46751315226404205,
+          0.6945924043683764
+        ],
+        "p90": [
+          0.6671758002211005,
+          0.8925604193031685,
+          1.2711006387869104
+        ],
+        "p95": [
+          0.7634653565163616,
+          1.0242117004739937,
+          1.4769575115588196
+        ],
+        "p99": [
+          0.9610771880794565,
+          1.2717038910952159,
+          1.9072148134442923
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          1.4148707893492536,
+          3.230000916073285,
+          9.606646036358274
+        ],
+        "p90": [
+          2.070205708602852,
+          4.651684239535032,
+          12.244015616242212
+        ],
+        "p95": [
+          2.3477415625852265,
+          4.908564679823196,
+          12.774774359238403
+        ],
+        "p99": [
+          2.5508463534157095,
+          5.350588829706576,
+          13.647102267906343
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.7875664419636351,
+          0.939001947780131,
+          0.9856750859807158
+        ],
+        "1s": [
+          0.342847860740006,
+          0.7765234672054258,
+          0.900321523166036
+        ],
+        "5s": [
+          -0.6729382420504622,
+          -0.48396941074325484,
+          0.028709644719519332
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.07538439310446725
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.203125,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "8c7fd3f5395374a6",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "948134fc422b5105",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T003433Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.4426856794361851,
+          "p90": 1.126460025254322,
+          "p95": 1.2134395131728102,
+          "p99": 1.7558028021216483
+        },
+        "baseline_displacement_mm": {
+          "p50": 4.322674115753514,
+          "p90": 4.627163369905324,
+          "p95": 4.7230983248508345,
+          "p99": 4.859935573940338
+        },
+        "correlation_over_time": {
+          ".2s": 0.8303584368659026,
+          "1s": -0.20150370483639743,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 4.203011989593506,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.36084817777221534,
+          0.5039963475390368,
+          0.8491188692993161
+        ],
+        "p90": [
+          0.693410203215607,
+          0.9697253727851507,
+          1.4956656110119182
+        ],
+        "p95": [
+          0.803153613380356,
+          1.0928312675859133,
+          1.6480883746002026
+        ],
+        "p99": [
+          1.014482847693684,
+          1.3648926144559672,
+          2.3319853914646624
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.6295763054433975,
+          1.26878503070289,
+          3.261222668237681
+        ],
+        "p90": [
+          1.18444952017937,
+          2.44325893562054,
+          5.638008138225893
+        ],
+        "p95": [
+          1.3054510510055695,
+          2.590529544508638,
+          6.108262118551562
+        ],
+        "p99": [
+          1.5066798718984624,
+          2.94955346400916,
+          6.66988788377598
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.38169832759522593,
+          0.685863781206567,
+          0.8769977101103145
+        ],
+        "1s": [
+          -0.32797888337147507,
+          -0.034484716396478945,
+          0.4307861353324158
+        ],
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.015625,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "94ff488d39ed21a1",
+      "validated": false,
+      "reason": "Fewer than ten consecutive usable observations; phase checks only",
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real_phase_boundary_stop_fraction": 0.0,
+      "generated_phase_boundary_stop_probability": 0.203125
+    },
+    {
+      "session": "9eff93ed5bc47bf4",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/clearance-demos-20261008-preserved/trial-04/events.jsonl.gz",
+        "offline/evidence/clearance-demos-20261008/trial-04.tar.gz:events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.5951939111436088,
+          "p90": 1.2091409554899646,
+          "p95": 1.4397020908261695,
+          "p99": 1.9594537365568043
+        },
+        "baseline_displacement_mm": {
+          "p50": 3.9758509773076813,
+          "p90": 8.510250974844865,
+          "p95": 9.112654749007783,
+          "p99": 9.429928733198162
+        },
+        "correlation_over_time": {
+          ".2s": 0.974017690050008,
+          "1s": 0.9450137964280665,
+          "5s": 0.6704994909523457
+        },
+        "large_step_rate_hz": 0.03620530601318173,
+        "large_step_count": 1,
+        "observed_duration_s": 27.6202609539032,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.33472447839437913,
+          0.432353039469366,
+          0.6448580877615135
+        ],
+        "p90": [
+          0.6621161557551472,
+          0.8090552566141802,
+          1.2316791491703034
+        ],
+        "p95": [
+          0.7507359719306663,
+          0.9468232727422348,
+          1.4322159886685815
+        ],
+        "p99": [
+          0.9765830872664756,
+          1.2777760678216605,
+          1.8756855548518305
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.6561983266516686,
+          1.038596229949826,
+          3.3160477154259183
+        ],
+        "p90": [
+          1.2366719885936461,
+          2.0382436771512857,
+          5.225097061347348
+        ],
+        "p95": [
+          1.3862332870279057,
+          2.3802757917228083,
+          5.566689310916695
+        ],
+        "p99": [
+          1.7257429937631452,
+          2.892232073868551,
+          6.352963651200096
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.6278238980156333,
+          0.7354420554885928,
+          0.9067233917819187
+        ],
+        "1s": [
+          0.06077176256502697,
+          0.30251395068986453,
+          0.7253574810524773
+        ],
+        "5s": [
+          -0.2403759682804682,
+          -0.025186173438374555,
+          0.32365965267503616
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.03620530601318173
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.03125,
+      "p95_step_within_generated_90pct_interval": false
+    },
+    {
+      "session": "a255e9b0e09ac4dd",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "b4cf6168a5e84277",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/issue-batch-demo-20261008-preserved/trial-01/events.jsonl.gz",
+        "offline/evidence/issue-batch-demo-20261008/trial-01.tar.gz:events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.4851229888262109,
+          "p90": 1.1558929997831735,
+          "p95": 1.4205893018181104,
+          "p99": 2.0240842658697007
+        },
+        "baseline_displacement_mm": {
+          "p50": 1.9240265998606925,
+          "p90": 5.271213398529398,
+          "p95": 5.75211740023462,
+          "p99": 6.371713843841244
+        },
+        "correlation_over_time": {
+          ".2s": 0.9327887248502361,
+          "1s": 0.8997067890229472,
+          "5s": 0.513247292482112
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 25.151585578918457,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.3738283875099153,
+          0.468868767882917,
+          0.6915111530903484
+        ],
+        "p90": [
+          0.7436392254843223,
+          0.9267283641029719,
+          1.3641404248405558
+        ],
+        "p95": [
+          0.8612973908777237,
+          1.0825934482164579,
+          1.5362017530726721
+        ],
+        "p99": [
+          1.09267967227161,
+          1.3839418482666739,
+          2.030707763518085
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.9347506852447398,
+          2.0412776049654267,
+          6.6681995003067165
+        ],
+        "p90": [
+          1.8162276081006423,
+          3.925007064486702,
+          9.247031068774737
+        ],
+        "p95": [
+          2.035678957598817,
+          4.374403724503543,
+          9.78778761193665
+        ],
+        "p99": [
+          2.3379557971846285,
+          4.827359919676487,
+          10.742627428396444
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.7795169926705439,
+          0.8846070629347935,
+          0.9632010475004896
+        ],
+        "1s": [
+          0.39038222625580515,
+          0.651444945675089,
+          0.8551850742885947
+        ],
+        "5s": [
+          -0.4313522871949325,
+          0.014291364567283884,
+          0.2968171624186821
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.039758924814592186
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.03125,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "c33f81bfaea41254",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "d733439709f3ddb3",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T002809Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.547079610421098,
+          "p90": 0.9843579216110757,
+          "p95": 1.1451355358906048,
+          "p99": 1.5162718773116242
+        },
+        "baseline_displacement_mm": {
+          "p50": 0.8928026233068592,
+          "p90": 1.3927656489455233,
+          "p95": 1.7790743339922832,
+          "p99": 2.868271291989323
+        },
+        "correlation_over_time": {
+          ".2s": 0.7511793429724808,
+          "1s": 0.29710788736533483,
+          "5s": -0.15915486546334906
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 12.21277546346164,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.30096530901165186,
+          0.4256583060827818,
+          0.5992219584835473
+        ],
+        "p90": [
+          0.6325654656057726,
+          0.790740105176627,
+          1.147862607231161
+        ],
+        "p95": [
+          0.7465381794607764,
+          0.9525425481061891,
+          1.365475786518786
+        ],
+        "p99": [
+          0.9286772397606736,
+          1.3208842925551116,
+          1.931803362472819
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          1.1790399605279906,
+          2.993896836814079,
+          7.372915832774607
+        ],
+        "p90": [
+          1.5972250897372422,
+          3.412422081987498,
+          7.779715825806871
+        ],
+        "p95": [
+          1.7150785738893086,
+          3.5098953040883103,
+          7.921280636674719
+        ],
+        "p99": [
+          1.8520783639777938,
+          3.7009275037718092,
+          8.22565182585616
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.09255805909833932,
+          0.45590279026854913,
+          0.8469219927087891
+        ],
+        "1s": [
+          -0.12676943538616428,
+          -0.0377507288658209,
+          0.44385599291940125
+        ],
+        "5s": [
+          -0.24699433694927667,
+          -0.03467146421166218,
+          0.10634964765757846
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.08188146936720606
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.03125,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "dc3e8e7bbec601c3",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "e0318c5d9747f3ae",
+      "validated": true,
+      "held_out_sources": [
+        "offline/evidence/exposure-failure-20261008-preserved/trial-01/events.jsonl.gz",
+        "offline/evidence/exposure-failure-20261008/trial-01.tar.gz:events.jsonl.gz"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e",
+        "f9f210359219479b"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.4284485950248429,
+          "p90": 0.9327595633477386,
+          "p95": 1.178320886206646,
+          "p99": 1.8036208797849942
+        },
+        "baseline_displacement_mm": {
+          "p50": 6.450154336240014,
+          "p90": 7.438534309621212,
+          "p95": 7.517568550251833,
+          "p99": 7.73269295735643
+        },
+        "correlation_over_time": {
+          ".2s": 0.9765822040443741,
+          "1s": 0.9533723027036772,
+          "5s": 0.6399840740465261
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 26.952744245529175,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.2755026410660248,
+          0.38383249279768183,
+          0.61637096896046
+        ],
+        "p90": [
+          0.5679438651222182,
+          0.808315568668838,
+          1.2695126342136236
+        ],
+        "p95": [
+          0.6903742501540684,
+          0.9602712408548514,
+          1.5175918354925868
+        ],
+        "p99": [
+          0.8531348526329364,
+          1.2652605571854174,
+          1.911185552235427
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          1.677635080180704,
+          4.81847688547575,
+          13.98359538155532
+        ],
+        "p90": [
+          3.024755954436012,
+          7.094644653843213,
+          16.65045300230683
+        ],
+        "p95": [
+          3.3585643600020494,
+          7.414248929050975,
+          17.032548717902685
+        ],
+        "p99": [
+          3.685312788263222,
+          8.579748469712637,
+          17.364693089446067
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.8893018831753577,
+          0.9713037851694044,
+          0.993741797554132
+        ],
+        "1s": [
+          0.6268924360522287,
+          0.8768199115753929,
+          0.9597327936559819
+        ],
+        "5s": [
+          -0.1148124290695622,
+          0.21038014119404985,
+          0.49681192153473364
+        ]
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.03710197339797325
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.34375,
+      "p95_step_within_generated_90pct_interval": true
+    },
+    {
+      "session": "e8022be09e0a2f51",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "e97f2e71d4a6fc6e",
+      "validated": false,
+      "reason": "Insufficient observations even for a phase-check comparison"
+    },
+    {
+      "session": "f9f210359219479b",
+      "validated": true,
+      "held_out_sources": [
+        "offline/trial-events.json.gz:20261008T002131Z"
+      ],
+      "fit_session_ids": [
+        "0c797c41083162a8",
+        "1cb16686bbd524f7",
+        "4009b2ee84e4d214",
+        "41f9c3afaba4b319",
+        "44c4a09789783385",
+        "4c763e987e108301",
+        "52fc59ceb690b3f5",
+        "5817f9dc8c7c3a94",
+        "5af0edf5464ec73b",
+        "5e2ed72ed585530e",
+        "74b9b88f77684051",
+        "7f42de8a93081fb3",
+        "8c2d29895ff6c465",
+        "8c7fd3f5395374a6",
+        "948134fc422b5105",
+        "94ff488d39ed21a1",
+        "9eff93ed5bc47bf4",
+        "a255e9b0e09ac4dd",
+        "b4cf6168a5e84277",
+        "c33f81bfaea41254",
+        "d733439709f3ddb3",
+        "dc3e8e7bbec601c3",
+        "e0318c5d9747f3ae",
+        "e8022be09e0a2f51",
+        "e97f2e71d4a6fc6e"
+      ],
+      "real": {
+        "step_displacement_mm": {
+          "p50": 0.46436515984213084,
+          "p90": 0.9383847059548845,
+          "p95": 1.1591505208539263,
+          "p99": 1.527590849527566
+        },
+        "baseline_displacement_mm": {
+          "p50": 5.073508186666757,
+          "p90": 5.45267616587721,
+          "p95": 5.499306309628508,
+          "p99": 5.564358667545959
+        },
+        "correlation_over_time": {
+          ".2s": 0.8721812989197222,
+          "1s": -0.07758232731285566,
+          "5s": null
+        },
+        "large_step_rate_hz": 0.0,
+        "large_step_count": 0,
+        "observed_duration_s": 3.6056414901163407,
+        "phase_boundary_stop_fraction": 0.0,
+        "checked_segments": 1,
+        "censoring": "Only recorded phase boundaries; recordings terminate on other failures. This is not full-demo success probability."
+      },
+      "generated_step_percentiles_mm": {
+        "p50": [
+          0.2657643337717563,
+          0.3774030025401099,
+          0.6318940600416969
+        ],
+        "p90": [
+          0.48120522661932325,
+          0.7156968831044551,
+          1.1365535753006526
+        ],
+        "p95": [
+          0.6013224387229004,
+          0.8301397591752206,
+          1.3733540446313965
+        ],
+        "p99": [
+          0.6669755188841529,
+          1.050062660381955,
+          2.178032625810289
+        ]
+      },
+      "generated_baseline_percentiles_mm": {
+        "p50": [
+          0.44659914261027994,
+          1.107279769341133,
+          2.837469511334406
+        ],
+        "p90": [
+          0.8531545539715157,
+          2.0766959752207534,
+          5.287821918164644
+        ],
+        "p95": [
+          0.9547958793350744,
+          2.222448760604819,
+          5.536828963014638
+        ],
+        "p99": [
+          1.1292086059103124,
+          2.606205032264601,
+          5.898971943235029
+        ]
+      },
+      "generated_correlation": {
+        ".2s": [
+          0.3205295129858377,
+          0.7200605511820835,
+          0.9051635413020214
+        ],
+        "1s": [
+          -0.39838302865484854,
+          -0.010392930102740013,
+          0.2170425526735822
+        ],
+        "5s": null
+      },
+      "generated_large_step_rate_hz": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_fraction": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "generated_phase_boundary_stop_probability": 0.015625,
+      "p95_step_within_generated_90pct_interval": true
+    }
+  ],
+  "hardware_used": false
+}

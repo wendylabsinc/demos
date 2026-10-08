@@ -272,12 +272,18 @@ files for exact artifacts, samples, dataset metrics, and simulation failures.
 
 ## Shared simulation regression
 
-Simulated can estimates now default to repeatable, correlated XY noise from
-recorded real phase observations. The physical can pose remains separate. Use
-`--noise-trace approach-drift` to reproduce the recorded 11.6 mm reach drift,
-`--noise-trace handover` for the 10.4 mm handover shift, or `--position-noise none`
-to retain the ideal baseline. See [noise replay details](offline/README.md#recorded-position-noise-in-simulation)
-and [the paired comparison](offline/validation/position-noise-20261008/README.md).
+The simulation CLI now defaults to fresh, seeded XY jitter, correlated drift and
+jumps fitted across 26 deduplicated real trial groups (1,993 observations), with
+separate stationary, moving-arm and reduced-support regimes. The physical can
+pose remains separate. `--planner-mode tuned` uses the offline candidate: three
+checked orientations, a small yaw search and a tighter 5 mm IK endpoint tolerance.
+The physical runtime retains its original defaults; this candidate is not deployed.
+
+Use `--position-noise recorded --noise-trace approach-drift --planner-mode legacy`
+for the recorded 11.6 mm reach drift, select `handover` for the 10.4 mm shift, or
+`--position-noise none --planner-mode legacy` for the ideal baseline. See
+[stochastic model and tuning details](offline/README.md#stochastic-position-noise-and-planner-tuning)
+and [the comparison and limitations](offline/validation/stochastic-noise-20261008/README.md).
 
 `runtime.py` and `sim_runtime.py` call the same `pickup.prepare` and
 `pickup.execute`. Both use `PhysicalPlant` for measured-state IK, collision

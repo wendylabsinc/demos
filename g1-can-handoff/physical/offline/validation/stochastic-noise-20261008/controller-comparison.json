@@ -1,0 +1,48 @@
+{
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "held_draws": 24,
+  "baseline_joint_change_rms_rad": 0.0038309466055279095,
+  "candidate_joint_change_rms_rad": 0.003733686551333685,
+  "reduction_pct": 2.5387995242189487,
+  "full_sim_pairs": [
+    {
+      "seed": 200,
+      "baseline_lift": true,
+      "candidate_lift": true,
+      "baseline_seconds": 51.540000000017024,
+      "candidate_seconds": 50.200000000015386,
+      "baseline_error": null,
+      "candidate_error": null
+    },
+    {
+      "seed": 201,
+      "baseline_lift": true,
+      "candidate_lift": true,
+      "baseline_seconds": 51.76000000001729,
+      "candidate_seconds": 50.100000000015264,
+      "baseline_error": null,
+      "candidate_error": null
+    },
+    {
+      "seed": 202,
+      "baseline_lift": true,
+      "candidate_lift": true,
+      "baseline_seconds": 51.680000000017195,
+      "candidate_seconds": 50.12000000001529,
+      "baseline_error": null,
+      "candidate_error": null
+    },
+    {
+      "seed": 203,
+      "baseline_lift": true,
+      "candidate_lift": true,
+      "baseline_seconds": 51.820000000017366,
+      "candidate_seconds": 50.08000000001524,
+      "baseline_error": null,
+      "candidate_error": null
+    }
+  ],
+  "baseline_mean_seconds": 51.70000000001722,
+  "candidate_mean_seconds": 50.1250000000153
+}
