@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.2-workspace-message",
+  "version": "0.3.3-isolated-perception",
   "entitlements": [
     {
       "type": "network",

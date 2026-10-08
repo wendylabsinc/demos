@@ -15,6 +15,18 @@ from runtime import Runtime
 
 
 class RuntimeLifecycleTests(unittest.TestCase):
+    def setUp(self):
+        self.worker_patch=patch('perception_worker.PerceptionWorker')
+        self.worker_patch.start();self.addCleanup(self.worker_patch.stop)
+
+    def test_first_failure_survives_later_cancellation(self):
+        runtime=self.runtime()
+        runtime.record_failure(RuntimeError('tracking stale at 411 ms'),'watchdog')
+        runtime.record_failure(RuntimeError('Operator cancelled trial'),'execution')
+        self.assertEqual(runtime.error,'RuntimeError: tracking stale at 411 ms')
+        self.assertEqual(runtime.first_failure['source'],'watchdog')
+        self.assertEqual(runtime.event.call_count,1)
+
     def runtime(self):
         runtime=Runtime.__new__(Runtime)
         runtime.cancel=threading.Event();runtime.operation_lock=threading.Lock()

@@ -34,7 +34,8 @@ class Runtime:
         self.operation_lock=threading.Lock();self.cancel=threading.Event();self.lock=threading.RLock();self.phase='PASSIVE';self.error=None;self.plant=None;self.arm=None;self.hand=None
         self.grasp_started=False
         self.demo_running=False;self.demo_result=None;self.demo_error=None
-        self.observation_lock=threading.RLock();self.tracker=None
+        self.observation_lock=threading.RLock();self.tracker=None;self.perception=None
+        self.first_failure=None
         self.tracking_stop=threading.Event();self.tracking_thread=None
         self.frame_prefetch=None;self.pending_frame=None
         self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
@@ -55,6 +56,19 @@ class Runtime:
         with self.lock:self.motion_commands_sent+=1
         # Exact DDS command content is retained by the independent recorder.
         if result is False:self.event('command_write_failed',result=False)
+
+    def record_failure(self,exc,source):
+        with self.lock:
+            if getattr(self,'first_failure',None) is None:
+                self.first_failure={'error':f'{type(exc).__name__}: {exc}','source':source}
+                self.event('primary_failure',**self.first_failure)
+            self.error=self.first_failure['error']
+            return self.error
+
+    def stop_perception(self):
+        worker=getattr(self,'perception',None)
+        if worker is not None:
+            worker.close();self.perception=None
 
     def event(self,phase,**fields):
         row={'unix_ns':time.time_ns(),'monotonic_ns':time.monotonic_ns(),'phase':phase,**fields}
@@ -102,6 +116,7 @@ class Runtime:
         result.update(perception_mode='yolo_visual_depth',tracking_error=getattr(self,'tracking_error',None),
                       tracking_exposure_age_ms=None if observation is None else (time.monotonic()-observation.timestamp)*1000,
                       tracking_vision=getattr(self,'tracking_vision',None))
+        result['first_failure']=getattr(self,'first_failure',None)
         result.update(demo_running=getattr(self,'demo_running',False),demo_result=getattr(self,'demo_result',None),
                       demo_error=getattr(self,'demo_error',None))
         try:
@@ -154,6 +169,9 @@ class Runtime:
     def observe_frame(self,config,phase,require_table,expected_center_xy=None):
         from contextlib import nullcontext
         with getattr(self,'observation_lock',nullcontext()):
+            worker=getattr(self,'perception',None)
+            if worker is not None:
+                return worker.observe(config,phase,require_table,expected_center_xy,self.event)
             return self._observe_frame(config,phase,require_table,expected_center_xy)
 
     def _observe_frame(self,config,phase,require_table,expected_center_xy=None):
@@ -251,7 +269,8 @@ class Runtime:
                     with self.lock:self.tracking_error=f'{type(exc).__name__}: {exc}'
                     self.event('tracking_failed',error=self.tracking_error)
                     if self.active and self.plant:
-                        self.plant.freeze();self.active=False;self.phase='FROZEN';self.error=self.tracking_error
+                        self.record_failure(exc,'tracking')
+                        self.plant.freeze();self.active=False;self.phase='FROZEN'
                     break
         self.tracking_thread=threading.Thread(target=work,daemon=True,name='visual-depth-tracking')
         self.tracking_thread.start()
@@ -428,6 +447,7 @@ class Runtime:
         if not preserve_cancel:self.cancel.clear()
         if self.cancel.is_set():raise RuntimeError('Operator cancelled before demo preparation')
         grasp_started=False
+        self.first_failure=None
         self.grasp_started=False
         self.archive_guard();snapshot_guard(self.read())
         self.camera.acquire()
@@ -435,6 +455,8 @@ class Runtime:
             config=self.config(refresh=True)
             from target_tracker import TargetTracker
             self.tracker=TargetTracker(recheck_interval_s=1.)
+            from perception_worker import PerceptionWorker
+            self.perception=PerceptionWorker(self.camera.token)
             def observe(phase, require_table, expected_center_xy=None):
                 return self.observe_frame(config,phase,require_table,expected_center_xy)
             def phase_event(phase, **fields):
@@ -487,7 +509,7 @@ class Runtime:
             return {'physical_lift_verified':result['lift_verified'],'visual_rise_m':result['visual_rise_m'],
                     'hold_verified_s':result['hold_verified_s'],'awaiting_operator_take':True}
         except Exception as exc:
-            self.error=f'{type(exc).__name__}: {exc}';self.phase='BLOCKED' if self.arm is None else 'FROZEN'
+            self.record_failure(exc,'execution');self.phase='BLOCKED' if self.arm is None else 'FROZEN'
             if self.plant:self.plant.freeze()
             elif self.arm:self.arm.hold_arm_measured()
             self.active=False;self.event('error',error=self.error,traceback=traceback.format_exc())
@@ -496,7 +518,7 @@ class Runtime:
             raise
         finally:
             if self.phase!='HOLDING_CAN':
-                self.stop_tracking();self.camera.close()
+                self.stop_tracking();self.stop_perception();self.camera.close()
 
     def watchdog(self):
         last_archive=0
@@ -510,7 +532,8 @@ class Runtime:
                     if self.phase=='HOLDING_CAN':
                         self.plant.maintain_hand()
                 except Exception as exc:
-                    self.error=str(exc);self.plant.freeze();self.phase='FROZEN';self.active=False
+                    self.record_failure(exc,'watchdog')
+                    self.plant.freeze();self.phase='FROZEN';self.active=False
             time.sleep(.02)
 
     def stop(self):
@@ -522,7 +545,7 @@ class Runtime:
         return self.status()
 
     def relax_owned_arms(self,reason):
-        self.stop_tracking();self.camera.close()
+        self.stop_tracking();self.stop_perception();self.camera.close()
         if self.hand:self.hand.relax()
         if self.arm:self.arm.shutdown(ramp_s=1.)
         self.hand=None;self.arm=None;self.plant=None;self.active=False;self.phase='PASSIVE';self.grasp_started=False
