@@ -184,6 +184,15 @@ class PhysicalPlant:
 
     def sync(self, snap):
         import mujoco
+        if self.config.get('calibration_method')=='operator_accepted_factory_table':
+            from pose_alignment import corrected_config
+            body=snap['body']
+            corrected=corrected_config(self.config,{'timestamp':body['time'],
+                'rpy':body['imu_rpy'],'waist_q':body['q'][12:15]})
+            root=np.asarray(corrected['pelvis_to_world'])
+            pelvis=self.ik.model.body('pelvis').id
+            self.ik.model.body_pos[pelvis]=root[:3,3]
+            mujoco.mju_mat2Quat(self.ik.model.body_quat[pelvis],root[:3,:3].ravel())
         for name,q in zip(BODY_NAMES, snap['body']['q'][:29]):
             self.ik.data.qpos[self.ik.model.jnt_qposadr[self.ik.model.joint(name).id]]=q
         for side,values in [('left', snap['left']['q']), ('right', np.array(snap['right']['q'])[SIM_TO_BRIDGE])]:
@@ -443,6 +452,7 @@ class PhysicalPlant:
         """SDK second argument is feedforward torque, not joint velocity."""
         import mujoco
         self.sync(snapshot)
+        self.check_live_geometry(left_q=left_q,hand_q=self.left_hand)
         self.gravity_data.qpos[:] = self.ik.data.qpos
         self.gravity_data.qvel[:] = 0
         mujoco.mj_forward(self.ik.model, self.gravity_data)
@@ -460,11 +470,30 @@ class PhysicalPlant:
         self.arm_tau_time = now
         self.adapter.ctrl_dual_arm(np.r_[left_q, self.right_arm], self.arm_tau_command.copy())
 
+    def check_live_geometry(self,left_q=None,hand_q=None):
+        """Recheck commands against the current measured base attitude."""
+        if self.config.get('calibration_method')!='operator_accepted_factory_table':return
+        import mujoco
+        data=self.gravity_data;data.qpos[:]=self.ik.data.qpos
+        if left_q is not None:
+            data.qpos[self.ik.qadr[self.ik.arm]]=left_q
+            for name,q in zip(BODY_NAMES[22:29],self.right_arm):
+                data.qpos[self.ik.model.jnt_qposadr[self.ik.model.joint(name).id]]=q
+        if hand_q is not None:
+            for side,values in [('left',hand_q),('right',self.right_hand)]:
+                for suffix,q in zip(('thumb_0','thumb_1','thumb_2','index_0','index_1','middle_0','middle_1'),
+                                    np.asarray(values)[SIM_TO_BRIDGE]):
+                    data.qpos[self.ik.model.jnt_qposadr[self.ik.model.joint(side+'_hand_'+suffix+'_joint').id]]=q
+        mujoco.mj_forward(self.ik.model,data)
+        collision=self.ik.collision_details(data)
+        if collision:raise RuntimeError('Live target intersects at measured base attitude: '+str(collision))
+
     def hand(self, goal, duration=1.):
         end=sim_hand_to_bridge(goal);start=self.left_hand.copy()
         for t in np.linspace(0,1,max(2,int(duration/.02))):
             with self.command_lock:
-                self.check();self.left_hand=start+t*(end-start)
+                snap=self.check();self.sync(snap);self.left_hand=start+t*(end-start)
+                self.check_live_geometry(hand_q=self.left_hand)
                 self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
                 self.event('hand_target',left=self.left_hand.tolist(),right=self.right_hand.tolist())
             self.clock.sleep(.02)

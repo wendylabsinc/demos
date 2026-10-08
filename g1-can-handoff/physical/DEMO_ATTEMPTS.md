@@ -215,3 +215,28 @@ exposure-time motion. The fixed camera-to-world transform needs validation
 under arm load before another calibration change or physical trial. The table
 guard remains unchanged and the controller remains in a measured failure hold.
 See `yolo/validation-cylinder-trial-20261008.json`.
+
+### Exposure-synchronized attitude correction
+
+The 00:28:09 UTC warm retry refreshed calibration while retaining the existing
+arm controller. It still stopped during staging on table-height drift, so a
+startup-only refresh was insufficient. Across 153 recorded frames, matching
+each exposure to recorded body attitude (maximum skew 1.87 ms) and rotating
+the camera about the calibrated pelvis reduced the table offset range from
+[-0.63, 5.17] mm to [-0.90, 0.46] mm. The shared production helper reproduced
+this result; the 5 mm table guard is unchanged.
+
+The candidate retains a bounded history from the existing body-state reader.
+Perception requests the pose nearest its actual exposure, rejects skew above
+20 ms, and applies the same rotation to camera and pelvis transforms. Current
+attitude also updates the robot collision/gravity model; live arm and finger
+targets are checked together. Attitude changes above 0.04 rad and unmodeled
+waist movement above 0.002 rad stop the trial. Base translation remains
+unmodeled, and this is still the operator-accepted factory/table estimate,
+not an independently measured extrinsic calibration.
+
+An initial passive probe stopped before observations because body motor 11
+reported 78 C. No motor adapters were created by the probe. After the operator
+reset, the controller reported PASSIVE, no arm adapter, healthy telemetry,
+and a maximum body temperature of 64 C (then 60 C). Live validation of the
+candidate and a physical pickup remain pending.

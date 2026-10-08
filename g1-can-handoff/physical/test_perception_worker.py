@@ -13,13 +13,26 @@ def fake_worker(connection,token):
         request=connection.recv()
         if request is None:break
         config,*_=request
+        pose={}
+        if config.get('request_pose'):
+            connection.send({'pose_request':config['exposure']})
+            pose=connection.recv()
         connection.send({'result':(SimpleNamespace(timestamp=time.monotonic()-config.get('age',0)),{'pid':os.getpid()}),
                          'events':[('test_evidence',{'saved':True})],
-                         'worker_ms':1,'error':config.get('error')})
+                         'worker_ms':1,'error':pose.get('error') or config.get('error')})
     connection.close()
 
 
 class WorkerTests(unittest.TestCase):
+    def test_child_can_request_exact_exposure_pose_without_another_dds_reader(self):
+        worker=PerceptionWorker(None,target=fake_worker);provider=Mock(return_value={'timestamp':12.5})
+        try:
+            worker.observe({'request_pose':True,'exposure':12.5},'test',True,None,Mock(),pose_at=provider)
+            provider.assert_called_once_with(12.5)
+            with self.assertRaisesRegex(RuntimeError,'history unavailable'):
+                worker.observe({'request_pose':True,'exposure':12.5},'test',True,None,Mock())
+        finally:worker.close()
+
     def test_stalled_request_expires_before_tracking_join_deadline(self):
         worker=PerceptionWorker.__new__(PerceptionWorker)
         worker.process=Mock();worker.connection=Mock()

@@ -30,6 +30,7 @@ class Runtime:
         from unitree_sdk2py.core.channel import ChannelFactoryInitialize,ChannelSubscriber
         from unitree_sdk2py.idl.unitree_hg.msg.dds_ import LowState_,HandState_
         from lowstate_hub import LowstateHub
+        from pose_alignment import PoseHistory
         ChannelFactoryInitialize(0,'enP8p1s0')
         self.operation_lock=threading.Lock();self.cancel=threading.Event();self.lock=threading.RLock();self.phase='PASSIVE';self.error=None;self.plant=None;self.arm=None;self.hand=None
         self.grasp_started=False
@@ -46,7 +47,11 @@ class Runtime:
         self.camera=Camera();self.latest={};self.motion_commands_sent=0;self.active=False
         self.archive_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='camera-evidence')
         self.body=ChannelSubscriber('rt/lowstate',LowState_);self.body.Init()
-        self.hub=LowstateHub(self.body.Read,hz=200).start()
+        self.pose_history=PoseHistory()
+        self.hub=LowstateHub(self.body.Read,hz=200)
+        self.hub.add_listener(lambda msg:self.pose_history.add(self.hub.latest()[2],
+            list(msg.imu_state.rpy),[float(m.q) for m in msg.motor_state[12:15]]))
+        self.hub.start()
         self.subs={side:ChannelSubscriber(f'rt/dex3/{side}/state',HandState_) for side in ('left','right')}
         for side,sub in self.subs.items():
             sub.Init();threading.Thread(target=self.poll_hand,args=(side,sub),daemon=True).start()
@@ -78,7 +83,7 @@ class Runtime:
         with self.event_lock:
             with EVENTS.open('a') as f:
                 f.write(json.dumps(row,allow_nan=False)+'\n');f.flush()
-        if phase not in ('target','hand_target','phase_camera_evidence','perception_result','perception_worker_result'):
+        if phase not in ('target','hand_target','phase_camera_evidence','perception_result','perception_worker_result','exposure_pose'):
             print(json.dumps(row),flush=True)
 
     def poll_hand(self,side,sub):
@@ -137,7 +142,8 @@ class Runtime:
         if refresh and config.get('calibration_method')=='operator_accepted_factory_table':
             from scene_refresh import refresh_scene
             frame=self.camera.frame();self.archive_frame(frame,'scene_refresh')
-            config=refresh_scene(config,frame,self.read(),health['serial'])
+            config=refresh_scene(config,frame,self.read(),health['serial'],
+                                 exposure_pose=self.pose_history.nearest(frame['timestamp']))
             self.event('scene_refreshed',calibration=config,independent_validation=False)
         config=calibration(config,health['serial'])
         calibration_start_guard(config,self.read())
@@ -175,8 +181,14 @@ class Runtime:
         with getattr(self,'observation_lock',nullcontext()):
             worker=getattr(self,'perception',None)
             if worker is not None:
-                return worker.observe(config,phase,require_table,expected_center_xy,self.event)
+                return worker.observe(config,phase,require_table,expected_center_xy,self.event,
+                                      pose_at=self.pose_history.nearest)
             return self._observe_frame(config,phase,require_table,expected_center_xy)
+
+    def exposure_config(self,config,timestamp):
+        if config.get('calibration_method')!='operator_accepted_factory_table':return config
+        from pose_alignment import corrected_config
+        return corrected_config(config,self.pose_history.nearest(timestamp))
 
     def _observe_frame(self,config,phase,require_table,expected_center_xy=None):
         # Reserve a quarter of the final deadline for tracking/fit/archive.
@@ -197,6 +209,7 @@ class Runtime:
         else:
             self.event('camera_acquisition_rejected',attempts=attempts,budget_ms=acquisition_budget*1000)
             raise RuntimeError(f'Camera could not supply an exposure within the {acquisition_budget*1000:.0f} ms acquisition budget')
+        config=self.exposure_config(config,frame['timestamp'])
         # Persist this exact frame while inference/geometric fitting runs.
         # Join the single archive job before returning any usable observation;
         # IO failure or excess exposure age still blocks the next motor action.

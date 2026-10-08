@@ -43,5 +43,48 @@ class SceneRefreshTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'identity'):refresh_scene(self.config,self.frame,self.snapshot,'camera')
             observe.assert_not_called()
 
+    def test_reference_and_candidate_use_exposure_pose_without_mutating_live_snapshot(self):
+        self.frame['timestamp']=100.
+        self.snapshot['body']['imu_rpy']=[.01,.04,.02]
+        self.snapshot['body']['q']=list(range(29))
+        before=copy.deepcopy(self.snapshot)
+        exposure=dict(timestamp=100.003,rpy=[.02,.025,.03],waist_q=[.001,.002,.003])
+        with patch('scene_refresh.candidate',return_value=self.fresh) as observe:
+            result=refresh_scene(self.config,self.frame,self.snapshot,'camera',exposure_pose=exposure)
+        used=observe.call_args.args[1]
+        self.assertEqual(used['body']['imu_rpy'],exposure['rpy'])
+        self.assertEqual(used['body']['q'][12:15],exposure['waist_q'])
+        self.assertEqual(used['body']['q'][:12],before['body']['q'][:12])
+        self.assertEqual(used['body']['q'][15:],before['body']['q'][15:])
+        self.assertEqual(used['body']['time'],before['body']['time'])
+        self.assertEqual(result['reference_imu_rpy'],exposure['rpy'])
+        self.assertEqual(result['reference_base_q'][12:15],exposure['waist_q'])
+        self.assertEqual(self.snapshot,before)
+        self.assertAlmostEqual(result['calibration_exposure_pose']['skew_ms'],3.)
+
+    def test_exposure_pose_rejects_skew_or_nonfinite_before_candidate(self):
+        self.frame['timestamp']=100.
+        pose=dict(timestamp=100.,rpy=[0.,0.,0.],waist_q=[0.,0.,0.])
+        bad=[]
+        for timestamp in (99.979,100.021,float('nan')):
+            bad.append(dict(pose,timestamp=timestamp))
+        bad.extend([dict(pose,rpy=[0.,float('nan'),0.]),dict(pose,waist_q=[0.,0.]),
+                    dict(pose,waist_q=[0.,0.,float('inf')])])
+        for exposure in bad:
+            with self.subTest(exposure=exposure),patch('scene_refresh.candidate') as observe:
+                with self.assertRaises(ValueError):
+                    refresh_scene(self.config,self.frame,self.snapshot,'camera',exposure_pose=exposure)
+                observe.assert_not_called()
+
+    def test_exposure_pose_does_not_bypass_live_snapshot_health(self):
+        self.frame['timestamp']=100.
+        pose=dict(timestamp=100.,rpy=[0.,0.,0.],waist_q=[0.,0.,0.])
+        for changes in ({'time':time.monotonic()-1.},{'temperature_max':78.}):
+            snapshot=copy.deepcopy(self.snapshot);snapshot['body'].update(changes)
+            with patch('scene_refresh.candidate') as observe:
+                with self.assertRaises(ValueError):
+                    refresh_scene(self.config,self.frame,snapshot,'camera',exposure_pose=pose)
+                observe.assert_not_called()
+
 
 if __name__=='__main__':unittest.main()

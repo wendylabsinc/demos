@@ -24,6 +24,18 @@ def worker_main(connection,token):
     def event(phase,**fields):
         with event_lock:events.append((phase,fields))
     runtime.event=event
+    def exposure_config(config,timestamp):
+        if config.get('calibration_method')!='operator_accepted_factory_table':return config
+        from pose_alignment import corrected_config
+        connection.send({'pose_request':timestamp})
+        if not connection.poll(.5):raise RuntimeError('Exposure pose response timeout')
+        response=connection.recv()
+        if response.get('error'):raise RuntimeError(response['error'])
+        pose=response['pose']
+        if abs(pose['timestamp']-timestamp)>.02:raise RuntimeError('Exposure pose skew exceeds 20 ms')
+        event('exposure_pose',frame_timestamp=timestamp,pose=pose)
+        return corrected_config(config,pose)
+    runtime.exposure_config=exposure_config
     try:
         connection.send({'ready':True})
         while True:
@@ -59,15 +71,24 @@ class PerceptionWorker:
         except Exception:
             self.close();raise
 
-    def observe(self,config,phase,require_table,expected_center_xy,event):
+    def observe(self,config,phase,require_table,expected_center_xy,event,pose_at=None):
         from yolo_client import frame_age_limit_s
         if not self.process.is_alive():raise RuntimeError('Perception worker exited')
         started=time.monotonic()
         self.connection.send((config,phase,require_table,expected_center_xy))
         # Leave two seconds for error reporting before stop_tracking's join
         # deadline. A stalled camera must not prevent worker/lease cleanup.
-        if not self.connection.poll(4.):raise RuntimeError('Perception worker response timeout')
-        response=self.connection.recv()
+        deadline=started+4.
+        while True:
+            remaining=deadline-time.monotonic()
+            if remaining<=0 or not self.connection.poll(remaining):raise RuntimeError('Perception worker response timeout')
+            response=self.connection.recv()
+            if 'pose_request' not in response:break
+            try:
+                if pose_at is None:raise RuntimeError('Exposure pose history unavailable')
+                reply={'pose':pose_at(response['pose_request'])}
+            except Exception as exc:reply={'error':str(exc)}
+            self.connection.send(reply)
         for name,fields in response['events']:event(name,**fields)
         event('perception_worker_result',phase_name=phase,worker_ms=response['worker_ms'],
               round_trip_ms=(time.monotonic()-started)*1000,error=response['error'])
