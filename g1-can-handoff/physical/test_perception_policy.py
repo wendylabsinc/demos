@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock,patch
 
-from perception_policy import perception_policy,semantic_recheck_interval_s
+from perception_policy import perception_policy,semantic_recheck_interval_s,target_identity_mode
 from perception_worker import worker_main
 from physical_core import PhysicalPlant
 from runtime import Runtime
@@ -27,6 +27,14 @@ class PerceptionPolicyTests(unittest.TestCase):
             self.assertEqual(semantic_recheck_interval_s(),1.)
         with patch.dict('os.environ',HANDOFF_PERCEPTION_POLICY='typo'):
             with self.assertRaisesRegex(ValueError,'PERCEPTION_POLICY'):perception_policy()
+
+    def test_color_and_once_modes_never_schedule_periodic_yolo(self):
+        for mode in ('color_depth','yolo_once'):
+            with self.subTest(mode=mode),patch.dict('os.environ',HANDOFF_TARGET_IDENTITY=mode,HANDOFF_PERCEPTION_POLICY='continuous'):
+                self.assertEqual(target_identity_mode(),mode)
+                self.assertIsNone(semantic_recheck_interval_s())
+        with patch.dict('os.environ',HANDOFF_TARGET_IDENTITY='bad'):
+            with self.assertRaisesRegex(ValueError,'TARGET_IDENTITY'):target_identity_mode()
 
     def runtime(self):
         result=Runtime.__new__(Runtime)

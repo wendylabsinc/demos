@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 0.597261874936521,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_color_depth_acquisition",
+      "tests_run": 3,
+      "seconds": 0.14168724999763072,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_color_depth_acquisition.RecordedColorDepthTests.test_both_failed_views_acquire_and_track_without_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_color_depth_acquisition.RecordedColorDepthTests.test_missing_target_still_blocks_without_asking_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_color_depth_acquisition.RecordedColorDepthTests.test_stale_recording_still_blocks_in_color_mode",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.142s\n\nOK\n"
+    }
+  ]
+}

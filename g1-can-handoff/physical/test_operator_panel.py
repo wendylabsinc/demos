@@ -1,5 +1,8 @@
 """Operator action boundary: a page load never releases robot ownership."""
 import json
+import shutil
+import subprocess
+import re
 import threading
 import tempfile
 from pathlib import Path
@@ -35,6 +38,24 @@ class OperatorPanelTests(unittest.TestCase):
         self.assertIn('<button id="start"',html)
         self.assertIn('<button id="stop"',html)
         self.server.wendy.request.assert_not_called()
+    @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
+    def test_overlay_stays_visible_during_demo_and_marks_expired_projection(self):
+        function=re.search(r'function placementVisible\(\)\{[^\n]+',panel.PAGE).group()
+        script="""
+const assert=require('node:assert/strict');
+const pickupOverlay={style:{},dataset:{}},placementMessage={dataset:{},textContent:'Place can'};
+let guideValid=true,guidePresent=true,guideReceived=Date.now(),lastImage=Date.now(),demoActive=true;
+"""+function+"""
+placementVisible();assert.equal(pickupOverlay.style.display,'block');
+assert.equal(pickupOverlay.dataset.reference,'false');
+guideReceived-=5000;placementVisible();
+assert.equal(pickupOverlay.style.display,'block');assert.equal(pickupOverlay.dataset.reference,'true');
+assert.match(placementMessage.textContent,/Reference only/);
+guideValid=false;placementVisible();assert.equal(pickupOverlay.style.display,'block');
+guidePresent=false;placementVisible();assert.equal(pickupOverlay.style.display,'none');
+"""
+        subprocess.run(['node','-e',script],check=True,capture_output=True,text=True)
+
     def test_missing_support_or_wrong_local_token_cannot_release(self):
         for data,token in [({'can_supported':False},panel.TOKEN),({'can_supported':True},'bad')]:
             with self.subTest(data=data,token=token),self.assertRaises(urllib.error.HTTPError):self.post(data,token)

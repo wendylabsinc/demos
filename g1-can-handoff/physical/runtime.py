@@ -17,7 +17,7 @@ sys.path.insert(0,str(Path(__file__).parent/'adapter'))
 from physical_core import calibration,calibration_start_guard,calibrated_scene,PhysicalPlant,snapshot_guard
 from camera_input import Camera,geometry,materialize_rgbd
 from yolo_client import fresh, frame_age_limit_s
-from perception_policy import perception_policy,semantic_recheck_interval_s
+from perception_policy import perception_policy,semantic_recheck_interval_s,target_identity_mode
 
 DATA=Path(os.getenv('HANDOFF_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
 EVENTS=DATA/('events-'+time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'.jsonl')
@@ -124,7 +124,9 @@ class Runtime:
                 'camera_max_age_ms':frame_age_limit_s()*1000,
                 'yolo_confidence_strictly_above':confidence_threshold()}
         observation=getattr(self,'tracking_observation',None)
-        result.update(perception_mode='yolo_visual_depth',perception_policy=perception_policy(),
+        result.update(perception_mode='color_depth_tracker' if target_identity_mode()=='color_depth' else 'yolo_visual_depth',
+                      target_identity=target_identity_mode(),yolo_required=target_identity_mode()!='color_depth',
+                      perception_policy=perception_policy(),
                       periodic_yolo_recheck_s=semantic_recheck_interval_s(),
                       last_phase_check=getattr(self,'last_phase_check',None),
                       tracking_error=getattr(self,'tracking_error',None),
@@ -271,6 +273,7 @@ class Runtime:
         finally:
             archived.result()
             self.event('perception_result',phase_name=phase,frame_id=frame['meta']['frame_id'],
+                       target_identity=target_identity_mode(),
                        source=detection.get('source'),model_sha256=detection.get('model_sha256'),
                        detections=detection.get('detections'),inference_ms=detection.get('inference_ms'),
                        geometry=None if error else result[1],error=error,
@@ -533,7 +536,7 @@ class Runtime:
             from target_tracker import TargetTracker
             self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
             self.last_phase_check=None
-            self.event('perception_policy',policy=perception_policy(),
+            self.event('perception_policy',policy=perception_policy(),target_identity=target_identity_mode(),
                        periodic_yolo_recheck_s=semantic_recheck_interval_s())
             from perception_worker import PerceptionWorker
             self.perception=PerceptionWorker(self.camera.token)

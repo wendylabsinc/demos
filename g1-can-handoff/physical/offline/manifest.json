@@ -145,7 +145,10 @@
     "offline/evidence/head-camera-offset-20261008/events-and-result.json.gz": "8dcf6a1c91c6a26b34d9c8cdadbcb69d56becf8b2e1802398ffafcb5a3b3a6d6",
     "offline/evidence/head-camera-offset-20261008/frame.npz": "106ff70fe7e2a978fad66cfa70eb3092a2b0a5e28d3d596e81b28e6aceac6172",
     "offline/evidence/head-camera-offset-20261008/frame.png": "88493bf09efa52332a3356dea0e58c6f88c9f47e5cfba033895161c1bc797efe",
-    "offline/evidence/head-camera-offset-20261008/manifest.json": "4c69a82cdcaadd60f4e730b101997ca31f49e7a20f399eedb148cb871a9ea30e"
+    "offline/evidence/head-camera-offset-20261008/manifest.json": "4c69a82cdcaadd60f4e730b101997ca31f49e7a20f399eedb148cb871a9ea30e",
+    "offline/evidence/low-yolo-20261008/camera-115616-planning.source.zip": "b0a355b52d56a8c3a6f20dfa34ca7def30382456c649ace08a6f9a72b5c8de6c",
+    "offline/evidence/low-yolo-20261008/camera-115503-planning.source.zip": "4f10896b9bbaa9e2778a76497662c19b74369c7cbbd7d7a7a9aa02a11df46ad6",
+    "offline/evidence/low-yolo-20261008/last-scene.json": "080627ec28340aa4468d41d454517e73636a6e6dfe66166d36bea57204fb3ad9"
   },
   "archive_runtime_commit": "1538fd1",
   "additional_attempts": [

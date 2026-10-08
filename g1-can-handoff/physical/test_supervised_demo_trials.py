@@ -22,6 +22,17 @@ class SupervisedTrialTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError,'Camera exposure is stale'):preflight(before,500)
         with self.assertRaisesRegex(RuntimeError,'Unexpected configured'):preflight(before,400)
 
+    def test_color_depth_mode_does_not_require_yolo_but_still_requires_fresh_camera(self):
+        before=dict(status=dict(phase='PASSIVE',adapter_initialized=False,demo_running=False,
+            telemetry_healthy=True,calibration_present=True,camera_max_age_ms=500,
+            yolo_confidence_strictly_above=.1,target_identity='color_depth'),
+            recorder=dict(recording=True,error=None,dropped={},missing_or_stale_required=[]),
+            camera=dict(healthy=True,serial='338622073335'),camera_exposure_age_ms=100,
+            yolo={'required':False})
+        preflight(before,500)
+        before['camera_exposure_age_ms']=501
+        with self.assertRaisesRegex(RuntimeError,'Camera exposure is stale'):preflight(before,500)
+
     def test_no_automatic_second_start_without_operator_reset(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)

@@ -342,10 +342,16 @@ def world_points(frame,config,*,workers=None):
 
 def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False,tracker=None):
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
+    if not synthetic_red and tracker is None:
+        from perception_policy import target_identity_mode
+        if target_identity_mode()=='color_depth':
+            from target_tracker import TargetTracker
+            tracker=TargetTracker(identity_mode='color_depth')
     depth=frame['depth_m']
     # Exact distortion-corrected RealSense rays, not simulated pinhole geometry.
     state=None if tracker is None else tracker.state
-    scheduled_semantic=tracker is not None and (state is None or (
+    scheduled_semantic=tracker is not None and getattr(tracker,'identity_mode','yolo_reacquire')!='color_depth' and (state is None or (
+        tracker.recheck_interval_s is not None and
         frame['meta']['frame_id']>state['frame_id'] and frame['timestamp']>state['timestamp'] and
         frame['timestamp']-state['semantic_timestamp']>=tracker.recheck_interval_s))
     detection=None
@@ -374,7 +380,7 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         roi=np.linalg.norm(world[:,:,:2]-expected,axis=2)<=config['can_radius_m']+.04+.01
     if synthetic_red:
         # Explicitly reserved for untextured MuJoCo regression fixtures. The
-        # physical runtime never passes this flag and has no color fallback.
+        # physical runtime uses its explicit TargetTracker acquisition mode.
         if frame['meta'].get('synthetic_rgbd') is not True:
             raise ValueError('Synthetic red detection requires a MuJoCo camera')
         target=target_red_mask(frame['color_bgr'][...,::-1],depth,roi=roi)

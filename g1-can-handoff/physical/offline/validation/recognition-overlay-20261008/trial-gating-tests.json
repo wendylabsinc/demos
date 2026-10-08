@@ -1,0 +1,57 @@
+{
+  "profile": "regression",
+  "tests_run": 6,
+  "successful": true,
+  "seconds": 0.3451813750434667,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_supervised_demo_trials",
+      "tests_run": 6,
+      "seconds": 0.004066958092153072,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_budget_must_match_verified_controller_and_yolo_release",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_color_depth_mode_does_not_require_yolo_but_still_requires_fresh_camera",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_duplicate_run_never_constructs_transport_or_reissues_start",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_no_automatic_second_start_without_operator_reset",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_reset_acknowledgement_cannot_skip_a_running_previous_trial",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_supervised_demo_trials.SupervisedTrialTests.test_retained_ownership_requires_release_even_if_reset_was_acknowledged",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.004s\n\nOK\n"
+    }
+  ]
+}

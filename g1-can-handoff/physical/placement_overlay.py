@@ -20,7 +20,8 @@ class PlacementGuide:
     def read(self):
         with self.lock:
             if time.monotonic()-self.updated>3:
-                return dict(valid=False,error='Placement feedback expired — guide hidden')
+                return dict(self.value,valid=False,reference_only=bool(self.value.get('polygon')),
+                            error='Placement feedback expired — last calibrated area shown as reference')
             return dict(self.value)
 
     def update(self):
@@ -34,8 +35,14 @@ class PlacementGuide:
                     payload=result.get('structuredContent') or json.loads(next(c['text'] for c in result['content'] if c['type']=='text'))
                     if payload.get('exit_code')!=0 or payload.get('truncated'):
                         raise RuntimeError(payload.get('stderr') or 'Placement feedback unavailable')
-                    value=project_area(json.loads(payload['stdout']));value['valid']=True
-                except Exception as exc:value=dict(valid=False,error=str(exc))
+                    snapshot=json.loads(payload['stdout'])
+                    # A received snapshot must pass camera/calibration identity
+                    # checks even when only a reference projection is available.
+                    try:value=project_status(snapshot)
+                    except Exception as exc:value=dict(valid=False,error=str(exc))
+                except Exception as exc:
+                    with self.lock:value=dict(self.value,valid=False,
+                        reference_only=bool(self.value.get('polygon')),error=str(exc))
                 with self.lock:self.value=value;self.updated=time.monotonic()
                 self.stop.wait(1)
         finally:
@@ -46,8 +53,6 @@ class PlacementGuide:
 
 SCRIPT = r'''import ast,io,json,pathlib,time,urllib.request,zipfile
 s=json.load(urllib.request.urlopen('http://127.0.0.1:8102/status',timeout=3))
-if s['demo_running']:
- print(json.dumps(dict(demo_running=True)));raise SystemExit(0)
 c=json.loads(pathlib.Path('/data/calibration.json').read_text())
 h=json.load(urllib.request.urlopen('http://127.0.0.1:8001/health',timeout=3))
 raw=urllib.request.urlopen('http://127.0.0.1:8001/frame.tracking-rgbd',timeout=3).read()
@@ -68,21 +73,21 @@ print(json.dumps(dict(config=c,bounds=bounds,intrinsics=m['calibration']['intrin
  body_age_s=None if body is None else time.monotonic()-body['time'],camera_health=h)))
 '''
 
-def project_area(snapshot):
-    if snapshot['demo_running']:
-        raise ValueError('Placement guide hidden while the demo is running')
-    if not 0 <= snapshot['body_age_s'] <= .2:
-        raise ValueError('Placement guide unavailable: body feedback is stale')
+def project_area(snapshot, *, reference=False):
     config = snapshot['config']
     if not config.get('operator_accepted') or not config.get('stationary_base_confirmed'):
         raise ValueError('Placement guide requires accepted stationary-base calibration')
     if config['camera_serial'] != snapshot['camera_serial']:
         raise ValueError('Placement guide camera/calibration mismatch')
-    h = snapshot['camera_health']
-    if not h['healthy'] or not 0 <= h['frame_age_s'] <= .4:
-        raise ValueError('Placement guide unavailable: camera is stale')
-    body = snapshot['body']
-    config = corrected_config(config, dict(timestamp=body['time'], rpy=body['imu_rpy'], waist_q=body['q'][12:15]))
+    if not reference:
+        age = snapshot['body_age_s']
+        if age is None or not 0 <= age <= .2:
+            raise ValueError('Placement guide unavailable: body feedback is stale')
+        h = snapshot['camera_health']
+        if not h['healthy'] or not 0 <= h['frame_age_s'] <= .4:
+            raise ValueError('Placement guide unavailable: camera is stale')
+        body = snapshot['body']
+        config = corrected_config(config, dict(timestamp=body['time'], rpy=body['imu_rpy'], waist_q=body['q'][12:15]))
     intrinsics = snapshot['intrinsics']
     # The verified NX2 aligned-color intrinsics have zero distortion. Fail
     # visibly if this camera contract changes rather than silently misproject.
@@ -103,3 +108,14 @@ def project_area(snapshot):
     return dict(polygon=pixels.tolist(),width=intrinsics['width'],height=intrinsics['height'],
                 bounds_m=bounds,phase=snapshot['phase'],table_height_m=config['table_height_m'],
                 label=f'Can base center: {x0*100:g}–{x1*100:g} cm forward · {y0*100:g}–{y1*100:g} cm robot-left')
+
+
+def project_status(snapshot):
+    """A stale projection is a visible reference, never current placement proof."""
+    try:
+        return dict(project_area(snapshot),valid=True,reference_only=False)
+    except (ValueError,RuntimeError) as exc:
+        # Use the accepted calibration without pretending it follows a changed
+        # robot pose. Identity, distortion and geometry checks still apply.
+        return dict(project_area(snapshot,reference=True),valid=False,
+                    reference_only=True,error=str(exc))

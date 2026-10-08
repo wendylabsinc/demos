@@ -17,6 +17,7 @@ def main(argv=()):
     configured_env=json.loads((root/'wendy.json').read_text())['env']
     configured_limit=float(configured_env['HANDOFF_CAMERA_MAX_AGE_MS'])
     configured_policy=configured_env['HANDOFF_PERCEPTION_POLICY']
+    configured_identity=configured_env['HANDOFF_TARGET_IDENTITY']
     if args.configure_camera_max_age_ms is not None and args.configure_camera_max_age_ms!=configured_limit:
         parser.error('Requested budget must equal this deployment descriptor')
     copied={s.strip() for group in re.findall(r'paths:\s*\[([^\]]+)\]',
@@ -37,9 +38,12 @@ status=get(8102,'/status')
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['telemetry_healthy'],status
 budget=CONFIGURED_LIMIT
-yolo=get(8112,'/health')
-assert yolo['healthy'] and yolo['backend']=='pytorch_cuda' and yolo['model_sha256']=='fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9',yolo
-assert yolo['camera_max_age_ms']==budget,yolo
+assert status['target_identity']==CONFIGURED_IDENTITY,status
+yolo={'required':False}
+if status['yolo_required']:
+ yolo=get(8112,'/health')
+ assert yolo['healthy'] and yolo['backend']=='pytorch_cuda' and yolo['model_sha256']=='fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9',yolo
+ assert yolo['camera_max_age_ms']==budget,yolo
 previous_budget=status['camera_max_age_ms']
 if APPLY_CONFIG and previous_budget!=budget:
  request=urllib.request.Request('http://127.0.0.1:8102/perception-config',data=json.dumps({'camera_max_age_ms':budget}).encode(),headers={'Content-Type':'application/json'},method='POST')
@@ -47,7 +51,7 @@ if APPLY_CONFIG and previous_budget!=budget:
  assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['camera_max_age_ms']==budget and status['yolo_confidence_strictly_above']==.1,status
 assert status['perception_policy']==CONFIGURED_POLICY,status
-assert status['periodic_yolo_recheck_s']==(None if CONFIGURED_POLICY=='phase_boundary' else 1.),status
+assert status['periodic_yolo_recheck_s']==(None if CONFIGURED_POLICY=='phase_boundary' or CONFIGURED_IDENTITY!='yolo_reacquire' else 1.),status
 recorder=get(8101,'/status')
 assert recorder['recording'] and not recorder['error'] and not sum(recorder['dropped'].values()) and not recorder['missing_or_stale_required'],recorder
 assert recorder['queue_depth']<=1000 and all(recorder['last_written_age_s'].get(topic,999)<.5 for topic in ['rt/lowstate','rt/dex3/left/state','rt/dex3/right/state']),recorder
@@ -62,7 +66,7 @@ for _ in range(2):
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
+""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
     client=Wendy()
     try:
         for attempt in range(8):

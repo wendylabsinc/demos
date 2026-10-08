@@ -10,4 +10,11 @@ def perception_policy():
 
 
 def semantic_recheck_interval_s():
-    return None if perception_policy()=='phase_boundary' else 1.0
+    return None if perception_policy()=='phase_boundary' or target_identity_mode()!='yolo_reacquire' else 1.0
+
+
+def target_identity_mode():
+    value=os.getenv('HANDOFF_TARGET_IDENTITY','yolo_reacquire')
+    if value not in ('color_depth','yolo_once','yolo_reacquire'):
+        raise ValueError('HANDOFF_TARGET_IDENTITY must be color_depth, yolo_once or yolo_reacquire')
+    return value

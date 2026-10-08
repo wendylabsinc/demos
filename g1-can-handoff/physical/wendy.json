@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.14-phase-perception",
+  "version": "0.3.15-color-depth-tracker",
   "entitlements": [
     {
       "type": "network",
@@ -25,6 +25,7 @@
     "HANDOFF_CAMERA_MAX_AGE_MS": "500",
     "HANDOFF_CONTROL_SETTLE_MAX_SPEED_RAD_S": "1",
     "HANDOFF_TABLE_CLEARANCE_M": "0.01",
-    "HANDOFF_GEOMETRY_WORKERS": "1"
+    "HANDOFF_GEOMETRY_WORKERS": "1",
+    "HANDOFF_TARGET_IDENTITY": "color_depth"
   }
 }

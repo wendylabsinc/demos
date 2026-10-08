@@ -24,7 +24,8 @@ if expected is not None:
  actual={n:hashlib.sha256((pathlib.Path('/app')/n).read_bytes()).hexdigest() for n in expected}
  assert actual==expected,'Controller source differs from verified release'
  result['source_sha256']=actual
- result['camera']=get(8001,'/health');result['yolo']=get(8112,'/health')
+ result['camera']=get(8001,'/health')
+ result['yolo']=get(8112,'/health') if result['status'].get('target_identity')!='color_depth' else {'required':False}
  raw=urllib.request.urlopen('http://127.0.0.1:8001/frame.tracking-rgbd',timeout=5).read()
  with zipfile.ZipFile(io.BytesIO(raw)) as z:meta=json.loads(z.read('metadata.json'))['source_metadata']
  result['camera_exposure_age_ms']=(time.monotonic()-meta['depth_time'])*1000
@@ -54,6 +55,7 @@ def preflight(before, camera_max_age_ms=500):
     camera, yolo = before['camera'], before['yolo']
     if not camera['healthy'] or camera['serial'] != '338622073335' or not 0 <= before['camera_exposure_age_ms'] < limit_ms:
         raise RuntimeError('Camera exposure is stale or camera identity is wrong')
+    if state.get('target_identity')=='color_depth':return
     if not yolo['healthy'] or yolo['model_sha256'] != 'fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9':
         raise RuntimeError('YOLO is unavailable or model identity differs')
     if yolo.get('camera_max_age_ms')!=limit_ms:

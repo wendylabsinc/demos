@@ -1,9 +1,10 @@
 """Placement projection and visibility checks; no network or robot required."""
-from copy import deepcopy
 import unittest
+import json
 
 import numpy as np
-from placement_overlay import project_area
+from placement_overlay import project_area, project_status, PlacementGuide
+from unittest.mock import patch, Mock
 
 
 class PickupAreaTests(unittest.TestCase):
@@ -29,8 +30,8 @@ class PickupAreaTests(unittest.TestCase):
         before=project_area(snapshot)['polygon'];snapshot['body']['imu_rpy'][2]=.01
         self.assertFalse(np.allclose(project_area(snapshot)['polygon'],before))
 
-    def test_hides_active_stale_mismatched_and_unsupported_projection(self):
-        changes=[{'demo_running':True},{'body_age_s':.201},{'camera_serial':'other'},
+    def test_rejects_stale_mismatched_and_unsupported_current_projection(self):
+        changes=[{'body_age_s':.201},{'camera_serial':'other'},
                  {'camera_health':dict(healthy=False,frame_age_s=.03)}]
         for fields in changes:
             snapshot=self.snapshot();snapshot.update(fields)
@@ -39,6 +40,54 @@ class PickupAreaTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'distortion'):project_area(snapshot)
         snapshot=self.snapshot();snapshot['config']['operator_accepted']=False
         with self.assertRaisesRegex(ValueError,'accepted'):project_area(snapshot)
+
+    def test_running_demo_keeps_current_projection(self):
+        snapshot=self.snapshot();snapshot['demo_running']=True
+        self.assertTrue(project_status(snapshot)['valid'])
+        self.assertEqual(len(project_status(snapshot)['polygon']),4)
+
+    def test_waist_mismatch_keeps_explicit_reference_even_on_first_load(self):
+        snapshot=self.snapshot();snapshot['body']['q'][12]=.01
+        result=project_status(snapshot)
+        self.assertFalse(result['valid']);self.assertTrue(result['reference_only'])
+        self.assertIn('Waist',result['error'])
+        np.testing.assert_allclose(result['polygon'],[[27,9],[45,9],[45,29],[27,29]])
+
+    def test_stale_feedback_retains_reference_but_never_current_green_status(self):
+        snapshot=self.snapshot();snapshot['body_age_s']=.8
+        result=project_status(snapshot)
+        self.assertFalse(result['valid']);self.assertTrue(result['reference_only'])
+        self.assertIn('stale',result['error'])
+
+    def test_reference_still_rejects_wrong_camera_and_distortion(self):
+        for field in ('camera','distortion'):
+            snapshot=self.snapshot()
+            if field=='camera':snapshot['camera_serial']='other'
+            else:snapshot['intrinsics']['coeffs'][0]=.1
+            with self.subTest(field=field),self.assertRaises(ValueError):project_status(snapshot)
+
+    def test_expired_cache_retains_polygon_as_reference(self):
+        guide=PlacementGuide(lambda:None)
+        guide.value=project_status(self.snapshot());guide.updated=10
+        with patch('placement_overlay.time.monotonic',return_value=14):result=guide.read()
+        self.assertFalse(result['valid']);self.assertTrue(result['reference_only'])
+        self.assertEqual(len(result['polygon']),4)
+        self.assertIn('expired',result['error'])
+
+    def test_transport_failure_preserves_only_reference_and_identity_failure_clears_it(self):
+        for transport_failure in (True,False):
+            client=Mock();guide=PlacementGuide(lambda:client)
+            guide.value=project_status(self.snapshot())
+            def poll(*args,**kwargs):
+                guide.stop.set()
+                if transport_failure:raise RuntimeError('transport unavailable')
+                snapshot=self.snapshot();snapshot['camera_serial']='wrong'
+                return {'structuredContent':{'exit_code':0,'truncated':False,'stdout':json.dumps(snapshot)}}
+            client.tool.side_effect=poll;guide.update();result=guide.read()
+            with self.subTest(transport_failure=transport_failure):
+                self.assertFalse(result['valid'])
+                self.assertEqual(bool(result.get('polygon')),transport_failure)
+            client.process.terminate.assert_called_once()
 
 
 if __name__=='__main__':unittest.main()
