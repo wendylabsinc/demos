@@ -18,7 +18,7 @@ python -m pip install -r offline/requirements.txt
 python offline/run.py
 ```
 
-The default profile runs **216 regression tests**, verifies captured evidence
+The default profile discovers regression tests, verifies captured evidence
 checksums, and writes `offline/reports/latest.json`. Each module runs in a fresh
 process with temporary runtime storage, fixed random/hash seeds, a 400 ms
 exposure limit, and bounded execution. Reports retain individual test IDs,
@@ -44,6 +44,48 @@ native execution is also tested; the portable reference uses Python 3.12/Linux.
 
 ## Profiles and focused debugging
 
+The later supervised batch is preserved in `evidence/ten-demos-20261008`:
+three numbered trials, 130 native events, 15 exact RGB-D frames, accepted
+calibration, terminal feedback and deployed source copies. Each member is
+checksum-verified by `manifest.json` and `test_clearance_planning`. The batch's
+raw DDS segments remain on the robot; the local settling analysis contains
+derived window statistics rather than a full raw-feedback export. An additional
+attempt's recent events are saved separately under
+`validation/ten-demos-20261008/additional-attempt-observed.json`.
+
+To replay planning without the robot:
+
+```sh
+python offline/run.py --test test_clearance_planning
+python -m offline.planner_replay --trial 1
+python -m offline.planner_replay --trial 2
+python -m offline.planner_replay --trial 3
+```
+
+The replay rebuilds the accepted geometry and replaces only model state with
+recorded calibration/hold/staging poses. It rebases receipt timestamps for
+offline checks and never constructs command publishers. It does not reproduce
+live timing, feedback dynamics or physical grasp success. Returned arm samples
+are independently checked with MuJoCo geometry-distance queries; all three
+scenes passed with at least 32.5 mm modeled table clearance at a required 10 mm.
+The earlier planner also eventually found a path on the faster Mac (7.14 s),
+after two rejected candidates. The final replay, including independent distance
+auditing, took 4.84–5.41 s while other validation jobs ran concurrently. These
+are Mac observations, not a controlled speed comparison or Jetson benchmarks.
+Full trajectory/finger collision checks remain active. Staging search is deferred
+until alignment, reach, finger closing and lift have passed geometric checks,
+so infeasible grasps do not spend the expensive staging budget.
+
+The high-first grasp experiment passed the static geometry replay but caused
+a simulated head-camera lift verification failure. Its exact RGB-D frame,
+events, source hashes and truth-only diagnostic pose are preserved in
+`evidence/head-camera-offset-20261008`. The can shifted 39.7 mm while the camera
+fit measured 40.3 mm. `test_clearance_planning` still requires this old frame to
+fail the unchanged 40 mm bound. The final planner prefers the can-centre grasp
+and checks higher candidates only if needed. The head-camera dynamics test
+now passes without changing the tracking gate. Original red and final green
+reports remain under `validation/ten-demos-20261008`.
+
 ```sh
 python offline/run.py --list
 python offline/run.py --test test_recorded_failures
@@ -63,7 +105,7 @@ python offline/inspect_trace.py --attempt 20261008T005915Z --events
 four ownership acceptance cases. `open` runs those four cases alone with fake
 actuator endpoints: final planning follows measured ownership settling; failed
 perception, cancellation, or unstable control cannot execute the preview plan.
-`simulation` runs 13 MuJoCo control/dynamics tests. `all` runs all **229 tests**
+`simulation` runs MuJoCo control/dynamics tests. `all` runs both profiles
 without duplicating ownership cases. All profiles now pass offline. No tests are
 skipped or marked expected-failure to conceal the original failures.
 

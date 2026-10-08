@@ -1,0 +1,12 @@
+{
+  "schema": "g1-synthetic-failure/1",
+  "synthetic": true,
+  "hardware_used": false,
+  "truth_used_for_planning": false,
+  "original_error": "Tracked target center differs by over 40 mm",
+  "files": {
+    "frame.png": "88493bf09efa52332a3356dea0e58c6f88c9f47e5cfba033895161c1bc797efe",
+    "frame.npz": "106ff70fe7e2a978fad66cfa70eb3092a2b0a5e28d3d596e81b28e6aceac6172",
+    "events-and-result.json.gz": "8dcf6a1c91c6a26b34d9c8cdadbcb69d56becf8b2e1802398ffafcb5a3b3a6d6"
+  }
+}

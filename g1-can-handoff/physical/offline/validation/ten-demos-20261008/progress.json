@@ -1,0 +1,78 @@
+{
+  "requested": 10,
+  "completed": 3,
+  "remaining": 7,
+  "successful_lifts": 0,
+  "errors": {
+    "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table": 1,
+    "RuntimeError: Control handover did not settle within 5 seconds": 2
+  },
+  "trials": [
+    {
+      "index": 1,
+      "state": "terminal",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "primary_failure": {
+        "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+        "source": "execution"
+      },
+      "physical_lift_verified": false,
+      "reset_confirmed_after": true,
+      "artifact_verified": true,
+      "recorder_session": "20261008T162358Z-ab00e585",
+      "events": 58,
+      "perception": {
+        "accepted": 5,
+        "exposure_age_ms": {
+          "min": 194.8955695506811,
+          "median": 207.87224651394354,
+          "max": 261.6674548762603
+        }
+      }
+    },
+    {
+      "index": 2,
+      "state": "terminal",
+      "error": "RuntimeError: Control handover did not settle within 5 seconds",
+      "primary_failure": {
+        "error": "RuntimeError: Control handover did not settle within 5 seconds",
+        "source": "execution"
+      },
+      "physical_lift_verified": false,
+      "reset_confirmed_after": true,
+      "artifact_verified": true,
+      "recorder_session": "20261008T162358Z-ab00e585",
+      "events": 38,
+      "perception": {
+        "accepted": 4,
+        "exposure_age_ms": {
+          "min": 211.67114125364606,
+          "median": 215.40317283552213,
+          "max": 237.59836627414188
+        }
+      }
+    },
+    {
+      "index": 3,
+      "state": "terminal",
+      "error": "RuntimeError: Control handover did not settle within 5 seconds",
+      "primary_failure": {
+        "error": "RuntimeError: Control handover did not settle within 5 seconds",
+        "source": "execution"
+      },
+      "physical_lift_verified": false,
+      "reset_confirmed_after": false,
+      "artifact_verified": true,
+      "recorder_session": "20261008T162358Z-ab00e585",
+      "events": 34,
+      "perception": {
+        "accepted": 4,
+        "exposure_age_ms": {
+          "min": 225.2770268742097,
+          "median": 233.69774303455415,
+          "max": 272.37287847037805
+        }
+      }
+    }
+  ]
+}

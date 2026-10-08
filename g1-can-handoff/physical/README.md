@@ -59,6 +59,16 @@ base/leg/waist joint span <=0.005 rad, and arm joint span <=0.015 rad, with a
 five-second timeout. This limit changes handover admission, not commanded
 motion speed. It does not exempt table collisions or robot self-collisions.
 
+The physical FK model now requires positive table clearance, configured with
+`HANDOFF_TABLE_CLEARANCE_M` (metres, default `0.01`, finite range
+`0.005..0.03`). Proximity contacts enforce the margin without moving the
+measured table plane or exempting penetrations. The planner prefers a grasp
+at the measured can centre, testing 10/20 mm higher candidates if needed.
+Alignment and final reach use
+continuous Cartesian IK from the preceding arm pose, checking every connecting
+joint segment with the same collision and velocity limits as execution.
+Staging and the ascending lift retain their existing bounded planners.
+
 The arm adapter's second `ctrl_dual_arm` argument is feedforward torque.
 The physical plant supplies gravity torque from the measured joint posture,
 with zero model velocity. Per-arm caps are 6/6/4/4/1.5/1.5/1.5 Nm and the

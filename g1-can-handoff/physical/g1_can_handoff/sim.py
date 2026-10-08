@@ -123,6 +123,7 @@ class Plant:
                         distance_m=float(contact.dist))
         for contact in data.contact:
             names=[m.body(m.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
+            geoms=[m.geom(g).name for g in (contact.geom1,contact.geom2)]
             if 'can' in names:
                 other=names[1] if names[0]=='can' else names[0]
                 # Table support is expected. Only the designated left fingers
@@ -134,6 +135,10 @@ class Plant:
                 threshold=.01 if self.contact_phase in ('pregrasp','staging','approach','align') else 0.
                 if contact.dist<threshold:return detail(contact,names)
                 continue
+            clearance=getattr(self,'table_clearance_m',0.)
+            if ('table' in geoms and clearance>0 and
+                    any(n.startswith('left_') for n in names) and contact.dist<clearance):
+                return dict(**detail(contact,names),required_clearance_m=clearance)
             if contact.dist>=-.001:continue
             if all("left_hand" in n or n=="left_wrist_yaw_link" for n in names):continue
             if any(n.startswith("left_") for n in names) and any(n in ("world","torso_link","pelvis") or n.startswith("right_") for n in names):return detail(contact,names)

@@ -69,4 +69,21 @@ class CartesianLiftTests(unittest.TestCase):
                 plant._cartesian_lift_poses(start+delta)
         plant.adapter.ctrl_dual_arm.assert_not_called()
 
+    def test_downward_alignment_is_continuous_checked_and_read_only(self):
+        plant=self.plant();plant.set_contact_phase('align')
+        before=plant.ik.data.qpos.copy()
+        start=plant.ik.data.site_xpos[plant.ik.site].copy()
+        rotation=plant.ik.data.site_xmat[plant.ik.site].reshape(3,3).copy()
+        plant._joint_poses=Mock(wraps=plant._joint_poses)
+        plant._cartesian_transfer_poses(start+[0,0,-.005],rotation=rotation)
+        plant._joint_poses.assert_called()
+        np.testing.assert_array_equal(plant.ik.data.qpos,before)
+        plant.adapter.ctrl_dual_arm.assert_not_called()
+
+    def test_descent_cannot_be_requested_during_lift(self):
+        plant=self.plant();start=plant.ik.data.site_xpos[plant.ik.site].copy()
+        with self.assertRaisesRegex(RuntimeError,'descent requires'):
+            plant._cartesian_lift_poses(start+[0,0,-.005],allow_descent=True)
+        plant.adapter.ctrl_dual_arm.assert_not_called()
+
 if __name__=='__main__':unittest.main()

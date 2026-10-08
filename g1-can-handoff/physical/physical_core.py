@@ -3,6 +3,7 @@ This module has no DDS imports or publishers. Physics is used for FK/collision
 checks only; simulation step(), contacts(), and can_position() are never used.
 """
 import json
+import os
 import time
 import threading
 import numpy as np
@@ -102,6 +103,11 @@ def calibrated_scene(config, x=.35, y=.18, decorate=None):
     """Compile actual base/table geometry, including collision bounding boxes."""
     import mujoco
     from g1_can_handoff.sim import scene
+    try:
+        clearance=float(os.environ.get('HANDOFF_TABLE_CLEARANCE_M','0.01'))
+        if not np.isfinite(clearance) or not .005<=clearance<=.03:raise ValueError()
+    except ValueError as exc:
+        raise ValueError('Table clearance must be finite and between 0.005 and 0.03 m') from exc
     root_pose = rigid(config['pelvis_to_world'])
     quat = np.empty(4)
     mujoco.mju_mat2Quat(quat, root_pose[:3, :3].ravel())
@@ -112,9 +118,13 @@ def calibrated_scene(config, x=.35, y=.18, decorate=None):
         table = root.find(".//geom[@name='table']")
         table.set('pos', ' '.join(map(str, [*config['table_center_xy_m'], config['table_height_m']-.025])))
         table.set('size', ' '.join(map(str, [*config['table_half_size_xy_m'], .025])))
+        # Generate proximity contacts without moving the measured table plane.
+        table.set('margin',str(clearance));table.set('gap',str(clearance))
         if decorate is not None:
             decorate(root)
-    return scene(height=config['table_height_m'], x=x, y=y, decorate=configure)
+    plant=scene(height=config['table_height_m'], x=x, y=y, decorate=configure)
+    plant.table_clearance_m=clearance
+    return plant
 
 
 def sim_hand_to_bridge(q):
@@ -245,9 +255,16 @@ class PhysicalPlant:
     def _move_poses(self, position, duration=2., rotation=None):
         if self.ik.contact_phase == 'lift':
             return self._cartesian_lift_poses(position,duration,rotation)
+        if self.ik.contact_phase in ('align','reach'):
+            return self._cartesian_transfer_poses(position,duration,rotation)
         return self._joint_poses(self.ik.solve(position,rotation),duration)
 
-    def _cartesian_lift_poses(self, position, duration=2., rotation=None):
+    def _cartesian_transfer_poses(self,position,duration=2.,rotation=None):
+        if self.ik.contact_phase not in ('align','reach'):
+            raise RuntimeError('Cartesian transfer requires align or reach phase')
+        return self._cartesian_lift_poses(position,duration,rotation,allow_descent=True)
+
+    def _cartesian_lift_poses(self, position, duration=2., rotation=None, *, allow_descent=False):
         """Lift along the Cartesian line, checking every connecting joint path."""
         import mujoco
         original=self.ik.data.qpos.copy()
@@ -256,7 +273,9 @@ class PhysicalPlant:
         if target.shape!=(3,) or not np.isfinite(target).all():
             raise ValueError('Expected finite Cartesian lift target')
         distance=float(np.linalg.norm(target-start))
-        if distance>.20 or target[2]<start[2]-.005:
+        if allow_descent and self.ik.contact_phase not in ('align','reach'):
+            raise RuntimeError('Cartesian descent requires align or reach phase')
+        if distance>.20 or (not allow_descent and target[2]<start[2]-.005):
             raise RuntimeError('Cartesian lift must ascend by at most 0.20 m')
         count=max(1,int(np.ceil(distance/.01)))
         poses=[]
@@ -289,7 +308,8 @@ class PhysicalPlant:
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
                 completed+=1
-            self.event('cartesian_lift_planned',waypoints=completed,ik_attempts=attempts,
+            self.event('cartesian_transfer_planned' if allow_descent else 'cartesian_lift_planned',
+                       phase_name=self.ik.contact_phase,waypoints=completed,ik_attempts=attempts,
                        start=start.tolist(),target=target.tolist())
             return goal,poses
         finally:
@@ -355,6 +375,7 @@ class PhysicalPlant:
         self.staging_start=original[self.ik.qadr[self.ik.arm]].copy()
         self.staging_waypoints=[]
         self.path_preflight_ok=False
+        staging_goal=None
         def fingers(target):
             start=self.ik.data.qpos[self.ik.qadr[self.ik.fingers]].copy()
             for alpha in np.linspace(0,1,51):
@@ -370,30 +391,38 @@ class PhysicalPlant:
             for index,position in enumerate(points[:4]):
                 self.set_contact_phase(('approach','align','reach','lift')[index])
                 if index==3:fingers(CLOSED)
-                goal=None if index==3 else self.ik.solve(position,rotation)
+                goal=None if index in (1,2,3) else self.ik.solve(position,rotation)
                 try:
                     if index==3:goal,_=self._cartesian_lift_poses(position,rotation=rotation)
+                    elif index in (1,2):goal,_=self._cartesian_transfer_poses(position,rotation=rotation)
                     else:self._joint_poses(goal)
                 except RuntimeError as exc:
                     if (index!=0 or not self.config.get('staging_enabled',True) or
                             'trajectory intersects' not in str(exc)):
                         raise
-                    from staging import joint_path
-                    path,metadata=joint_path(self.ik,goal,np.asarray(self.config['arm_limits_rad'])[:7],
-                                             check=self.check)
-                    # Search candidates are validated with exactly the same
-                    # smoothstep interpolation used by the command executor.
-                    for waypoint in path:
-                        self._joint_poses(waypoint)
-                        self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=waypoint
-                        mujoco.mj_forward(self.ik.model,self.ik.data)
-                    self.staging_waypoints=path
-                    self.event('staging_planned',start_q=self.staging_start.tolist(),
-                               joint_waypoints=path,**metadata)
+                    # Check reach, close and lift before spending the staging
+                    # search budget on a grasp that may already be infeasible.
+                    staging_goal=goal.copy()
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
+            if staging_goal is not None:
+                self.ik.data.qpos[:]=original
+                self.ik.data.qpos[self.ik.qadr[self.ik.fingers]]=OPEN
+                self.set_contact_phase('staging')
+                mujoco.mj_forward(self.ik.model,self.ik.data)
+                from staging import joint_path
+                path,metadata=joint_path(self.ik,staging_goal,np.asarray(self.config['arm_limits_rad'])[:7],
+                                         check=self.check)
+                for waypoint in path:
+                    self._joint_poses(waypoint)
+                    self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=waypoint
+                    mujoco.mj_forward(self.ik.model,self.ik.data)
+                self.staging_waypoints=path
+                self.event('staging_planned',start_q=self.staging_start.tolist(),
+                           joint_waypoints=path,**metadata)
             self.path_preflight_ok=True
-            self.event('path_preflight_passed',waypoints_checked=4,hand_paths_checked=2,motion_commands_sent=0)
+            self.event('path_preflight_passed',waypoints_checked=4,hand_paths_checked=2,motion_commands_sent=0,
+                       table_clearance_m=getattr(self.ik,'table_clearance_m',0.))
         finally:
             self.set_contact_phase('pregrasp')
             self.ik.data.qpos[:]=original

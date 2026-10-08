@@ -21,6 +21,8 @@ def plan(plant, observation, validate=None, include_offer=True):
     # reachable workspace on lower tables without changing the can location.
     deadline=time.monotonic()+30.
     orientations=[(0,0),(0,.5),(0,1.),(-.4,0),(-.4,.5),(.4,0),(.4,.5),(.7,0),(.7,.5),(.7,1.)]
+    # Prefer the cylinder centre; raising the grasp increases slip leverage.
+    # Higher candidates are still checked against the positive table margin.
     heights=(0.,) if include_offer else (0.,.01,.02)
     for pitch,yaw,height in [(p,y,h) for p,y in orientations for h in heights]:
         if time.monotonic()>deadline:raise ValueError('Grasp orientation search time limit reached')

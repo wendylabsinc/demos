@@ -1,0 +1,57 @@
+{
+  "profile": "regression",
+  "tests_run": 6,
+  "successful": true,
+  "seconds": 7.684096583048813,
+  "evidence_verified": 136,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_clearance_planning",
+      "tests_run": 6,
+      "seconds": 7.140739292022772,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_align_and_reach_use_continuous_cartesian_paths",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_all_saved_frames_events_and_sources_are_hash_verified",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_positive_table_gap_under_clearance_is_rejected_in_every_phase",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_recorded_table_collision_still_rejected_with_clearance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_saved_scene_replans_all_four_phases_with_positive_clearance",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_table_gap_above_clearance_passes",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 7.141s\n\nOK\n"
+    }
+  ]
+}

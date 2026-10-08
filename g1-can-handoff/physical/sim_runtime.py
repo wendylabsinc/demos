@@ -258,6 +258,14 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
             if output:
                 from PIL import Image
                 Image.fromarray(frame['color_bgr'][...,::-1]).save(Path(output).with_suffix('.png'))
+                np.savez_compressed(Path(output).with_suffix('.frame.npz'),
+                    color_bgr=frame['color_bgr'],depth_m=frame['depth_m'],rays=frame['rays'],
+                    metadata_json=json.dumps(dict(meta=frame['meta'],timestamp=frame['timestamp'],
+                        config=config,phase=phase,require_table=require_table,
+                        expected_center_xy=None if expected_center_xy is None else np.asarray(expected_center_xy).tolist(),
+                        synthetic_fixture=True)),
+                    truth_can_position=world.can_position(),
+                    truth_can_quaternion=world.data.xquat[world.can_id].copy())
             raise
         event('camera',phase_name=phase,vision=vision)
         return observation,vision

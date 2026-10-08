@@ -1,0 +1,187 @@
+{
+  "passed": true,
+  "waypoints": [
+    [
+      0.3264505913300319,
+      0.2692390765496568,
+      1.003
+    ],
+    [
+      0.3264505913300319,
+      0.2692390765496568,
+      0.843
+    ],
+    [
+      0.3264505913300319,
+      0.16923907654965678,
+      0.843
+    ],
+    [
+      0.3264505913300319,
+      0.16923907654965678,
+      0.993
+    ],
+    [
+      0.3464505913300319,
+      0.16923907654965678,
+      0.993
+    ]
+  ],
+  "rotation": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "elapsed_s": 2.263251540949568,
+  "rejected": [],
+  "events": [
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3264505913300319,
+        0.16923907654965678,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008949543064536195,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.19892082713600057,
+        0.3570860347776178,
+        0.003935410282253735,
+        0.651138555888638,
+        -0.13219167503918253,
+        0.07496352020350454,
+        -0.04227149287092344
+      ],
+      "path_fraction": 0.2727272727272727
+    },
+    {
+      "phase": "staging_planned",
+      "start_q": [
+        0.24419057369232178,
+        0.2740912139415741,
+        -0.08436894416809082,
+        0.8259048461914062,
+        0.002145176287740469,
+        0.00977912824600935,
+        -0.004693981260061264
+      ],
+      "joint_waypoints": [
+        [
+          0.2954558221092645,
+          0.5985064667237259,
+          1.1051529207751576,
+          0.22249932440893766,
+          -0.6077583731404058,
+          0.6602210536908156,
+          -0.13306989431970498
+        ],
+        [
+          -0.0037684084741947638,
+          0.7286842449406448,
+          0.39930634708050433,
+          -0.13135413484968264,
+          -0.7336669599926486,
+          0.36681791711607564,
+          -0.21051977530968086
+        ]
+      ],
+      "collision_checks": 3318,
+      "nodes": 28,
+      "seed": 7,
+      "edge_resolution_rad": 0.004,
+      "rejected_candidates": 0
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32645058954829903,
+        0.26923907633361416,
+        1.002999996685966
+      ],
+      "target": [
+        0.3264505913300319,
+        0.2692390765496568,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32623043915896005,
+        0.2690185280014576,
+        0.8433665162067266
+      ],
+      "target": [
+        0.3264505913300319,
+        0.16923907654965678,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_lift_planned",
+      "phase_name": "lift",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32645059147408273,
+        0.16923907702357086,
+        0.8429999992522559
+      ],
+      "target": [
+        0.3264505913300319,
+        0.16923907654965678,
+        0.993
+      ]
+    },
+    {
+      "phase": "path_preflight_passed",
+      "waypoints_checked": 4,
+      "hand_paths_checked": 2,
+      "motion_commands_sent": 0
+    }
+  ],
+  "clearance": {
+    "samples": 2484,
+    "min_table_distance_m": 0.03250324494676199,
+    "required_clearance_m": 0.01
+  },
+  "trial": 1,
+  "actuation": false,
+  "physical_lift_verified": false,
+  "provenance": "Recorded accepted calibration and terminal feedback; base/arm replaced by recorded calibration/hold/staging values, receipt times rebased offline"
+}

@@ -1,0 +1,129 @@
+{
+  "method": "Read-only CDR feedback replay; recorder receipt times and approximate 20ms sampling, not exact controller loop sample selection",
+  "criterion_order": [
+    "imu_span",
+    "base_joint_span",
+    "arm_span",
+    "speed_all_joints"
+  ],
+  "trials": [
+    {
+      "trial": 2,
+      "segment": "samples-000086.jsonl.gz",
+      "segment_sha256": "0c2416217683eb965b376c731adcf773afb977aad31b4c5a7995426c6e45b7a5",
+      "start_unix_ns": 1791481826783523600,
+      "end_unix_ns": 1791481831809654000,
+      "all_recorded": {
+        "samples": 5291,
+        "windows": 4764,
+        "passing_windows": 0,
+        "best_window": {
+          "offset_s": 3.081209538,
+          "imu_span_rad": 0.0004330873489379883,
+          "base_joint_span_rad": 0.0000937432050704956,
+          "arm_span_rad": 0.0001677870750427246,
+          "max_speed_rad_s": 0.054853200912475586,
+          "speed_joint_index": 0,
+          "ratios": [
+            0.21654367446899414,
+            0.01874864101409912,
+            0.011185805002848308,
+            1.828440030415853
+          ]
+        },
+        "min_window_speed_rad_s": 0.054853200912475586,
+        "criterion_failure_fraction": [
+          0,
+          0,
+          0.0688497061293031,
+          1
+        ]
+      },
+      "approximate_50hz": {
+        "samples": 238,
+        "windows": 214,
+        "passing_windows": 0,
+        "best_window": {
+          "offset_s": 1.770105633,
+          "imu_span_rad": 0.00021305633708834648,
+          "base_joint_span_rad": 0.00006815791130065918,
+          "arm_span_rad": 0.00010786950588226318,
+          "max_speed_rad_s": 0.03708824887871742,
+          "speed_joint_index": 3,
+          "ratios": [
+            0.10652816854417324,
+            0.013631582260131836,
+            0.007191300392150879,
+            1.2362749626239142
+          ]
+        },
+        "min_window_speed_rad_s": 0.03708824887871742,
+        "criterion_failure_fraction": [
+          0,
+          0,
+          0.07009345794392523,
+          1
+        ]
+      }
+    },
+    {
+      "trial": 3,
+      "segment": "samples-000088.jsonl.gz",
+      "segment_sha256": "79bb4623af49cffaea852b8e359b32713ef473740afa89c9417ed3788d8b6045",
+      "start_unix_ns": 1791481957009910300,
+      "end_unix_ns": 1791481962035613200,
+      "all_recorded": {
+        "samples": 5290,
+        "windows": 4763,
+        "passing_windows": 0,
+        "best_window": {
+          "offset_s": 4.481610216,
+          "imu_span_rad": 0.00023794174194335938,
+          "base_joint_span_rad": 0.00009375810623168945,
+          "arm_span_rad": 0.00015579164028167725,
+          "max_speed_rad_s": 0.05999569222331047,
+          "speed_joint_index": 0,
+          "ratios": [
+            0.11897087097167969,
+            0.01875162124633789,
+            0.010386109352111816,
+            1.9998564074436824
+          ]
+        },
+        "min_window_speed_rad_s": 0.05999569222331047,
+        "criterion_failure_fraction": [
+          0,
+          0,
+          0.051438169221079154,
+          1
+        ]
+      },
+      "approximate_50hz": {
+        "samples": 242,
+        "windows": 217,
+        "passing_windows": 0,
+        "best_window": {
+          "offset_s": 1.286111999,
+          "imu_span_rad": 0.00035834312438964844,
+          "base_joint_span_rad": 0.00010713934898376465,
+          "arm_span_rad": 0.0009467601776123047,
+          "max_speed_rad_s": 0.039425741881132126,
+          "speed_joint_index": 0,
+          "ratios": [
+            0.17917156219482422,
+            0.02142786979675293,
+            0.06311734517415366,
+            1.3141913960377376
+          ]
+        },
+        "min_window_speed_rad_s": 0.039425741881132126,
+        "criterion_failure_fraction": [
+          0,
+          0,
+          0.05069124423963134,
+          1
+        ]
+      }
+    }
+  ]
+}
