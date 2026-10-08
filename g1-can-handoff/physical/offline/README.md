@@ -18,7 +18,7 @@ python -m pip install -r offline/requirements.txt
 python offline/run.py
 ```
 
-The default profile runs **213 regression tests**, verifies captured evidence
+The default profile runs **214 regression tests**, verifies captured evidence
 checksums, and writes `offline/reports/latest.json`. Each module runs in a fresh
 process with temporary runtime storage, fixed random/hash seeds, a 400 ms
 exposure limit, and bounded execution. Reports retain individual test IDs,
@@ -63,7 +63,7 @@ python offline/inspect_trace.py --attempt 20261008T005915Z --events
 four ownership acceptance cases. `open` runs those four cases alone with fake
 actuator endpoints: final planning follows measured ownership settling; failed
 perception, cancellation, or unstable control cannot execute the preview plan.
-`simulation` runs 13 MuJoCo control/dynamics tests. `all` runs all **226 tests**
+`simulation` runs 13 MuJoCo control/dynamics tests. `all` runs all **227 tests**
 without duplicating ownership cases. All profiles now pass offline. No tests are
 skipped or marked expected-failure to conceal the original failures.
 
