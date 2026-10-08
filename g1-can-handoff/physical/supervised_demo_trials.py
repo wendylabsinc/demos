@@ -85,12 +85,13 @@ def beep():
     return results
 
 
-def run(directory, index, reset_confirmed, timeout_s=180):
+def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None):
     if DEPLOYING.is_file():
         raise RuntimeError('Deployment in progress')
     if (directory / f'trial-{index:02d}.json').exists():
         raise RuntimeError('Trial already reserved; inspect it instead of issuing another start')
-    expected = json.loads((Path(__file__).parent / 'offline/validation/start-button-20261008/controller-readiness.json').read_text())['source_sha256']
+    verified_release = verified_release or (Path(__file__).parent / 'offline/validation/start-button-20261008/controller-readiness.json')
+    expected = json.loads(Path(verified_release).read_text())['source_sha256']
     client = None; path = None; data = {}; before = None
     try:
         client = Wendy()
@@ -159,7 +160,8 @@ if __name__ == '__main__':
     parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--index', type=int, choices=range(1,11), required=True)
     parser.add_argument('--reset-confirmed', action='store_true')
+    parser.add_argument('--verified-release', type=Path, help='Read-only startup verification JSON for the release under test')
     args = parser.parse_args()
-    result = run(args.directory, args.index, args.reset_confirmed)
+    result = run(args.directory, args.index, args.reset_confirmed, verified_release=args.verified_release)
     print(json.dumps(dict(index=args.index, recorded=str(args.directory),
                          artifact_verified=result.get('artifact',{}).get('verified',False))), flush=True)

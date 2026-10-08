@@ -1,0 +1,372 @@
+{
+  "release": "0.3.9-clearance-path",
+  "source_commit": "e7b6a93",
+  "trial": 1,
+  "terminal_phase": "BLOCKED",
+  "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+  "motion_commands_sent": 0,
+  "adapter_initialized": false,
+  "events": 37,
+  "rgbd_frames": 2,
+  "archive_sha256": "ee843e2843dc5d02209b84e90d6a9673091b8be0437e5389fd942af34eb7fb9f",
+  "archive_verified": true,
+  "collision_rejections": [
+    {
+      "unix_ns": 1791484457014653918,
+      "monotonic_ns": 591583373886,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009324781113515828,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.20664154221484754,
+        0.331193729104648,
+        -0.011815435431158358,
+        0.5823737555476469,
+        -0.12530819268049187,
+        0.08618542933231939,
+        -0.007965462211330146
+      ],
+      "path_fraction": 0.287292817679558
+    },
+    {
+      "unix_ns": 1791484460347885532,
+      "monotonic_ns": 594916604636,
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.001123626097835116
+      },
+      "joint_q": [
+        -0.016949190748860872,
+        -0.3399818893631481,
+        0.4314973870912728,
+        0.08243348110659193,
+        0.2919836965751641,
+        -0.22537812028512258,
+        -0.3890145649298279
+      ],
+      "path_fraction": 0.5625
+    },
+    {
+      "unix_ns": 1791484461448489585,
+      "monotonic_ns": 596017209201,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009352425514390967,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.20373728558802423,
+        0.3310461536563617,
+        -0.007017664122795378,
+        0.5803429290320654,
+        -0.12602790268113306,
+        0.09786613721633083,
+        -0.006356719842873846
+      ],
+      "path_fraction": 0.28342245989304815
+    },
+    {
+      "unix_ns": 1791484464226579623,
+      "monotonic_ns": 598795299751,
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010119512332431564
+      },
+      "joint_q": [
+        -0.005690989377798729,
+        -0.3349083277751154,
+        0.40746324203605105,
+        0.04401330583834795,
+        0.2841173761831629,
+        -0.1893606995813579,
+        -0.3816698966677484
+      ],
+      "path_fraction": 0.043478260869565216
+    },
+    {
+      "unix_ns": 1791484465488566681,
+      "monotonic_ns": 600057285977,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008583118248419837,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.20041480474244938,
+        0.3314259935143176,
+        -0.0016587844261311546,
+        0.577581769331023,
+        -0.12794143988013715,
+        0.10955491025358098,
+        -0.00457845356592874
+      ],
+      "path_fraction": 0.2805194805194805
+    },
+    {
+      "unix_ns": 1791484468003695733,
+      "monotonic_ns": 602572415509,
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010722046792139594
+      },
+      "joint_q": [
+        0.0005482268315424518,
+        -0.33293426896052514,
+        0.3946148649018501,
+        0.017092052551732344,
+        0.28035515806058053,
+        -0.16518157865120026,
+        -0.37859006469510703
+      ],
+      "path_fraction": 0.34782608695652173
+    },
+    {
+      "unix_ns": 1791484469269518239,
+      "monotonic_ns": 603838238367,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009139159660764253,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.2485297077455331,
+        0.2805285047817322,
+        -0.06168547911106499,
+        0.4938621701548718,
+        -0.07558803776506273,
+        0.11627956663098438,
+        0.133145774489383
+      ],
+      "path_fraction": 0.2823529411764706
+    },
+    {
+      "unix_ns": 1791484470952075411,
+      "monotonic_ns": 605520795027,
+      "phase": "trajectory_collision",
+      "phase_name": "reach",
+      "collision": {
+        "phase": "reach",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010684857864666762
+      },
+      "joint_q": [
+        0.10310890124940365,
+        -0.2883799938466337,
+        0.3083930987306888,
+        0.36537207118105974,
+        0.25064696086379473,
+        -0.5595889701000194,
+        0.2519316474732193
+      ],
+      "path_fraction": 0.2
+    },
+    {
+      "unix_ns": 1791484472162658759,
+      "monotonic_ns": 606731378343,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009037966558154444,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.24200308506408075,
+        0.2829717519639826,
+        -0.05643491134217634,
+        0.4969933367914051,
+        -0.08236630818107557,
+        0.12769503644273345,
+        0.13368756724563505
+      ],
+      "path_fraction": 0.2761904761904762
+    },
+    {
+      "unix_ns": 1791484473551108551,
+      "monotonic_ns": 608119828359,
+      "phase": "trajectory_collision",
+      "phase_name": "reach",
+      "collision": {
+        "phase": "reach",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.001126992130306332
+      },
+      "joint_q": [
+        0.15296397435170672,
+        -0.2793509632221606,
+        0.27356204254327826,
+        0.24223903516324496,
+        0.21783784304879084,
+        -0.4761098231755561,
+        0.231054553624885
+      ],
+      "path_fraction": 0.43333333333333335
+    },
+    {
+      "unix_ns": 1791484474601189920,
+      "monotonic_ns": 609169909312,
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.00948655636024845,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.23504914022087794,
+        0.2867940560733956,
+        -0.05126425235653247,
+        0.5037955411271602,
+        -0.09144223479989298,
+        0.13653327443857172,
+        0.13567236173309657
+      ],
+      "path_fraction": 0.2690166975881262
+    },
+    {
+      "unix_ns": 1791484476151619726,
+      "monotonic_ns": 610720340590,
+      "phase": "trajectory_collision",
+      "phase_name": "reach",
+      "collision": {
+        "phase": "reach",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010456853288127077
+      },
+      "joint_q": [
+        0.1929050900129066,
+        -0.2667585794021877,
+        0.2344982323057721,
+        0.13407150268319426,
+        0.19296144166472992,
+        -0.39696915344370454,
+        0.22825947910866898
+      ],
+      "path_fraction": 0.9354838709677419
+    }
+  ],
+  "beep_results": [
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    }
+  ],
+  "physical_pickup_verified": false
+}
