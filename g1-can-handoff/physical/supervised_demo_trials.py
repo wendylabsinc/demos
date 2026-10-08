@@ -38,22 +38,26 @@ print(json.dumps(result))
     return json.loads(result_payload(result)['stdout'])
 
 
-def preflight(before):
+def preflight(before, camera_max_age_ms=500):
     state, recorder = before['status'], before['recorder']
     if state['phase'] not in ('PASSIVE', 'BLOCKED') or state['adapter_initialized'] or state['demo_running']:
         raise RuntimeError('Reset/release required: controller must be idle without ownership')
     if not state['telemetry_healthy'] or not state['calibration_present']:
         raise RuntimeError('Telemetry or accepted calibration unavailable')
-    if state['camera_max_age_ms'] != 400 or state['yolo_confidence_strictly_above'] != .1:
+    from yolo.frame_limits import frame_age_limit_s
+    limit_ms=frame_age_limit_s(camera_max_age_ms)*1000
+    if state['camera_max_age_ms'] != limit_ms or state['yolo_confidence_strictly_above'] != .1:
         raise RuntimeError('Unexpected configured frame/confidence limits')
     if not (recorder['recording'] and not recorder['error'] and
             not sum(recorder['dropped'].values()) and not recorder['missing_or_stale_required']):
         raise RuntimeError('Recorder is not healthy')
     camera, yolo = before['camera'], before['yolo']
-    if not camera['healthy'] or camera['serial'] != '338622073335' or not 0 <= before['camera_exposure_age_ms'] < 400:
+    if not camera['healthy'] or camera['serial'] != '338622073335' or not 0 <= before['camera_exposure_age_ms'] < limit_ms:
         raise RuntimeError('Camera exposure is stale or camera identity is wrong')
     if not yolo['healthy'] or yolo['model_sha256'] != 'fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9':
         raise RuntimeError('YOLO is unavailable or model identity differs')
+    if yolo.get('camera_max_age_ms')!=limit_ms:
+        raise RuntimeError('YOLO and controller exposure budgets differ')
 
 
 def reserve(directory, index, reset_confirmed):
@@ -91,11 +95,12 @@ def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None)
     if (directory / f'trial-{index:02d}.json').exists():
         raise RuntimeError('Trial already reserved; inspect it instead of issuing another start')
     verified_release = verified_release or (Path(__file__).parent / 'offline/validation/start-button-20261008/controller-readiness.json')
-    expected = json.loads(Path(verified_release).read_text())['source_sha256']
+    release=json.loads(Path(verified_release).read_text())
+    expected=release['source_sha256']
     client = None; path = None; data = {}; before = None
     try:
         client = Wendy()
-        before = snapshot(client, expected); preflight(before)
+        before = snapshot(client, expected); preflight(before,release['controller']['camera_max_age_ms'])
         path = reserve(directory, index, reset_confirmed)
         if index > 1:
             previous_path = directory / f'trial-{index-1:02d}.json'

@@ -1,7 +1,9 @@
-"""Replay the 341.2 ms stop and enforce the requested 400 ms hard ceiling."""
+"""Replay recorded exposure stops and enforce the bounded configured budget."""
 import importlib.util
 from pathlib import Path
 import sys
+import threading
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 import numpy as np
@@ -28,11 +30,32 @@ class FrameAgeLimitTests(unittest.TestCase):
                     with self.assertRaises(RuntimeError):fresh(frame)
                     with self.assertRaises(ValueError):service.decode_frame(source,frame['color_bgr'].tobytes())
     def test_bad_or_unbounded_configuration_fails_closed(self):
-        for value in ['0','49','401','inf','nan','bad']:
+        for value in ['0','49','501','inf','nan','bad']:
             with self.subTest(value=value),patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':value}):
                 with self.assertRaises(ValueError):frame_age_limit_s()
+    def test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames(self):
+        service=self.service();frame=self.frame();source=identity(frame)
+        for now,allowed in [(10.4017,True),(10.4999,True),(10.5001,False),(9.9999,False)]:
+            with self.subTest(now=now),patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'500'}),patch('time.monotonic',return_value=now):
+                if allowed:
+                    fresh(frame);service.decode_frame(source,frame['color_bgr'].tobytes())
+                else:
+                    with self.assertRaises(RuntimeError):fresh(frame)
+                    with self.assertRaises(ValueError):service.decode_frame(source,frame['color_bgr'].tobytes())
     def test_stricter_override_rejects_saved_fault(self):
         with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'300'}),patch('time.monotonic',return_value=10.3412):
             with self.assertRaisesRegex(RuntimeError,'stale'):fresh(self.frame())
+    def test_motion_tracking_guard_uses_the_same_bounded_budget(self):
+        from runtime import Runtime
+        runtime=Runtime.__new__(Runtime);runtime.lock=threading.Lock()
+        runtime.tracking_observation=SimpleNamespace(timestamp=10.);runtime.tracking_error=None
+        for limit,now,allowed in [('400',10.4017,False),('500',10.4017,True),('500',10.4999,True),('500',10.5001,False),('500',9.9999,False)]:
+            with self.subTest(limit=limit,now=now),patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':limit}),patch('time.monotonic',return_value=now):
+                if allowed:runtime.tracking_guard()
+                else:
+                    with self.assertRaisesRegex(RuntimeError,'tracking exposure stale'):runtime.tracking_guard()
+        runtime.tracking_error='uncertain appearance'
+        with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'500'}),patch('time.monotonic',return_value=10.01):
+            with self.assertRaisesRegex(RuntimeError,'tracking uncertain'):runtime.tracking_guard()
 
 if __name__=='__main__':unittest.main()

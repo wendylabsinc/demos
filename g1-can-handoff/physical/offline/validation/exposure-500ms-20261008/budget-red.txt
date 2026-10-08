@@ -1,0 +1,46 @@
+======================================================================
+ERROR: test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames (test_frame_age_limit.FrameAgeLimitTests.test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames) (now=10.4017)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_frame_age_limit.py", line 39, in test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames
+    fresh(frame);service.decode_frame(source,frame['color_bgr'].tobytes())
+    ^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo_client.py", line 27, in fresh
+    if not 0 <= age <= frame_age_limit_s():
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/frame_limits.py", line 8, in frame_age_limit_s
+    raise ValueError('HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms')
+ValueError: HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms
+
+======================================================================
+ERROR: test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames (test_frame_age_limit.FrameAgeLimitTests.test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames) (now=10.4999)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_frame_age_limit.py", line 39, in test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames
+    fresh(frame);service.decode_frame(source,frame['color_bgr'].tobytes())
+    ^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo_client.py", line 27, in fresh
+    if not 0 <= age <= frame_age_limit_s():
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/frame_limits.py", line 8, in frame_age_limit_s
+    raise ValueError('HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms')
+ValueError: HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms
+
+======================================================================
+ERROR: test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames (test_frame_age_limit.FrameAgeLimitTests.test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames) (now=10.5001)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_frame_age_limit.py", line 41, in test_500ms_budget_accepts_recorded_stop_but_rejects_older_or_future_frames
+    with self.assertRaises(RuntimeError):fresh(frame)
+                                         ^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo_client.py", line 27, in fresh
+    if not 0 <= age <= frame_age_limit_s():
+                       ^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/frame_limits.py", line 8, in frame_age_limit_s
+    raise ValueError('HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms')
+ValueError: HANDOFF_CAMERA_MAX_AGE_MS must be finite and within 50..400 ms
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.061s
+
+FAILED (errors=3)

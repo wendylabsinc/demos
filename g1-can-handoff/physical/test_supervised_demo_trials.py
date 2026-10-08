@@ -8,6 +8,20 @@ from supervised_demo_trials import preflight, reserve, run
 
 
 class SupervisedTrialTests(unittest.TestCase):
+    def test_budget_must_match_verified_controller_and_yolo_release(self):
+        before=dict(status=dict(phase='PASSIVE',adapter_initialized=False,demo_running=False,
+            telemetry_healthy=True,calibration_present=True,camera_max_age_ms=500,yolo_confidence_strictly_above=.1),
+            recorder=dict(recording=True,error=None,dropped={},missing_or_stale_required=[]),
+            camera=dict(healthy=True,serial='338622073335'),camera_exposure_age_ms=490,
+            yolo=dict(healthy=True,camera_max_age_ms=500,
+                model_sha256='fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9'))
+        preflight(before,500)
+        before['yolo']['camera_max_age_ms']=400
+        with self.assertRaisesRegex(RuntimeError,'budgets differ'):preflight(before,500)
+        before['yolo']['camera_max_age_ms']=500;before['camera_exposure_age_ms']=500.1
+        with self.assertRaisesRegex(RuntimeError,'Camera exposure is stale'):preflight(before,500)
+        with self.assertRaisesRegex(RuntimeError,'Unexpected configured'):preflight(before,400)
+
     def test_no_automatic_second_start_without_operator_reset(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)

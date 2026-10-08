@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.11-warm-perception",
+  "version": "0.3.12-exposure-500ms",
   "entitlements": [
     {
       "type": "network",
@@ -21,7 +21,7 @@
   "env": {
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
     "HANDOFF_YOLO_MIN_CONFIDENCE": "0.10",
-    "HANDOFF_CAMERA_MAX_AGE_MS": "400",
+    "HANDOFF_CAMERA_MAX_AGE_MS": "500",
     "HANDOFF_CONTROL_SETTLE_MAX_SPEED_RAD_S": "1",
     "HANDOFF_TABLE_CLEARANCE_M": "0.01",
     "HANDOFF_GEOMETRY_WORKERS": "1"

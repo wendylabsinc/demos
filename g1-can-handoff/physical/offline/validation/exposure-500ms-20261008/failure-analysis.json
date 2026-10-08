@@ -1,0 +1,36 @@
+{
+  "failure": {
+    "unix_ns": 1791486678345985800,
+    "monotonic_ns": 2812914704769,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+    "source": "execution"
+  },
+  "accepted_frame_id": 41858,
+  "age_when_processed_ms": 288.26826964314023,
+  "last_processed_to_failure_ms": 111.354531,
+  "rgb_age_at_failure_ms": 401.6360930049814,
+  "depth_age_at_failure_ms": 401.75720964316497,
+  "rgb_depth_skew_ms": 0.12111663818359375,
+  "next_result": {
+    "monotonic_ns": 2812952534416,
+    "phase": "perception_result",
+    "phase_name": "motion-tracking",
+    "frame_id": 41860,
+    "source": {
+      "frame_id": 41860,
+      "camera_serial": "338622073335",
+      "timestamp": 2812.6463708877563,
+      "shape": [
+        480,
+        640,
+        3
+      ],
+      "image_sha256": "8075128fd7ae77fb0018cda117db1770a3689134ba0878af87a8afc18b6d5bfb"
+    },
+    "inference_ms": 24.096,
+    "error": null,
+    "processing_ms": 143.42845999999554,
+    "exposure_age_ms": 304.1328982435516
+  }
+}

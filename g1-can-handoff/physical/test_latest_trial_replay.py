@@ -16,6 +16,35 @@ ROOT=Path(__file__).parent/'offline/evidence/20261008T005915Z'
 
 
 class LatestTrialTests(unittest.TestCase):
+    def test_latest_rgb_depth_gap_fits_500ms_without_disabling_uncertainty_or_future_guard(self):
+        root=Path(__file__).parent/'offline/evidence/exposure-failure-20261008-preserved/trial-01'
+        import hashlib
+        manifest=json.loads((root/'manifest.json').read_text())
+        for name,metadata in manifest['files'].items():
+            self.assertEqual(hashlib.sha256((root/name).read_bytes()).hexdigest(),metadata['sha256'])
+        rows=[json.loads(line) for line in gzip.decompress((root/'events.jsonl.gz').read_bytes()).splitlines()]
+        failure=next(r for r in rows if r['phase']=='primary_failure')
+        results=[r for r in rows if r['phase']=='perception_result' and r.get('geometry')]
+        before=[r for r in results if r['monotonic_ns']<failure['monotonic_ns']][-1]
+        late=[r for r in results if r['monotonic_ns']>failure['monotonic_ns']][0]
+        self.assertEqual((before['frame_id'],late['frame_id']),(41858,41860))
+        meta=next(r['metadata'] for r in rows if r['phase']=='phase_camera_evidence' and r['metadata']['frame_id']==before['frame_id'])
+        self.assertLess(abs(meta['color_time']-meta['depth_time']),.001)
+        timestamp=meta['depth_time'];stop_at=failure['monotonic_ns']/1e9
+        self.assertGreater(stop_at-timestamp,.4);self.assertLess(stop_at-timestamp,.5)
+        self.assertLess(late['monotonic_ns']/1e9-timestamp,.5)
+        runtime=Runtime.__new__(Runtime);runtime.lock=threading.RLock();runtime.tracking_error=None
+        runtime.tracking_observation=SimpleNamespace(timestamp=timestamp)
+        with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'400'}),patch('runtime.time.monotonic',return_value=stop_at):
+            with self.assertRaisesRegex(RuntimeError,'tracking exposure stale'):runtime.tracking_guard()
+        with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'500'}):
+            with patch('runtime.time.monotonic',return_value=stop_at):runtime.tracking_guard()
+            with patch('runtime.time.monotonic',return_value=timestamp+.5001):
+                with self.assertRaisesRegex(RuntimeError,'tracking exposure stale'):runtime.tracking_guard()
+            runtime.tracking_error='uncertain appearance'
+            with patch('runtime.time.monotonic',return_value=stop_at):
+                with self.assertRaisesRegex(RuntimeError,'tracking uncertain'):runtime.tracking_guard()
+
     def test_recorded_recheck_arrives_after_timeout_and_cannot_resume_motor_writes(self):
         rows=[json.loads(line) for line in gzip.decompress((ROOT/'events.jsonl.gz').read_bytes()).splitlines()]
         failure=next(e for e in rows if e['phase']=='primary_failure')

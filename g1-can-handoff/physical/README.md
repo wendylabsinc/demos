@@ -126,24 +126,27 @@ The handoff runtime keeps the existing `g1-can-camera` owner and renewable
 camera lease. It sends **the exact decoded BGR image paired with its depth** to
 loopback `POST /detect` on port 8112. The response must match camera serial,
 frame ID, exposure time, dimensions, image checksum, model checksum and CUDA
-backend. The 400 ms exposure-age limit is enforced before and after inference
+backend. The configured exposure-age limit (500 ms on NX2) is enforced before and after inference
 and after geometric fitting. It never consumes a latest-box feed or silently
 falls back to red pixels when YOLO is unavailable.
 
 Timing and RGB-D payloads are fetched concurrently for the same frame ID.
-The physical runtime reserves a 180 ms acquisition budget, trying at most three
+The physical runtime reserves 75% of the configured exposure budget for acquisition, trying at most three
 complete acquisitions before rejecting the observation. Inference overlaps the
 ray transform; normalized NPZ generation and evidence writes overlap fitting.
 The archive worker must finish successfully before any observation returns,
-and the final 400 ms freshness check still applies after that join. There is
+and the final configured freshness check still applies after that join. There is
 one archive worker and no pending evidence backlog between observations.
 
-`HANDOFF_CAMERA_MAX_AGE_MS` defaults to 400 milliseconds and accepts only finite
-values from 50 through 400. The physical controller exposes a loopback-only
-`POST /perception-config` with `{"camera_max_age_ms":400}` for future tuning
+`HANDOFF_CAMERA_MAX_AGE_MS` has a library fallback of 400 milliseconds; the NX2
+controller and inference deployment descriptors both specify 500. It accepts
+only finite values from 50 through 500. The physical controller exposes a loopback-only
+`POST /perception-config` with `{"camera_max_age_ms":500}` for future tuning
 without rebuilding or restarting an owned arm. It requires no active operation,
 persists the accepted value in `/data/perception-config.json`, and never resumes
-motion. The inference service retains its independent 400 ms hard ceiling.
+motion. The inference service enforces its own configured limit; both services
+must match for supervised trials. To restore 400 ms, change both deployment
+descriptors and set the persisted controller configuration to 400 while idle.
 
 On the operator Mac, `python3 physical/operator_panel.py` opens a local control
 server at `http://127.0.0.1:8197/`. Its enabled Release button returns this demo's

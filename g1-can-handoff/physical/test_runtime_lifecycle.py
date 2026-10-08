@@ -127,16 +127,16 @@ class RuntimeLifecycleTests(unittest.TestCase):
     def test_camera_limit_tuning_preserves_hold_and_persists_without_resume(self):
         with tempfile.TemporaryDirectory() as directory,patch('runtime.DATA',Path(directory)),patch.dict('os.environ',{}):
             runtime=self.runtime();arm=runtime.arm;hand=runtime.hand
-            runtime.configure_perception(400)
-            self.assertEqual(json.loads((Path(directory)/'perception-config.json').read_text())['camera_max_age_ms'],400)
-            self.assertEqual(os.environ['HANDOFF_CAMERA_MAX_AGE_MS'],'400.0')
+            runtime.configure_perception(500)
+            self.assertEqual(json.loads((Path(directory)/'perception-config.json').read_text())['camera_max_age_ms'],500)
+            self.assertEqual(os.environ['HANDOFF_CAMERA_MAX_AGE_MS'],'500.0')
             self.assertEqual(runtime.phase,'FROZEN')
             arm.shutdown.assert_not_called();hand.relax.assert_not_called()
-            runtime.event.assert_called_once_with('perception_configured',camera_max_age_ms=400,automatic_resume=False)
+            runtime.event.assert_called_once_with('perception_configured',camera_max_age_ms=500,automatic_resume=False)
     def test_active_or_invalid_camera_limit_does_not_mutate_runtime(self):
         with tempfile.TemporaryDirectory() as directory,patch('runtime.DATA',Path(directory)):
             runtime=self.runtime()
-            for value in [None,True,401,float('nan')]:
+            for value in [None,True,501,float('nan')]:
                 with self.subTest(value=value),self.assertRaises(ValueError):runtime.configure_perception(value)
             runtime.active=True
             with self.assertRaisesRegex(RuntimeError,'active trial'):runtime.configure_perception(400)

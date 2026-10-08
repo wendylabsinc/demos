@@ -135,7 +135,7 @@ def main():
         stop.set();thread.join(4)
     after=status()
     report=dict(schema='wendy.g1.perception-timing.v1',passive=True,new_actuator_created=False,
-                camera_lease_acquired=False,deadline_ms=400,startup_ms=startup_ms,archive_path=archive,
+                camera_lease_acquired=False,deadline_ms=before['camera_max_age_ms'],startup_ms=startup_ms,archive_path=archive,
                 before={k:before[k] for k in ['phase','demo_running','adapter_initialized','motion_commands_sent']},
                 after={k:after[k] for k in ['phase','demo_running','adapter_initialized','motion_commands_sent']},
                 pose_poll_errors=poll_errors,samples=rows,
