@@ -1,0 +1,738 @@
+{
+  "passed": false,
+  "error": "No reachable grasp and offer path for this can position; preflight rejected: Interpolated physical trajectory intersects robot/table",
+  "elapsed_s": 13.30439091695007,
+  "rejected": [
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010412824328825852}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0011722061537897204}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010296753349710447}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'reach', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0012096512835799904}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.001142715848604557}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_1_link'], 'geoms': ['table', ''], 'distance_m': 0.009835053285228252, 'required_clearance_m': 0.01}",
+    "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010220109541536483}"
+  ],
+  "events": [
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008684234286962463,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.2091061524881028,
+        0.3320139431748465,
+        -0.032166028613071794,
+        0.5888872436636852,
+        -0.11909217535139405,
+        0.08225872243371984,
+        0.01345970070688723
+      ],
+      "path_fraction": 0.2755905511811024
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.3267157298560992,
+        0.19131879320160167,
+        0.9829999999984504
+      ],
+      "target": [
+        0.3267157298576071,
+        0.191318793201806,
+        0.823
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32671572723685327,
+        0.19131878961130974,
+        0.8230000043067015
+      ],
+      "target": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.823
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010412824328825852
+      },
+      "joint_q": [
+        -0.005791569801337479,
+        -0.31821721234304257,
+        0.3374196392031836,
+        0.21348439596594707,
+        0.2901174765047036,
+        -0.32700132840012314,
+        -0.26427512068499054
+      ],
+      "path_fraction": 0.9215686274509803
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010412824328825852}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008838285299398618,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.207465017328428,
+        0.3354944744913464,
+        -0.030030891374601527,
+        0.5893755242832271,
+        -0.12363048910541727,
+        0.08912706462691022,
+        0.018001913572103755
+      ],
+      "path_fraction": 0.2710997442455243
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32671572984829,
+        0.1913187932011845,
+        0.9929999999888877
+      ],
+      "target": [
+        0.3267157298576071,
+        0.191318793201806,
+        0.833
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32671564131312036,
+        0.19131873769831703,
+        0.8330001643245996
+      ],
+      "target": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.833
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0011722061537897204
+      },
+      "joint_q": [
+        0.008538863644243257,
+        -0.3131107560816955,
+        0.30811353749529363,
+        0.16448876836122248,
+        0.2798997908397891,
+        -0.2841140083698405,
+        -0.25702249075151995
+      ],
+      "path_fraction": 0.4897959183673469
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0011722061537897204}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008976414376415519,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.20529036967098985,
+        0.3381821051055963,
+        -0.027301078627202234,
+        0.590361656620622,
+        -0.1278195893121335,
+        0.09606764823525757,
+        0.021929439915568952
+      ],
+      "path_fraction": 0.26683291770573564
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32671572981460734,
+        0.19131879320170841,
+        1.0029999999406665
+      ],
+      "target": [
+        0.3267157298576071,
+        0.191318793201806,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32671572068970245,
+        0.19131878751407044,
+        0.8430000168073372
+      ],
+      "target": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.843
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010296753349710447
+      },
+      "joint_q": [
+        0.021421211943091267,
+        -0.3064062021862173,
+        0.2816812071904876,
+        0.12084922407744805,
+        0.2698377638034964,
+        -0.2450446539612285,
+        -0.24885555025414366
+      ],
+      "path_fraction": 0.8367346938775511
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010296753349710447}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009913666420335665,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.24271324454844112,
+        0.23719831086967177,
+        -0.07233391201383024,
+        0.4947164754971547,
+        -0.017740132413333252,
+        0.13608349534949357,
+        0.09850774454056332
+      ],
+      "path_fraction": 0.27756653992395436
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.27877315888263865,
+        0.17907704048517584,
+        0.9829999852041297
+      ],
+      "target": [
+        0.2787731759971868,
+        0.1790770493908433,
+        0.823
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "reach",
+      "collision": {
+        "phase": "reach",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0012096512835799904
+      },
+      "joint_q": [
+        0.16425891875369336,
+        -0.2597562796793915,
+        0.22407497151497638,
+        0.32089740748138024,
+        0.21646409228422092,
+        -0.5495570571330025,
+        0.29429582014949784
+      ],
+      "path_fraction": 0.3793103448275862
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          0.8775825618903728,
+          -0.479425538604203,
+          0.0
+        ],
+        [
+          0.479425538604203,
+          0.8775825618903728,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'reach', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0012096512835799904}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009848887047249098,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.25110187147320245,
+        0.2029346117357025,
+        -0.0557635996801855,
+        0.5617309566327797,
+        0.03757520486636622,
+        -0.013131019146820935,
+        0.05445117347681145
+      ],
+      "path_fraction": 0.27884615384615385
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 17,
+      "ik_attempts": 17,
+      "start": [
+        0.27877317598667084,
+        0.1790770493941456,
+        1.0030000000094434
+      ],
+      "target": [
+        0.2787731759971868,
+        0.1790770493908433,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 11,
+      "ik_attempts": 11,
+      "start": [
+        0.2783129115083011,
+        0.17881961143520192,
+        0.8443693681111367
+      ],
+      "target": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.843
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.001142715848604557
+      },
+      "joint_q": [
+        -0.336519762657322,
+        -0.3353631503868311,
+        0.7719899642819279,
+        1.0277776673073884,
+        1.2515376532782647,
+        -1.220308374148716,
+        0.9485611669710886
+      ],
+      "path_fraction": 0.35526315789473684
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          0.8083070667743452,
+          -0.479425538604203,
+          -0.34174674649032766
+        ],
+        [
+          0.4415801631371558,
+          0.8775825618903728,
+          -0.18669709850368066
+        ],
+        [
+          0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.001142715848604557}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_wrist_yaw_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008853703144172833,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.14387876915260178,
+        0.3061925021950815,
+        0.01034229076835698,
+        0.5891756090511358,
+        -0.07855463099400616,
+        0.25472865536307593,
+        -0.01606917716915346
+      ],
+      "path_fraction": 0.2538293216630197
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "align",
+      "collision": {
+        "phase": "align",
+        "bodies": [
+          "world",
+          "left_hand_middle_1_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009835053285228252,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        -0.06292180264905128,
+        0.09681026466633917,
+        0.3727332324560891,
+        -0.016915330382320667,
+        0.05491153705227286,
+        0.45900760395161616,
+        -0.39523733006100664
+      ],
+      "path_fraction": 0.7555555555555555
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          0.9210609940028851,
+          0.0,
+          0.3894183423086505
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_1_link'], 'geoms': ['table', ''], 'distance_m': 0.009835053285228252, 'required_clearance_m': 0.01}"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_wrist_yaw_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009047506965319262,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.14000897729245526,
+        0.3107219587170701,
+        0.012886437297088799,
+        0.5969358967406928,
+        -0.09677633518093344,
+        0.25621654492298895,
+        -0.00027775114586113536
+      ],
+      "path_fraction": 0.25
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.3267157296885773,
+        0.19131879318402129,
+        1.0029999999037909
+      ],
+      "target": [
+        0.3267157298576071,
+        0.191318793201806,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32671562071167326,
+        0.191318709798695,
+        0.8430001920645979
+      ],
+      "target": [
+        0.3267157298576071,
+        0.09131879320180601,
+        0.843
+      ]
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "lift",
+      "collision": {
+        "phase": "lift",
+        "bodies": [
+          "torso_link",
+          "left_elbow_link"
+        ],
+        "geoms": [
+          "",
+          ""
+        ],
+        "distance_m": -0.0010220109541536483
+      },
+      "joint_q": [
+        -0.06288880181000941,
+        -0.2966901138957129,
+        0.1353010845246602,
+        -0.42010292518254294,
+        0.4341499002195314,
+        0.7804432730481677,
+        -0.31070008771010044
+      ],
+      "path_fraction": 0.65
+    },
+    {
+      "phase": "grasp_candidate_rejected",
+      "rotation": [
+        [
+          0.9210609940028851,
+          0.0,
+          0.3894183423086505
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['torso_link', 'left_elbow_link'], 'geoms': ['', ''], 'distance_m': -0.0010220109541536483}"
+    }
+  ],
+  "clearance": {
+    "samples": 0,
+    "min_table_distance_m": 1.0,
+    "required_clearance_m": 0.01
+  },
+  "trial": 3,
+  "actuation": false,
+  "physical_lift_verified": false,
+  "provenance": "Recorded accepted calibration and terminal feedback; base/arm replaced by recorded calibration/hold/staging values, receipt times rebased offline"
+}

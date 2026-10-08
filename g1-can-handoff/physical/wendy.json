@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.9-clearance-path",
+  "version": "0.3.10-elbow-clearance",
   "entitlements": [
     {
       "type": "network",

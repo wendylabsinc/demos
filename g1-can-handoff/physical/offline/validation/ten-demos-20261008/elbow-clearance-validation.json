@@ -1,0 +1,19 @@
+{
+  "source_sha256": {
+    "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+    "g1_can_handoff/sim.py": "b11f4fae01a3234fa2853b0de39fe7b3726c6de4119acdc012f0f69759a60f5b",
+    "g1_can_handoff/task.py": "423f2c27debc8529427ee8d9854954063f916db7f62359baf0db099d489d40d7",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "offline/planner_replay.py": "54106c8d2f6ac7eb8a008dcdfdcf08589fa18eb9ebae499fb1a366199c117477",
+    "test_clearance_planning.py": "4b5275b191229cdbff7f826016126bc946203479f6f1568e5cd6249a86f7329d",
+    "wendy.json": "9be6c42698e5fc762852c279207a534826ec324138b1405fe1e89a178e93dee6"
+  },
+  "regression_tests": 263,
+  "simulation_scenarios": 13,
+  "hardware_used": false,
+  "deployed": false,
+  "physical_pickup_verified": false,
+  "root_cause": "Pose-only local IK let redundant elbow curl into torso; conditional signed-distance objective steers it clear while preserving nominal pose-only continuation",
+  "probe_only_report": "new-placement-ik-probe.json",
+  "final_report": "new-placement-planner-final.json"
+}
