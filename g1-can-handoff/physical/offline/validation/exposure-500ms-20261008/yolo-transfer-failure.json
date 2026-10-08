@@ -1,0 +1,121 @@
+{
+  "app_id": "DEV-g1-handoff-coke-yolo",
+  "app_version": "0.2.3-exposure-500ms",
+  "arguments": [
+    "--device",
+    "10.10.20.238:50052",
+    "--build-host=10.10.20.208:50052",
+    "--detach",
+    "--yes"
+  ],
+  "built_services": [],
+  "cache_state": "warm",
+  "cli_version": "wendy version 2026.10.01-013419",
+  "command": "wendy run",
+  "deployment_exit_code": 1,
+  "deployment_id": "d05a051d-c381-44a7-b065-094e72784ac6",
+  "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+  "exit_code": 1,
+  "functional_readiness": {
+    "configured": true,
+    "evidence_source": null,
+    "exit_code": null,
+    "status": "not_run_deployment_failed"
+  },
+  "git_branch": "codex/g1-nx2-trial-fixes",
+  "git_commit": "11a582c73f7db293ce4f71fb0affdec3c6deb058",
+  "git_dirty": true,
+  "note": "NX2 Coke CUDA inference; bounded matching 500ms exposure; passive deployment",
+  "outcome": "failed",
+  "phase_seconds": {
+    "agent_diagnosis_s": null,
+    "analysis_s": null,
+    "build_lock_wait_s": null,
+    "code_test_s": null,
+    "command_elapsed_s": 187.280891,
+    "device_replacement_s": null,
+    "functional_readiness_s": null,
+    "physical_execution_s": null,
+    "readiness_s": null,
+    "runtime_diagnostics_s": 3.541783,
+    "service_build_s": null,
+    "stagefile_compile_s": null,
+    "target_metadata_s": 0.647047,
+    "upload_s": null
+  },
+  "project": "yolo",
+  "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo",
+  "recorded_at_utc": "2026-10-08T19:21:44.483120Z",
+  "replaced_services": [],
+  "restarted_services": [],
+  "runtime_diagnostics": {
+    "app_state": {
+      "failure_count": 1,
+      "observed_at_utc": "2026-10-08T19:21:40.941366Z",
+      "running_state": "RUNNING",
+      "status": "available"
+    },
+    "device": "10.10.20.238:50052",
+    "diagnostic_target": null,
+    "evidence_source": [
+      "wendy_run_output",
+      "wendy_device_apps_list",
+      "wendy_device_logs"
+    ],
+    "failure_kind": "deployment_failed",
+    "log_probe_status": "available",
+    "port_conflict": null,
+    "status": "available"
+  },
+  "schema_version": 4,
+  "scope": "whole-project",
+  "source_changes": {
+    "added_files": 26,
+    "approx_text_line_churn": 728,
+    "approx_text_lines_added": 728,
+    "approx_text_lines_deleted": 0,
+    "baseline_available": false,
+    "changed_files": 26,
+    "current_input_bytes": 6620527,
+    "current_input_files": 26,
+    "current_text_lines": 728,
+    "deleted_files": 0,
+    "layer_counts_can_overlap": false,
+    "layers": {
+      "project:manifest": {
+        "approx_text_line_churn": 23,
+        "changed_files": 1
+      },
+      "project:packaging": {
+        "approx_text_line_churn": 108,
+        "changed_files": 5
+      },
+      "project:source": {
+        "approx_text_line_churn": 597,
+        "changed_files": 20
+      }
+    },
+    "line_churn_unmeasured_files": 11,
+    "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+    "modified_files": 0,
+    "state_key": "d48644c20df8422d6b82cdca83c3180b"
+  },
+  "stagefiles": [
+    "build.stagefile.yaml"
+  ],
+  "started_at_utc": "2026-10-08T19:18:33.660463Z",
+  "target": "10.10.20.238:50052",
+  "target_metadata": {
+    "agent_version": "2026.10.05-134249",
+    "cpu_architecture": "arm64",
+    "device_type": null,
+    "gpu_arch": "sm_87",
+    "observed_at_utc": "2026-10-08T19:18:32.999799Z",
+    "os": "ubuntu",
+    "os_version": "22.04",
+    "status": "available"
+  },
+  "transferred_services": [],
+  "wrapper_exit_code": 1,
+  "wrapper_version": "wendy-run-timed.v4"
+}

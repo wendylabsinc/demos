@@ -1,0 +1,6 @@
+Registered DEV-g1-handoff-coke-yolo in Cloud Apps (organization 76).
+Notifications for DEV-g1-handoff-coke-yolo are disabled; an owner or admin can enable its grant in the Cloud app settings.
+Warning: disk / is 85% full. Free cached container data with 'wendy device cache prune'.
+✗ no supported Docker runtime app found — install Docker Desktop, OrbStack, or Rancher Desktop and try again
+Deployment timing appended to global ledger /Users/olivertaylor/Documents/Wendy/benchmarks/results/deployment-timings.jsonl
+Deployment timing mirrored to /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/benchmarks/results/deployment-timings.jsonl

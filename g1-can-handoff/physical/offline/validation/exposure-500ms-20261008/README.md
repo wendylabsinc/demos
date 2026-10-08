@@ -41,3 +41,32 @@ persisted controller budget while idle. The previous deployed source is
 `095ee9b`, controller `0.3.11-warm-perception`, inference `0.2.2`.
 Offline timing/replay acceptance does not verify a physical pickup or prove
 that every future perception delay will fit inside 500 ms.
+
+
+## Deployment transport diagnosis
+
+Native `wendy run --build-host=10.10.20.208:50052 --detach --yes`
+built the inference image but delivery failed because the NX2 Agent rejected
+an assembly RPC of 7,481,342 bytes against its 4,194,304-byte receive limit.
+CLI: 2026.10.01-013419; NX2 Agent: 2026.10.05-134249; target:
+10.10.20.238:50052, asset 501, Jetson Orin NX, arm64/sm_87. The original
+inference service remained running. This is a deployment-platform limitation,
+separate from the captured camera deadline failure.
+
+The on-device build attempt refused before build because NX2 has no BuildKit
+daemon. The default local builder also refused because this Mac has no Docker
+runtime app. Neither refusal changed the running robot service. Failure ledgers
+and sanitized command output are retained here. No Agent/OS changes or cache
+pruning were made.
+
+The native CLI supports the existing Apple Container runtime and
+`--builder apple-container --chunking off` for regular registry transfer,
+avoiding the oversized assembly RPC. Its build VM, however, timed out reaching
+package indexes over HTTP, HTTPS and a signed Ubuntu mirror. The Mac itself
+could reach the HTTPS indexes. Restarting only the local image builder was
+attempted; robot services and the Agent/OS were untouched. Temporary package
+source experiments were reverted. All command failures are retained here.
+
+The 500 ms source change is tested and saved, but deployment is **not verified**.
+The running controller 0.3.11 and inference 0.2.2 still use **400 ms**. This
+report must not be read as evidence of a deployed limit increase.

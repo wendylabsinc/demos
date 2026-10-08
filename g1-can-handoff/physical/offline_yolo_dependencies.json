@@ -1,0 +1,355 @@
+{
+  "apt": {
+    "gir1.2-glib-2.0": {
+      "filename": "gir1.2-glib-2.0_2.80.0-6ubuntu3.9_arm64.deb",
+      "sha256": "c590516ace98bef1486c505dcbc3c0ea1c45077b2d18343aa445b9acb616f5b2",
+      "size": 182474,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/g/glib2.0/gir1.2-glib-2.0_2.80.0-6ubuntu3.9_arm64.deb",
+      "version": "2.80.0-6ubuntu3.9"
+    },
+    "libdrm-amdgpu1": {
+      "filename": "libdrm-amdgpu1_2.4.125-1ubuntu0.1~24.04.2_arm64.deb",
+      "sha256": "23bb606aca9a17029962779491dd3447795d27bfe823d926adb6885ca20840a7",
+      "size": 21870,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libd/libdrm/libdrm-amdgpu1_2.4.125-1ubuntu0.1~24.04.2_arm64.deb",
+      "version": "2.4.125-1ubuntu0.1~24.04.2"
+    },
+    "libdrm-common": {
+      "filename": "libdrm-common_2.4.125-1ubuntu0.1~24.04.2_all.deb",
+      "sha256": "0b60996bc18fa1545e60a47bb0fe1a7f360ec06fe62ba35fb8d8ba2a54e62166",
+      "size": 9250,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libd/libdrm/libdrm-common_2.4.125-1ubuntu0.1~24.04.2_all.deb",
+      "version": "2.4.125-1ubuntu0.1~24.04.2"
+    },
+    "libdrm2": {
+      "filename": "libdrm2_2.4.125-1ubuntu0.1~24.04.2_arm64.deb",
+      "sha256": "6ed8a3f9da5fdc36a289503341a608c21fb33b77acf1604c83265c3f70ca9018",
+      "size": 42898,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libd/libdrm/libdrm2_2.4.125-1ubuntu0.1~24.04.2_arm64.deb",
+      "version": "2.4.125-1ubuntu0.1~24.04.2"
+    },
+    "libgbm1": {
+      "filename": "libgbm1_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "sha256": "30b5fdfde03881869e6816865e5f718ab5a158bafdfcec2ef7dc67b369e1954c",
+      "size": 35020,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/m/mesa/libgbm1_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "version": "25.2.8-0ubuntu0.24.04.4"
+    },
+    "libgl1": {
+      "filename": "libgl1_1.7.0-1build1_arm64.deb",
+      "sha256": "8b2478bdeaf7a13d3c3b993f0238ac74640ab5a623b9d2645ebf6f1336c9881b",
+      "size": 106320,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libg/libglvnd/libgl1_1.7.0-1build1_arm64.deb",
+      "version": "1.7.0-1build1"
+    },
+    "libgl1-mesa-dri": {
+      "filename": "libgl1-mesa-dri_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "sha256": "1a03d36c970f3a28fe9925e56536434102307fc5b0e86715878847d47d22cc38",
+      "size": 36970,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/m/mesa/libgl1-mesa-dri_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "version": "25.2.8-0ubuntu0.24.04.4"
+    },
+    "libglib2.0-0t64": {
+      "filename": "libglib2.0-0t64_2.80.0-6ubuntu3.9_arm64.deb",
+      "sha256": "e8ed0414ac46a406c7b8c18b28572075dcc6807b1cfc48fa88198c0db0a7dcf9",
+      "size": 1533246,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/g/glib2.0/libglib2.0-0t64_2.80.0-6ubuntu3.9_arm64.deb",
+      "version": "2.80.0-6ubuntu3.9"
+    },
+    "libglib2.0-bin": {
+      "filename": "libglib2.0-bin_2.80.0-6ubuntu3.9_arm64.deb",
+      "sha256": "3470c1a342b45ac3241640f139f6467ec36e327b7c98cdaa0c35fbf814579c0b",
+      "size": 97076,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/g/glib2.0/libglib2.0-bin_2.80.0-6ubuntu3.9_arm64.deb",
+      "version": "2.80.0-6ubuntu3.9"
+    },
+    "libglib2.0-data": {
+      "filename": "libglib2.0-data_2.80.0-6ubuntu3.9_all.deb",
+      "sha256": "87b6c824ce057baed1144474640e083f167096453393f93727f8d3a1d75a2707",
+      "size": 50146,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/g/glib2.0/libglib2.0-data_2.80.0-6ubuntu3.9_all.deb",
+      "version": "2.80.0-6ubuntu3.9"
+    },
+    "libglvnd0": {
+      "filename": "libglvnd0_1.7.0-1build1_arm64.deb",
+      "sha256": "3d0c30187bb5f0993b42cc9af94abfc42098451503fbde23d51fd152c4b7ff7e",
+      "size": 60588,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libg/libglvnd/libglvnd0_1.7.0-1build1_arm64.deb",
+      "version": "1.7.0-1build1"
+    },
+    "libglx-mesa0": {
+      "filename": "libglx-mesa0_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "sha256": "5afe724ed80482592e4e40b12272111ba1e346a8b84374d9d4347a1a503db755",
+      "size": 110770,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/m/mesa/libglx-mesa0_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "version": "25.2.8-0ubuntu0.24.04.4"
+    },
+    "libglx0": {
+      "filename": "libglx0_1.7.0-1build1_arm64.deb",
+      "sha256": "830625e5a00b176afcc47742cd2b123c74555afd58da91f6bc7e68f0781b684a",
+      "size": 33236,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libg/libglvnd/libglx0_1.7.0-1build1_arm64.deb",
+      "version": "1.7.0-1build1"
+    },
+    "libllvm20": {
+      "filename": "libllvm20_20.1.2-0ubuntu1~24.04.3_arm64.deb",
+      "sha256": "ce47263e73c09528971c86cb14239fdf1dd38f1024a005fd634e38237fe0f054",
+      "size": 29261604,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/l/llvm-toolchain-20/libllvm20_20.1.2-0ubuntu1~24.04.3_arm64.deb",
+      "version": "1:20.1.2-0ubuntu1~24.04.3"
+    },
+    "libsensors-config": {
+      "filename": "libsensors-config_3.6.0-9build1_all.deb",
+      "sha256": "148103a436fd273dabfe0fe41dc54873df46227b59b2c7ac7339d7e2ddfd033b",
+      "size": 5546,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/l/lm-sensors/libsensors-config_3.6.0-9build1_all.deb",
+      "version": "1:3.6.0-9build1"
+    },
+    "libsensors5": {
+      "filename": "libsensors5_3.6.0-9build1_arm64.deb",
+      "sha256": "62df0293b46a8bf8b9ae8e63bd0286176738673f55eee15e78c3e4d2d15505b6",
+      "size": 26956,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/l/lm-sensors/libsensors5_3.6.0-9build1_arm64.deb",
+      "version": "1:3.6.0-9build1"
+    },
+    "libvulkan1": {
+      "filename": "libvulkan1_1.3.275.0-1build1_arm64.deb",
+      "sha256": "9459488a53ead304d00587c874f9b31d56d59c9aeae5c46b6f78801a89d53e63",
+      "size": 149690,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/v/vulkan-loader/libvulkan1_1.3.275.0-1build1_arm64.deb",
+      "version": "1.3.275.0-1build1"
+    },
+    "libx11-6": {
+      "filename": "libx11-6_1.8.7-1build1_arm64.deb",
+      "sha256": "16d10ae5d27f1a0feb054001ff2b213b51acd29894f86ff088c31eebeba65fe3",
+      "size": 649412,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libx11/libx11-6_1.8.7-1build1_arm64.deb",
+      "version": "2:1.8.7-1build1"
+    },
+    "libx11-data": {
+      "filename": "libx11-data_1.8.7-1build1_all.deb",
+      "sha256": "9ae01f7747e7f479394c697c55acf11d3baf139e8e54b7c4adfb55ef9c50de08",
+      "size": 115446,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libx11/libx11-data_1.8.7-1build1_all.deb",
+      "version": "2:1.8.7-1build1"
+    },
+    "libx11-xcb1": {
+      "filename": "libx11-xcb1_1.8.7-1build1_arm64.deb",
+      "sha256": "3e900fac4bb54a117dd80f2a01ac9a2ab9519b4af1ec3607e1b6258e4b23f9ea",
+      "size": 7870,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libx11/libx11-xcb1_1.8.7-1build1_arm64.deb",
+      "version": "2:1.8.7-1build1"
+    },
+    "libxau6": {
+      "filename": "libxau6_1.0.9-1build6_arm64.deb",
+      "sha256": "348d0732ff9571f95d6ff18373a93e827bfe00474d792ef5e9071e6dd618605c",
+      "size": 7264,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxau/libxau6_1.0.9-1build6_arm64.deb",
+      "version": "1:1.0.9-1build6"
+    },
+    "libxcb-dri3-0": {
+      "filename": "libxcb-dri3-0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "5c356f1b46a4756fc829083b718c6028bade7caec5f55956e30ebb4321ef0968",
+      "size": 7196,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-dri3-0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-glx0": {
+      "filename": "libxcb-glx0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "d13b3f909e0cc478408e86eee1acc7e90b25f782feee8872e3a9c4f3e24e8e9e",
+      "size": 25474,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-glx0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-present0": {
+      "filename": "libxcb-present0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "e36f016e2407868fd9f416780d7783529e060d608e6043924cc99dde88b783de",
+      "size": 5866,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-present0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-randr0": {
+      "filename": "libxcb-randr0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "d1dc1d06b42da9a332274e34121ff57c6f6c1c155e4fe726c652f80f392ed419",
+      "size": 18442,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-randr0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-shm0": {
+      "filename": "libxcb-shm0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "1d3f59159910a43ec798a0bf467ca2f78d1f9e1351ac04fb8d3db8469d4a516c",
+      "size": 5876,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-shm0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-sync1": {
+      "filename": "libxcb-sync1_1.15-1ubuntu2_arm64.deb",
+      "sha256": "9886f3632d9242c0b5a0235e663455d8a25746b3006bd9f8b4d809f06d757515",
+      "size": 9682,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-sync1_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb-xfixes0": {
+      "filename": "libxcb-xfixes0_1.15-1ubuntu2_arm64.deb",
+      "sha256": "c0842d78979b8c6b904f0fa2049647733a7da7985fbbc6825d0cc071804e4085",
+      "size": 10646,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb-xfixes0_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxcb1": {
+      "filename": "libxcb1_1.15-1ubuntu2_arm64.deb",
+      "sha256": "5483e5d19bbfa28e961d951645944e7763e943262ac17e216b2870d83597f319",
+      "size": 49408,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxcb/libxcb1_1.15-1ubuntu2_arm64.deb",
+      "version": "1.15-1ubuntu2"
+    },
+    "libxdmcp6": {
+      "filename": "libxdmcp6_1.1.3-0ubuntu6_arm64.deb",
+      "sha256": "6b96dbbae4e515ac8f32d6dacfcb6afd1266118400a85ae7cb3f887895017f53",
+      "size": 10364,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxdmcp/libxdmcp6_1.1.3-0ubuntu6_arm64.deb",
+      "version": "1:1.1.3-0ubuntu6"
+    },
+    "libxext6": {
+      "filename": "libxext6_1.3.4-1build2_arm64.deb",
+      "sha256": "1140abacd8d23cb83cc63fb9aebb15a201e2dddbf5ca79fd999c0cbd181d0088",
+      "size": 30434,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxext/libxext6_1.3.4-1build2_arm64.deb",
+      "version": "2:1.3.4-1build2"
+    },
+    "libxshmfence1": {
+      "filename": "libxshmfence1_1.3-1build5_arm64.deb",
+      "sha256": "8764cf3566b060817cd4ad7dd367c45ca29d133d325c4145644cbcbd639830b2",
+      "size": 4938,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxshmfence/libxshmfence1_1.3-1build5_arm64.deb",
+      "version": "1.3-1build5"
+    },
+    "libxxf86vm1": {
+      "filename": "libxxf86vm1_1.1.4-1build4_arm64.deb",
+      "sha256": "e3977d43433269eb5081cbc83a7fefb59f90cbc457902d8046a032a3e280e292",
+      "size": 9130,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/libx/libxxf86vm/libxxf86vm1_1.1.4-1build4_arm64.deb",
+      "version": "1:1.1.4-1build4"
+    },
+    "mesa-libgallium": {
+      "filename": "mesa-libgallium_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "sha256": "97bfd3fa3f12a6dbb36dacab7fb3c6fc514187fbe8c371106bea625e1b9a1c07",
+      "size": 12104580,
+      "url": "https://ports.ubuntu.com/ubuntu-ports/pool/main/m/mesa/mesa-libgallium_25.2.8-0ubuntu0.24.04.4_arm64.deb",
+      "version": "25.2.8-0ubuntu0.24.04.4"
+    }
+  },
+  "base": "dustynv/pytorch:2.7-r36.4.0-cu128-24.04@sha256:4bb7f0a3852f86629ed271aaf6c4aa000305cc4e4673b8e9f334668ee1b22bc8",
+  "provenance": "Ubuntu official signed noble indexes and PyPI HTTPS metadata; vendor CUDA torch preserved from pinned base",
+  "schema_version": 1,
+  "ubuntu_signed_indexes": {
+    "noble": {
+      "inrelease_sha256": "cdb2f31d809f589719a53c6ad15f255b27569c4059542ada282aaa21b8e164b0",
+      "packages_sha256": "4a1901e6124fb0a111f5dffc8f5c14474f449e2ecfa71f2eaf0b29917edb53f9",
+      "packages_size": 1376632
+    },
+    "noble-security": {
+      "inrelease_sha256": "6ecd3b53d337b050a7ff401ba61934008b7ba5685b5db4258fa36c113d60d0ea",
+      "packages_sha256": "003daf63cec1f3e623b33447fcd4c6fd5cc28852e61044b729b1a4c5ab2a8351",
+      "packages_size": 1180972
+    },
+    "noble-updates": {
+      "inrelease_sha256": "a618b4ce3ff9122096cac66ebd09bd156769a75bde69c272a2e31d3621cfacd1",
+      "packages_sha256": "126761f0f95d96e9988eebc01bfa4f23e467e8d00dfba90637fa14a064473b2e",
+      "packages_size": 1430916
+    }
+  },
+  "wheels": {
+    "contourpy": {
+      "filename": "contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "sha256": "43c3ccbb32c6294b183dcc8e8c46dacf5ecef809497e3d48a5be298eef185ad0",
+      "size": 356332,
+      "url": "https://files.pythonhosted.org/packages/0f/cc/cb989599eec12fda312e127eb8e04a8b21a7a6c94bf7ff1bc68273334a42/contourpy-1.4.0-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "version": "1.4.0"
+    },
+    "cycler": {
+      "filename": "cycler-0.12.1-py3-none-any.whl",
+      "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+      "size": 8321,
+      "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
+      "version": "0.12.1"
+    },
+    "fonttools": {
+      "filename": "fonttools-4.66.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "sha256": "09ae73bd219e1245debd8376077a0fa6e03175e255c4f51bae5f6a271bfe384a",
+      "size": 5416460,
+      "url": "https://files.pythonhosted.org/packages/75/c0/5810d73f9102eb1a08f26b8f7a6c22498622b43e05e684cd5ec602be8ffd/fonttools-4.66.1-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "version": "4.66.1"
+    },
+    "kiwisolver": {
+      "filename": "kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "sha256": "d27c2123977cb9269c30a49ba45f03a4323017ef693e19db4ec9dbe1299a3002",
+      "size": 1278499,
+      "url": "https://files.pythonhosted.org/packages/6f/35/09c58daac34e6f6ea5c6dee0094b422118e5a7c265586008a95fd135ac5f/kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl",
+      "version": "1.5.1"
+    },
+    "matplotlib": {
+      "filename": "matplotlib-3.11.2-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "sha256": "1b9a7ad579856284135e401ecc918c5f8a017ee30539298862a109f51b971710",
+      "size": 10670348,
+      "url": "https://files.pythonhosted.org/packages/f4/84/32549e7a462dc311aed2ab62e5d2538028840b5c53a8be0195c789937c3d/matplotlib-3.11.2-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl",
+      "version": "3.11.2"
+    },
+    "numpy": {
+      "filename": "numpy-2.2.6-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sha256": "f2618db89be1b4e05f7a1a847a9c1c0abd63e63a1607d892dd54668dd92faf87",
+      "size": 14018462,
+      "url": "https://files.pythonhosted.org/packages/f8/35/8c80729f1ff76b3921d5c9487c7ac3de9b2a103b1cd05e905b3090513510/numpy-2.2.6-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "version": "2.2.6"
+    },
+    "nvidia-ml-py": {
+      "filename": "nvidia_ml_py-13.615.71-py3-none-any.whl",
+      "sha256": "959bf4adf6fe1308e4bd739e722236b0d1ec8392e2cefad33ff70c311380b9b6",
+      "size": 58132,
+      "url": "https://files.pythonhosted.org/packages/53/a1/1681dfa1c904d4e3e72e51b55a0ff012d50b766843ef832d584abe2113c6/nvidia_ml_py-13.615.71-py3-none-any.whl",
+      "version": "13.615.71"
+    },
+    "opencv-python": {
+      "filename": "opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sha256": "1b92ae2c8852208817e6776ba1ea0d6b1e0a1b5431e971a2a0ddd2a8cc398202",
+      "size": 42230439,
+      "url": "https://files.pythonhosted.org/packages/f3/bd/29c126788da65c1fb2b5fb621b7fed0ed5f9122aa22a0868c5e2c15c6d23/opencv_python-4.11.0.86-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "version": "4.11.0.86"
+    },
+    "polars": {
+      "filename": "polars-2.0.0-py3-none-any.whl",
+      "sha256": "35d62f3541b7a6d4c360a2e2f07fccc0c2bcbd33b0ea51c83a25417a47a3f3ad",
+      "size": 876611,
+      "url": "https://files.pythonhosted.org/packages/ac/09/cc33bbd5463749c116b62c204d88bed6c02a6cb901eac7adab0d38651b07/polars-2.0.0-py3-none-any.whl",
+      "version": "2.0.0"
+    },
+    "polars-runtime-32": {
+      "filename": "polars_runtime_32-2.0.0-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "sha256": "8b85bb42e6009acc9629afcc70a83473fd468694d6a30ffb0ab376c8dd1a0a17",
+      "size": 50417889,
+      "url": "https://files.pythonhosted.org/packages/0d/0d/85e3ed90417996fc09770be91b39979074fe2978fc15b431bf8a9459760d/polars_runtime_32-2.0.0-cp310-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
+      "version": "2.0.0"
+    },
+    "ultralytics": {
+      "filename": "ultralytics-8.4.123-py3-none-any.whl",
+      "sha256": "07cc6cd099391555537ba459a1af6d00ade9ccd1f54447e54cad58ca9bd8517d",
+      "size": 1425818,
+      "url": "https://files.pythonhosted.org/packages/92/71/15074f4c7d4f2960481ffac97a65f8d7697f7bd48aef5c5259d7952f9031/ultralytics-8.4.123-py3-none-any.whl",
+      "version": "8.4.123"
+    },
+    "ultralytics-platform": {
+      "filename": "ultralytics_platform-0.1.82-py3-none-any.whl",
+      "sha256": "7bda4676e49db1fd3c0d692f78d07bc59b4855a933afa0ee8442526f47887b7d",
+      "size": 96112,
+      "url": "https://files.pythonhosted.org/packages/34/1c/3f1a23a33a22b932b2f32eb29a81c96a8bdfde20a9f7399f3016171b9410/ultralytics_platform-0.1.82-py3-none-any.whl",
+      "version": "0.1.82"
+    },
+    "ultralytics-thop": {
+      "filename": "ultralytics_thop-2.2.2-py3-none-any.whl",
+      "sha256": "10ef0f4ab45261516008660619fef114cddc2b7c8383d9d3bd76c1e551208ca3",
+      "size": 32582,
+      "url": "https://files.pythonhosted.org/packages/e7/53/0141f38ee122fc25b234ad1318e0c87050f3dfa84158f8dd46cd0c90da1a/ultralytics_thop-2.2.2-py3-none-any.whl",
+      "version": "2.2.2"
+    }
+  }
+}

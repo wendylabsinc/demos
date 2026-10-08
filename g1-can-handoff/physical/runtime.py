@@ -199,8 +199,13 @@ class Runtime:
     def publish_tracking_observation(self,observation,vision,require_table):
         baseline=getattr(self,'tracking_baseline',None)
         if baseline is None:return
+        checked=np.asarray(baseline.center,dtype=float)
+        observed=np.asarray(observation.center,dtype=float)
+        if (checked.shape!=(3,) or observed.shape!=(3,) or
+                not np.isfinite(checked).all() or not np.isfinite(observed).all()):
+            raise RuntimeError('Tracked can position is invalid')
         tolerance=.01 if require_table else .04
-        if np.linalg.norm(observation.center[:2]-baseline.center[:2])>tolerance:
+        if np.linalg.norm(observed[:2]-checked[:2])>tolerance:
             raise RuntimeError('Tracked can moved outside the checked pickup path')
         age=time.monotonic()-observation.timestamp
         if not 0<=age<=frame_age_limit_s():
@@ -294,8 +299,13 @@ class Runtime:
             raise RuntimeError(f'Visual/depth tracking exposure stale ({age*1000:.1f} ms)')
 
     def start_tracking(self,config,baseline):
+        from copy import deepcopy
         self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
-        self.tracking_baseline=baseline
+        # This reference belongs to the checked path, never the latest sample.
+        # Ownership replanning replaces it only after checking a complete new
+        # path; aliases held by perception must not silently move this origin.
+        self.tracking_baseline=deepcopy(baseline)
+        self.tracking_baseline.center.setflags(write=False)
         if self.cancel.is_set():raise RuntimeError('Operator cancelled before tracking')
         self.tracking_stop.clear()
         # The spawned worker continuously refreshes its single latest-frame

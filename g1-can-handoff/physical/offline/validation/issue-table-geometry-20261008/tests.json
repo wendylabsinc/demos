@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 3.0411883749766275,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_table_geometry_acceptance",
+      "tests_run": 3,
+      "seconds": 2.5766802500002086,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_exposure_pose_correction_accepts_both_original_faults_repeatably",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_native_calibration_frames_keep_disjoint_table_validation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_geometry_acceptance.NativeTableGeometryAcceptanceTests.test_original_frozen_pose_reproduces_both_native_table_errors",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "./Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul\n  inside = np.abs((cloud-a) @ normal) < .006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul\n  selected=np.abs((points-seed_center)@seed_normal)<.025\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul\n  updated=np.abs((points-center)@normal)<.006\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul\n  check_error=(check_points-center)@normal\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul\n  if np.quantile(np.abs((tape-center)@normal),.9)>.008:\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul\n  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),\n..\n----------------------------------------------------------------------\nRan 3 tests in 2.577s\n\nOK\n"
+    }
+  ]
+}

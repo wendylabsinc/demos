@@ -102,4 +102,4 @@ def project_area(snapshot):
                               intrinsics['fy']*camera[:,1]/camera[:,2]+intrinsics['ppy']))
     return dict(polygon=pixels.tolist(),width=intrinsics['width'],height=intrinsics['height'],
                 bounds_m=bounds,phase=snapshot['phase'],table_height_m=config['table_height_m'],
-                label=f'Can base center: {x0*100:.0f}–{x1*100:.0f} cm forward · {y0*100:.0f}–{y1*100:.0f} cm robot-left')
+                label=f'Can base center: {x0*100:g}–{x1*100:g} cm forward · {y0*100:g}–{y1*100:g} cm robot-left')

@@ -1,0 +1,7 @@
+test_start_tracking_copies_the_path_reference (test_tracking_position_replay.TrackingPositionReplayTests.test_start_tracking_copies_the_path_reference) ... ok
+test_new_samples_never_rebase_and_invalid_position_never_publishes (test_tracking_position_replay.TrackingPositionReplayTests.test_new_samples_never_rebase_and_invalid_position_never_publishes) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK

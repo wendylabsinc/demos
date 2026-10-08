@@ -1,0 +1,565 @@
+{
+  "scope": "Saved successful observation timelines at real command-loop gate; no native latency or physical pickup claim",
+  "max_age_ms": 400,
+  "publication": "legacy",
+  "repeats": 1,
+  "scenarios": 9,
+  "accepted": 0,
+  "cases": [
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (478.3 ms)",
+      "source": [
+        "offline/attempts/20261008T001246Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "original_frame_id": 20105,
+      "original_age_ms": 478.39451425898005,
+      "original400ms_rejected": true,
+      "next_frame_id": 20107,
+      "next_packet_delay_ms": 1.4205899999524263,
+      "raw_frame_inputs": {},
+      "input_sha256": {
+        "offline/attempts/20261008T001246Z.json": "796c13bd8875a6b53780b124ceea8dec886b45b72e5f7f67dd27a6e7bc112d43",
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (478.4 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 478.39451425898005,
+          "frame_id": 20105,
+          "at": 1361.23819018,
+          "available_at": 1361.017238351,
+          "geometry_complete_at": 1361.015585977,
+          "validated_result_at": 1361.017041128
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (479.8 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 479.8151042587051,
+          "frame_id": 20105,
+          "at": 1361.2396107699997,
+          "available_at": 1361.017238351,
+          "geometry_complete_at": 1361.015585977,
+          "validated_result_at": 1361.017041128
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 346.39082218495787,
+          "frame_id": 20107,
+          "at": 1361.23961077,
+          "available_at": 1361.23961077,
+          "geometry_complete_at": 1361.163254547,
+          "validated_result_at": 1361.234288836
+        }
+      ],
+      "worst_exposure_age_ms": 479.8151042587051,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (407.1 ms)",
+      "source": [
+        "offline/attempts/20261008T001402Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "original_frame_id": 21122,
+      "original_age_ms": 407.2125910718114,
+      "original400ms_rejected": true,
+      "next_frame_id": 21124,
+      "next_packet_delay_ms": 0.11920299994017114,
+      "raw_frame_inputs": {},
+      "input_sha256": {
+        "offline/attempts/20261008T001402Z.json": "b709b947b20b947872356752ca3d24bd7cce3e0eef84de811d511544d5537caa",
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (407.2 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 407.2125910718114,
+          "frame_id": 21122,
+          "at": 1429.015955305,
+          "available_at": 1428.925129404,
+          "geometry_complete_at": 1428.917993049,
+          "validated_result_at": 1428.923020185
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (407.3 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 407.3317940715242,
+          "frame_id": 21122,
+          "at": 1429.0160745079997,
+          "available_at": 1428.925129404,
+          "geometry_complete_at": 1428.917993049,
+          "validated_result_at": 1428.923020185
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 273.88772325571153,
+          "frame_id": 21124,
+          "at": 1429.016074508,
+          "available_at": 1429.016074508,
+          "geometry_complete_at": 1429.012712289,
+          "validated_result_at": 1429.014242674
+        }
+      ],
+      "worst_exposure_age_ms": 407.3317940715242,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (405.4 ms)",
+      "source": [
+        "offline/attempts/20261008T003433Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "original_frame_id": 39605,
+      "original_age_ms": 405.54843159179654,
+      "original400ms_rejected": true,
+      "next_frame_id": 39607,
+      "next_packet_delay_ms": 11.689643999943655,
+      "raw_frame_inputs": {},
+      "input_sha256": {
+        "offline/attempts/20261008T003433Z.json": "84b3d2049adeb2eb6f8c2e8932c78370edec502cab843d9d75572f5e912cef4f",
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (405.5 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 405.54843159179654,
+          "frame_id": 39605,
+          "at": 2662.107685425,
+          "available_at": 2662.020748783,
+          "geometry_complete_at": 2662.010008707,
+          "validated_result_at": 2662.01859207
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (417.2 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 417.23807559128545,
+          "frame_id": 39605,
+          "at": 2662.1193750689995,
+          "available_at": 2662.020748783,
+          "geometry_complete_at": 2662.010008707,
+          "validated_result_at": 2662.01859207
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 283.8009189144941,
+          "frame_id": 39607,
+          "at": 2662.119375069,
+          "available_at": 2662.119375069,
+          "geometry_complete_at": 2662.111934753,
+          "validated_result_at": 2662.117646114
+        }
+      ],
+      "worst_exposure_age_ms": 417.23807559128545,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (410.8 ms)",
+      "source": [
+        "offline/attempts/20261008T003513Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "original_frame_id": 40358,
+      "original_age_ms": 410.88925122221553,
+      "original400ms_rejected": true,
+      "next_frame_id": 40361,
+      "next_packet_delay_ms": 16.482505000112724,
+      "raw_frame_inputs": {},
+      "input_sha256": {
+        "offline/attempts/20261008T003513Z.json": "f4346903fc7d03a3643b0b323e7d31d825750ef9a1f32d83983f93cee4c55868",
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (410.9 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 410.88925122221553,
+          "frame_id": 40358,
+          "at": 2712.349379642,
+          "available_at": 2712.223473047,
+          "geometry_complete_at": 2712.22175187,
+          "validated_result_at": 2712.223281553
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (427.4 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 427.3717562218735,
+          "frame_id": 40358,
+          "at": 2712.3658621469995,
+          "available_at": 2712.223473047,
+          "geometry_complete_at": 2712.22175187,
+          "validated_result_at": 2712.223281553
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 227.23700204142006,
+          "frame_id": 40361,
+          "at": 2712.365862147,
+          "available_at": 2712.365862147,
+          "geometry_complete_at": 2712.361853564,
+          "validated_result_at": 2712.365697117
+        }
+      ],
+      "worst_exposure_age_ms": 427.3717562218735,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (411.8 ms)",
+      "source": [
+        "offline/attempts/20261008T004101Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "original_frame_id": 45594,
+      "original_age_ms": 411.9568361484198,
+      "original400ms_rejected": true,
+      "next_frame_id": 45596,
+      "next_packet_delay_ms": 9.976000000278873,
+      "raw_frame_inputs": {},
+      "input_sha256": {
+        "offline/attempts/20261008T004101Z.json": "8449e8b90ea321555df0115c3d62b80cc57b69136dbaf2c9cac864e4c710eb09",
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (412.0 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 411.9568361484198,
+          "frame_id": 45594,
+          "at": 3061.669636537,
+          "available_at": 3061.586040482,
+          "geometry_complete_at": 3061.580617748,
+          "validated_result_at": 3061.584620085
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (421.9 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 421.93283614824395,
+          "frame_id": 45594,
+          "at": 3061.6796125369997,
+          "available_at": 3061.586040482,
+          "geometry_complete_at": 3061.580617748,
+          "validated_result_at": 3061.584620085
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 288.4980636572436,
+          "frame_id": 45596,
+          "at": 3061.679612537,
+          "available_at": 3061.679612537,
+          "geometry_complete_at": 3061.672713532,
+          "validated_result_at": 3061.679118089
+        }
+      ],
+      "worst_exposure_age_ms": 421.93283614824395,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "source": [
+        "offline/attempts/20261008T005915Z.json",
+        "offline/attempts/20261008T005915Z.json",
+        "offline/evidence/20261008T005915Z/events.jsonl.gz"
+      ],
+      "original_frame_id": 62257,
+      "original_age_ms": 401.90058866119216,
+      "original400ms_rejected": true,
+      "next_frame_id": 62259,
+      "next_packet_delay_ms": 9.27045500066015,
+      "raw_frame_inputs": {
+        "62257": [
+          "offline/evidence/20261008T005915Z/rgbd/camera-62257-motion-tracking.source.zip",
+          "offline/evidence/20261008T005915Z/rgbd/camera-62257-motion-tracking.timing.npz"
+        ],
+        "62259": [
+          "offline/evidence/20261008T005915Z/rgbd/camera-62259-motion-tracking.source.zip",
+          "offline/evidence/20261008T005915Z/rgbd/camera-62259-motion-tracking.timing.npz"
+        ]
+      },
+      "input_sha256": {
+        "offline/attempts/20261008T005915Z.json": "d3e4cfd7f62caf1513fc21e045ae40723005ddd05909dbfc0b001a85495d1e4a",
+        "offline/evidence/20261008T005915Z/events.jsonl.gz": "c13e510a5488ed65e7c7942b92e6ac0b2cb2ffd29986aa91c3ac7e60591c3753"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (401.9 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 401.90058866119216,
+          "frame_id": 62257,
+          "at": 4173.330383598,
+          "available_at": 4173.230552338,
+          "geometry_complete_at": 4173.22207168,
+          "validated_result_at": 4173.230057338
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (411.2 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 411.1710436609428,
+          "frame_id": 62257,
+          "at": 4173.339654052999,
+          "available_at": 4173.230552338,
+          "geometry_complete_at": 4173.22207168,
+          "validated_result_at": 4173.230057338
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 277.7493841922478,
+          "frame_id": 62259,
+          "at": 4173.339654053,
+          "available_at": 4173.339654053,
+          "geometry_complete_at": 4173.333386204,
+          "validated_result_at": 4173.339346198
+        }
+      ],
+      "worst_exposure_age_ms": 411.1710436609428,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+      "source": [
+        "offline/evidence/clearance-demos-20261008/trial-04.json",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-04/events.jsonl.gz"
+      ],
+      "original_frame_id": 22596,
+      "original_age_ms": 409.1265452486823,
+      "original400ms_rejected": true,
+      "next_frame_id": 22598,
+      "next_packet_delay_ms": 51.53734500004248,
+      "raw_frame_inputs": {
+        "22596": [
+          "offline/evidence/clearance-demos-20261008-preserved/trial-04/rgbd/camera-22596-motion-tracking.source.zip",
+          "offline/evidence/clearance-demos-20261008-preserved/trial-04/rgbd/camera-22596-motion-tracking.timing.npz"
+        ],
+        "22598": [
+          "offline/evidence/clearance-demos-20261008-preserved/trial-04/rgbd/camera-22598-motion-tracking.source.zip",
+          "offline/evidence/clearance-demos-20261008-preserved/trial-04/rgbd/camera-22598-motion-tracking.timing.npz"
+        ]
+      },
+      "input_sha256": {
+        "offline/evidence/clearance-demos-20261008/trial-04.json": "e987c556c24cba8cd0e40482da86b926d745b66a266bbcd462660065e1cc73f8",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-04/events.jsonl.gz": "58ea0a540b1488d3ba8ece247d6e821efeb5a2688590713d60b5aff855bf7c7e"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (409.1 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 409.1265452486823,
+          "frame_id": 22596,
+          "at": 1527.855457331,
+          "available_at": 1527.712033018,
+          "geometry_complete_at": 1527.709235463,
+          "validated_result_at": 1527.711860243
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (429.1 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 429.1265452486641,
+          "frame_id": 22596,
+          "at": 1527.875457331,
+          "available_at": 1527.712033018,
+          "geometry_complete_at": 1527.709235463,
+          "validated_result_at": 1527.711860243
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (449.1 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 449.1265452486459,
+          "frame_id": 22596,
+          "at": 1527.895457331,
+          "available_at": 1527.712033018,
+          "geometry_complete_at": 1527.709235463,
+          "validated_result_at": 1527.711860243
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (460.7 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 460.6638902484974,
+          "frame_id": 22596,
+          "at": 1527.9069946759998,
+          "available_at": 1527.712033018,
+          "geometry_complete_at": 1527.709235463,
+          "validated_result_at": 1527.711860243
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 327.22387254852947,
+          "frame_id": 22598,
+          "at": 1527.906994676,
+          "available_at": 1527.906994676,
+          "geometry_complete_at": 1527.904963104,
+          "validated_result_at": 1527.906843277
+        }
+      ],
+      "worst_exposure_age_ms": 460.6638902484974,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "source": [
+        "offline/evidence/exposure-failure-20261008/trial-01.json",
+        "offline/evidence/exposure-failure-20261008-preserved/trial-01/events.jsonl.gz"
+      ],
+      "original_frame_id": 41858,
+      "original_age_ms": 401.75720964316497,
+      "original400ms_rejected": true,
+      "next_frame_id": 41860,
+      "next_packet_delay_ms": 38.01048500008619,
+      "raw_frame_inputs": {
+        "41858": [
+          "offline/evidence/exposure-failure-20261008-preserved/trial-01/rgbd/camera-41858-motion-tracking.source.zip",
+          "offline/evidence/exposure-failure-20261008-preserved/trial-01/rgbd/camera-41858-motion-tracking.timing.npz"
+        ],
+        "41860": [
+          "offline/evidence/exposure-failure-20261008-preserved/trial-01/rgbd/camera-41860-motion-tracking.source.zip",
+          "offline/evidence/exposure-failure-20261008-preserved/trial-01/rgbd/camera-41860-motion-tracking.timing.npz"
+        ]
+      },
+      "input_sha256": {
+        "offline/evidence/exposure-failure-20261008/trial-01.json": "2d98c11d22bc1f359567840f511ec0b18aa793e78d85afc6fb330701166a8f34",
+        "offline/evidence/exposure-failure-20261008-preserved/trial-01/events.jsonl.gz": "b87480d6cebf2b7669a517c33935eaf21b23b96c3ff8a3e6419e94fe46e17ad0"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (401.8 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 401.75720964316497,
+          "frame_id": 41858,
+          "at": 2812.914704769,
+          "available_at": 2812.803519396,
+          "geometry_complete_at": 2812.801215829,
+          "validated_result_at": 2812.803350238
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (421.8 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 421.7572096431468,
+          "frame_id": 41858,
+          "at": 2812.934704769,
+          "available_at": 2812.803519396,
+          "geometry_complete_at": 2812.801215829,
+          "validated_result_at": 2812.803350238
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (439.8 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 439.7676946427964,
+          "frame_id": 41858,
+          "at": 2812.9527152539995,
+          "available_at": 2812.803519396,
+          "geometry_complete_at": 2812.801215829,
+          "validated_result_at": 2812.803350238
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 306.34436624359296,
+          "frame_id": 41860,
+          "at": 2812.952715254,
+          "available_at": 2812.952715254,
+          "geometry_complete_at": 2812.950503786,
+          "validated_result_at": 2812.952534416
+        }
+      ],
+      "worst_exposure_age_ms": 439.7676946427964,
+      "accepted": false
+    },
+    {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (404.1 ms)",
+      "source": [
+        "offline/evidence/exposure-restart-20261008/trial-01.json"
+      ],
+      "original_frame_id": 62898,
+      "original_age_ms": 404.50258189139277,
+      "original400ms_rejected": true,
+      "next_frame_id": 62901,
+      "next_packet_delay_ms": 15.262064000125974,
+      "raw_frame_inputs": {
+        "62898": [
+          "offline/evidence/exposure-restart-20261008-preserved/trial-01/rgbd/camera-62898-motion-tracking.source.zip",
+          "offline/evidence/exposure-restart-20261008-preserved/trial-01/rgbd/camera-62898-motion-tracking.timing.npz"
+        ],
+        "62901": [
+          "offline/evidence/exposure-restart-20261008-preserved/trial-01/rgbd/camera-62901-motion-tracking.source.zip",
+          "offline/evidence/exposure-restart-20261008-preserved/trial-01/rgbd/camera-62901-motion-tracking.timing.npz"
+        ]
+      },
+      "input_sha256": {
+        "offline/evidence/exposure-restart-20261008/trial-01.json": "ff28b4b628b5abdbc56becc13f8f56ad82bd92174252589df7832121cfce656b",
+        "offline/evidence/exposure-restart-20261008-preserved/trial-01/events.jsonl.gz": "a0f243ff98e7e2f9466cced77a1ebf4de5d3a5d5e957d881dbc7cd8d744eeafd"
+      },
+      "ticks": [
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (404.5 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 404.50258189139277,
+          "frame_id": 62898,
+          "at": 4216.608347606,
+          "available_at": 4216.524764301,
+          "geometry_complete_at": 4216.515517829,
+          "validated_result_at": 4216.524480816
+        },
+        {
+          "accepted": false,
+          "error": "Visual/depth tracking exposure stale (419.8 ms)",
+          "recording_sink_calls": 0,
+          "exposure_age_ms": 419.76464589060924,
+          "frame_id": 62898,
+          "at": 4216.6236096699995,
+          "available_at": 4216.524764301,
+          "geometry_complete_at": 4216.515517829,
+          "validated_result_at": 4216.524480816
+        },
+        {
+          "accepted": true,
+          "error": null,
+          "recording_sink_calls": 3,
+          "exposure_age_ms": 219.626315431924,
+          "frame_id": 62901,
+          "at": 4216.62360967,
+          "available_at": 4216.62360967,
+          "geometry_complete_at": 4216.616447402,
+          "validated_result_at": 4216.621200701
+        }
+      ],
+      "worst_exposure_age_ms": 419.76464589060924,
+      "accepted": false
+    }
+  ]
+}

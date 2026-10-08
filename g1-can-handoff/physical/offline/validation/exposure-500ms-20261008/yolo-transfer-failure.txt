@@ -1,0 +1,32 @@
+Registered DEV-g1-handoff-coke-yolo in Cloud Apps (organization 76).
+Notifications for DEV-g1-handoff-coke-yolo are disabled; an owner or admin can enable its grant in the Cloud app settings.
+Warning: disk / is 85% full. Free cached container data with 'wendy device cache prune'.
+Building on 10.10.20.208:50052 for linux/arm64...
+  done    load build definition  0.0s
+  done    load metadata  0.6s
+  done    [stagefile-pip-deps-0 1/4] FROM docker.io/dustynv/pytorch:2.7-r36.4.0-cu128-24.04@sha256:4bb7f0a3852f86629ed271aaf6c4aa000305cc4e4673b8e9f334668ee1b22bc8  0.0s
+  cached  [stagefile-pip-deps-0 2/4] WORKDIR /app
+  done    load build context  0.1s
+  done    [stagefile-pip-deps-0 3/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && command -v pip >/dev/null 2>&1 || (apt-get update && apt-get install -y --no-install-recommends 'python3-pip')  0.1s
+  done    [dependencies 3/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1'  10.2s
+  ...     [stagefile-pip-deps-0 4/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=Non…  (19.0s)
+  ...     [stagefile-pip-deps-0 4/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=Non…  (49.0s)
+  ...     [stagefile-pip-deps-0 4/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=Non…  (79.0s)
+  ...     [stagefile-pip-deps-0 4/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  downloading kiwisolver-1.5.1-cp312-cp312-manylinux_2_24_aarch64.manylin…  (94.0s)
+  done    [stagefile-pip-deps-0 4/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  110.6s
+  done    [dependencies 4/4] COPY --link --from=stagefile-pip-deps-0 /opt/stagefile/pip/root/ /  1.3s
+  done    [weights 1/1] COPY model/coke-can.pt /models/coke-can.pt  0.2s
+  done    [fixtures 1/1] COPY fixtures/ /fixtures/  0.0s
+  done    [inference 1/1] COPY service.py preprocessing.py postprocessing.py qualification.py frame_limits.py confidence.py /app/  0.0s
+  ...     exporting + pushing layers  (21.0s)
+  ...     exporting + pushing layers  (36.0s)
+  ...     exporting + pushing layers  (51.0s)
+  ...     exporting + pushing layers  (66.0s)
+
+Build failure details
+  Step: inference 1/1 — COPY service.py preprocessing.py postprocessing.py qualification.py frame_limits.py confidence.py /app/
+  Cause: rpc error: code = Unavailable desc = pushing the built image to the target device failed: device 501 could not assemble the image from chunks: rpc error: code = ResourceExhausted desc = grpc: received message larger tha…
+  Build log: /var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/wendy-build-image-3244977774.log
+✗ image built on 10.10.20.208:50052 but could not be delivered to the device: pushing the built image to the target device failed: device 501 could not assemble the image from chunks: rpc error: code = ResourceExhausted desc = grpc: received message larger than max (7481342 vs. 4194304)
+Deployment timing appended to global ledger /Users/olivertaylor/Documents/Wendy/benchmarks/results/deployment-timings.jsonl
+Deployment timing mirrored to /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/benchmarks/results/deployment-timings.jsonl

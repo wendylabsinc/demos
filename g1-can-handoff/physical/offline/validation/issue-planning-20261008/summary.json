@@ -1,0 +1,107 @@
+{
+  "scene_passes": 18,
+  "scene_attempts": 18,
+  "repeat_count": 3,
+  "captured_feedback_scene_count": 4,
+  "scene_only_fallback_count": 2,
+  "full_dynamic_execution_replay_count": 0,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "table_clearance_m": 0.01,
+  "planner_deadline_s": 30,
+  "tests_passed": 36,
+  "tests_elapsed_s": 31.724,
+  "scenes": [
+    {
+      "name": "orientation-timeout",
+      "passed": true,
+      "elapsed_s": [
+        4.3055497909663245,
+        3.9708653750130907,
+        3.9490402499213815
+      ],
+      "min_table_gap_m": 0.037087085472804364,
+      "min_elbow_torso_gap_m": 0.01100835511006973,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "name": "owned-staging-collision",
+      "passed": true,
+      "elapsed_s": [
+        3.325920332921669,
+        3.291808250010945,
+        3.3282130839070305
+      ],
+      "min_table_gap_m": 0.027082960735300362,
+      "min_elbow_torso_gap_m": 0.0032513385823680976,
+      "missing_fields": [
+        "full measured body and both hand feedback"
+      ],
+      "feedback_source": "scene-only diagnostic with explicit fallback feedback"
+    },
+    {
+      "name": "owned-search-timeout",
+      "passed": true,
+      "elapsed_s": [
+        3.2446834170259535,
+        3.216618165955879,
+        3.2389720419887453
+      ],
+      "min_table_gap_m": 0.027104037215638255,
+      "min_elbow_torso_gap_m": 0.0029592540596907256,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "name": "additional-owned-search-timeout",
+      "passed": true,
+      "elapsed_s": [
+        3.5104617499746382,
+        3.4923187909880653,
+        3.521813750034198
+      ],
+      "min_table_gap_m": 0.027087279916509163,
+      "min_elbow_torso_gap_m": 0.002999388987459639,
+      "missing_fields": [
+        "full measured body and both hand feedback",
+        "exact RGB-D planning frame",
+        "captured controller source"
+      ],
+      "feedback_source": "scene-only diagnostic with explicit fallback feedback"
+    },
+    {
+      "name": "clearance-search-timeout-01",
+      "passed": true,
+      "elapsed_s": [
+        2.623357917065732,
+        2.5716092920629308,
+        2.5687827499350533
+      ],
+      "min_table_gap_m": 0.017013739272242256,
+      "min_elbow_torso_gap_m": 0.00295579168456839,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "name": "clearance-search-timeout-03",
+      "passed": true,
+      "elapsed_s": [
+        2.6945922079030424,
+        2.688506083097309,
+        2.6811461249599233
+      ],
+      "min_table_gap_m": 0.017029269636333888,
+      "min_elbow_torso_gap_m": 0.0029812640845040123,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    }
+  ],
+  "source_sha256": {
+    "g1_can_handoff/task.py": "de32dd4b3b917efbf2266c54ee4f95e01c21cd5b681a79ee917d515d76bb4ec7",
+    "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "offline/planning_failures_replay.py": "6ebcf801770c6f2e1099b30d6c07b8a818b7a4f751bb911fb73b19fa4f1ccdf7",
+    "test_planning_acceptance.py": "015ed9e3ca8d7e8ae5895c2bc078f7851a52214d7fa937137c8105bdf8d5c09d"
+  }
+}
