@@ -1,0 +1,104 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791480707218000000,
+  "end_unix_ns": 1791480796980565200,
+  "native_event_file": "/data/events-20261008T173130Z.jsonl",
+  "events": 651,
+  "camera_events": 95,
+  "selected_frames": [
+    "/data/camera-4024-scene_refresh.npz",
+    "/data/camera-4074-planning.npz",
+    "/data/camera-5185-motion-tracking.npz",
+    "/data/camera-5187-motion-tracking.npz",
+    "/data/camera-5188-motion-tracking.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 95808,
+      "sha256": "601efaba06b34190a9954ae183f689c3453a7bb8f8114a624461c98d0c3252dd"
+    },
+    "rgbd/camera-4024-scene_refresh.source.zip": {
+      "bytes": 109530,
+      "sha256": "64923f61af9c57898abfacad76e135c21deeec6a809c9ee0156814447ae9a484"
+    },
+    "rgbd/camera-4024-scene_refresh.timing.npz": {
+      "bytes": 3904,
+      "sha256": "7723f3538eb5bfde8bc6211da1dca2a2b37bde6e5ff7615b478b463aa98eef13"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938120,
+      "sha256": "e6396d2cf609455d7f5532cca57cbd0d4df144364b1315974f3bf1190df5c072"
+    },
+    "rgbd/camera-4074-planning.source.zip": {
+      "bytes": 109769,
+      "sha256": "71e9b9d1e3a0c7e56bbf8ad6fc75d5b38bf6417292c95bb23c005c2006b5e96e"
+    },
+    "rgbd/camera-4074-planning.timing.npz": {
+      "bytes": 3896,
+      "sha256": "571ad6b3ac1617ef822f4b0d44e727bb1b18283078275d87e922e30ff5e7a48f"
+    },
+    "rgbd/camera-5185-motion-tracking.source.zip": {
+      "bytes": 110324,
+      "sha256": "011be10d38fabd495f40aa59382952796897a7618fa9c4b636fb3b6cf8ad7871"
+    },
+    "rgbd/camera-5185-motion-tracking.timing.npz": {
+      "bytes": 3900,
+      "sha256": "5cc8b4ae8278768181f4cfc1da33721eeca263fbb35e505cf526fadcd7110970"
+    },
+    "rgbd/camera-5187-motion-tracking.source.zip": {
+      "bytes": 111946,
+      "sha256": "d5c98a222f0d012d08218547e7e4281665cb921f767aa6dcdfc1c3f8828ec6a2"
+    },
+    "rgbd/camera-5187-motion-tracking.timing.npz": {
+      "bytes": 3900,
+      "sha256": "6a5888b116614d419cca2f3828fe6111fbd4ea759ebe1e433f2e58fb61817fe4"
+    },
+    "rgbd/camera-5188-motion-tracking.source.zip": {
+      "bytes": 111821,
+      "sha256": "dc5688f86b9d2aba357aa36ed08372b785625adee861446c8a2017d3ac39957f"
+    },
+    "rgbd/camera-5188-motion-tracking.timing.npz": {
+      "bytes": 3896,
+      "sha256": "bf3eba66ef08f77c05ab729309d8e45118c0e1099b00fb8265656ce4e7d89458"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 31191,
+      "sha256": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791480796375861108,
+    "monotonic_ns": 4177466597725,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+    "source": "execution"
+  }
+}

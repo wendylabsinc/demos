@@ -1,0 +1,58 @@
+{
+  "schema": "wendy.g1.trial-dds-export.v1",
+  "session": "20261008T162358Z-ab00e585",
+  "start_unix_ns": 1791480707218000000,
+  "end_unix_ns": 1791480796980565200,
+  "first_record_unix_ns": 1791480707218946327,
+  "last_record_unix_ns": 1791480796980013427,
+  "records": 245009,
+  "status_records": 90,
+  "topics": {
+    "rt/lowstate": 94483,
+    "rt/dex3/left/state": 71852,
+    "rt/dex3/right/state": 71589,
+    "rt/lf/dex3/left/state": 808,
+    "rt/lf/dex3/right/state": 807,
+    "rt/arm_sdk": 4988,
+    "rt/dex3/left/cmd": 241,
+    "rt/dex3/right/cmd": 241
+  },
+  "sealed_segments": [
+    {
+      "file": "samples-000066.jsonl.gz",
+      "bytes": 36646709,
+      "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+    },
+    {
+      "file": "samples-000067.jsonl.gz",
+      "bytes": 36217651,
+      "sha256": "29171d4e8e766ab14ca6c37013b3c83a5896ca740badfb06410d5b77408e8e39"
+    },
+    {
+      "file": "samples-000068.jsonl.gz",
+      "bytes": 37805845,
+      "sha256": "2bc45b09ac34ec0c2ced83af08f86d0ff03cb0388ef8d799d4f7f32a5f7acf4d"
+    },
+    {
+      "file": "samples-000069.jsonl.gz",
+      "bytes": 38992608,
+      "sha256": "95be5c902fdce13d1a6a68e57bba3289b1873a55cdf5ee9f6c7bce7d696ac821"
+    },
+    {
+      "file": "samples-000070.jsonl.gz",
+      "bytes": 36753742,
+      "sha256": "819c066f11c7f51d28e2c5ee53652225cf60c29409706bfd890426680d86d501"
+    }
+  ],
+  "coverage": "All callback-delivered records in the requested interval; upstream DDS loss is unknown",
+  "files": {
+    "samples.jsonl.gz": {
+      "bytes": 53978730,
+      "sha256": "f1c5f2b6aaee2457f519a6560c70aef61ef8c781baa0305162d9ef9b493261b0"
+    },
+    "export_cdr.py": {
+      "bytes": 906,
+      "sha256": "8f613ba8f249332b6a45fe4a1ad2fb3e8594472c68c6430388e8fb156ea38507"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+*
+!s[r]c/coke_detector/
+!s[r]c/
+!s[r]c/coke_detector/__init__.py
+!s[r]c/coke_detector/__init__.py/
+!s[r]c/coke_detector/__init__.py/**
+!s[r]c/coke_detector/settings.py
+!s[r]c/coke_detector/settings.py/
+!s[r]c/coke_detector/settings.py/**
+!s[r]c/coke_detector/lease.py
+!s[r]c/coke_detector/lease.py/
+!s[r]c/coke_detector/lease.py/**
+!s[r]c/coke_detector/camera_service.py
+!s[r]c/coke_detector/camera_service.py/
+!s[r]c/coke_detector/camera_service.py/**

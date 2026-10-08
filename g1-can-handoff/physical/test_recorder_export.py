@@ -40,6 +40,30 @@ class RecorderExportTests(unittest.TestCase):
                 create_recording_export(status,10,31,root/'trial.tar.gz')
             self.assertFalse((root/'trial.tar.gz').exists())
 
+    def test_periodic_status_rows_survive_export_without_being_counted_as_dds(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);status,rows=self.fixture(root)
+            path=root/'samples-000001.jsonl.gz'
+            health=dict(type='recorder_status',unix_ns=14,status=dict(recording=True,dropped={}))
+            path.write_bytes(gzip.compress(gzip.decompress(path.read_bytes())+(json.dumps(health)+'\n').encode(),mtime=0))
+            status['closed_segments'][1]['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+            info=create_recording_export(status,10,23,root/'trial.tar.gz')
+            with tarfile.open(info['path']) as tar:
+                saved=[json.loads(line) for line in gzip.decompress(tar.extractfile('samples.jsonl.gz').read()).splitlines()]
+                manifest=json.load(tar.extractfile('manifest.json'))
+            self.assertEqual(saved,[e for e in rows if 10<=e['unix_ns']<20]+[health]+[e for e in rows if 20<=e['unix_ns']<=23])
+            self.assertEqual(info['records'],8)
+            self.assertEqual(manifest['status_records'],1)
+
+    def test_unknown_rows_without_topic_still_fail_visibly(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);status,_=self.fixture(root)
+            path=root/'samples-000001.jsonl.gz'
+            path.write_bytes(gzip.compress(gzip.decompress(path.read_bytes())+b'{"unix_ns":14,"type":"unknown"}\n',mtime=0))
+            status['closed_segments'][1]['sha256']=hashlib.sha256(path.read_bytes()).hexdigest()
+            with self.assertRaisesRegex(RuntimeError,'Unknown recorder row'):
+                create_recording_export(status,10,23,root/'trial.tar.gz')
+
     def test_missing_start_and_corrupted_sealed_segment_are_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);status,_=self.fixture(root)

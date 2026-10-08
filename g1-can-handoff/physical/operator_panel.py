@@ -3,6 +3,7 @@
 Run on the operator Mac: python3 operator_panel.py. No motion starts on load.
 """
 import json
+from pathlib import Path
 import queue
 import secrets
 import subprocess
@@ -12,21 +13,22 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 DEVICE = '10.10.20.238:50052'
 PORT = 8197
+DEPLOYING = Path("/tmp/wendy-g1-nx2-deployment.lock")
 TOKEN = secrets.token_urlsafe(32)
 
 PAGE = r'''<!doctype html><html><head><meta charset="utf-8"><title>G1 operator controls</title>
 <style>body{margin:0;background:#10151c;color:#edf2f8;font:18px system-ui}main{max-width:1000px;margin:32px auto;padding:24px}h1{font-size:26px}button{font:700 22px system-ui;background:#ffca68;color:#181510;border:0;border-radius:12px;padding:22px;width:100%;cursor:pointer}button:disabled{opacity:.4;cursor:default}img{display:block;width:100%;max-width:800px;border-radius:12px}#state{white-space:pre-wrap;padding:18px;background:#1c2530;border-radius:10px}</style></head><body><main>
 <h1>G1 · Coke demo controls</h1><p>Start runs one pickup attempt. Stop holds the measured arm position. Release returns upper-body control to Unitree and relaxes both hands. Support the can and raised arms before releasing.</p>
 <p>Pressing Release confirms that the can and raised arms are supported.</p>
-<button id="start" style="background:#8adeb2;margin-bottom:12px">Start demo</button>
+<button id="start" disabled style="background:#8adeb2;margin-bottom:12px">Start demo</button>
 <button id="stop" style="background:#a8cafa;margin-bottom:12px">Stop and hold</button>
-<button id="release">Release upper body + fingers to Unitree</button><p id="state">Checking controller…</p>
+<button id="release">Release upper body + fingers to Unitree</button><p id="state">Checking controller…</p><p id="action-status" aria-live="polite"></p>
 <img id="video" alt="Live color camera"><p id="video-state">Connecting to live camera…</p><p id="camera-health"></p>
 <script>const button=document.querySelector('#release'),state=document.querySelector('#state'),video=document.querySelector('#video'),videoState=document.querySelector('#video-state'),cameraHealth=document.querySelector('#camera-health');let busy=false,lastImage=0,imagePending=false,imageStarted=0;
 async function call(path,data){let r=await fetch(path,{method:data?'POST':'GET',headers:{'Content-Type':'application/json','X-Operator-Token':'TOKEN_VALUE'},body:data?JSON.stringify(data):undefined});let s=await r.json();if(!r.ok)throw Error(s.error||'Controller request failed');return s;}
-const start=document.querySelector('#start'),stop=document.querySelector('#stop');let starting=false,polling=false;
-function show(s){start.disabled=starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'')+(s.yolo_confidence_strictly_above?'\nYOLO confidence: above '+Math.round(s.yolo_confidence_strictly_above*100)+'%':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
-start.onclick=async()=>{if(starting)return;starting=true;start.disabled=true;state.textContent='Starting one pickup attempt…';try{show(await call('/start',{}));}catch(e){state.textContent=e.message;}finally{starting=false;poll();}};
+const actionStatus=document.querySelector('#action-status');const start=document.querySelector('#start'),stop=document.querySelector('#stop');let starting=false,polling=false;
+function show(s){start.disabled=!!s.deployment_in_progress||starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.deployment_in_progress?'Updating demo — Start will be available after verification\n':'')+(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'')+(s.yolo_confidence_strictly_above?'\nYOLO confidence: above '+Math.round(s.yolo_confidence_strictly_above*100)+'%':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
+start.onclick=async()=>{if(starting)return;starting=true;start.disabled=true;state.textContent='Starting one pickup attempt…';actionStatus.textContent='Sending Start request…';try{let result=await call('/start',{});actionStatus.textContent='Start accepted — one pickup attempt requested.';show(result);}catch(e){actionStatus.textContent='Start request failed: '+e.message;state.textContent=e.message;}finally{starting=false;poll();}};
 stop.onclick=async()=>{state.textContent='Stopping and holding…';try{show(await call('/stop',{}));}catch(e){state.textContent=e.message;}};
 button.onclick=async()=>{if(busy)return;busy=true;button.disabled=true;state.textContent='Releasing upper body and fingers…';try{show(await call('/release',{can_supported:true}));}catch(e){state.textContent=e.message;}finally{busy=false;button.disabled=false;}};
 video.onload=()=>{imagePending=false;lastImage=Date.now();videoState.textContent='Live camera · received '+new Date(lastImage).toLocaleTimeString();};
@@ -75,6 +77,7 @@ class Wendy:
         action='release' if release else (action or 'status')
         paths={'status':'status','release':'release','start':'demo/start','stop':'stop'}
         if action not in paths:raise ValueError('Unknown operator action')
+        if action in ('start','start_force') and DEPLOYING.is_file():raise RuntimeError('Demo update in progress; Start will be available after verification')
         data=",data=b'{\"can_supported\":true}',headers={'Content-Type':'application/json'}" if action=='release' else (",data=b'{}',headers={'Content-Type':'application/json'}" if action!='status' else '')
         script="""import json,urllib.request,urllib.error
 url='http://127.0.0.1:8102/"""+paths[action]+"""'
@@ -93,6 +96,7 @@ except urllib.error.HTTPError as e:
             payload=json.loads(next(c['text'] for c in result['content'] if c['type']=='text'))
         if payload.get('exit_code')!=0:raise RuntimeError(payload.get('stderr') or 'Controller unavailable')
         state=json.loads(payload['stdout'])
+        state['deployment_in_progress']=DEPLOYING.is_file()
         if state.get('error') and 'phase' not in state:raise RuntimeError(state['error'])
         if action=='release' and (state.get('phase')!='PASSIVE' or state.get('adapter_initialized')):
             raise RuntimeError(state.get('error') or 'Release not confirmed; controller retains hold')
@@ -120,6 +124,7 @@ class Handler(BaseHTTPRequestHandler):
         except Exception as exc:self.send({'error':str(exc)},503)
     def do_POST(self):
         if self.path not in ('/release','/start','/stop') or not self.valid():self.send({'error':'Invalid operator request'},403);return
+        if self.path=='/start' and DEPLOYING.is_file():self.send({'error':'Demo update in progress; Start will be available after verification'},409);return
         try:
             size=int(self.headers.get('Content-Length','0'))
             if not 0<size<1024:raise ValueError('Invalid operator request')

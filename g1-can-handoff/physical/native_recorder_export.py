@@ -28,7 +28,7 @@ def create_recording_export(status,start_ns,end_ns,output):
     # callback reorderings around a rotation boundary.
     overlaps=[i for i,(first,_,_) in enumerate(segments[:-1]) if first<=end_ns and segments[i+1][0]>=start_ns]
     selected=segments[max(0,min(overlaps)-1):min(len(segments)-1,max(overlaps)+2)]
-    counts=collections.Counter();sealed=[];raw=io.BytesIO();first_record=None;last_record=None
+    counts=collections.Counter();status_records=0;sealed=[];raw=io.BytesIO();first_record=None;last_record=None
     with gzip.GzipFile(fileobj=raw,mode='wb',mtime=0,compresslevel=3) as saved:
         for _,path,entry in selected:
             if hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']:
@@ -38,7 +38,13 @@ def create_recording_export(status,start_ns,end_ns,output):
                 for line in src:
                     row=json.loads(line)
                     if start_ns<=row['unix_ns']<=end_ns:
-                        saved.write(line);counts[row['topic']]+=1
+                        if row.get('topic'):
+                            counts[row['topic']]+=1
+                        elif row.get('type')=='recorder_status' and isinstance(row.get('status'),dict):
+                            status_records+=1
+                        else:
+                            raise RuntimeError('Unknown recorder row without topic')
+                        saved.write(line)
                         first_record=row['unix_ns'] if first_record is None else min(first_record,row['unix_ns'])
                         last_record=row['unix_ns'] if last_record is None else max(last_record,row['unix_ns'])
     if not counts:raise RuntimeError('No recorded DDS samples in trial interval')
@@ -46,7 +52,7 @@ def create_recording_export(status,start_ns,end_ns,output):
     if len(data)>64000000:raise RuntimeError('Trial recording exceeds 64 MB transfer budget')
     manifest=dict(schema='wendy.g1.trial-dds-export.v1',session=status['session'],
         start_unix_ns=start_ns,end_unix_ns=end_ns,first_record_unix_ns=first_record,last_record_unix_ns=last_record,
-        records=sum(counts.values()),topics=dict(counts),sealed_segments=sealed,
+        records=sum(counts.values()),status_records=status_records,topics=dict(counts),sealed_segments=sealed,
         coverage='All callback-delivered records in the requested interval; upstream DDS loss is unknown',
         files={'samples.jsonl.gz':dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest())})
     members=[('samples.jsonl.gz',data)]

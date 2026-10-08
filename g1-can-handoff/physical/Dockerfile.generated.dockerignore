@@ -18,6 +18,9 @@
 !pose_alignment.py
 !pose_alignment.py/
 !pose_alignment.py/**
+!latest_frame.py
+!latest_frame.py/
+!latest_frame.py/**
 !perception_worker.py
 !perception_worker.py/
 !perception_worker.py/**

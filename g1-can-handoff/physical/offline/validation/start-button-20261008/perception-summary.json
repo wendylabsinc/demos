@@ -1,0 +1,22 @@
+{
+  "schema": "wendy.g1.trial-perception-age.v1",
+  "observations": 93,
+  "exposure_age_ms": {
+    "min": 165.88505742583948,
+    "median": 222.3516485573782,
+    "max": 272.26895642616
+  },
+  "deadline_ms": 400,
+  "all_below_deadline": true,
+  "limitations": [
+    "One trial, terminated during staging on collision prediction; no grasp or lift qualification.",
+    "Includes initial and motion-tracking observations; not directly comparable to the earlier passive workload."
+  ],
+  "primary_failure": {
+    "unix_ns": 1791480796375861108,
+    "monotonic_ns": 4177466597725,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+    "source": "execution"
+  }
+}

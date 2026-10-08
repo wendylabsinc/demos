@@ -1,0 +1,603 @@
+[
+  {
+    "app_id": "g1-can-camera",
+    "app_version": "0.1.1-compact-tracking",
+    "arguments": [
+      "--device",
+      "10.10.20.238:50052",
+      "--detach",
+      "--yes"
+    ],
+    "built_services": [],
+    "cache_state": "warm",
+    "cli_version": "wendy version 2026.10.01-013419",
+    "command": "wendy run",
+    "deployment_exit_code": 1,
+    "deployment_id": "8e822139-d87d-4119-8818-d59929d309b6",
+    "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+    "exit_code": 1,
+    "functional_readiness": {
+      "configured": true,
+      "evidence_source": null,
+      "exit_code": null,
+      "status": "not_run_deployment_failed"
+    },
+    "git_branch": "codex/g1-nx2-trial-fixes",
+    "git_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+    "git_dirty": true,
+    "note": null,
+    "outcome": "failed",
+    "phase_seconds": {
+      "agent_diagnosis_s": null,
+      "analysis_s": null,
+      "build_lock_wait_s": null,
+      "code_test_s": null,
+      "command_elapsed_s": 0.15356,
+      "device_replacement_s": null,
+      "functional_readiness_s": null,
+      "physical_execution_s": null,
+      "readiness_s": null,
+      "runtime_diagnostics_s": 3.494719,
+      "service_build_s": null,
+      "stagefile_compile_s": null,
+      "target_metadata_s": 0.816802,
+      "upload_s": null
+    },
+    "project": "camera_owner",
+    "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/camera_owner",
+    "recorded_at_utc": "2026-10-08T17:20:33.784395Z",
+    "replaced_services": [],
+    "restarted_services": [],
+    "runtime_diagnostics": {
+      "app_state": {
+        "failure_count": 1,
+        "observed_at_utc": "2026-10-08T17:20:30.289725Z",
+        "running_state": "RUNNING",
+        "status": "available"
+      },
+      "device": "10.10.20.238:50052",
+      "diagnostic_target": null,
+      "evidence_source": [
+        "wendy_run_output",
+        "wendy_device_apps_list",
+        "wendy_device_logs"
+      ],
+      "failure_kind": "deployment_failed",
+      "log_probe_status": "available",
+      "port_conflict": null,
+      "status": "available"
+    },
+    "schema_version": 4,
+    "scope": "whole-project",
+    "source_changes": {
+      "added_files": 8,
+      "approx_text_line_churn": 2280,
+      "approx_text_lines_added": 2280,
+      "approx_text_lines_deleted": 0,
+      "baseline_available": false,
+      "changed_files": 8,
+      "current_input_bytes": 107211,
+      "current_input_files": 8,
+      "current_text_lines": 2280,
+      "deleted_files": 0,
+      "layer_counts_can_overlap": false,
+      "layers": {
+        "project:manifest": {
+          "approx_text_line_churn": 38,
+          "changed_files": 1
+        },
+        "project:packaging": {
+          "approx_text_line_churn": 32,
+          "changed_files": 1
+        },
+        "project:source": {
+          "approx_text_line_churn": 2210,
+          "changed_files": 6
+        }
+      },
+      "line_churn_unmeasured_files": 0,
+      "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+      "modified_files": 0,
+      "state_key": "cfaab1af890e620d84d789408df2a5dd"
+    },
+    "stagefiles": [
+      "build.stagefile.yaml"
+    ],
+    "started_at_utc": "2026-10-08T17:20:30.136082Z",
+    "target": "10.10.20.238:50052",
+    "target_metadata": {
+      "agent_version": "2026.10.05-134249",
+      "cpu_architecture": "arm64",
+      "device_type": null,
+      "gpu_arch": "sm_87",
+      "observed_at_utc": "2026-10-08T17:20:29.315674Z",
+      "os": "ubuntu",
+      "os_version": "22.04",
+      "status": "available"
+    },
+    "transferred_services": [],
+    "wrapper_exit_code": 1,
+    "wrapper_version": "wendy-run-timed.v4"
+  },
+  {
+    "app_id": "g1-can-camera",
+    "app_version": "0.1.1-compact-tracking",
+    "arguments": [
+      "--device",
+      "10.10.20.238:50052",
+      "--detach",
+      "--yes"
+    ],
+    "built_services": [],
+    "cache_state": "warm",
+    "cli_version": "wendy version 2026.10.01-013419",
+    "command": "wendy run",
+    "deployment_exit_code": 1,
+    "deployment_id": "3234979a-1c37-4105-acdf-64a16fe56a71",
+    "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+    "exit_code": 1,
+    "functional_readiness": {
+      "configured": true,
+      "evidence_source": null,
+      "exit_code": null,
+      "status": "not_run_deployment_failed"
+    },
+    "git_branch": "codex/g1-nx2-trial-fixes",
+    "git_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+    "git_dirty": true,
+    "note": null,
+    "outcome": "failed",
+    "phase_seconds": {
+      "agent_diagnosis_s": null,
+      "analysis_s": null,
+      "build_lock_wait_s": null,
+      "code_test_s": null,
+      "command_elapsed_s": 1.17255,
+      "device_replacement_s": null,
+      "functional_readiness_s": null,
+      "physical_execution_s": null,
+      "readiness_s": null,
+      "runtime_diagnostics_s": 3.521332,
+      "service_build_s": null,
+      "stagefile_compile_s": null,
+      "target_metadata_s": 0.500719,
+      "upload_s": null
+    },
+    "project": "camera_owner",
+    "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/camera_owner",
+    "recorded_at_utc": "2026-10-08T17:24:01.925939Z",
+    "replaced_services": [],
+    "restarted_services": [],
+    "runtime_diagnostics": {
+      "app_state": {
+        "failure_count": 1,
+        "observed_at_utc": "2026-10-08T17:23:58.404629Z",
+        "running_state": "RUNNING",
+        "status": "available"
+      },
+      "device": "10.10.20.238:50052",
+      "diagnostic_target": null,
+      "evidence_source": [
+        "wendy_run_output",
+        "wendy_device_apps_list",
+        "wendy_device_logs"
+      ],
+      "failure_kind": "deployment_failed",
+      "log_probe_status": "available",
+      "port_conflict": null,
+      "status": "available"
+    },
+    "schema_version": 4,
+    "scope": "whole-project",
+    "source_changes": {
+      "added_files": 8,
+      "approx_text_line_churn": 2280,
+      "approx_text_lines_added": 2280,
+      "approx_text_lines_deleted": 0,
+      "baseline_available": false,
+      "changed_files": 8,
+      "current_input_bytes": 107211,
+      "current_input_files": 8,
+      "current_text_lines": 2280,
+      "deleted_files": 0,
+      "layer_counts_can_overlap": false,
+      "layers": {
+        "project:manifest": {
+          "approx_text_line_churn": 38,
+          "changed_files": 1
+        },
+        "project:packaging": {
+          "approx_text_line_churn": 32,
+          "changed_files": 1
+        },
+        "project:source": {
+          "approx_text_line_churn": 2210,
+          "changed_files": 6
+        }
+      },
+      "line_churn_unmeasured_files": 0,
+      "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+      "modified_files": 0,
+      "state_key": "cfaab1af890e620d84d789408df2a5dd"
+    },
+    "stagefiles": [
+      "build.stagefile.yaml"
+    ],
+    "started_at_utc": "2026-10-08T17:23:57.232010Z",
+    "target": "10.10.20.238:50052",
+    "target_metadata": {
+      "agent_version": "2026.10.05-134249",
+      "cpu_architecture": "arm64",
+      "device_type": null,
+      "gpu_arch": "sm_87",
+      "observed_at_utc": "2026-10-08T17:23:56.728423Z",
+      "os": "ubuntu",
+      "os_version": "22.04",
+      "status": "available"
+    },
+    "transferred_services": [],
+    "wrapper_exit_code": 1,
+    "wrapper_version": "wendy-run-timed.v4"
+  },
+  {
+    "app_id": "g1-can-camera",
+    "app_version": "0.1.1-compact-tracking",
+    "arguments": [
+      "--device",
+      "10.10.20.238:50052",
+      "--build-host=10.10.20.238:50052",
+      "--detach",
+      "--yes"
+    ],
+    "built_services": [],
+    "cache_state": "unknown",
+    "cli_version": "wendy version 2026.10.01-013419",
+    "command": "wendy run",
+    "deployment_exit_code": 1,
+    "deployment_id": "da43035a-d077-4737-8cc9-3c9daaa404bc",
+    "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+    "exit_code": 1,
+    "functional_readiness": {
+      "configured": true,
+      "evidence_source": null,
+      "exit_code": null,
+      "status": "not_run_deployment_failed"
+    },
+    "git_branch": "codex/g1-nx2-trial-fixes",
+    "git_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+    "git_dirty": true,
+    "note": null,
+    "outcome": "failed",
+    "phase_seconds": {
+      "agent_diagnosis_s": null,
+      "analysis_s": null,
+      "build_lock_wait_s": null,
+      "code_test_s": null,
+      "command_elapsed_s": 0.565961,
+      "device_replacement_s": null,
+      "functional_readiness_s": null,
+      "physical_execution_s": null,
+      "readiness_s": null,
+      "runtime_diagnostics_s": 3.425297,
+      "service_build_s": null,
+      "stagefile_compile_s": null,
+      "target_metadata_s": 0.628277,
+      "upload_s": null
+    },
+    "project": "camera_owner",
+    "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/camera_owner",
+    "recorded_at_utc": "2026-10-08T17:25:02.993039Z",
+    "replaced_services": [],
+    "restarted_services": [],
+    "runtime_diagnostics": {
+      "app_state": {
+        "failure_count": 1,
+        "observed_at_utc": "2026-10-08T17:24:59.567764Z",
+        "running_state": "RUNNING",
+        "status": "available"
+      },
+      "device": "10.10.20.238:50052",
+      "diagnostic_target": null,
+      "evidence_source": [
+        "wendy_run_output",
+        "wendy_device_apps_list",
+        "wendy_device_logs"
+      ],
+      "failure_kind": "deployment_failed",
+      "log_probe_status": "available",
+      "port_conflict": null,
+      "status": "available"
+    },
+    "schema_version": 4,
+    "scope": "whole-project",
+    "source_changes": {
+      "added_files": 9,
+      "approx_text_line_churn": 2239,
+      "approx_text_lines_added": 2239,
+      "approx_text_lines_deleted": 0,
+      "baseline_available": false,
+      "changed_files": 9,
+      "current_input_bytes": 105068,
+      "current_input_files": 9,
+      "current_text_lines": 2239,
+      "deleted_files": 0,
+      "layer_counts_can_overlap": false,
+      "layers": {
+        "project:manifest": {
+          "approx_text_line_churn": 38,
+          "changed_files": 1
+        },
+        "project:packaging": {
+          "approx_text_line_churn": 73,
+          "changed_files": 4
+        },
+        "project:source": {
+          "approx_text_line_churn": 2128,
+          "changed_files": 4
+        }
+      },
+      "line_churn_unmeasured_files": 0,
+      "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+      "modified_files": 0,
+      "state_key": "cfaab1af890e620d84d789408df2a5dd"
+    },
+    "stagefiles": [
+      "build.stagefile.yaml"
+    ],
+    "started_at_utc": "2026-10-08T17:24:59.001737Z",
+    "target": "10.10.20.238:50052",
+    "target_metadata": {
+      "agent_version": "2026.10.05-134249",
+      "cpu_architecture": "arm64",
+      "device_type": null,
+      "gpu_arch": "sm_87",
+      "observed_at_utc": "2026-10-08T17:24:58.368413Z",
+      "os": "ubuntu",
+      "os_version": "22.04",
+      "status": "available"
+    },
+    "transferred_services": [],
+    "wrapper_exit_code": 1,
+    "wrapper_version": "wendy-run-timed.v4"
+  },
+  {
+    "app_id": "g1-can-camera",
+    "app_version": "0.1.1-compact-tracking",
+    "arguments": [
+      "--device",
+      "10.10.20.238:50052",
+      "--build-host=10.10.20.208:50052",
+      "--detach",
+      "--yes"
+    ],
+    "built_services": [],
+    "cache_state": "unknown",
+    "cli_version": "wendy version 2026.10.01-013419",
+    "command": "wendy run",
+    "deployment_exit_code": 0,
+    "deployment_id": "1b1d3079-600a-40e9-bcf4-1626a01f0a49",
+    "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+    "exit_code": 0,
+    "functional_readiness": {
+      "configured": true,
+      "evidence_source": "configured_command_exit_status",
+      "exit_code": 0,
+      "status": "passed"
+    },
+    "git_branch": "codex/g1-nx2-trial-fixes",
+    "git_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+    "git_dirty": true,
+    "note": null,
+    "outcome": "success",
+    "phase_seconds": {
+      "agent_diagnosis_s": null,
+      "analysis_s": null,
+      "build_lock_wait_s": null,
+      "code_test_s": null,
+      "command_elapsed_s": 62.742732,
+      "device_replacement_s": null,
+      "functional_readiness_s": 4.419174,
+      "physical_execution_s": null,
+      "readiness_s": null,
+      "runtime_diagnostics_s": 0.326954,
+      "service_build_s": null,
+      "stagefile_compile_s": null,
+      "target_metadata_s": 0.480063,
+      "upload_s": null
+    },
+    "project": "camera_owner",
+    "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/camera_owner",
+    "recorded_at_utc": "2026-10-08T17:27:31.037504Z",
+    "replaced_services": [],
+    "restarted_services": [],
+    "runtime_diagnostics": {
+      "app_state": {
+        "failure_count": null,
+        "observed_at_utc": "2026-10-08T17:27:30.710581Z",
+        "running_state": "RUNNING",
+        "status": "available"
+      },
+      "device": "10.10.20.238:50052",
+      "diagnostic_target": null,
+      "evidence_source": [
+        "wendy_run_output",
+        "wendy_device_apps_list"
+      ],
+      "failure_kind": null,
+      "log_probe_status": "not_requested",
+      "port_conflict": null,
+      "status": "available"
+    },
+    "schema_version": 4,
+    "scope": "whole-project",
+    "source_changes": {
+      "added_files": 9,
+      "approx_text_line_churn": 2239,
+      "approx_text_lines_added": 2239,
+      "approx_text_lines_deleted": 0,
+      "baseline_available": false,
+      "changed_files": 9,
+      "current_input_bytes": 105068,
+      "current_input_files": 9,
+      "current_text_lines": 2239,
+      "deleted_files": 0,
+      "layer_counts_can_overlap": false,
+      "layers": {
+        "project:manifest": {
+          "approx_text_line_churn": 38,
+          "changed_files": 1
+        },
+        "project:packaging": {
+          "approx_text_line_churn": 73,
+          "changed_files": 4
+        },
+        "project:source": {
+          "approx_text_line_churn": 2128,
+          "changed_files": 4
+        }
+      },
+      "line_churn_unmeasured_files": 0,
+      "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+      "modified_files": 0,
+      "state_key": "cfaab1af890e620d84d789408df2a5dd"
+    },
+    "stagefiles": [
+      "build.stagefile.yaml"
+    ],
+    "started_at_utc": "2026-10-08T17:26:23.548671Z",
+    "target": "10.10.20.238:50052",
+    "target_metadata": {
+      "agent_version": "2026.10.05-134249",
+      "cpu_architecture": "arm64",
+      "device_type": null,
+      "gpu_arch": "sm_87",
+      "observed_at_utc": "2026-10-08T17:26:23.064313Z",
+      "os": "ubuntu",
+      "os_version": "22.04",
+      "status": "available"
+    },
+    "transferred_services": [],
+    "wrapper_exit_code": 0,
+    "wrapper_version": "wendy-run-timed.v4"
+  },
+  {
+    "app_id": "DEV-g1-handoff-physical",
+    "app_version": "0.3.8-latest-frame",
+    "arguments": [
+      "--device",
+      "10.10.20.238:50052",
+      "--build-host=10.10.20.208:50052",
+      "--detach",
+      "--yes"
+    ],
+    "built_services": [],
+    "cache_state": "unknown",
+    "cli_version": "wendy version 2026.10.01-013419",
+    "command": "wendy run",
+    "deployment_exit_code": 0,
+    "deployment_id": "c069d341-a498-4b02-9948-b15dd826ddf1",
+    "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+    "exit_code": 0,
+    "functional_readiness": {
+      "configured": true,
+      "evidence_source": "configured_command_exit_status",
+      "exit_code": 0,
+      "status": "passed"
+    },
+    "git_branch": "codex/g1-nx2-trial-fixes",
+    "git_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+    "git_dirty": true,
+    "note": null,
+    "outcome": "success",
+    "phase_seconds": {
+      "agent_diagnosis_s": null,
+      "analysis_s": null,
+      "build_lock_wait_s": null,
+      "code_test_s": null,
+      "command_elapsed_s": 134.895283,
+      "device_replacement_s": null,
+      "functional_readiness_s": 3.856558,
+      "physical_execution_s": null,
+      "readiness_s": null,
+      "runtime_diagnostics_s": 0.395585,
+      "service_build_s": null,
+      "stagefile_compile_s": null,
+      "target_metadata_s": 0.462381,
+      "upload_s": null
+    },
+    "project": "physical",
+    "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical",
+    "recorded_at_utc": "2026-10-08T17:31:32.645479Z",
+    "replaced_services": [],
+    "restarted_services": [],
+    "runtime_diagnostics": {
+      "app_state": {
+        "failure_count": null,
+        "observed_at_utc": "2026-10-08T17:31:32.249942Z",
+        "running_state": "RUNNING",
+        "status": "available"
+      },
+      "device": "10.10.20.238:50052",
+      "diagnostic_target": null,
+      "evidence_source": [
+        "wendy_run_output",
+        "wendy_device_apps_list"
+      ],
+      "failure_kind": null,
+      "log_probe_status": "not_requested",
+      "port_conflict": null,
+      "status": "available"
+    },
+    "schema_version": 4,
+    "scope": "whole-project",
+    "source_changes": {
+      "added_files": 1,
+      "approx_text_line_churn": 150,
+      "approx_text_lines_added": 133,
+      "approx_text_lines_deleted": 17,
+      "baseline_available": true,
+      "changed_files": 9,
+      "current_input_bytes": 40068522,
+      "current_input_files": 165,
+      "current_text_lines": 19547,
+      "deleted_files": 0,
+      "layer_counts_can_overlap": false,
+      "layers": {
+        "project:manifest": {
+          "approx_text_line_churn": 2,
+          "changed_files": 1
+        },
+        "project:packaging": {
+          "approx_text_line_churn": 9,
+          "changed_files": 4
+        },
+        "project:source": {
+          "approx_text_line_churn": 139,
+          "changed_files": 4
+        }
+      },
+      "line_churn_unmeasured_files": 0,
+      "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+      "modified_files": 8,
+      "state_key": "19fc1a81ad3beeb3e6c87e89ecdcb807"
+    },
+    "stagefiles": [
+      "build.stagefile.yaml"
+    ],
+    "started_at_utc": "2026-10-08T17:29:13.498180Z",
+    "target": "10.10.20.238:50052",
+    "target_metadata": {
+      "agent_version": "2026.10.05-134249",
+      "cpu_architecture": "arm64",
+      "device_type": null,
+      "gpu_arch": "sm_87",
+      "observed_at_utc": "2026-10-08T17:29:12.909183Z",
+      "os": "ubuntu",
+      "os_version": "22.04",
+      "status": "available"
+    },
+    "transferred_services": [],
+    "wrapper_exit_code": 0,
+    "wrapper_version": "wendy-run-timed.v4"
+  }
+]

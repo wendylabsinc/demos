@@ -1,5 +1,20 @@
 # Passive perception performance checks
 
+## Compact tracking deployment and regular Start trial, 8 October 2026
+
+Controller `0.3.8-latest-frame` and camera `0.1.1-compact-tracking` were deployed
+and verified on Nx2. One regular Start button click was acknowledged and ran a
+bounded trial. The trial recorded 93 accepted perception observations with
+165.9–272.3 ms exposure age (median 222.4 ms), all below 400 ms. It stopped during
+staging on a predicted 1.6223 mm table/index-finger intersection, before grasping.
+No camera-freshness error was the terminal failure. These results do not qualify
+the full pickup, establish tail latency, or provide a matched before/after
+comparison against the passive profile below. The collision remains unresolved.
+
+Deployment hashes, native events, exact RGB-D frames, operator acknowledgement,
+and final supported release to PASSIVE are preserved under
+`offline/validation/start-button-20261008/`.
+
 ## Exposure budget profile, 8 October 2026
 
 Sixteen observations through the deployed spawned observation worker were
