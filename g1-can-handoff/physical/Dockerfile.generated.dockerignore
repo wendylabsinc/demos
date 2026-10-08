@@ -12,6 +12,9 @@
 !yolo/confidence.py
 !yolo/confidence.py/
 !yolo/confidence.py/**
+!perception_worker.py
+!perception_worker.py/
+!perception_worker.py/**
 !runtime.py
 !runtime.py/
 !runtime.py/**

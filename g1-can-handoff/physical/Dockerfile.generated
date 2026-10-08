@@ -56,7 +56,7 @@ COPY --link --from=stagefile-pip-deps-3 /opt/stagefile/pip/root/ /
 COPY adapter /app/adapter/
 COPY g1_can_handoff /app/g1_can_handoff/
 COPY yolo/frame_limits.py yolo/confidence.py /app/yolo/
-COPY runtime.py scene_refresh.py factory_table_candidate.py physical_core.py camera_input.py target_tracker.py yolo_client.py benchmark_perception.py pickup.py staging.py sim_runtime.py calibration_points.py fit_camera_calibration.py test_physical_core.py diagnose_head_alignment.py shadow_approach.py shadow_staging.py test_camera_input.py /app/
+COPY perception_worker.py runtime.py scene_refresh.py factory_table_candidate.py physical_core.py camera_input.py target_tracker.py yolo_client.py benchmark_perception.py pickup.py staging.py sim_runtime.py calibration_points.py fit_camera_calibration.py test_physical_core.py diagnose_head_alignment.py shadow_approach.py shadow_staging.py test_camera_input.py /app/
 COPY sdk_native /usr/local/lib/python3.12/site-packages/unitree_sdk2py/utils/lib/
 CMD ["python3", "/app/runtime.py"]
 USER 65532

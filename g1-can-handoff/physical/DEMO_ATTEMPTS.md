@@ -135,3 +135,32 @@ Full attempt files are `.runtime/demo-attempts/20261007T230710Z.json` and
 `20261007T230826Z.json`; compact evidence is included in the tracker validation
 report. Next work is reducing the under-control processing tail and recording
 the first watchdog fault. No completed physical pickup has been verified.
+
+
+## Isolated perception trial, 2026-10-08 00:12 UTC
+
+Controller `3e3c771` (0.3.3-isolated-perception) ran RGB-D processing and
+exact-frame archiving in a spawned process without motor adapters. The
+passive native probe accepted 45 observations, with a maximum independently
+sampled exposure age of 380.62 ms. The 24 focused tests passed before the
+physical trial; deployed runtime, worker and physical-core hashes matched.
+
+The trial passed planning, opened the hand and entered arm staging. It
+stopped before grasping: the first watchdog fault was
+`Visual/depth tracking exposure stale (478.3 ms)`. The controller retained
+ownership in FROZEN state. Its 1,146 recorded command writes are not a count
+of movements and do not establish pickup. No lift was verified.
+
+The worker's last pre-fault computation took 135.83 ms, but parent round-trip
+processing took 211.50 ms. Parent event replay delayed publication of that
+observation; its full frame records were also synchronously duplicated to
+container stdout. This identifies an avoidable delay, but does not establish
+that logging explains every latency spike. Candidate `71989c2` separates file
+logging from the controller-state lock, suppresses duplicated per-frame
+console output while retaining JSONL evidence, and propagates the first
+failure into demo status/attempt summaries. Its 25 focused tests pass; this
+candidate still requires deployment and another measured physical trial.
+
+See `yolo/validation-isolated-worker-trial-20261008.json` for compact native
+evidence. The full local attempt is
+`.runtime/demo-attempts/20261008T001246Z.json`.
