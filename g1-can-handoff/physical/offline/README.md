@@ -163,6 +163,9 @@ See [CASES.md](CASES.md) for the failure-to-test mapping, exact trial IDs, and t
 remaining open cases. GitHub Actions runs the complete `all` profile for relevant
 PR/push changes and uploads the JSON report. Manual workflow dispatch can select
 `regression`, `open`, `simulation`, or `all` for focused checks.
+CI gives each module a 300-second wall-clock budget: the full simulation module
+took 178 seconds on a GitHub runner, close to the local runner's default 180.
+This test-process budget does not change controller planning or motion deadlines.
 
 A home-development loop is: choose a captured failure, run its focused test,
 change the production code, rerun that test, then run the regression profile.
