@@ -1,0 +1,186 @@
+{
+  "parent_commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "physical_core_sha256": "1a1dde56023640dd4771c7af75ca70213c9f375a5a961bf2bd473e49630748d5",
+  "python": "3.10.20 (main, Jul 23 2026, 14:34:21) [Clang 22.1.3 ]",
+  "mujoco": "3.14.0",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "source_trial": 3,
+  "hardware_used": false,
+  "actuation": false,
+  "physical_success_verified": false,
+  "scenario": "Captured base/arms; synthetic can XY and optional table height; recorded terminal state replay",
+  "cases": [
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.35,
+          0.2,
+          1.1809999999999998
+        ],
+        [
+          0.35,
+          0.2,
+          1.021
+        ],
+        [
+          0.35,
+          0.1,
+          1.021
+        ],
+        [
+          0.35,
+          0.1,
+          1.1709999999999998
+        ],
+        [
+          0.37,
+          0.1,
+          1.1709999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2476,
+        "min_table_distance_m": 0.012133615853925216,
+        "min_elbow_torso_distance_m": 0.08162041946169427,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 6.821170625276864,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009926828026256471,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.14500947037913414,
+            0.4104093958876218,
+            0.13162068931474927,
+            0.4214303727416453,
+            -0.2259376483194273,
+            0.5185620346296402,
+            0.021373171335778825
+          ],
+          "path_fraction": 0.3792372881355932
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "lift",
+          "collision": {
+            "phase": "lift",
+            "bodies": [
+              "left_wrist_roll_link",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "",
+              ""
+            ],
+            "distance_m": -0.0010074168110390848
+          },
+          "joint_q": [
+            -0.8837147287414813,
+            0.23007546505802842,
+            0.37174479862243354,
+            -0.7152439146549069,
+            -0.8763728520013834,
+            1.5928846884630563,
+            0.6766116305127722
+          ],
+          "path_fraction": 0.821917808219178
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008627410618245263,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.1541709319433478,
+            0.4232662987162724,
+            0.12661542910175216,
+            0.44336818346760326,
+            -0.2616320842952351,
+            0.5133127423935274,
+            0.05302021921019415
+          ],
+          "path_fraction": 0.3771186440677966
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['left_wrist_roll_link', 'left_wrist_yaw_link'], 'geoms': ['', ''], 'distance_m': -0.0010074168110390848}"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    }
+  ]
+}

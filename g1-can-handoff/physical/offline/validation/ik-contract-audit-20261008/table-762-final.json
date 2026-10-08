@@ -1,0 +1,1422 @@
+{
+  "parent_commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "physical_core_sha256": "1a1dde56023640dd4771c7af75ca70213c9f375a5a961bf2bd473e49630748d5",
+  "python": "3.10.20 (main, Jul 23 2026, 14:34:21) [Clang 22.1.3 ]",
+  "mujoco": "3.14.0",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "source_trial": 3,
+  "hardware_used": false,
+  "actuation": false,
+  "physical_success_verified": false,
+  "scenario": "Captured base/arms; synthetic can XY and optional table height; recorded terminal state replay",
+  "cases": [
+    {
+      "center_m": [
+        0.28,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.28,
+          0.2,
+          0.983
+        ],
+        [
+          0.28,
+          0.2,
+          0.823
+        ],
+        [
+          0.28,
+          0.1,
+          0.823
+        ],
+        [
+          0.28,
+          0.1,
+          0.973
+        ],
+        [
+          0.30000000000000004,
+          0.1,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2241,
+        "min_table_distance_m": 0.01704007438145494,
+        "min_elbow_torso_distance_m": 0.03459712236906662,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 2.895817833021283,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00964142354146074,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.266586654362377,
+            0.36236247508762687,
+            -0.018276692434041508,
+            0.5335606638574582,
+            -0.15938710318799743,
+            0.055041186753131306,
+            0.02349976337824945
+          ],
+          "path_fraction": 0.2917647058823529
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.28,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.28,
+          0.28,
+          0.983
+        ],
+        [
+          0.28,
+          0.28,
+          0.823
+        ],
+        [
+          0.28,
+          0.18,
+          0.823
+        ],
+        [
+          0.28,
+          0.18,
+          0.973
+        ],
+        [
+          0.30000000000000004,
+          0.18,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2487,
+        "min_table_distance_m": 0.017039668037726607,
+        "min_elbow_torso_distance_m": 0.053163999807746394,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 2.8436206658370793,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009191690154696217,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.2416694060765255,
+            0.35487597723718056,
+            0.07736435030888497,
+            0.5643867152124973,
+            -0.1650290518730825,
+            0.08425743343667587,
+            -0.09117712062189202
+          ],
+          "path_fraction": 0.3180428134556575
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.23205744613957974,
+          0.3677582561890373,
+          0.983
+        ],
+        [
+          0.23205744613957974,
+          0.3677582561890373,
+          0.823
+        ],
+        [
+          0.28,
+          0.28,
+          0.823
+        ],
+        [
+          0.28,
+          0.28,
+          0.973
+        ],
+        [
+          0.30000000000000004,
+          0.28,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          0.8775825618903728,
+          -0.479425538604203,
+          0.0
+        ],
+        [
+          0.479425538604203,
+          0.8775825618903728,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2187,
+        "min_table_distance_m": 0.01704488816035843,
+        "min_elbow_torso_distance_m": 0.08245245030086516,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 3.1894354578107595,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008675362342742056,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.3307706049397335,
+            0.38717859883426464,
+            0.13616080489162036,
+            0.4934739728799022,
+            -0.25628990971854826,
+            0.04668323203923796,
+            0.01777487598715734
+          ],
+          "path_fraction": 0.3601190476190476
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.35,
+          0.2,
+          0.983
+        ],
+        [
+          0.35,
+          0.2,
+          0.823
+        ],
+        [
+          0.35,
+          0.1,
+          0.823
+        ],
+        [
+          0.35,
+          0.1,
+          0.973
+        ],
+        [
+          0.37,
+          0.1,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2462,
+        "min_table_distance_m": 0.0170556548934182,
+        "min_elbow_torso_distance_m": 0.04096322490709263,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 3.0951770418323576,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00932441928922423,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.18498196048483487,
+            0.3195181286629966,
+            -0.024800353346633462,
+            0.6170690180883904,
+            -0.09921043423077919,
+            0.0887420124186884,
+            -0.006901625666511851
+          ],
+          "path_fraction": 0.2735294117647059
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.3020574461395797,
+          0.26775825618903726,
+          0.983
+        ],
+        [
+          0.3020574461395797,
+          0.26775825618903726,
+          0.823
+        ],
+        [
+          0.35,
+          0.18,
+          0.823
+        ],
+        [
+          0.35,
+          0.18,
+          0.973
+        ],
+        [
+          0.37,
+          0.18,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          0.8775825618903728,
+          -0.479425538604203,
+          0.0
+        ],
+        [
+          0.479425538604203,
+          0.8775825618903728,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2301,
+        "min_table_distance_m": 0.017063291952750137,
+        "min_elbow_torso_distance_m": 0.020252746291241932,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 5.013973790686578,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 2
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00958796246011207,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.16913948179688446,
+            0.3612275282224967,
+            0.01988723261994718,
+            0.6612305962958955,
+            -0.12352162237947761,
+            0.08504430140185204,
+            -0.06397820922153964
+          ],
+          "path_fraction": 0.285140562248996
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009606959652757133,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.21711507515462034,
+            0.27358688125554653,
+            0.015404191347730967,
+            0.5479727796128273,
+            -0.0680975294696168,
+            0.12448035801351234,
+            0.04733240018634706
+          ],
+          "path_fraction": 0.2785388127853881
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "reason": "Continuous Cartesian lift IK cannot preserve the grasp pose"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.3020574461395797,
+          0.3677582561890373,
+          0.993
+        ],
+        [
+          0.3020574461395797,
+          0.3677582561890373,
+          0.833
+        ],
+        [
+          0.35,
+          0.28,
+          0.833
+        ],
+        [
+          0.35,
+          0.28,
+          0.983
+        ],
+        [
+          0.37,
+          0.28,
+          0.983
+        ]
+      ],
+      "rotation": [
+        [
+          0.8775825618903728,
+          -0.479425538604203,
+          0.0
+        ],
+        [
+          0.479425538604203,
+          0.8775825618903728,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2445,
+        "min_table_distance_m": 0.026424086212896658,
+        "min_elbow_torso_distance_m": 0.08285240967278797,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 5.537174999713898,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009980144723080432,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.21965970937438634,
+            0.3685443697376499,
+            0.06458207332696045,
+            0.6095284940861697,
+            -0.16022498758575993,
+            0.07237380576267233,
+            0.020327404714199516
+          ],
+          "path_fraction": 0.3129496402877698
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_0_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008620627568955827,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.2187664820775541,
+            0.3728549358956229,
+            0.07005359020405214,
+            0.6018229845376698,
+            -0.16487342801349797,
+            0.08464132972016877,
+            0.023436719101203016
+          ],
+          "path_fraction": 0.3125
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              0.8775825618903728,
+              -0.479425538604203,
+              0.0
+            ],
+            [
+              0.479425538604203,
+              0.8775825618903728,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "reason": "Continuous Cartesian lift IK cannot preserve the grasp pose"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.44,
+          0.2,
+          0.993
+        ],
+        [
+          0.44,
+          0.2,
+          0.833
+        ],
+        [
+          0.44,
+          0.1,
+          0.833
+        ],
+        [
+          0.44,
+          0.1,
+          0.983
+        ],
+        [
+          0.46,
+          0.1,
+          0.983
+        ]
+      ],
+      "rotation": [
+        [
+          0.9210609940028851,
+          0.0,
+          0.3894183423086505
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          -0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "clearance": {
+        "samples": 2660,
+        "min_table_distance_m": 0.010978867871205276,
+        "min_elbow_torso_distance_m": 0.07478026504794082,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 16.020007957704365,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.009584092956338771, 'required_clearance_m': 0.01}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 15,
+        "Target pose collision": 1
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00974373659231736,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.08462115386781233,
+            0.3162771662144291,
+            -0.03754635358582876,
+            0.7371784735336407,
+            -0.04675763144952539,
+            0.1606978226618692,
+            -0.029646288969426587
+          ],
+          "path_fraction": 0.25245901639344265
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00956463738461604,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.08367990557300167,
+            0.3197507821852641,
+            -0.04006440098950324,
+            0.7370498156836058,
+            -0.05205412824456956,
+            0.16385125622809815,
+            -0.025942799407656703
+          ],
+          "path_fraction": 0.25
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              0.9210609940028851,
+              0.0,
+              0.3894183423086505
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              -0.3894183423086505,
+              0.0,
+              0.9210609940028851
+            ]
+          ],
+          "reason": "Continuous Cartesian lift IK cannot preserve the grasp pose"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.3920574461395797,
+          0.26775825618903726,
+          0.993
+        ],
+        [
+          0.3920574461395797,
+          0.26775825618903726,
+          0.833
+        ],
+        [
+          0.44,
+          0.18,
+          0.833
+        ],
+        [
+          0.44,
+          0.18,
+          0.983
+        ],
+        [
+          0.46,
+          0.18,
+          0.983
+        ]
+      ],
+      "rotation": [
+        [
+          0.8083070667743452,
+          -0.479425538604203,
+          0.34174674649032766
+        ],
+        [
+          0.4415801631371558,
+          0.8775825618903728,
+          0.18669709850368066
+        ],
+        [
+          -0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "clearance": {
+        "samples": 2324,
+        "min_table_distance_m": 0.010976504846695987,
+        "min_elbow_torso_distance_m": 0.08937588202349601,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 14.727784209419042,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target pose collision: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.009584084177832386, 'required_clearance_m': 0.01}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.009584086411683873, 'required_clearance_m': 0.01}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 18,
+        "Target pose collision": 2
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008728595201016561,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.11579049245757508,
+            0.3042702584949874,
+            0.0013342345410245204,
+            0.6621158067626797,
+            -0.08737595131140272,
+            0.2051923820119251,
+            0.07606672607718773
+          ],
+          "path_fraction": 0.25555555555555554
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009048959843478189,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.11370834159434356,
+            0.30310652381582043,
+            0.00231474870964396,
+            0.6651554272722208,
+            -0.0810736541721042,
+            0.20837399248741795,
+            0.07206788694480949
+          ],
+          "path_fraction": 0.25065963060686014
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              0.8083070667743452,
+              -0.479425538604203,
+              0.34174674649032766
+            ],
+            [
+              0.4415801631371558,
+              0.8775825618903728,
+              0.18669709850368066
+            ],
+            [
+              -0.3894183423086505,
+              0.0,
+              0.9210609940028851
+            ]
+          ],
+          "reason": "Continuous Cartesian lift IK cannot preserve the grasp pose"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "waypoints": [
+        [
+          0.3920574461395797,
+          0.3677582561890373,
+          1.003
+        ],
+        [
+          0.3920574461395797,
+          0.3677582561890373,
+          0.843
+        ],
+        [
+          0.44,
+          0.28,
+          0.843
+        ],
+        [
+          0.44,
+          0.28,
+          0.993
+        ],
+        [
+          0.46,
+          0.28,
+          0.993
+        ]
+      ],
+      "rotation": [
+        [
+          0.8083070667743452,
+          -0.479425538604203,
+          0.34174674649032766
+        ],
+        [
+          0.4415801631371558,
+          0.8775825618903728,
+          0.18669709850368066
+        ],
+        [
+          -0.3894183423086505,
+          0.0,
+          0.9210609940028851
+        ]
+      ],
+      "clearance": {
+        "samples": 2355,
+        "min_table_distance_m": 0.015679511883056066,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 14.038256166968495,
+      "endpoint_errors": [
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 19
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009405640929478163,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.08762452688998879,
+            0.3684928877870935,
+            0.020902502858956076,
+            0.735762670916176,
+            -0.07003666390021293,
+            0.18504141524767045,
+            -0.0007612825027878078
+          ],
+          "path_fraction": 0.2736842105263158
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "lift",
+          "collision": {
+            "phase": "lift",
+            "bodies": [
+              "can",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "can_shell",
+              ""
+            ],
+            "distance_m": -1.4763221858490883e-05
+          },
+          "joint_q": [
+            -0.887049362309456,
+            0.3825504362610047,
+            0.8137903686372425,
+            1.4954861577697045,
+            0.2980070221893901,
+            -0.1686367509363811,
+            0.09213104671210039
+          ],
+          "path_fraction": 0.4868421052631579
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008454584134936839,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.08495683284615221,
+            0.376973466016709,
+            0.015621738413131067,
+            0.7355010859914748,
+            -0.08380785707697981,
+            0.1897434772347048,
+            0.006589808914175583
+          ],
+          "path_fraction": 0.273972602739726
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              0.8083070667743452,
+              -0.479425538604203,
+              0.34174674649032766
+            ],
+            [
+              0.4415801631371558,
+              0.8775825618903728,
+              0.18669709850368066
+            ],
+            [
+              -0.3894183423086505,
+              0.0,
+              0.9210609940028851
+            ]
+          ],
+          "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -1.4763221858490883e-05}"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    }
+  ]
+}

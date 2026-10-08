@@ -7,6 +7,7 @@ import unittest
 from unittest.mock import Mock,patch
 import numpy as np
 from g1_can_handoff.task import plan
+from g1_can_handoff.errors import IKError
 
 class PlanningDeadlineTests(unittest.TestCase):
     def test_recorded_orientation_timeout_is_bounded_before_any_motion(self):
@@ -20,7 +21,7 @@ class PlanningDeadlineTests(unittest.TestCase):
         def blocked_candidate(*args):
             # Reproduce expensive failed IK/preflight, advancing virtual time.
             state['time']+=30.001
-            raise ValueError('No candidate IK solution')
+            raise IKError('No candidate IK solution')
         plant.solve.side_effect=blocked_candidate
         observation=SimpleNamespace(center=np.array([.35,.18,.823]),table_height=.762,timestamp=100.)
         with patch('g1_can_handoff.task.time.monotonic',side_effect=lambda:state['time']):

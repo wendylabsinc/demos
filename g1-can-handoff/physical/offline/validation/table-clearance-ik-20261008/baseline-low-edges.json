@@ -1,0 +1,348 @@
+{
+  "commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "physical_core_sha256": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+  "python": "3.10.20 (main, Jul 23 2026, 14:34:21) [Clang 22.1.3 ]",
+  "mujoco": "3.14.0",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "source_trial": 3,
+  "hardware_used": false,
+  "actuation": false,
+  "physical_success_verified": false,
+  "scenario": "Captured table/base/arms; only can XY changed; recorded terminal state replay",
+  "cases": [
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "error": "No reachable grasp and offer path for this can position; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose",
+      "elapsed_s": 7.443923166021705,
+      "endpoint_errors": [
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.007283876011732537, 'required_clearance_m': 0.01}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.0031318602268917174}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.0026889519186743677}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.0072839058026632625, 'required_clearance_m': 0.01}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.0031318602294025943}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.0026889519583812686}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 23,
+        "Target pose collision": 6
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_hand_index_1_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009738580901510127,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.2978202838372802,
+            0.37476395045165717,
+            0.0808997145255047,
+            0.5805701005415342,
+            -0.21145893839585264,
+            0.11788170275940327,
+            0.00881285908305039
+          ],
+          "path_fraction": 0.328719723183391
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              0.8083070667743452,
+              -0.479425538604203,
+              0.34174674649032766
+            ],
+            [
+              0.4415801631371558,
+              0.8775825618903728,
+              0.18669709850368066
+            ],
+            [
+              -0.3894183423086505,
+              0.0,
+              0.9210609940028851
+            ]
+          ],
+          "reason": "Continuous Cartesian lift IK cannot preserve the grasp pose"
+        }
+      ],
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "error": "No reachable grasp and offer path for this can position",
+      "elapsed_s": 9.61944983387366,
+      "endpoint_errors": [
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "align",
+          "error": "Target pose collision: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_0_link'], 'geoms': ['table', ''], 'distance_m': 0.00728390637592728, 'required_clearance_m': 0.01}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.001381688411342414}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['can', 'left_wrist_yaw_link'], 'geoms': ['can_shell', ''], 'distance_m': -0.002688951946845479}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 27,
+        "Target pose collision": 3
+      },
+      "collision_events": [],
+      "rejected": [],
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    }
+  ],
+  "baseline_mode": true
+}

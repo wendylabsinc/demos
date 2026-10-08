@@ -31,6 +31,10 @@ class AttitudePlantTests(unittest.TestCase):
         subject.gravity_data=mujoco.MjData(subject.ik.model)
         subject.left_hand=np.arange(7)*.01;subject.right_hand=np.arange(7)*.02;subject.right_arm=np.arange(7)*.03
         subject.adapter=Mock()
+        subject.arm_dofs=np.array([subject.ik.model.jnt_dofadr[subject.ik.model.joint(n).id]
+                                  for n in BODY_NAMES[15:]])
+        subject.arm_tau_command=np.zeros(14);subject.arm_tau_time=0.
+        subject.clock=Mock();subject.clock.monotonic.return_value=.02
         def reject_exact_target(data):
             for name,q in zip(BODY_NAMES[22:29],subject.right_arm):
                 self.assertAlmostEqual(data.qpos[subject.ik.model.jnt_qposadr[subject.ik.model.joint(name).id]],q)
@@ -39,6 +43,9 @@ class AttitudePlantTests(unittest.TestCase):
                     self.assertAlmostEqual(data.qpos[subject.ik.model.jnt_qposadr[subject.ik.model.joint(side+'_hand_'+suffix+'_joint').id]],q)
             return {'bodies':['table','hand']}
         with patch.object(subject.ik,'collision_details',side_effect=reject_exact_target):
+            with self.assertRaisesRegex(RuntimeError,'Live target intersects'):
+                subject.command_arm(np.zeros(7),snapshot)
+            subject.config['calibration_method']='independently_measured'
             with self.assertRaisesRegex(RuntimeError,'Live target intersects'):
                 subject.command_arm(np.zeros(7),snapshot)
         subject.adapter.ctrl_dual_arm.assert_not_called()

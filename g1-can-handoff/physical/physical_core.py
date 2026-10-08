@@ -100,7 +100,7 @@ def calibration_start_guard(config, snapshot):
 
 
 def calibrated_scene(config, x=.35, y=.18, decorate=None):
-    """Compile actual base/table geometry, including collision bounding boxes."""
+    """Compile configured base/table estimates, including collision bounds."""
     import mujoco
     from g1_can_handoff.sim import scene
     try:
@@ -193,6 +193,11 @@ class PhysicalPlant:
         self.elbow_torso_pairs=[(a,b) for a in range(model.ngeom) for b in range(model.ngeom)
             if model.geom_bodyid[a]==torso and model.geom_bodyid[b]==elbow
             and model.geom_contype[a] and model.geom_contype[b]]
+        self.table_pairs=[]
+        if getattr(self.ik,'table_clearance_m',0.)>0:
+            table=model.geom('table').id
+            self.table_pairs=[(table,g) for g in range(model.ngeom) if model.geom_contype[g]
+                              and model.body(model.geom_bodyid[g]).name.startswith('left_')]
         self.gravity_data = mujoco.MjData(self.ik.model)
         self.arm_dofs = np.array([self.ik.model.jnt_dofadr[self.ik.model.joint(n).id]
                                   for n in BODY_NAMES[15:]])
@@ -237,7 +242,74 @@ class PhysicalPlant:
 
     def solve(self, position, rotation=None):
         self.sync(self.check())
-        return self.ik.solve(position, rotation)
+        collision=self.ik.collision_details(self.ik.data)
+        if collision is not None:
+            self.event("starting_pose_collision",collision=collision)
+            raise RuntimeError(f"Starting measured pose intersects robot/table: {collision}")
+        return self._pose_ik(position, rotation)
+
+    def _robot_contact_pairs(self, data):
+        model=self.ik.model
+        pairs=set()
+        for contact in data.contact:
+            names=[model.body(model.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
+            if ('can' in names or 'world' in names or
+                    not any(n.startswith('left_') for n in names) or
+                    all('left_hand' in n or n=='left_wrist_yaw_link' for n in names)):
+                continue
+            pairs.add(tuple(sorted((int(contact.geom1),int(contact.geom2)))))
+        return sorted(pairs)
+
+    def _pose_ik(self, position, rotation=None):
+        """Keep existing endpoint IK; recover only a table/torso rejection."""
+        import mujoco
+        from scipy.optimize import least_squares
+        try:
+            return self.ik.solve(position,rotation)
+        except ValueError as exc:
+            if not str(exc).startswith('Target pose collision:'):
+                raise
+            collision=self.ik.collision_details(self.ik.ik_data)
+            if (collision is None or
+                    not ('table' in collision['geoms'] or
+                         set(collision['bodies'])=={'torso_link','left_elbow_link'} or
+                         all(n.startswith('left_') for n in collision['bodies']))):
+                raise
+            original_error=exc
+        model,data=self.ik.model,self.ik.ik_data
+        seed=data.qpos[self.ik.qadr[self.ik.arm]].copy()
+        robot_pairs=self._robot_contact_pairs(data)
+        data.qpos[:]=self.ik.data.qpos
+        adr=self.ik.qadr[self.ik.arm]
+        start=data.qpos[adr].copy()
+        limits=np.asarray(self.config['arm_limits_rad'])[:7]
+        lo,hi=limits[:,0]+.025,limits[:,1]-.025
+        rotation=np.eye(3) if rotation is None else rotation
+        table_gap=getattr(self.ik,'table_clearance_m',0.)+.001
+        def error(q):
+            self.check()
+            data.qpos[adr]=q
+            mujoco.mj_forward(model,data)
+            pose=np.r_[data.site_xpos[self.ik.site]-position,
+                       .15*(data.site_xmat[self.ik.site].reshape(3,3)-rotation).ravel()]
+            torso=self._geometry_gaps(data,self.elbow_torso_pairs)
+            table=self._geometry_gaps(data,self.table_pairs)
+            robot=self._geometry_gaps(data,robot_pairs)
+            return np.r_[pose,5*np.maximum(0,.003-torso),
+                         10*np.maximum(0,table_gap-table),5*np.maximum(0,.003-robot),.003*(q-start)]
+        result=least_squares(error,np.clip(seed,lo,hi),bounds=(lo,hi),max_nfev=250)
+        error(result.x)
+        if (np.linalg.norm(result.fun[:3])>.008 or np.linalg.norm(result.fun[3:12])>.02
+                or self.ik.collision_details(data) is not None):
+            raise original_error
+        self.event('endpoint_clearance_ik_recovered',phase_name=self.ik.contact_phase,
+                   original_collision=collision,position_error_m=float(np.linalg.norm(result.fun[:3])))
+        return result.x
+
+    def _geometry_gaps(self, data, pairs):
+        import mujoco
+        return np.array([mujoco.mj_geomDistance(self.ik.model,data,a,b,.1,None)
+                         for a,b in pairs])
 
     def check(self):
         if self.cancelled or (self.cancel is not None and self.cancel.is_set()):
@@ -263,7 +335,7 @@ class PhysicalPlant:
             return self._cartesian_lift_poses(position,duration,rotation)
         if self.ik.contact_phase in ('align','reach'):
             return self._cartesian_transfer_poses(position,duration,rotation)
-        return self._joint_poses(self.ik.solve(position,rotation),duration)
+        return self._joint_poses(self._pose_ik(position,rotation),duration)
 
     def _cartesian_transfer_poses(self,position,duration=2.,rotation=None):
         if self.ik.contact_phase not in ('align','reach'):
@@ -323,7 +395,7 @@ class PhysicalPlant:
             mujoco.mj_forward(self.ik.model,self.ik.data)
 
     def _continuous_lift_ik(self, position, rotation):
-        """Continue the same branch while using redundancy to clear the torso."""
+        """Continue the same branch; recover table clearance only when needed."""
         import mujoco
         from scipy.optimize import least_squares
         model,data=self.ik.model,self.ik.ik_data
@@ -334,7 +406,17 @@ class PhysicalPlant:
         lo=np.maximum(limits[:,0],start-.2)
         hi=np.minimum(limits[:,1],start+.2)
         rotation=np.eye(3) if rotation is None else rotation
-        def error(q,avoid_torso=False):
+        table_gap=getattr(self.ik,'table_clearance_m',0.)+.001
+        fractions=(.25,.5,.75,1.)
+        def path_table_gaps(q,pairs):
+            gaps=[]
+            for alpha in fractions:
+                data.qpos[adr]=start+alpha*(q-start)
+                mujoco.mj_forward(model,data)
+                gaps.append(self._geometry_gaps(data,pairs))
+            return np.asarray(gaps)
+        def error(q,avoid_torso=False,table_pairs=(),robot_pairs=()):
+            if table_pairs or robot_pairs:self.check()
             data.qpos[adr]=q
             mujoco.mj_forward(model,data)
             pose=np.r_[data.site_xpos[self.ik.site]-position,
@@ -346,7 +428,11 @@ class PhysicalPlant:
             # a valid Cartesian reach/lift. Bias it away before contact, and
             # damp null-space drift. Final joint-path collision checks still
             # decide acceptance; these residuals grant no collision exemption.
-            return np.r_[pose,5*np.maximum(0,.003-gaps),.003*(q-start)]
+            table=path_table_gaps(q,table_pairs) if table_pairs else np.array([])
+            robot=path_table_gaps(q,robot_pairs) if robot_pairs else np.array([])
+            return np.r_[pose,5*np.maximum(0,.003-gaps),
+                         10*np.maximum(0,table_gap-table).ravel(),
+                         5*np.maximum(0,.003-robot).ravel(),.003*(q-start)]
         result=least_squares(error,np.clip(start,lo,hi),bounds=(lo,hi),max_nfev=250)
         error(result.x)
         gaps=[mujoco.mj_geomDistance(model,data,a,b,.1,None) for a,b in self.elbow_torso_pairs]
@@ -354,6 +440,33 @@ class PhysicalPlant:
             result=least_squares(lambda q:error(q,True),np.clip(start,lo,hi),
                                  bounds=(lo,hi),max_nfev=250)
             error(result.x)
+        robot_pairs=set()
+        for alpha in fractions:
+            data.qpos[adr]=start+alpha*(result.x-start)
+            mujoco.mj_forward(model,data)
+            robot_pairs.update(self._robot_contact_pairs(data))
+        robot_pairs=sorted(robot_pairs)
+        active=[]
+        refine_table=False
+        if self.table_pairs:
+            table=path_table_gaps(result.x,self.table_pairs)
+            active=[pair for pair,gap in zip(self.table_pairs,np.min(table,axis=0))
+                    if gap<table_gap+.005]
+            refine_table=bool(np.any(table<table_gap))
+            before_gap=float(np.min(table))
+        if refine_table or robot_pairs:
+            result=least_squares(lambda q:error(q,True,active,robot_pairs),np.clip(result.x,lo,hi),
+                                 bounds=(lo,hi),max_nfev=250)
+            if refine_table:
+                table=path_table_gaps(result.x,self.table_pairs)
+                self.event('table_clearance_ik_refined',phase_name=self.ik.contact_phase,
+                           before_distance_m=before_gap,after_distance_m=float(np.min(table)),
+                           required_clearance_m=self.ik.table_clearance_m)
+            if robot_pairs:
+                self.event('robot_clearance_ik_refined',phase_name=self.ik.contact_phase,
+                           geom_pairs=[list(pair) for pair in robot_pairs],
+                           after_distance_m=float(np.min(path_table_gaps(result.x,robot_pairs))))
+        error(result.x)
         if np.linalg.norm(result.fun[:3])>.008 or np.linalg.norm(result.fun[3:12])>.02:
             self.event('continuous_lift_ik_failed',position_error_m=float(np.linalg.norm(result.fun[:3])),
                        rotation_error=float(np.linalg.norm(result.fun[3:12])),target_position=np.asarray(position).tolist(),
@@ -386,7 +499,7 @@ class PhysicalPlant:
         return goal, poses
 
     def preflight(self, points, rotation):
-        """Check open, reach, close and lift paths without any command output."""
+        """Stage with measured fingers, then check open/reach/close/lift paths."""
         import mujoco
         from g1_can_handoff.task import OPEN, CLOSED
         self.sync(self.check())
@@ -406,11 +519,14 @@ class PhysicalPlant:
                     raise RuntimeError(f'Planned finger trajectory intersects robot/table: {details}')
         try:
             self.set_contact_phase('pregrasp')
-            fingers(OPEN)
+            collision=self.ik.collision_details(self.ik.data)
+            if collision is not None:
+                self.event('starting_pose_collision',collision=collision)
+                raise RuntimeError(f'Starting measured pose intersects robot/table: {collision}')
             for index,position in enumerate(points[:4]):
                 self.set_contact_phase(('approach','align','reach','lift')[index])
                 if index==3:fingers(CLOSED)
-                goal=None if index in (1,2,3) else self.ik.solve(position,rotation)
+                goal=None if index in (1,2,3) else self._pose_ik(position,rotation)
                 try:
                     if index==3:goal,_=self._cartesian_lift_poses(position,rotation=rotation)
                     elif index in (1,2):goal,_=self._cartesian_transfer_poses(position,rotation=rotation)
@@ -424,9 +540,9 @@ class PhysicalPlant:
                     staging_goal=goal.copy()
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
+                if index==0:fingers(OPEN)
             if staging_goal is not None:
                 self.ik.data.qpos[:]=original
-                self.ik.data.qpos[self.ik.qadr[self.ik.fingers]]=OPEN
                 self.set_contact_phase('staging')
                 mujoco.mj_forward(self.ik.model,self.ik.data)
                 from staging import joint_path
@@ -547,7 +663,8 @@ class PhysicalPlant:
 
     def check_live_geometry(self,left_q=None,hand_q=None):
         """Recheck commands against the current measured base attitude."""
-        if self.config.get('calibration_method')!='operator_accepted_factory_table':return
+        if (getattr(self.ik,'table_clearance_m',0.)<=0 and
+                self.config.get('calibration_method')!='operator_accepted_factory_table'):return
         import mujoco
         data=self.gravity_data;data.qpos[:]=self.ik.data.qpos
         if left_q is not None:

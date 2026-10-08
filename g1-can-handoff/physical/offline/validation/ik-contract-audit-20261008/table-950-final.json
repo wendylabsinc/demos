@@ -1,0 +1,992 @@
+{
+  "parent_commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "physical_core_sha256": "1a1dde56023640dd4771c7af75ca70213c9f375a5a961bf2bd473e49630748d5",
+  "python": "3.10.20 (main, Jul 23 2026, 14:34:21) [Clang 22.1.3 ]",
+  "mujoco": "3.14.0",
+  "numpy": "2.2.6",
+  "scipy": "1.15.3",
+  "source_trial": 3,
+  "hardware_used": false,
+  "actuation": false,
+  "physical_success_verified": false,
+  "scenario": "Captured base/arms; synthetic can XY and optional table height; recorded terminal state replay",
+  "cases": [
+    {
+      "center_m": [
+        0.28,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.28,
+          0.2,
+          1.1709999999999998
+        ],
+        [
+          0.28,
+          0.2,
+          1.011
+        ],
+        [
+          0.28,
+          0.1,
+          1.011
+        ],
+        [
+          0.28,
+          0.1,
+          1.1609999999999998
+        ],
+        [
+          0.30000000000000004,
+          0.1,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2991,
+        "min_table_distance_m": 0.01702402400348413,
+        "min_elbow_torso_distance_m": 0.055471493116046565,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 3.759170916862786,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009996390400948334,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.008377710627265833,
+            0.5805058562821788,
+            0.21629040351801077,
+            0.35124550527225123,
+            -0.6828910425785951,
+            0.4358158808915806,
+            0.28866992973102584
+          ],
+          "path_fraction": 0.4020797227036395
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.28,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.28,
+          0.28,
+          1.1709999999999998
+        ],
+        [
+          0.28,
+          0.28,
+          1.011
+        ],
+        [
+          0.28,
+          0.18,
+          1.011
+        ],
+        [
+          0.28,
+          0.18,
+          1.1609999999999998
+        ],
+        [
+          0.30000000000000004,
+          0.18,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2570,
+        "min_table_distance_m": 0.012441304063661337,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 3.782387707848102,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008224251609645896,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            0.0034358436164393658,
+            0.6363970788973157,
+            0.3462426735745014,
+            0.37679480094273765,
+            -0.4874474805067162,
+            0.5331959019929275,
+            -0.029099641109757775
+          ],
+          "path_fraction": 0.4386422976501306
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.28,
+          0.38,
+          1.1709999999999998
+        ],
+        [
+          0.28,
+          0.38,
+          1.011
+        ],
+        [
+          0.28,
+          0.28,
+          1.011
+        ],
+        [
+          0.28,
+          0.28,
+          1.1609999999999998
+        ],
+        [
+          0.30000000000000004,
+          0.28,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2242,
+        "min_table_distance_m": 0.017058928015364128,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 2.9667367497459054,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009154342102129998,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.07064827150543973,
+            0.7417088705818532,
+            0.34450165057301585,
+            0.6300751515832425,
+            -0.21846600894490045,
+            0.4138512230018723,
+            -0.4056281251783534
+          ],
+          "path_fraction": 0.46885245901639344
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.35,
+          0.2,
+          1.1809999999999998
+        ],
+        [
+          0.35,
+          0.2,
+          1.021
+        ],
+        [
+          0.35,
+          0.1,
+          1.021
+        ],
+        [
+          0.35,
+          0.1,
+          1.1709999999999998
+        ],
+        [
+          0.37,
+          0.1,
+          1.1709999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2476,
+        "min_table_distance_m": 0.012133615853925216,
+        "min_elbow_torso_distance_m": 0.08162041946169427,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 6.697786415927112,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009926828026256471,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.14500947037913414,
+            0.4104093958876218,
+            0.13162068931474927,
+            0.4214303727416453,
+            -0.2259376483194273,
+            0.5185620346296402,
+            0.021373171335778825
+          ],
+          "path_fraction": 0.3792372881355932
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "lift",
+          "collision": {
+            "phase": "lift",
+            "bodies": [
+              "left_wrist_roll_link",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "",
+              ""
+            ],
+            "distance_m": -0.0010074168110390848
+          },
+          "joint_q": [
+            -0.8837147287414813,
+            0.23007546505802842,
+            0.37174479862243354,
+            -0.7152439146549069,
+            -0.8763728520013834,
+            1.5928846884630563,
+            0.6766116305127722
+          ],
+          "path_fraction": 0.821917808219178
+        },
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008627410618245263,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.1541709319433478,
+            0.4232662987162724,
+            0.12661542910175216,
+            0.44336818346760326,
+            -0.2616320842952351,
+            0.5133127423935274,
+            0.05302021921019415
+          ],
+          "path_fraction": 0.3771186440677966
+        }
+      ],
+      "rejected": [
+        {
+          "phase": "grasp_candidate_rejected",
+          "rotation": [
+            [
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "reason": "Interpolated physical trajectory intersects robot/table: {'phase': 'lift', 'bodies': ['left_wrist_roll_link', 'left_wrist_yaw_link'], 'geoms': ['', ''], 'distance_m': -0.0010074168110390848}"
+        }
+      ],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.35,
+          0.28,
+          1.1709999999999998
+        ],
+        [
+          0.35,
+          0.28,
+          1.011
+        ],
+        [
+          0.35,
+          0.18,
+          1.011
+        ],
+        [
+          0.35,
+          0.18,
+          1.1609999999999998
+        ],
+        [
+          0.37,
+          0.18,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2650,
+        "min_table_distance_m": 0.010496069121852133,
+        "min_elbow_torso_distance_m": 0.019016017917484154,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 5.004149583168328,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008943323172440492,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.10616672016562445,
+            0.5951078253489632,
+            0.14656036568482408,
+            0.5129009016782389,
+            -0.3395152907973304,
+            0.415303881688171,
+            -0.06551301051640426
+          ],
+          "path_fraction": 0.41875
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.35,
+          0.38,
+          1.1709999999999998
+        ],
+        [
+          0.35,
+          0.38,
+          1.011
+        ],
+        [
+          0.35,
+          0.28,
+          1.011
+        ],
+        [
+          0.35,
+          0.28,
+          1.1609999999999998
+        ],
+        [
+          0.37,
+          0.28,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2432,
+        "min_table_distance_m": 0.016197487688003255,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 3.2921540839597583,
+      "endpoint_errors": [],
+      "endpoint_error_counts": {},
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_yaw_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.009015230785743365,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.24495640968586319,
+            0.6553107711904078,
+            0.09303180410653561,
+            0.8495739547216244,
+            -0.12491173299762715,
+            0.23983590715231184,
+            -0.33879289083614833
+          ],
+          "path_fraction": 0.4236842105263158
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.44,
+          0.2,
+          1.1709999999999998
+        ],
+        [
+          0.44,
+          0.2,
+          1.011
+        ],
+        [
+          0.44,
+          0.1,
+          1.011
+        ],
+        [
+          0.44,
+          0.1,
+          1.1609999999999998
+        ],
+        [
+          0.46,
+          0.1,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2511,
+        "min_table_distance_m": 0.010968443754890606,
+        "min_elbow_torso_distance_m": 0.020800406654806817,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 5.5431590410880744,
+      "endpoint_errors": [
+        {
+          "phase": "align",
+          "error": "Target pose collision: {'phase': 'align', 'bodies': ['world', 'left_elbow_link'], 'geoms': ['table', ''], 'distance_m': 0.00497466434004617, 'required_clearance_m': 0.01}"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_elbow_link'], 'geoms': ['table', ''], 'distance_m': -0.006490080879199073, 'required_clearance_m': 0.01}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target pose collision": 2
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008389821849527499,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.23325499391613375,
+            0.390696977969487,
+            0.054279545467284196,
+            0.6098159383955704,
+            -0.08299912948301735,
+            0.3693625933485864,
+            -0.0726499197812451
+          ],
+          "path_fraction": 0.39285714285714285
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.44,
+          0.28,
+          1.1709999999999998
+        ],
+        [
+          0.44,
+          0.28,
+          1.011
+        ],
+        [
+          0.44,
+          0.18,
+          1.011
+        ],
+        [
+          0.44,
+          0.18,
+          1.1609999999999998
+        ],
+        [
+          0.46,
+          0.18,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2344,
+        "min_table_distance_m": 0.010820023108390012,
+        "min_elbow_torso_distance_m": 0.0880502791586092,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 4.409541333094239,
+      "endpoint_errors": [
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_elbow_link'], 'geoms': ['table', ''], 'distance_m': 0.00044437338949033026, 'required_clearance_m': 0.01}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target pose collision": 1
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.00951892385736177,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.27380783488341975,
+            0.4692770539276162,
+            0.07313838715576068,
+            0.7737437684415853,
+            -0.03964639731653733,
+            0.2681778521741345,
+            -0.19022011033025266
+          ],
+          "path_fraction": 0.39954853273137697
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    },
+    {
+      "center_m": [
+        0.44,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "waypoints": [
+        [
+          0.3920574461395797,
+          0.3677582561890373,
+          1.1709999999999998
+        ],
+        [
+          0.3920574461395797,
+          0.3677582561890373,
+          1.011
+        ],
+        [
+          0.44,
+          0.28,
+          1.011
+        ],
+        [
+          0.44,
+          0.28,
+          1.1609999999999998
+        ],
+        [
+          0.46,
+          0.28,
+          1.1609999999999998
+        ]
+      ],
+      "rotation": [
+        [
+          0.8775825618903728,
+          -0.479425538604203,
+          0.0
+        ],
+        [
+          0.479425538604203,
+          0.8775825618903728,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "clearance": {
+        "samples": 2300,
+        "min_table_distance_m": 0.010997408676105429,
+        "min_elbow_torso_distance_m": 0.06031368278109865,
+        "required_clearance_m": 0.01
+      },
+      "elapsed_s": 5.125012416858226,
+      "endpoint_errors": [
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "approach",
+          "error": "Target cannot be reached with the required grasp orientation"
+        },
+        {
+          "phase": "reach",
+          "error": "Target pose collision: {'phase': 'reach', 'bodies': ['world', 'left_elbow_link'], 'geoms': ['table', ''], 'distance_m': 0.002100850647887488, 'required_clearance_m': 0.01}"
+        }
+      ],
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3,
+        "Target pose collision": 1
+      },
+      "collision_events": [
+        {
+          "phase": "trajectory_collision",
+          "phase_name": "approach",
+          "collision": {
+            "phase": "approach",
+            "bodies": [
+              "world",
+              "left_wrist_pitch_link"
+            ],
+            "geoms": [
+              "table",
+              ""
+            ],
+            "distance_m": 0.008741533533699027,
+            "required_clearance_m": 0.01
+          },
+          "joint_q": [
+            -0.2020301952370307,
+            0.5022052848583205,
+            0.12976877013283608,
+            0.6236886814774522,
+            -0.069789600882169,
+            0.37379479649352737,
+            -0.03795487458140944
+          ],
+          "path_fraction": 0.40591397849462363
+        }
+      ],
+      "rejected": [],
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true
+    }
+  ]
+}

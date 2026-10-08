@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 import mujoco
 from scipy.optimize import least_squares
+from g1_can_handoff.errors import IKError
 
 ROOT = Path(__file__).resolve().parent
 ARM = [f"left_{name}_joint" for name in ("shoulder_pitch", "shoulder_roll", "shoulder_yaw", "elbow", "wrist_roll", "wrist_pitch", "wrist_yaw")]
@@ -97,15 +98,18 @@ class Plant:
             return np.r_[d.site_xpos[self.site]-position, .15*(d.site_xmat[self.site].reshape(3,3)-rotation).ravel()]
         seeds = [np.clip(self.data.qpos[adr],lo,hi), np.clip([-1.2,.2,0,1.2,0,0,0],lo,hi), np.clip([-.5,.2,1.3,1.4,.7,-.9,-.5],lo,hi)]
         candidates = [least_squares(error,s,bounds=(lo,hi),max_nfev=250) for s in seeds]
+        accurate=[]
         valid=[]
         for r in candidates:
-            error(r.x)
-            if np.linalg.norm(r.fun[:3]) < .008 and np.linalg.norm(r.fun[3:]) < .02 and not self.pose_collision(d): valid.append(r)
-        best = min(valid,key=lambda r: np.linalg.norm(r.x-self.data.qpos[adr])) if valid else min(candidates,key=lambda r: np.linalg.norm(r.fun))
+            residual=error(r.x)
+            if np.linalg.norm(residual[:3]) <= .008 and np.linalg.norm(residual[3:]) <= .02:
+                accurate.append(r)
+                if not self.pose_collision(d):valid.append(r)
+        if not accurate:
+            raise IKError("Target cannot be reached with the required grasp orientation")
+        best = min(valid or accurate,key=lambda r: np.linalg.norm(r.x-self.data.qpos[adr]))
         error(best.x)
-        if np.linalg.norm(d.site_xpos[self.site]-position) > .012 or np.linalg.norm(d.site_xmat[self.site].reshape(3,3)-rotation) > .18:
-            raise ValueError("Target cannot be reached with the required grasp orientation")
-        if self.pose_collision(d): raise ValueError("Target pose collides with the table or robot body")
+        if self.pose_collision(d): raise IKError("Target pose collides with the table or robot body")
         return best.x
 
     def pose_collision(self,data):
@@ -115,7 +119,7 @@ class Plant:
             names=[m.body(m.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
             if "can" in names:continue  # Grasp contact is intentional.
             if all("left_hand" in n or n=="left_wrist_yaw_link" for n in names):continue
-            if any(n.startswith("left_") for n in names) and any(n in ("world","torso_link","pelvis") or n.startswith("right_") for n in names):return True
+            if any(n.startswith("left_") for n in names):return True
         return False
 
     def move(self, position, duration=2., rotation=None):

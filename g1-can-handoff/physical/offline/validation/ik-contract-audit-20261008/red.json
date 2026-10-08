@@ -1,0 +1,50 @@
+{
+  "profile": "regression",
+  "tests_run": 4,
+  "successful": false,
+  "seconds": 1.0395311661995947,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_ik_contract",
+      "tests_run": 4,
+      "seconds": 0.13892662478610873,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_ik_contract.IKContractTests.test_endpoint_fallback_does_not_accept_a_10mm_pose_error",
+          "status": "failed",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 40, in test_endpoint_fallback_does_not_accept_a_10mm_pose_error\n    with self.assertRaisesRegex(ValueError, 'Target cannot be reached'):\nAssertionError: ValueError not raised\n"
+        },
+        {
+          "test": "test_ik_contract.IKContractTests.test_endpoint_fallback_does_not_accept_excess_rotation_error",
+          "status": "failed",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 55, in test_endpoint_fallback_does_not_accept_excess_rotation_error\n    with self.assertRaisesRegex(ValueError, 'Target cannot be reached'):\nAssertionError: ValueError not raised\n"
+        },
+        {
+          "test": "test_ik_contract.IKContractTests.test_nonadjacent_left_links_cannot_interpenetrate",
+          "status": "failed",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 30, in test_nonadjacent_left_links_cannot_interpenetrate\n    self.assertIsNotNone(plant.collision_details(data), other)\nAssertionError: unexpectedly None : left_hip_roll_link\n"
+        },
+        {
+          "test": "test_ik_contract.IKContractTests.test_stale_feedback_during_endpoint_search_aborts_immediately",
+          "status": "failed",
+          "detail": "ValueError: No reachable grasp and offer path for this can position\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 63, in test_stale_feedback_during_endpoint_search_aborts_immediately\n    with self.assertRaisesRegex(ValueError, 'body feedback is stale'):\nAssertionError: \"body feedback is stale\" does not match \"No reachable grasp and offer path for this can position\"\n"
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "FFFF\n======================================================================\nFAIL: test_endpoint_fallback_does_not_accept_a_10mm_pose_error (test_ik_contract.IKContractTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 40, in test_endpoint_fallback_does_not_accept_a_10mm_pose_error\n    with self.assertRaisesRegex(ValueError, 'Target cannot be reached'):\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_endpoint_fallback_does_not_accept_excess_rotation_error (test_ik_contract.IKContractTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 55, in test_endpoint_fallback_does_not_accept_excess_rotation_error\n    with self.assertRaisesRegex(ValueError, 'Target cannot be reached'):\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_nonadjacent_left_links_cannot_interpenetrate (test_ik_contract.IKContractTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 30, in test_nonadjacent_left_links_cannot_interpenetrate\n    self.assertIsNotNone(plant.collision_details(data), other)\nAssertionError: unexpectedly None : left_hip_roll_link\n\n======================================================================\nFAIL: test_stale_feedback_during_endpoint_search_aborts_immediately (test_ik_contract.IKContractTests)\n----------------------------------------------------------------------\nValueError: No reachable grasp and offer path for this can position\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_ik_contract.py\", line 63, in test_stale_feedback_during_endpoint_search_aborts_immediately\n    with self.assertRaisesRegex(ValueError, 'body feedback is stale'):\nAssertionError: \"body feedback is stale\" does not match \"No reachable grasp and offer path for this can position\"\n\n----------------------------------------------------------------------\nRan 4 tests in 0.139s\n\nFAILED (failures=4)\n"
+    }
+  ],
+  "baseline_commit": "e9afa925c6931d7612020c5bcb5661fbd9bcd485",
+  "baseline_cases": 4,
+  "note": "Original four invariant tests before adding primitive-distance and retry tests."
+}

@@ -1,6 +1,7 @@
 """Observed-pose grasp, lift verification, and offer. Release requires acceptance."""
 import time
 import numpy as np
+from g1_can_handoff.errors import IKError
 
 OPEN = [0,0,0,0,0,0,0]
 CLOSED = [0,.5,1.,-1.,-1.,-1.,-1.]
@@ -35,7 +36,7 @@ def plan(plant, observation, validate=None, include_offer=True):
             for phase,target in zip(('approach','align','reach','lift','offer'),waypoints[:5 if include_offer else 4]):
                 plant.set_contact_phase(phase)
                 plant.solve(target,rotation)
-        except ValueError:continue
+        except IKError:continue
         plant.set_contact_phase('pregrasp')
         if validate is not None and not validate(waypoints,rotation):continue
         return waypoints,rotation

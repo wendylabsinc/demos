@@ -94,24 +94,33 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertEqual(result['hold_verified_s'],1.)
         self.assertFalse(result['physical_pickup_verified'])
         self.assertEqual(result['backend_assumptions']['hand_kp'],2.)
+        self.assertEqual(result['backend_assumptions']['fk_table_clearance_m'],.01)
         self.assertGreater(result['command_count'],0)
         phases=[e['phase'] for e in result['events']]
         self.assertIn('contact_proxy',phases)
         self.assertEqual(phases[-1],'lift_verified')
 
-    def test_measured_arms_down_start_rejects_interpolated_collision(self):
+    def test_open_arms_down_start_rejects_initial_thumb_hip_collision(self):
         initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,
                  .265,-.286,.089,.798,-.00014,.0102,.00156]
         result=run(height=.762,initial_arm_q14=initial,staging_enabled=False)
         self.assertFalse(result['lift_verified'])
-        self.assertIn('trajectory intersects',result['error'])
+        self.assertIn('Starting measured pose intersects',result['error'])
+        self.assertIn('left_hip_roll_link',result['error'])
+        self.assertIn('left_hand_thumb_2_link',result['error'])
         self.assertNotIn('target',result['event_counts'])
         self.assertEqual(result['command_count'],0)
 
     def test_measured_arms_down_stages_then_lifts_and_holds(self):
         initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,
                  .265,-.286,.089,.798,-.00014,.0102,.00156]
-        result=run(height=.762,initial_arm_q14=initial)
+        # Retain the recorded folded hand instead of assuming an open hand
+        # beside the thigh is a collision-free initial condition.
+        from offline.planner_replay import fixture
+        from pathlib import Path
+        measured=fixture(3,Path(__file__).parent/'offline/evidence/clearance-demos-20261008-preserved')[0].read()
+        fingers=measured['left']['q']+measured['right']['q']
+        result=run(height=.762,initial_arm_q14=initial,initial_hand_q14=fingers)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['hold_verified_s'],1.)
         planned=[e for e in result['events'] if e['phase']=='staging_planned'][-1]['joint_waypoints']
@@ -121,6 +130,15 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertEqual(result['simulation_contact_audit']['pregrasp_contact_steps'],0)
         self.assertEqual(result['event_counts']['lift_observation'],5)
         self.assertLess(result['max_tracking_error_rad'],.15)
+
+    def test_colliding_start_cannot_be_bypassed_by_staging(self):
+        initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,
+                 .265,-.286,.089,.798,-.00014,.0102,.00156]
+        result=run(height=.762,initial_arm_q14=initial,staging_enabled=True)
+        self.assertFalse(result['lift_verified'])
+        self.assertIn('Starting measured pose intersects',result['error'])
+        self.assertEqual(result['command_count'],0)
+        self.assertNotIn('staging_segment',result['event_counts'])
 
     def test_75cm_scene_tracks_finger_split_label_during_hold(self):
         result=run(height=.75)

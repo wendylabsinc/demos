@@ -1,0 +1,12 @@
+{
+  "baseline_commit": "2e1ab974f4eb1fa7660820a3c642b43f028779b1",
+  "tests_run": 1,
+  "successful": false,
+  "hardware_used": false,
+  "failures": [
+    {
+      "test": "test_fk_and_gravity_match_a_scene_built_at_current_attitude (test_attitude_plant.AttitudePlantTests)",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_attitude_plant.py\", line 49, in test_fk_and_gravity_match_a_scene_built_at_current_attitude\n    with self.assertRaisesRegex(RuntimeError,'Live target intersects'):\nAssertionError: RuntimeError not raised\n"
+    }
+  ]
+}

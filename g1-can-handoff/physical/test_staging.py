@@ -31,12 +31,14 @@ class StagingPlannerTests(unittest.TestCase):
             joint_path(self.plant,self.start,self.limits,check=cancelled)
 
     def test_node_limit_bounds_obstructed_search(self):
-        adr=self.plant.qadr[self.plant.arm]
-        self.plant.data.qpos[adr]=[.246,.265,-.092,.820,.0029,.00794,-.00446]
-        mujoco.mj_forward(self.plant.model,self.plant.data)
-        goal=[-.126166,.527521,.314833,-.181504,-.505647,.433954,-.155160]
+        # A node-budget test needs clear endpoints, not a G1 start already
+        # penetrating its hip. This analytic wall blocks only the direct edge.
+        plant=NarrowObstacleTests().plant()
+        goal=plant.data.qpos.copy();goal[0]=.1
+        limits=np.array([[-.2,.2],[-.2,.2]]+[[-1e-5,1e-5]]*5)
+        self.assertFalse(plant.pose_collision(plant.data))
         with self.assertRaisesRegex(RuntimeError,'node limit'):
-            joint_path(self.plant,goal,self.limits,max_nodes=2)
+            joint_path(plant,goal,limits,max_nodes=2)
 
 class NarrowObstacleTests(unittest.TestCase):
     def plant(self):

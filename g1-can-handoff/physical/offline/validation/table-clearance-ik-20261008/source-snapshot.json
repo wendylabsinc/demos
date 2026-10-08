@@ -1,0 +1,9 @@
+{
+  "parent_commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "files": {
+    "physical_core.py": "31b974d705a4d739a55864bf754323b60b1ff176754a0503f3c647df5caa5f04",
+    "test_table_clearance_ik.py": "6a28cf561db06d26530d226eda28794f5d085ca5d339fff76ceb9cc64efd842d",
+    "fixtures/table-clearance-ik.json": "13ca8648cde1d784553088b2295ecc55103e083526b3b7d7f82d5cb8b6cdc8c7",
+    "offline/table_clearance_sweep.py": "076a915b9de0c0262e1d702e36e7ee8fddbb14914f0def9426cb80ad2756cd5f"
+  }
+}

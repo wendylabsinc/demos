@@ -1,0 +1,605 @@
+{
+  "parent_commit": "b75956609a5a9e0003ad9b6485c08036d9b06055",
+  "source_trial": 3,
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "versions": {
+    "python": "3.10.20 (main, Jul 23 2026, 14:34:21) [Clang 22.1.3 ]",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "mujoco": "3.14.0"
+  },
+  "case_count": 27,
+  "passed": 22,
+  "cases": [
+    {
+      "center_m": [
+        0.28,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 1.8442499171942472,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2336,
+        "min_table_distance_m": 0.017027398539030125,
+        "min_elbow_torso_distance_m": 0.0029357988501344744,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 1.8995229583233595,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2521,
+        "min_table_distance_m": 0.01494168199719414,
+        "min_elbow_torso_distance_m": 0.0029880235939624173,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 2.1515551670454443,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3
+      },
+      "clearance": {
+        "samples": 2359,
+        "min_table_distance_m": 0.017043150986547184,
+        "min_elbow_torso_distance_m": 0.03865972298645413,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 1.9993025423027575,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2430,
+        "min_table_distance_m": 0.016994641158483037,
+        "min_elbow_torso_distance_m": 0.002992953930078739,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 3.8794763749465346,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 1
+      },
+      "clearance": {
+        "samples": 2286,
+        "min_table_distance_m": 0.017054027447400366,
+        "min_elbow_torso_distance_m": 0.002992370843664959,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 3.481032125186175,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3
+      },
+      "clearance": {
+        "samples": 2380,
+        "min_table_distance_m": 0.020617467054710348,
+        "min_elbow_torso_distance_m": 0.012359021127878862,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.1,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 14.678056290838867,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 15,
+        "Target pose collision": 1
+      },
+      "clearance": {
+        "samples": 2397,
+        "min_table_distance_m": 0.010977017819526312,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.18,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 16.153137540910393,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 17,
+        "Target pose collision": 2
+      },
+      "clearance": {
+        "samples": 2278,
+        "min_table_distance_m": 0.010976505246262924,
+        "min_elbow_torso_distance_m": 0.08326500723607194,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.28,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "passed": true,
+      "elapsed_s": 15.612643457949162,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 18
+      },
+      "clearance": {
+        "samples": 2410,
+        "min_table_distance_m": 0.015331018846004945,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.1,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": true,
+      "elapsed_s": 6.2209872915409505,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 12,
+        "Target pose collision": 4
+      },
+      "clearance": {
+        "samples": 2521,
+        "min_table_distance_m": 0.010980211245332995,
+        "min_elbow_torso_distance_m": 0.002987023099759672,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.18,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": true,
+      "elapsed_s": 6.453218916896731,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 18,
+        "Target pose collision": 5
+      },
+      "clearance": {
+        "samples": 2405,
+        "min_table_distance_m": 0.010971113163396162,
+        "min_elbow_torso_distance_m": 0.0029878017733393453,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "elapsed_s": 7.893418957944959,
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 23,
+        "Target pose collision": 6
+      },
+      "error": "No reachable grasp and offer path for this can position; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose"
+    },
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": true,
+      "elapsed_s": 13.9296890841797,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 17,
+        "Target pose collision": 4
+      },
+      "clearance": {
+        "samples": 2772,
+        "min_table_distance_m": 0.01183308892283728,
+        "min_elbow_torso_distance_m": 0.0025570279296253814,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.18,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": true,
+      "elapsed_s": 8.644743666052818,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 19,
+        "Target pose collision": 1
+      },
+      "clearance": {
+        "samples": 2511,
+        "min_table_distance_m": 0.010994974101337983,
+        "min_elbow_torso_distance_m": 0.009425368677245971,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "elapsed_s": 10.618136417120695,
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 27,
+        "Target pose collision": 3
+      },
+      "error": "No reachable grasp and offer path for this can position; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose"
+    },
+    {
+      "center_m": [
+        0.44,
+        0.1,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "elapsed_s": 13.595341874752194,
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 30
+      },
+      "error": "No reachable grasp and offer path for this can position"
+    },
+    {
+      "center_m": [
+        0.44,
+        0.18,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "elapsed_s": 10.282132416963577,
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 30
+      },
+      "error": "No reachable grasp and offer path for this can position"
+    },
+    {
+      "center_m": [
+        0.44,
+        0.28,
+        0.7110000000000001
+      ],
+      "table_height_m": 0.65,
+      "passed": false,
+      "elapsed_s": 8.5229487917386,
+      "path_preflight_ok": false,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 30
+      },
+      "error": "No reachable grasp and offer path for this can position"
+    },
+    {
+      "center_m": [
+        0.28,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 3.713163166772574,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 3444,
+        "min_table_distance_m": 0.012223606775139126,
+        "min_elbow_torso_distance_m": 0.041487948885851125,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 2.5806871661916375,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2760,
+        "min_table_distance_m": 0.01700207038305368,
+        "min_elbow_torso_distance_m": 0.06848719279755953,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.28,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 1.9833682500757277,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2208,
+        "min_table_distance_m": 0.01258427741211468,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 2.934099916834384,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2714,
+        "min_table_distance_m": 0.01701549567748717,
+        "min_elbow_torso_distance_m": 0.024891693628590582,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 2.1200926671735942,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2234,
+        "min_table_distance_m": 0.013259978678420018,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.35,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 2.255590124987066,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {},
+      "clearance": {
+        "samples": 2371,
+        "min_table_distance_m": 0.011321917948889287,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.1,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 4.999390374869108,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target pose collision": 2
+      },
+      "clearance": {
+        "samples": 2588,
+        "min_table_distance_m": 0.010876434590414793,
+        "min_elbow_torso_distance_m": 0.09379604945990333,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.18,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 3.704195958096534,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target pose collision": 1
+      },
+      "clearance": {
+        "samples": 2448,
+        "min_table_distance_m": 0.010994175323649755,
+        "min_elbow_torso_distance_m": 0.016206146829131872,
+        "required_clearance_m": 0.01
+      }
+    },
+    {
+      "center_m": [
+        0.44,
+        0.28,
+        1.011
+      ],
+      "table_height_m": 0.95,
+      "passed": true,
+      "elapsed_s": 4.529230332933366,
+      "path_preflight_ok": true,
+      "arm_state_restored": true,
+      "adapter_absent": true,
+      "sender_absent": true,
+      "endpoint_error_counts": {
+        "Target cannot be reached with the required grasp orientation": 3,
+        "Target pose collision": 1
+      },
+      "clearance": {
+        "samples": 2299,
+        "min_table_distance_m": 0.01063908939324932,
+        "min_elbow_torso_distance_m": 0.02760389596099089,
+        "required_clearance_m": 0.01
+      }
+    }
+  ],
+  "provenance": "Captured terminal posture and accepted table/base calibration from preserved trial-03. Synthetic can XY at 0.28/0.35/0.44 m forward, 0.10/0.18/0.28 m robot-left; synthetic table heights 0.65/0.95 m plus captured 0.762 m. Actual exposure timing, command transport, and contact dynamics are not reproduced.",
+  "timing_limit": "Wall times are descriptive local observations; validation jobs overlapped. This is not a controlled speed comparison or a Jetson benchmark."
+}
