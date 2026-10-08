@@ -22,6 +22,11 @@ class PassiveDeploymentTests(unittest.TestCase):
         for call in client.tool.call_args_list:
             self.assertEqual(call.args[0],'container_exec')
             self.assertEqual(call.args[1]['app_name'],'DEV-g1-handoff-physical')
+            # Verify the policy on the deployed status, as well as source
+            # hashes; a correct build with the old environment is insufficient.
+            script=call.args[1]['command'][2]
+            self.assertIn("status['perception_policy']=='phase_boundary'",script)
+            self.assertIn("status['periodic_yolo_recheck_s']",script)
 
     def test_persistent_transport_failure_stops_at_the_attempt_limit(self):
         client=self.client();client.tool.side_effect=RuntimeError('Container unavailable')

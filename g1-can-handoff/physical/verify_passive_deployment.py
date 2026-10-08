@@ -14,7 +14,9 @@ def main(argv=()):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--configure-camera-max-age-ms',type=float)
     args=parser.parse_args(argv)
-    configured_limit=float(json.loads((root/'wendy.json').read_text())['env']['HANDOFF_CAMERA_MAX_AGE_MS'])
+    configured_env=json.loads((root/'wendy.json').read_text())['env']
+    configured_limit=float(configured_env['HANDOFF_CAMERA_MAX_AGE_MS'])
+    configured_policy=configured_env['HANDOFF_PERCEPTION_POLICY']
     if args.configure_camera_max_age_ms is not None and args.configure_camera_max_age_ms!=configured_limit:
         parser.error('Requested budget must equal this deployment descriptor')
     copied={s.strip() for group in re.findall(r'paths:\s*\[([^\]]+)\]',
@@ -44,6 +46,8 @@ if APPLY_CONFIG and previous_budget!=budget:
  with urllib.request.urlopen(request,timeout=5) as response:status=json.load(response)
  assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['camera_max_age_ms']==budget and status['yolo_confidence_strictly_above']==.1,status
+assert status['perception_policy']==CONFIGURED_POLICY,status
+assert status['periodic_yolo_recheck_s']==(None if CONFIGURED_POLICY=='phase_boundary' else 1.),status
 recorder=get(8101,'/status')
 assert recorder['recording'] and not recorder['error'] and not sum(recorder['dropped'].values()) and not recorder['missing_or_stale_required'],recorder
 assert recorder['queue_depth']<=1000 and all(recorder['last_written_age_s'].get(topic,999)<.5 for topic in ['rt/lowstate','rt/dex3/left/state','rt/dex3/right/state']),recorder
@@ -58,7 +62,7 @@ for _ in range(2):
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
+""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
     client=Wendy()
     try:
         for attempt in range(8):

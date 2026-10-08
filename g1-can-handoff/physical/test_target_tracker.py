@@ -59,6 +59,25 @@ class TrackerTests(FrameFixture,unittest.TestCase):
         self.assertEqual(vision['tracking']['reason'],'periodic_recheck')
         self.assertEqual(vision['tracking']['semantic_frame_id'],frame['meta']['frame_id'])
 
+    def test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes(self):
+        self.tracker=TargetTracker(self.detector,recheck_interval_s=None)
+        self.seed();self.tracker.state['semantic_timestamp']-=90
+        # The latest failure was a periodic empty YOLO result despite a
+        # confident visual/depth track. It must not be queried on elapsed time.
+        self.detector.boxes=[]
+        for _ in range(5):
+            frame=self.next_frame();_,vision=self.select(frame)
+            self.assertEqual(vision['tracking']['mode'],'visual_depth')
+            self.accept(frame,vision)
+        self.assertEqual(self.detector.calls,1)
+
+    def test_phase_tracking_still_reacquires_uncertain_identity(self):
+        self.tracker=TargetTracker(self.detector,recheck_interval_s=None)
+        self.seed();self.detector.boxes=[]
+        frame=self.next_frame();frame['color_bgr'][25:85,60:100]=[0,255,0]
+        with self.assertRaisesRegex(RuntimeError,'absent/ambiguous'):self.select(frame)
+        self.assertEqual(self.detector.calls,2)
+
     def test_visual_uncertainty_forces_same_frame_semantic_confirmation(self):
         self.seed();frame=self.next_frame();frame['color_bgr'][25:85,60:100]=[0,255,0]
         _,vision=self.select(frame)

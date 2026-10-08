@@ -49,22 +49,22 @@ def execute(plant, prepared, observe, event):
     observation, baseline, points, rotation = prepared
     plant.validate_start()
     plant.set_contact_phase('pregrasp')
-    plant.hand(OPEN, .8)
-    plant.stage()
-    for phase, point in zip(('approach', 'align', 'reach'), points[:3]):
-        fresh, vision = observe(phase, True)
+    def checkpoint(phase,message):
+        fresh,vision=observe(phase,True)
         if (np.linalg.norm(fresh.center-observation.center) > .01 or
                 abs(fresh.table_height-observation.table_height) > .005):
-            raise RuntimeError('Can or table moved during approach; replanning required')
+            raise RuntimeError(message)
         plant.observe_can(fresh)
+    checkpoint('pre-open','Can or table moved before opening; replanning required')
+    plant.hand(OPEN, .8)
+    checkpoint('pre-stage','Can or table moved before staging; replanning required')
+    plant.stage()
+    for phase, point in zip(('approach', 'align', 'reach'), points[:3]):
+        checkpoint(phase,'Can or table moved during approach; replanning required')
         plant.set_contact_phase(phase)
         event(phase)
         plant.move(point, rotation=rotation)
-    fresh, vision = observe('pre-close', True)
-    if (np.linalg.norm(fresh.center-observation.center) > .01 or
-            abs(fresh.table_height-observation.table_height) > .005):
-        raise RuntimeError('Can or table moved during final reach; refusing to close')
-    plant.observe_can(fresh)
+    checkpoint('pre-close','Can or table moved during final reach; refusing to close')
     plant.set_contact_phase('close')
     event('close')
     plant.hand(CLOSED, 1.2)
@@ -78,6 +78,13 @@ def execute(plant, prepared, observe, event):
         if stationary >= 3:break
         if attempt < 20:plant.step(.1)
     else:raise RuntimeError('Insufficient stable finger obstruction candidates')
+    # Once the fingers close, use the existing post-grasp tracking contract:
+    # the can may rise/settle in the fingers, but must remain within 40 mm in XY.
+    # The pregrasp 10 mm full-position/table check no longer describes this state.
+    fresh,vision=observe('pre-lift',False,expected_center_xy=observation.center[:2])
+    if np.linalg.norm(fresh.center[:2]-observation.center[:2]) > .04:
+        raise RuntimeError('Grasped can moved outside the checked pickup path before lifting')
+    plant.observe_can(fresh)
     plant.set_contact_phase('lift')
     event('lift')
     plant.move(points[3], rotation=rotation)

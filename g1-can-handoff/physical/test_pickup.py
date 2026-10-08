@@ -114,4 +114,53 @@ class SharedPickupTests(unittest.TestCase):
         self.assertEqual(plant.actions.count('hand'),2)
         self.assertEqual(plant.actions.count('move'),4)
 
+    def test_each_motion_phase_has_a_fresh_checkpoint_and_no_mid_motion_queries(self):
+        plant=Plant();timeline=[]
+        plant.hand=lambda *a:timeline.append('hand')
+        plant.stage=lambda:timeline.append('stage')
+        plant.move=lambda *a,**kw:timeline.append('move')
+        def observe(phase,*a,**kw):
+            timeline.append(phase)
+            return self.observe(phase,*a,**kw)
+        execute(plant,self.prepared,observe,lambda *a,**kw:None)
+        self.assertEqual(timeline[:14],[
+            'pre-open','hand','pre-stage','stage','approach','move',
+            'align','move','reach','move','pre-close','hand','pre-lift','move'])
+        self.assertEqual(timeline[14:],[
+            'lift-verification','hold-verification-1','hold-verification-2',
+            'hold-verification-3','hold-verification-4'])
+
+    def test_failed_checkpoint_prevents_its_next_motion(self):
+        checkpoints=['pre-open','pre-stage','approach','align','reach','pre-close','pre-lift']
+        for stop_at in checkpoints:
+            with self.subTest(stop_at=stop_at):
+                timeline=[];plant=Plant()
+                plant.hand=lambda *a:timeline.append('hand')
+                plant.stage=lambda:timeline.append('stage')
+                plant.move=lambda *a,**kw:timeline.append('move')
+                def observe(phase,*a,**kw):
+                    timeline.append(phase)
+                    if phase==stop_at:raise RuntimeError('Exposure stale at phase boundary')
+                    return self.observe(phase,*a,**kw)
+                with self.assertRaisesRegex(RuntimeError,'stale at phase boundary'):
+                    execute(plant,self.prepared,observe,lambda *a,**kw:None)
+                self.assertEqual(timeline[-1],stop_at)
+
+    def test_pre_lift_uses_postgrasp_tracking_bound_without_requiring_table_contact(self):
+        for shift,allowed in [(np.array([.02,0,.02]),True),(np.array([.041,0,0]),False)]:
+            with self.subTest(shift=shift):
+                plant=Plant();calls=[]
+                def observe(phase,require_table,expected_center_xy=None):
+                    if phase=='pre-lift':
+                        calls.append((require_table,expected_center_xy))
+                        return SimpleNamespace(center=self.obs.center+shift,table_height=.75),{}
+                    return self.observe(phase,require_table,expected_center_xy)
+                if allowed:execute(plant,self.prepared,observe,lambda *a,**kw:None)
+                else:
+                    with self.assertRaisesRegex(RuntimeError,'before lifting'):
+                        execute(plant,self.prepared,observe,lambda *a,**kw:None)
+                    self.assertEqual(plant.actions.count('move'),3)
+                self.assertFalse(calls[0][0])
+                np.testing.assert_array_equal(calls[0][1],self.obs.center[:2])
+
 if __name__=='__main__':unittest.main()

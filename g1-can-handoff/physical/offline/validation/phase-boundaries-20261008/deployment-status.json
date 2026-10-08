@@ -1,0 +1,14 @@
+{
+  "observed_unix_s": 1791491466.40022,
+  "status": {
+    "phase": "PASSIVE",
+    "adapter_initialized": false,
+    "demo_running": false,
+    "motion_commands_sent": 88429,
+    "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "perception_policy": null
+  },
+  "read_only": true,
+  "phase_boundary_update_deployed": false,
+  "reason": "Read-only predeployment check now verifies PASSIVE and no arm ownership; the old process retains its historical command count."
+}

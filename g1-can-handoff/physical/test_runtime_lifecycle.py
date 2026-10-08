@@ -116,6 +116,22 @@ class RuntimeLifecycleTests(unittest.TestCase):
         arm.shutdown.assert_not_called();hand.relax.assert_not_called()
         runtime.event.assert_any_call('ownership_reused',recorder_session='test')
 
+    def test_phase_policy_is_wired_through_actual_trial_entry(self):
+        runtime=self.runtime();runtime.camera=Mock();runtime.read=Mock()
+        runtime.archive_guard=Mock(return_value={'age_s':{'rt/arm_sdk':0},'session':'test'})
+        runtime.config=Mock(return_value={'arm_limits_rad':[]})
+        plant=Mock();runtime.make_plant=Mock(return_value=plant)
+        runtime.start_tracking=Mock()
+        result={'lift_verified':True,'visual_rise_m':.13,'hold_verified_s':1}
+        with patch.dict('os.environ',HANDOFF_PERCEPTION_POLICY='phase_boundary'),\
+             patch('runtime.snapshot_guard'),patch('runtime.calibration_start_guard'),\
+             patch('runtime.http_json',side_effect=ConnectionError),patch('pickup.prepare'),\
+             patch('pickup.execute',return_value=result),patch('target_tracker.TargetTracker') as tracker:
+            runtime.run(True)
+        runtime.start_tracking.assert_not_called()
+        tracker.assert_called_once_with(recheck_interval_s=None)
+        self.assertIsNone(plant.perception_guard)
+
     def test_retry_refuses_possible_held_can_or_active_motion(self):
         for active,grasp in ((False,True),(True,False)):
             runtime=self.runtime();runtime.active=active;runtime.grasp_started=grasp

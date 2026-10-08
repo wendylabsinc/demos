@@ -14,10 +14,11 @@ def worker_main(connection,token):
     from runtime import Runtime
     from camera_input import Camera
     from target_tracker import TargetTracker
+    from perception_policy import semantic_recheck_interval_s
     from latest_frame import LatestFrameBuffer
     runtime=Runtime.__new__(Runtime)
     runtime.camera=Camera();runtime.camera.token=token
-    runtime.tracker=TargetTracker(recheck_interval_s=1.)
+    runtime.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
     runtime.archive_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='perception-archive')
     runtime.frame_prefetch=None;runtime.pending_frame=None
     runtime.latest_frames=LatestFrameBuffer(runtime.camera)

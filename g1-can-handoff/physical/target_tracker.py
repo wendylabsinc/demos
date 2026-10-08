@@ -23,7 +23,8 @@ def histogram(bins,mask):
 
 class TargetTracker:
     def __init__(self,detector=None,recheck_interval_s=1.0):
-        if not 0<recheck_interval_s<=1.0:raise ValueError('Semantic recheck interval must be within0..1s')
+        if recheck_interval_s is not None and not 0<recheck_interval_s<=1.0:
+            raise ValueError('Semantic recheck interval must be None or within0..1s')
         self.detector=detector or YoloClient();self.recheck_interval_s=recheck_interval_s
         self.state=None;self.pending=None
 
@@ -55,7 +56,7 @@ class TargetTracker:
         state=self.state
         if frame['meta']['frame_id']<=state['frame_id'] or frame['timestamp']<=state['timestamp']:
             raise RuntimeError('Tracker requires a distinct increasing exact camera frame')
-        if frame['timestamp']-state['semantic_timestamp']>=self.recheck_interval_s:
+        if self.recheck_interval_s is not None and frame['timestamp']-state['semantic_timestamp']>=self.recheck_interval_s:
             return self._semantic(frame,config,world,require_table,expected_center_xy,result,'periodic_recheck')
         depth=frame['depth_m']
         center=np.asarray(state['center_xy'] if expected_center_xy is None else expected_center_xy)

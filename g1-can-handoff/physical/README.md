@@ -118,7 +118,7 @@ startup. This version uses PyTorch CUDA, not the old app's TensorRT engine.
 The detector reuses the older detector's fixed-square letterbox and bounded
 one-class CPU NMS around its CUDA model forward. Inference stays on the
 same warmed CUDA thread, with a fixed 640-pixel FP16 CUDA graph by default.
-Four saved Coke views and two empty regions must pass semantic/box qualification
+Four saved Coke views and six negative images must pass semantic/box qualification
 before readiness. The detector has no
 USB/camera/DDS access or command publisher.
 
@@ -129,6 +129,24 @@ frame ID, exposure time, dimensions, image checksum, model checksum and CUDA
 backend. The configured exposure-age limit (500 ms on NX2) is enforced before and after inference
 and after geometric fitting. It never consumes a latest-box feed or silently
 falls back to red pixels when YOLO is unavailable.
+
+`HANDOFF_PERCEPTION_POLICY=phase_boundary` is the default. The runtime checks a
+new RGB-D exposure immediately before opening, staging, approach, alignment,
+reach, closing and lifting. YOLO establishes the initial identity, then measured
+visual/depth tracking updates it at those boundaries. There is no timed Coke
+reclassification. If a boundary observation is uncertain, YOLO must reacquire
+the target on that exact frame before the next movement is allowed. The five
+post-lift observations still verify the outcome.
+
+The perception worker keeps a fresh camera frame available but performs no
+inference or fitting between boundary requests. Object motion or loss of visual
+identity during an individual movement is therefore detected at the next
+boundary, not continuously. Robot feedback, trajectory/collision limits,
+cancellation, recorder health and the trial deadline remain continuously checked.
+`HANDOFF_PERCEPTION_POLICY=continuous` restores the previous background tracking
+and one-second semantic recheck behavior. Changing policy requires a controller
+restart after supported release; it never resumes or starts motion automatically.
+The controller status reports the active policy and last successful phase check.
 
 Timing and RGB-D payloads are fetched concurrently for the same frame ID.
 The physical runtime reserves 75% of the configured exposure budget for acquisition, trying at most three
@@ -170,8 +188,8 @@ in `PERCEPTION_PERFORMANCE.md`. Inside the physical container,
 `python3 /app/benchmark_perception.py --samples 8` runs a bounded passive check
 without acquiring a camera lease or creating motor adapters.
 
-A Coke detection strictly above 30% confidence (or a higher configured
-threshold) selects a box; exactly 30% is rejected. Measured depth
+A Coke detection strictly above 10% confidence (or a higher configured
+threshold) selects a box; exactly 10% is rejected. Measured depth
 inside its inset region supplies the cylinder points, with finite-depth,
 foreground-depth, upright/table, 6 mm fit, and 6-pixel image-boundary guards.
 The cylinder fit uses sidewall points: the upper 10 mm below the measured lid
@@ -180,14 +198,16 @@ by the commissioned can/table height; tracked height follows measured depth.
 There must be exactly one qualifying initial target. During lift/hold, only
 boxes with measured points in the existing expected-cylinder region can match;
 multiple matches remain ambiguous, and the fitted center must stay within
-40 mm. Finger occlusion may cause YOLO/depth rejection; color cannot rescue a
-missing semantic detection. Repeated observations retain the existing distinct
+40 mm. Finger occlusion may cause tracking or YOLO/depth reacquisition rejection.
+A confident existing track does not need periodic semantic confirmation, but
+uncertain tracking cannot rescue a missing reacquisition. Observations retain the distinct
 frame and vertical-rise checks. YOLO confidence does not authorize motion.
 
 | Runtime variable | Default | Units / allowed range |
 | --- | --- | --- |
 | `HANDOFF_YOLO_URL` | `http://127.0.0.1:8112` | Same-host inference URL; timestamps use the NX2 monotonic clock |
-| `HANDOFF_YOLO_MIN_CONFIDENCE` | `0.30` | Probability, `0.30..0.99`; geometry and motion gates remain required |
+| `HANDOFF_YOLO_MIN_CONFIDENCE` | `0.10` | Probability, `0.10..0.99`; geometry and motion gates remain required |
+| `HANDOFF_PERCEPTION_POLICY` | `phase_boundary` | Phase checks without periodic classification; `continuous` restores background tracking and 1 s rechecks |
 | `YOLO_MODEL_PATH` (detector app) | `/models/coke-can.pt` | Checksum-pinned checkpoint file |
 | `YOLO_CUDA_GRAPH` (detector app) | `1` | `1`: captured FP16 forward; `0`: eager FP16 comparison |
 

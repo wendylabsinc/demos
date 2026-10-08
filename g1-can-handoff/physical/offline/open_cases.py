@@ -45,6 +45,8 @@ class ColdOwnershipAcceptance(unittest.TestCase):
             subject.run(True)
         self.assertTrue(planned[-1],'Final plan was measured before cold SDK ownership changed robot pose')
         self.assertAlmostEqual(executed[-1],.39629,places=5)
+        subject.start_tracking.assert_not_called()
+        self.assertIsNone(subject.make_plant.return_value.perception_guard)
 
     def failed_owned_attempt(self,failure):
         subject=self.subject();state={'owned':False}

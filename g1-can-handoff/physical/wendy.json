@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.13-regression-acceptance",
+  "version": "0.3.14-phase-perception",
   "entitlements": [
     {
       "type": "network",
@@ -19,6 +19,7 @@
     "timeoutSeconds": 60
   },
   "env": {
+    "HANDOFF_PERCEPTION_POLICY": "phase_boundary",
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
     "HANDOFF_YOLO_MIN_CONFIDENCE": "0.10",
     "HANDOFF_CAMERA_MAX_AGE_MS": "500",

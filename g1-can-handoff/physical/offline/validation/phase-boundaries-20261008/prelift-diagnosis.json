@@ -1,0 +1,19 @@
+{
+  "scope": "offline MuJoCo diagnostic, no physical robot motion",
+  "case": "height .762, default observation camera",
+  "error_before_fix": "Can or table moved before lifting; replanning required",
+  "owned_initial_observation_m": [
+    0.35010740560290976,
+    0.18010706044559258,
+    0.823
+  ],
+  "pre_lift_observation_m": [
+    0.33629363211245994,
+    0.1541493563935506,
+    0.823
+  ],
+  "xy_displacement_m": 0.029404467988706252,
+  "pregrasp_bound_m": 0.01,
+  "existing_postgrasp_bound_m": 0.04,
+  "finding": "Fingers displace the grasped can within the existing postgrasp bound. Apply the postgrasp contract at the new pre-lift checkpoint, after stable finger obstruction."
+}

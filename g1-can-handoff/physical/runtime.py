@@ -17,6 +17,7 @@ sys.path.insert(0,str(Path(__file__).parent/'adapter'))
 from physical_core import calibration,calibration_start_guard,calibrated_scene,PhysicalPlant,snapshot_guard
 from camera_input import Camera,geometry,materialize_rgbd
 from yolo_client import fresh, frame_age_limit_s
+from perception_policy import perception_policy,semantic_recheck_interval_s
 
 DATA=Path(os.getenv('HANDOFF_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
 EVENTS=DATA/('events-'+time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'.jsonl')
@@ -123,7 +124,10 @@ class Runtime:
                 'camera_max_age_ms':frame_age_limit_s()*1000,
                 'yolo_confidence_strictly_above':confidence_threshold()}
         observation=getattr(self,'tracking_observation',None)
-        result.update(perception_mode='yolo_visual_depth',tracking_error=getattr(self,'tracking_error',None),
+        result.update(perception_mode='yolo_visual_depth',perception_policy=perception_policy(),
+                      periodic_yolo_recheck_s=semantic_recheck_interval_s(),
+                      last_phase_check=getattr(self,'last_phase_check',None),
+                      tracking_error=getattr(self,'tracking_error',None),
                       tracking_exposure_age_ms=None if observation is None else (time.monotonic()-observation.timestamp)*1000,
                       tracking_vision=getattr(self,'tracking_vision',None))
         result['first_failure']=getattr(self,'first_failure',None)
@@ -330,6 +334,19 @@ class Runtime:
         self.tracking_thread=threading.Thread(target=work,daemon=True,name='visual-depth-tracking')
         self.tracking_thread.start()
 
+    def configure_motion_perception(self,plant,config,baseline):
+        if perception_policy()=='continuous':
+            self.start_tracking(config,baseline)
+            plant.perception_guard=self.tracking_guard
+        else:
+            # Freshness and geometry are checked synchronously at the next
+            # movement boundary. Robot feedback/collision/stop guards remain
+            # active in PhysicalPlant.check and the runtime watchdog.
+            self.stop_tracking()
+            self.tracking_baseline=None
+            self.tracking_observation=None;self.tracking_vision=None;self.tracking_error=None
+            plant.perception_guard=None
+
     def stop_tracking(self):
         stop=getattr(self,'tracking_stop',None)
         if stop is not None:stop.set()
@@ -514,11 +531,17 @@ class Runtime:
         try:
             config=self.config(refresh=True)
             from target_tracker import TargetTracker
-            self.tracker=TargetTracker(recheck_interval_s=1.)
+            self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
+            self.last_phase_check=None
+            self.event('perception_policy',policy=perception_policy(),
+                       periodic_yolo_recheck_s=semantic_recheck_interval_s())
             from perception_worker import PerceptionWorker
             self.perception=PerceptionWorker(self.camera.token)
             def observe(phase, require_table, expected_center_xy=None):
-                return self.observe_frame(config,phase,require_table,expected_center_xy)
+                observation,vision=self.observe_frame(config,phase,require_table,expected_center_xy)
+                self.last_phase_check={'phase':phase,'frame_id':vision.get('frame_id'),
+                    'exposure_time':observation.timestamp,'tracking':vision.get('tracking')}
+                return observation,vision
             def phase_event(phase, **fields):
                 nonlocal grasp_started
                 if phase=='close':
@@ -536,8 +559,7 @@ class Runtime:
             if not actuate:
                 if resuming:self.phase='FROZEN'
                 return {'planned':True,'motion_commands_sent':self.motion_commands_sent}
-            self.start_tracking(config,prepared[0])
-            plant.perception_guard=self.tracking_guard
+            self.configure_motion_perception(plant,config,prepared[0])
             # Old teleop service must be stopped, not merely STANDBY, before a
             # separate publisher can take ownership. Refuse any reachable service.
             try:http_json(8090)
@@ -565,7 +587,7 @@ class Runtime:
                 self.wait_for_control_settle()
                 if self.cancel.is_set():raise RuntimeError('Operator cancelled before owned replanning')
                 config=self.config(refresh=True)
-                self.tracker=TargetTracker(recheck_interval_s=1.)
+                self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
                 self.perception=PerceptionWorker(self.camera.token)
                 held_plant=plant
                 plant=self.make_plant(config);plant.inherit_control_hold(held_plant);self.plant=plant
@@ -575,7 +597,7 @@ class Runtime:
                     pending=DATA/'calibration.pending.json'
                     pending.write_text(json.dumps(config,indent=2)+'\n');pending.replace(DATA/'calibration.json')
                 self.event('owned_plan_context',calibration=config,reference_after_control_handover=True)
-                self.start_tracking(config,prepared[0]);plant.perception_guard=self.tracking_guard
+                self.configure_motion_perception(plant,config,prepared[0])
                 plant.validate_start()
             else:
                 self.arm.set_arm_position_limits(config['arm_limits_rad'])

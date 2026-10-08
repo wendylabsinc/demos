@@ -127,6 +127,7 @@ def run(historical=False, displacement_m=0.):
              'g1_dex3':SimpleNamespace(Dex3Sender=lambda **kw:hand)}
     started=time.monotonic();error=None;reached=False
     with tempfile.TemporaryDirectory() as directory,patch.dict('sys.modules',modules),\
+         patch.dict('os.environ',HANDOFF_PERCEPTION_POLICY='continuous'),\
          patch('perception_worker.PerceptionWorker',return_value=Mock()),\
          patch.object(runtime_module,'http_json',side_effect=ConnectionError),\
          patch.object(runtime_module,'DATA',Path(directory)):
