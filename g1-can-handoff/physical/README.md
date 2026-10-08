@@ -272,6 +272,13 @@ files for exact artifacts, samples, dataset metrics, and simulation failures.
 
 ## Shared simulation regression
 
+Simulated can estimates now default to repeatable, correlated XY noise from
+recorded real phase observations. The physical can pose remains separate. Use
+`--noise-trace approach-drift` to reproduce the recorded 11.6 mm reach drift,
+`--noise-trace handover` for the 10.4 mm handover shift, or `--position-noise none`
+to retain the ideal baseline. See [noise replay details](offline/README.md#recorded-position-noise-in-simulation)
+and [the paired comparison](offline/validation/position-noise-20261008/README.md).
+
 `runtime.py` and `sim_runtime.py` call the same `pickup.prepare` and
 `pickup.execute`. Both use `PhysicalPlant` for measured-state IK, collision
 checks, trajectory limits, finger ordering, tracking, obstruction candidates

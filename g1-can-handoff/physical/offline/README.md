@@ -30,10 +30,11 @@ views. The previous synthetic-red tests remain as a comparison baseline.
 
 This is not a calibrated digital twin: the base is supported, the can is an
 untextured cylinder, hand friction/gains are modeled, feedback is synthetic, and
-camera geometry is approximate unless supplied explicitly. The synthetic camera
-does not model USB/HTTP queues, CUDA inference latency, realistic lighting or
-sensor noise. Those failures use recorded-data replays rather than invented
-physics. Neither kind of offline test proves a physical pickup will succeed.
+camera geometry is approximate unless supplied explicitly. Simulation now adds
+recorded, correlated XY estimate drift after RGB-D geometry; see the position-noise
+section below. It does not model USB/HTTP queues, CUDA inference latency, realistic
+lighting or depth-pixel noise. Those failures use recorded-data replays rather than
+invented physics. Neither kind of offline test proves a physical pickup will succeed.
 
 **Current known failure:** the external-view color/depth pickup passes, while
 the approximate head-camera view stops at lift verification with
@@ -348,3 +349,51 @@ became unreachable; raw DDS transfer is **not yet hardware-verified**. The
 controller event/image archives were already transferred and verified locally.
 Connection failures also produce local error records, with Start marked as
 unattempted when Wendy initialization fails.
+
+## Recorded position noise in simulation
+
+`sim_runtime.py` now defaults to `--position-noise recorded`. A seeded whole-trace
+selection replays the XY offsets from sixteen phase observations in two October 8
+trials, preserving millimetre jitter, the 10.4 mm control-handover shift, and the
+11.6 mm approach drift. Noise is applied to the geometry result before the
+production tracker accepts it; the planner and all later checkpoints see the same
+noisy estimate. The physical can in MuJoCo stays at its original pose until
+physics moves it. Observation timestamps, Z, table height, depth-fit residuals and
+lift height are not fabricated.
+
+```sh
+mkdir -p offline/reports/position-noise
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --noise-trace approach-drift --output offline/reports/position-noise/drift.json
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --identity-mode color_depth --setup-json offline/validation/position-noise-20261008/setup.json --position-noise none --output offline/reports/position-noise/ideal.json
+python offline/run.py --test test_simulation_position_noise
+python offline/run.py --test test_sim_position_noise
+```
+
+The drift run should stop at reach with `Can or table moved during approach;
+replanning required`; it returns nonzero intentionally. The regression tests assert
+that stop before a reach/close command. Existing ideal physics tests explicitly
+set `position_noise='none'`; noisy cases have their own lab coverage.
+
+`--noise-seed 7` repeats recording selection; `--noise-trace handover` selects the
+other pattern. Selection weights are equal for test coverage, **not measured
+probabilities**. `--noise-scale 1` preserves recorded offsets; other scales are
+stress tests. Missing phases retain the final offset and mark it `extrapolated`
+in each observation. A second preflight reuses the last recorded planning/refresh
+occurrence when the source already held control.
+
+This is an empirical failure model, not calibrated sensor accuracy: no independent
+can ground truth was recorded, so some observed drift may be actual movement.
+Two traces do not establish a general noise distribution, pixel noise, temporal
+spectrum, or postgrasp variability. Sampling is by movement phase, not elapsed
+seconds. The result records seed, selected trace, scale, profile checksum, per-frame
+offsets, unperturbed estimates and source frame IDs separately from physical truth.
+
+`g1_can_handoff/position_noise_profile.json` preserves the selected native samples
+and source archive/event checksums. To regenerate it from the original archives:
+
+```sh
+python offline/fit_position_noise.py --real-directory offline/validation/sim-real-20261008 --output g1_can_handoff/position_noise_profile.json
+```
+
+See [the paired simulation report](validation/position-noise-20261008/README.md)
+for current ideal/noisy runs and the comparison with the real estimates.

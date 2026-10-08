@@ -1,0 +1,62 @@
+{
+  "profile": "regression",
+  "tests_run": 7,
+  "successful": true,
+  "seconds": 0.5194030000129715,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_simulation_position_noise",
+      "tests_run": 7,
+      "seconds": 0.003207665984518826,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_handover_bias_persists_in_later_phase_estimates",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_invalid_noise_settings_and_estimates_are_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_large_noisy_estimate_cannot_bypass_postgrasp_tracking_gate",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_none_and_zero_scale_retain_ideal_estimate",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_real_approach_drift_reproduces_stop_before_reach_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_repeated_frame_does_not_resample_or_advance_phase",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_simulation_position_noise.PositionNoiseTests.test_seed_repeats_entire_correlated_trace_and_metadata",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.003s\n\nOK\n"
+    }
+  ]
+}

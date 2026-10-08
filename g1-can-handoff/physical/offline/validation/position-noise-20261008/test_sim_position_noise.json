@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 7.093008583062328,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_position_noise",
+      "tests_run": 1,
+      "seconds": 6.517468250007369,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_sim_position_noise.NoisyPerceptionSimulationTests.test_real_seeded_scene_stops_at_recorded_reach_drift",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n.\n----------------------------------------------------------------------\nRan 1 test in 6.517s\n\nOK\n"
+    }
+  ]
+}

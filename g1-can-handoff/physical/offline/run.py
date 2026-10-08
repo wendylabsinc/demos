@@ -57,7 +57,7 @@ def main():
     args=parser.parse_args()
     if args.child:return child(*args.child)
     manifest=integrity()
-    simulations=['test_sim_color_depth','test_sim_runtime']
+    simulations=['test_sim_color_depth','test_sim_runtime','test_simulation_position_noise','test_sim_position_noise']
     modules=sorted(p.stem for p in PHYSICAL.glob('test_*.py') if p.stem not in simulations)
     modules+=['offline.open_cases']
     if args.profile=='simulation':modules=list(simulations)

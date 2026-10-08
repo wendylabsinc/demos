@@ -16,7 +16,7 @@ class ColorDepthSimulationTests(unittest.TestCase):
             destination.mkdir(parents=True, exist_ok=True)
             output = destination / 'result.json'
         with patch('yolo_client.YoloClient.detect', side_effect=AssertionError('Unexpected YOLO dependency')):
-            return run(output=output, height=.762, identity_mode='color_depth',
+            return run(output=output, height=.762, identity_mode='color_depth', position_noise='none',
                        capture_animation=bool(directory), **kwargs)
 
     def test_current_color_depth_path_lifts_and_holds_without_yolo(self):

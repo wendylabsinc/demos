@@ -88,7 +88,7 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertEqual(io.commands,0)
 
     def test_shared_physical_sequence_lifts_with_measured_table_height(self):
-        result=run(height=.762)
+        result=run(position_noise='none',height=.762)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertGreater(result['visual_rise_m'],.11)
         self.assertEqual(result['hold_verified_s'],1.)
@@ -102,7 +102,7 @@ class PhysicalSimulationTests(unittest.TestCase):
     def test_measured_arms_down_start_rejects_interpolated_collision(self):
         initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,
                  .265,-.286,.089,.798,-.00014,.0102,.00156]
-        result=run(height=.762,initial_arm_q14=initial,staging_enabled=False)
+        result=run(position_noise='none',height=.762,initial_arm_q14=initial,staging_enabled=False)
         self.assertFalse(result['lift_verified'])
         self.assertIn('trajectory intersects',result['error'])
         self.assertNotIn('target',result['event_counts'])
@@ -111,7 +111,7 @@ class PhysicalSimulationTests(unittest.TestCase):
     def test_measured_arms_down_stages_then_lifts_and_holds(self):
         initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,
                  .265,-.286,.089,.798,-.00014,.0102,.00156]
-        result=run(height=.762,initial_arm_q14=initial)
+        result=run(position_noise='none',height=.762,initial_arm_q14=initial)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['hold_verified_s'],1.)
         planned=[e for e in result['events'] if e['phase']=='staging_planned'][-1]['joint_waypoints']
@@ -123,12 +123,12 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertLess(result['max_tracking_error_rad'],.15)
 
     def test_75cm_scene_tracks_finger_split_label_during_hold(self):
-        result=run(height=.75)
+        result=run(position_noise='none',height=.75)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['event_counts']['lift_observation'],5)
 
     def test_head_camera_tracks_finger_split_label_during_hold(self):
-        result=run(camera='head')
+        result=run(position_noise='none',camera='head')
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['event_counts']['lift_observation'],5)
         self.assertFalse(result['physical_pickup_verified'])

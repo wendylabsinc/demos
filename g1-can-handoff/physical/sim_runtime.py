@@ -17,6 +17,7 @@ from camera_input import geometry
 from physical_core import BODY_NAMES, PhysicalPlant, SIM_TO_BRIDGE
 from pickup import prepare, execute
 from g1_can_handoff.sim import scene, FINGERS
+from simulation_position_noise import PositionNoise
 
 
 class SimulationIO:
@@ -209,7 +210,9 @@ def apply_measured_state(world, io, measured):
 
 
 def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False,
-        *, identity_mode='synthetic_red', fault=None, capture_animation=False):
+        *, identity_mode='synthetic_red', fault=None, capture_animation=False,
+        position_noise='recorded', noise_seed=7, noise_scale=1., noise_trace=None):
+    noise = PositionNoise(position_noise, seed=noise_seed, scale=noise_scale, trace=noise_trace)
     if identity_mode not in ('synthetic_red','color_depth'):
         raise ValueError('Simulation identity mode must be synthetic_red or color_depth')
     if fault is not None and (fault.get('kind') not in ('stale','missing_target') or not fault.get('phase')):
@@ -307,6 +310,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         try:
             observation,vision=geometry(frame,config,require_table=require_table,
                 expected_center_xy=expected_center_xy,synthetic_red=identity_mode=='synthetic_red',tracker=tracker)
+            observation,vision=noise.apply(observation,vision,phase,frame['meta']['frame_id'],
+                                          expected_center_xy=expected_center_xy)
             if tracker is not None:tracker.accept(observation,vision,frame)
             tracking_modes.add(vision.get('tracking',{}).get('mode','synthetic_red'))
         except Exception:
@@ -354,6 +359,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                                   duration=200,loop=0,optimize=False)
                 result['animation']=animation_path.name
     result.update(perception=dict(identity_mode=identity_mode,yolo_calls=detector.calls,tracking_modes=sorted(tracking_modes)),
+                  position_noise=noise.description,
                   fault=fault_record,failure_phase=observation_phase if result.get('error') else None)
     result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
                   truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,trajectory=trajectory,
@@ -380,7 +386,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     root=Path(__file__).parent
     result['source_sha256']={name:hashlib.sha256((root/name).read_bytes()).hexdigest()
         for name in ('physical_core.py','pickup.py','staging.py','camera_input.py','target_tracker.py','perception_policy.py',
-                     'runtime.py','sim_runtime.py','g1_can_handoff/sim.py','g1_can_handoff/task.py',
+                     'runtime.py','sim_runtime.py','simulation_position_noise.py','g1_can_handoff/position_noise_profile.json',
+                     'g1_can_handoff/sim.py','g1_can_handoff/task.py',
                      'adapter/arm_reference.py','adapter/g1_arm.py')}
     if output:
         Path(output).write_text(json.dumps(result,indent=2)+'\n')
@@ -401,11 +408,17 @@ if __name__=='__main__':
     parser.add_argument('--identity-mode',choices=['color_depth','synthetic_red'],default='color_depth',
                         help='Default runs the deployed color/depth tracker; synthetic_red is the legacy simulation baseline')
     parser.add_argument('--capture-animation',action='store_true',help='Save a sampled 5 fps GIF beside the JSON result')
+    parser.add_argument('--position-noise',choices=['recorded','none'],default='recorded',
+                        help='Replay measured correlated XY estimate drift; none retains the ideal baseline')
+    parser.add_argument('--noise-seed',type=int,default=7,help='Repeatable whole-recording selection')
+    parser.add_argument('--noise-scale',type=float,default=1.,help='1 reproduces recorded drift; other values are stress tests')
+    parser.add_argument('--noise-trace',choices=['handover','approach-drift'],help='Select one recorded pattern explicitly')
     parser.add_argument('--fault',choices=['stale-align','missing-can-align'],help='Inject a perception fault before alignment')
     args=parser.parse_args()
     fault=None if args.fault is None else dict(phase='align',kind='stale' if args.fault=='stale-align' else 'missing_target',age_s=.6)
     result=run(args.output,args.hand_kp,args.camera,args.height,args.initial_arm_q,not args.disable_staging,
                None if args.setup_json is None else json.loads(Path(args.setup_json).read_text()),args.force_zero_feedforward,
-               identity_mode=args.identity_mode,fault=fault,capture_animation=args.capture_animation)
+               identity_mode=args.identity_mode,fault=fault,capture_animation=args.capture_animation,
+               position_noise=args.position_noise,noise_seed=args.noise_seed,noise_scale=args.noise_scale,noise_trace=args.noise_trace)
     print(json.dumps({k:v for k,v in result.items() if k!='events'},indent=2))
     raise SystemExit(0 if result['lift_verified'] else 1)
