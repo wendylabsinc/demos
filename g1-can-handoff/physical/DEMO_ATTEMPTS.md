@@ -164,3 +164,36 @@ candidate still requires deployment and another measured physical trial.
 See `yolo/validation-isolated-worker-trial-20261008.json` for compact native
 evidence. The full local attempt is
 `.runtime/demo-attempts/20261008T001246Z.json`.
+
+## Cylinder initialization repair, 2026-10-08 00:20 UTC
+
+The logging candidate was deployed, but the next trial stopped before grasping
+at 407.1 ms. Its first fault is now preserved in both controller status and
+the attempt summary. No successful pickup is claimed. The robot retained its
+measured hold. A subsequent retry was stopped while investigating perception.
+
+Passive profiling reproduced intermittent 6 mm cylinder-fit failures with an
+upright, unobstructed can. The captured partial arc converges to a mirrored
+local minimum when initialized at the points' mean: center (0.2767, 0.1073),
+RMSE 6.68 mm, 14 optimizer evaluations. An algebraic circle initializer finds
+the correct basin: center (0.3290, 0.1338), RMSE 2.92 mm, eight evaluations.
+The repaired implementation uses that initializer and an analytic Jacobian.
+The measured point fixture is retained in `fixtures/cylinder-local-minimum.npz`.
+It changes no acceptance threshold or calibration.
+
+If a proposed visual track still fails the cylinder fit, the tracker now
+reacquires YOLO identity on that exact frame and repeats the full geometric
+checks. Failed reacquisition never reuses an old mask or commits tracker state.
+
+61 focused tests pass. A 20-second native passive probe accepted 267
+observations with 21 YOLO checks, no geometry errors, no age violations, and
+a maximum continuously sampled exposure age of 367.87 ms. Median processing
+was 58.95 ms versus 64.41 ms in the preceding 12-second passive baseline.
+This is a bounded timing result, not proof of freshness throughout motion.
+See `yolo/validation-cylinder-initializer-20261008.json`.
+
+Disabling prefetch, a continuously refreshed one-slot reader, and the existing
+raw RGB-D transport were tested without actuators. They did not consistently
+improve latency, so the candidate retains the existing camera transport and
+one-frame prefetch. Controller replacement and physical verification of the
+cylinder repair remain pending supported release.
