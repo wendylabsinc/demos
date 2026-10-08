@@ -85,7 +85,19 @@ class Plant:
             mujoco.mj_step(m, d)
             if self.frame_callback: self.frame_callback(self)
 
+    IK_SETTINGS=dict(method='trf',jac='2-point',ftol=1e-8,xtol=1e-8,gtol=1e-8,
+                     max_nfev=250,x_scale=1.,loss='linear',f_scale=1.,diff_step=None,
+                     tr_solver=None,tr_options={},verbose=0)
+
     def solve(self, position, rotation=None):
+        rotation=np.eye(3) if rotation is None else rotation
+        hook=getattr(self,'planning_hook',None)
+        if hook is not None:
+            return hook('ik',dict(position=np.asarray(position).tolist(),rotation=np.asarray(rotation).tolist()),
+                        lambda:self._solve(position,rotation))
+        return self._solve(position,rotation)
+
+    def _solve(self, position, rotation=None):
         m,d = self.model,self.ik_data
         d.qpos[:] = self.data.qpos
         adr = self.qadr[self.arm]
@@ -97,7 +109,7 @@ class Plant:
             mujoco.mj_forward(m,d)
             return np.r_[d.site_xpos[self.site]-position, .15*(d.site_xmat[self.site].reshape(3,3)-rotation).ravel()]
         seeds = [np.clip(self.data.qpos[adr],lo,hi), np.clip([-1.2,.2,0,1.2,0,0,0],lo,hi), np.clip([-.5,.2,1.3,1.4,.7,-.9,-.5],lo,hi)]
-        candidates = [least_squares(error,s,bounds=(lo,hi),max_nfev=250) for s in seeds]
+        candidates = [least_squares(error,s,bounds=(lo,hi),**self.IK_SETTINGS) for s in seeds]
         valid=[]
         for r in candidates:
             error(r.x)

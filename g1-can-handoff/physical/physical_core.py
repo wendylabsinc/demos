@@ -7,6 +7,7 @@ import os
 import time
 import threading
 import numpy as np
+from planning_snapshot import recorded
 
 MAX_MOTOR_TEMPERATURE_C = 75.0
 # Conservative feedforward limits, below the model's actuator torque limits.
@@ -165,6 +166,9 @@ class PhysicalPlant:
         self.cancel = cancel
         self.perception_guard = None
         self.ik = model_plant
+        self.planning_recorder = None
+        self.ik.planning_hook = lambda kind, request, fn: (fn() if self.planning_recorder is None
+            else self.planning_recorder.call(self,kind,request,fn))
         self.adapter, self.sender, self.read = adapter, hand, read
         self.config, self.event = config, event
         limits=np.asarray(config['arm_limits_rad'],dtype=float)
@@ -201,6 +205,7 @@ class PhysicalPlant:
 
     def sync(self, snap):
         import mujoco
+        self.last_synced_snapshot = snap
         if self.config.get('calibration_method')=='operator_accepted_factory_table':
             from pose_alignment import corrected_config
             body=snap['body']
@@ -210,6 +215,11 @@ class PhysicalPlant:
             pelvis=self.ik.model.body('pelvis').id
             self.ik.model.body_pos[pelvis]=root[:3,3]
             mujoco.mju_mat2Quat(self.ik.model.body_quat[pelvis],root[:3,:3].ravel())
+        elif self.config.get('calibration_method')=='harness_clear_workspace_joint_replay':
+            from scipy.spatial.transform import Rotation
+            pelvis=self.ik.model.body('pelvis').id
+            rotation=Rotation.from_euler('xyz',[*snap['body']['imu_rpy'][:2],0.]).as_matrix()
+            mujoco.mju_mat2Quat(self.ik.model.body_quat[pelvis],rotation.ravel())
         for name,q in zip(BODY_NAMES, snap['body']['q'][:29]):
             self.ik.data.qpos[self.ik.model.jnt_qposadr[self.ik.model.joint(name).id]]=q
         for side,values in [('left', snap['left']['q']), ('right', np.array(snap['right']['q'])[SIM_TO_BRIDGE])]:
@@ -258,6 +268,7 @@ class PhysicalPlant:
             self.sender.feedback_temperatures(left.tolist(), right[SIM_TO_BRIDGE].tolist())
         return snap
 
+    @recorded('move_poses')
     def _move_poses(self, position, duration=2., rotation=None):
         if self.ik.contact_phase == 'lift':
             return self._cartesian_lift_poses(position,duration,rotation)
@@ -322,6 +333,7 @@ class PhysicalPlant:
             self.ik.data.qpos[:]=original
             mujoco.mj_forward(self.ik.model,self.ik.data)
 
+    @recorded('continuous_ik')
     def _continuous_lift_ik(self, position, rotation):
         """Continue the same branch while using redundancy to clear the torso."""
         import mujoco
@@ -362,6 +374,7 @@ class PhysicalPlant:
             raise RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose')
         return result.x
 
+    @recorded('joint_poses')
     def _joint_poses(self, goal, duration=2.):
         import mujoco
         start=self.ik.data.qpos[self.ik.qadr[self.ik.arm]].copy()
@@ -387,9 +400,13 @@ class PhysicalPlant:
 
     def preflight(self, points, rotation):
         """Check open, reach, close and lift paths without any command output."""
+        self.sync(self.check())
+        return self._preflight(points,rotation)
+
+    @recorded('preflight')
+    def _preflight(self, points, rotation):
         import mujoco
         from g1_can_handoff.task import OPEN, CLOSED
-        self.sync(self.check())
         original=self.ik.data.qpos.copy()
         self.staging_start=original[self.ik.qadr[self.ik.arm]].copy()
         self.staging_waypoints=[]
@@ -484,6 +501,7 @@ class PhysicalPlant:
                 self.command_arm(q,snap)
                 self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
                 self.event('target',arm=np.r_[q,self.right_arm].tolist(),tracking_error_rad=float(error),
+                           phase_name=self.ik.contact_phase,measured_arm=snap['body']['q'][15:29],
                            gravity_feedforward_nm=self.arm_tau_command.tolist())
             self.clock.sleep(max(0,.02-(self.clock.monotonic()-started)))
         deadline=self.clock.monotonic()+2
@@ -547,7 +565,7 @@ class PhysicalPlant:
 
     def check_live_geometry(self,left_q=None,hand_q=None):
         """Recheck commands against the current measured base attitude."""
-        if self.config.get('calibration_method')!='operator_accepted_factory_table':return
+        if self.config.get('calibration_method') not in ('operator_accepted_factory_table','harness_clear_workspace_joint_replay'):return
         import mujoco
         data=self.gravity_data;data.qpos[:]=self.ik.data.qpos
         if left_q is not None:

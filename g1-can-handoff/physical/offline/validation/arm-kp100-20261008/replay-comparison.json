@@ -1,0 +1,96 @@
+{
+  "schema": "wendy.g1.arm-gain-replay.v1",
+  "simulation_only": true,
+  "hardware_used": false,
+  "trial": "offline/validation/sim-real-20261008/real/trial-01.tar.gz",
+  "trial_sha256": "b8397ce076247fe66c0fde3a3343c7fcab0349bb6f4060537ce67c1032486b58",
+  "same_recorded_targets_feedforward_and_initial_state": true,
+  "gains": [
+    {
+      "kp": 80.0,
+      "kd": 3.0,
+      "wrist_kp": 40.0,
+      "wrist_kd": 1.5,
+      "commands_replayed": 418,
+      "recorded_commands": 418,
+      "error": null,
+      "trajectory_max_abs_error_rad": 0.02017235031180542,
+      "trajectory_rms_error_rad": 0.005706872222921362,
+      "shoulder_roll_rms_error_rad": 0.005934435050456297,
+      "final_error_rad": [
+        -0.0010581711743320246,
+        0.004211480054294475,
+        0.0024198740433434285,
+        -0.0007732011848595732,
+        -0.0014946140796608942,
+        0.0002983729853892614,
+        0.0017717485214530093,
+        0.0003638169545465142,
+        0.0007262839226295781,
+        0.0003036687757759643,
+        0.00018378136393659705,
+        -3.067067150750401e-05,
+        0.00019694169513255998,
+        0.00015942284866138617
+      ],
+      "final_max_abs_error_rad": 0.004211480054294475,
+      "final_shoulder_roll_error_rad": 0.004211480054294475,
+      "final_settle_pass": true,
+      "simulation_only": true,
+      "physical_tracking_verified": false
+    },
+    {
+      "kp": 100.0,
+      "kd": 3.0,
+      "wrist_kp": 40.0,
+      "wrist_kd": 1.5,
+      "commands_replayed": 418,
+      "recorded_commands": 418,
+      "error": null,
+      "trajectory_max_abs_error_rad": 0.018237981844726026,
+      "trajectory_rms_error_rad": 0.005323438326321608,
+      "shoulder_roll_rms_error_rad": 0.005307233457332337,
+      "final_error_rad": [
+        -0.000857781800531747,
+        0.00343024645411269,
+        0.0019494226143064175,
+        -0.000629282795808872,
+        -0.001505322858100469,
+        0.00029607923091778954,
+        0.001785601287847105,
+        0.00029774260972792455,
+        0.000591722450525467,
+        0.0002469726588144039,
+        0.00014930905373877756,
+        -3.072942062542865e-05,
+        0.00019883267828107315,
+        0.00016223255651324
+      ],
+      "final_max_abs_error_rad": 0.00343024645411269,
+      "final_shoulder_roll_error_rad": 0.00343024645411269,
+      "final_settle_pass": true,
+      "simulation_only": true,
+      "physical_tracking_verified": false
+    }
+  ],
+  "physical_baseline_settle_error_rad": [
+    -0.018556531806147476,
+    0.04186851892901183,
+    0.004374547920058203,
+    -0.003985234597713216,
+    3.837625961146396e-05,
+    -0.0015124876715406632,
+    -0.0018899647647468987
+  ],
+  "final_error_reduction_percent": 18.55009616833294,
+  "limitations": [
+    "Supported-base dynamics; factory balance and real servo parameters remain approximate.",
+    "Requested 50 Hz targets are recorded; exact 100 Hz DDS cadence is not replayed.",
+    "Only the reach phase is replayed; camera/tracker checks are not exercised."
+  ],
+  "traces": {
+    "file": "replay-comparison.traces.json.gz",
+    "sha256": "ed15123a0fd39a3fa1281c90f0f7de7b38e8dd32366632ca7cfe5ab27c8c7575",
+    "bytes": 275531
+  }
+}

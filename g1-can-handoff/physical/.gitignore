@@ -1,0 +1,2 @@
+# Exact compiled visual/collision models are large local replay artifacts.
+offline/validation/**/*.planning/

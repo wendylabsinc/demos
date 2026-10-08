@@ -24,7 +24,7 @@ class PhysicalSimulationTests(unittest.TestCase):
         feedforward=np.linspace(-.3,.3,14)
         io.ctrl_dual_arm(q,feedforward);io.sleep(.002)
         np.testing.assert_allclose(world.data.ctrl[io.arm_ids],feedforward,atol=1e-12)
-        np.testing.assert_array_equal(io.arm_kp,[80,80,80,80,40,40,40]*2)
+        np.testing.assert_array_equal(io.arm_kp,[150,150,150,150,40,40,40]*2)
         np.testing.assert_array_equal(io.arm_kd,[3,3,3,3,1.5,1.5,1.5]*2)
 
     def test_arm_servo_reuses_bounded_adapter_reference(self):

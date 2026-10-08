@@ -4,6 +4,12 @@ import json
 
 
 COVERAGE = [
+    ('Arm tracking and gain replay', ['test_arm_gains', 'test_harness_replay', 'test_harness_regression'],
+     'Identical 418-command physical reach; P80 settling failure and repeated P150 success with checksum-verified measured feedback.',
+     'Replay the real feedback through the unchanged production settle gate without hardware; reject invalid, cancelled, faulty or colliding replay commands.'),
+    ('Exact planning replay', ['test_planning_snapshot', 'test_trajectory_parity'],
+     'Compiled MuJoCo model, full planning state, solver options and archived command curves.',
+     'Replay numerical decisions exactly, retain failed inputs, reject model/source/version drift, and seed measured joint velocities.'),
     ('Recognition and tracking', ['test_color_depth_acquisition', 'test_perception_policy'],
      'Exact failed RGB-D frames 115503 and 115616; recorded empty YOLO result 97662.',
      'Color/depth must acquire both failed views without YOLO; stale or missing targets still stop. Phase mode must not schedule periodic classification.'),

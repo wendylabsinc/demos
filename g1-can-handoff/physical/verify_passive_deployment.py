@@ -18,6 +18,7 @@ def main(argv=()):
     configured_limit=float(configured_env['HANDOFF_CAMERA_MAX_AGE_MS'])
     configured_policy=configured_env['HANDOFF_PERCEPTION_POLICY']
     configured_identity=configured_env['HANDOFF_TARGET_IDENTITY']
+    configured_kp=float(configured_env['HANDOFF_ARM_KP'])
     if args.configure_camera_max_age_ms is not None and args.configure_camera_max_age_ms!=configured_limit:
         parser.error('Requested budget must equal this deployment descriptor')
     copied={s.strip() for group in re.findall(r'paths:\s*\[([^\]]+)\]',
@@ -37,6 +38,9 @@ def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+s
 status=get(8102,'/status')
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['telemetry_healthy'],status
+assert status['arm_gains']['configured_kp']==[CONFIGURED_KP]*4+[40.]*3+[CONFIGURED_KP]*4+[40.]*3,status
+assert status['arm_gains']['configured_kd']==[3.]*4+[1.5]*3+[3.]*4+[1.5]*3,status
+assert status['arm_gains']['active'] is None,status
 budget=CONFIGURED_LIMIT
 assert status['target_identity']==CONFIGURED_IDENTITY,status
 yolo={'required':False}
@@ -66,7 +70,7 @@ for _ in range(2):
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
+""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
     client=Wendy()
     try:
         for attempt in range(8):

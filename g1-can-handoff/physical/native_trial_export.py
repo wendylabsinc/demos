@@ -28,9 +28,21 @@ def create_export(events_path,start_ns,end_ns,output,app_root=Path('/app')):
         if row['path'] not in selected:selected.append(row['path'])
     files={};members=[]
     def member(name,raw):
-        if len(raw)>16000000:raise RuntimeError('Trial evidence member exceeds 16 MB')
+        maximum=160000000 if name.startswith('planning/') and name.endswith('.mjb') else 16000000
+        if len(raw)>maximum:raise RuntimeError('Trial evidence member exceeds bounded transfer size')
         members.append((name,raw));files[name]=dict(bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
     member('events.jsonl.gz',gzip.compress((''.join(json.dumps(e,separators=(',',':'))+'\n' for e in events)).encode(),mtime=0))
+    planning_files=set()
+    for row in events:
+        if row['phase']!='planning_snapshot_complete':continue
+        path=Path(row['path']).resolve()
+        if not path.is_relative_to(root/'planning'):raise RuntimeError('Planning evidence outside data directory')
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=row['sha256']:raise RuntimeError('Planning snapshot checksum mismatch')
+        planning_files.add(path)
+        model=Path(json.loads(path.read_text())['model']['path']).resolve()
+        if model.parent!=path.parent:raise RuntimeError('Planning model outside snapshot directory')
+        planning_files.add(model)
+    for path in sorted(planning_files):member('planning/'+path.name,path.read_bytes())
     for index,name in enumerate(selected):
         path=Path(name).resolve()
         if path.parent!=root:raise RuntimeError('Camera evidence outside controller data directory')
@@ -55,11 +67,11 @@ def create_export(events_path,start_ns,end_ns,output,app_root=Path('/app')):
     member('manifest.json',json.dumps(manifest,indent=2).encode())
     output.parent.mkdir(parents=True,exist_ok=True)
     pending=output.with_suffix(output.suffix+'.pending')
-    with tarfile.open(pending,'w:gz') as tar:
+    with tarfile.open(pending,'w:gz',compresslevel=1) as tar:
         for name,raw in members:
             info=tarfile.TarInfo(name);info.size=len(raw);info.mtime=0
             tar.addfile(info,io.BytesIO(raw))
-    if pending.stat().st_size>32000000:raise RuntimeError('Trial export exceeds 32 MB transfer budget')
+    if pending.stat().st_size>256000000:raise RuntimeError('Trial export exceeds 256 MB planning transfer budget')
     pending.replace(output)
     return dict(path=str(output),bytes=output.stat().st_size,sha256=hashlib.sha256(output.read_bytes()).hexdigest(),
         events=len(events),selected_frames=len(selected),primary_failure=manifest['primary_failure'])

@@ -9,7 +9,7 @@ from offline.today import COVERAGE, MODULES, dashboard
 class TodayReportTests(unittest.TestCase):
     def test_catalog_has_no_duplicate_suites(self):
         self.assertEqual(len(MODULES),len(set(MODULES)))
-        self.assertEqual(len(COVERAGE),9)
+        self.assertTrue(all((Path(__file__).parent/(module+'.py')).is_file() for module in MODULES))
 
     def test_failure_and_custom_report_name_remain_visible(self):
         report=dict(successful=False,tests_run=1,evidence_verified=143,seconds=1.,

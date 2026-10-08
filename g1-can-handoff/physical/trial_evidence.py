@@ -25,10 +25,10 @@ def export_trial(client,snapshot,start_ns,end_ns,destination):
     if native.parent!=Path('/data') or native.suffix!='.jsonl':raise RuntimeError('Unexpected native event path')
     source=(Path(__file__).parent/'native_trial_export.py').read_text()
     script=source+"\nimport sys\nprint(json.dumps(create_export(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),sys.argv[4])))\n"
-    remote='/data/trial-exports/'+Path(destination).name
+    remote='/data/trial-exports/'+str(start_ns)+'-'+Path(destination).name
     metadata=json.loads(result_payload(client.tool('container_exec',dict(app_name='DEV-g1-handoff-physical',
-        command=['python3','-c',script,str(native),str(start_ns),str(end_ns),remote],timeout_seconds=30,max_bytes=10000)))['stdout'])
-    return fetch_artifact(client,'DEV-g1-handoff-physical',remote,metadata,destination)
+        command=['python3','-c',script,str(native),str(start_ns),str(end_ns),remote],timeout_seconds=55,max_bytes=10000)))['stdout'])
+    return fetch_artifact(client,'DEV-g1-handoff-physical',remote,metadata,destination,max_bytes=256000000)
 
 
 def fetch_artifact(client,app_name,remote,metadata,destination,max_bytes=32000000):
@@ -37,11 +37,12 @@ def fetch_artifact(client,app_name,remote,metadata,destination,max_bytes=3200000
     pending.parent.mkdir(parents=True,exist_ok=True);digest=hashlib.sha256();written=0
     try:
         with pending.open('wb') as out:
-            for offset in range(0,metadata['bytes'],120000):
-                count=min(120000,metadata['bytes']-offset)
+            chunk_size=480000 if metadata['bytes']>32000000 else 120000
+            for offset in range(0,metadata['bytes'],chunk_size):
+                count=min(chunk_size,metadata['bytes']-offset)
                 script="import base64,sys\nwith open(sys.argv[1],'rb') as f:\n f.seek(int(sys.argv[2]));print(base64.b64encode(f.read(int(sys.argv[3]))).decode())"
                 result=result_payload(client.tool('container_exec',dict(app_name=app_name,
-                    command=['python3','-c',script,remote,str(offset),str(count)],timeout_seconds=15,max_bytes=170000)))
+                    command=['python3','-c',script,remote,str(offset),str(count)],timeout_seconds=15,max_bytes=max(170000,count*2))))
                 raw=base64.b64decode(result['stdout'].strip(),validate=True)
                 if len(raw)!=count:raise RuntimeError('Short trial artifact chunk')
                 out.write(raw);digest.update(raw);written+=len(raw)

@@ -12,6 +12,12 @@
 !yolo/confidence.py
 !yolo/confidence.py/
 !yolo/confidence.py/**
+!harness_replay.py
+!harness_replay.py/
+!harness_replay.py/**
+!planning_snapshot.py
+!planning_snapshot.py/
+!planning_snapshot.py/**
 !table_plane.py
 !table_plane.py/
 !table_plane.py/**

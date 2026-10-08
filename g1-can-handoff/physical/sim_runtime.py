@@ -20,7 +20,7 @@ from g1_can_handoff.sim import scene, FINGERS
 
 
 class SimulationIO:
-    def __init__(self, world, force_zero_feedforward=False):
+    def __init__(self, world, force_zero_feedforward=False,*,arm_kp=None):
         self.world = world
         self.origin = time.monotonic()
         self.commands = 0
@@ -31,8 +31,9 @@ class SimulationIO:
         self.actuators = {n: world.model.actuator(n).id for n in BODY_NAMES[15:]}
         self.arm_ids=np.array(list(self.actuators.values()))
         self.all_hand_ids=np.array([i for i in range(world.model.nu) if 'hand' in world.model.actuator(i).name])
-        self.arm_kp=np.array([40. if 'wrist' in name else 80. for name in BODY_NAMES[15:]])
-        self.arm_kd=np.array([1.5 if 'wrist' in name else 3. for name in BODY_NAMES[15:]])
+        from adapter.arm_gains import arm_gains
+        kp,kd=arm_gains(arm_kp)
+        self.arm_kp=np.tile(kp,2);self.arm_kd=np.tile(kd,2)
         self.arm_feedforward=np.zeros(14)
         self.force_zero_feedforward=force_zero_feedforward
         self.arm_reference=None
@@ -182,19 +183,27 @@ def apply_measured_state(world, io, measured):
     body=np.asarray(measured['body']['q'],dtype=float)
     if body.shape!=(29,) or not np.isfinite(body).all():
         raise ValueError('Expected twenty-nine measured body joint angles')
+    velocities=np.asarray(measured['body'].get('dq',[0.]*29),dtype=float)
+    if velocities.shape!=(29,) or not np.isfinite(velocities).all():raise ValueError('Invalid measured body velocities')
     for name,value in zip(BODY_NAMES,measured['body']['q']):
         jid=world.model.joint(name).id
         world.data.qpos[world.model.jnt_qposadr[jid]]=value
         world.targets[world.model.actuator(name).id]=value
+    for name,value in zip(BODY_NAMES,velocities):
+        world.data.qvel[world.model.jnt_dofadr[world.model.joint(name).id]]=value
     for side in ('left','right'):
         values=np.asarray(measured[side]['q'])
         if values.shape!=(7,) or not np.isfinite(values).all():
             raise ValueError('Expected seven measured hand joint angles')
         if side=='left':values=values[SIM_TO_BRIDGE]
-        for name,value in zip(FINGERS,values):
+        velocities=np.asarray(measured[side].get('dq',[0.]*7),dtype=float)
+        if side=='left':velocities=velocities[SIM_TO_BRIDGE]
+        if velocities.shape!=(7,) or not np.isfinite(velocities).all():raise ValueError('Invalid measured hand velocities')
+        for name,value,velocity in zip(FINGERS,values,velocities):
             name=name.replace('left_',side+'_');jid=world.model.joint(name).id
             world.data.qpos[world.model.jnt_qposadr[jid]]=value
             world.targets[world.model.actuator(name).id]=value
+            world.data.qvel[world.model.jnt_dofadr[jid]]=velocity
     io.imu_rpy=list(measured['body']['imu_rpy'])
     mujoco.mj_forward(world.model,world.data)
 
@@ -232,7 +241,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         apply_measured_state(world,io,setup['measured'])
         sensor=SimulationCamera(world,'setup-camera',setup['camera_intrinsics'],setup['config']['camera_serial'])
     else:sensor=SimulationCamera(world,camera)
-    rows=[];counts={};worst_tracking=0.;display_phase='planning'
+    rows=[];counts={};worst_tracking=0.;display_phase='planning';trajectory=[]
     animation=[];last_render=-1.
     visualizer=mujoco.Renderer(world.model,height=480,width=640) if capture_animation else None
     view=mujoco.MjvCamera()
@@ -251,6 +260,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         counts[phase]=counts.get(phase,0)+1
         if phase=='target':
             worst_tracking=max(worst_tracking,fields['tracking_error_rad'])
+            trajectory.append(dict(simulation_time_s=float(world.data.time),**fields))
             return
         if phase=='hand_target':return
         display_phase=phase
@@ -265,6 +275,11 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     io.arm_limits=np.asarray(config['arm_limits_rad'],dtype=float)
     model=scene(height=height) if setup is None else setup_scene(setup)
     plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+    planning_recorder=None
+    if output:
+        from planning_snapshot import PlanningRecorder
+        planning_recorder=PlanningRecorder(Path(output).with_suffix('.planning'),event)
+        plant.planning_recorder=planning_recorder
     contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
     def audit_contacts(world):
         capture()
@@ -317,6 +332,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         plant.settle_control()
         held_plant=plant
         plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+        plant.planning_recorder=planning_recorder
         plant.inherit_control_hold(held_plant)
         prepared=prepare(plant,observe,event)
         result=execute(plant,prepared,observe,event)
@@ -340,7 +356,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     result.update(perception=dict(identity_mode=identity_mode,yolo_calls=detector.calls,tracking_modes=sorted(tracking_modes)),
                   fault=fault_record,failure_phase=observation_phase if result.get('error') else None)
     result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
-                  truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,
+                  truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,trajectory=trajectory,
                   max_tracking_error_rad=worst_tracking,
                   max_abs_commanded_feedforward_nm=io.max_abs_feedforward.tolist(),
                   backend_assumptions=dict(supported_base=True,hand_kp=hand_kp,hand_kd=.2,camera=camera,table_height_m=height,can_xy_m=[.35,.18],
@@ -357,7 +373,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         result['backend_assumptions'].update(camera='setup-camera',camera_intrinsics=setup['camera_intrinsics'],
             optical_extrinsic_source='supplied model-based estimate, not independently validated',
             can_xy_m=setup['can_center_world_m'][:2],measured_joint_positions_used=True,
-            measured_joint_velocities_used=False,temperature_and_fault_feedback='synthetic healthy',
+            measured_joint_velocities_used=all('dq' in setup['measured'][side] for side in ('body','left','right')),
+            temperature_and_fault_feedback='synthetic healthy',
             stationary_lower_body_equality_support=setup.get('stationary_lower_body_support',False),
             supplied_camera_transform_error=float(np.max(np.abs(sensor.transform-np.asarray(config['camera_to_world'])))))
     root=Path(__file__).parent

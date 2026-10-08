@@ -85,7 +85,7 @@ class Runtime:
         with self.event_lock:
             with EVENTS.open('a') as f:
                 f.write(json.dumps(row,allow_nan=False)+'\n');f.flush()
-        if phase not in ('target','hand_target','phase_camera_evidence','perception_result','perception_worker_result','exposure_pose'):
+        if phase not in ('target','hand_target','joint_replay_sample','phase_camera_evidence','perception_result','perception_worker_result','exposure_pose'):
             print(json.dumps(row),flush=True)
 
     def poll_hand(self,side,sub):
@@ -133,6 +133,10 @@ class Runtime:
                       tracking_exposure_age_ms=None if observation is None else (time.monotonic()-observation.timestamp)*1000,
                       tracking_vision=getattr(self,'tracking_vision',None))
         result['first_failure']=getattr(self,'first_failure',None)
+        from adapter.arm_gains import arm_gains
+        kp,kd=arm_gains()
+        result['arm_gains']={'configured_kp':np.tile(kp,2).tolist(),'configured_kd':np.tile(kd,2).tolist(),
+                             'active':None if self.arm is None else self.arm.get_gains()}
         result.update(demo_running=getattr(self,'demo_running',False),demo_result=getattr(self,'demo_result',None),
                       demo_error=getattr(self,'demo_error',None))
         try:
@@ -432,7 +436,12 @@ class Runtime:
 
     def make_plant(self,config):
         p=calibrated_scene(config)
-        return PhysicalPlant(p,self.arm,self.hand,self.read,config,self.event,cancel=self.cancel)
+        plant=PhysicalPlant(p,self.arm,self.hand,self.read,config,self.event,cancel=self.cancel)
+        from planning_snapshot import PlanningRecorder
+        if not hasattr(self,'planning_recorder'):
+            self.planning_recorder=PlanningRecorder(DATA/'planning'/EVENTS.stem,self.event)
+        plant.planning_recorder=self.planning_recorder
+        return plant
 
     def rest_arm(self,actuate=False):
         """Explicit checked return to the recorded relaxed left-arm pose."""
@@ -519,6 +528,27 @@ class Runtime:
         self.phase='CONTROL_SETTLING'
         return self.plant.settle_control(archive_guard=self.archive_guard)
 
+    def start_joint_replay(self,data):
+        if not self.operation_lock.acquire(blocking=False):raise RuntimeError('A demo/planning operation is already running')
+        if self.active or self.grasp_started or (self.arm is not None and self.phase!='FROZEN'):
+            self.operation_lock.release();raise RuntimeError('Harness replay requires idle released or pregrasp frozen state')
+        self.cancel.clear();self.first_failure=None;self.demo_running=True;self.demo_result=None;self.demo_error=None;self.error=None
+        def work():
+            try:
+                from harness_replay import run
+                self.demo_result=run(self,data)
+            except Exception as exc:
+                self.demo_error=self.record_failure(exc,'joint_replay');self.active=False
+                if self.plant:self.plant.freeze()
+                elif self.arm:self.arm.hold_arm_measured()
+                self.phase='FROZEN' if self.arm else 'BLOCKED'
+                self.event('failure_hold',grasp_started=False,control_retained=self.arm is not None,automatic_release=False)
+            finally:self.demo_running=False;self.operation_lock.release()
+        try:threading.Thread(target=work,daemon=True,name='harness-joint-replay').start()
+        except Exception:
+            self.demo_running=False;self.operation_lock.release();raise
+        return self.status()
+
     def run(self,actuate=False,*,preserve_cancel=False):
         from pickup import prepare, execute
         resuming=self.arm is not None
@@ -586,7 +616,7 @@ class Runtime:
                 self.hand=Dex3Sender(kp=2,kd=.2)
                 plant.adapter=self.arm;plant.sender=self.hand;self.plant=plant
                 self.event('ownership_acquired',recorder_session=archive['session'],right_arm_hold=plant.right_arm.tolist(),
-                           right_hand_hold=plant.right_hand.tolist(),blend_affects_both_arms=True)
+                           right_hand_hold=plant.right_hand.tolist(),blend_affects_both_arms=True,arm_gains=self.arm.get_gains())
                 self.wait_for_control_settle()
                 if self.cancel.is_set():raise RuntimeError('Operator cancelled before owned replanning')
                 config=self.config(refresh=True)
@@ -692,6 +722,7 @@ class Handler(BaseHTTPRequestHandler):
             elif self.path=='/trial':
                 result=runtime.run(True)
             elif self.path=='/demo/start':result=runtime.start_demo()
+            elif self.path=='/joint-replay/start':result=runtime.start_joint_replay(data)
             elif self.path=='/stop':result=runtime.stop()
             elif self.path=='/perception-config':result=runtime.configure_perception(data.get('camera_max_age_ms'))
             elif self.path=='/release':result=runtime.release(data.get('can_supported'))

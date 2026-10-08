@@ -19,6 +19,11 @@ def snapshot(client, expected=None):
     script = '''import hashlib,io,json,pathlib,time,urllib.request,zipfile
 def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+str(port)+path,timeout=5))
 result=dict(unix_ns=time.time_ns(),status=get(8102,'/status'),recorder=get(8101,'/status'))
+if result['status']['phase']=='FROZEN':
+ with pathlib.Path(result['status']['events']).open('rb') as f:
+  f.seek(max(0,f.seek(0,2)-262144));tail=f.read().splitlines()[1:]
+ rows=[json.loads(line) for line in tail]
+ result['failure_hold']=next((row for row in reversed(rows) if row['phase']=='failure_hold'),None)
 expected=EXPECTED
 if expected is not None:
  actual={n:hashlib.sha256((pathlib.Path('/app')/n).read_bytes()).hexdigest() for n in expected}
@@ -39,10 +44,13 @@ print(json.dumps(result))
     return json.loads(result_payload(result)['stdout'])
 
 
-def preflight(before, camera_max_age_ms=500):
+def preflight(before, camera_max_age_ms=500,*,resume_pregrasp=False):
     state, recorder = before['status'], before['recorder']
-    if state['phase'] not in ('PASSIVE', 'BLOCKED') or state['adapter_initialized'] or state['demo_running']:
+    resumable=(resume_pregrasp and state['phase']=='FROZEN' and state['adapter_initialized']
+               and (before.get('failure_hold') or {}).get('grasp_started') is False)
+    if not resumable and (state['phase'] not in ('PASSIVE', 'BLOCKED') or state['adapter_initialized'] or state['demo_running']):
         raise RuntimeError('Reset/release required: controller must be idle without ownership')
+    if state['demo_running']:raise RuntimeError('A demo is already running')
     if not state['telemetry_healthy'] or not state['calibration_present']:
         raise RuntimeError('Telemetry or accepted calibration unavailable')
     from yolo.frame_limits import frame_age_limit_s
@@ -91,7 +99,7 @@ def beep():
     return results
 
 
-def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None):
+def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None,*,resume_pregrasp=False):
     if DEPLOYING.is_file():
         raise RuntimeError('Deployment in progress')
     if (directory / f'trial-{index:02d}.json').exists():
@@ -102,7 +110,7 @@ def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None)
     client = None; path = None; data = {}; before = None
     try:
         client = Wendy()
-        before = snapshot(client, expected); preflight(before,release['controller']['camera_max_age_ms'])
+        before = snapshot(client, expected); preflight(before,release['controller']['camera_max_age_ms'],resume_pregrasp=resume_pregrasp)
         path = reserve(directory, index, reset_confirmed)
         if index > 1:
             previous_path = directory / f'trial-{index-1:02d}.json'
@@ -111,6 +119,7 @@ def run(directory, index, reset_confirmed, timeout_s=180, verified_release=None)
             previous['post_reset_status'] = before['status']
             save(previous_path, previous)
         data = dict(index=index, requested_trials=10, reset_confirmed=reset_confirmed,
+                    resume_pregrasp=resume_pregrasp,
                     started_unix_ns=before['unix_ns'], controller_before=before['status'],
                     recorder_before=before['recorder'], preflight=before, state='start_requested')
         save(path, data)
@@ -167,8 +176,9 @@ if __name__ == '__main__':
     parser.add_argument('--directory', type=Path, required=True)
     parser.add_argument('--index', type=int, choices=range(1,11), required=True)
     parser.add_argument('--reset-confirmed', action='store_true')
+    parser.add_argument('--resume-pregrasp',action='store_true',help='Explicit retry from recorded pregrasp FROZEN hold; all controller checks remain')
     parser.add_argument('--verified-release', type=Path, help='Read-only startup verification JSON for the release under test')
     args = parser.parse_args()
-    result = run(args.directory, args.index, args.reset_confirmed, verified_release=args.verified_release)
+    result = run(args.directory, args.index, args.reset_confirmed, verified_release=args.verified_release,resume_pregrasp=args.resume_pregrasp)
     print(json.dumps(dict(index=args.index, recorded=str(args.directory),
                          artifact_verified=result.get('artifact',{}).get('verified',False))), flush=True)

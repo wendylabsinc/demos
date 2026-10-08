@@ -104,6 +104,8 @@ class G1_29_ArmController:
         self.kd_high = 3.0
         self.kp_low = 80.0
         self.kd_low = 3.0
+        from adapter.arm_gains import arm_gains
+        self.kp_arm=float(arm_gains()[0][0])
         self.kp_wrist = 40.0
         self.kd_wrist = 1.5
 
@@ -190,7 +192,7 @@ class G1_29_ArmController:
                     self.msg.motor_cmd[id].kp = self.kp_wrist
                     self.msg.motor_cmd[id].kd = self.kd_wrist
                 else:
-                    self.msg.motor_cmd[id].kp = self.kp_low
+                    self.msg.motor_cmd[id].kp = self.kp_arm
                     self.msg.motor_cmd[id].kd = self.kd_low
             else:
                 if self._Is_weak_motor(id):
@@ -576,7 +578,7 @@ class G1_29_ArmController:
                     self.msg.motor_cmd[id].kp = self.kp_wrist
                     self.msg.motor_cmd[id].kd = self.kd_wrist
                 else:
-                    self.msg.motor_cmd[id].kp = self.kp_low
+                    self.msg.motor_cmd[id].kp = self.kp_arm
                     self.msg.motor_cmd[id].kd = self.kd_low
             else:
                 self.msg.motor_cmd[id].kp = float(kp)
@@ -600,7 +602,7 @@ class G1_29_ArmController:
     def default_gains(self):
         """-> [(kp, kd)] x 14, the constructor's values."""
         return [(self.kp_wrist, self.kd_wrist) if self._Is_wrist_motor(j)
-                else (self.kp_low, self.kd_low) for j in G1_29_JointArmIndex]
+                else (self.kp_arm, self.kd_low) for j in G1_29_JointArmIndex]
 
     def shutdown(self, ramp_s = 1.0):
         """Stop publishing and hand rt/arm_sdk back to the motion controller.
