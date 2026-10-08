@@ -20,6 +20,14 @@ def fake_worker(connection,token):
 
 
 class WorkerTests(unittest.TestCase):
+    def test_stalled_request_expires_before_tracking_join_deadline(self):
+        worker=PerceptionWorker.__new__(PerceptionWorker)
+        worker.process=Mock();worker.connection=Mock()
+        worker.connection.poll.return_value=False
+        with self.assertRaisesRegex(RuntimeError,'response timeout'):
+            worker.observe({},'test',True,None,Mock())
+        self.assertLess(worker.connection.poll.call_args.args[0],6.)
+
     def test_spawn_round_trip_and_shutdown(self):
         worker=PerceptionWorker(None,target=fake_worker);event=Mock()
         try:

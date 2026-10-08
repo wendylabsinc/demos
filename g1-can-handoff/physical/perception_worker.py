@@ -64,7 +64,9 @@ class PerceptionWorker:
         if not self.process.is_alive():raise RuntimeError('Perception worker exited')
         started=time.monotonic()
         self.connection.send((config,phase,require_table,expected_center_xy))
-        if not self.connection.poll(6.):raise RuntimeError('Perception worker response timeout')
+        # Leave two seconds for error reporting before stop_tracking's join
+        # deadline. A stalled camera must not prevent worker/lease cleanup.
+        if not self.connection.poll(4.):raise RuntimeError('Perception worker response timeout')
         response=self.connection.recv()
         for name,fields in response['events']:event(name,**fields)
         event('perception_worker_result',phase_name=phase,worker_ms=response['worker_ms'],
