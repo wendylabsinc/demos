@@ -1,0 +1,1 @@
+{"online_cpus": "0-7", "probe_affinity": [0, 1, 2, 3, 4, 5, 6, 7], "controller_status": {"Name": "python3", "Threads": "12", "Cpus_allowed_list": "0-7"}, "geometry_workers": "1", "omp_threads": "1", "openblas_threads": "1"}

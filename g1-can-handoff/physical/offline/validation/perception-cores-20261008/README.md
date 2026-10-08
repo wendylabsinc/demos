@@ -33,6 +33,13 @@ request. Total startup time is approximately unchanged. This avoids cold
 calibration/decode work inside the bounded observation path; it does not claim
 an improvement to steady-state median throughput.
 
+Native Wendy deployed `0.3.11-warm-perception`, source `095ee9b`. All 48 deployed
+source hashes match (`controller-readiness.json`). The final deployed passive
+profile accepted all 32 observations: exposure age p50 215 ms, p95 247 ms,
+maximum 268 ms. Startup was 2.33 s and the first request 104 ms. Command counts
+were zero before and after this profile. The normal Start button was restored
+after verification; this optimization session did not start a physical trial.
+
 These are passive comparisons, not physical pickup or motion-watchdog
 qualification. Demo 4's recorded watchdog failure occurred between accepted
 observations, so individually fresh passive observations do not prove the
