@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-08",
+  "device": "Unitree G1 Nx 2",
+  "agent": "10.10.20.238:50052",
+  "app": "DEV-g1-handoff-physical",
+  "version": "0.3.7-owned-plan",
+  "deployed_source_commit": "778195b",
+  "camera_serial": "338622073335",
+  "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+  "source_sha256": {
+    "/app/camera_input.py": "d573e972306d19c8dd928f85a42a9039f55f4f61e7bc9c4ad0102522fca8d561",
+    "/app/runtime.py": "c0cabf2190c26c54df558619ac95cf2fd462b50fac3ceeacebab72e00617cb75",
+    "/app/perception_worker.py": "54af3da840508395577b66d3005528d3bce8fceb8e50246d70dcfdb1dfafbe27",
+    "/app/target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2",
+    "/app/yolo_client.py": "39e1a799edd9c47452dea4cd0d152d3ed55ea577e9f43ded9ea5a6e18f9b80a4",
+    "/app/pose_alignment.py": "668e9ee3f1f0689ba8795768a109438d9c79d8d4a11a78117782cf1c584c6583",
+    "/tmp/profile_perception.py": "c83268d379181534abdd9e6bf2f0335cee7ea528b7075a8fbae7a13c0aca6e80",
+    "/data/calibration.json": "bbdc57984c921d8cfef027a9587395ba5225859de5dc847894be193efb4bdb34",
+    "/data/perception-config.json": "edc7a887979f5a187a3b3a189f04e072837a995bf0182606a6cdc210648a465b"
+  },
+  "failure_trace": {
+    "path": "/data/events-20261008T163631Z.jsonl",
+    "bytes": 60449,
+    "sha256": "82feabb4549dad28dfde6edf4ef5e1280646eb686824482c6b0b9c03ce7fe7ad"
+  },
+  "note": "Separate passive process. Existing FROZEN SDK retained control and continued its existing hold publications. No controller restart, release, gate change, or trial start."
+}

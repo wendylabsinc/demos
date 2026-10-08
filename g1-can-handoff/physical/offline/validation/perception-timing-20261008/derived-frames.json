@@ -1,0 +1,482 @@
+[
+  {
+    "i": 0,
+    "frame": 31087,
+    "mode": "yolo",
+    "exposure_age_ms": 366.5863095857276,
+    "headroom_ms": 33.41369041427242,
+    "round_trip_ms": 744.2224229998828,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.33657158590722,
+      "sdk_receive_to_aligned_ms": 9.26457700006722,
+      "aligned_to_fetch_start_ms": -447.9934270002559,
+      "fetch_decode_ms": 506.7471030001798,
+      "prefetch_wait_ms": 0.21501699984582956,
+      "pose_and_dispatch_ms": 8.0222220003634,
+      "geometry_ms": 83.26893599996765,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 140.72530999965238
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 7.1662499999547435,
+      "recorder_http": 24.77341499979957,
+      "depth_decode": 15.636618999906204,
+      "color_decode": 10.235977999855095,
+      "yolo_client": 33.79523000012341,
+      "yolo_service_predict": 24.486,
+      "mask_or_visual_tracker": 23.807582999779697,
+      "cylinder_fit": 10.718686000018351,
+      "archive_total": 28.262967000046046
+    }
+  },
+  {
+    "i": 1,
+    "frame": 31091,
+    "mode": "visual_depth",
+    "exposure_age_ms": 221.122182302679,
+    "headroom_ms": 178.877817697321,
+    "round_trip_ms": 111.19720200031225,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.2581403025797,
+      "sdk_receive_to_aligned_ms": 9.382629999890924,
+      "aligned_to_fetch_start_ms": 35.660107000239805,
+      "fetch_decode_ms": 47.79584399966552,
+      "prefetch_wait_ms": 0.2420900000288384,
+      "pose_and_dispatch_ms": 2.8982650001125876,
+      "geometry_ms": 57.46258199997101,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.4225240001906059
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 7.78816399997595,
+      "recorder_http": 32.33177700030865,
+      "depth_decode": 10.519988999931229,
+      "color_decode": 7.021507999979804,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 15.342109999892273,
+      "cylinder_fit": 14.106282999819086,
+      "archive_total": 22.62478100010412
+    }
+  },
+  {
+    "i": 2,
+    "frame": 31092,
+    "mode": "visual_depth",
+    "exposure_age_ms": 229.1709776850439,
+    "headroom_ms": 170.8290223149561,
+    "round_trip_ms": 64.66688199998316,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.35847668530914,
+      "sdk_receive_to_aligned_ms": 9.373861999847577,
+      "aligned_to_fetch_start_ms": 17.52306500020495,
+      "fetch_decode_ms": 50.451314999918395,
+      "prefetch_wait_ms": 21.463324999785982,
+      "pose_and_dispatch_ms": 1.7791459999898507,
+      "geometry_ms": 56.57825700018293,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 5.64353099980508
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 12.49156000039875,
+      "recorder_http": 30.807041000116442,
+      "depth_decode": 10.019841000030283,
+      "color_decode": 6.458669000039663,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 15.090611999767134,
+      "cylinder_fit": 7.025699999758217,
+      "archive_total": 26.778361999731715
+    }
+  },
+  {
+    "i": 3,
+    "frame": 31093,
+    "mode": "visual_depth",
+    "exposure_age_ms": 233.4635034862913,
+    "headroom_ms": 166.5364965137087,
+    "round_trip_ms": 60.92583099962212,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.59851448648624,
+      "sdk_receive_to_aligned_ms": 9.449097000015172,
+      "aligned_to_fetch_start_ms": 22.529961000145704,
+      "fetch_decode_ms": 66.11298999996507,
+      "prefetch_wait_ms": 8.456447999833472,
+      "pose_and_dispatch_ms": 3.0775680002079753,
+      "geometry_ms": 55.73562999961723,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.5032950000204437
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 12.602859999788052,
+      "recorder_http": 41.034603000298375,
+      "depth_decode": 11.66522099993017,
+      "color_decode": 7.437525000113965,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 15.126293999855989,
+      "cylinder_fit": 11.334135999732098,
+      "archive_total": 30.516853999870364
+    }
+  },
+  {
+    "i": 4,
+    "frame": 31094,
+    "mode": "visual_depth",
+    "exposure_age_ms": 239.57982677620748,
+    "headroom_ms": 160.42017322379252,
+    "round_trip_ms": 62.75224299997717,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.53781277645976,
+      "sdk_receive_to_aligned_ms": 12.882295999588678,
+      "aligned_to_fetch_start_ms": 27.141289000155666,
+      "fetch_decode_ms": 51.65104400020937,
+      "prefetch_wait_ms": 19.29990700000417,
+      "pose_and_dispatch_ms": 2.281758999743033,
+      "geometry_ms": 58.35970699990867,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.4260120001381438
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 17.38069099974382,
+      "recorder_http": 37.73539400026493,
+      "depth_decode": 8.207508999930724,
+      "color_decode": 7.365938000020833,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 19.606446999659966,
+      "cylinder_fit": 7.87338300006013,
+      "archive_total": 26.434507999965717
+    }
+  },
+  {
+    "i": 5,
+    "frame": 31095,
+    "mode": "visual_depth",
+    "exposure_age_ms": 236.6088586704791,
+    "headroom_ms": 163.3911413295209,
+    "round_trip_ms": 53.660985000078654,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.47410067034798,
+      "sdk_receive_to_aligned_ms": 9.341029000097478,
+      "aligned_to_fetch_start_ms": 35.09861200018349,
+      "fetch_decode_ms": 48.73281099980886,
+      "prefetch_wait_ms": 23.935268000059295,
+      "pose_and_dispatch_ms": 1.7052869998224196,
+      "geometry_ms": 49.32361999999557,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.998131000163994
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 12.123032000090461,
+      "recorder_http": 28.348924000056286,
+      "depth_decode": 8.792270000412827,
+      "color_decode": 8.23269500006063,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 14.636608000273554,
+      "cylinder_fit": 7.81850100020165,
+      "archive_total": 26.575345999845013
+    }
+  },
+  {
+    "i": 6,
+    "frame": 31096,
+    "mode": "visual_depth",
+    "exposure_age_ms": 239.7577504475521,
+    "headroom_ms": 160.2422495524479,
+    "round_trip_ms": 59.770710000066174,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.65115844771208,
+      "sdk_receive_to_aligned_ms": 9.278722000090056,
+      "aligned_to_fetch_start_ms": 41.068235999773606,
+      "fetch_decode_ms": 69.54238100024668,
+      "prefetch_wait_ms": 0.14922199989086948,
+      "pose_and_dispatch_ms": 1.7819939998844347,
+      "geometry_ms": 49.87346600000819,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.4125709999461833
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 40.710621000016545,
+      "recorder_http": 53.544308000255114,
+      "depth_decode": 7.062596999730886,
+      "color_decode": 6.445259999964037,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 14.09325800022998,
+      "cylinder_fit": 9.14290799983064,
+      "archive_total": 25.12920499975735
+    }
+  },
+  {
+    "i": 7,
+    "frame": 31097,
+    "mode": "visual_depth",
+    "exposure_age_ms": 246.75721780613458,
+    "headroom_ms": 153.24278219386542,
+    "round_trip_ms": 63.610130999677494,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 70.46553680629586,
+      "sdk_receive_to_aligned_ms": 10.340270000142482,
+      "aligned_to_fetch_start_ms": 39.31603499995617,
+      "fetch_decode_ms": 73.77951599983135,
+      "prefetch_wait_ms": 0.13629300019601942,
+      "pose_and_dispatch_ms": 2.5818999997682113,
+      "geometry_ms": 48.439868000059505,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.6977989998849807
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 27.4642459999086,
+      "recorder_http": 53.19872400013992,
+      "depth_decode": 9.31725100008407,
+      "color_decode": 6.569008000042231,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 17.52722499986703,
+      "cylinder_fit": 5.974552000225231,
+      "archive_total": 23.084415000084846
+    }
+  },
+  {
+    "i": 8,
+    "frame": 31098,
+    "mode": "visual_depth",
+    "exposure_age_ms": 247.37138174623396,
+    "headroom_ms": 152.62861825376604,
+    "round_trip_ms": 57.21840999967753,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 68.53793374648376,
+      "sdk_receive_to_aligned_ms": 17.366417999710393,
+      "aligned_to_fetch_start_ms": 41.55926300018109,
+      "fetch_decode_ms": 56.82556100009606,
+      "prefetch_wait_ms": 6.511278999823844,
+      "pose_and_dispatch_ms": 1.773194000179501,
+      "geometry_ms": 53.51175899977534,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.2859739999839803
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 22.7037909999126,
+      "recorder_http": 40.540853000038624,
+      "depth_decode": 8.91044999980295,
+      "color_decode": 7.064326000090659,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 15.118771999823366,
+      "cylinder_fit": 9.573293000357808,
+      "archive_total": 37.88906299996597
+    }
+  },
+  {
+    "i": 9,
+    "frame": 31099,
+    "mode": "visual_depth",
+    "exposure_age_ms": 257.48813010477534,
+    "headroom_ms": 142.51186989522466,
+    "round_trip_ms": 66.74450099990281,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.74852410515086,
+      "sdk_receive_to_aligned_ms": 9.670257999914611,
+      "aligned_to_fetch_start_ms": 47.89011799994114,
+      "fetch_decode_ms": 68.72755999984292,
+      "prefetch_wait_ms": 0.3318859999126289,
+      "pose_and_dispatch_ms": 1.7234960000678257,
+      "geometry_ms": 60.95341200034454,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.4428759996008012
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 26.86774099993272,
+      "recorder_http": 42.859508999754325,
+      "depth_decode": 7.513081000070088,
+      "color_decode": 6.7048549999526585,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 15.01332799989541,
+      "cylinder_fit": 10.025024999777088,
+      "archive_total": 23.733850000098755
+    }
+  },
+  {
+    "i": 10,
+    "frame": 31100,
+    "mode": "visual_depth",
+    "exposure_age_ms": 268.9780884634274,
+    "headroom_ms": 131.0219115365726,
+    "round_trip_ms": 68.11127799983296,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 67.47441946345134,
+      "sdk_receive_to_aligned_ms": 15.041137000025628,
+      "aligned_to_fetch_start_ms": 44.280624000293756,
+      "fetch_decode_ms": 55.335930999717675,
+      "prefetch_wait_ms": 19.47479399996155,
+      "pose_and_dispatch_ms": 2.3424969999723544,
+      "geometry_ms": 63.19837000000916,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.8303159999959462
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 15.343741999913618,
+      "recorder_http": 36.828761999913695,
+      "depth_decode": 7.831909999822528,
+      "color_decode": 6.414921999748913,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 19.37821299998177,
+      "cylinder_fit": 14.138860000002751,
+      "archive_total": 24.110824999752367
+    }
+  },
+  {
+    "i": 11,
+    "frame": 31101,
+    "mode": "visual_depth",
+    "exposure_age_ms": 273.7887144035085,
+    "headroom_ms": 126.2112855964915,
+    "round_trip_ms": 61.44376899965209,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.61207340357578,
+      "sdk_receive_to_aligned_ms": 13.273863999984314,
+      "aligned_to_fetch_start_ms": 55.26770400001624,
+      "fetch_decode_ms": 52.80731500033653,
+      "prefetch_wait_ms": 25.503747999664483,
+      "pose_and_dispatch_ms": 2.1768260003227624,
+      "geometry_ms": 55.88612999963516,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 2.261053999973228
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 13.627637999888975,
+      "recorder_http": 32.32265599990569,
+      "depth_decode": 8.484319999752188,
+      "color_decode": 6.363528999827395,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 16.935040000134904,
+      "cylinder_fit": 10.562199000105466,
+      "archive_total": 24.61055799994938
+    }
+  },
+  {
+    "i": 12,
+    "frame": 31103,
+    "mode": "yolo",
+    "exposure_age_ms": 228.00544679512313,
+    "headroom_ms": 171.99455320487687,
+    "round_trip_ms": 77.4396980000347,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 67.26391979509572,
+      "sdk_receive_to_aligned_ms": 10.02649600013683,
+      "aligned_to_fetch_start_ms": 2.9305220000424015,
+      "fetch_decode_ms": 44.14833100008764,
+      "prefetch_wait_ms": 26.897084999745857,
+      "pose_and_dispatch_ms": 1.9905150002159644,
+      "geometry_ms": 73.46014099994136,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.2884369998573675
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 11.360119999608287,
+      "recorder_http": 29.045590999885462,
+      "depth_decode": 7.553528999778791,
+      "color_decode": 6.3740569999026775,
+      "yolo_client": 37.56508099968414,
+      "yolo_service_predict": 24.416,
+      "mask_or_visual_tracker": 19.502537999869674,
+      "cylinder_fit": 5.343037999864464,
+      "archive_total": 30.30746700005693
+    }
+  },
+  {
+    "i": 13,
+    "frame": 31104,
+    "mode": "visual_depth",
+    "exposure_age_ms": 231.50121399112322,
+    "headroom_ms": 168.49878600887678,
+    "round_trip_ms": 60.126594999928784,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.42737799120368,
+      "sdk_receive_to_aligned_ms": 9.174941999845032,
+      "aligned_to_fetch_start_ms": 9.16834800000288,
+      "fetch_decode_ms": 55.53475599981539,
+      "prefetch_wait_ms": 31.585377000283188,
+      "pose_and_dispatch_ms": 1.9218080001337512,
+      "geometry_ms": 56.248096999752306,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.440508000086993
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 14.37618099998872,
+      "recorder_http": 34.39867699989918,
+      "depth_decode": 7.978474999617902,
+      "color_decode": 7.783778999964852,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 17.653436999808036,
+      "cylinder_fit": 5.643946999953187,
+      "archive_total": 33.067581999603135
+    }
+  },
+  {
+    "i": 14,
+    "frame": 31105,
+    "mode": "visual_depth",
+    "exposure_age_ms": 233.55925934993138,
+    "headroom_ms": 166.44074065006862,
+    "round_trip_ms": 58.682758000031754,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 67.13343234969216,
+      "sdk_receive_to_aligned_ms": 10.575414999948407,
+      "aligned_to_fetch_start_ms": 27.73760099989886,
+      "fetch_decode_ms": 67.54546299998765,
+      "prefetch_wait_ms": 2.4645180001243716,
+      "pose_and_dispatch_ms": 1.6830459999255254,
+      "geometry_ms": 54.873095999937505,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.546688000416907
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 15.909333000308834,
+      "recorder_http": 43.86175899981026,
+      "depth_decode": 9.407718000147725,
+      "color_decode": 13.624181999603024,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 14.971086000059586,
+      "cylinder_fit": 11.067884000112826,
+      "archive_total": 25.329308999971545
+    }
+  },
+  {
+    "i": 15,
+    "frame": 31106,
+    "mode": "visual_depth",
+    "exposure_age_ms": 232.16304438255975,
+    "headroom_ms": 167.83695561744025,
+    "round_trip_ms": 55.2307429998109,
+    "exposure_partition_ms": {
+      "exposure_to_sdk_receive_ms": 66.89211238290227,
+      "sdk_receive_to_aligned_ms": 9.654832999785867,
+      "aligned_to_fetch_start_ms": 32.31622300017989,
+      "fetch_decode_ms": 50.64936899998429,
+      "prefetch_wait_ms": 18.04090899986477,
+      "pose_and_dispatch_ms": 1.8824469998435234,
+      "geometry_ms": 51.30926800029556,
+      "remaining_archive_wait_ms": 0,
+      "receipt_tail_ms": 1.4178829997035791
+    },
+    "inclusive_stage_ms": {
+      "policy_http": 30.39419100014129,
+      "recorder_http": 31.94628700020985,
+      "depth_decode": 7.475990000330057,
+      "color_decode": 6.765369000277133,
+      "yolo_client": null,
+      "yolo_service_predict": null,
+      "mask_or_visual_tracker": 17.1175749997019,
+      "cylinder_fit": 6.3958180003282905,
+      "archive_total": 25.02219200005129
+    }
+  }
+]

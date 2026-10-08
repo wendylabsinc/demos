@@ -1,0 +1,5379 @@
+{
+  "schema": "wendy.g1.perception-timing.v1",
+  "passive": true,
+  "new_actuator_created": false,
+  "camera_lease_acquired": false,
+  "deadline_ms": 400,
+  "startup_ms": 1917.7054030001273,
+  "archive_path": "/data/perception-profiles/20261008T165831Z",
+  "before": {
+    "phase": "FROZEN",
+    "demo_running": false,
+    "adapter_initialized": true,
+    "motion_commands_sent": 85206
+  },
+  "after": {
+    "phase": "FROZEN",
+    "demo_running": false,
+    "adapter_initialized": true,
+    "motion_commands_sent": 85749
+  },
+  "pose_poll_errors": [],
+  "samples": [
+    {
+      "index": 0,
+      "start_s": 2094.896060786,
+      "end_s": 2095.640283209,
+      "round_trip_ms": 744.2224229998828,
+      "exposure_age_ms": 366.5863095857276,
+      "vision": {
+        "top_quantile_z_m": 0.8701970003736805,
+        "center_xy_m": [
+          0.2849496460435454,
+          0.10607620721501748
+        ],
+        "fit_error_m": 0.0015007347170869628,
+        "pixels": 1518,
+        "frame_id": 31087,
+        "detector": "coke_yolo",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "b42c318d8263aa63fe391499cc77ce73f55c4f5349382ee5029f8963295a30c8",
+        "tracking": {
+          "mode": "yolo",
+          "reason": "initial_identity",
+          "semantic_frame_id": 31087
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31087,
+          "group": 0,
+          "exposure_s": 2095.273696899414,
+          "used_s": 2095.408266741,
+          "next_frame_ms": 507.79978699983985,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714249295400,
+            "raw_received_monotonic_ns": 2095340033471,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.2738189697266,
+            "depth_time": 2095.273696899414,
+            "received_monotonic": 2095.349298048,
+            "color_sensor_ms": 1791478714183.0872,
+            "depth_sensor_ms": 1791478714182.965,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31087,
+            "captured_at_unix_ns": 1791478714259714300,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.273696899414,
+          "pose": {
+            "timestamp": 2095.280832576,
+            "rpy": [
+              0.009872743859887123,
+              0.0006266134441830218,
+              1.716807246208191
+            ],
+            "waist_q": [
+              0.003669379511848092,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31087-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714249295400,
+            "raw_received_monotonic_ns": 2095340033471,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.2738189697266,
+            "depth_time": 2095.273696899414,
+            "received_monotonic": 2095.349298048,
+            "color_sensor_ms": 1791478714183.0872,
+            "depth_sensor_ms": 1791478714182.965,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31087,
+            "captured_at_unix_ns": 1791478714259714300,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31087,
+          "source": {
+            "frame_id": 31087,
+            "camera_serial": "338622073335",
+            "timestamp": 2095.273696899414,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "b42c318d8263aa63fe391499cc77ce73f55c4f5349382ee5029f8963295a30c8"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 24.486,
+          "geometry": {
+            "top_quantile_z_m": 0.8701970003736805,
+            "center_xy_m": [
+              0.2849496460435454,
+              0.10607620721501748
+            ],
+            "fit_error_m": 0.0015007347170869628,
+            "pixels": 1518,
+            "frame_id": 31087,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "b42c318d8263aa63fe391499cc77ce73f55c4f5349382ee5029f8963295a30c8",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 31087
+            }
+          },
+          "error": null,
+          "processing_ms": 83.36385100028565,
+          "exposure_age_ms": 225.92381758613556
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "camera_http",
+              "start_s": 2094.901322861,
+              "end_s": 2094.951459221,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 0,
+              "bytes": 497,
+              "ms": 50.13635999966937
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2094.951583418,
+              "end_s": 2095.333200035,
+              "thread": "perception-frame_0",
+              "path": "/frame.rgbd?frame_id=31080",
+              "group": 0,
+              "bytes": 1233561,
+              "ms": 381.6166169999633
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.359802901,
+              "end_s": 2095.362561192,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 0,
+              "bytes": 498,
+              "ms": 2.758291000191093
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.363227204,
+              "end_s": 2095.370393454,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31087",
+              "group": null,
+              "bytes": 542000,
+              "ms": 7.1662499999547435
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.363820508,
+              "end_s": 2095.388593923,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31087",
+              "group": null,
+              "bytes": 109904,
+              "ms": 24.77341499979957
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.390264264,
+              "end_s": 2095.400500242,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.235977999855095
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.389489512,
+              "end_s": 2095.405126131,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 15.636618999906204
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2094.901304621,
+              "end_s": 2095.408051724,
+              "thread": "perception-frame_0",
+              "group": 0,
+              "frame_id": 31087,
+              "exposure_s": 2095.273696899414,
+              "received_s": 2095.349298048,
+              "raw_received_s": 2095.340033471,
+              "ms": 506.7471030001798
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.408298679,
+              "end_s": 2095.414280399,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 5.981719999908819
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.408728329,
+              "end_s": 2095.427027202,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 1,
+              "bytes": 498,
+              "ms": 18.29887299982147
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.415080593,
+              "end_s": 2095.431287123,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31087,
+              "ms": 16.206530000090424
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.427277612,
+              "end_s": 2095.439704369,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31087",
+              "group": null,
+              "bytes": 542000,
+              "ms": 12.426756999957433
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.415033839,
+              "end_s": 2095.443296806,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31087,
+              "ms": 28.262967000046046
+            },
+            {
+              "name": "yolo_client",
+              "start_s": 2095.416955327,
+              "end_s": 2095.450750557,
+              "thread": "exact-frame-yolo_0",
+              "group": null,
+              "frame_id": 31087,
+              "ms": 33.79523000012341
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.427734239,
+              "end_s": 2095.460934308,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31087",
+              "group": null,
+              "bytes": 109904,
+              "ms": 33.20006900003136
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.462365696,
+              "end_s": 2095.470001629,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.6359330000741465
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.461854602,
+              "end_s": 2095.470573749,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.719146999737859
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.408712392,
+              "end_s": 2095.470901763,
+              "thread": "perception-frame_0",
+              "group": 1,
+              "frame_id": 31087,
+              "exposure_s": 2095.273696899414,
+              "received_s": 2095.349298048,
+              "raw_received_s": 2095.340033471,
+              "ms": 62.18937099993127
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2095.452813586,
+              "end_s": 2095.476621169,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31087,
+              "ms": 23.807582999779697
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2095.478527424,
+              "end_s": 2095.48924611,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.718686000018351
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.416288963,
+              "end_s": 2095.499557899,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31087,
+              "ms": 83.26893599996765
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 600.2702900000259,
+          "round_trip_ms": 740.2412009996624,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "start_s": 2095.650508114,
+      "end_s": 2095.761705316,
+      "round_trip_ms": 111.19720200031225,
+      "exposure_age_ms": 221.122182302679,
+      "vision": {
+        "top_quantile_z_m": 0.8689563563924319,
+        "center_xy_m": [
+          0.2847737865456251,
+          0.10701151152153088
+        ],
+        "fit_error_m": 0.0014926534298121776,
+        "pixels": 1531,
+        "frame_id": 31091,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "443f317202f437909be281d3d4e52cd0755915d4d9e159873fef5db6aa4fadf6",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.26688623428344727,
+          "visual_agreement": 0.9974499700498867,
+          "support_pixels": 3061,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31087,
+          "group": 1,
+          "exposure_s": 2095.273696899414,
+          "used_s": 2095.651815592,
+          "next_frame_ms": 0.23232900002767565,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714249295400,
+            "raw_received_monotonic_ns": 2095340033471,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.2738189697266,
+            "depth_time": 2095.273696899414,
+            "received_monotonic": 2095.349298048,
+            "color_sensor_ms": 1791478714183.0872,
+            "depth_sensor_ms": 1791478714182.965,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31087,
+            "captured_at_unix_ns": 1791478714259714300,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "timing_frame",
+          "frame_id": 31091,
+          "group": 2,
+          "exposure_s": 2095.5405831336975,
+          "used_s": 2095.699921945,
+          "next_frame_ms": 27.94381900002918,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714516103400,
+            "raw_received_monotonic_ns": 2095606841274,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.5407049655914,
+            "depth_time": 2095.5405831336975,
+            "received_monotonic": 2095.616223904,
+            "color_sensor_ms": 1791478714449.9734,
+            "depth_sensor_ms": 1791478714449.8516,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31091,
+            "captured_at_unix_ns": 1791478714526885000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.5405831336975,
+          "pose": {
+            "timestamp": 2095.534040005,
+            "rpy": [
+              0.00990480836480856,
+              0.0006026211776770651,
+              1.7169393301010132
+            ],
+            "waist_q": [
+              0.003655987558886409,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31091-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714516103400,
+            "raw_received_monotonic_ns": 2095606841274,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.5407049655914,
+            "depth_time": 2095.5405831336975,
+            "received_monotonic": 2095.616223904,
+            "color_sensor_ms": 1791478714449.9734,
+            "depth_sensor_ms": 1791478714449.8516,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31091,
+            "captured_at_unix_ns": 1791478714526885000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31091,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8689563563924319,
+            "center_xy_m": [
+              0.2847737865456251,
+              0.10701151152153088
+            ],
+            "fit_error_m": 0.0014926534298121776,
+            "pixels": 1531,
+            "frame_id": 31091,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "443f317202f437909be281d3d4e52cd0755915d4d9e159873fef5db6aa4fadf6",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9974499700498867,
+              "support_pixels": 3061,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 57.58409100008066,
+          "exposure_age_ms": 219.76548530255968
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "camera_http",
+              "start_s": 2095.65189694,
+              "end_s": 2095.654943818,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 2,
+              "bytes": 498,
+              "ms": 3.046878000077413
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.655188181,
+              "end_s": 2095.662976345,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31091",
+              "group": null,
+              "bytes": 542008,
+              "ms": 7.78816399997595
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.655720555,
+              "end_s": 2095.688052332,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31091",
+              "group": null,
+              "bytes": 110188,
+              "ms": 32.33177700030865
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.689396228,
+              "end_s": 2095.696417736,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.021507999979804
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.688822636,
+              "end_s": 2095.699342625,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.519988999931229
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.651884011,
+              "end_s": 2095.699679855,
+              "thread": "perception-frame_0",
+              "group": 2,
+              "frame_id": 31091,
+              "exposure_s": 2095.5405831336975,
+              "received_s": 2095.616223904,
+              "raw_received_s": 2095.606841274,
+              "ms": 47.79584399966552
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.699965819,
+              "end_s": 2095.702675308,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.709488999698806
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.7005709,
+              "end_s": 2095.708035883,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 3,
+              "bytes": 498,
+              "ms": 7.464982999863423
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.702958808,
+              "end_s": 2095.713902783,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31091,
+              "ms": 10.943974999918282
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.708381785,
+              "end_s": 2095.720873345,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31092",
+              "group": null,
+              "bytes": 542004,
+              "ms": 12.49156000039875
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.702911606,
+              "end_s": 2095.725536387,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31091,
+              "ms": 22.62478100010412
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2095.72051765,
+              "end_s": 2095.73585976,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31091,
+              "ms": 15.342109999892273
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.708805195,
+              "end_s": 2095.739612236,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31092",
+              "group": null,
+              "bytes": 110375,
+              "ms": 30.807041000116442
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.742198648,
+              "end_s": 2095.748657317,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.458669000039663
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.740687801,
+              "end_s": 2095.750707642,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.019841000030283
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.700560692,
+              "end_s": 2095.751012007,
+              "thread": "perception-frame_0",
+              "group": 3,
+              "frame_id": 31092,
+              "exposure_s": 2095.607305288315,
+              "received_s": 2095.683037627,
+              "raw_received_s": 2095.673663765,
+              "ms": 50.451314999918395
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2095.737198568,
+              "end_s": 2095.751304851,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 14.106282999819086
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.70282021,
+              "end_s": 2095.760282792,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31091,
+              "ms": 57.46258199997101
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 109.34787700034576,
+          "round_trip_ms": 110.81452899998112,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "start_s": 2095.771809384,
+      "end_s": 2095.836476266,
+      "round_trip_ms": 64.66688199998316,
+      "exposure_age_ms": 229.1709776850439,
+      "vision": {
+        "top_quantile_z_m": 0.8688213966705542,
+        "center_xy_m": [
+          0.2850855764519102,
+          0.10583252825210099
+        ],
+        "fit_error_m": 0.0013804396776773726,
+        "pixels": 1584,
+        "frame_id": 31092,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "dc1bfbccb44f46cf23458cadc62cdbaba4ae08b2e457c3e2e14117a7ca8899ec",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.33360838890075684,
+          "visual_agreement": 0.995706285311557,
+          "support_pixels": 3167,
+          "roi_shape": [
+            143,
+            114
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31092,
+          "group": 3,
+          "exposure_s": 2095.607305288315,
+          "used_s": 2095.772475332,
+          "next_frame_ms": 0.0868520000949502,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714582925300,
+            "raw_received_monotonic_ns": 2095673663765,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.6074273586273,
+            "depth_time": 2095.607305288315,
+            "received_monotonic": 2095.683037627,
+            "color_sensor_ms": 1791478714516.6953,
+            "depth_sensor_ms": 1791478714516.5732,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31092,
+            "captured_at_unix_ns": 1791478714593519900,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.607305288315,
+          "pose": {
+            "timestamp": 2095.614183851,
+            "rpy": [
+              0.009884178638458252,
+              0.0006469004438258708,
+              1.716985821723938
+            ],
+            "waist_q": [
+              0.0036425956059247255,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31092-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714582925300,
+            "raw_received_monotonic_ns": 2095673663765,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.6074273586273,
+            "depth_time": 2095.607305288315,
+            "received_monotonic": 2095.683037627,
+            "color_sensor_ms": 1791478714516.6953,
+            "depth_sensor_ms": 1791478714516.5732,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31092,
+            "captured_at_unix_ns": 1791478714593519900,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31092,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8688213966705542,
+            "center_xy_m": [
+              0.2850855764519102,
+              0.10583252825210099
+            ],
+            "fit_error_m": 0.0013804396776773726,
+            "pixels": 1584,
+            "frame_id": 31092,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "dc1bfbccb44f46cf23458cadc62cdbaba4ae08b2e457c3e2e14117a7ca8899ec",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.33360838890075684,
+              "visual_agreement": 0.995706285311557,
+              "support_pixels": 3167,
+              "roi_shape": [
+                143,
+                114
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 56.6633489997912,
+          "exposure_age_ms": 223.58895368506637
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.772496196,
+              "end_s": 2095.774160714,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.664518000325188
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.772617353,
+              "end_s": 2095.778669253,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 4,
+              "bytes": 498,
+              "ms": 6.051899999874877
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.7746055,
+              "end_s": 2095.79013165,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31092,
+              "ms": 15.526150000368943
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.778935696,
+              "end_s": 2095.791538556,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31093",
+              "group": null,
+              "bytes": 541996,
+              "ms": 12.602859999788052
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.774562938,
+              "end_s": 2095.8013413,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31092,
+              "ms": 26.778361999731715
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2095.794227372,
+              "end_s": 2095.809317984,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31092,
+              "ms": 15.090611999767134
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2095.810602326,
+              "end_s": 2095.817628026,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.025699999758217
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.782753999,
+              "end_s": 2095.823788602,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31093",
+              "group": null,
+              "bytes": 110934,
+              "ms": 41.034603000298375
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.774254478,
+              "end_s": 2095.830832735,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31092,
+              "ms": 56.57825700018293
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 63.31184900000153,
+          "round_trip_ms": 64.53711699987252,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "start_s": 2095.846564877,
+      "end_s": 2095.907490708,
+      "round_trip_ms": 60.92583099962212,
+      "exposure_age_ms": 233.4635034862913,
+      "vision": {
+        "top_quantile_z_m": 0.8688343473826238,
+        "center_xy_m": [
+          0.2846417866110038,
+          0.10588136324236126
+        ],
+        "fit_error_m": 0.0011983915416946193,
+        "pixels": 1508,
+        "frame_id": 31093,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "8cced40023baaae231db2988db3aedd8f2468bf0048946471a870fef54bbd97a",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.4003303050994873,
+          "visual_agreement": 0.9936326047154601,
+          "support_pixels": 3016,
+          "roi_shape": [
+            143,
+            117
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31093,
+          "group": 4,
+          "exposure_s": 2095.6740272045135,
+          "used_s": 2095.847174215,
+          "next_frame_ms": 0.08310800012623076,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714649887700,
+            "raw_received_monotonic_ns": 2095740625719,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.674149274826,
+            "depth_time": 2095.6740272045135,
+            "received_monotonic": 2095.750074816,
+            "color_sensor_ms": 1791478714583.417,
+            "depth_sensor_ms": 1791478714583.295,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31093,
+            "captured_at_unix_ns": 1791478714664189400,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.6740272045135,
+          "pose": {
+            "timestamp": 2095.675237847,
+            "rpy": [
+              0.009919630363583565,
+              0.0006195265450514853,
+              1.717063546180725
+            ],
+            "waist_q": [
+              0.003669379511848092,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31093-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714649887700,
+            "raw_received_monotonic_ns": 2095740625719,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.674149274826,
+            "depth_time": 2095.6740272045135,
+            "received_monotonic": 2095.750074816,
+            "color_sensor_ms": 1791478714583.417,
+            "depth_sensor_ms": 1791478714583.295,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31093,
+            "captured_at_unix_ns": 1791478714664189400,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31093,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8688343473826238,
+            "center_xy_m": [
+              0.2846417866110038,
+              0.10588136324236126
+            ],
+            "fit_error_m": 0.0011983915416946193,
+            "pixels": 1508,
+            "frame_id": 31093,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8cced40023baaae231db2988db3aedd8f2468bf0048946471a870fef54bbd97a",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.4003303050994873,
+              "visual_agreement": 0.9936326047154601,
+              "support_pixels": 3016,
+              "roi_shape": [
+                143,
+                117
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 55.817872999796236,
+          "exposure_age_ms": 232.0135234863301
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "depth_decode",
+              "start_s": 2095.825352667,
+              "end_s": 2095.837017888,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 11.66522099993017
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.831025831,
+              "end_s": 2095.838463356,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.437525000113965
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.772604777,
+              "end_s": 2095.838717767,
+              "thread": "perception-frame_0",
+              "group": 4,
+              "frame_id": 31093,
+              "exposure_s": 2095.6740272045135,
+              "received_s": 2095.750074816,
+              "raw_received_s": 2095.740625719,
+              "ms": 66.11298999996507
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.84719572,
+              "end_s": 2095.850139298,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.943578000213165
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.847323501,
+              "end_s": 2095.850770492,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 5,
+              "bytes": 498,
+              "ms": 3.4469909996914794
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.851963854,
+              "end_s": 2095.866899579,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31093,
+              "ms": 14.935724999759259
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.850972741,
+              "end_s": 2095.868353432,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31094",
+              "group": null,
+              "bytes": 542000,
+              "ms": 17.38069099974382
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.851920396,
+              "end_s": 2095.88243725,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31093,
+              "ms": 30.516853999870364
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2095.868149071,
+              "end_s": 2095.883275365,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31093,
+              "ms": 15.126293999855989
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.851556189,
+              "end_s": 2095.889291583,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31094",
+              "group": null,
+              "bytes": 110609,
+              "ms": 37.73539400026493
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2095.884592027,
+              "end_s": 2095.895926163,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 11.334135999732098
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.890785661,
+              "end_s": 2095.898151599,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.365938000020833
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.890343691,
+              "end_s": 2095.8985512,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.207508999930724
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.847311949,
+              "end_s": 2095.898962993,
+              "thread": "perception-frame_0",
+              "group": 5,
+              "frame_id": 31094,
+              "exposure_s": 2095.7407505512238,
+              "received_s": 2095.82017066,
+              "raw_received_s": 2095.807288364,
+              "ms": 51.65104400020937
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.850251783,
+              "end_s": 2095.905987413,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31093,
+              "ms": 55.73562999961723
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 59.6252329996787,
+          "round_trip_ms": 60.81958599997961,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "start_s": 2095.917578135,
+      "end_s": 2095.980330378,
+      "round_trip_ms": 62.75224299997717,
+      "exposure_age_ms": 239.57982677620748,
+      "vision": {
+        "top_quantile_z_m": 0.8689139094233749,
+        "center_xy_m": [
+          0.28505972742569113,
+          0.10664466956757698
+        ],
+        "fit_error_m": 0.0013797654767740276,
+        "pixels": 2985,
+        "frame_id": 31094,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "57f73f67a4b5be42dcd1bcec25d3f88135c217bcac0d8e65aeb6756bbad4744c",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.4670536518096924,
+          "visual_agreement": 0.9952639843941407,
+          "support_pixels": 2985,
+          "roi_shape": [
+            141,
+            113
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31094,
+          "group": 5,
+          "exposure_s": 2095.7407505512238,
+          "used_s": 2095.9182629,
+          "next_frame_ms": 0.07760300013615051,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714716551700,
+            "raw_received_monotonic_ns": 2095807288364,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.7408726215363,
+            "depth_time": 2095.7407505512238,
+            "received_monotonic": 2095.82017066,
+            "color_sensor_ms": 1791478714650.139,
+            "depth_sensor_ms": 1791478714650.0168,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31094,
+            "captured_at_unix_ns": 1791478714733670000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.7407505512238,
+          "pose": {
+            "timestamp": 2095.734174026,
+            "rpy": [
+              0.009949992410838604,
+              0.0006626989343203604,
+              1.7170783281326294
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31094-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714716551700,
+            "raw_received_monotonic_ns": 2095807288364,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.7408726215363,
+            "depth_time": 2095.7407505512238,
+            "received_monotonic": 2095.82017066,
+            "color_sensor_ms": 1791478714650.139,
+            "depth_sensor_ms": 1791478714650.0168,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31094,
+            "captured_at_unix_ns": 1791478714733670000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31094,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8689139094233749,
+            "center_xy_m": [
+              0.28505972742569113,
+              0.10664466956757698
+            ],
+            "fit_error_m": 0.0013797654767740276,
+            "pixels": 2985,
+            "frame_id": 31094,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "57f73f67a4b5be42dcd1bcec25d3f88135c217bcac0d8e65aeb6756bbad4744c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.4670536518096924,
+              "visual_agreement": 0.9952639843941407,
+              "support_pixels": 2985,
+              "roi_shape": [
+                141,
+                113
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 58.440703000087524,
+          "exposure_age_ms": 238.2070337762343
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.918281653,
+              "end_s": 2095.920437774,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.15612100009821
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.918396473,
+              "end_s": 2095.927516405,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 6,
+              "bytes": 498,
+              "ms": 9.119931999975961
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.92071833,
+              "end_s": 2095.933090365,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31094,
+              "ms": 12.372035000225878
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.9277816,
+              "end_s": 2095.939904632,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31095",
+              "group": null,
+              "bytes": 542008,
+              "ms": 12.123032000090461
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.920673592,
+              "end_s": 2095.9471081,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31094,
+              "ms": 26.434507999965717
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.928251859,
+              "end_s": 2095.956600783,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31095",
+              "group": null,
+              "bytes": 109782,
+              "ms": 28.348924000056286
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2095.94205653,
+              "end_s": 2095.961662977,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31094,
+              "ms": 19.606446999659966
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2095.958374584,
+              "end_s": 2095.966607279,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.23269500006063
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2095.957949287,
+              "end_s": 2095.966741557,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.792270000412827
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.918385017,
+              "end_s": 2095.967117828,
+              "thread": "perception-frame_0",
+              "group": 6,
+              "frame_id": 31095,
+              "exposure_s": 2095.8074712753296,
+              "received_s": 2095.883286405,
+              "raw_received_s": 2095.873945376,
+              "ms": 48.73281099980886
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2095.963015674,
+              "end_s": 2095.970889057,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.87338300006013
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.920544659,
+              "end_s": 2095.978904366,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31094,
+              "ms": 58.35970699990867
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 61.32111099987014,
+          "round_trip_ms": 62.62718100015263,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "start_s": 2095.990419149,
+      "end_s": 2096.044080134,
+      "round_trip_ms": 53.660985000078654,
+      "exposure_age_ms": 236.6088586704791,
+      "vision": {
+        "top_quantile_z_m": 0.8688760180386135,
+        "center_xy_m": [
+          0.2850283012837799,
+          0.10669834659789039
+        ],
+        "fit_error_m": 0.0012931624151426835,
+        "pixels": 2997,
+        "frame_id": 31095,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "3d4682c06327b740adcfb9aea9390b7232e7c8ecfac3bbbcde5e2234e74fbeee",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.5337743759155273,
+          "visual_agreement": 0.9941483146813255,
+          "support_pixels": 2997,
+          "roi_shape": [
+            141,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31095,
+          "group": 6,
+          "exposure_s": 2095.8074712753296,
+          "used_s": 2095.991053096,
+          "next_frame_ms": 0.09290000025430345,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714783207000,
+            "raw_received_monotonic_ns": 2095873945376,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.8075931072235,
+            "depth_time": 2095.8074712753296,
+            "received_monotonic": 2095.883286405,
+            "color_sensor_ms": 1791478714716.8606,
+            "depth_sensor_ms": 1791478714716.7388,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31095,
+            "captured_at_unix_ns": 1791478714793717200,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.8074712753296,
+          "pose": {
+            "timestamp": 2095.809898104,
+            "rpy": [
+              0.009943741373717785,
+              0.0005296105518937111,
+              1.7171519994735718
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31095-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714783207000,
+            "raw_received_monotonic_ns": 2095873945376,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.8075931072235,
+            "depth_time": 2095.8074712753296,
+            "received_monotonic": 2095.883286405,
+            "color_sensor_ms": 1791478714716.8606,
+            "depth_sensor_ms": 1791478714716.7388,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31095,
+            "captured_at_unix_ns": 1791478714793717200,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31095,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8688760180386135,
+            "center_xy_m": [
+              0.2850283012837799,
+              0.10669834659789039
+            ],
+            "fit_error_m": 0.0012931624151426835,
+            "pixels": 2997,
+            "frame_id": 31095,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "3d4682c06327b740adcfb9aea9390b7232e7c8ecfac3bbbcde5e2234e74fbeee",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.5337743759155273,
+              "visual_agreement": 0.9941483146813255,
+              "support_pixels": 2997,
+              "roi_shape": [
+                141,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 49.39843900001506,
+          "exposure_age_ms": 234.66410567061757
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2095.991072777,
+              "end_s": 2095.99268254,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.609762999578379
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.991194638,
+              "end_s": 2095.998282293,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 7,
+              "bytes": 498,
+              "ms": 7.087655000304949
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2095.992902901,
+              "end_s": 2096.008455644,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31095,
+              "ms": 15.552743000171176
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2095.992862739,
+              "end_s": 2096.019438085,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31095,
+              "ms": 26.575345999845013
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.009270526,
+              "end_s": 2096.023907134,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31095,
+              "ms": 14.636608000273554
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.025339802,
+              "end_s": 2096.033158303,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.81850100020165
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2095.998547584,
+              "end_s": 2096.039258205,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31096",
+              "group": null,
+              "bytes": 542004,
+              "ms": 40.710621000016545
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2095.992758383,
+              "end_s": 2096.042082003,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31095,
+              "ms": 49.32361999999557
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 51.67367000012746,
+          "round_trip_ms": 53.508209999563405,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "start_s": 2096.054172841,
+      "end_s": 2096.113943551,
+      "round_trip_ms": 59.770710000066174,
+      "exposure_age_ms": 239.7577504475521,
+      "vision": {
+        "top_quantile_z_m": 0.8683716626001584,
+        "center_xy_m": [
+          0.2849483554498239,
+          0.10680577410304765
+        ],
+        "fit_error_m": 0.0013058991473611414,
+        "pixels": 2991,
+        "frame_id": 31096,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "5a2e548d048b169c7f5b19448070888a6fe7b9ab37761d48529da84adeb1cb19",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.6004889011383057,
+          "visual_agreement": 0.9942308264375336,
+          "support_pixels": 2991,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31096,
+          "group": 7,
+          "exposure_s": 2095.8741858005524,
+          "used_s": 2096.06087552,
+          "next_frame_ms": 5.692940999779239,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714850099500,
+            "raw_received_monotonic_ns": 2095940836959,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.874307870865,
+            "depth_time": 2095.8741858005524,
+            "received_monotonic": 2095.950115681,
+            "color_sensor_ms": 1791478714783.5754,
+            "depth_sensor_ms": 1791478714783.4534,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31096,
+            "captured_at_unix_ns": 1791478714860642300,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.8741858005524,
+          "pose": {
+            "timestamp": 2095.866040696,
+            "rpy": [
+              0.009950431995093822,
+              0.000552695244550705,
+              1.717158555984497
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31096-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714850099500,
+            "raw_received_monotonic_ns": 2095940836959,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.874307870865,
+            "depth_time": 2095.8741858005524,
+            "received_monotonic": 2095.950115681,
+            "color_sensor_ms": 1791478714783.5754,
+            "depth_sensor_ms": 1791478714783.4534,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31096,
+            "captured_at_unix_ns": 1791478714860642300,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31096,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8683716626001584,
+            "center_xy_m": [
+              0.2849483554498239,
+              0.10680577410304765
+            ],
+            "fit_error_m": 0.0013058991473611414,
+            "pixels": 2991,
+            "frame_id": 31096,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "5a2e548d048b169c7f5b19448070888a6fe7b9ab37761d48529da84adeb1cb19",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.6004889011383057,
+              "visual_agreement": 0.9942308264375336,
+              "support_pixels": 2991,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 49.949468999784585,
+          "exposure_age_ms": 238.39903744783442
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "camera_http",
+              "start_s": 2095.99904738,
+              "end_s": 2096.052591688,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31096",
+              "group": null,
+              "bytes": 109902,
+              "ms": 53.544308000255114
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.053871901,
+              "end_s": 2096.060317161,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.445259999964037
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.053407786,
+              "end_s": 2096.060470383,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.062596999730886
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2095.991183917,
+              "end_s": 2096.060726298,
+              "thread": "perception-frame_0",
+              "group": 7,
+              "frame_id": 31096,
+              "exposure_s": 2095.8741858005524,
+              "received_s": 2095.950115681,
+              "raw_received_s": 2095.940836959,
+              "ms": 69.54238100024668
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.060901345,
+              "end_s": 2096.062575175,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.6738300000724848
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.061032103,
+              "end_s": 2096.067234825,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 8,
+              "bytes": 498,
+              "ms": 6.202722000125505
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.062784848,
+              "end_s": 2096.078279796,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31096,
+              "ms": 15.494948000196018
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.062744142,
+              "end_s": 2096.087873347,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31096,
+              "ms": 25.12920499975735
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.079119319,
+              "end_s": 2096.093212577,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31096,
+              "ms": 14.09325800022998
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.070354091,
+              "end_s": 2096.097818337,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31097",
+              "group": null,
+              "bytes": 542004,
+              "ms": 27.4642459999086
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.094526456,
+              "end_s": 2096.103669364,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 9.14290799983064
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.062657514,
+              "end_s": 2096.11253098,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31096,
+              "ms": 49.87346600000819
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 57.902696000383,
+          "round_trip_ms": 59.611726999719394,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "start_s": 2096.124047651,
+      "end_s": 2096.187657782,
+      "round_trip_ms": 63.610130999677494,
+      "exposure_age_ms": 246.75721780613458,
+      "vision": {
+        "top_quantile_z_m": 0.8688181397536566,
+        "center_xy_m": [
+          0.28471158948567205,
+          0.10621719215931615
+        ],
+        "fit_error_m": 0.0013823751325225408,
+        "pixels": 1524,
+        "frame_id": 31097,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "836cbec19c26f7e31decd8eb64288b59d1ebc65bb67e44fd4f1f7b0c8bcb6c9d",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.6672036647796631,
+          "visual_agreement": 0.9977823457481624,
+          "support_pixels": 3047,
+          "roi_shape": [
+            141,
+            116
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31097,
+          "group": 8,
+          "exposure_s": 2095.9409005641937,
+          "used_s": 2096.134938215,
+          "next_frame_ms": 10.00755199993364,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714920628700,
+            "raw_received_monotonic_ns": 2096011366101,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.941022634506,
+            "depth_time": 2095.9409005641937,
+            "received_monotonic": 2096.021706371,
+            "color_sensor_ms": 1791478714850.2903,
+            "depth_sensor_ms": 1791478714850.1682,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31097,
+            "captured_at_unix_ns": 1791478714934956000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2095.9409005641937,
+          "pose": {
+            "timestamp": 2095.935413117,
+            "rpy": [
+              0.009910053573548794,
+              0.0005656038993038237,
+              1.7171645164489746
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31097-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714920628700,
+            "raw_received_monotonic_ns": 2096011366101,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2095.941022634506,
+            "depth_time": 2095.9409005641937,
+            "received_monotonic": 2096.021706371,
+            "color_sensor_ms": 1791478714850.2903,
+            "depth_sensor_ms": 1791478714850.1682,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31097,
+            "captured_at_unix_ns": 1791478714934956000,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31097,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8688181397536566,
+            "center_xy_m": [
+              0.28471158948567205,
+              0.10621719215931615
+            ],
+            "fit_error_m": 0.0013823751325225408,
+            "pixels": 1524,
+            "frame_id": 31097,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "836cbec19c26f7e31decd8eb64288b59d1ebc65bb67e44fd4f1f7b0c8bcb6c9d",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.6672036647796631,
+              "visual_agreement": 0.9977823457481624,
+              "support_pixels": 3047,
+              "roi_shape": [
+                141,
+                116
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 48.51724800028023,
+          "exposure_age_ms": 245.10895680623435
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "camera_http",
+              "start_s": 2096.070755419,
+              "end_s": 2096.123954143,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31097",
+              "group": null,
+              "bytes": 110829,
+              "ms": 53.19872400013992
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.126257599,
+              "end_s": 2096.132826607,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.569008000042231
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.125185714,
+              "end_s": 2096.134502965,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 9.31725100008407
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.061022406,
+              "end_s": 2096.134801922,
+              "thread": "perception-frame_0",
+              "group": 8,
+              "frame_id": 31097,
+              "exposure_s": 2095.9409005641937,
+              "received_s": 2096.021706371,
+              "raw_received_s": 2096.011366101,
+              "ms": 73.77951599983135
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.1349618,
+              "end_s": 2096.137414638,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.452837999953772
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.135088557,
+              "end_s": 2096.13905541,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 9,
+              "bytes": 498,
+              "ms": 3.966852999838011
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.138088714,
+              "end_s": 2096.150207842,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31097,
+              "ms": 12.119127999994816
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.138049801,
+              "end_s": 2096.161134216,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31097,
+              "ms": 23.084415000084846
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.139259035,
+              "end_s": 2096.161962826,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31098",
+              "group": null,
+              "bytes": 542000,
+              "ms": 22.7037909999126
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.151038596,
+              "end_s": 2096.168565821,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31097,
+              "ms": 17.52722499986703
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.169845042,
+              "end_s": 2096.175819594,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 5.974552000225231
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.13958276,
+              "end_s": 2096.180123613,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31098",
+              "group": null,
+              "bytes": 110408,
+              "ms": 40.540853000038624
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.137520115,
+              "end_s": 2096.185959983,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31097,
+              "ms": 48.439868000059505
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 61.59011099998679,
+          "round_trip_ms": 63.49761399997078,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "start_s": 2096.197768538,
+      "end_s": 2096.254986948,
+      "round_trip_ms": 57.21840999967753,
+      "exposure_age_ms": 247.37138174623396,
+      "vision": {
+        "top_quantile_z_m": 0.8683978978504647,
+        "center_xy_m": [
+          0.2850390462061864,
+          0.10676424242408213
+        ],
+        "fit_error_m": 0.001366898205341928,
+        "pixels": 1534,
+        "frame_id": 31098,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "8762520707c469da7cb3d1c4dd7b2daf68fe59de0f7676f26808cdbee601e26e",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.7339186668395996,
+          "visual_agreement": 0.9946516976467318,
+          "support_pixels": 3067,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31098,
+          "group": 9,
+          "exposure_s": 2096.0076155662537,
+          "used_s": 2096.198416021,
+          "next_frame_ms": 0.0865319998410996,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714985415700,
+            "raw_received_monotonic_ns": 2096076153500,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.0077373981476,
+            "depth_time": 2096.0076155662537,
+            "received_monotonic": 2096.093519918,
+            "color_sensor_ms": 1791478714917.005,
+            "depth_sensor_ms": 1791478714916.883,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31098,
+            "captured_at_unix_ns": 1791478715010175700,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.0076155662537,
+          "pose": {
+            "timestamp": 2096.004530008,
+            "rpy": [
+              0.009864370338618755,
+              0.0005769231938757002,
+              1.7172448635101318
+            ],
+            "waist_q": [
+              0.003696163184940815,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31098-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478714985415700,
+            "raw_received_monotonic_ns": 2096076153500,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.0077373981476,
+            "depth_time": 2096.0076155662537,
+            "received_monotonic": 2096.093519918,
+            "color_sensor_ms": 1791478714917.005,
+            "depth_sensor_ms": 1791478714916.883,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31098,
+            "captured_at_unix_ns": 1791478715010175700,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31098,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8683978978504647,
+            "center_xy_m": [
+              0.2850390462061864,
+              0.10676424242408213
+            ],
+            "fit_error_m": 0.001366898205341928,
+            "pixels": 1534,
+            "frame_id": 31098,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8762520707c469da7cb3d1c4dd7b2daf68fe59de0f7676f26808cdbee601e26e",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.7339186668395996,
+              "visual_agreement": 0.9946516976467318,
+              "support_pixels": 3067,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 53.58462599997438,
+          "exposure_age_ms": 246.1354577462771
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "depth_decode",
+              "start_s": 2096.180924478,
+              "end_s": 2096.189834928,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.91044999980295
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.184470321,
+              "end_s": 2096.191534647,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.064326000090659
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.135079181,
+              "end_s": 2096.191904742,
+              "thread": "perception-frame_0",
+              "group": 9,
+              "frame_id": 31098,
+              "exposure_s": 2096.0076155662537,
+              "received_s": 2096.093519918,
+              "raw_received_s": 2096.0761535,
+              "ms": 56.82556100009606
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.198439638,
+              "end_s": 2096.200100475,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.6608370001449657
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.200341573,
+              "end_s": 2096.21457474,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31098,
+              "ms": 14.23316699992938
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.198652575,
+              "end_s": 2096.214899554,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 10,
+              "bytes": 498,
+              "ms": 16.2469790002433
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.218608988,
+              "end_s": 2096.23372776,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31098,
+              "ms": 15.118771999823366
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.200305059,
+              "end_s": 2096.238194122,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31098,
+              "ms": 37.88906299996597
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.215504571,
+              "end_s": 2096.242372312,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31099",
+              "group": null,
+              "bytes": 542004,
+              "ms": 26.86774099993272
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.236166198,
+              "end_s": 2096.245739491,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 9.573293000357808
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.200189215,
+              "end_s": 2096.253700974,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31098,
+              "ms": 53.51175899977534
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 55.92888499995752,
+          "round_trip_ms": 57.08198800039099,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "start_s": 2096.265073959,
+      "end_s": 2096.33181846,
+      "round_trip_ms": 66.74450099990281,
+      "exposure_age_ms": 257.48813010477534,
+      "vision": {
+        "top_quantile_z_m": 0.8684458153097936,
+        "center_xy_m": [
+          0.2850672512585734,
+          0.10658812545463159
+        ],
+        "fit_error_m": 0.0014787873712174542,
+        "pixels": 1510,
+        "frame_id": 31099,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "965ef00612d4b1605ecb21eadefd4470462190a8db0470ad4d6aa83c16d15678",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.800633430480957,
+          "visual_agreement": 0.9952533616572451,
+          "support_pixels": 3019,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31099,
+          "group": 10,
+          "exposure_s": 2096.074330329895,
+          "used_s": 2096.267698676,
+          "next_frame_ms": 2.1011750000070606,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715050341000,
+            "raw_received_monotonic_ns": 2096141078854,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.0744524002075,
+            "depth_time": 2096.074330329895,
+            "received_monotonic": 2096.150749112,
+            "color_sensor_ms": 1791478714983.7197,
+            "depth_sensor_ms": 1791478714983.5977,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31099,
+            "captured_at_unix_ns": 1791478715064188200,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.074330329895,
+          "pose": {
+            "timestamp": 2096.069509543,
+            "rpy": [
+              0.009845079854130745,
+              0.0006196164176799357,
+              1.717262625694275
+            ],
+            "waist_q": [
+              0.003669379511848092,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31099-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715050341000,
+            "raw_received_monotonic_ns": 2096141078854,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.0744524002075,
+            "depth_time": 2096.074330329895,
+            "received_monotonic": 2096.150749112,
+            "color_sensor_ms": 1791478714983.7197,
+            "depth_sensor_ms": 1791478714983.5977,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31099,
+            "captured_at_unix_ns": 1791478715064188200,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31099,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8684458153097936,
+            "center_xy_m": [
+              0.2850672512585734,
+              0.10658812545463159
+            ],
+            "fit_error_m": 0.0014787873712174542,
+            "pixels": 1510,
+            "frame_id": 31099,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965ef00612d4b1605ecb21eadefd4470462190a8db0470ad4d6aa83c16d15678",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.800633430480957,
+              "visual_agreement": 0.9952533616572451,
+              "support_pixels": 3019,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 61.07857000006334,
+          "exposure_age_ms": 256.1424101049852
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "camera_http",
+              "start_s": 2096.215950958,
+              "end_s": 2096.258810467,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31099",
+              "group": null,
+              "bytes": 109743,
+              "ms": 42.859508999754325
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.260071767,
+              "end_s": 2096.266776622,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.7048549999526585
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.259598115,
+              "end_s": 2096.267111196,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.513081000070088
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.19863923,
+              "end_s": 2096.26736679,
+              "thread": "perception-frame_0",
+              "group": 10,
+              "frame_id": 31099,
+              "exposure_s": 2096.074330329895,
+              "received_s": 2096.150749112,
+              "raw_received_s": 2096.141078854,
+              "ms": 68.72755999984292
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.267720437,
+              "end_s": 2096.269330552,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.6101149999485642
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.267851098,
+              "end_s": 2096.276443103,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 11,
+              "bytes": 498,
+              "ms": 8.592005000082281
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.26956925,
+              "end_s": 2096.282220303,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31099,
+              "ms": 12.651052999899548
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.276778637,
+              "end_s": 2096.292122379,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31100",
+              "group": null,
+              "bytes": 542000,
+              "ms": 15.343741999913618
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.269527712,
+              "end_s": 2096.293261562,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31099,
+              "ms": 23.733850000098755
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.293670507,
+              "end_s": 2096.308683835,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31099,
+              "ms": 15.01332799989541
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.27717091,
+              "end_s": 2096.313999672,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31100",
+              "group": null,
+              "bytes": 109939,
+              "ms": 36.828761999913695
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.309965616,
+              "end_s": 2096.319990641,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.025024999777088
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.316044909,
+              "end_s": 2096.322459831,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.414921999748913
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.315046083,
+              "end_s": 2096.322877993,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.831909999822528
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.267841274,
+              "end_s": 2096.323177205,
+              "thread": "perception-frame_0",
+              "group": 11,
+              "frame_id": 31100,
+              "exposure_s": 2096.1410450935364,
+              "received_s": 2096.22356065,
+              "raw_received_s": 2096.208519513,
+              "ms": 55.335930999717675
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.269422172,
+              "end_s": 2096.330375584,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31099,
+              "ms": 60.95341200034454
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 65.40521399983845,
+          "round_trip_ms": 66.63204799997402,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "start_s": 2096.341911904,
+      "end_s": 2096.410023182,
+      "round_trip_ms": 68.11127799983296,
+      "exposure_age_ms": 268.9780884634274,
+      "vision": {
+        "top_quantile_z_m": 0.8688515597918959,
+        "center_xy_m": [
+          0.2846812774140125,
+          0.10632296543451777
+        ],
+        "fit_error_m": 0.0014201466790691455,
+        "pixels": 1555,
+        "frame_id": 31100,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "9584ffe8b471b03ae6e2b78308175d3b4a07f210e31e3b2d7544c946915b3bd6",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.8673481941223145,
+          "visual_agreement": 0.9966227445831323,
+          "support_pixels": 3109,
+          "roi_shape": [
+            143,
+            111
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31100,
+          "group": 11,
+          "exposure_s": 2096.1410450935364,
+          "used_s": 2096.342651999,
+          "next_frame_ms": 0.09325200016974122,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715117782000,
+            "raw_received_monotonic_ns": 2096208519513,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.141167163849,
+            "depth_time": 2096.1410450935364,
+            "received_monotonic": 2096.22356065,
+            "color_sensor_ms": 1791478715050.4343,
+            "depth_sensor_ms": 1791478715050.3123,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31100,
+            "captured_at_unix_ns": 1791478715135573500,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.1410450935364,
+          "pose": {
+            "timestamp": 2096.133959967,
+            "rpy": [
+              0.009835636243224144,
+              0.0006035725236870348,
+              1.7173420190811157
+            ],
+            "waist_q": [
+              0.003669379511848092,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31100-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715117782000,
+            "raw_received_monotonic_ns": 2096208519513,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.141167163849,
+            "depth_time": 2096.1410450935364,
+            "received_monotonic": 2096.22356065,
+            "color_sensor_ms": 1791478715050.4343,
+            "depth_sensor_ms": 1791478715050.3123,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31100,
+            "captured_at_unix_ns": 1791478715135573500,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31100,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8688515597918959,
+            "center_xy_m": [
+              0.2846812774140125,
+              0.10632296543451777
+            ],
+            "fit_error_m": 0.0014201466790691455,
+            "pixels": 1555,
+            "frame_id": 31100,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "9584ffe8b471b03ae6e2b78308175d3b4a07f210e31e3b2d7544c946915b3bd6",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.8673481941223145,
+              "visual_agreement": 0.9966227445831323,
+              "support_pixels": 3109,
+              "roi_shape": [
+                143,
+                111
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 63.28586199970232,
+          "exposure_age_ms": 267.21100746362936
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.342674303,
+              "end_s": 2096.344897596,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.2232930000427586
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.342926474,
+              "end_s": 2096.353223254,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 12,
+              "bytes": 496,
+              "ms": 10.296780000317085
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.345126277,
+              "end_s": 2096.357593035,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31100,
+              "ms": 12.466757999845868
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.353425502,
+              "end_s": 2096.36705314,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31101",
+              "group": null,
+              "bytes": 542000,
+              "ms": 13.627637999888975
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.34508378,
+              "end_s": 2096.369194605,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31100,
+              "ms": 24.110824999752367
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.362492695,
+              "end_s": 2096.381870908,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31100,
+              "ms": 19.37821299998177
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.35381723,
+              "end_s": 2096.386139886,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31101",
+              "group": null,
+              "bytes": 110242,
+              "ms": 32.32265599990569
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.388128384,
+              "end_s": 2096.394491913,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.363528999827395
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.386987409,
+              "end_s": 2096.395471729,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 8.484319999752188
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.342913737,
+              "end_s": 2096.395721052,
+              "thread": "perception-frame_0",
+              "group": 12,
+              "frame_id": 31101,
+              "exposure_s": 2096.2077600955963,
+              "received_s": 2096.287646033,
+              "raw_received_s": 2096.274372169,
+              "ms": 52.80731500033653
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.383289495,
+              "end_s": 2096.397428355,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 14.138860000002751
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.344994496,
+              "end_s": 2096.408192866,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31100,
+              "ms": 63.19837000000916
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 66.41088799960926,
+          "round_trip_ms": 67.99559299997782,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "start_s": 2096.420105041,
+      "end_s": 2096.48154881,
+      "round_trip_ms": 61.44376899965209,
+      "exposure_age_ms": 273.7887144035085,
+      "vision": {
+        "top_quantile_z_m": 0.8684206601460338,
+        "center_xy_m": [
+          0.2850077980347517,
+          0.10637396575893578
+        ],
+        "fit_error_m": 0.0014929761255723737,
+        "pixels": 1535,
+        "frame_id": 31101,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            275,
+            453.125
+          ],
+          "confidence": 0.4931640625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "4400fdd9a3d7407b5376b61ffcab50aab2cfa5a22fca8d3048f276faa675405a",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31087,
+          "semantic_age_s": 0.934063196182251,
+          "visual_agreement": 0.9971392556014105,
+          "support_pixels": 3069,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31101,
+          "group": 12,
+          "exposure_s": 2096.2077600955963,
+          "used_s": 2096.4212248,
+          "next_frame_ms": 0.16103100006148452,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715183634400,
+            "raw_received_monotonic_ns": 2096274372169,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.2078819274902,
+            "depth_time": 2096.2077600955963,
+            "received_monotonic": 2096.287646033,
+            "color_sensor_ms": 1791478715117.149,
+            "depth_sensor_ms": 1791478715117.027,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31101,
+            "captured_at_unix_ns": 1791478715200503600,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.2077600955963,
+          "pose": {
+            "timestamp": 2096.210254913,
+            "rpy": [
+              0.009845883585512638,
+              0.000751851184759289,
+              1.717397689819336
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31101-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715183634400,
+            "raw_received_monotonic_ns": 2096274372169,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.2078819274902,
+            "depth_time": 2096.2077600955963,
+            "received_monotonic": 2096.287646033,
+            "color_sensor_ms": 1791478715117.149,
+            "depth_sensor_ms": 1791478715117.027,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31101,
+            "captured_at_unix_ns": 1791478715200503600,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31101,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8684206601460338,
+            "center_xy_m": [
+              0.2850077980347517,
+              0.10637396575893578
+            ],
+            "fit_error_m": 0.0014929761255723737,
+            "pixels": 1535,
+            "frame_id": 31101,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                275,
+                453.125
+              ],
+              "confidence": 0.4931640625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "4400fdd9a3d7407b5376b61ffcab50aab2cfa5a22fca8d3048f276faa675405a",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31087,
+              "semantic_age_s": 0.934063196182251,
+              "visual_agreement": 0.9971392556014105,
+              "support_pixels": 3069,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 55.97003799994127,
+          "exposure_age_ms": 271.58795140348957
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.421250625,
+              "end_s": 2096.423318423,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 2.0677980000982643
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.42142228,
+              "end_s": 2096.427022768,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 13,
+              "bytes": 498,
+              "ms": 5.600487999799952
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.423555072,
+              "end_s": 2096.43755815,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31101,
+              "ms": 14.00307799985967
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.427403168,
+              "end_s": 2096.438763288,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31103",
+              "group": null,
+              "bytes": 542000,
+              "ms": 11.360119999608287
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.423512223,
+              "end_s": 2096.448122781,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31101,
+              "ms": 24.61055799994938
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.439776738,
+              "end_s": 2096.456711778,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31101,
+              "ms": 16.935040000134904
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.427924726,
+              "end_s": 2096.456970317,
+              "thread": "camera-frame_0",
+              "path": "/frame.recorder-rgbd?frame_id=31103",
+              "group": null,
+              "bytes": 110898,
+              "ms": 29.045590999885462
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.458150974,
+              "end_s": 2096.464525031,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.3740569999026775
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.457685579,
+              "end_s": 2096.465239108,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.553528999778791
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.421409607,
+              "end_s": 2096.465557938,
+              "thread": "perception-frame_0",
+              "group": 13,
+              "frame_id": 31103,
+              "exposure_s": 2096.3411886692047,
+              "received_s": 2096.418479085,
+              "raw_received_s": 2096.408452589,
+              "ms": 44.14833100008764
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.458852955,
+              "end_s": 2096.469415154,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 10.562199000105466
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.423401626,
+              "end_s": 2096.479287756,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31101,
+              "ms": 55.88612999963516
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 58.9820029999828,
+          "round_trip_ms": 61.337971999819274,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "start_s": 2096.491754418,
+      "end_s": 2096.569194116,
+      "round_trip_ms": 77.4396980000347,
+      "exposure_age_ms": 228.00544679512313,
+      "vision": {
+        "top_quantile_z_m": 0.8696076968694132,
+        "center_xy_m": [
+          0.28525346174700306,
+          0.10662927821115126
+        ],
+        "fit_error_m": 0.0014872832969437743,
+        "pixels": 1534,
+        "frame_id": 31103,
+        "detector": "coke_yolo",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            274.5,
+            453.125
+          ],
+          "confidence": 0.4775390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "2f5429f807e124d806d4dda96c356f629f1bd52888c82c6ad20d398311b09141",
+        "tracking": {
+          "mode": "yolo",
+          "reason": "periodic_recheck",
+          "semantic_frame_id": 31103
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31103,
+          "group": 13,
+          "exposure_s": 2096.3411886692047,
+          "used_s": 2096.492455023,
+          "next_frame_ms": 0.09024299970405991,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715317715000,
+            "raw_received_monotonic_ns": 2096408452589,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.341310739517,
+            "depth_time": 2096.3411886692047,
+            "received_monotonic": 2096.418479085,
+            "color_sensor_ms": 1791478715250.5781,
+            "depth_sensor_ms": 1791478715250.456,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31103,
+            "captured_at_unix_ns": 1791478715328815400,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.3411886692047,
+          "pose": {
+            "timestamp": 2096.333953461,
+            "rpy": [
+              0.009793066419661045,
+              0.0008298807078972459,
+              1.7173352241516113
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31103-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715317715000,
+            "raw_received_monotonic_ns": 2096408452589,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.341310739517,
+            "depth_time": 2096.3411886692047,
+            "received_monotonic": 2096.418479085,
+            "color_sensor_ms": 1791478715250.5781,
+            "depth_sensor_ms": 1791478715250.456,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31103,
+            "captured_at_unix_ns": 1791478715328815400,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31103,
+          "source": {
+            "frame_id": 31103,
+            "camera_serial": "338622073335",
+            "timestamp": 2096.3411886692047,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "2f5429f807e124d806d4dda96c356f629f1bd52888c82c6ad20d398311b09141"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                140.5,
+                298.875,
+                274.5,
+                453.125
+              ],
+              "confidence": 0.4775390625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 24.416,
+          "geometry": {
+            "top_quantile_z_m": 0.8696076968694132,
+            "center_xy_m": [
+              0.28525346174700306,
+              0.10662927821115126
+            ],
+            "fit_error_m": 0.0014872832969437743,
+            "pixels": 1534,
+            "frame_id": 31103,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                274.5,
+                453.125
+              ],
+              "confidence": 0.4775390625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "2f5429f807e124d806d4dda96c356f629f1bd52888c82c6ad20d398311b09141",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "periodic_recheck",
+              "semantic_frame_id": 31103
+            }
+          },
+          "error": null,
+          "processing_ms": 73.54075200009902,
+          "exposure_age_ms": 226.77429179520914
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.492529267,
+              "end_s": 2096.494366111,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.836844000081328
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.492686553,
+              "end_s": 2096.503328595,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 14,
+              "bytes": 498,
+              "ms": 10.642041999744833
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.494603241,
+              "end_s": 2096.51281699,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31103,
+              "ms": 18.21374900009687
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.503652449,
+              "end_s": 2096.51802863,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31104",
+              "group": null,
+              "bytes": 542004,
+              "ms": 14.37618099998872
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.494564135,
+              "end_s": 2096.524871602,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31103,
+              "ms": 30.30746700005693
+            },
+            {
+              "name": "yolo_client",
+              "start_s": 2096.49560069,
+              "end_s": 2096.533165771,
+              "thread": "exact-frame-yolo_0",
+              "group": null,
+              "frame_id": 31103,
+              "ms": 37.56508099968414
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.504472675,
+              "end_s": 2096.538871352,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31104",
+              "group": null,
+              "bytes": 110212,
+              "ms": 34.39867699989918
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.539659801,
+              "end_s": 2096.547638276,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.978474999617902
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.540138573,
+              "end_s": 2096.547922352,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.783778999964852
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.492673624,
+              "end_s": 2096.54820838,
+              "thread": "perception-frame_0",
+              "group": 14,
+              "frame_id": 31104,
+              "exposure_s": 2096.407902956009,
+              "received_s": 2096.483505276,
+              "raw_received_s": 2096.474330334,
+              "ms": 55.53475599981539
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.534046608,
+              "end_s": 2096.553549146,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31103,
+              "ms": 19.502537999869674
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.554824015,
+              "end_s": 2096.560167053,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 5.343037999864464
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.494445538,
+              "end_s": 2096.567905679,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31103,
+              "ms": 73.46014099994136
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 76.15718099987134,
+          "round_trip_ms": 77.33079799982079,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "start_s": 2096.579277575,
+      "end_s": 2096.63940417,
+      "round_trip_ms": 60.126594999928784,
+      "exposure_age_ms": 231.50121399112322,
+      "vision": {
+        "top_quantile_z_m": 0.8684262707744559,
+        "center_xy_m": [
+          0.2850274320898261,
+          0.10686947912811477
+        ],
+        "fit_error_m": 0.001451266831382041,
+        "pixels": 1544,
+        "frame_id": 31104,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            274.5,
+            453.125
+          ],
+          "confidence": 0.4775390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "6fb9a2076cb8f51bdd5515bcb45d76de4c8d143b33ee09aebf14df9c4c33d3cd",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31103,
+          "semantic_age_s": 0.06671428680419922,
+          "visual_agreement": 0.9985173901043395,
+          "support_pixels": 3087,
+          "roi_shape": [
+            143,
+            115
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31104,
+          "group": 14,
+          "exposure_s": 2096.407902956009,
+          "used_s": 2096.579793757,
+          "next_frame_ms": 0.07686800017836504,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715383593000,
+            "raw_received_monotonic_ns": 2096474330334,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.4080250263214,
+            "depth_time": 2096.407902956009,
+            "received_monotonic": 2096.483505276,
+            "color_sensor_ms": 1791478715317.2927,
+            "depth_sensor_ms": 1791478715317.1707,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31104,
+            "captured_at_unix_ns": 1791478715394593500,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.407902956009,
+          "pose": {
+            "timestamp": 2096.414283039,
+            "rpy": [
+              0.009799569845199585,
+              0.0007995847263373435,
+              1.7172725200653076
+            ],
+            "waist_q": [
+              0.003655987558886409,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31104-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715383593000,
+            "raw_received_monotonic_ns": 2096474330334,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.4080250263214,
+            "depth_time": 2096.407902956009,
+            "received_monotonic": 2096.483505276,
+            "color_sensor_ms": 1791478715317.2927,
+            "depth_sensor_ms": 1791478715317.1707,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31104,
+            "captured_at_unix_ns": 1791478715394593500,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31104,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8684262707744559,
+            "center_xy_m": [
+              0.2850274320898261,
+              0.10686947912811477
+            ],
+            "fit_error_m": 0.001451266831382041,
+            "pixels": 1544,
+            "frame_id": 31104,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                274.5,
+                453.125
+              ],
+              "confidence": 0.4775390625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6fb9a2076cb8f51bdd5515bcb45d76de4c8d143b33ee09aebf14df9c4c33d3cd",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31103,
+              "semantic_age_s": 0.06671428680419922,
+              "visual_agreement": 0.9985173901043395,
+              "support_pixels": 3087,
+              "roi_shape": [
+                143,
+                115
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 56.33149200002663,
+          "exposure_age_ms": 230.12278799114938
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.579810141,
+              "end_s": 2096.581637033,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.82689199982633
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.580079785,
+              "end_s": 2096.586926629,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 15,
+              "bytes": 498,
+              "ms": 6.846843999937846
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.581862035,
+              "end_s": 2096.601395934,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31104,
+              "ms": 19.533898999725352
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.587217809,
+              "end_s": 2096.603127142,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31105",
+              "group": null,
+              "bytes": 542000,
+              "ms": 15.909333000308834
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.581814769,
+              "end_s": 2096.614882351,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31104,
+              "ms": 33.067581999603135
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.60282025,
+              "end_s": 2096.620473687,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31104,
+              "ms": 17.653436999808036
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.621771917,
+              "end_s": 2096.627415864,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 5.643946999953187
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.588373889,
+              "end_s": 2096.632235648,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31105",
+              "group": null,
+              "bytes": 110379,
+              "ms": 43.86175899981026
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.581715565,
+              "end_s": 2096.637963662,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31104,
+              "ms": 56.248096999752306
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 58.989618999930826,
+          "round_trip_ms": 60.02962999991723,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "start_s": 2096.649494221,
+      "end_s": 2096.708176979,
+      "round_trip_ms": 58.682758000031754,
+      "exposure_age_ms": 233.55925934993138,
+      "vision": {
+        "top_quantile_z_m": 0.8691968591370133,
+        "center_xy_m": [
+          0.2849271816425758,
+          0.10693117867272865
+        ],
+        "fit_error_m": 0.0014677126043823672,
+        "pixels": 1563,
+        "frame_id": 31105,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            274.5,
+            453.125
+          ],
+          "confidence": 0.4775390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "d326ac519e5feb922ae219046e083b811e95d22418843168005946241ca64072",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31103,
+          "semantic_age_s": 0.13342905044555664,
+          "visual_agreement": 0.9985079229721612,
+          "support_pixels": 3125,
+          "roi_shape": [
+            143,
+            116
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31105,
+          "group": 15,
+          "exposure_s": 2096.4746177196503,
+          "used_s": 2096.650074149,
+          "next_frame_ms": 0.053793999995832564,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715451014000,
+            "raw_received_monotonic_ns": 2096541751152,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.474739551544,
+            "depth_time": 2096.4746177196503,
+            "received_monotonic": 2096.552326567,
+            "color_sensor_ms": 1791478715384.007,
+            "depth_sensor_ms": 1791478715383.8853,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31105,
+            "captured_at_unix_ns": 1791478715462841900,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.4746177196503,
+          "pose": {
+            "timestamp": 2096.47470155,
+            "rpy": [
+              0.009779270738363266,
+              0.000826057163067162,
+              1.7172602415084839
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31105-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715451014000,
+            "raw_received_monotonic_ns": 2096541751152,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.474739551544,
+            "depth_time": 2096.4746177196503,
+            "received_monotonic": 2096.552326567,
+            "color_sensor_ms": 1791478715384.007,
+            "depth_sensor_ms": 1791478715383.8853,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31105,
+            "captured_at_unix_ns": 1791478715462841900,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31105,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8691968591370133,
+            "center_xy_m": [
+              0.2849271816425758,
+              0.10693117867272865
+            ],
+            "fit_error_m": 0.0014677126043823672,
+            "pixels": 1563,
+            "frame_id": 31105,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                274.5,
+                453.125
+              ],
+              "confidence": 0.4775390625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "d326ac519e5feb922ae219046e083b811e95d22418843168005946241ca64072",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31103,
+              "semantic_age_s": 0.13342905044555664,
+              "visual_agreement": 0.9985079229721612,
+              "support_pixels": 3125,
+              "roi_shape": [
+                143,
+                116
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 54.9445549995653,
+          "exposure_age_ms": 232.06156534979527
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "depth_decode",
+              "start_s": 2096.63314263,
+              "end_s": 2096.642550348,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 9.407718000147725
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.633681308,
+              "end_s": 2096.64730549,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 13.624181999603024
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.580064168,
+              "end_s": 2096.647609631,
+              "thread": "perception-frame_0",
+              "group": 15,
+              "frame_id": 31105,
+              "exposure_s": 2096.4746177196503,
+              "received_s": 2096.552326567,
+              "raw_received_s": 2096.541751152,
+              "ms": 67.54546299998765
+            },
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.650092038,
+              "end_s": 2096.65168596,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.5939220002110233
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.650204362,
+              "end_s": 2096.655659373,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 16,
+              "bytes": 498,
+              "ms": 5.455011000321974
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.651870576,
+              "end_s": 2096.664312629,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31105,
+              "ms": 12.442053000086162
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.651828046,
+              "end_s": 2096.677157355,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31105,
+              "ms": 25.329308999971545
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.668608295,
+              "end_s": 2096.683579381,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31105,
+              "ms": 14.971086000059586
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.658730829,
+              "end_s": 2096.68912502,
+              "thread": "camera-frame_0",
+              "path": "/frame.policy-rgbd?frame_id=31106",
+              "group": null,
+              "bytes": 542000,
+              "ms": 30.39419100014129
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.660149032,
+              "end_s": 2096.692095319,
+              "thread": "camera-frame_1",
+              "path": "/frame.recorder-rgbd?frame_id=31106",
+              "group": null,
+              "bytes": 110061,
+              "ms": 31.94628700020985
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.684974895,
+              "end_s": 2096.696042779,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 11.067884000112826
+            },
+            {
+              "name": "color_decode",
+              "start_s": 2096.693466896,
+              "end_s": 2096.700232265,
+              "thread": "camera-frame_1",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.765369000277133
+            },
+            {
+              "name": "depth_decode",
+              "start_s": 2096.693069568,
+              "end_s": 2096.700545558,
+              "thread": "camera-frame_0",
+              "group": null,
+              "frame_id": null,
+              "ms": 7.475990000330057
+            },
+            {
+              "name": "camera_frame",
+              "start_s": 2096.650194698,
+              "end_s": 2096.700844067,
+              "thread": "perception-frame_0",
+              "group": 16,
+              "frame_id": 31106,
+              "exposure_s": 2096.5413315296173,
+              "received_s": 2096.617878475,
+              "raw_received_s": 2096.608223642,
+              "ms": 50.64936899998429
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.651757195,
+              "end_s": 2096.706630291,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31105,
+              "ms": 54.873095999937505
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 57.16205499993521,
+          "round_trip_ms": 58.569249999891326,
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "start_s": 2096.718263831,
+      "end_s": 2096.773494574,
+      "round_trip_ms": 55.2307429998109,
+      "exposure_age_ms": 232.16304438255975,
+      "vision": {
+        "top_quantile_z_m": 0.8682575477776617,
+        "center_xy_m": [
+          0.2846043933199432,
+          0.10662461297247047
+        ],
+        "fit_error_m": 0.001523816586409554,
+        "pixels": 1536,
+        "frame_id": 31106,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            140.5,
+            298.875,
+            274.5,
+            453.125
+          ],
+          "confidence": 0.4775390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "de3b2e8b20a7c58c4c76f25081f89922ccf04bebb57db945b1144d11e766917f",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 31103,
+          "semantic_age_s": 0.20014286041259766,
+          "visual_agreement": 0.9982178460896425,
+          "support_pixels": 3072,
+          "roi_shape": [
+            144,
+            116
+          ]
+        }
+      },
+      "error": null,
+      "events": [
+        {
+          "phase": "timing_frame",
+          "frame_id": 31106,
+          "group": 16,
+          "exposure_s": 2096.5413315296173,
+          "used_s": 2096.718884976,
+          "next_frame_ms": 0.06918600001881714,
+          "source_metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715517485800,
+            "raw_received_monotonic_ns": 2096608223642,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.54145359993,
+            "depth_time": 2096.5413315296173,
+            "received_monotonic": 2096.617878475,
+            "color_sensor_ms": 1791478715450.7217,
+            "depth_sensor_ms": 1791478715450.5996,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31106,
+            "captured_at_unix_ns": 1791478715529730600,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          }
+        },
+        {
+          "phase": "exposure_pose",
+          "frame_timestamp": 2096.5413315296173,
+          "pose": {
+            "timestamp": 2096.534375357,
+            "rpy": [
+              0.009771660901606083,
+              0.0008025076822377741,
+              1.7173165082931519
+            ],
+            "waist_q": [
+              0.0036827712319791317,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "phase": "phase_camera_evidence",
+          "phase_name": "passive-timing",
+          "path": "/data/perception-profiles/20261008T165831Z/camera-31106-passive-timing.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791478715517485800,
+            "raw_received_monotonic_ns": 2096608223642,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 2096.54145359993,
+            "depth_time": 2096.5413315296173,
+            "received_monotonic": 2096.617878475,
+            "color_sensor_ms": 1791478715450.7217,
+            "depth_sensor_ms": 1791478715450.5996,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "frame_id": 31106,
+            "captured_at_unix_ns": 1791478715529730600,
+            "stream_id": "bd0b38c2-445c-4a20-af52-8cc85e9ebac5"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "phase": "perception_result",
+          "phase_name": "passive-timing",
+          "frame_id": 31106,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8682575477776617,
+            "center_xy_m": [
+              0.2846043933199432,
+              0.10662461297247047
+            ],
+            "fit_error_m": 0.001523816586409554,
+            "pixels": 1536,
+            "frame_id": 31106,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                140.5,
+                298.875,
+                274.5,
+                453.125
+              ],
+              "confidence": 0.4775390625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "de3b2e8b20a7c58c4c76f25081f89922ccf04bebb57db945b1144d11e766917f",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 31103,
+              "semantic_age_s": 0.20014286041259766,
+              "visual_agreement": 0.9982178460896425,
+              "support_pixels": 3072,
+              "roi_shape": [
+                144,
+                116
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 51.382454999838956,
+          "exposure_age_ms": 230.79620338285167
+        },
+        {
+          "phase": "timing_spans",
+          "spans": [
+            {
+              "name": "pose_alignment_ipc",
+              "start_s": 2096.718902225,
+              "end_s": 2096.720627321,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 1.7250959999728366
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.71901279,
+              "end_s": 2096.727482358,
+              "thread": "perception-frame_0",
+              "path": "/health",
+              "group": 17,
+              "bytes": 498,
+              "ms": 8.469568000236904
+            },
+            {
+              "name": "archive_npz_encode",
+              "start_s": 2096.720894564,
+              "end_s": 2096.734246415,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31106,
+              "ms": 13.351851000152237
+            },
+            {
+              "name": "archive_total",
+              "start_s": 2096.720858786,
+              "end_s": 2096.745880978,
+              "thread": "perception-archive_0",
+              "group": null,
+              "frame_id": 31106,
+              "ms": 25.02219200005129
+            },
+            {
+              "name": "camera_http",
+              "start_s": 2096.727825636,
+              "end_s": 2096.754990637,
+              "thread": "camera-frame_1",
+              "path": "/frame.policy-rgbd?frame_id=31107",
+              "group": null,
+              "bytes": 542000,
+              "ms": 27.165000999957556
+            },
+            {
+              "name": "mask_or_visual_tracker",
+              "start_s": 2096.739151131,
+              "end_s": 2096.756268706,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31106,
+              "ms": 17.1175749997019
+            },
+            {
+              "name": "cylinder_fit",
+              "start_s": 2096.757544919,
+              "end_s": 2096.763940737,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": null,
+              "ms": 6.3958180003282905
+            },
+            {
+              "name": "geometry_including_detection",
+              "start_s": 2096.720767423,
+              "end_s": 2096.772076691,
+              "thread": "MainThread",
+              "group": null,
+              "frame_id": 31106,
+              "ms": 51.30926800029556
+            }
+          ]
+        },
+        {
+          "phase": "perception_worker_result",
+          "phase_name": "passive-timing",
+          "worker_ms": 53.820892999738135,
+          "round_trip_ms": 55.13205099987317,
+          "error": null
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Inclusive overlapping spans; not an additive stage budget.",
+    "Passive workload with feedback read through controller HTTP; real trial trace is separate.",
+    "Frozen SDK may continue its existing hold publications; this probe creates no publisher."
+  ]
+}
