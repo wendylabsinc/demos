@@ -187,6 +187,12 @@ class PhysicalPlant:
         self.path_preflight_ok = False
         self.sync(snap)
         import mujoco
+        model=self.ik.model
+        torso=model.body('torso_link').id
+        elbow=model.body('left_elbow_link').id
+        self.elbow_torso_pairs=[(a,b) for a in range(model.ngeom) for b in range(model.ngeom)
+            if model.geom_bodyid[a]==torso and model.geom_bodyid[b]==elbow
+            and model.geom_contype[a] and model.geom_contype[b]]
         self.gravity_data = mujoco.MjData(self.ik.model)
         self.arm_dofs = np.array([self.ik.model.jnt_dofadr[self.ik.model.joint(n).id]
                                   for n in BODY_NAMES[15:]])
@@ -317,7 +323,7 @@ class PhysicalPlant:
             mujoco.mj_forward(self.ik.model,self.ik.data)
 
     def _continuous_lift_ik(self, position, rotation):
-        """Use the preceding lift solution as the sole seed; never jump branches."""
+        """Continue the same branch while using redundancy to clear the torso."""
         import mujoco
         from scipy.optimize import least_squares
         model,data=self.ik.model,self.ik.ik_data
@@ -328,16 +334,29 @@ class PhysicalPlant:
         lo=np.maximum(limits[:,0],start-.2)
         hi=np.minimum(limits[:,1],start+.2)
         rotation=np.eye(3) if rotation is None else rotation
-        def error(q):
+        def error(q,avoid_torso=False):
             data.qpos[adr]=q
             mujoco.mj_forward(model,data)
-            return np.r_[data.site_xpos[self.ik.site]-position,
-                         .15*(data.site_xmat[self.ik.site].reshape(3,3)-rotation).ravel()]
+            pose=np.r_[data.site_xpos[self.ik.site]-position,
+                       .15*(data.site_xmat[self.ik.site].reshape(3,3)-rotation).ravel()]
+            if not avoid_torso:return pose
+            gaps=np.array([mujoco.mj_geomDistance(model,data,a,b,.1,None)
+                           for a,b in self.elbow_torso_pairs])
+            # Pose-only IK can curl the redundant elbow into the torso during
+            # a valid Cartesian reach/lift. Bias it away before contact, and
+            # damp null-space drift. Final joint-path collision checks still
+            # decide acceptance; these residuals grant no collision exemption.
+            return np.r_[pose,5*np.maximum(0,.003-gaps),.003*(q-start)]
         result=least_squares(error,np.clip(start,lo,hi),bounds=(lo,hi),max_nfev=250)
         error(result.x)
-        if np.linalg.norm(result.fun[:3])>.008 or np.linalg.norm(result.fun[3:])>.02:
+        gaps=[mujoco.mj_geomDistance(model,data,a,b,.1,None) for a,b in self.elbow_torso_pairs]
+        if any(gap<.003 for gap in gaps):
+            result=least_squares(lambda q:error(q,True),np.clip(start,lo,hi),
+                                 bounds=(lo,hi),max_nfev=250)
+            error(result.x)
+        if np.linalg.norm(result.fun[:3])>.008 or np.linalg.norm(result.fun[3:12])>.02:
             self.event('continuous_lift_ik_failed',position_error_m=float(np.linalg.norm(result.fun[:3])),
-                       rotation_error=float(np.linalg.norm(result.fun[3:])),target_position=np.asarray(position).tolist(),
+                       rotation_error=float(np.linalg.norm(result.fun[3:12])),target_position=np.asarray(position).tolist(),
                        start_q=start.tolist(),solution_q=result.x.tolist(),
                        local_bound_active=bool(np.any(np.abs(result.x-start)>.199)))
             raise RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose')

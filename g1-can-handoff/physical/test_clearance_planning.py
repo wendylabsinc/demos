@@ -104,6 +104,21 @@ class ClearancePlanningTests(unittest.TestCase):
                 self.assertGreaterEqual(report['min_table_distance_m'],.01)
                 self.assertTrue(any(e['phase']=='cartesian_transfer_planned' for e in logged))
 
+    def test_near_centre_hardware_failure_replans_without_elbow_torso_collision(self):
+        from pickup import prepare
+        root=Path(__file__).parent/'offline/evidence/clearance-demos-20261008-preserved'
+        plant,observation,_,logged=fixture(3,root)
+        before=plant.ik.data.qpos.copy()
+        report=clearance_auditor(plant)
+        with patch('g1_can_handoff.task.time.monotonic',return_value=100.):
+            prepare(plant,lambda *args:(observation,dict(source='saved_scene_replay')),plant.event)
+        self.assertTrue(plant.path_preflight_ok)
+        self.assertGreater(report['samples'],100)
+        self.assertGreaterEqual(report['min_table_distance_m'],.01)
+        self.assertGreater(report['min_elbow_torso_distance_m'],0.)
+        np.testing.assert_array_equal(plant.ik.data.qpos,before)
+        self.assertIsNone(plant.adapter);self.assertIsNone(plant.sender)
+
     def test_saved_head_camera_offset_is_still_rejected(self):
         from camera_input import geometry
         path=Path(__file__).parent/'offline/evidence/head-camera-offset-20261008/frame.npz'

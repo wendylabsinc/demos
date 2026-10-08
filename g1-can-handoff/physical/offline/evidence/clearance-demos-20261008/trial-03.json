@@ -1,0 +1,602 @@
+{
+  "index": 3,
+  "state": "terminal",
+  "agent_start_issued": false,
+  "start_origin": "Existing attempt observed; initiating request not captured",
+  "requested_trials": 10,
+  "controller_before": null,
+  "controller_after": {
+    "phase": "BLOCKED",
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "automatic_home": false,
+    "events": "/data/events-20261008T182744Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200.0,
+      "rate_hz": 200.0,
+      "samples": 123790,
+      "age_s": 0.0032,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": null,
+    "tracking_vision": null,
+    "first_failure": {
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "source": "execution"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.017497900873422623,
+          0.03060702420771122,
+          2.030574321746826
+        ],
+        "q": [
+          -0.17379489541053772,
+          -0.019198622554540634,
+          0.01124919205904007,
+          0.31570175290107727,
+          -0.1096724271774292,
+          0.024526849389076233,
+          -0.13696257770061493,
+          -0.0009033442474901676,
+          0.03077457658946514,
+          0.3167840838432312,
+          -0.183519184589386,
+          -0.01704181358218193,
+          0.0030399602837860584,
+          0.0,
+          0.0,
+          0.2470068633556366,
+          0.27811792492866516,
+          -0.08289488404989243,
+          0.8258569240570068,
+          0.001689775730483234,
+          0.009441652335226536,
+          -0.004325826186686754,
+          0.26259833574295044,
+          -0.2892872095108032,
+          0.08796421438455582,
+          0.7827855944633484,
+          -0.0010186590952798724,
+          0.013828837312757969,
+          0.0016260197153314948
+        ],
+        "dq": [
+          0.02571243792772293,
+          -0.015271631069481373,
+          -0.008570813573896885,
+          -0.013089969754219055,
+          -0.007166309282183647,
+          0.0009430013597011566,
+          -0.02571243792772293,
+          -0.0054541537538170815,
+          -0.001714162528514862,
+          0.0010908307740464807,
+          -0.003773893229663372,
+          0.006340475752949715,
+          -0.001714162528514862,
+          0.0,
+          0.0,
+          0.013805827125906944,
+          0.00920388475060463,
+          0.0015339808305725455,
+          0.0015339808305725455,
+          -0.004601942375302315,
+          0.009817477315664291,
+          0.0,
+          0.003067961661145091,
+          0.007669903803616762,
+          0.0,
+          -0.00920388475060463,
+          0.003067961661145091,
+          -0.0009817476384341717,
+          0.013744467869400978
+        ],
+        "tau_est": [
+          7.270951747894287,
+          5.09765625,
+          -2.237215995788574,
+          0.615234375,
+          5.47589635848999,
+          -1.1886531114578247,
+          -4.026988506317139,
+          -6.240234375,
+          1.6779119968414307,
+          -6.328125,
+          5.555394172668457,
+          0.6604474186897278,
+          0.055930398404598236,
+          0.0,
+          0.0,
+          0.4375,
+          2.25,
+          0.875,
+          -1.0625,
+          -0.1875,
+          -0.380859375,
+          0.185546875,
+          0.0625,
+          -2.25,
+          -0.4375,
+          -0.8125,
+          -0.0625,
+          -0.5078125,
+          -0.029296875
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            35,
+            39
+          ],
+          [
+            32,
+            33
+          ],
+          [
+            34,
+            33
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            40,
+            42
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            39,
+            40
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            43,
+            43
+          ],
+          [
+            45,
+            47
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            39,
+            38
+          ],
+          [
+            37,
+            33
+          ],
+          [
+            39,
+            31
+          ],
+          [
+            46,
+            45
+          ],
+          [
+            45,
+            47
+          ],
+          [
+            47,
+            46
+          ],
+          [
+            44,
+            44
+          ],
+          [
+            45,
+            43
+          ],
+          [
+            43,
+            39
+          ],
+          [
+            45,
+            37
+          ]
+        ],
+        "temperature_max": 47,
+        "time": 835.664635909
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.03164558857679367,
+          0.5886518359184265,
+          1.5793536901474,
+          -0.3207905888557434,
+          -1.574786901473999,
+          -0.57258540391922,
+          -1.8202909231185913
+        ],
+        "dq": [
+          -0.0,
+          -0.0,
+          0.0,
+          0.0,
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "tau_est": [
+          5861.07958984375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -3349.188232421875,
+          1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            34,
+            27
+          ],
+          [
+            34,
+            31
+          ],
+          [
+            31,
+            28
+          ],
+          [
+            34,
+            29
+          ],
+          [
+            30,
+            27
+          ],
+          [
+            34,
+            30
+          ],
+          [
+            31,
+            28
+          ]
+        ],
+        "temperature_max": 34,
+        "time": 835.586174346
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.03235486149787903,
+          -0.8915330767631531,
+          -1.5202864408493042,
+          1.009937047958374,
+          1.6994551420211792,
+          0.6489285826683044,
+          1.7297217845916748
+        ],
+        "dq": [
+          0.0,
+          0.0,
+          -0.0,
+          -0.0,
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -3349.188232421875,
+          1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            38,
+            30
+          ],
+          [
+            40,
+            34
+          ],
+          [
+            35,
+            32
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            38,
+            34
+          ],
+          [
+            38,
+            33
+          ],
+          [
+            36,
+            33
+          ]
+        ],
+        "temperature_max": 40,
+        "time": 835.661624405
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_after": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T182442Z-883d2556",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 818.734737421,
+    "received": {
+      "rt/dex3/left/state": 633378,
+      "rt/lf/dex3/left/state": 7061,
+      "rt/dex3/right/state": 634818,
+      "rt/lf/dex3/right/state": 7063,
+      "rt/lowstate": 803653
+    },
+    "written": {
+      "rt/dex3/left/state": 633378,
+      "rt/lf/dex3/left/state": 7061,
+      "rt/dex3/right/state": 634818,
+      "rt/lf/dex3/right/state": 7063,
+      "rt/lowstate": 803653
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.002285613,
+      "rt/dex3/left/state": 0.002270476,
+      "rt/dex3/right/state": 0.002258956,
+      "rt/lf/dex3/left/state": 0.084465369,
+      "rt/lf/dex3/right/state": 0.071277156,
+      "rt/arm_sdk": null,
+      "rt/dex3/left/cmd": null,
+      "rt/dex3/right/cmd": null
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.002270476,
+      "rt/lf/dex3/left/state": 0.084465369,
+      "rt/dex3/right/state": 0.002258956,
+      "rt/lf/dex3/right/state": 0.071277156,
+      "rt/lowstate": 0.002285613
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T182442Z-883d2556/samples-000013.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 7197733,
+        "sha256": "7f79358ff6886d261dad66cdeaa20e5b74d3b507233a89c8ee3a179f449780a2"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 36639943,
+        "sha256": "3a4eb2d15198521094378e4f24c991cf18059c2ad1e23c101512aa79586ec6d5"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 38306883,
+        "sha256": "6b23c3896e9cfb438e914f1469d15fe562083d60910e1faf9a946da7ad433a3e"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 37452710,
+        "sha256": "e61bb29d34a99ea12380f9c9d3bd7adf25e3190150a5b20ef5b5a4a94c8b7f57"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 36222007,
+        "sha256": "2d4ae8d21345edb9b2e1e44b35dedc99dfe705c3b2b509950232f168cecc6a88"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35770250,
+        "sha256": "1b9fcd7f6f4f28f061d6aea1690471559e01eee897eb2af06575a4f2638783f2"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 36325266,
+        "sha256": "a64205359b870452c062477d6a65264133f1d7aaf452a84bf51bc9feb7513d43"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 39526339,
+        "sha256": "a341a2d6923de04155673dbdc00245db0fda34814c49125148de016670401981"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 38087312,
+        "sha256": "3795c46616263b454fb277391ae96a8d17d431eb46205edb85f165520e423042"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 38738030,
+        "sha256": "599175cd3cdad9bc231c97549825cc2ca3656e5feafc13c05c0010c7c90270c2"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39367323,
+        "sha256": "b18d0cb3e823cc6c10fde968258a1812436c10174b31f042f34a19c4afe6a33f"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38643934,
+        "sha256": "5a925db9e372f7203fa72f7215b749c16d3d4fa1bc1e8962d2f708dcd2f19042"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38093851,
+        "sha256": "167755107afeec2a035578cedfd803f6c734ed2af7489e2ec78fd7dcb5ecc772"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "native_event_file": "/data/events-20261008T182744Z.jsonl",
+  "started_unix_ns": 1791484623141562012,
+  "finished_unix_ns": 1791484662123600994,
+  "demo_running_after": false,
+  "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+  "primary_failure": {
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "source": "execution"
+  },
+  "physical_lift_verified": false,
+  "attention_beep": [
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    }
+  ],
+  "artifact": {
+    "path": "/data/trial-exports/trial-03.tar.gz",
+    "bytes": 529955,
+    "sha256": "1f6000d02670d4e58d345162ede4789ad233d9ce01d6cda5e4ff57023520d368",
+    "events": 29,
+    "selected_frames": 2,
+    "primary_failure": {
+      "unix_ns": 1791484662118959983,
+      "monotonic_ns": 796687679343,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "source": "execution"
+    },
+    "local_path": "offline/evidence/clearance-demos-20261008/trial-03.tar.gz",
+    "verified": true
+  }
+}
