@@ -40,6 +40,26 @@ class MotionTrackingTests(unittest.TestCase):
         plant.command_arm.assert_not_called();plant.sender.ctrl_dual_hand.assert_not_called()
         plant.read.assert_not_called()
 
+    def test_synchronous_phase_observation_updates_watchdog_after_full_validation(self):
+        runtime=self.runtime(.39);runtime.observation_lock=threading.RLock()
+        runtime.tracking_baseline=SimpleNamespace(center=np.array([.3,.15,.823]))
+        runtime.pose_history=Mock();runtime.event=Mock()
+        observation=SimpleNamespace(center=np.array([.301,.15,.823]),timestamp=99.9)
+        runtime.perception=Mock();runtime.perception.observe.return_value=(observation,{'frame_id':2})
+        with patch('runtime.time.monotonic',return_value=100):
+            self.assertEqual(runtime.observe_frame({},'approach',True)[0],observation)
+            self.assertIs(runtime.tracking_observation,observation)
+            runtime.tracking_guard()
+            for center,timestamp in [(np.array([.32,.15,.823]),99.95),(observation.center,99.5),
+                                     (observation.center,99.9)]:
+                runtime.perception.observe.return_value=(SimpleNamespace(center=center,timestamp=timestamp),{})
+                with self.assertRaises(RuntimeError):runtime.observe_frame({},'align',True)
+                self.assertIs(runtime.tracking_observation,observation)
+            runtime.tracking_error='Identity lost'
+            runtime.perception.observe.return_value=(SimpleNamespace(center=observation.center,timestamp=99.99),{})
+            with self.assertRaisesRegex(RuntimeError,'Identity lost'):runtime.observe_frame({},'align',True)
+            self.assertIs(runtime.tracking_observation,observation)
+
     def test_one_frame_prefetch_overlaps_processing_without_rewriting_exposure(self):
         runtime=self.runtime();runtime.tracking_stop=threading.Event();runtime.tracking_thread=None
         runtime.pending_frame=None;runtime.frame_prefetch=ThreadPoolExecutor(max_workers=1)

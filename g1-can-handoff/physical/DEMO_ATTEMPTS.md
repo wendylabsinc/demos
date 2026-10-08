@@ -249,3 +249,20 @@ stopped before ownership/motion because forward reach exceeds the existing
 0.45 m pickup bound. The robot remained released with zero motion commands.
 The operator was asked to reposition the can. Physical lift remains unverified.
 See `yolo/validation-exposure-attitude-20261008.json`.
+
+After repositioning, the 00:34:33 UTC trial measured the can at (0.3043,
+0.1486, 0.8230) m and reached staging, but stopped on a 405.4 ms exposure age.
+A reviewed warm retry at 00:35:13 UTC completed both staging segments and
+reached approach before a 410.8 ms watchdog failure. Neither trial started
+grasping or verified a lift. The controller retained its measured hold.
+Attitude correction passed these motion segments without a table-height
+failure; sustained camera freshness remains unresolved.
+
+The approach transition exposed an additional coordination delay: its
+synchronous observation serialized the shared perception worker but was
+not published to the watchdog, which still aged the preceding background
+observation. The candidate publishes either source under the same observation
+lock, after the same freshness and baseline-displacement checks; a latched
+tracking error cannot be cleared by a new observation. A regression exercises
+this phase transition and rejects displaced, stale, repeated, or uncertain
+observations.

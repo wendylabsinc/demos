@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.4-exposure-attitude",
+  "version": "0.3.5-shared-observations",
   "entitlements": [
     {
       "type": "network",

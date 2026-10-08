@@ -249,17 +249,22 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
     depth=frame['depth_m']
     # Exact distortion-corrected RealSense rays, not simulated pinhole geometry.
-    if synthetic_red or tracker is not None:
-        result=None
-        pts=frame['rays']*depth[...,None]
-        t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
-    else:
+    state=None if tracker is None else tracker.state
+    scheduled_semantic=tracker is not None and (state is None or (
+        frame['meta']['frame_id']>state['frame_id'] and frame['timestamp']>state['timestamp'] and
+        frame['timestamp']-state['semantic_timestamp']>=tracker.recheck_interval_s))
+    detection=None
+    if not synthetic_red and (tracker is None or scheduled_semantic):
         # HTTP inference and the independent ray transform can overlap. The
         # detector still sees the same frame and validates its exact identity.
-        detection=_geometry_executor.submit((detector or YoloClient()).detect,frame)
-        pts=frame['rays']*depth[...,None]
-        t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
-        result=detection.result()
+        # Scheduled tracker rechecks are known before any world computation;
+        # uncertainty still reacquires synchronously on this exact frame.
+        fresh(frame)
+        source=tracker.detector if tracker is not None else (detector or YoloClient())
+        detection=_geometry_executor.submit(source.detect,frame)
+    pts=frame['rays']*depth[...,None]
+    t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+    result=None if detection is None else detection.result()
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
     roi=None
     if expected_center_xy is not None:
@@ -282,7 +287,7 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         if tracker is None:
             target,detection=target_coke_mask(frame,config,world,roi,detector,require_table,result)
         else:
-            target,detection=tracker.select(frame,config,world,require_table,expected_center_xy)
+            target,detection=tracker.select(frame,config,world,require_table,expected_center_xy,result=result)
     for attempt in range(2):
         points=world[target]
         if len(points)<40:raise RuntimeError('Target has too few valid depth points')

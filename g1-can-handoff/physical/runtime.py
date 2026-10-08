@@ -41,6 +41,7 @@ class Runtime:
         self.tracking_stop=threading.Event();self.tracking_thread=None
         self.frame_prefetch=None;self.pending_frame=None
         self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
+        self.tracking_baseline=None
         saved=DATA/'perception-config.json'
         if saved.exists():
             os.environ['HANDOFF_CAMERA_MAX_AGE_MS']=str(frame_age_limit_s(json.loads(saved.read_text())['camera_max_age_ms'])*1000)
@@ -181,9 +182,30 @@ class Runtime:
         with getattr(self,'observation_lock',nullcontext()):
             worker=getattr(self,'perception',None)
             if worker is not None:
-                return worker.observe(config,phase,require_table,expected_center_xy,self.event,
+                result=worker.observe(config,phase,require_table,expected_center_xy,self.event,
                                       pose_at=self.pose_history.nearest)
-            return self._observe_frame(config,phase,require_table,expected_center_xy)
+            else:result=self._observe_frame(config,phase,require_table,expected_center_xy)
+            # Synchronous phase checks share this worker with background
+            # tracking. Publish either checked observation before releasing
+            # its serialization lock, so the watchdog sees the latest one.
+            self.publish_tracking_observation(*result,require_table)
+            return result
+
+    def publish_tracking_observation(self,observation,vision,require_table):
+        baseline=getattr(self,'tracking_baseline',None)
+        if baseline is None:return
+        tolerance=.01 if require_table else .04
+        if np.linalg.norm(observation.center[:2]-baseline.center[:2])>tolerance:
+            raise RuntimeError('Tracked can moved outside the checked pickup path')
+        age=time.monotonic()-observation.timestamp
+        if not 0<=age<=frame_age_limit_s():
+            raise RuntimeError('Cannot publish stale tracking observation')
+        with self.lock:
+            if self.tracking_error:raise RuntimeError(self.tracking_error)
+            previous=self.tracking_observation
+            if previous is not None and observation.timestamp<=previous.timestamp:
+                raise RuntimeError('Tracking observation exposure did not advance')
+            self.tracking_observation=observation;self.tracking_vision=vision
 
     def exposure_config(self,config,timestamp):
         if config.get('calibration_method')!='operator_accepted_factory_table':return config
@@ -266,6 +288,7 @@ class Runtime:
 
     def start_tracking(self,config,baseline):
         self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
+        self.tracking_baseline=baseline
         if self.cancel.is_set():raise RuntimeError('Operator cancelled before tracking')
         self.tracking_stop.clear()
         self.frame_prefetch=ThreadPoolExecutor(max_workers=1,thread_name_prefix='tracking-frame')
@@ -274,10 +297,6 @@ class Runtime:
             require_table=not self.grasp_started
             observation,vision=self.observe_frame(config,'motion-tracking',require_table,
                  None if require_table else baseline.center[:2])
-            tolerance=.01 if require_table else .04
-            if np.linalg.norm(observation.center[:2]-baseline.center[:2])>tolerance:
-                raise RuntimeError('Tracked can moved outside the checked pickup path')
-            with self.lock:self.tracking_observation=observation;self.tracking_vision=vision
         sample();self.tracking_guard()
         def work():
             while not self.tracking_stop.wait(.01):
@@ -300,6 +319,7 @@ class Runtime:
             worker.join(timeout=6)
             if worker.is_alive():raise RuntimeError('Tracking worker has not stopped; retain controller ownership')
         self.tracking_thread=None
+        self.tracking_baseline=None
         pool=getattr(self,'frame_prefetch',None)
         if pool is not None:
             pool.shutdown(wait=True,cancel_futures=True)
