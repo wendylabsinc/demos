@@ -6,11 +6,18 @@ from unittest.mock import patch
 import numpy as np
 
 from camera_input import geometry
-from test_target_tracker import TrackerTests
+import test_target_tracker as tracker_tests
+from test_yolo_coke import FrameFixture
 from yolo_client import identity
 
 
-class ParallelGeometryTests(TrackerTests):
+class ParallelGeometryTests(FrameFixture,unittest.TestCase):
+    setUp=tracker_tests.TrackerTests.setUp
+    next_frame=tracker_tests.TrackerTests.next_frame
+    select=tracker_tests.TrackerTests.select
+    accept=tracker_tests.TrackerTests.accept
+    seed=tracker_tests.TrackerTests.seed
+
     def check_overlap(self, periodic):
         if periodic:
             self.seed()

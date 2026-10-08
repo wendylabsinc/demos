@@ -266,3 +266,13 @@ lock, after the same freshness and baseline-displacement checks; a latched
 tracking error cannot be cleared by a new observation. A regression exercises
 this phase transition and rejects displaced, stale, repeated, or uncertain
 observations.
+
+The combined fix also overlaps scheduled exact-frame YOLO checks with the
+world transform; it does not add YOLO calls during a strong visual track.
+45 focused checks pass after removing duplicate inherited test discovery.
+Native Wendy deployed `325372e` as `0.3.5-shared-observations`; the runtime
+and camera source hashes matched. The 00:37:18 UTC retry stopped before any
+motion because the new scene estimate placed the can 25.7 cm forward (minimum
+27 cm). Body temperature was 73 C after the attempt. The operator was asked
+to move the can about 5 cm away from the robot and allow cooling. This build's
+freshness behavior under motion remains unverified.
