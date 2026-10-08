@@ -78,7 +78,7 @@ def main():
         evidence['finished_unix_ns']=time.time_ns()
         path=args.output/(name+'.json');path.write_text(json.dumps(evidence,indent=2)+'\n')
         state=evidence.get('after',{}).get('status',{})
-        summary={'evidence':str(path),'phase':state.get('phase'),'error':state.get('demo_error') or state.get('error'),
+        summary={'evidence':str(path),'phase':state.get('phase'),'error':(state.get('first_failure') or {}).get('error') or state.get('demo_error') or state.get('error'),
                  'physical_lift_verified':(state.get('demo_result') or {}).get('physical_lift_verified',False),
                  'motion_commands_sent':state.get('motion_commands_sent'),'adapter_initialized':state.get('adapter_initialized'),
                  'runner_error':evidence.get('runner_error')}

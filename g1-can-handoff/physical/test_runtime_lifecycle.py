@@ -27,6 +27,19 @@ class RuntimeLifecycleTests(unittest.TestCase):
         self.assertEqual(runtime.first_failure['source'],'watchdog')
         self.assertEqual(runtime.event.call_count,1)
 
+    def test_frame_evidence_is_persisted_without_stdout_or_state_lock(self):
+        runtime=self.runtime();runtime.event_lock=threading.Lock()
+        # A state lock held by another thread must not block evidence writes.
+        runtime.lock=threading.Lock();runtime.lock.acquire()
+        with tempfile.TemporaryDirectory() as directory,patch('runtime.EVENTS',Path(directory)/'events.jsonl'),patch('builtins.print') as output:
+            worker=threading.Thread(target=Runtime.event,args=(runtime,'perception_result'),kwargs={'frame_id':42},daemon=True)
+            worker.start();worker.join(.5)
+            completed=not worker.is_alive()
+            runtime.lock.release();worker.join(1)
+            self.assertTrue(completed)
+            self.assertEqual(json.loads((Path(directory)/'events.jsonl').read_text())['frame_id'],42)
+            output.assert_not_called()
+
     def runtime(self):
         runtime=Runtime.__new__(Runtime)
         runtime.cancel=threading.Event();runtime.operation_lock=threading.Lock()

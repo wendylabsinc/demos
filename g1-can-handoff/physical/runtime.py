@@ -36,6 +36,7 @@ class Runtime:
         self.demo_running=False;self.demo_result=None;self.demo_error=None
         self.observation_lock=threading.RLock();self.tracker=None;self.perception=None
         self.first_failure=None
+        self.event_lock=threading.Lock()
         self.tracking_stop=threading.Event();self.tracking_thread=None
         self.frame_prefetch=None;self.pending_frame=None
         self.tracking_error=None;self.tracking_observation=None;self.tracking_vision=None
@@ -72,10 +73,13 @@ class Runtime:
 
     def event(self,phase,**fields):
         row={'unix_ns':time.time_ns(),'monotonic_ns':time.monotonic_ns(),'phase':phase,**fields}
-        with self.lock:
+        # File IO must not hold the observation/command state lock. Keep full
+        # frame evidence on disk without duplicating it into container stdout.
+        with self.event_lock:
             with EVENTS.open('a') as f:
                 f.write(json.dumps(row,allow_nan=False)+'\n');f.flush()
-        if phase not in ('target','hand_target'):print(json.dumps(row),flush=True)
+        if phase not in ('target','hand_target','phase_camera_evidence','perception_result','perception_worker_result'):
+            print(json.dumps(row),flush=True)
 
     def poll_hand(self,side,sub):
         while True:
@@ -432,7 +436,7 @@ class Runtime:
         self.cancel.clear();self.demo_running=True;self.demo_result=None;self.demo_error=None
         def work():
             try:self.demo_result=self.run(True,preserve_cancel=True)
-            except Exception as exc:self.demo_error=f'{type(exc).__name__}: {exc}'
+            except Exception as exc:self.demo_error=self.record_failure(exc,'demo')
             finally:self.demo_running=False;self.operation_lock.release()
         try:threading.Thread(target=work,daemon=True,name='operator-demo').start()
         except Exception:
