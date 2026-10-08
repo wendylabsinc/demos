@@ -276,3 +276,22 @@ motion because the new scene estimate placed the can 25.7 cm forward (minimum
 27 cm). Body temperature was 73 C after the attempt. The operator was asked
 to move the can about 5 cm away from the robot and allow cooling. This build's
 freshness behavior under motion remains unverified.
+
+### Root cause: a narrow tape strip does not establish a reliable table normal
+
+The repeated reach error was not solely a can-placement problem. Tape-only
+calibration fits had 1.3–1.6 mm residuals while disagreeing with wider tabletop
+depth by as much as 19 mm. The last failed frame's tape support had only 7.5 mm
+of minor-axis spatial spread. A deterministic archived-depth regression failed
+on frames 20903 and 41836 with held-out tabletop RMS errors of 8.8 and 19.0 mm.
+
+The replacement uses tape to associate the surface and locate the near edge,
+then fits the broad tabletop and validates it against a separate set of pixels.
+It rejects narrow support, disagreement between pixel groups, and a fitted
+surface inconsistent with the tape. Across eight archived captures, held-out
+RMS error is 2.0–2.3 mm. Replaying the identical YOLO detection and source pixels
+from the last failed trial changes estimated forward position from 25.7 to
+28.3 cm, within the existing reach bound, without moving the can or changing
+that bound. The fixtures retain source-file hashes. This verifies the specific
+regression; factory mount translation and physical pickup still require live
+validation. See `yolo/validation-broad-tabletop-20261008.json`.

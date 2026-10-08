@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.5-shared-observations",
+  "version": "0.3.6-validated-tabletop",
   "entitlements": [
     {
       "type": "network",

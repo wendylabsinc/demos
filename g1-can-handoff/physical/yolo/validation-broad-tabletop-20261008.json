@@ -1,0 +1,270 @@
+{
+  "captured_frame_replay": [
+    {
+      "frame_id": 19766,
+      "normal": [
+        -0.010463321818021166,
+        -0.5930254656807373,
+        -0.8051157158760951
+      ],
+      "center": [
+        0.0007315450453076039,
+        -0.052343375751425024,
+        0.6640009301757036
+      ],
+      "quality": {
+        "rmse_m": 0.002184873267007138,
+        "heldout_rmse_m": 0.0021520269282851267,
+        "heldout_normal_angle_deg": 0.003797089735531834,
+        "fitted_points": 16701,
+        "heldout_points": 16665,
+        "axis_spread_m": [
+          0.21040275968039385,
+          0.18982617301992907,
+          0.0021848732670071355
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 20903,
+      "normal": [
+        -0.010628282817765613,
+        -0.5938741005297739,
+        -0.8044877825823694
+      ],
+      "center": [
+        0.0007454424029298227,
+        -0.053458839181951705,
+        0.6651774427903193
+      ],
+      "quality": {
+        "rmse_m": 0.0021192756946681887,
+        "heldout_rmse_m": 0.0021171278130883825,
+        "heldout_normal_angle_deg": 0.001387854691278404,
+        "fitted_points": 16707,
+        "heldout_points": 16691,
+        "axis_spread_m": [
+          0.21054538595187278,
+          0.18987381471432813,
+          0.002119275694668185
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 27644,
+      "normal": [
+        -0.011028224786002216,
+        -0.5931047711786209,
+        -0.8050497553960407
+      ],
+      "center": [
+        0.0005615237815188157,
+        -0.054466700793347686,
+        0.6657817787646311
+      ],
+      "quality": {
+        "rmse_m": 0.0020844467960725948,
+        "heldout_rmse_m": 0.0020764276863587307,
+        "heldout_normal_angle_deg": 0.003856577402791617,
+        "fitted_points": 16797,
+        "heldout_points": 16775,
+        "axis_spread_m": [
+          0.2113547206544547,
+          0.19021178460082516,
+          0.002084446796072596
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 33586,
+      "normal": [
+        -0.01065194123820728,
+        -0.6035843595196806,
+        -0.7972279831334791
+      ],
+      "center": [
+        -0.0007439165366736636,
+        -0.05130007697696948,
+        0.6722965255814799
+      ],
+      "quality": {
+        "rmse_m": 0.002110506407973944,
+        "heldout_rmse_m": 0.002114757140450324,
+        "heldout_normal_angle_deg": 0.006466099284466183,
+        "fitted_points": 16712,
+        "heldout_points": 16702,
+        "axis_spread_m": [
+          0.21227994636003583,
+          0.19443193033402806,
+          0.002110506407973927
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 38920,
+      "normal": [
+        -0.0021033209876516238,
+        -0.6078681952622009,
+        -0.7940351586859977
+      ],
+      "center": [
+        0.003597813840668922,
+        -0.1522696730581515,
+        0.755435398098673
+      ],
+      "quality": {
+        "rmse_m": 0.002244074570532743,
+        "heldout_rmse_m": 0.0022569446899943064,
+        "heldout_normal_angle_deg": 0.00693479451204318,
+        "fitted_points": 11108,
+        "heldout_points": 11046,
+        "axis_spread_m": [
+          0.2382270457478624,
+          0.16355298534000254,
+          0.002244074570532742
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 39343,
+      "normal": [
+        -0.00840962863427122,
+        -0.5878780901775016,
+        -0.8089058222286986
+      ],
+      "center": [
+        0.0027775169882350652,
+        -0.04839447899979738,
+        0.6568997064059553
+      ],
+      "quality": {
+        "rmse_m": 0.0020672866075918585,
+        "heldout_rmse_m": 0.002077081529527531,
+        "heldout_normal_angle_deg": 0.0046729607897970015,
+        "fitted_points": 17234,
+        "heldout_points": 17234,
+        "axis_spread_m": [
+          0.20827651966892388,
+          0.18988099627327984,
+          0.0020672866075918603
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 39954,
+      "normal": [
+        -0.00913813397303347,
+        -0.6009301454724542,
+        -0.7992493070187462
+      ],
+      "center": [
+        0.001394829917494563,
+        -0.049382325817730895,
+        0.6675025637362905
+      ],
+      "quality": {
+        "rmse_m": 0.002013409564550513,
+        "heldout_rmse_m": 0.002020962355659477,
+        "heldout_normal_angle_deg": 0.004761843507049409,
+        "fitted_points": 16984,
+        "heldout_points": 16989,
+        "axis_spread_m": [
+          0.21216447183544535,
+          0.19351497988038138,
+          0.0020134095645505125
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "frame_id": 41836,
+      "normal": [
+        -0.010893393678711743,
+        -0.5770228952667608,
+        -0.8166553203843867
+      ],
+      "center": [
+        0.002909792774402302,
+        -0.0439282197257646,
+        0.6451902576831998
+      ],
+      "quality": {
+        "rmse_m": 0.00204124634664236,
+        "heldout_rmse_m": 0.002052674898727478,
+        "heldout_normal_angle_deg": 0.00612952125335306,
+        "fitted_points": 17211,
+        "heldout_points": 17248,
+        "axis_spread_m": [
+          0.20491795553844563,
+          0.182663465120588,
+          0.0020412463466423663
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    }
+  ],
+  "last_failed_reach_replay": {
+    "replay_only": true,
+    "old_center": [
+      0.25735769859435936,
+      0.15088371247765964
+    ],
+    "new_center": [
+      0.28317530887187164,
+      0.14772023063152445,
+      0.823
+    ],
+    "vision": {
+      "top_quantile_z_m": 0.8715344850375489,
+      "center_xy_m": [
+        0.28317530887187164,
+        0.14772023063152445
+      ],
+      "fit_error_m": 0.0016002654579120687,
+      "pixels": 1512,
+      "frame_id": 41890,
+      "detector": "coke_yolo",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          76,
+          288.5,
+          222.5,
+          443
+        ],
+        "confidence": 0.32861328125,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "0c3ffaa2345f353a77fa1a0b155b911e204c33297d3daee013f6fa1a5f1eb98b"
+    },
+    "table_quality": {
+      "rmse_m": 0.00204124634664236,
+      "heldout_rmse_m": 0.002052674898727478,
+      "heldout_normal_angle_deg": 0.00612952125335306,
+      "fitted_points": 17211,
+      "heldout_points": 17248,
+      "axis_spread_m": [
+        0.20491795553844563,
+        0.182663465120588,
+        0.0020412463466423663
+      ],
+      "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+    }
+  },
+  "baseline_regression": {
+    "command": "python -m unittest test_table_plane -q",
+    "failed_frame_rms_m": {
+      "20903": 0.008781682,
+      "41836": 0.018983057
+    }
+  },
+  "hardware_pickup_verified": false
+}

@@ -1,0 +1,55 @@
+"""Archived tape fits must generalize to unseen pixels on the tabletop."""
+from pathlib import Path
+import unittest
+import numpy as np
+from table_plane import fit_table_plane
+
+
+class TablePlaneTests(unittest.TestCase):
+    def surfaces(self):
+        rng=np.random.default_rng(3)
+        def points(width,n):
+            x=rng.uniform(-.3,.3,n);y=rng.uniform(-width,width,n)
+            return np.c_[x,y,.7+rng.normal(0,.0007,n)]
+        return points(.015,1500),points(.3,5000),points(.3,5000)
+
+    def test_narrow_surface_support_is_rejected_despite_low_tape_residual(self):
+        tape,_,held=self.surfaces()
+        with self.assertRaisesRegex(ValueError,'too narrow'):
+            fit_table_plane(tape,tape,held)
+
+    def test_disagreeing_heldout_plane_is_rejected(self):
+        tape,train,held=self.surfaces();held[:,2]+=held[:,0]*.02
+        with self.assertRaisesRegex(ValueError,'disagree'):
+            fit_table_plane(tape,train,held)
+
+    def test_objects_and_invalid_depth_do_not_rotate_the_table(self):
+        tape,train,held=self.surfaces()
+        train=np.r_[train,np.full((100,3),np.nan),train[:500]+[0,0,.08]]
+        normal,center,_,quality=fit_table_plane(tape,train,held)
+        self.assertAlmostEqual(center[2],.7,places=3)
+        self.assertGreater(abs(normal[2]),.9999)
+        self.assertLess(quality['heldout_rmse_m'],.001)
+
+    def test_recorded_calibrations_explain_the_wide_table(self):
+        # Reference normals identify the broad tabletop cluster only; fitting
+        # uses the disjoint train pixels, never this held-out test selection.
+        references={20903:[-.01062727,-.59383839,-.80451417],
+                    38920:[-.00210495,-.60784334,-.79405421],
+                    41836:[-.01090847,-.57688212,-.81675458]}
+        with np.load(Path(__file__).parent/'fixtures/table-plane.npz') as data:
+            for fid,reference in references.items():
+                with self.subTest(frame=fid):
+                    tape=data[f'tape_{fid}'];train=data[f'train_{fid}'];held=data[f'holdout_{fid}']
+                    normal,center,_,_=fit_table_plane(tape,train,held)
+                    held=held[np.isfinite(held).all(1)&(held[:,2]>.1)&(held[:,2]<2)]
+                    distance=held@reference
+                    offset=np.median(tape@reference)
+                    table=held[np.abs(distance-offset)<.006]
+                    self.assertGreater(len(table),1000)
+                    errors=(table-center)@normal
+                    self.assertLess(np.sqrt(np.mean(errors**2)),.004)
+                    self.assertLess(np.quantile(np.abs(errors),.95),.006)
+
+
+if __name__=='__main__':unittest.main()
