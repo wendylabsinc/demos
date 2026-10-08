@@ -30,3 +30,5 @@ semantic behavior remains available as `yolo_reacquire`.
 
 Offline tests and passive deployment/probe results are recorded alongside this
 file. No demo start or robot movement is authorized by this validation.
+
+Deployment 0.3.15-color-depth-tracker passed passive readiness with 49 source hashes matched and zero motion commands. The five-frame live probe used zero YOLO calls, with completed exposure ages 166–264 ms and cylinder residuals 2.70–3.12 mm. Its first attempt used old stored calibration and failed table agreement; that failure is retained. The corrected probe mirrors the production in-memory scene refresh with exposure-aligned poses; it does not persist calibration or authorize movement. The full offline suite passed 357 tests including 13 simulations and 143 evidence hashes.
