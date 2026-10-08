@@ -167,6 +167,7 @@ class PhysicalPlant:
         self.base_joints = np.array(snap['body']['q'][:15])
         self.base_rpy = np.array(snap['body'].get('imu_rpy',[0,0,0]))
         self.right_arm = np.array(snap['body']['q'][22:29])
+        self.left_arm = np.array(snap['body']['q'][15:22])
         self.right_hand = np.array(snap['right']['q'])[SIM_TO_BRIDGE]
         self.left_hand = np.array(snap['left']['q'])
         self.cancelled = False
@@ -219,7 +220,7 @@ class PhysicalPlant:
         self.ik.set_contact_phase(phase)
 
     def solve(self, position, rotation=None):
-        self.sync(snapshot_guard(self.read(), now=self.clock.monotonic()))
+        self.sync(self.check())
         return self.ik.solve(position, rotation)
 
     def check(self):
@@ -403,6 +404,9 @@ class PhysicalPlant:
         if not self.path_preflight_ok or self.staging_start is None:
             raise RuntimeError('Pickup path has not been preflighted')
         if np.max(np.abs(np.asarray(snap['body']['q'][15:22])-self.staging_start))>.04:
+            self.event('start_pose_changed',planned_q=self.staging_start.tolist(),
+                       measured_q=snap['body']['q'][15:22],
+                       error_rad=(np.asarray(snap['body']['q'][15:22])-self.staging_start).tolist())
             raise RuntimeError('Measured starting arm posture changed after planning; replan required')
         return snap
 
@@ -469,6 +473,29 @@ class PhysicalPlant:
         self.arm_tau_command += np.clip(target-self.arm_tau_command, -change, change)
         self.arm_tau_time = now
         self.adapter.ctrl_dual_arm(np.r_[left_q, self.right_arm], self.arm_tau_command.copy())
+        self.left_arm=np.asarray(left_q,dtype=float).copy()
+
+    def hold_arm(self,snapshot):
+        if np.max(np.abs(np.asarray(snapshot['body']['q'][15:22])-self.left_arm))>.15:
+            raise RuntimeError('Measured arm tracking error exceeds 0.15 rad')
+        self.command_arm(self.left_arm,snapshot)
+
+    def settle_control(self,archive_guard=lambda:None):
+        """Hold the bounded SDK reference until measured control is stable."""
+        from control_settle import wait_for_stable_control
+        def sample():
+            with self.command_lock:
+                snapshot=self.check();self.hold_arm(snapshot)
+                return snapshot
+        return wait_for_stable_control(sample,self.cancel or threading.Event(),self.event,archive_guard,self.clock)
+
+    def inherit_control_hold(self,previous):
+        """A new calibrated planning model must not restart the torque ramp."""
+        if previous.cancelled or self.adapter is not previous.adapter or self.sender is not previous.sender or self.clock is not previous.clock:
+            raise RuntimeError('Cannot inherit a hold from a different or stopped controller')
+        self.arm_tau_command=previous.arm_tau_command.copy()
+        self.arm_tau_time=previous.arm_tau_time
+        self.left_arm=previous.left_arm.copy();self.right_arm=previous.right_arm.copy()
 
     def check_live_geometry(self,left_q=None,hand_q=None):
         """Recheck commands against the current measured base attitude."""
@@ -493,6 +520,7 @@ class PhysicalPlant:
         for t in np.linspace(0,1,max(2,int(duration/.02))):
             with self.command_lock:
                 snap=self.check();self.sync(snap);self.left_hand=start+t*(end-start)
+                self.hold_arm(snap)
                 self.check_live_geometry(hand_q=self.left_hand)
                 self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
                 self.event('hand_target',left=self.left_hand.tolist(),right=self.right_hand.tolist())
@@ -518,7 +546,7 @@ class PhysicalPlant:
 
     def maintain_hand(self):
         with self.command_lock:
-            self.check()
+            snapshot=self.check();self.hold_arm(snapshot)
             self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
 
     def freeze(self):

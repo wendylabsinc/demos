@@ -58,10 +58,11 @@ def main():
     if args.child:return child(*args.child)
     manifest=integrity()
     modules=sorted(p.stem for p in PHYSICAL.glob('test_*.py') if p.stem!='test_sim_runtime')
+    modules+=['offline.open_cases']
     if args.profile=='simulation':modules=['test_sim_runtime']
     elif args.profile=='open':modules=['offline.open_cases']
     elif args.profile=='model':modules=['offline.test_model_recognition']
-    elif args.profile=='all':modules+=['test_sim_runtime','offline.open_cases']
+    elif args.profile=='all':modules+=['test_sim_runtime']
     if args.test:modules=[args.test]
     if args.list:
         print('\n'.join(modules));return 0
@@ -90,10 +91,10 @@ def main():
     total=sum(r['tests_run'] for r in results);passed=all(r['successful'] for r in results)
     report=dict(profile=args.profile,tests_run=total,successful=passed,seconds=time.monotonic()-started,
         evidence_verified=len(manifest['files']),hardware_used=False,physical_success_verified=False,
-        unresolved=['camera_headroom','cold_control_handover','simulation_pickup'],modules=results)
+        unresolved=['live_camera_headroom','live_control_handover','physical_pickup'],modules=results)
     args.report.parent.mkdir(parents=True,exist_ok=True);args.report.write_text(json.dumps(report,indent=2)+'\n')
     print(f'{total} tests; '+('PASS' if passed else 'FAIL')+f'; report: {args.report}')
-    print('Open physical issues remain; a passing regression profile does not verify a pickup.')
+    print('Live camera timing, ownership settling, and a physical pickup remain unverified.')
     return 0 if passed else 1
 
 if __name__=='__main__':raise SystemExit(main())

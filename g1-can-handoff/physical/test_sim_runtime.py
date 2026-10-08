@@ -114,7 +114,11 @@ class PhysicalSimulationTests(unittest.TestCase):
         result=run(height=.762,initial_arm_q14=initial)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['hold_verified_s'],1.)
-        self.assertEqual(result['event_counts']['staging_segment'],3)
+        planned=[e for e in result['events'] if e['phase']=='staging_planned'][-1]['joint_waypoints']
+        executed=[e['goal_q'] for e in result['events'] if e['phase']=='staging_segment']
+        self.assertGreater(len(executed),0)
+        np.testing.assert_allclose(executed,planned)
+        self.assertEqual(result['simulation_contact_audit']['pregrasp_contact_steps'],0)
         self.assertEqual(result['event_counts']['lift_observation'],5)
         self.assertLess(result['max_tracking_error_rad'],.15)
 

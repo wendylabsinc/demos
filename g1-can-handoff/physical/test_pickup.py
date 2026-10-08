@@ -47,7 +47,8 @@ class SharedPickupTests(unittest.TestCase):
     def test_orientation_candidates_are_bounded(self):
         self.obs.timestamp=time.monotonic()
         plant=Mock();plant.preflight.side_effect=RuntimeError('Interpolated physical trajectory intersects robot/table')
-        with self.assertRaisesRegex(ValueError,'No reachable'):prepare(plant,self.observe,lambda *a,**k:None)
+        with self.assertRaisesRegex(ValueError,'No reachable.*preflight rejected: Interpolated physical trajectory intersects robot/table'):
+            prepare(plant,self.observe,lambda *a,**k:None)
         self.assertEqual(plant.preflight.call_count,30)
         plant.move.assert_not_called()
     def test_lift_requires_camera_evidence_even_with_finger_obstructions(self):

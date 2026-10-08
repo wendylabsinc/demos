@@ -262,6 +262,14 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         event('camera',phase_name=phase,vision=vision)
         return observation,vision
     try:
+        # As on hardware, reject an invalid pickup before taking SDK ownership.
+        prepare(plant,observe,event)
+        # Use the same bounded commanded hold as hardware ownership settling.
+        # No simulation gravity or object truth is injected into the planner.
+        plant.settle_control()
+        held_plant=plant
+        plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+        plant.inherit_control_hold(held_plant)
         prepared=prepare(plant,observe,event)
         result=execute(plant,prepared,observe,event)
         result.update(simulation_only=True,physical_pickup_verified=False)

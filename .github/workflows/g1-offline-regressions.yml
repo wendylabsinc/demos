@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       profile:
-        description: 'Simulation/open/all currently include known failing acceptance cases'
+        description: 'Regression, ownership acceptance, simulation, or the complete suite'
         type: choice
-        default: regression
+        default: all
         options: [regression, simulation, open, all]
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
         run: docker build -f g1-can-handoff/physical/offline/Dockerfile -t g1-offline g1-can-handoff/physical
       - name: Run without network or robot devices
         env:
-          PROFILE: ${{ inputs.profile || 'regression' }}
+          PROFILE: ${{ inputs.profile || 'all' }}
         run: |
           mkdir -p g1-can-handoff/physical/offline/reports
           docker run --rm --network none --read-only --tmpfs /tmp \

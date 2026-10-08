@@ -476,6 +476,10 @@ class Runtime:
             self.demo_running=False;self.operation_lock.release();raise
         return self.status()
 
+    def wait_for_control_settle(self):
+        self.phase='CONTROL_SETTLING'
+        return self.plant.settle_control(archive_guard=self.archive_guard)
+
     def run(self,actuate=False,*,preserve_cancel=False):
         from pickup import prepare, execute
         resuming=self.arm is not None
@@ -526,6 +530,9 @@ class Runtime:
             if self.cancel.is_set():raise RuntimeError('Operator cancelled before control acquisition')
             plant.validate_start()
             if not resuming:
+                # Ownership changes balance and the measured camera frame.
+                # Stop the old tracker before establishing a new reference.
+                self.stop_tracking();self.stop_perception();plant.perception_guard=None
                 from g1_arm import G1_29_ArmController
                 from g1_dex3 import Dex3Sender
                 self.arm=G1_29_ArmController(motion_mode=True,simulation_mode=False,lowstate_hub=self.hub,record_lowcmd=self.command_written)
@@ -533,11 +540,28 @@ class Runtime:
                 self.arm.set_arm_motion_limits({'max_velocity_rad_s':.25,'max_acceleration_rad_s2':1.})
                 self.arm.set_arm_position_limits(config['arm_limits_rad'])
                 self.hand=Dex3Sender(kp=2,kd=.2)
+                plant.adapter=self.arm;plant.sender=self.hand;self.plant=plant
                 self.event('ownership_acquired',recorder_session=archive['session'],right_arm_hold=plant.right_arm.tolist(),
                            right_hand_hold=plant.right_hand.tolist(),blend_affects_both_arms=True)
+                self.wait_for_control_settle()
+                if self.cancel.is_set():raise RuntimeError('Operator cancelled before owned replanning')
+                config=self.config(refresh=True)
+                self.tracker=TargetTracker(recheck_interval_s=1.)
+                self.perception=PerceptionWorker(self.camera.token)
+                held_plant=plant
+                plant=self.make_plant(config);plant.inherit_control_hold(held_plant);self.plant=plant
+                prepared=prepare(plant,observe,phase_event)
+                calibration_start_guard(config,self.read())
+                if config.get('scene_refresh_automatic'):
+                    pending=DATA/'calibration.pending.json'
+                    pending.write_text(json.dumps(config,indent=2)+'\n');pending.replace(DATA/'calibration.json')
+                self.event('owned_plan_context',calibration=config,reference_after_control_handover=True)
+                self.start_tracking(config,prepared[0]);plant.perception_guard=self.tracking_guard
+                plant.validate_start()
             else:
                 self.arm.set_arm_position_limits(config['arm_limits_rad'])
                 self.event('ownership_reused',recorder_session=archive['session'])
+            if self.cancel.is_set():raise RuntimeError('Operator cancelled before pickup execution')
             self.error=None;self.grasp_started=False
             plant.adapter=self.arm;plant.sender=self.hand;self.plant=plant
             self.active=True;self.trial_deadline=time.monotonic()+90

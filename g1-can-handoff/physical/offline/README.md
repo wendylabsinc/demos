@@ -18,7 +18,7 @@ python -m pip install -r offline/requirements.txt
 python offline/run.py
 ```
 
-The default profile runs **200 regression tests**, verifies captured evidence
+The default profile runs **213 regression tests**, verifies captured evidence
 checksums, and writes `offline/reports/latest.json`. Each module runs in a fresh
 process with temporary runtime storage, fixed random/hash seeds, a 400 ms
 exposure limit, and bounded execution. Reports retain individual test IDs,
@@ -59,15 +59,13 @@ python offline/inspect_trace.py --attempt 20261008T004012Z --events
 python offline/inspect_trace.py --attempt 20261008T005915Z --events
 ```
 
-`regression` covers fixed defects and required rejection behavior. `open` is an
-intentionally red acceptance test: a cold SDK ownership change must happen before
-the final measured pickup plan used for execution. It uses fake actuator
-endpoints and proves the current runtime still uses a plan from before ownership.
-It is neither skipped nor marked expected-failure. `simulation` runs 13 MuJoCo
-control/dynamics tests; **five currently fail** with changed starting posture,
-final-reach target movement, or an earlier unreachable-path error. `all` combines
-these three profiles and currently exits nonzero. These failures are work to do,
-not a reason to relax movement gates.
+`regression` covers fixed defects and required rejection behavior, including the
+four ownership acceptance cases. `open` runs those four cases alone with fake
+actuator endpoints: final planning follows measured ownership settling; failed
+perception, cancellation, or unstable control cannot execute the preview plan.
+`simulation` runs 13 MuJoCo control/dynamics tests. `all` runs all **226 tests**
+without duplicating ownership cases. All profiles now pass offline. No tests are
+skipped or marked expected-failure to conceal the original failures.
 
 The latest hardware trial also has a real pipeline headroom problem: frame 45594
 returned at 322.94 ms age and frame 45596 arrived after the watchdog stopped at
@@ -77,9 +75,21 @@ the full trace, source timestamps, worker timings, and archived camera source to
 work on capture/transport/processing latency; CPU wall time cannot qualify Jetson
 CUDA timing.
 
-An untested control-settle/replan proposal was saved in
-`experiments/control-settle.patch`. It is not applied, not deployed, and not a
-verified fix. Start with the red `open` profile before editing that behavior.
+The runtime now holds the existing arm reference with bounded gravity updates
+during finger operations and settling. Cold ownership must produce at least
+500 ms of advancing, stable measured feedback within five seconds, then refresh
+calibration and build a new pickup plan. Recreating the calibrated model retains
+the hold reference and torque ramp. Cancellation is checked before entering IK.
+These changes pass offline acceptance and simulation; they are not deployed or
+hardware-qualified. The original untested proposal remains in Git history.
+
+Before/after reports, individual test outcomes, source hashes, and historical
+red proofs are retained in `validation/home-fixes-20261008.json` and
+`validation/home-fixes-20261008/`. The original five simulation failures and
+the ownership failure are preserved alongside the passing results. Collision
+rejections remain visible when orientation search exhausts its candidates.
+The staging test compares executed waypoints with the validated plan and requires
+zero pregrasp contacts instead of forcing a particular number of segments.
 
 ## Run the actual YOLO checkpoint on CPU
 
@@ -150,14 +160,14 @@ masking behavior from returning.
 ## Coverage and unresolved work
 
 See [CASES.md](CASES.md) for the failure-to-test mapping, exact trial IDs, and the
-remaining open cases. GitHub Actions runs the regression profile for relevant
-PR/push changes and uploads the JSON report. Manual workflow dispatch can run
-`open`, `simulation`, or `all` to expose the outstanding failures.
+remaining open cases. GitHub Actions runs the complete `all` profile for relevant
+PR/push changes and uploads the JSON report. Manual workflow dispatch can select
+`regression`, `open`, `simulation`, or `all` for focused checks.
 
 A home-development loop is: choose a captured failure, run its focused test,
 change the production code, rerun that test, then run the regression profile.
-For handover work, the open acceptance test must go red → green while stale-frame
-and target-movement rejection tests continue to pass. Never rewrite captured
+For handover work, retain the ownership acceptance cases while stale-frame and
+target-movement rejection tests continue to pass. Never rewrite captured
 expectations/checksums merely to make a code change pass. Add a new labeled
 fixture when new evidence changes the expectation.
 

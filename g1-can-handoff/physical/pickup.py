@@ -10,6 +10,7 @@ from g1_can_handoff.task import plan, OPEN, CLOSED
 def prepare(plant, observe, event):
     observation, baseline = observe('planning', True)
     plant.observe_can(observation)
+    rejected=[]
     def validate_candidate(points,rotation):
         try:
             plant.preflight(points,rotation)
@@ -27,9 +28,14 @@ def prepare(plant, observe, event):
                        'Staging planning node limit reached',
                        'No staging path within bounded search')
             if not str(exc).startswith(geometric):raise
+            reason=str(exc).split(':',1)[0]
+            if reason not in rejected:rejected.append(reason)
             event('grasp_candidate_rejected',rotation=rotation.tolist(),reason=str(exc))
             return False
-    points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
+    try:points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
+    except ValueError as exc:
+        if rejected:raise ValueError(str(exc)+'; preflight rejected: '+'; '.join(rejected)) from exc
+        raise
     refreshed, track = observe('plan-refresh', True)
     if (np.linalg.norm(refreshed.center-observation.center) > .01 or
             abs(refreshed.table_height-observation.table_height) > .005):
