@@ -94,6 +94,7 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertEqual(result['hold_verified_s'],1.)
         self.assertFalse(result['physical_pickup_verified'])
         self.assertEqual(result['backend_assumptions']['hand_kp'],2.)
+        self.assertEqual(result['backend_assumptions']['fk_table_clearance_m'],.01)
         self.assertGreater(result['command_count'],0)
         phases=[e['phase'] for e in result['events']]
         self.assertIn('contact_proxy',phases)

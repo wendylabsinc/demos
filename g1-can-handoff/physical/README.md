@@ -79,6 +79,11 @@ torso and detected forbidden robot-contact residuals while the dense path guard
 still decides acceptance. The independent audit and remaining low-table failures
 are recorded in [IK contract validation](offline/validation/ik-contract-audit-20261008/README.md).
 
+Live target checks apply to every FK model with configured positive table
+clearance, including independently measured calibrations. The default dynamics
+fixture now uses the same calibrated FK model and 10 mm table margin; its physics
+world retains the real table surface without inflating the contact geometry.
+
 The arm adapter's second `ctrl_dual_arm` argument is feedforward torque.
 The physical plant supplies gravity torque from the measured joint posture,
 with zero model velocity. Per-arm caps are 6/6/4/4/1.5/1.5/1.5 Nm and the

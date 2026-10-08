@@ -3,7 +3,7 @@
 The earlier green results were insufficient: the application ignored contacts
 between nonadjacent left links, accepted an endpoint using looser tolerances than
 its candidate filter, and retried arbitrary ValueErrors from feedback. The new
-four-test baseline in red.json fails on e9afa92. The final suite has 284 passing
+four-test baseline in red.json fails on e9afa92. The final suite in all-margin-final.json has 284 passing
 tests, including six IK contract tests and 14 dynamics tests.
 
 The collision checker now rejects nonadjacent left-side contacts. A hand at the
@@ -18,6 +18,19 @@ For a clear folded resting hand, preflight and execution stage/approach with the
 measured fingers, then open at the checked approach pose. Opening beside the thigh
 was the sequence defect exposed by the stricter collision policy. Full hand
 opening and closing trajectories remain checked.
+
+A follow-up check found that live target checks ran only for factory/table
+calibration and the default dynamics FK fixture had no positive table margin.
+Live checking now applies to every model with configured positive table clearance.
+The dynamics FK model uses calibrated_scene with the synthetic world's exact
+pelvis transform and table bounds, preserving the real world's contact surfaces.
+It enforces the same 10 mm table margin during planning and command checks.
+live-guard-red.json reproduces a missed collision rejection on 2e1ab97;
+all-calibration-live-guard.json and physical-margin-dynamics.json pass after repair.
+The older all-final.json and placement reports are retained from 2e1ab97; the
+placement-planning code is unchanged by this follow-up. all-margin-final.json is
+the final full-suite result. The folded-hand dynamics results remain simulations
+with exact synthetic calibration, not independent real-world qualification.
 
 Endpoint acceptance consistently requires <=8 mm position error and <=0.02
 weighted matrix rotation residual (0.15 times the matrix difference norm).

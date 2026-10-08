@@ -1,0 +1,97 @@
+{
+  "profile": "regression",
+  "tests_run": 14,
+  "successful": true,
+  "seconds": 37.580298041924834,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_runtime",
+      "tests_run": 14,
+      "seconds": 36.27094912528992,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_arm_servo_reuses_bounded_adapter_reference",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_arm_servo_uses_commanded_torque_without_hidden_gravity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_cancelled_hand_open_sends_no_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_colliding_start_cannot_be_bypassed_by_staging",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_freeze_prevents_subsequent_watchdog_hand_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_freeze_serializes_with_inflight_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_open_arms_down_start_rejects_initial_thumb_hip_collision",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_staging_rejects_changed_measured_start_before_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_staging_requires_completed_preflight",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_stale_hand_feedback_sends_no_commands",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n..............\n----------------------------------------------------------------------\nRan 14 tests in 36.271s\n\nOK\n"
+    }
+  ]
+}

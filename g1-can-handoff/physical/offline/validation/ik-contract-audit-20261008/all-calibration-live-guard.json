@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 0.6903351251967251,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_attitude_plant",
+      "tests_run": 1,
+      "seconds": 0.2388360002078116,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_attitude_plant.AttitudePlantTests.test_fk_and_gravity_match_a_scene_built_at_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.239s\n\nOK\n"
+    }
+  ]
+}

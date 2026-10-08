@@ -663,7 +663,8 @@ class PhysicalPlant:
 
     def check_live_geometry(self,left_q=None,hand_q=None):
         """Recheck commands against the current measured base attitude."""
-        if self.config.get('calibration_method')!='operator_accepted_factory_table':return
+        if (getattr(self.ik,'table_clearance_m',0.)<=0 and
+                self.config.get('calibration_method')!='operator_accepted_factory_table'):return
         import mujoco
         data=self.gravity_data;data.qpos[:]=self.ik.data.qpos
         if left_q is not None:

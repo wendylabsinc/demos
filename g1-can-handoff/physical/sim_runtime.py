@@ -14,7 +14,7 @@ from pathlib import Path
 import mujoco
 import numpy as np
 from camera_input import geometry
-from physical_core import BODY_NAMES, PhysicalPlant, SIM_TO_BRIDGE
+from physical_core import BODY_NAMES, PhysicalPlant, SIM_TO_BRIDGE, calibrated_scene
 from pickup import prepare, execute
 from g1_can_handoff.sim import scene, FINGERS
 
@@ -241,12 +241,20 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     config=dict(staging_enabled=staging_enabled,camera_serial='mujoco-synthetic',camera_to_world=sensor.transform.tolist(),
                 can_radius_m=.033,can_height_m=.122,table_height_m=height,
                 arm_limits_rad=world.model.jnt_range[io.body_ids[15:]].tolist())
+    if setup is None:
+        pelvis=world.model.body('pelvis').id
+        root_pose=np.eye(4)
+        root_pose[:3,:3]=world.data.xmat[pelvis].reshape(3,3)
+        root_pose[:3,3]=world.data.xpos[pelvis]
+        table=world.model.geom('table')
+        config.update(pelvis_to_world=root_pose.tolist(),table_center_xy_m=table.pos[:2].tolist(),
+                      table_half_size_xy_m=table.size[:2].tolist())
     # Distinct model state prevents FK/collision queries from overwriting the
     # dynamics state, as on hardware.
     if setup is not None:
         config=dict(setup['config'],staging_enabled=staging_enabled)
     io.arm_limits=np.asarray(config['arm_limits_rad'],dtype=float)
-    model=scene(height=height) if setup is None else setup_scene(setup)
+    model=calibrated_scene(config) if setup is None else setup_scene(setup)
     plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
     contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
     def audit_contacts(world):
@@ -302,6 +310,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                   max_tracking_error_rad=worst_tracking,
                   max_abs_commanded_feedforward_nm=io.max_abs_feedforward.tolist(),
                   backend_assumptions=dict(supported_base=True,hand_kp=hand_kp,hand_kd=.2,camera=camera,table_height_m=height,can_xy_m=[.35,.18],
+                                           fk_table_clearance_m=plant.ik.table_clearance_m,
                                            initial_arm_q14=None if initial_arm_q14 is None else list(initial_arm_q14),
                                            initial_hand_q14=None if initial_hand_q14 is None else list(initial_hand_q14),
                                            staging_enabled=staging_enabled,
