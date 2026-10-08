@@ -1,0 +1,10 @@
+{
+  "camera-44504-planning.source.zip": "1fe9a78a9e3defa19fa3eb71b1555ee92eef16e5a28af7a983e04962e3fcbe4c",
+  "camera-44504-planning.timing.npz": "3648ba469d509c3902500f6e4c2bbfe2ba49feaff25e0db396fa103cf62ce97a",
+  "camera-44725-motion-tracking.source.zip": "512b54957ce1681a9d5500ef151808427bb9eb3c5610c49e8622fda905471e10",
+  "camera-44725-motion-tracking.timing.npz": "c1a1df6e6efc24647ae8ba5842b9783fa1fa055bbbd03006dc85122d46d95036",
+  "camera-45594-motion-tracking.source.zip": "44db13fbce919f4b17743ead77b666df0a2f2e201c4740de789c611b59814c72",
+  "camera-45594-motion-tracking.timing.npz": "1baa189d7fe02aea91cfe2d0d9bec3505f24c7f3912dbdcc2137bde009007a40",
+  "camera-45596-motion-tracking.source.zip": "cd8de6173f0315757df8ffb3574df22dda271717d68f6aba54edb82bf0523c02",
+  "camera-45596-motion-tracking.timing.npz": "f11d082b6bcefa9891c928e3fdd3a3d6993e3c766bb2cf761c0415ee82e096b7"
+}

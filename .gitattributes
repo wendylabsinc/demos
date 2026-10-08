@@ -21,3 +21,6 @@
 
 # Keep upstream formatting in vendored browser assets.
 **/static/vendor/** -whitespace
+
+# Unified patches preserve a single-space context marker on blank lines.
+g1-can-handoff/physical/offline/experiments/*.patch whitespace=-blank-at-eol

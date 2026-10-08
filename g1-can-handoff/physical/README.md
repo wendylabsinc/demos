@@ -328,3 +328,10 @@ hand motors, and refuses values at or above 75 C. This is a commissioning settin
 not a manufacturer-qualified limit. The packaged Dex3 thermal
 module receives fresh hand temperatures from the same telemetry snapshots used
 by the motion guards, without adding blocking reads to the command loop.
+
+## Offline regression pack
+
+See [offline/README.md](offline/README.md) for recorded hardware failure replays,
+184 CPU regressions, optional real-checkpoint tests, and the open handover and
+simulation acceptance cases. Run `python offline/run.py` from this directory;
+no robot or Wendy connection is required.

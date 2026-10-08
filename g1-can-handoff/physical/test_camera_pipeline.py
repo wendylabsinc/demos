@@ -5,11 +5,62 @@ import time
 import unittest
 import zipfile
 from unittest.mock import patch
+from urllib.parse import urlsplit
 
 import numpy as np
 from PIL import Image
 
 from camera_input import Camera,decode_color,decode_depth
+
+
+class FakeRGBDHTTP:
+    """Immutable encoded frame bundles served through the real HTTP client."""
+    def __init__(self,color=None,depth=None,rays=None,serial='paired'):
+        self.color=np.random.default_rng(4).integers(0,256,(48,64,3),dtype=np.uint8) if color is None else color
+        self.depth=np.ones(self.color.shape[:2],np.float32) if depth is None else depth
+        self.rays=np.ones((*self.depth.shape,3)) if rays is None else rays
+        self.serial=serial;self.scale=.001;self.paths=[];self.yolo=None
+        self.intrinsics=dict(width=self.depth.shape[1],height=self.depth.shape[0])
+        self.advance(12,99.95)
+
+    def advance(self,fid,timestamp,color=None):
+        if color is not None:self.color=color
+        self.fid=fid
+        self.meta=dict(frame_id=fid,captured_at_unix_ns=100000+fid,
+            intrinsics=dict(self.intrinsics),camera_serial=self.serial,
+            depth_time=timestamp,color_time=timestamp,timestamp_valid=True,depth_scale_m=self.scale)
+        self.compact=dict(source_frame_id=fid,captured_at_unix_ns=100000+fid,
+            calibration=dict(serial=self.serial,intrinsics=dict(self.intrinsics),depth_scale_m=self.scale))
+        png=io.BytesIO();Image.fromarray(np.rint(self.depth/self.scale).astype(np.uint16)).save(png,format='PNG')
+        jpg=io.BytesIO();Image.fromarray(self.color[...,::-1]).save(jpg,format='JPEG',quality=95)
+        self.png=png.getvalue();self.jpg=jpg.getvalue()
+
+    def camera(self):
+        camera=Camera();camera.rays=self.rays.copy();camera.intrinsics=dict(self.intrinsics);camera.serial=self.serial
+        return camera
+
+    def urlopen(self,request,timeout=None):
+        url=urlsplit(request.full_url);path=url.path;self.paths.append(path)
+        if url.port==8112:
+            if self.yolo is None:raise AssertionError('Unexpected YOLO request')
+            payload=self.yolo(request)
+        elif path=='/lease/renew':payload=b'{}'
+        elif path=='/health':payload=json.dumps({'frame_id':self.fid,'serial':self.serial}).encode()
+        elif path=='/frame.policy-rgbd':
+            self.check_fid(url.query)
+            bundle=io.BytesIO();np.savez(bundle,metadata_json=json.dumps(self.meta));payload=bundle.getvalue()
+        elif path=='/frame.recorder-rgbd':
+            self.check_fid(url.query)
+            bundle=io.BytesIO()
+            with zipfile.ZipFile(bundle,'w') as archive:
+                archive.writestr('metadata.json',json.dumps(self.compact))
+                archive.writestr('depth.png',self.png);archive.writestr('color.jpg',self.jpg)
+            payload=bundle.getvalue()
+        else:raise AssertionError('Unexpected HTTP endpoint: '+request.full_url)
+        return io.BytesIO(payload)
+
+    def check_fid(self,query):
+        if query!='frame_id='+str(self.fid):raise AssertionError('Request did not pin exact frame ID')
 
 
 class CameraPipelineTests(unittest.TestCase):
@@ -30,7 +81,7 @@ class CameraPipelineTests(unittest.TestCase):
             if 'policy-rgbd' in path:
                 timestamp=time.monotonic()
                 metadata=dict(frame_id=12,captured_at_unix_ns=33,intrinsics=intrinsics,
-                              camera_serial='paired',depth_time=timestamp,color_time=timestamp,timestamp_valid=True)
+                              camera_serial='paired',depth_time=timestamp,color_time=timestamp,timestamp_valid=True,depth_scale_m=.001)
                 result=io.BytesIO();np.savez(result,metadata_json=json.dumps(metadata));return result.getvalue()
             if 'recorder-rgbd' in path:
                 result=io.BytesIO()
@@ -78,6 +129,67 @@ class CameraPipelineTests(unittest.TestCase):
                  patch('camera_input.decode_color',side_effect=lambda *a:decode('color',decode_color,*a)):
                 camera.frame(materialize=False)
         finally:camera.close()
+
+    def assert_bundle_rejected(self,http,pattern):
+        camera=http.camera()
+        try:
+            with patch('urllib.request.urlopen',side_effect=http.urlopen),patch('camera_input.time.monotonic',return_value=100.):
+                with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+        finally:camera.close()
+        return camera
+
+    def test_camera_http_rejects_stale_future_and_invalid_exposure(self):
+        for timestamp,valid in ((99.599,True),(100.001,True),(99.95,False),(float('nan'),True)):
+            with self.subTest(timestamp=timestamp,valid=valid):
+                http=FakeRGBDHTTP();http.meta.update(depth_time=timestamp,color_time=timestamp,timestamp_valid=valid)
+                self.assert_bundle_rejected(http,'exposure timestamp')
+
+    def test_camera_http_accepts_configured_freshness_boundary_without_retimestamping(self):
+        http=FakeRGBDHTTP();http.meta.update(depth_time=99.6001,color_time=99.6001)
+        camera=http.camera()
+        try:
+            with patch('urllib.request.urlopen',side_effect=http.urlopen),patch('camera_input.time.monotonic',return_value=100.):
+                frame=camera.frame(materialize=False)
+            self.assertEqual(frame['timestamp'],99.6001)
+            self.assertEqual(frame['meta']['depth_time'],99.6001)
+            self.assertNotIn('raw',frame)
+        finally:camera.close()
+
+    def test_camera_http_rejects_positive_and_negative_rgb_depth_skew(self):
+        for skew in (-.0121,.0121,float('inf'),float('nan')):
+            with self.subTest(skew=skew):
+                http=FakeRGBDHTTP();http.meta['color_time']+=skew
+                self.assert_bundle_rejected(http,'skew|timestamp')
+
+    def test_camera_http_rejects_policy_frame_and_capture_time_mismatch(self):
+        for field in ('frame_id','captured_at_unix_ns'):
+            with self.subTest(field=field):
+                http=FakeRGBDHTTP();http.meta[field]+=1
+                self.assert_bundle_rejected(http,'exact-frame identity')
+
+    def test_camera_http_invalidates_ray_cache_on_timing_calibration_change(self):
+        for field,value in (('camera_serial','other'),('intrinsics',{'width':65,'height':48})):
+            with self.subTest(field=field):
+                http=FakeRGBDHTTP();http.meta[field]=value
+                camera=self.assert_bundle_rejected(http,'calibration changed')
+                self.assertIsNone(camera.rays)
+
+    def test_camera_http_rejects_compact_intrinsics_and_dimensions_mismatch(self):
+        http=FakeRGBDHTTP();http.compact['calibration']['intrinsics']['width']+=1
+        self.assert_bundle_rejected(http,'intrinsics disagree')
+        http=FakeRGBDHTTP();smaller=io.BytesIO();Image.fromarray(np.ones((47,64),np.uint16)).save(smaller,format='PNG')
+        http.png=smaller.getvalue()
+        self.assert_bundle_rejected(http,'dimensions disagree')
+
+    def test_camera_http_rejects_compact_calibration_serial_mismatch(self):
+        http=FakeRGBDHTTP();http.compact['calibration']['serial']='other-camera'
+        self.assert_bundle_rejected(http,'identity|serial|calibration')
+
+    def test_camera_http_rejects_compact_depth_scale_mismatch(self):
+        for scale in (.002,0.,-.001,float('nan')):
+            with self.subTest(scale=scale):
+                http=FakeRGBDHTTP();http.compact['calibration']['depth_scale_m']=scale
+                self.assert_bundle_rejected(http,'scale|calibration')
 
 
 if __name__=='__main__':unittest.main()

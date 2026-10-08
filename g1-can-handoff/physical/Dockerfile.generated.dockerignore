@@ -12,6 +12,9 @@
 !yolo/confidence.py
 !yolo/confidence.py/
 !yolo/confidence.py/**
+!table_plane.py
+!table_plane.py/
+!table_plane.py/**
 !pose_alignment.py
 !pose_alignment.py/
 !pose_alignment.py/**

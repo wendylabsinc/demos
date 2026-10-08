@@ -1,0 +1,5 @@
+-r requirements.txt
+# Optional real checkpoint inference; verified in the local Python 3.11 environment.
+torch==2.14.1
+torchvision==0.29.1
+ultralytics==8.4.123

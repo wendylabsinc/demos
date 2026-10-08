@@ -81,28 +81,38 @@ class Camera:
         timing=timing_request.result()
         with np.load(io.BytesIO(timing),allow_pickle=False) as f:
             meta=json.loads(str(f['metadata_json']))
+        if meta['intrinsics'] != self.intrinsics or meta['camera_serial'] != self.serial:
+            self.rays=None;raise RuntimeError('Camera calibration changed; refresh ray cache')
         compact=compact_request.result()
         fetched=time.perf_counter()
         with zipfile.ZipFile(io.BytesIO(compact)) as z:
             cm=json.loads(z.read('metadata.json'))
             png=z.read('depth.png');jpg=z.read('color.jpg')
+        compact_calibration=cm['calibration']
+        if compact_calibration['serial'] != meta['camera_serial']:
+            raise RuntimeError('Camera compact-frame calibration serial identity mismatch')
+        scale=compact_calibration['depth_scale_m']
+        timing_scale=meta.get('depth_scale_m')
+        if (not isinstance(scale,(int,float)) or not np.isfinite(scale) or scale<=0 or
+                not isinstance(timing_scale,(int,float)) or not np.isfinite(timing_scale) or
+                timing_scale<=0 or scale!=timing_scale):
+            raise RuntimeError('Camera compact-frame depth scale disagrees with timing calibration')
         # Both C decoders release the GIL. Decode the immutable paired payloads
         # concurrently, retaining exactly the same Pillow pixels and scale.
-        depth_request=self.frame_executor.submit(decode_depth,png,cm['calibration']['depth_scale_m'])
+        depth_request=self.frame_executor.submit(decode_depth,png,scale)
         color_request=self.frame_executor.submit(decode_color,jpg)
         depth=depth_request.result();color=color_request.result()
         if cm['source_frame_id'] != fid or meta['frame_id'] != fid or cm['captured_at_unix_ns'] != meta['captured_at_unix_ns']:
             raise RuntimeError('Camera color/depth exact-frame identity mismatch')
-        if meta['intrinsics'] != self.intrinsics or meta['camera_serial'] != self.serial:
-            self.rays=None;raise RuntimeError('Camera calibration changed; refresh ray cache')
         if depth.shape!=color.shape[:2] or self.rays.shape!=(*depth.shape,3):
             raise RuntimeError('Camera color/depth/ray geometry dimensions disagree')
         if cm['calibration']['intrinsics']!=self.intrinsics:
             raise RuntimeError('Camera compact-frame intrinsics disagree with cached rays')
         timestamp=meta['depth_time']
-        if not meta.get('timestamp_valid') or not 0<=time.monotonic()-timestamp<=frame_age_limit_s():
+        if not meta.get('timestamp_valid') or not np.isfinite(timestamp) or not 0<=time.monotonic()-timestamp<=frame_age_limit_s():
             raise RuntimeError('Camera exposure timestamp invalid/stale')
-        if abs(meta['color_time']-timestamp)>.012:raise RuntimeError('Camera RGB/depth exposure skew exceeds 12 ms')
+        if not np.isfinite(meta['color_time']) or abs(meta['color_time']-timestamp)>.012:
+            raise RuntimeError('Camera RGB/depth exposure skew exceeds 12 ms or timestamp invalid')
         frame={'color_bgr':color,'depth_m':depth,'rays':self.rays,'meta':meta,'timestamp':timestamp,
                'color_codec':'jpeg_exact_source_frame','source_rgbd_zip':compact,'source_timing_npz':timing,
                'timings_ms':{'fetch':(fetched-start)*1000,'decode':(time.perf_counter()-fetched)*1000}}
