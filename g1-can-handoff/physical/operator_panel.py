@@ -3,6 +3,8 @@
 Run on the operator Mac: python3 operator_panel.py. No motion starts on load.
 """
 import json
+from operator_state import describe_state
+from placement_overlay import PlacementGuide
 from pathlib import Path
 import queue
 import secrets
@@ -17,28 +19,35 @@ DEPLOYING = Path("/tmp/wendy-g1-nx2-deployment.lock")
 TOKEN = secrets.token_urlsafe(32)
 
 PAGE = r'''<!doctype html><html><head><meta charset="utf-8"><title>G1 operator controls</title>
-<style>body{margin:0;background:#10151c;color:#edf2f8;font:18px system-ui}main{max-width:1000px;margin:32px auto;padding:24px}h1{font-size:26px}button{font:700 22px system-ui;background:#ffca68;color:#181510;border:0;border-radius:12px;padding:22px;width:100%;cursor:pointer}button:disabled{opacity:.4;cursor:default}img{display:block;width:100%;max-width:800px;border-radius:12px}#state{white-space:pre-wrap;padding:18px;background:#1c2530;border-radius:10px}</style></head><body><main>
+<style>body{margin:0;background:#10151c;color:#edf2f8;font:18px system-ui}main{max-width:1000px;margin:32px auto;padding:24px}h1{font-size:26px}button{font:700 22px system-ui;background:#ffca68;color:#181510;border:0;border-radius:12px;padding:22px;width:100%;cursor:pointer}button:disabled{opacity:.4;cursor:default}img{display:block;width:100%;max-width:800px;border-radius:12px}#state{white-space:pre-wrap;padding:18px;background:#1c2530;border-radius:10px}#robot-card{padding:20px;border:2px solid #526275;border-radius:14px;margin:18px 0;background:#1c2530}#robot-title{font-size:28px;margin:0 0 10px}#robot-card[data-tone="ready"]{border-color:#8adeb2}#robot-card[data-tone="busy"]{border-color:#a8cafa}#robot-card[data-tone="hold"],#robot-card[data-tone="blocked"]{border-color:#ffca68}#robot-owner{display:inline-block;border-radius:24px;background:#303c4a;padding:6px 12px;font-size:16px}#robot-next{margin-bottom:0}#robot-error{color:#ffb0a8;overflow-wrap:anywhere}details{font-size:14px;color:#b7c4d2;margin:12px 0}.camera-view{position:relative;max-width:800px}#pickup-overlay{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}#pickup-area{fill:#62ffab33;stroke:#62ffab;stroke-width:3;vector-effect:non-scaling-stroke}#placement-message{color:#9df4c6}</style></head><body><main>
 <h1>G1 · Coke demo controls</h1><p>Start runs one pickup attempt. Stop holds the measured arm position. Release returns upper-body control to Unitree and relaxes both hands. Support the can and raised arms before releasing.</p>
 <p>Pressing Release confirms that the can and raised arms are supported.</p>
+<section id="robot-card" data-tone="unknown" aria-live="polite"><h2 id="robot-title">Checking robot state…</h2><span id="robot-owner">Control ownership unknown</span><p id="robot-next">Connecting to the controller.</p><p id="robot-error"></p></section>
 <button id="start" disabled style="background:#8adeb2;margin-bottom:12px">Start demo</button>
 <button id="stop" style="background:#a8cafa;margin-bottom:12px">Stop and hold</button>
-<button id="release">Release upper body + fingers to Unitree</button><p id="state">Checking controller…</p><p id="action-status" aria-live="polite"></p>
-<img id="video" alt="Live color camera"><p id="video-state">Connecting to live camera…</p><p id="camera-health"></p>
+<button id="release">Release upper body + fingers to Unitree</button><details><summary>Controller details</summary><p id="state">Checking controller…</p></details><p id="action-status" aria-live="polite"></p>
+<div class="camera-view"><img id="video" alt="Live color camera"><svg id="pickup-overlay" preserveAspectRatio="none" aria-label="Coke can pickup placement area"><polygon id="pickup-area"/></svg></div><p id="placement-message">Loading calibrated pickup area…</p><p id="video-state">Connecting to live camera…</p><p id="camera-health"></p>
 <script>const button=document.querySelector('#release'),state=document.querySelector('#state'),video=document.querySelector('#video'),videoState=document.querySelector('#video-state'),cameraHealth=document.querySelector('#camera-health');let busy=false,lastImage=0,imagePending=false,imageStarted=0;
 async function call(path,data){let r=await fetch(path,{method:data?'POST':'GET',headers:{'Content-Type':'application/json','X-Operator-Token':'TOKEN_VALUE'},body:data?JSON.stringify(data):undefined});let s=await r.json();if(!r.ok)throw Error(s.error||'Controller request failed');return s;}
 const actionStatus=document.querySelector('#action-status');const start=document.querySelector('#start'),stop=document.querySelector('#stop');let starting=false,polling=false;
-function show(s){start.disabled=!!s.deployment_in_progress||starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.deployment_in_progress?'Updating demo — Start will be available after verification\n':'')+(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'')+(s.yolo_confidence_strictly_above?'\nYOLO confidence: above '+Math.round(s.yolo_confidence_strictly_above*100)+'%':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
-start.onclick=async()=>{if(starting)return;starting=true;start.disabled=true;state.textContent='Starting one pickup attempt…';actionStatus.textContent='Sending Start request…';try{let result=await call('/start',{});actionStatus.textContent='Start accepted — one pickup attempt requested.';show(result);}catch(e){actionStatus.textContent='Start request failed: '+e.message;state.textContent=e.message;}finally{starting=false;poll();}};
+function show(s){renderRobotState(s);start.disabled=!!s.deployment_in_progress||starting||!!s.demo_running||s.phase==='HOLDING_CAN';state.textContent=(s.deployment_in_progress?'Updating demo — Start will be available after verification\n':'')+(s.demo_running?'Demo running · ':'Controller: ')+s.phase+(s.demo_error||s.error?'\n'+(s.demo_error||s.error):'')+(s.camera_max_age_ms?'\nCamera limit: '+s.camera_max_age_ms+' ms':'')+(s.yolo_confidence_strictly_above?'\nYOLO confidence: above '+Math.round(s.yolo_confidence_strictly_above*100)+'%':'');if(s.demo_result?.physical_lift_verified)state.textContent+='\nLift verified; support the can before releasing.';}
+start.onclick=async()=>{if(starting)return;starting=true;start.disabled=true;demoActive=true;placementVisible();state.textContent='Starting one pickup attempt…';actionStatus.textContent='Sending Start request…';try{let result=await call('/start',{});actionStatus.textContent='Start accepted — one pickup attempt requested.';show(result);}catch(e){actionStatus.textContent='Start request failed: '+e.message;state.textContent=e.message;}finally{starting=false;poll();}};
 stop.onclick=async()=>{state.textContent='Stopping and holding…';try{show(await call('/stop',{}));}catch(e){state.textContent=e.message;}};
 button.onclick=async()=>{if(busy)return;busy=true;button.disabled=true;state.textContent='Releasing upper body and fingers…';try{show(await call('/release',{can_supported:true}));}catch(e){state.textContent=e.message;}finally{busy=false;button.disabled=false;}};
 video.onload=()=>{imagePending=false;lastImage=Date.now();videoState.textContent='Live camera · received '+new Date(lastImage).toLocaleTimeString();};
-video.onerror=()=>{imagePending=false;videoState.textContent='Camera image unavailable; reconnecting…';};
+video.onerror=()=>{imagePending=false;videoState.textContent='Camera image unavailable; reconnecting…';guideValid=false;placementVisible();};
 function refreshVideo(){if(lastImage&&Date.now()-lastImage>3000)videoState.textContent='Camera feed stalled';if(imagePending&&Date.now()-imageStarted>3000)imagePending=false;if(!imagePending){imagePending=true;imageStarted=Date.now();video.src='http://10.10.20.238:8001/frame.jpg?t='+imageStarted;}}
 refreshVideo();setInterval(refreshVideo,250);
 async function health(){try{let h=await call('/camera-health');cameraHealth.textContent=(h.healthy&&h.frame_age_s<=.4?'Fresh camera':'Camera stale')+' · frame '+h.frame_id+' · '+Math.round(h.frame_age_s*1000)+' ms · '+h.fps+' fps';}catch(e){cameraHealth.textContent='Camera health unavailable';}}
 health();setInterval(health,1000);
-async function poll(){if(polling||busy||starting)return;polling=true;try{show(await call('/status'));}catch(e){state.textContent=e.message;}finally{polling=false;}}
+async function poll(){if(polling||busy||starting)return;polling=true;try{show(await call('/status'));}catch(e){state.textContent=e.message;robotTitle.textContent='Controller unavailable';robotCard.dataset.tone='unknown';robotOwner.textContent='Control ownership unknown';robotNext.textContent='Check the controller connection.';guideValid=false;placementVisible();}finally{polling=false;}}
 poll();setInterval(poll,1000);
+const robotCard=document.querySelector('#robot-card'),robotTitle=document.querySelector('#robot-title'),robotOwner=document.querySelector('#robot-owner'),robotNext=document.querySelector('#robot-next'),robotError=document.querySelector('#robot-error'),pickupOverlay=document.querySelector('#pickup-overlay'),pickupArea=document.querySelector('#pickup-area'),placementMessage=document.querySelector('#placement-message');let guideValid=false,guideReceived=0,demoActive=false,placementPolling=false;
+function placementVisible(){pickupOverlay.style.display=guideValid&&!demoActive&&Date.now()-guideReceived<2500&&lastImage&&Date.now()-lastImage<1000?'block':'none';}
+function renderRobotState(s){demoActive=!!s.demo_running;const p=s.presentation;if(p){robotTitle.textContent=p.title;robotCard.dataset.tone=p.tone;robotOwner.textContent=p.ownership;robotNext.textContent=p.next_action;robotError.textContent=p.failure?(p.failure_label+': '+(p.failure_summary||p.failure)):'';}placementVisible();}
+async function placement(){if(placementPolling)return;placementPolling=true;try{const p=await call('/placement');guideReceived=Date.now();guideValid=!!p.valid;if(guideValid){pickupOverlay.setAttribute('viewBox',`0 0 ${p.width} ${p.height}`);pickupArea.setAttribute('points',p.polygon.map(point=>point.join(',')).join(' '));placementMessage.textContent='Place the center of the can base inside the green area. '+p.label;}else placementMessage.textContent=p.error||'Pickup placement guide unavailable';}catch(e){guideValid=false;placementMessage.textContent='Pickup placement guide unavailable';}finally{placementPolling=false;placementVisible();}}
+placement();setInterval(placement,1000);setInterval(placementVisible,250);
+
 </script></main></body></html>'''
 
 class Wendy:
@@ -97,6 +106,7 @@ except urllib.error.HTTPError as e:
         if payload.get('exit_code')!=0:raise RuntimeError(payload.get('stderr') or 'Controller unavailable')
         state=json.loads(payload['stdout'])
         state['deployment_in_progress']=DEPLOYING.is_file()
+        state['presentation']=describe_state(state)
         if state.get('error') and 'phase' not in state:raise RuntimeError(state['error'])
         if action=='release' and (state.get('phase')!='PASSIVE' or state.get('adapter_initialized')):
             raise RuntimeError(state.get('error') or 'Release not confirmed; controller retains hold')
@@ -115,9 +125,12 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.headers.get('Host')!=f'127.0.0.1:{PORT}':self.send({'error':'Local operator only'},403);return
         if self.path=='/':self.send(PAGE.replace('TOKEN_VALUE',TOKEN),kind='text/html; charset=utf-8');return
-        if self.path not in ('/status','/camera-health') or not self.valid():self.send({'error':'Invalid operator request'},403);return
+        if self.path not in ('/status','/camera-health','/placement') or not self.valid():self.send({'error':'Invalid operator request'},403);return
         try:
-            if self.path=='/camera-health':
+            if self.path=='/placement':
+                guide=getattr(self.server,'placement',None)
+                self.send(guide.read() if guide is not None else {'valid':False,'error':'Placement guide unavailable'})
+            elif self.path=='/camera-health':
                 with urllib.request.urlopen('http://10.10.20.238:8001/health',timeout=2) as response:health=json.load(response)
                 self.send({k:health.get(k) for k in ['healthy','frame_id','frame_age_s','fps']})
             else:self.send(self.server.wendy.request())
@@ -139,8 +152,9 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     server=ThreadingHTTPServer(('127.0.0.1',PORT),Handler)
     server.wendy=Wendy()
+    server.placement=PlacementGuide(Wendy).start()
     print(f'G1 operator panel: http://127.0.0.1:{PORT}/',flush=True)
     try:server.serve_forever()
-    finally:server.wendy.process.terminate();server.server_close()
+    finally:server.placement.close();server.wendy.process.terminate();server.server_close()
 
 if __name__=='__main__':main()

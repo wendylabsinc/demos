@@ -50,6 +50,14 @@ class OperatorPanelTests(unittest.TestCase):
         with self.post({},path='/stop'):pass
         self.server.wendy.request.assert_called_once_with(action='stop')
 
+    def test_cached_overlay_does_not_issue_a_control_request(self):
+        self.server.placement=Mock()
+        self.server.placement.read.return_value=dict(valid=True,polygon=[[1,2],[3,4],[5,6],[7,8]])
+        request=urllib.request.Request(self.url+'/placement',headers={'X-Operator-Token':panel.TOKEN})
+        with urllib.request.urlopen(request,timeout=2) as response:
+            self.assertTrue(json.load(response)['valid'])
+        self.server.wendy.request.assert_not_called()
+
     def test_start_is_blocked_during_deployment_but_stop_remains_available(self):
         self.deploying.write_text('updating')
         with self.assertRaises(urllib.error.HTTPError) as failure:self.post({},path='/start')
