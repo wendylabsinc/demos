@@ -14,12 +14,13 @@ def worker_main(connection,token):
     from runtime import Runtime
     from camera_input import Camera
     from target_tracker import TargetTracker
+    from latest_frame import LatestFrameBuffer
     runtime=Runtime.__new__(Runtime)
     runtime.camera=Camera();runtime.camera.token=token
     runtime.tracker=TargetTracker(recheck_interval_s=1.)
     runtime.archive_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='perception-archive')
-    runtime.frame_prefetch=ThreadPoolExecutor(max_workers=1,thread_name_prefix='perception-frame')
-    runtime.pending_frame=None
+    runtime.frame_prefetch=None;runtime.pending_frame=None
+    runtime.latest_frames=LatestFrameBuffer(runtime.camera)
     events=[];event_lock=threading.Lock()
     def event(phase,**fields):
         with event_lock:events.append((phase,fields))
@@ -53,7 +54,7 @@ def worker_main(connection,token):
             connection.send(response)
     except (EOFError,BrokenPipeError):pass
     finally:
-        runtime.frame_prefetch.shutdown(wait=True,cancel_futures=True)
+        runtime.latest_frames.close()
         runtime.archive_executor.shutdown(wait=True,cancel_futures=True)
         # The parent owns and releases the lease, including on child failure.
         runtime.camera.token=None;runtime.camera.close();connection.close()
@@ -71,7 +72,7 @@ class PerceptionWorker:
         except Exception:
             self.close();raise
 
-    def observe(self,config,phase,require_table,expected_center_xy,event,pose_at=None):
+    def observe(self,config,phase,require_table,expected_center_xy,event,pose_at=None,publish=None):
         from yolo_client import frame_age_limit_s
         if not self.process.is_alive():raise RuntimeError('Perception worker exited')
         started=time.monotonic()
@@ -89,11 +90,26 @@ class PerceptionWorker:
                 reply={'pose':pose_at(response['pose_request'])}
             except Exception as exc:reply={'error':str(exc)}
             self.connection.send(reply)
+        received=time.monotonic()
+        receipt_error=None
+        try:
+            if response['error']:raise RuntimeError(response['error'])
+            observation,vision=response['result']
+            age=time.monotonic()-observation.timestamp
+            if not 0<=age<=frame_age_limit_s():
+                raise RuntimeError(f'Perception worker observation stale on receipt ({age*1000:.1f} ms)')
+            # Child exact-frame persistence is already joined. Publish only
+            # after the parent's freshness and target/path acceptance callback,
+            # before replaying descriptive events through synchronous file IO.
+            if publish is not None:publish(observation,vision)
+        except Exception as exc:receipt_error=exc
+        relay_started=time.monotonic()
         for name,fields in response['events']:event(name,**fields)
         event('perception_worker_result',phase_name=phase,worker_ms=response['worker_ms'],
-              round_trip_ms=(time.monotonic()-started)*1000,error=response['error'])
-        if response['error']:raise RuntimeError(response['error'])
-        observation,vision=response['result']
+              round_trip_ms=(time.monotonic()-started)*1000,receive_ms=(received-started)*1000,
+              event_relay_ms=(time.monotonic()-relay_started)*1000,error=response['error'],
+              receipt_error=None if receipt_error is None else str(receipt_error))
+        if receipt_error is not None:raise receipt_error
         age=time.monotonic()-observation.timestamp
         if not 0<=age<=frame_age_limit_s():
             raise RuntimeError(f'Perception worker observation stale on receipt ({age*1000:.1f} ms)')

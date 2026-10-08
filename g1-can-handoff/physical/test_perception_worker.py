@@ -24,6 +24,20 @@ def fake_worker(connection,token):
 
 
 class WorkerTests(unittest.TestCase):
+    def test_publish_checked_result_before_event_relay_but_never_publish_stale(self):
+        worker=PerceptionWorker(None,target=fake_worker);order=[]
+        try:
+            worker.observe({},'test',True,None,lambda *a,**kw:order.append('event'),
+                           publish=lambda *a:order.append('publish'))
+            self.assertEqual(order[0],'publish');self.assertIn('event',order)
+            publisher=Mock()
+            with self.assertRaisesRegex(RuntimeError,'stale on receipt'):
+                worker.observe({'age':.5},'test',True,None,Mock(),publish=publisher)
+            publisher.assert_not_called()
+            with self.assertRaisesRegex(RuntimeError,'outside pickup path'):
+                worker.observe({},'test',True,None,Mock(),publish=Mock(side_effect=RuntimeError('outside pickup path')))
+        finally:worker.close()
+
     def test_child_can_request_exact_exposure_pose_without_another_dds_reader(self):
         worker=PerceptionWorker(None,target=fake_worker);provider=Mock(return_value={'timestamp':12.5})
         try:

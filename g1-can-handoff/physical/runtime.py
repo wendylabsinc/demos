@@ -181,14 +181,19 @@ class Runtime:
         from contextlib import nullcontext
         with getattr(self,'observation_lock',nullcontext()):
             worker=getattr(self,'perception',None)
+            published=False
+            def publish(observation,vision):
+                nonlocal published
+                self.publish_tracking_observation(observation,vision,require_table)
+                published=True
             if worker is not None:
                 result=worker.observe(config,phase,require_table,expected_center_xy,self.event,
-                                      pose_at=self.pose_history.nearest)
+                                      pose_at=self.pose_history.nearest,publish=publish)
             else:result=self._observe_frame(config,phase,require_table,expected_center_xy)
             # Synchronous phase checks share this worker with background
             # tracking. Publish either checked observation before releasing
             # its serialization lock, so the watchdog sees the latest one.
-            self.publish_tracking_observation(*result,require_table)
+            if not published:self.publish_tracking_observation(*result,require_table)
             return result
 
     def publish_tracking_observation(self,observation,vision,require_table):
@@ -267,6 +272,8 @@ class Runtime:
         return result
 
     def next_tracking_frame(self):
+        latest=getattr(self,'latest_frames',None)
+        if latest is not None:return latest.next()
         pool=getattr(self,'frame_prefetch',None)
         if pool is None:return self.camera.frame(materialize=False)
         if self.pending_frame is None:
@@ -291,7 +298,9 @@ class Runtime:
         self.tracking_baseline=baseline
         if self.cancel.is_set():raise RuntimeError('Operator cancelled before tracking')
         self.tracking_stop.clear()
-        self.frame_prefetch=ThreadPoolExecutor(max_workers=1,thread_name_prefix='tracking-frame')
+        # The spawned worker continuously refreshes its single latest-frame
+        # slot. A second parked future in the parent serves no purpose.
+        self.frame_prefetch=None
         self.pending_frame=None
         def sample():
             require_table=not self.grasp_started
@@ -299,7 +308,7 @@ class Runtime:
                  None if require_table else baseline.center[:2])
         sample();self.tracking_guard()
         def work():
-            while not self.tracking_stop.wait(.01):
+            while not self.tracking_stop.wait(0):
                 try:sample()
                 except Exception as exc:
                     with self.lock:self.tracking_error=f'{type(exc).__name__}: {exc}'

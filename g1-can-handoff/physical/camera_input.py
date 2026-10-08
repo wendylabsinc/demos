@@ -24,6 +24,7 @@ class Camera:
         self.base='http://127.0.0.1:8001';self.token=None;self.rays=None;self.intrinsics=None;self.serial=None
         self.lease_stop=threading.Event();self.lease_thread=None;self.lease_error=None
         self.frame_executor=None
+        self.tracking_compact=False;self.tracking_frame_id=None;self.tracking_stream_id=None
         # Pillow otherwise loads its decoder plugins during the first bounded
         # observation. Warm them before acquiring a camera lease or moving.
         Image.init()
@@ -62,6 +63,8 @@ class Camera:
     def frame(self, *, materialize=True):
         start=time.perf_counter()
         self.request('/lease/renew',{})
+        if self.tracking_compact and self.rays is not None:
+            return self._tracking_frame(start,materialize)
         health=json.loads(self.request('/health'))
         if self.rays is None or health['serial'] != self.serial:
             # Rays are calibration data: cache once, never use this slow full
@@ -71,6 +74,9 @@ class Camera:
                 self.rays=f['rays'].copy();meta=json.loads(str(f['metadata_json']))
             self.intrinsics=meta['intrinsics'];self.serial=meta['camera_serial']
             health=json.loads(self.request('/health'))
+        if health.get('tracking_rgbd_schema')=='wendy.g1.compact-tracking.v1':
+            self.tracking_compact=True
+            return self._tracking_frame(start,materialize)
         fid=health['frame_id']
         # Both bundles address the same immutable frame ID. Fetch independent
         # payloads concurrently, then retain all identity/skew/freshness checks.
@@ -118,6 +124,48 @@ class Camera:
                'timings_ms':{'fetch':(fetched-start)*1000,'decode':(time.perf_counter()-fetched)*1000}}
         if materialize:
             frame['raw']=materialize_rgbd(frame)
+        return frame
+
+    def _tracking_frame(self,start,materialize):
+        from urllib.parse import urlencode
+        query={} if self.tracking_frame_id is None else dict(after_frame_id=self.tracking_frame_id,stream_id=self.tracking_stream_id)
+        compact=self.request('/frame.tracking-rgbd'+('?' + urlencode(query) if query else ''))
+        with zipfile.ZipFile(io.BytesIO(compact)) as z:
+            cm=json.loads(z.read('metadata.json'));png=z.read('depth.png');jpg=z.read('color.jpg')
+        meta=cm['source_metadata'];fid=meta['frame_id'];cal=cm['calibration']
+        if meta['intrinsics']!=self.intrinsics or meta['camera_serial']!=self.serial:
+            self.rays=None;raise RuntimeError('Camera calibration changed; refresh ray cache')
+        if (cm['source_frame_id']!=fid or cm['captured_at_unix_ns']!=meta['captured_at_unix_ns'] or
+                cal['serial']!=meta['camera_serial'] or cal['intrinsics']!=meta['intrinsics']):
+            raise RuntimeError('Camera compact-frame exact-frame/calibration identity mismatch')
+        scale=cal['depth_scale_m']
+        if (not isinstance(scale,(int,float)) or not np.isfinite(scale) or scale<=0 or
+                scale!=meta.get('depth_scale_m')):
+            raise RuntimeError('Camera compact-frame depth scale disagrees with timing calibration')
+        if self.tracking_frame_id is not None and (fid<=self.tracking_frame_id or meta['stream_id']!=self.tracking_stream_id):
+            raise RuntimeError('Camera tracking frame/stream identity did not advance')
+        fetched=time.perf_counter()
+        if self.frame_executor is None:
+            self.frame_executor=ThreadPoolExecutor(max_workers=2,thread_name_prefix='camera-frame')
+        depth_request=self.frame_executor.submit(decode_depth,png,scale)
+        color_request=self.frame_executor.submit(decode_color,jpg)
+        depth=depth_request.result();color=color_request.result()
+        if depth.shape!=color.shape[:2] or self.rays.shape!=(*depth.shape,3):
+            raise RuntimeError('Camera color/depth/ray geometry dimensions disagree')
+        timestamp=meta['depth_time']
+        if not meta.get('timestamp_valid') or not np.isfinite(timestamp) or not 0<=time.monotonic()-timestamp<=frame_age_limit_s():
+            raise RuntimeError('Camera exposure timestamp invalid/stale')
+        if not np.isfinite(meta['color_time']) or abs(meta['color_time']-timestamp)>.012:
+            raise RuntimeError('Camera RGB/depth exposure skew exceeds 12 ms or timestamp invalid')
+        # Preserve the original metadata in the immutable source ZIP. This tiny
+        # NPZ is a derived compatibility sidecar, not a second camera download.
+        timing=io.BytesIO();np.savez(timing,metadata_json=json.dumps(meta))
+        frame={'color_bgr':color,'depth_m':depth,'rays':self.rays,'meta':meta,'timestamp':timestamp,
+               'color_codec':'jpeg_exact_source_frame','source_rgbd_zip':compact,'source_timing_npz':timing.getvalue(),
+               'timing_source':'compact_source_metadata',
+               'timings_ms':{'fetch':(fetched-start)*1000,'decode':(time.perf_counter()-fetched)*1000}}
+        self.tracking_frame_id=fid;self.tracking_stream_id=meta['stream_id']
+        if materialize:frame['raw']=materialize_rgbd(frame)
         return frame
 
 
@@ -255,6 +303,15 @@ def fit_cylinder(points_xy,radius):
                          jac=lambda c:cylinder_jacobian(c,points_xy),loss='soft_l1',f_scale=.002)
 
 
+def world_points(frame,config):
+    pts=frame['rays']*frame['depth_m'][...,None]
+    t=np.asarray(config['camera_to_world'])
+    world=np.empty(pts.shape,dtype=np.result_type(pts,t))
+    np.matmul(pts,t[:3,:3].T,out=world)
+    world+=t[:3,3]
+    return world
+
+
 def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False,tracker=None):
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
     depth=frame['depth_m']
@@ -272,8 +329,9 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
         fresh(frame)
         source=tracker.detector if tracker is not None else (detector or YoloClient())
         detection=_geometry_executor.submit(source.detect,frame)
-    pts=frame['rays']*depth[...,None]
-    t=np.asarray(config['camera_to_world']);world=pts@t[:3,:3].T+t[:3,3]
+    # Preserve full-image geometry and the exact arithmetic; avoid allocating
+    # another full XYZ image solely for translation.
+    world=world_points(frame,config)
     result=None if detection is None else detection.result()
     valid=np.isfinite(depth)&(depth>.1)&(depth<2.5)
     roi=None

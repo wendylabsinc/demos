@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.7-owned-plan",
+  "version": "0.3.8-latest-frame",
   "entitlements": [
     {
       "type": "network",
