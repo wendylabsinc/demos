@@ -30,6 +30,14 @@ class TargetTracker:
     def reset(self):
         self.state=None;self.pending=None
 
+    def reacquire(self,frame,config,world,require_table,expected_center_xy):
+        """Replace an uncertain, uncommitted track using this exact image."""
+        fresh(frame)
+        if self.pending is None or self.pending['frame_id']!=frame['meta']['frame_id']:
+            raise RuntimeError('Reacquisition requires the current pending tracking frame')
+        self.pending=None
+        return self._semantic(frame,config,world,require_table,expected_center_xy,None,'cylinder_fit_uncertain')
+
     def _semantic(self,frame,config,world,require_table,expected_center_xy,result,reason):
         from camera_input import target_coke_mask
         detection=validate_result(frame,self.detector.detect(frame) if result is None else result)

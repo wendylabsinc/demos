@@ -1,6 +1,7 @@
 """Initial semantic identity, conservative tracking and rejection regressions."""
 import time
 import unittest
+from unittest.mock import patch
 from types import SimpleNamespace
 
 import numpy as np
@@ -95,6 +96,35 @@ class TrackerTests(FrameFixture,unittest.TestCase):
         _,vision=self.select(frame)
         with self.assertRaisesRegex(RuntimeError,'40mm'):
             self.tracker.accept(SimpleNamespace(center=np.array([.4,.18,.95])),vision,frame)
+
+    def test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback(self):
+        from camera_input import geometry
+        self.seed()
+        for missing in (False,True):
+            frame=self.next_frame()
+            good=self.tracker.select
+            def contaminated(*args,**kwargs):
+                _,vision=good(*args,**kwargs)
+                return np.ones(frame['depth_m'].shape,dtype=bool),vision
+            # Spread background points so an all-image tracker proposal is
+            # observably not a cylinder. The semantic box still encloses it.
+            yy,xx=np.indices(frame['depth_m'].shape)
+            outside=frame['color_bgr'][:,:,0]==0
+            frame['rays'][outside,0]=(.1+xx*.004)[outside]
+            frame['rays'][outside,1]=(.05+yy*.004)[outside]
+            prior=self.tracker.state
+            if missing:self.detector.boxes=[]
+            with patch.object(self.tracker,'select',side_effect=contaminated):
+                if missing:
+                    with self.assertRaisesRegex(RuntimeError,'absent/ambiguous'):
+                        geometry(frame,self.config(),require_table=False,tracker=self.tracker)
+                    self.assertIsNone(self.tracker.pending)
+                else:
+                    observation,vision=geometry(frame,self.config(),require_table=False,tracker=self.tracker)
+                    self.assertEqual(vision['tracking']['reason'],'cylinder_fit_uncertain')
+                    self.assertEqual(vision['tracking']['semantic_frame_id'],frame['meta']['frame_id'])
+                    np.testing.assert_allclose(observation.center[:2],[.35,.18],atol=1e-6)
+            self.assertIs(self.tracker.state,prior)
 
 
 if __name__=='__main__':unittest.main()

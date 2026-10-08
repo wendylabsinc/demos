@@ -228,6 +228,23 @@ def target_coke_mask(frame, config, world, roi=None, detector=None, require_tabl
                      'image_sha256':result['source']['image_sha256']}
 
 
+def cylinder_jacobian(center,points_xy):
+    delta=center-points_xy
+    return delta/np.maximum(np.linalg.norm(delta,axis=1),1e-12)[:,None]
+
+
+def fit_cylinder(points_xy,radius):
+    # The mean of a visible arc lies on its surface, not at the cylinder
+    # center. Starting there can converge to a mirrored local minimum.
+    # Center coordinates before the algebraic solve to retain precision.
+    mean=points_xy.mean(axis=0);local=points_xy-mean
+    coefficients,_,rank,_=np.linalg.lstsq(np.c_[2*local,np.ones(len(local))],
+                                         np.sum(local*local,axis=1),rcond=None)
+    initial=mean+coefficients[:2] if rank==3 else mean
+    return least_squares(lambda c:np.linalg.norm(points_xy-c,axis=1)-radius,initial,
+                         jac=lambda c:cylinder_jacobian(c,points_xy),loss='soft_l1',f_scale=.002)
+
+
 def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=None,synthetic_red=False,tracker=None):
     if frame['meta']['camera_serial']!=config['camera_serial']:raise RuntimeError('Camera serial changed')
     depth=frame['depth_m']
@@ -266,11 +283,16 @@ def geometry(frame,config,require_table=True,expected_center_xy=None,*,detector=
             target,detection=target_coke_mask(frame,config,world,roi,detector,require_table,result)
         else:
             target,detection=tracker.select(frame,config,world,require_table,expected_center_xy)
-    points=world[target]
-    if len(points)<40:raise RuntimeError('Target has too few valid depth points')
-    points=points[::max(1,len(points)//1500)]
-    fit=least_squares(lambda c:np.linalg.norm(points[:,:2]-c,axis=1)-config['can_radius_m'],points[:,:2].mean(axis=0),loss='soft_l1',f_scale=.002)
-    residual=float(np.sqrt(np.mean(fit.fun**2)))
+    for attempt in range(2):
+        points=world[target]
+        if len(points)<40:raise RuntimeError('Target has too few valid depth points')
+        points=points[::max(1,len(points)//1500)]
+        fit=fit_cylinder(points[:,:2],config['can_radius_m'])
+        residual=float(np.sqrt(np.mean(fit.fun**2)))
+        if residual<=.006:break
+        if attempt==0 and tracker is not None and detection.get('tracking',{}).get('mode')=='visual_depth':
+            target,detection=tracker.reacquire(frame,config,world,require_table,expected_center_xy)
+        else:break
     if residual>.006:raise RuntimeError('Physical target cylinder fit exceeds 6 mm')
     if expected_center_xy is not None and np.linalg.norm(fit.x-expected)>.04:
         raise RuntimeError('Tracked target center differs by over 40 mm')
