@@ -114,4 +114,11 @@ class SharedPickupTests(unittest.TestCase):
         self.assertEqual(plant.actions.count('hand'),2)
         self.assertEqual(plant.actions.count('move'),4)
 
+    def test_hand_opens_only_after_approach_clears_the_resting_posture(self):
+        plant=Plant()
+        execute(plant,self.prepared,self.observe,lambda *a,**kw:None)
+        # Opening beside the thigh can intersect it. The first arm move
+        # must reach the preflighted approach pose before any finger motion.
+        self.assertEqual(plant.actions[:4],['move','hand','move','move'])
+
 if __name__=='__main__':unittest.main()

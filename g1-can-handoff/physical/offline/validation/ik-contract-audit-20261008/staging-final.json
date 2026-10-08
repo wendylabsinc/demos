@@ -1,0 +1,52 @@
+{
+  "profile": "regression",
+  "tests_run": 5,
+  "successful": true,
+  "seconds": 0.848735332954675,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_staging",
+      "tests_run": 5,
+      "seconds": 0.19204491702839732,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_staging.NarrowObstacleTests.test_narrow_wall_is_avoided_by_tree_edges_and_shortcuts",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_deadline_and_cancellation_are_enforced",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_node_limit_bounds_obstructed_search",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_out_of_limits_goal_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_staging.StagingPlannerTests.test_starting_model_is_preserved",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.192s\n\nOK\n"
+    }
+  ]
+}

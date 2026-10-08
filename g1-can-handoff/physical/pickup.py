@@ -49,7 +49,6 @@ def execute(plant, prepared, observe, event):
     observation, baseline, points, rotation = prepared
     plant.validate_start()
     plant.set_contact_phase('pregrasp')
-    plant.hand(OPEN, .8)
     plant.stage()
     for phase, point in zip(('approach', 'align', 'reach'), points[:3]):
         fresh, vision = observe(phase, True)
@@ -60,6 +59,9 @@ def execute(plant, prepared, observe, event):
         plant.set_contact_phase(phase)
         event(phase)
         plant.move(point, rotation=rotation)
+        # The resting hand can be beside the thigh. Keep its measured shape
+        # during staging/approach, then open at the checked approach pose.
+        if phase=='approach':plant.hand(OPEN, .8)
     fresh, vision = observe('pre-close', True)
     if (np.linalg.norm(fresh.center-observation.center) > .01 or
             abs(fresh.table_height-observation.table_height) > .005):

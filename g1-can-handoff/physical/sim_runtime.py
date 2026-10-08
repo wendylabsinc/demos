@@ -199,7 +199,7 @@ def apply_measured_state(world, io, measured):
     mujoco.mj_forward(world.model,world.data)
 
 
-def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False):
+def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False, *, initial_hand_q14=None):
     if setup is not None:height=setup['config']['table_height_m']
     world=scene(height=height) if setup is None else setup_scene(setup)
     # Match the physical hand's configured kp=2, kd=.2; body support and the
@@ -213,6 +213,17 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
             raise ValueError('Initial arm state must contain fourteen finite joint angles')
         world.data.qpos[world.model.jnt_qposadr[io.body_ids[15:]]]=initial
         for name,value in zip(BODY_NAMES[15:],initial):world.targets[io.actuators[name]]=value
+        mujoco.mj_forward(world.model,world.data)
+    if initial_hand_q14 is not None:
+        initial=np.asarray(initial_hand_q14,dtype=float)
+        if initial.shape!=(14,) or not np.isfinite(initial).all():
+            raise ValueError('Initial hand state must contain fourteen finite raw hardware joint angles')
+        # Runtime.read returns raw hardware slots: left thumb/middle/index,
+        # right thumb/index/middle. Preserve that input contract in simulation.
+        for side,values in (('left',initial[:7][SIM_TO_BRIDGE]),('right',initial[7:])):
+            world.data.qpos[world.model.jnt_qposadr[io.hand_ids[side]]]=values
+            for name,value in zip(FINGERS,values):
+                world.targets[world.model.actuator(name.replace('left_',side+'_')).id]=value
         mujoco.mj_forward(world.model,world.data)
     if setup is not None:
         apply_measured_state(world,io,setup['measured'])
@@ -292,6 +303,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                   max_abs_commanded_feedforward_nm=io.max_abs_feedforward.tolist(),
                   backend_assumptions=dict(supported_base=True,hand_kp=hand_kp,hand_kd=.2,camera=camera,table_height_m=height,can_xy_m=[.35,.18],
                                            initial_arm_q14=None if initial_arm_q14 is None else list(initial_arm_q14),
+                                           initial_hand_q14=None if initial_hand_q14 is None else list(initial_hand_q14),
                                            staging_enabled=staging_enabled,
                                            force_zero_feedforward=force_zero_feedforward,
                                            arm_kp=io.arm_kp.tolist(),arm_kd=io.arm_kd.tolist(),

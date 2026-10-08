@@ -62,6 +62,33 @@ class TableClearanceIKTests(unittest.TestCase):
         self.assertIsNone(plant.adapter)
         self.assertIsNone(plant.sender)
 
+    def test_high_table_wrist_collision_recovers_a_clear_complete_path(self):
+        import copy
+        import time
+        from pickup import prepare
+        from physical_core import PhysicalPlant, calibrated_scene
+        from offline.planner_replay import clearance_auditor
+        root=Path(__file__).parent
+        captured,observation,_,events=fixture(3,root/'offline/evidence/clearance-demos-20261008-preserved')
+        config=copy.deepcopy(captured.config)
+        config['table_height_m']=.95
+        observation.center[:]=[.35,.10,.95+config['can_height_m']/2]
+        observation.table_height=.95
+        plant=PhysicalPlant(calibrated_scene(config,.35,.10),None,None,
+                            captured.read,config,captured.event,clock=captured.clock)
+        before=plant.ik.data.qpos.copy()
+        audit=clearance_auditor(plant)
+        def observe(*args):
+            observation.timestamp=time.monotonic()
+            return observation,{'source':'synthetic_high_table_with_captured_posture'}
+        prepare(plant,observe,plant.event)
+        self.assertTrue(plant.path_preflight_ok)
+        self.assertGreater(audit['samples'],100)
+        self.assertGreaterEqual(audit['min_table_distance_m'],.01)
+        np.testing.assert_array_equal(plant.ik.data.qpos,before)
+        self.assertIsNone(plant.adapter)
+        self.assertIsNone(plant.sender)
+
 
 if __name__ == '__main__':
     unittest.main()

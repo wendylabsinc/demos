@@ -1,6 +1,7 @@
 """Observed-pose grasp, lift verification, and offer. Release requires acceptance."""
 import time
 import numpy as np
+from g1_can_handoff.errors import IKError
 
 OPEN = [0,0,0,0,0,0,0]
 CLOSED = [0,.5,1.,-1.,-1.,-1.,-1.]
@@ -26,7 +27,7 @@ def plan(plant, observation):
         waypoints=[c+offset+[0,0,.16],c+offset,c,c+[0,0,.15],c+[.02,0,.15]]
         try:
             for target in waypoints: plant.solve(target,rotation)
-        except ValueError:continue
+        except IKError:continue
         return waypoints,rotation
     raise ValueError("No reachable grasp and offer path for this can position")
 

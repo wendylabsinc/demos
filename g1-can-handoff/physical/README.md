@@ -69,6 +69,16 @@ continuous Cartesian IK from the preceding arm pose, checking every connecting
 joint segment with the same collision and velocity limits as execution.
 Staging and the ascending lift retain their existing bounded planners.
 
+The current planner checks nonadjacent left-side contacts as well as table/body
+contacts. It rejects an already-intersecting measured starting pose before IK.
+Staging and approach retain the measured finger shape; the hand opens at the
+checked approach pose, which avoids opening beside the thigh. Endpoint IK uses
+one 8 mm/0.02 weighted-rotation acceptance contract. Geometric IK rejections may
+retry; feedback and operator faults abort. Collision-aware recovery adds table,
+torso and detected forbidden robot-contact residuals while the dense path guard
+still decides acceptance. The independent audit and remaining low-table failures
+are recorded in [IK contract validation](offline/validation/ik-contract-audit-20261008/README.md).
+
 The arm adapter's second `ctrl_dual_arm` argument is feedforward torque.
 The physical plant supplies gravity torque from the measured joint posture,
 with zero model velocity. Per-arm caps are 6/6/4/4/1.5/1.5/1.5 Nm and the

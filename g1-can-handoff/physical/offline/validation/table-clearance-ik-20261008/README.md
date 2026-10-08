@@ -1,5 +1,7 @@
 # Table clearance IK repair
 
+These are historical e9afa92 results. The later [IK contract audit](../ik-contract-audit-20261008/README.md) supersedes their collision-policy qualification and documents the stricter checker and corrected hand-opening sequence.
+
 The original Cartesian continuation can reach the requested hand pose while a
 finger violates the 10 mm table clearance. The synthetic regression keeps the
 preserved trial-03 posture and table geometry and moves the can to 44 cm forward,

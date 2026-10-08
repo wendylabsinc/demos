@@ -61,6 +61,11 @@ def clearance_auditor(plant):
                 raise AssertionError(f'Returned trajectory lacks table clearance: {minimum}')
             body_gap=min(mujoco.mj_geomDistance(model,data,a,b,.1,None) for a,b in pairs)
             if body_gap<-.001:raise AssertionError(f'Returned trajectory intersects torso: {body_gap}')
+            for contact in data.contact:
+                names=[model.body(model.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
+                if 'can' in names or all('left_hand' in n or n=='left_wrist_yaw_link' for n in names):continue
+                if contact.dist<-.001 and any(n.startswith('left_') for n in names):
+                    raise AssertionError(f'Returned trajectory intersects a left link: {names}, {contact.dist}')
             report['min_elbow_torso_distance_m']=min(report['min_elbow_torso_distance_m'],float(body_gap))
             report['min_table_distance_m']=min(report['min_table_distance_m'],float(minimum))
             report['samples']+=1

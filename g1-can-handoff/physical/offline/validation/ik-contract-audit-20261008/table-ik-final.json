@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 7.699917042162269,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_table_clearance_ik",
+      "tests_run": 3,
+      "seconds": 7.492483749985695,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_table_clearance_ik.TableClearanceIKTests.test_alignment_recovers_finger_clearance_without_changing_the_grasp",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_clearance_ik.TableClearanceIKTests.test_endpoint_collision_recovers_a_different_redundant_solution",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_table_clearance_ik.TableClearanceIKTests.test_high_table_wrist_collision_recovers_a_clear_complete_path",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 7.492s\n\nOK\n"
+    }
+  ]
+}
