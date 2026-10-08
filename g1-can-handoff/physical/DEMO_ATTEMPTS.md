@@ -197,3 +197,21 @@ raw RGB-D transport were tested without actuators. They did not consistently
 improve latency, so the candidate retains the existing camera transport and
 one-frame prefetch. Controller replacement and physical verification of the
 cylinder repair remain pending supported release.
+
+
+### Deployed cylinder repair trial
+
+After supported release, native Wendy deployed `e4893b1`; runtime, camera,
+tracker and physical-core hashes were verified. The bounded 00:21:31 UTC
+trial entered arm staging with valid cylinder fits and no first-fault
+freshness failure. It stopped before grasping on
+`Table plane differs by over 5 mm`. No physical lift was verified.
+
+Replay of the archived table neighborhood gives an initial median offset of
+-1.46 mm and a failed-frame offset of -5.02 mm. Body pitch changed from
+0.03515 to 0.02256 rad between initial and final telemetry. This is consistent
+with camera/base attitude drift, but endpoint samples do not prove exact
+exposure-time motion. The fixed camera-to-world transform needs validation
+under arm load before another calibration change or physical trial. The table
+guard remains unchanged and the controller remains in a measured failure hold.
+See `yolo/validation-cylinder-trial-20261008.json`.
