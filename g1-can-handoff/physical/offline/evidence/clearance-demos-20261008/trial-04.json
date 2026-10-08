@@ -1,0 +1,1352 @@
+{
+  "index": 4,
+  "agent_start_issued": false,
+  "start_origin": "Already active at initial observation; initiating request not captured",
+  "reset_confirmed": true,
+  "requested_trials": 10,
+  "controller_first_observed": {
+    "phase": "FROZEN",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "motion_commands_sent": 6597,
+    "adapter_initialized": true,
+    "automatic_home": false,
+    "events": "/data/events-20261008T184723Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200.0,
+      "rate_hz": 196.3,
+      "samples": 30438,
+      "age_s": 0.0023,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": 19511.801726548358,
+    "tracking_vision": {
+      "top_quantile_z_m": 0.8701879687649989,
+      "center_xy_m": [
+        0.32492933694951337,
+        0.09005980273451962
+      ],
+      "fit_error_m": 0.003683923045878298,
+      "pixels": 2851,
+      "frame_id": 22598,
+      "detector": "coke_yolo",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          168.1875,
+          256.125,
+          290.8125,
+          392.875
+        ],
+        "confidence": 0.3310546875,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "614874080bce59050ff0f71abbfb68e1263f9542fe7ae18f3021fa7e5f7b2a75",
+      "tracking": {
+        "mode": "yolo",
+        "reason": "cylinder_fit_uncertain",
+        "semantic_frame_id": 22598
+      }
+    },
+    "first_failure": {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+      "source": "watchdog"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.018217677250504494,
+          0.029817041009664536,
+          2.026801109313965
+        ],
+        "q": [
+          -0.1690809726715088,
+          -0.021738212555646896,
+          0.00798156950622797,
+          0.31373316049575806,
+          -0.1097382977604866,
+          0.02512451447546482,
+          -0.13048090040683746,
+          -0.00358781055547297,
+          0.02671683207154274,
+          0.3158722221851349,
+          -0.18488411605358124,
+          -0.015237225219607353,
+          0.002839081920683384,
+          0.0,
+          0.0,
+          0.027036411687731743,
+          0.13069996237754822,
+          0.28862807154655457,
+          0.1507735401391983,
+          -0.17647969722747803,
+          -0.0342998132109642,
+          -0.30805402994155884,
+          0.2612560987472534,
+          -0.2622627913951874,
+          0.0938604548573494,
+          0.8050882816314697,
+          -0.0011504855938255787,
+          0.024681752547621727,
+          0.001825437182560563
+        ],
+        "dq": [
+          0.030854929238557816,
+          0.0,
+          -0.0051424880512058735,
+          0.006544984877109528,
+          0.006065092980861664,
+          -0.0009346724255010486,
+          -0.008570813573896885,
+          -0.007635815534740686,
+          0.0,
+          0.0054541537538170815,
+          -0.002190939150750637,
+          -0.003635847708210349,
+          -0.04113990440964699,
+          0.0,
+          0.0,
+          0.0015339808305725455,
+          0.0015339808305725455,
+          0.00920388475060463,
+          -0.019941750913858414,
+          -0.004601942375302315,
+          -0.008835730142891407,
+          0.0019634952768683434,
+          0.004601942375302315,
+          0.0015339808305725455,
+          0.0,
+          -0.006135923322290182,
+          -0.0015339808305725455,
+          -0.005890486296266317,
+          0.005890486296266317
+        ],
+        "tau_est": [
+          7.606534004211426,
+          5.537109375,
+          -2.4609375,
+          1.7578125,
+          6.08659553527832,
+          -1.0210894346237183,
+          -2.572798252105713,
+          -6.064453125,
+          1.2863991260528564,
+          -4.306640625,
+          6.576943874359131,
+          0.7832009792327881,
+          -0.1677911877632141,
+          0.0,
+          0.0,
+          -3.25,
+          1.625,
+          0.75,
+          -3.25,
+          -0.0625,
+          -1.064453125,
+          0.0,
+          0.125,
+          -2.0,
+          -0.25,
+          -0.8125,
+          -0.125,
+          -0.2734375,
+          0.01953125
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            36,
+            40
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            34,
+            33
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            41,
+            43
+          ],
+          [
+            35,
+            35
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            41,
+            42
+          ],
+          [
+            39,
+            42
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            48
+          ],
+          [
+            46,
+            48
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            45
+          ],
+          [
+            40,
+            39
+          ],
+          [
+            38,
+            46
+          ],
+          [
+            41,
+            33
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            48
+          ],
+          [
+            48,
+            47
+          ],
+          [
+            45,
+            45
+          ],
+          [
+            45,
+            44
+          ],
+          [
+            45,
+            40
+          ],
+          [
+            47,
+            39
+          ]
+        ],
+        "temperature_max": 48,
+        "time": 1547.089205679
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.03164686635136604,
+          0.014612801373004913,
+          0.01058995258063078,
+          -0.02619456872344017,
+          -0.023635316640138626,
+          -0.040445949882268906,
+          -0.02778245136141777
+        ],
+        "dq": [
+          -0.0,
+          -0.0,
+          0.0,
+          0.0,
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "tau_est": [
+          82055.1171875,
+          -25118.912109375,
+          -23444.318359375,
+          47725.93359375,
+          50237.82421875,
+          77031.328125,
+          57773.5
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            35,
+            27
+          ],
+          [
+            35,
+            32
+          ],
+          [
+            32,
+            29
+          ],
+          [
+            35,
+            29
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            36,
+            30
+          ],
+          [
+            32,
+            28
+          ]
+        ],
+        "temperature_max": 36,
+        "time": 1547.070914744
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.03235664963722229,
+          -0.8915321826934814,
+          -1.520298957824707,
+          1.0099235773086548,
+          1.699465036392212,
+          0.6489375233650208,
+          1.7297128438949585
+        ],
+        "dq": [
+          0.0,
+          0.0,
+          -0.0,
+          -0.0,
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          4186.4853515625,
+          3349.188232421875,
+          -1674.5941162109375,
+          4186.4853515625,
+          -3349.188232421875
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            40,
+            31
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            36,
+            32
+          ],
+          [
+            40,
+            34
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            39,
+            33
+          ],
+          [
+            38,
+            33
+          ]
+        ],
+        "temperature_max": 42,
+        "time": 1546.998080106
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_first_observed": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T182442Z-883d2556",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 1530.158432933,
+    "received": {
+      "rt/dex3/left/state": 1205480,
+      "rt/lf/dex3/left/state": 13443,
+      "rt/dex3/right/state": 1208681,
+      "rt/lf/dex3/right/state": 13455,
+      "rt/lowstate": 1552506,
+      "rt/arm_sdk": 6598,
+      "rt/dex3/left/cmd": 1078,
+      "rt/dex3/right/cmd": 1078
+    },
+    "written": {
+      "rt/dex3/left/state": 1205480,
+      "rt/lf/dex3/left/state": 13443,
+      "rt/dex3/right/state": 1208681,
+      "rt/lf/dex3/right/state": 13455,
+      "rt/lowstate": 1552506,
+      "rt/arm_sdk": 6598,
+      "rt/dex3/left/cmd": 1078,
+      "rt/dex3/right/cmd": 1078
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.001970418,
+      "rt/dex3/left/state": 0.001938608,
+      "rt/dex3/right/state": 0.00191928,
+      "rt/lf/dex3/left/state": 0.10245462,
+      "rt/lf/dex3/right/state": 0.045628646,
+      "rt/arm_sdk": 0.001905103,
+      "rt/dex3/left/cmd": 19.243547314,
+      "rt/dex3/right/cmd": 19.243536242
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.001938608,
+      "rt/lf/dex3/left/state": 0.10245462,
+      "rt/dex3/right/state": 0.00191928,
+      "rt/lf/dex3/right/state": 0.045628646,
+      "rt/lowstate": 0.001970418,
+      "rt/arm_sdk": 0.001905103,
+      "rt/dex3/left/cmd": 19.243547314,
+      "rt/dex3/right/cmd": 19.243536242
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T182442Z-883d2556/samples-000025.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 7197733,
+        "sha256": "7f79358ff6886d261dad66cdeaa20e5b74d3b507233a89c8ee3a179f449780a2"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 36639943,
+        "sha256": "3a4eb2d15198521094378e4f24c991cf18059c2ad1e23c101512aa79586ec6d5"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 38306883,
+        "sha256": "6b23c3896e9cfb438e914f1469d15fe562083d60910e1faf9a946da7ad433a3e"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 37452710,
+        "sha256": "e61bb29d34a99ea12380f9c9d3bd7adf25e3190150a5b20ef5b5a4a94c8b7f57"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 36222007,
+        "sha256": "2d4ae8d21345edb9b2e1e44b35dedc99dfe705c3b2b509950232f168cecc6a88"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35770250,
+        "sha256": "1b9fcd7f6f4f28f061d6aea1690471559e01eee897eb2af06575a4f2638783f2"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 36325266,
+        "sha256": "a64205359b870452c062477d6a65264133f1d7aaf452a84bf51bc9feb7513d43"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 39526339,
+        "sha256": "a341a2d6923de04155673dbdc00245db0fda34814c49125148de016670401981"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 38087312,
+        "sha256": "3795c46616263b454fb277391ae96a8d17d431eb46205edb85f165520e423042"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 38738030,
+        "sha256": "599175cd3cdad9bc231c97549825cc2ca3656e5feafc13c05c0010c7c90270c2"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39367323,
+        "sha256": "b18d0cb3e823cc6c10fde968258a1812436c10174b31f042f34a19c4afe6a33f"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38643934,
+        "sha256": "5a925db9e372f7203fa72f7215b749c16d3d4fa1bc1e8962d2f708dcd2f19042"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38093851,
+        "sha256": "167755107afeec2a035578cedfd803f6c734ed2af7489e2ec78fd7dcb5ecc772"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 37526388,
+        "sha256": "b870fc668d39641f4dd9a487384edee2374b3c4699a1c9c079447f239575155e"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 37471647,
+        "sha256": "0b178e305ea918a142da2cf69267c9bca7ca074e21584131c8318277827a370c"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37191176,
+        "sha256": "0728fb794f3da2416c820ce74480d493c354cd239cd714e8a1f0371aac6fb860"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37190040,
+        "sha256": "1d9be4ea9ade7bea6c0815d09d4f2273c43b1d023b308a74b091537bf8b438c9"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36945849,
+        "sha256": "9e3d4dea1d08ecdd519897e1dd22505cad0f795f6a916b5f134e41e371dd3d99"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 37260253,
+        "sha256": "3e1dd60df1bfb1a354bd37c5e006b561077901bb5f0ab2cb6b7f8c49f82c8746"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 37178853,
+        "sha256": "2fea70a7c2e3bb91d7d0f68cd2fd1a7feaf1295cc9734032273be18284bd23cc"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 36973667,
+        "sha256": "69d762d8c24ab5d795b0d3dba7465f3db892f490ba929147c0d1ddf20b6f5f30"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 36853023,
+        "sha256": "61a5a3d75b09d95a6354fb2c577a7d1c0a132795dd8c00754e8e13005e28e00a"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 37329741,
+        "sha256": "cd1b6f48fabc02f66277a10138e7f0f9a35ce9837654d750feecf2e5255ce55d"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 37417965,
+        "sha256": "611bb04889c802ad5744b8a14da2f605a0dc5c0dc66ebb3d084c263dff91ad7f"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 40184528,
+        "sha256": "5ba65de9fd4a70202562de62b2c4c8b17c511a81a0ea271b5684ff24a17721c4"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "state": "terminal",
+  "native_event_file": "/data/events-20261008T184723Z.jsonl",
+  "started_unix_ns": 1791485324766877693,
+  "finished_unix_ns": 1791485413680231747,
+  "controller_after": {
+    "phase": "FROZEN",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "motion_commands_sent": 6712,
+    "adapter_initialized": true,
+    "automatic_home": false,
+    "events": "/data/events-20261008T184723Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200.0,
+      "rate_hz": 177.0,
+      "samples": 30651,
+      "age_s": 0.0046,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": 20704.174908548564,
+    "tracking_vision": {
+      "top_quantile_z_m": 0.8701879687649989,
+      "center_xy_m": [
+        0.32492933694951337,
+        0.09005980273451962
+      ],
+      "fit_error_m": 0.003683923045878298,
+      "pixels": 2851,
+      "frame_id": 22598,
+      "detector": "coke_yolo",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          168.1875,
+          256.125,
+          290.8125,
+          392.875
+        ],
+        "confidence": 0.3310546875,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "614874080bce59050ff0f71abbfb68e1263f9542fe7ae18f3021fa7e5f7b2a75",
+      "tracking": {
+        "mode": "yolo",
+        "reason": "cylinder_fit_uncertain",
+        "semantic_frame_id": 22598
+      }
+    },
+    "first_failure": {
+      "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+      "source": "watchdog"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.018349094316363335,
+          0.029468422755599022,
+          2.0273971557617188
+        ],
+        "q": [
+          -0.16909435391426086,
+          -0.021746736019849777,
+          0.00799496192485094,
+          0.31374168395996094,
+          -0.1097382977604866,
+          0.02512451447546482,
+          -0.1305076777935028,
+          -0.003579288488253951,
+          0.02671683207154274,
+          0.315863698720932,
+          -0.18488411605358124,
+          -0.015237225219607353,
+          0.002852473873645067,
+          0.0,
+          0.0,
+          0.027060380205512047,
+          0.13071194291114807,
+          0.28862807154655457,
+          0.1507735401391983,
+          -0.17646771669387817,
+          -0.03429214283823967,
+          -0.3080463707447052,
+          0.2612560987472534,
+          -0.26227477192878723,
+          0.09384846687316895,
+          0.8050882816314697,
+          -0.0011624698527157307,
+          0.024681752547621727,
+          0.001825437182560563
+        ],
+        "dq": [
+          0.023998277261853218,
+          -0.013089969754219055,
+          0.011999138630926609,
+          -0.014180800877511501,
+          -0.005014279391616583,
+          0.006259513087570667,
+          -0.013713300228118896,
+          0.014180800877511501,
+          -0.011999138630926609,
+          0.007635815534740686,
+          2.22647986447555e-06,
+          0.0018174946308135986,
+          -0.001714162528514862,
+          0.0,
+          0.0,
+          0.004601942375302315,
+          0.004601942375302315,
+          0.01073786523193121,
+          -0.01073786523193121,
+          0.00920388475060463,
+          -0.0009817476384341717,
+          0.010799224488437176,
+          0.0,
+          -0.012271846644580364,
+          -0.003067961661145091,
+          0.0,
+          0.004601942375302315,
+          -0.008835730142891407,
+          0.007853981107473373
+        ],
+        "tau_est": [
+          7.606534004211426,
+          5.625,
+          -2.4050071239471436,
+          1.845703125,
+          6.259915351867676,
+          -1.1273126602172852,
+          -2.6287286281585693,
+          -5.9765625,
+          1.2863991260528564,
+          -4.306640625,
+          6.576943874359131,
+          0.7832009792327881,
+          -0.1677911877632141,
+          0.0,
+          0.0,
+          -3.25,
+          1.625,
+          0.75,
+          -3.25,
+          -0.0625,
+          -1.07421875,
+          0.0,
+          0.125,
+          -1.9375,
+          -0.25,
+          -0.8125,
+          -0.0625,
+          -0.2734375,
+          0.0
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            36,
+            40
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            34,
+            33
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            41,
+            43
+          ],
+          [
+            35,
+            35
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            41,
+            42
+          ],
+          [
+            40,
+            42
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            48
+          ],
+          [
+            46,
+            48
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            46
+          ],
+          [
+            40,
+            39
+          ],
+          [
+            38,
+            46
+          ],
+          [
+            41,
+            33
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            48
+          ],
+          [
+            48,
+            47
+          ],
+          [
+            45,
+            45
+          ],
+          [
+            45,
+            44
+          ],
+          [
+            45,
+            40
+          ],
+          [
+            47,
+            39
+          ]
+        ],
+        "temperature_max": 48,
+        "time": 1548.279272878
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.031646355986595154,
+          0.014616379514336586,
+          0.010591741651296616,
+          -0.02619456872344017,
+          -0.023615637794137,
+          -0.040444161742925644,
+          -0.027777083218097687
+        ],
+        "dq": [
+          -0.0,
+          -0.0,
+          0.0,
+          0.0,
+          0.11450418829917908,
+          0.0,
+          -0.0
+        ],
+        "tau_est": [
+          76194.0390625,
+          -23444.318359375,
+          -23444.318359375,
+          46888.63671875,
+          50237.82421875,
+          77031.328125,
+          57773.5
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            35,
+            27
+          ],
+          [
+            35,
+            32
+          ],
+          [
+            32,
+            29
+          ],
+          [
+            35,
+            29
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            36,
+            30
+          ],
+          [
+            32,
+            28
+          ]
+        ],
+        "temperature_max": 36,
+        "time": 1548.186189429
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.032355885952711105,
+          -0.891535758972168,
+          -1.5202999114990234,
+          1.009929895401001,
+          1.6994668245315552,
+          0.6489330530166626,
+          1.7297190427780151
+        ],
+        "dq": [
+          0.0,
+          0.0,
+          -0.0,
+          -0.0,
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          3349.188232421875,
+          3349.188232421875,
+          -3349.188232421875,
+          3349.188232421875,
+          -3349.188232421875
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            40,
+            31
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            36,
+            32
+          ],
+          [
+            40,
+            34
+          ],
+          [
+            39,
+            34
+          ],
+          [
+            39,
+            33
+          ],
+          [
+            38,
+            33
+          ]
+        ],
+        "temperature_max": 42,
+        "time": 1548.230023921
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_after": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T182442Z-883d2556",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 1531.349757528,
+    "received": {
+      "rt/dex3/left/state": 1206438,
+      "rt/lf/dex3/left/state": 13454,
+      "rt/dex3/right/state": 1209650,
+      "rt/lf/dex3/right/state": 13465,
+      "rt/lowstate": 1553760,
+      "rt/arm_sdk": 6713,
+      "rt/dex3/left/cmd": 1078,
+      "rt/dex3/right/cmd": 1078
+    },
+    "written": {
+      "rt/dex3/left/state": 1206438,
+      "rt/lf/dex3/left/state": 13454,
+      "rt/dex3/right/state": 1209650,
+      "rt/lf/dex3/right/state": 13465,
+      "rt/lowstate": 1553760,
+      "rt/arm_sdk": 6713,
+      "rt/dex3/left/cmd": 1078,
+      "rt/dex3/right/cmd": 1078
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.002383971,
+      "rt/dex3/left/state": 0.00236413,
+      "rt/dex3/right/state": 0.002344385,
+      "rt/lf/dex3/left/state": 0.04428107,
+      "rt/lf/dex3/right/state": 0.113072215,
+      "rt/arm_sdk": 0.002329728,
+      "rt/dex3/left/cmd": 20.434874501,
+      "rt/dex3/right/cmd": 20.434863429
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.00236413,
+      "rt/lf/dex3/left/state": 0.04428107,
+      "rt/dex3/right/state": 0.002344385,
+      "rt/lf/dex3/right/state": 0.113072215,
+      "rt/lowstate": 0.002383971,
+      "rt/arm_sdk": 0.002329728,
+      "rt/dex3/left/cmd": 20.434874501,
+      "rt/dex3/right/cmd": 20.434863429
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T182442Z-883d2556/samples-000025.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 7197733,
+        "sha256": "7f79358ff6886d261dad66cdeaa20e5b74d3b507233a89c8ee3a179f449780a2"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 36639943,
+        "sha256": "3a4eb2d15198521094378e4f24c991cf18059c2ad1e23c101512aa79586ec6d5"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 38306883,
+        "sha256": "6b23c3896e9cfb438e914f1469d15fe562083d60910e1faf9a946da7ad433a3e"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 37452710,
+        "sha256": "e61bb29d34a99ea12380f9c9d3bd7adf25e3190150a5b20ef5b5a4a94c8b7f57"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 36222007,
+        "sha256": "2d4ae8d21345edb9b2e1e44b35dedc99dfe705c3b2b509950232f168cecc6a88"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35770250,
+        "sha256": "1b9fcd7f6f4f28f061d6aea1690471559e01eee897eb2af06575a4f2638783f2"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 36325266,
+        "sha256": "a64205359b870452c062477d6a65264133f1d7aaf452a84bf51bc9feb7513d43"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 39526339,
+        "sha256": "a341a2d6923de04155673dbdc00245db0fda34814c49125148de016670401981"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 38087312,
+        "sha256": "3795c46616263b454fb277391ae96a8d17d431eb46205edb85f165520e423042"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 38738030,
+        "sha256": "599175cd3cdad9bc231c97549825cc2ca3656e5feafc13c05c0010c7c90270c2"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39367323,
+        "sha256": "b18d0cb3e823cc6c10fde968258a1812436c10174b31f042f34a19c4afe6a33f"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38643934,
+        "sha256": "5a925db9e372f7203fa72f7215b749c16d3d4fa1bc1e8962d2f708dcd2f19042"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38093851,
+        "sha256": "167755107afeec2a035578cedfd803f6c734ed2af7489e2ec78fd7dcb5ecc772"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 37526388,
+        "sha256": "b870fc668d39641f4dd9a487384edee2374b3c4699a1c9c079447f239575155e"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 37471647,
+        "sha256": "0b178e305ea918a142da2cf69267c9bca7ca074e21584131c8318277827a370c"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37191176,
+        "sha256": "0728fb794f3da2416c820ce74480d493c354cd239cd714e8a1f0371aac6fb860"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37190040,
+        "sha256": "1d9be4ea9ade7bea6c0815d09d4f2273c43b1d023b308a74b091537bf8b438c9"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36945849,
+        "sha256": "9e3d4dea1d08ecdd519897e1dd22505cad0f795f6a916b5f134e41e371dd3d99"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 37260253,
+        "sha256": "3e1dd60df1bfb1a354bd37c5e006b561077901bb5f0ab2cb6b7f8c49f82c8746"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 37178853,
+        "sha256": "2fea70a7c2e3bb91d7d0f68cd2fd1a7feaf1295cc9734032273be18284bd23cc"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 36973667,
+        "sha256": "69d762d8c24ab5d795b0d3dba7465f3db892f490ba929147c0d1ddf20b6f5f30"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 36853023,
+        "sha256": "61a5a3d75b09d95a6354fb2c577a7d1c0a132795dd8c00754e8e13005e28e00a"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 37329741,
+        "sha256": "cd1b6f48fabc02f66277a10138e7f0f9a35ce9837654d750feecf2e5255ce55d"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 37417965,
+        "sha256": "611bb04889c802ad5744b8a14da2f605a0dc5c0dc66ebb3d084c263dff91ad7f"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 40184528,
+        "sha256": "5ba65de9fd4a70202562de62b2c4c8b17c511a81a0ea271b5684ff24a17721c4"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "demo_running_after": false,
+  "physical_lift_verified": false,
+  "primary_failure": {
+    "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "source": "watchdog"
+  },
+  "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+  "attention_beep": [
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    }
+  ],
+  "artifact": {
+    "path": "/data/trial-exports/trial-04.tar.gz",
+    "bytes": 1255206,
+    "sha256": "3d9928f3d7fd80a856a9005e6615e0a9fba2274c280dd14c57f9dc1a8025655e",
+    "events": 2470,
+    "selected_frames": 5,
+    "primary_failure": {
+      "unix_ns": 1791485393286738419,
+      "monotonic_ns": 1527855457331,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+      "source": "watchdog"
+    },
+    "local_path": "offline/evidence/clearance-demos-20261008/trial-04.tar.gz",
+    "verified": true
+  }
+}

@@ -96,6 +96,10 @@ def main():
     if before['demo_running'] or before['phase'] not in ('PASSIVE','FROZEN'):
         raise RuntimeError('Do not compete with a running trial')
     from pose_alignment import PoseHistory
+    # The real controller already imports Observation through camera_input.
+    # Otherwise the first IPC unpickle imports SciPy inside the timed receive,
+    # adding a profiler-only delay of about 100-160 ms on NX2.
+    from g1_can_handoff.perception import Observation
     from perception_worker import PerceptionWorker
     from functools import partial
     history=PoseHistory();stop=threading.Event();poll_errors=[]
@@ -116,7 +120,6 @@ def main():
     try:
         worker=PerceptionWorker(None,target=partial(profiled_worker,archive_path=archive))
         startup_ms=(time.monotonic()-started)*1000
-        time.sleep(.6)
         for index in range(args.samples):
             events.clear();began=time.monotonic();result=None;error=None
             def event(phase,**fields):events.append(dict(phase=phase,**fields))

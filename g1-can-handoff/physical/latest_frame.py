@@ -30,6 +30,21 @@ class LatestFrameBuffer:
                 self.error = exc
                 self.condition.notify_all()
 
+    def wait_ready(self, *, max_age_s, timeout=4.):
+        """Warm calibration/decoders before readiness, without claiming a frame."""
+        deadline=time.monotonic()+timeout
+        with self.condition:
+            while True:
+                if self.error is not None:
+                    raise RuntimeError('Latest camera reader failed: '+str(self.error)) from self.error
+                if self.stopped.is_set():raise RuntimeError('Latest camera reader stopped')
+                now=time.monotonic()
+                if self.latest is not None and 0<=now-self.latest['timestamp']<=max_age_s:
+                    return
+                remaining=deadline-now
+                if remaining<=0:raise RuntimeError('Latest camera readiness timeout')
+                self.condition.wait(remaining)
+
     def next(self, timeout=4.):
         deadline = time.monotonic() + timeout
         with self.condition:

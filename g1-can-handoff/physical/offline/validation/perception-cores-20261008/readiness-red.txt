@@ -1,0 +1,29 @@
+======================================================================
+ERROR: test_readiness_rejects_future_frame_and_stall (test_latest_frame.LatestFrameTests.test_readiness_rejects_future_frame_and_stall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_latest_frame.py", line 43, in test_readiness_rejects_future_frame_and_stall
+    buffer.wait_ready(max_age_s=.3,timeout=.03)
+    ^^^^^^^^^^^^^^^^^
+AttributeError: 'LatestFrameBuffer' object has no attribute 'wait_ready'
+
+======================================================================
+FAIL: test_readiness_waits_for_a_fresh_decoded_frame_without_consuming_it (test_latest_frame.LatestFrameTests.test_readiness_waits_for_a_fresh_decoded_frame_without_consuming_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_latest_frame.py", line 27, in test_readiness_waits_for_a_fresh_decoded_frame_without_consuming_it
+    self.assertEqual(errors,[]);self.assertTrue(ready.is_set())
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [AttributeError("'LatestFrameBuffer' object has no attribute 'wait_ready'")] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+AttributeError("'LatestFrameBuffer' object has no attribute 'wait_ready'")
+
+- [AttributeError("'LatestFrameBuffer' object has no attribute 'wait_ready'")]
++ []
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.045s
+
+FAILED (failures=1, errors=1)

@@ -1,6 +1,7 @@
 """Exact-frame camera client, calibrated ray geometry, and real visual lift check."""
 import io
 import json
+import os
 import time
 import threading
 import urllib.request
@@ -17,6 +18,7 @@ from yolo_client import YoloClient, fresh, frame_age_limit_s
 # Each caller joins its exact-frame result; the client checks age when queued
 # work starts and after it returns, so queuing cannot admit an old frame.
 _geometry_executor=ThreadPoolExecutor(max_workers=1,thread_name_prefix='exact-frame-yolo')
+_world_executor=ThreadPoolExecutor(max_workers=4,thread_name_prefix='depth-world')
 
 
 class Camera:
@@ -303,12 +305,38 @@ def fit_cylinder(points_xy,radius):
                          jac=lambda c:cylinder_jacobian(c,points_xy),loss='soft_l1',f_scale=.002)
 
 
-def world_points(frame,config):
-    pts=frame['rays']*frame['depth_m'][...,None]
+def world_points(frame,config,*,workers=None):
+    """Transform every pixel in bounded row tiles; one worker restores serial execution."""
+    if workers is None:
+        workers=int(os.environ.get('HANDOFF_GEOMETRY_WORKERS','1'))
+    if type(workers) is not int or workers not in (1,2,4):
+        raise ValueError('HANDOFF_GEOMETRY_WORKERS must be 1, 2, or 4')
+    rays=frame['rays'];depth=frame['depth_m']
     t=np.asarray(config['camera_to_world'])
-    world=np.empty(pts.shape,dtype=np.result_type(pts,t))
-    np.matmul(pts,t[:3,:3].T,out=world)
-    world+=t[:3,3]
+    world=np.empty(rays.shape,dtype=np.result_type(rays,depth,t))
+    def transform(start,end):
+        pts=rays[start:end]*depth[start:end,...,None]
+        np.matmul(pts,t[:3,:3].T,out=world[start:end])
+        world[start:end]+=t[:3,3]
+    height=len(depth)
+    count=min(workers,height)
+    if count<=1:
+        transform(0,height)
+    else:
+        # NumPy releases the GIL. Each task owns disjoint output rows, keeping
+        # the original arithmetic and all invalid-depth pixels unchanged.
+        boundaries=np.linspace(0,height,count+1,dtype=int)
+        futures=[_world_executor.submit(transform,int(start),int(end))
+                 for start,end in zip(boundaries[:-1],boundaries[1:])]
+        try:
+            for future in futures:future.result()
+        finally:
+            # Finish all writers even when one tile raises; nothing can keep
+            # reading the caller's frame after this function has returned.
+            for future in futures:
+                if not future.done():
+                    try:future.result()
+                    except Exception:pass
     return world
 
 

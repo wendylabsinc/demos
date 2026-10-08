@@ -3,8 +3,8 @@ import os
 import time
 from types import SimpleNamespace
 import unittest
-from unittest.mock import Mock
-from perception_worker import PerceptionWorker
+from unittest.mock import Mock,patch
+from perception_worker import PerceptionWorker,worker_main
 
 
 def fake_worker(connection,token):
@@ -24,6 +24,24 @@ def fake_worker(connection,token):
 
 
 class WorkerTests(unittest.TestCase):
+    def test_real_worker_reports_ready_only_after_camera_warmup(self):
+        order=[];connection=Mock();connection.recv.return_value=None
+        connection.send.side_effect=lambda message:order.append(('send',message))
+        with patch('camera_input.Camera'),patch('target_tracker.TargetTracker'),patch('latest_frame.LatestFrameBuffer') as constructor:
+            buffer=constructor.return_value
+            buffer.wait_ready.side_effect=lambda **kw:order.append(('warm',kw))
+            worker_main(connection,None)
+            self.assertEqual([row[0] for row in order],['warm','send'])
+            self.assertEqual(order[1][1],{'ready':True})
+            self.assertAlmostEqual(order[0][1]['max_age_s'],.3)
+            buffer.close.assert_called_once()
+        connection.send.reset_mock()
+        with patch('camera_input.Camera'),patch('target_tracker.TargetTracker'),patch('latest_frame.LatestFrameBuffer') as constructor:
+            constructor.return_value.wait_ready.side_effect=RuntimeError('Latest camera readiness timeout')
+            with self.assertRaisesRegex(RuntimeError,'readiness timeout'):worker_main(connection,None)
+            connection.send.assert_not_called()
+            constructor.return_value.close.assert_called_once()
+
     def test_publish_checked_result_before_event_relay_but_never_publish_stale(self):
         worker=PerceptionWorker(None,target=fake_worker);order=[]
         try:

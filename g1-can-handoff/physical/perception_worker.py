@@ -38,6 +38,8 @@ def worker_main(connection,token):
         return corrected_config(config,pose)
     runtime.exposure_config=exposure_config
     try:
+        from yolo_client import frame_age_limit_s
+        runtime.latest_frames.wait_ready(max_age_s=.75*frame_age_limit_s())
         connection.send({'ready':True})
         while True:
             request=connection.recv()

@@ -1,0 +1,200 @@
+{
+  "order": [
+    1,
+    4,
+    4,
+    1
+  ],
+  "samples_per_run": 32,
+  "runs": [
+    {
+      "file": "abba-0-workers-1.json",
+      "workers": 1,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 207.87339685944062,
+          "p95": 252.01240672383847,
+          "max": 356.4320956479605
+        },
+        "round_trip_ms": {
+          "p50": 62.418922999768256,
+          "p95": 81.6022107499748,
+          "max": 233.69338400016204
+        },
+        "geometry_ms": {
+          "p50": 58.95534350020171,
+          "p95": 77.55104709983698,
+          "max": 83.46935199961081
+        }
+      },
+      "errors": [],
+      "before": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      },
+      "after": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      }
+    },
+    {
+      "file": "abba-1-workers-4.json",
+      "workers": 4,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 205.18726734758275,
+          "p95": 240.39142716360402,
+          "max": 386.5725578598358
+        },
+        "round_trip_ms": {
+          "p50": 63.463854499786976,
+          "p95": 78.79243004990713,
+          "max": 227.73996499972782
+        },
+        "geometry_ms": {
+          "p50": 59.384762500030774,
+          "p95": 74.99875189992053,
+          "max": 85.99972299998626
+        }
+      },
+      "errors": [],
+      "before": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      },
+      "after": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      }
+    },
+    {
+      "file": "abba-2-workers-4.json",
+      "workers": 4,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 221.285842980933,
+          "p95": 256.6082265239629,
+          "max": 376.01358597748913
+        },
+        "round_trip_ms": {
+          "p50": 64.98481300013736,
+          "p95": 92.34594464994643,
+          "max": 234.14721499966618
+        },
+        "geometry_ms": {
+          "p50": 60.20827199995438,
+          "p95": 82.03535069997086,
+          "max": 92.58865499987223
+        }
+      },
+      "errors": [],
+      "before": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      },
+      "after": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      }
+    },
+    {
+      "file": "abba-3-workers-1.json",
+      "workers": 1,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 213.48450814866737,
+          "p95": 240.97125589469215,
+          "max": 251.41309238688336
+        },
+        "round_trip_ms": {
+          "p50": 64.16033499999685,
+          "p95": 78.98723899984361,
+          "max": 82.28154399967025
+        },
+        "geometry_ms": {
+          "p50": 60.085018999870954,
+          "p95": 74.75231649982561,
+          "max": 77.74074600001768
+        }
+      },
+      "errors": [
+        {
+          "i": 0,
+          "error": "RuntimeError: Perception worker observation stale on receipt (409.9 ms)"
+        }
+      ],
+      "before": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      },
+      "after": {
+        "phase": "PASSIVE",
+        "demo_running": false,
+        "adapter_initialized": false,
+        "motion_commands_sent": 10322
+      }
+    }
+  ],
+  "combined": [
+    {
+      "workers": 1,
+      "accepted": 63,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 212.59914420306814,
+          "p95": 250.4435168224063,
+          "max": 356.4320956479605
+        },
+        "round_trip_ms": {
+          "p50": 63.83538399995814,
+          "p95": 79.94954659998257,
+          "max": 233.69338400016204
+        },
+        "geometry_ms": {
+          "p50": 59.89824700009194,
+          "p95": 75.94800130000294,
+          "max": 83.46935199961081
+        }
+      }
+    },
+    {
+      "workers": 4,
+      "accepted": 64,
+      "metrics": {
+        "exposure_age_ms": {
+          "p50": 211.47544523569195,
+          "p95": 252.96015375276963,
+          "max": 386.5725578598358
+        },
+        "round_trip_ms": {
+          "p50": 63.97315449976304,
+          "p95": 87.65857694970688,
+          "max": 234.14721499966618
+        },
+        "geometry_ms": {
+          "p50": 60.14625550005803,
+          "p95": 79.1592853498514,
+          "max": 92.58865499987223
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Passive measurements with no actuators; not proof of watchdog compliance during motion.",
+    "Failed observations excluded from timing percentiles and retained separately."
+  ]
+}

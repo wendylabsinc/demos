@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 import numpy as np
 from PIL import Image
 
-from camera_input import Camera,decode_color,decode_depth
+from camera_input import Camera,decode_color,decode_depth,world_points
 
 
 class FakeRGBDHTTP:
@@ -61,6 +61,44 @@ class FakeRGBDHTTP:
 
     def check_fid(self,query):
         if query!='frame_id='+str(self.fid):raise AssertionError('Request did not pin exact frame ID')
+
+
+class WorldTransformTests(unittest.TestCase):
+    def test_parallel_transform_retains_every_pixel_and_original_arithmetic(self):
+        rng=np.random.default_rng(219)
+        for height,width in [(480,640),(7,11),(1,3),(0,3)]:
+            for ray_dtype in [np.float32,np.float64]:
+                rays=rng.normal(size=(height,width,3)).astype(ray_dtype)
+                depth=rng.uniform(0,2,(height,width)).astype(np.float32)
+                if height:
+                    depth[0,0]=np.nan;depth[-1,-1]=0
+                t=np.eye(4);t[:3,:3]=rng.normal(size=(3,3));t[:3,3]=rng.normal(size=3)
+                points=rays*depth[...,None]
+                expected=np.empty(points.shape,dtype=np.result_type(points,t))
+                np.matmul(points,t[:3,:3].T,out=expected);expected+=t[:3,3]
+                frame=dict(rays=rays,depth_m=depth)
+                saved_rays=rays.copy();saved_depth=depth.copy()
+                for workers in (1,2,4):
+                    actual=world_points(frame,{'camera_to_world':t},workers=workers)
+                    np.testing.assert_array_equal(actual,expected)
+                    self.assertEqual(actual.dtype,expected.dtype)
+                np.testing.assert_array_equal(rays,saved_rays)
+                np.testing.assert_array_equal(depth,saved_depth)
+
+    def test_worker_configuration_is_bounded_and_serial_is_available(self):
+        frame=dict(rays=np.ones((5,3,3)),depth_m=np.ones((5,3)))
+        config={'camera_to_world':np.eye(4)}
+        with patch.dict('os.environ',{'HANDOFF_GEOMETRY_WORKERS':'1'}):
+            with patch('camera_input._world_executor.submit',side_effect=AssertionError('Unexpected worker')):
+                np.testing.assert_array_equal(world_points(frame,config),frame['rays'])
+        for invalid in ['0','3','8','invalid','4.0']:
+            with patch.dict('os.environ',{'HANDOFF_GEOMETRY_WORKERS':invalid}):
+                with self.assertRaises(ValueError):world_points(frame,config)
+
+    def test_parallel_transform_propagates_bad_input_instead_of_partial_results(self):
+        frame=dict(rays=np.ones((5,3,3)),depth_m=np.ones((5,4)))
+        with self.assertRaises(ValueError):
+            world_points(frame,{'camera_to_world':np.eye(4)},workers=4)
 
 
 class CameraPipelineTests(unittest.TestCase):

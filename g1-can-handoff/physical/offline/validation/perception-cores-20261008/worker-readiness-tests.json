@@ -1,0 +1,62 @@
+{
+  "profile": "regression",
+  "tests_run": 7,
+  "successful": true,
+  "seconds": 0.9556216249475256,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_perception_worker",
+      "tests_run": 7,
+      "seconds": 0.8297659159870818,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_perception_worker.WorkerTests.test_child_can_request_exact_exposure_pose_without_another_dds_reader",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_error_is_not_converted_to_success",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_publish_checked_result_before_event_relay_but_never_publish_stale",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_real_worker_reports_ready_only_after_camera_warmup",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_spawn_round_trip_and_shutdown",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_stale_and_future_observations_are_rejected_in_parent",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_worker.WorkerTests.test_stalled_request_expires_before_tracking_join_deadline",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 0.830s\n\nOK\n"
+    }
+  ]
+}
