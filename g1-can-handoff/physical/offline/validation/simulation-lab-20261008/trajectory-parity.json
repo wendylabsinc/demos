@@ -1,0 +1,188 @@
+{
+  "hardware_used": false,
+  "physical_trajectory_verified": false,
+  "scope": "Logged left-arm command targets and two reconstructed approach IK endpoints",
+  "all_logged_targets_match": true,
+  "compared_segments": 8,
+  "compared_samples": 1647,
+  "segments": [
+    {
+      "trial": "20261008T001246Z",
+      "segment": 0,
+      "recorded_samples": 350,
+      "generated_samples": 350,
+      "compared_samples": 350,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T002131Z",
+      "segment": 0,
+      "recorded_samples": 60,
+      "generated_samples": 350,
+      "compared_samples": 60,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T002809Z",
+      "segment": 0,
+      "recorded_samples": 331,
+      "generated_samples": 331,
+      "compared_samples": 331,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T002809Z",
+      "segment": 1,
+      "recorded_samples": 173,
+      "generated_samples": 209,
+      "compared_samples": 173,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T003433Z",
+      "segment": 0,
+      "recorded_samples": 84,
+      "generated_samples": 368,
+      "compared_samples": 84,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T003513Z",
+      "segment": 0,
+      "recorded_samples": 331,
+      "generated_samples": 331,
+      "compared_samples": 331,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T003513Z",
+      "segment": 1,
+      "recorded_samples": 201,
+      "generated_samples": 201,
+      "compared_samples": 201,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    },
+    {
+      "trial": "20261008T004101Z",
+      "segment": 0,
+      "recorded_samples": 117,
+      "generated_samples": 320,
+      "compared_samples": 117,
+      "all_recorded_samples_covered": true,
+      "max_abs_error_rad": 0.0,
+      "rms_error_rad": 0.0,
+      "collision_admission_tested": false,
+      "first_sample_used_as_execution_start": true
+    }
+  ],
+  "ik": [
+    {
+      "trial": "20261008T001246Z",
+      "target_m": [
+        0.3231905138345667,
+        0.23242894808432432,
+        0.983
+      ],
+      "current_joint_goal_rad": [
+        0.048651213701316746,
+        0.5507756302441996,
+        0.3703335513659823,
+        -0.33076514929785295,
+        -0.6065513563070517,
+        0.3943635783603946,
+        -0.14206009251596058
+      ],
+      "recorded_joint_goal_rad": [
+        0.04869331618347524,
+        0.5507946881310962,
+        0.3703519149175782,
+        -0.3307784843553048,
+        -0.6065805370250933,
+        0.3943464797836928,
+        -0.1420411187644835
+      ],
+      "repeat_max_abs_error_rad": 0.0,
+      "vs_recorded_max_abs_error_rad": 4.210248215849588e-05,
+      "full_planning_snapshot_available": false,
+      "reconstruction": "recorded staging start and calibration; other joints from before-trial snapshot"
+    },
+    {
+      "trial": "20261008T003513Z",
+      "target_m": [
+        0.3102411898290488,
+        0.24867292566528829,
+        0.983
+      ],
+      "current_joint_goal_rad": [
+        0.08693877255187932,
+        0.5172552465217584,
+        0.46496568244607694,
+        -0.3063422534396731,
+        -0.5684812617256416,
+        0.3907864476876876,
+        -0.2595915044860201
+      ],
+      "recorded_joint_goal_rad": [
+        0.08789727416579171,
+        0.5172416096118965,
+        0.46584595925025574,
+        -0.3070893174811717,
+        -0.5691140448010998,
+        0.3904946559339779,
+        -0.2595778228114479
+      ],
+      "repeat_max_abs_error_rad": 0.0,
+      "vs_recorded_max_abs_error_rad": 0.0009585016139123936,
+      "full_planning_snapshot_available": false,
+      "reconstruction": "recorded staging start and calibration; other joints from before-trial snapshot"
+    }
+  ],
+  "input_sha256": {
+    "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77",
+    "offline/attempts/20261008T001246Z.json": "796c13bd8875a6b53780b124ceea8dec886b45b72e5f7f67dd27a6e7bc112d43",
+    "offline/attempts/20261008T002131Z.json": "1185d166089d14d399c6aa856a2c14746813173f6b81e710cdd2cdd8a71c68ba",
+    "offline/attempts/20261008T002809Z.json": "efb01ef2fd53fa2cb939376865f07d88ef20bf329ebbcf6d5a905e5a43e660a1",
+    "offline/attempts/20261008T003433Z.json": "84b3d2049adeb2eb6f8c2e8932c78370edec502cab843d9d75572f5e912cef4f",
+    "offline/attempts/20261008T003513Z.json": "f4346903fc7d03a3643b0b323e7d31d825750ef9a1f32d83983f93cee4c55868",
+    "offline/attempts/20261008T004101Z.json": "8449e8b90ea321555df0115c3d62b80cc57b69136dbaf2c9cac864e4c710eb09"
+  },
+  "source_sha256": {
+    "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+    "g1_can_handoff/sim.py": "b11f4fae01a3234fa2853b0de39fe7b3726c6de4119acdc012f0f69759a60f5b",
+    "offline/trajectory_parity.py": "9c987062efa461c7e594d7addbf2d4d696807d4b95a0cc37cad51374365fdc05"
+  },
+  "limitations": [
+    "Recorded IK goals are inputs to command-curve replay, not regenerated by that test.",
+    "Complete model and feedback state at planning time were not captured for these two IK comparisons.",
+    "Current solver/model may differ from the historical version.",
+    "No exact DDS packet cadence, feedforward torque, adapter stream or measured physical path equivalence claim."
+  ]
+}

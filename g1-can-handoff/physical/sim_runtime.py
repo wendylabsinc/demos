@@ -199,7 +199,21 @@ def apply_measured_state(world, io, measured):
     mujoco.mj_forward(world.model,world.data)
 
 
-def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False):
+def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False,
+        *, identity_mode='synthetic_red', fault=None, capture_animation=False):
+    if identity_mode not in ('synthetic_red','color_depth'):
+        raise ValueError('Simulation identity mode must be synthetic_red or color_depth')
+    if fault is not None and (fault.get('kind') not in ('stale','missing_target') or not fault.get('phase')):
+        raise ValueError('Simulation fault requires a phase and stale/missing_target kind')
+    from target_tracker import TargetTracker
+    class NoYolo:
+        calls=0
+        def detect(self,frame):
+            self.calls+=1
+            raise AssertionError('Color/depth simulation attempted YOLO')
+    detector=NoYolo()
+    tracker=TargetTracker(detector,identity_mode='color_depth') if identity_mode=='color_depth' else None
+    tracking_modes=set();fault_record=None;observation_phase=None
     if setup is not None:height=setup['config']['table_height_m']
     world=scene(height=height) if setup is None else setup_scene(setup)
     # Match the physical hand's configured kp=2, kd=.2; body support and the
@@ -218,14 +232,28 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         apply_measured_state(world,io,setup['measured'])
         sensor=SimulationCamera(world,'setup-camera',setup['camera_intrinsics'],setup['config']['camera_serial'])
     else:sensor=SimulationCamera(world,camera)
-    rows=[];counts={};worst_tracking=0.
+    rows=[];counts={};worst_tracking=0.;display_phase='planning'
+    animation=[];last_render=-1.
+    visualizer=mujoco.Renderer(world.model,height=480,width=640) if capture_animation else None
+    view=mujoco.MjvCamera()
+    view.lookat[:]=[.1,.1,.9];view.distance=2.25;view.azimuth=135;view.elevation=-20
+    def capture(force=False):
+        nonlocal last_render
+        if visualizer is None or (not force and world.data.time-last_render < .2):return
+        from PIL import Image,ImageDraw
+        visualizer.update_scene(world.data,camera=view)
+        image=Image.fromarray(visualizer.render().copy())
+        ImageDraw.Draw(image).rectangle((0,0,640,38),fill='#10151e')
+        ImageDraw.Draw(image).text((10,8),f'SIMULATION ONLY | {world.data.time:.1f}s | {display_phase}',fill='white')
+        animation.append(image);last_render=float(world.data.time)
     def event(phase,**fields):
-        nonlocal worst_tracking
+        nonlocal worst_tracking,display_phase
         counts[phase]=counts.get(phase,0)+1
         if phase=='target':
             worst_tracking=max(worst_tracking,fields['tracking_error_rad'])
             return
         if phase=='hand_target':return
+        display_phase=phase
         rows.append(dict(phase=phase,simulation_time_s=float(world.data.time),**fields))
     config=dict(staging_enabled=staging_enabled,camera_serial='mujoco-synthetic',camera_to_world=sensor.transform.tolist(),
                 can_radius_m=.033,can_height_m=.122,table_height_m=height,
@@ -239,6 +267,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
     contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
     def audit_contacts(world):
+        capture()
         if plant.ik.contact_phase not in ('pregrasp','staging','approach','align'):return
         for contact in world.data.contact:
             names=[world.model.body(world.model.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
@@ -252,8 +281,19 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                 if other not in contact_audit['bodies']:contact_audit['bodies'].append(other)
     world.frame_callback=audit_contacts
     def observe(phase,require_table,expected_center_xy=None):
+        nonlocal fault_record,observation_phase,display_phase
+        observation_phase=phase;display_phase=phase
         frame=sensor.frame()
-        try:observation,vision=geometry(frame,config,require_table=require_table,expected_center_xy=expected_center_xy,synthetic_red=True)
+        if fault is not None and phase==fault['phase'] and fault_record is None:
+            fault_record={**fault,'command_count_at_injection':io.commands,'frame_id':frame['meta']['frame_id']}
+            if fault['kind']=='stale':frame['timestamp']-=float(fault.get('age_s',.6))
+            elif fault['kind']=='missing_target':frame['color_bgr']=np.zeros_like(frame['color_bgr'])
+            event('simulation_fault',injection=fault_record)
+        try:
+            observation,vision=geometry(frame,config,require_table=require_table,
+                expected_center_xy=expected_center_xy,synthetic_red=identity_mode=='synthetic_red',tracker=tracker)
+            if tracker is not None:tracker.accept(observation,vision,frame)
+            tracking_modes.add(vision.get('tracking',{}).get('mode','synthetic_red'))
         except Exception:
             if output:
                 from PIL import Image
@@ -282,10 +322,23 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         result=execute(plant,prepared,observe,event)
         result.update(simulation_only=True,physical_pickup_verified=False)
     except Exception as exc:
+        commands_at_failure=io.commands
         if io.commands:plant.freeze()
         event('error',error=f'{type(exc).__name__}: {exc}')
-        result=dict(lift_verified=False,error=str(exc),simulation_only=True,physical_pickup_verified=False)
-    finally:sensor.close()
+        result=dict(lift_verified=False,error=str(exc),simulation_only=True,physical_pickup_verified=False,
+                    commands_at_failure=commands_at_failure,stop_hold_commands=io.commands-commands_at_failure)
+    finally:
+        sensor.close()
+        if visualizer is not None:
+            capture(force=True)
+            visualizer.close()
+            if output and animation:
+                animation_path=Path(output).with_suffix('.gif')
+                animation[0].save(animation_path,save_all=True,append_images=animation[1:],
+                                  duration=200,loop=0,optimize=False)
+                result['animation']=animation_path.name
+    result.update(perception=dict(identity_mode=identity_mode,yolo_calls=detector.calls,tracking_modes=sorted(tracking_modes)),
+                  fault=fault_record,failure_phase=observation_phase if result.get('error') else None)
     result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
                   truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,
                   max_tracking_error_rad=worst_tracking,
@@ -309,7 +362,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
             supplied_camera_transform_error=float(np.max(np.abs(sensor.transform-np.asarray(config['camera_to_world'])))))
     root=Path(__file__).parent
     result['source_sha256']={name:hashlib.sha256((root/name).read_bytes()).hexdigest()
-        for name in ('physical_core.py','pickup.py','staging.py','camera_input.py',
+        for name in ('physical_core.py','pickup.py','staging.py','camera_input.py','target_tracker.py','perception_policy.py',
                      'runtime.py','sim_runtime.py','g1_can_handoff/sim.py','g1_can_handoff/task.py',
                      'adapter/arm_reference.py','adapter/g1_arm.py')}
     if output:
@@ -328,8 +381,14 @@ if __name__=='__main__':
     parser.add_argument('--disable-staging',action='store_true',help='Regression: require the direct approach path')
     parser.add_argument('--setup-json',help='Supplied setup geometry, camera intrinsics and measured joint snapshot')
     parser.add_argument('--force-zero-feedforward',action='store_true',help='Diagnostic regression: discard commanded arm feedforward')
+    parser.add_argument('--identity-mode',choices=['color_depth','synthetic_red'],default='color_depth',
+                        help='Default runs the deployed color/depth tracker; synthetic_red is the legacy simulation baseline')
+    parser.add_argument('--capture-animation',action='store_true',help='Save a sampled 5 fps GIF beside the JSON result')
+    parser.add_argument('--fault',choices=['stale-align','missing-can-align'],help='Inject a perception fault before alignment')
     args=parser.parse_args()
+    fault=None if args.fault is None else dict(phase='align',kind='stale' if args.fault=='stale-align' else 'missing_target',age_s=.6)
     result=run(args.output,args.hand_kp,args.camera,args.height,args.initial_arm_q,not args.disable_staging,
-               None if args.setup_json is None else json.loads(Path(args.setup_json).read_text()),args.force_zero_feedforward)
+               None if args.setup_json is None else json.loads(Path(args.setup_json).read_text()),args.force_zero_feedforward,
+               identity_mode=args.identity_mode,fault=fault,capture_animation=args.capture_animation)
     print(json.dumps({k:v for k,v in result.items() if k!='events'},indent=2))
     raise SystemExit(0 if result['lift_verified'] else 1)

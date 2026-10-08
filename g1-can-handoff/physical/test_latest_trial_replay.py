@@ -64,8 +64,10 @@ class LatestTrialTests(unittest.TestCase):
         plant=PhysicalPlant.__new__(PhysicalPlant);plant.cancelled=False;plant.cancel=threading.Event()
         plant.perception_guard=runtime.tracking_guard;plant.command_lock=threading.RLock();plant.clock=time
         plant.command_arm=Mock();plant.sender=Mock();plant.read=Mock()
-        with patch('runtime.time.monotonic',return_value=before['monotonic_ns']/1e9):runtime.tracking_guard()
-        with patch('runtime.time.monotonic',return_value=stop_at):
+        with patch.dict('os.environ',HANDOFF_CAMERA_MAX_AGE_MS='400'),patch('runtime.time.monotonic',return_value=before['monotonic_ns']/1e9):runtime.tracking_guard()
+        # This is the historical 400 ms stop, independent of the runner's
+        # current deployment budget (500 ms in the today profile).
+        with patch.dict('os.environ',HANDOFF_CAMERA_MAX_AGE_MS='400'),patch('runtime.time.monotonic',return_value=stop_at):
             with self.assertRaisesRegex(RuntimeError,'tracking exposure stale'):
                 plant._execute_poses(np.zeros(7),[np.zeros(7)])
         # Freeze latches cancellation. A late, individually fresh result

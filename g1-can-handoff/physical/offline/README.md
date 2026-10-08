@@ -1,9 +1,93 @@
 # G1 NX2 offline failure regression pack
 
+## Today's demo simulation and failure lab
+
+Run the current color/depth tracker in MuJoCo and replay the October 8 failures:
+
+```sh
+python offline/run.py --profile today --report offline/reports/today/latest.json
+```
+
+Open `offline/reports/today/index.html` for the outcome matrix, expandable
+individual test results and animated MuJoCo replays. The run is fully offline:
+the existing sandbox blocks real DDS imports and external network connections.
+Each run writes its own animation directory, so older renders cannot be confused
+with new results. Use the environment installation below on a fresh computer.
+
+The lab covers initial/periodic recognition, stale RGB-D, table-height drift,
+pickup bounds, ownership settling, collision planning, target movement,
+start/stop lifecycle and placement overlay behavior. A passing suite includes
+**expected safe rejections**; it does not claim every scene can be picked up.
+Actual saved frames and native timing/feedback traces test the recorded errors.
+Synthetic fault injection also removes the target or makes its exposure 600 ms
+old immediately before alignment, requiring a stop before alignment commands.
+The measured-position hold command on a stop is counted separately.
+
+The new contact runs use `TargetTracker(identity_mode='color_depth')`, the same
+geometry, planner, arm reference, finger control and pickup sequence as hardware.
+They assert zero YOLO calls, and cover both external and approximate head-camera
+views. The previous synthetic-red tests remain as a comparison baseline.
+
+This is not a calibrated digital twin: the base is supported, the can is an
+untextured cylinder, hand friction/gains are modeled, feedback is synthetic, and
+camera geometry is approximate unless supplied explicitly. The synthetic camera
+does not model USB/HTTP queues, CUDA inference latency, realistic lighting or
+sensor noise. Those failures use recorded-data replays rather than invented
+physics. Neither kind of offline test proves a physical pickup will succeed.
+
+**Current known failure:** the external-view color/depth pickup passes, while
+the approximate head-camera view stops at lift verification with
+`Color/depth can target absent/ambiguous`. This remains a failing test rather
+than an expected failure or a skipped test. It reproduces the target-loss
+symptom with YOLO disabled; matching the real failure's cause still requires
+comparison with the physical recording. The `today`, `simulation` and `all`
+profiles return nonzero until this case is repaired.
+
+Replay its saved synthetic frame in under a second without running dynamics:
+
+```sh
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python offline/replay_sim_frame.py fixtures/sim-head-color-depth-20261008.npz
+```
+
+This narrower repro pins the original exposure clock and exercises color/depth
+reacquisition; it does not reconstruct the earlier tracker history. The saved
+frame and report are listed in `offline/validation/simulation-lab-20261008`.
+
+To render just one demo or one fault (under the same offline sandbox):
+
+```sh
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --height .762 --camera head --capture-animation --output offline/reports/head-demo.json
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python sim_runtime.py --height .762 --fault stale-align --capture-animation --output offline/reports/stale-demo.json
+```
+
+Create the output directory first for standalone commands. A fault demo returns
+nonzero because its pickup was stopped; the `today` suite instead checks that
+this stop was the expected outcome. GIF playback samples simulated motion at
+5 fps and is not a benchmark of the real robot's speed.
+
 Use this pack to continue developing after the robot is gone. It includes the
 actual checkpoint, images, calibrated rays/depth, exposure-paired poses, and
 failure traces from the October 7–8 Coke-can trials. No robot, Wendy CLI,
 RealSense SDK, Unitree SDK, or CUDA GPU is needed for the main profile.
+
+## Trajectory parity against real recordings
+
+```sh
+HANDOFF_OFFLINE=1 PYTHONPATH=offline:. python offline/trajectory_parity.py --output offline/reports/trajectory-parity.json
+```
+
+The current interpolation code exactly reproduces 1,647 logged left-arm target
+samples across eight staging segments, given each recorded execution start and
+IK goal. This isolates command generation; collision admission is not repeated
+by that comparison. It does not claim independent regeneration of those goals.
+
+Two approach IK goals recomputed with current code repeat exactly on this
+computer, but differ from recorded goals by at most 0.0000421 and 0.0009585 rad.
+Those inputs use the captured planning start and calibration with other joints
+from the before-trial snapshot. Complete exact-time model/feedback state is
+missing, and code/dependency versions may differ. Therefore full replanning and
+the physical trajectory have not been shown to be identical. The generic demo
+animation is a synthetic scene, not a replay of these real command streams.
 
 ## Run at home
 
@@ -105,9 +189,10 @@ python offline/inspect_trace.py --attempt 20261008T005915Z --events
 four ownership acceptance cases. `open` runs those four cases alone with fake
 actuator endpoints: final planning follows measured ownership settling; failed
 perception, cancellation, or unstable control cannot execute the preview plan.
-`simulation` runs MuJoCo control/dynamics tests. `all` runs both profiles
-without duplicating ownership cases. All profiles now pass offline. No tests are
-skipped or marked expected-failure to conceal the original failures.
+`simulation` runs both the current color/depth and legacy MuJoCo control/dynamics
+tests. `all` runs regression and simulation without duplicating ownership cases.
+The head-camera color/depth case above is currently red. No tests are skipped
+or marked expected-failure to conceal it or the original failures.
 
 The latest hardware trial also has a real pipeline headroom problem: frame 45594
 returned at 322.94 ms age and frame 45596 arrived after the watchdog stopped at
