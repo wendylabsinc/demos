@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 0.852825874928385,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_table_clearance_ik",
+      "tests_run": 1,
+      "seconds": 0.6156371659599245,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_table_clearance_ik.TableClearanceIKTests.test_alignment_recovers_finger_clearance_without_changing_the_grasp",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.616s\n\nOK\n"
+    }
+  ]
+}

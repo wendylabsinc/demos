@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": false,
+  "seconds": 0.8060059999115765,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_table_clearance_ik",
+      "tests_run": 1,
+      "seconds": 0.6056687920354307,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_table_clearance_ik.TableClearanceIKTests.test_alignment_recovers_finger_clearance_without_changing_the_grasp",
+          "status": "error",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_table_clearance_ik.py\", line 23, in test_alignment_recovers_finger_clearance_without_changing_the_grasp\n    _, poses = plant._joint_poses(goal, .1)\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/physical_core.py\", line 385, in _joint_poses\n    raise RuntimeError(f'Interpolated physical trajectory intersects robot/table: {details}')\nRuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_1_link'], 'geoms': ['table', ''], 'distance_m': 0.00989054220329204, 'required_clearance_m': 0.01}\n"
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "E\n======================================================================\nERROR: test_alignment_recovers_finger_clearance_without_changing_the_grasp (test_table_clearance_ik.TableClearanceIKTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/test_table_clearance_ik.py\", line 23, in test_alignment_recovers_finger_clearance_without_changing_the_grasp\n    _, poses = plant._joint_poses(goal, .1)\n  File \"/Users/smile/Documents/ChatGPT/RL_Puffer/validation/demos-pr3-review/g1-can-handoff/physical/physical_core.py\", line 385, in _joint_poses\n    raise RuntimeError(f'Interpolated physical trajectory intersects robot/table: {details}')\nRuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'align', 'bodies': ['world', 'left_hand_middle_1_link'], 'geoms': ['table', ''], 'distance_m': 0.00989054220329204, 'required_clearance_m': 0.01}\n\n----------------------------------------------------------------------\nRan 1 test in 0.606s\n\nFAILED (errors=1)\n"
+    }
+  ]
+}

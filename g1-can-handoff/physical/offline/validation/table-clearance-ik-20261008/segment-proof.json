@@ -1,0 +1,19 @@
+{
+  "original_endpoint_distance_m": 0.008330505646294194,
+  "required_clearance_m": 0.01,
+  "refined_min_path_distance_m": 0.010976505246262924,
+  "position_error_m": 0.002358452521286245,
+  "rotation_error": 0.0008209070489130596,
+  "max_local_joint_change_rad": 0.062016614609276155,
+  "samples": 43,
+  "refinement_events": [
+    {
+      "phase": "table_clearance_ik_refined",
+      "phase_name": "align",
+      "before_distance_m": 0.008330416151924425,
+      "after_distance_m": 0.010976505246262924,
+      "required_clearance_m": 0.01
+    }
+  ],
+  "hardware_used": false
+}
