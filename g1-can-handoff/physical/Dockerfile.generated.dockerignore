@@ -33,6 +33,9 @@
 !physical_core.py
 !physical_core.py/
 !physical_core.py/**
+!control_settle.py
+!control_settle.py/
+!control_settle.py/**
 !camera_input.py
 !camera_input.py/
 !camera_input.py/**

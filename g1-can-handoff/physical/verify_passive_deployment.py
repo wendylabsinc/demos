@@ -28,7 +28,7 @@ assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not 
 assert status['telemetry_healthy'],status
 assert status['camera_max_age_ms']==400 and status['yolo_confidence_strictly_above']==.1,status
 recorder=get(8101,'/status')
-assert recorder['recording'] and not recorder['error'] and not recorder['dropped'] and not recorder['missing_or_stale_required'],recorder
+assert recorder['recording'] and not recorder['error'] and not sum(recorder['dropped'].values()) and not recorder['missing_or_stale_required'],recorder
 assert recorder['queue_depth']<=1000 and all(recorder['last_written_age_s'].get(topic,999)<.5 for topic in ['rt/lowstate','rt/dex3/left/state','rt/dex3/right/state']),recorder
 yolo=get(8112,'/health')
 assert yolo['healthy'] and yolo['backend']=='pytorch_cuda' and yolo['model_sha256']=='fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9',yolo
@@ -47,8 +47,12 @@ print(json.dumps({'startup_verified':True,'motion_readiness':'not_checked','cont
     client=Wendy()
     try:
         for attempt in range(8):
-            result=client.tool('container_exec',{'app_name':'DEV-g1-handoff-physical',
-                'command':['python3','-c',script],'timeout_seconds':25,'max_bytes':40000})
+            try:
+                result=client.tool('container_exec',{'app_name':'DEV-g1-handoff-physical',
+                    'command':['python3','-c',script],'timeout_seconds':25,'max_bytes':40000})
+            except RuntimeError:
+                if attempt==7:raise
+                time.sleep(1);continue
             payload=result.get('structuredContent')
             if payload is None:payload=json.loads(next(c['text'] for c in result['content'] if c['type']=='text'))
             if payload.get('exit_code')==0:
