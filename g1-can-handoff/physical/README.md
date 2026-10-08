@@ -48,6 +48,17 @@ Finger obstruction is only a contact candidate. Camera-measured vertical
 movement independently verifies the lift; stationary raw Dex3 torque values
 are not treated as Newton-metres or grasp evidence.
 
+Ownership settling uses `HANDOFF_CONTROL_SETTLE_MAX_SPEED_RAD_S` (rad/s,
+default `1`, finite valid range `0 < value <= 1`). Every body joint's absolute
+reported velocity must remain strictly below that value over the settling
+window. Set `0.03` to restore the earlier, more restrictive limit. The value
+is read at each handover, so the process environment must be updated before
+the next trial; changing a launch environment requires a controller restart.
+The half-second position-stability requirements remain: IMU span <=0.002 rad,
+base/leg/waist joint span <=0.005 rad, and arm joint span <=0.015 rad, with a
+five-second timeout. This limit changes handover admission, not commanded
+motion speed. It does not exempt table collisions or robot self-collisions.
+
 The arm adapter's second `ctrl_dual_arm` argument is feedforward torque.
 The physical plant supplies gravity torque from the measured joint posture,
 with zero model velocity. Per-arm caps are 6/6/4/4/1.5/1.5/1.5 Nm and the
