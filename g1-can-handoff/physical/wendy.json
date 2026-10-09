@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.23-versioned-controls",
+  "version": "0.3.24-sensor-temperature-guards",
   "entitlements": [
     {
       "type": "network",
@@ -29,6 +29,8 @@
     "HANDOFF_TABLE_CLEARANCE_M": "0.01",
     "HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M": "0.01",
     "HANDOFF_BODY_TEMPERATURE_LIMIT_C": "85",
+    "HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C": "85",
+    "HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C": "95",
     "HANDOFF_GEOMETRY_WORKERS": "1",
     "HANDOFF_TARGET_IDENTITY": "color_depth"
   }

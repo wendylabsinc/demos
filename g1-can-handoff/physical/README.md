@@ -482,12 +482,19 @@ fill missing measurements from the simulator or treat the historical head
 camera estimate as a verified transform.
 
 The runtime preserves per-motor temperature readings in status even if a guard
-fails. `HANDOFF_BODY_TEMPERATURE_LIMIT_C` sets the body guard in degrees Celsius
-(default `85`, finite range greater than `0` and at most `85`). Body readings at
-or above the limit stop the run; missing/nonfinite readings and motor faults
-also stop it. The SDK reports casing and winding temperatures; the runtime uses
-the hotter reading. Unitree's G1 SDK uses an 85 C default casing-overheat limit:
+fails. Body guards check each motor's two sensors separately:
+`HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C` checks `temperature[0]` (casing;
+default `85`, finite positive values at most `85` C), and
+`HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C` checks `temperature[1]` (internal
+winding; default `95`, finite positive values at most `120` C).
+`HANDOFF_BODY_TEMPERATURE_LIMIT_C` remains a casing-only compatibility alias
+when the new casing variable is absent. Readings at or above either guard,
+invalid sensor arrays and motor faults stop the run. Errors name the joint
+and sensor. Older fixtures with only an unidentified `temperature_max` retain
+the stricter cutoff, so missing sensor identity cannot admit a hotter reading.
+Unitree's G1 SDK uses protection defaults of 85 C casing and 120 C winding:
 https://github.com/unitreerobotics/unitree_sdk2/blob/main/include/unitree/robot/g1/common/terminations.hpp
+These are software protection thresholds, not continuous-operation ratings.
 This does not qualify sustained contact operation. The separate hand guard
 remains 75 C. Restart the controller after changing its process environment;
 no trial starts automatically. The packaged Dex3 thermal

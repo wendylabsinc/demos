@@ -71,6 +71,8 @@ assert BUILDSTAMP is not None and status.get('build_info')==BUILDSTAMP,'Running 
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['telemetry_healthy'],status
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
+assert physical_core.body_winding_temperature_limit_c()==CONFIGURED_WINDING_TEMP
+assert status['body_temperature_limits_c']=={'casing':CONFIGURED_BODY_TEMP,'winding':CONFIGURED_WINDING_TEMP},status
 assert os.environ.get('HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M')==CONFIGURED_TABLE_OFFSET
 assert status['arm_gains']['configured_kp']==[CONFIGURED_KP]*4+[40.]*3+[CONFIGURED_KP]*4+[40.]*3,status
 assert status['arm_gains']['configured_kd']==[3.]*4+[1.5]*3+[3.]*4+[1.5]*3,status
@@ -108,7 +110,18 @@ print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_r
         .replace("BUILDSTAMP", repr(expected_version))
         .replace(
             "CONFIGURED_BODY_TEMP",
-            repr(float(configured_env["HANDOFF_BODY_TEMPERATURE_LIMIT_C"])),
+            repr(
+                float(
+                    configured_env.get(
+                        "HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C",
+                        configured_env.get("HANDOFF_BODY_TEMPERATURE_LIMIT_C", "85"),
+                    )
+                )
+            ),
+        )
+        .replace(
+            "CONFIGURED_WINDING_TEMP",
+            repr(float(configured_env["HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C"])),
         )
         .replace(
             "CONFIGURED_TABLE_OFFSET",

@@ -10,9 +10,11 @@ import threading
 import numpy as np
 from planning_snapshot import recorded
 
-# Unitree G1 SDK casing overheat default is 85 C. Body telemetry keeps
-# the hotter of casing/winding sensors, so this remains conservative for both.
+# Unitree G1 SDK temperature[0] is casing (85 C default protection);
+# temperature[1] is winding (120 C default protection). Keep separate guards.
+# https://github.com/unitreerobotics/unitree_sdk2/blob/main/include/unitree/robot/g1/common/terminations.hpp
 MAX_MOTOR_TEMPERATURE_C = 85.0
+MAX_BODY_WINDING_TEMPERATURE_C = 120.0
 MAX_HAND_TEMPERATURE_C = 75.0
 # Conservative feedforward limits, below the model's actuator torque limits.
 ARM_GRAVITY_LIMITS_NM = np.array([6.0, 6.0, 4.0, 4.0, 1.5, 1.5, 1.5] * 2)
@@ -256,8 +258,14 @@ def sim_hand_to_bridge(q):
 
 
 def body_temperature_limit_c():
+    """Casing guard; the original environment name remains a compatibility alias."""
     try:
-        limit = float(os.environ.get("HANDOFF_BODY_TEMPERATURE_LIMIT_C", "85"))
+        limit = float(
+            os.environ.get(
+                "HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C",
+                os.environ.get("HANDOFF_BODY_TEMPERATURE_LIMIT_C", "85"),
+            )
+        )
         if not np.isfinite(limit) or not 0 < limit <= MAX_MOTOR_TEMPERATURE_C:
             raise ValueError()
     except (ValueError, TypeError) as exc:
@@ -267,10 +275,54 @@ def body_temperature_limit_c():
     return limit
 
 
+def body_winding_temperature_limit_c():
+    """Trial winding guard defaults to 95 C, below the SDK's 120 C protection."""
+    try:
+        limit = float(os.environ.get("HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C", "95"))
+        if not np.isfinite(limit) or not 0 < limit <= MAX_BODY_WINDING_TEMPERATURE_C:
+            raise ValueError()
+    except (ValueError, TypeError) as exc:
+        raise ValueError(
+            "Body winding temperature limit must be finite, positive and at most 120 C"
+        ) from exc
+    return limit
+
+
+def body_temperature_guard(sample, casing_limit, winding_limit):
+    """Validate both raw sensors on every body motor without conflating them."""
+    if "temperatures" not in sample:
+        # Older fixtures/archives expose only the hotter reading. Without sensor
+        # identity retain the stricter cutoff; never assume it is winding.
+        temperature = sample.get("temperature_max", float("nan"))
+        limit = min(casing_limit, winding_limit)
+        if not np.isfinite(temperature) or temperature >= limit:
+            raise ValueError(
+                f"body temperature {temperature} C reaches the {limit:g} C guard or is invalid"
+            )
+        return
+    try:
+        temperatures = np.asarray(sample["temperatures"], dtype=float)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Invalid body casing/winding temperature feedback") from exc
+    if temperatures.shape != (29, 2) or not np.isfinite(temperatures).all():
+        raise ValueError("Invalid body casing/winding temperature feedback")
+    for sensor, label, limit in (
+        (0, "casing", casing_limit),
+        (1, "winding", winding_limit),
+    ):
+        exceeded = np.flatnonzero(temperatures[:, sensor] >= limit)
+        if len(exceeded):
+            joint = int(exceeded[np.argmax(temperatures[exceeded, sensor])])
+            raise ValueError(
+                f"body {label} temperature {temperatures[joint, sensor]:g} C at {BODY_NAMES[joint]} reaches the {limit:g} C guard"
+            )
+
+
 def snapshot_guard(snapshot, now=None):
     """Validate feedback ages, motor faults, finite values and temperature limits."""
     now = time.monotonic() if now is None else now
     body_limit = body_temperature_limit_c()
+    winding_limit = body_winding_temperature_limit_c()
     for name, count in [("body", 29), ("left", 7), ("right", 7)]:
         sample = snapshot[name]
         if not 0 <= now - sample["time"] <= 0.2:
@@ -278,12 +330,14 @@ def snapshot_guard(snapshot, now=None):
         q = np.asarray(sample["q"], dtype=float)
         if q.ndim != 1 or len(q) != count or not np.all(np.isfinite(q)):
             raise ValueError(f"Invalid {name} measured feedback")
-        temperature = sample.get("temperature_max", float("nan"))
-        limit = body_limit if name == "body" else MAX_HAND_TEMPERATURE_C
-        if not np.isfinite(temperature) or temperature >= limit:
-            raise ValueError(
-                f"{name} temperature {temperature} C reaches the {limit:g} C guard or is invalid"
-            )
+        if name == "body":
+            body_temperature_guard(sample, body_limit, winding_limit)
+        else:
+            temperature = sample.get("temperature_max", float("nan"))
+            if not np.isfinite(temperature) or temperature >= MAX_HAND_TEMPERATURE_C:
+                raise ValueError(
+                    f"{name} temperature {temperature} C reaches the {MAX_HAND_TEMPERATURE_C:g} C guard or is invalid"
+                )
         if "faults" not in sample or any(sample["faults"]):
             raise ValueError(f"{name} motor fault or missing fault feedback")
         for field in ("dq", "tau_est"):

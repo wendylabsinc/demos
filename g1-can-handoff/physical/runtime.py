@@ -22,6 +22,8 @@ from physical_core import (
     calibrated_scene,
     PhysicalPlant,
     snapshot_guard,
+    body_temperature_limit_c,
+    body_winding_temperature_limit_c,
 )
 from camera_input import Camera, geometry, materialize_rgbd
 from yolo_client import fresh, frame_age_limit_s
@@ -214,6 +216,10 @@ class Runtime:
 
         result = {
             "build_info": deployed_version(),
+            "body_temperature_limits_c": {
+                "casing": body_temperature_limit_c(),
+                "winding": body_winding_temperature_limit_c(),
+            },
             "phase": self.phase,
             "error": self.error,
             "motion_commands_sent": self.motion_commands_sent,
