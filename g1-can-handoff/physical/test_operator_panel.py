@@ -39,6 +39,31 @@ class OperatorPanelTests(unittest.TestCase):
         self.assertIn('<button id="stop"',html)
         self.server.wendy.request.assert_not_called()
     @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
+    def test_demo_error_survives_poll_release_and_reload_until_next_accepted_start(self):
+        functions='\n'.join(re.search(r'function '+name+r'\([^\n]+',panel.PAGE).group()
+                            for name in ('rememberDemoError','clearDemoError','show'))
+        script="""
+const assert=require('node:assert/strict');const storage=new Map();
+const sessionStorage={setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k),removeItem:k=>storage.delete(k)};
+const lastDemoError={textContent:'',hidden:true},start={},state={};
+let savedDemoError='',starting=false;function renderRobotState(s){}
+"""+functions+"""
+const failure='ValueError: Grasp orientation search time limit reached';
+show({phase:'BLOCKED',demo_running:false,demo_error:failure});
+assert.equal(lastDemoError.hidden,false);assert.match(lastDemoError.textContent,/search time limit/);
+show({phase:'PASSIVE',demo_running:false,error:null});
+assert.equal(lastDemoError.hidden,false);
+savedDemoError='';rememberDemoError(sessionStorage.getItem('g1-last-demo-error'));
+assert.match(lastDemoError.textContent,/search time limit/);
+// Accepted Start clears it; stale old fields in a running response cannot relatch it.
+clearDemoError();show({phase:'BLOCKED',demo_running:true,error:failure});
+assert.equal(lastDemoError.hidden,true);assert.equal(storage.size,0);
+show({phase:'BLOCKED',demo_running:false,demo_error:'New attempt failed'});
+assert.match(lastDemoError.textContent,/New attempt failed/);
+"""
+        subprocess.run(['node','-e',script],check=True,capture_output=True,text=True)
+
+    @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
     def test_overlay_stays_visible_during_demo_and_marks_expired_projection(self):
         function=re.search(r'function placementVisible\(\)\{[^\n]+',panel.PAGE).group()
         script="""
