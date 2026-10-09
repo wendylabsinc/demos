@@ -37,18 +37,22 @@ from .settings import CameraSettings
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("coke-detector.camera")
 
-SEGMENTATION_URL = os.environ.get("SEGMENTATION_URL", "http://127.0.0.1:8003").rstrip("/")
+SEGMENTATION_URL = os.environ.get("SEGMENTATION_URL", "http://127.0.0.1:8003").rstrip(
+    "/"
+)
 INFERENCE_URL = os.environ.get("INFERENCE_URL", "http://127.0.0.1:8117").rstrip("/")
-WRAPPER_URL = os.environ.get("PHYSICAL_WRAPPER_URL", "http://127.0.0.1:8121").rstrip("/")
-FSM_BRIDGE_URL = os.environ.get("G1_FSM_BRIDGE_URL", "http://127.0.0.1:8100").rstrip("/")
+WRAPPER_URL = os.environ.get("PHYSICAL_WRAPPER_URL", "http://127.0.0.1:8121").rstrip(
+    "/"
+)
+FSM_BRIDGE_URL = os.environ.get("G1_FSM_BRIDGE_URL", "http://127.0.0.1:8100").rstrip(
+    "/"
+)
 
 #: What the policy consumes. The segmentation service scales detector pixels and
 #: camera intrinsics from the source size into this one, and hardcodes the
 #: source, so these four belong together and are asserted, not assumed.
 SOURCE_WIDTH, SOURCE_HEIGHT = 640, 480
 POLICY_WIDTH, POLICY_HEIGHT = 320, 240
-
-
 
 
 #: From docs/measurements/2026-09-17-camera-field-of-view.md: between the can
@@ -427,8 +431,10 @@ tick();feeds();inspection();diagnostics();calibration();setInterval(diagnostics,
 def _field_of_view(intrinsics) -> dict[str, float]:
     """Horizontal and vertical FOV in degrees, from focal length and size."""
     return {
-        "horizontal_deg": 2 * math.degrees(math.atan(intrinsics.width / (2 * intrinsics.fx))),
-        "vertical_deg": 2 * math.degrees(math.atan(intrinsics.height / (2 * intrinsics.fy))),
+        "horizontal_deg": 2
+        * math.degrees(math.atan(intrinsics.width / (2 * intrinsics.fx))),
+        "vertical_deg": 2
+        * math.degrees(math.atan(intrinsics.height / (2 * intrinsics.fy))),
     }
 
 
@@ -458,13 +464,17 @@ def _raw_frame_metadata(frame) -> dict[str, Any]:
     """Sensor-reported timing/geometry, before alignment or unit conversion."""
     intr = frame.profile.as_video_stream_profile().intrinsics
     metadata = {}
-    for name, field in getattr(getattr(rs, "frame_metadata_value", None), "__members__", {}).items():
+    for name, field in getattr(
+        getattr(rs, "frame_metadata_value", None), "__members__", {}
+    ).items():
         if frame.supports_frame_metadata(field):
             metadata[name] = frame.get_frame_metadata(field)
     return {
         "sensor_timestamp_ms": frame.get_timestamp(),
         "timestamp_domain": str(frame.get_frame_timestamp_domain()),
-        "sensor_frame_number": frame.get_frame_number() if hasattr(frame, "get_frame_number") else None,
+        "sensor_frame_number": (
+            frame.get_frame_number() if hasattr(frame, "get_frame_number") else None
+        ),
         "intrinsics": _intrinsics_dict(intr),
         "sensor_metadata": metadata,
     }
@@ -635,7 +645,9 @@ class CameraRuntime:
                 if requested is None:
                     policy_mode = True
                     width, height, fps = (
-                        self.settings.width_px, self.settings.height_px, self.settings.fps,
+                        self.settings.width_px,
+                        self.settings.height_px,
+                        self.settings.fps,
                     )
                     configuration.enable_stream(
                         rs.stream.color, width, height, rs.format.bgr8, fps
@@ -647,7 +659,11 @@ class CameraRuntime:
                 else:
                     # Operator inspection. One stream, exactly as asked for.
                     policy_mode = False
-                    width, height, fps = requested["width"], requested["height"], requested["fps"]
+                    width, height, fps = (
+                        requested["width"],
+                        requested["height"],
+                        requested["fps"],
+                    )
                     stream, fmt = {
                         "color": (rs.stream.color, rs.format.bgr8),
                         "depth": (rs.stream.depth, rs.format.z16),
@@ -674,7 +690,9 @@ class CameraRuntime:
                     with self._lock:
                         self._device_streams = device_streams
                         self._active_streams = active
-                except Exception as error:  # noqa: BLE001 - reporting must not stop capture
+                except (
+                    Exception
+                ) as error:  # noqa: BLE001 - reporting must not stop capture
                     logger.warning("stream description unavailable: %s", error)
                 align = (
                     rs.align(rs.stream.color)
@@ -746,7 +764,9 @@ class CameraRuntime:
                             raw_depth = np.asanyarray(unaligned.get_data()).copy()
                             raw_depth_meta = _raw_frame_metadata(unaligned)
                             if hasattr(unaligned.profile, "get_extrinsics_to"):
-                                transform = unaligned.profile.get_extrinsics_to(color.profile)
+                                transform = unaligned.profile.get_extrinsics_to(
+                                    color.profile
+                                )
                                 raw_depth_meta["depth_to_color"] = {
                                     "rotation_column_major": list(transform.rotation),
                                     "translation_m": list(transform.translation),
@@ -789,8 +809,13 @@ class CameraRuntime:
                         rgbd = {
                             "raw_color_bgr": raw_color,
                             "raw_depth_z16": raw_depth,
-                            "aligned_depth_z16": np.asanyarray(depth_frame.get_data()).copy(),
-                            "raw_sources": {"color": raw_color_meta, "depth": raw_depth_meta},
+                            "aligned_depth_z16": np.asanyarray(
+                                depth_frame.get_data()
+                            ).copy(),
+                            "raw_sources": {
+                                "color": raw_color_meta,
+                                "depth": raw_depth_meta,
+                            },
                             "color_bgr": np.asanyarray(color.get_data()).copy(),
                             "depth_m": np.asanyarray(depth_frame.get_data()).astype(
                                 np.float32
@@ -805,12 +830,16 @@ class CameraRuntime:
                                 "camera_serial": serial,
                                 "clock": "host_monotonic",
                                 "timestamp_valid": timestamp_valid,
-                                "color_time": received_mono + color_ms / 1000 - wall
-                                if timestamp_valid
-                                else None,
-                                "depth_time": received_mono + depth_ms / 1000 - wall
-                                if timestamp_valid
-                                else None,
+                                "color_time": (
+                                    received_mono + color_ms / 1000 - wall
+                                    if timestamp_valid
+                                    else None
+                                ),
+                                "depth_time": (
+                                    received_mono + depth_ms / 1000 - wall
+                                    if timestamp_valid
+                                    else None
+                                ),
                                 "received_monotonic": received_mono,
                                 "color_sensor_ms": color_ms,
                                 "depth_sensor_ms": depth_ms,
@@ -993,7 +1022,12 @@ class CameraRuntime:
                 for m in sensor["modes"]
                 for fps in m["fps"]
             }
-            key = (request["stream"], request["width"], request["height"], request["fps"])
+            key = (
+                request["stream"],
+                request["width"],
+                request["height"],
+                request["fps"],
+            )
             if key not in offered:
                 raise ValueError(f"this camera does not offer {key}")
         with self._lock:
@@ -1026,7 +1060,9 @@ class CameraRuntime:
         metres = depth.astype(np.float32) * float(scale or 0.001)
         valid = metres > 0
         span = np.clip((metres - near_m) / max(far_m - near_m, 1e-6), 0, 1)
-        image = cv2.applyColorMap((255 * (1 - span)).astype(np.uint8), cv2.COLORMAP_TURBO)
+        image = cv2.applyColorMap(
+            (255 * (1 - span)).astype(np.uint8), cv2.COLORMAP_TURBO
+        )
         image[~valid] = 0
         ok, encoded = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), 80])
         if not ok:
@@ -1048,7 +1084,11 @@ class CameraRuntime:
         return {
             "schema": "wendy.g1.camera-streams.v1",
             "serial": self.settings.serial,
-            "alignment": "depth aligned into color" if self.settings.rgbd_enabled else "color only",
+            "alignment": (
+                "depth aligned into color"
+                if self.settings.rgbd_enabled
+                else "color only"
+            ),
             "delivered_field_of_view": "color" if self.settings.rgbd_enabled else None,
             "active": active,
             "device": device_streams,
@@ -1097,13 +1137,15 @@ class CameraRuntime:
             axis=1,
         )
 
-        generator = np.random.default_rng(0)      # deterministic: same frame, same answer
+        generator = np.random.default_rng(0)  # deterministic: same frame, same answer
         # RANSAC scores against a subsample: 600 iterations over a full 640x480
         # frame is 180M dot products for an answer a tenth of the points gives
         # just as well. The winning plane is then refined on every inlier.
-        scoring = points if len(points) <= 30_000 else points[
-            generator.choice(len(points), 30_000, replace=False)
-        ]
+        scoring = (
+            points
+            if len(points) <= 30_000
+            else points[generator.choice(len(points), 30_000, replace=False)]
+        )
         best = None
         for _ in range(600):
             sample = points[generator.choice(len(points), 3, replace=False)]
@@ -1131,10 +1173,10 @@ class CameraRuntime:
         centred = accepted - centre
         normal = np.linalg.eigh(centred.T @ centred)[1][:, 0]
         normal = normal / np.linalg.norm(normal)
-        if normal[1] > 0:                          # optical +Y is down; point it up
+        if normal[1] > 0:  # optical +Y is down; point it up
             normal = -normal
         offset = -(normal @ centre)
-        axis = np.asarray([0.0, 0.0, 1.0])         # optical +Z is the viewing direction
+        axis = np.asarray([0.0, 0.0, 1.0])  # optical +Z is the viewing direction
         tilt = 90 - math.degrees(math.acos(abs(float(np.clip(axis @ normal, -1, 1)))))
         return {
             "schema": "wendy.g1.camera-plane-measurement.v1",
@@ -1151,36 +1193,36 @@ class CameraRuntime:
     def policy_rgbd_snapshot(self, frame_id: int) -> bytes:
         """One exact frame at the policy's 320x240, as color_bgr + depth_m + meta.
 
-        The two arrays are resized by DIFFERENT rules, and the difference is the
-        point.  Colour is averaged (INTER_AREA): discarding three pixels in four
-        without averaging aliases the can's edge.  Depth is NOT averaged
-        (INTER_NEAREST): averaging a 0.40 m can pixel with a 0.80 m table pixel
-        yields 0.60 m, a surface that is not there, all the way round the rim --
-        and that number reaches the retargeter, which turns it into a position.
-        A nearest sample is always a distance something actually had.
+                The two arrays are resized by DIFFERENT rules, and the difference is the
+                point.  Colour is averaged (INTER_AREA): discarding three pixels in four
+                without averaging aliases the can's edge.  Depth is NOT averaged
+                (INTER_NEAREST): averaging a 0.40 m can pixel with a 0.80 m table pixel
+                yields 0.60 m, a surface that is not there, all the way round the rim --
+                and that number reaches the retargeter, which turns it into a position.
+                A nearest sample is always a distance something actually had.
 
-There is no training-time resize to match, and that is not an oversight:
-        the policy was trained in simulation on `robot_rgbd` renders produced
-        natively at 320x240 (sealed scene contract, `intrinsics_320x240`). No
-        640x480 sensor frame was ever reduced. The sealed sensor contract
-        delegates this step -- "the camera driver must align depth into RGB
-        pixels, resize/calibrate both to this grid" -- and names no method.
-        So these rules are ours to choose, and choosing them is not deferred
-        work.
+        There is no training-time resize to match, and that is not an oversight:
+                the policy was trained in simulation on `robot_rgbd` renders produced
+                natively at 320x240 (sealed scene contract, `intrinsics_320x240`). No
+                640x480 sensor frame was ever reduced. The sealed sensor contract
+                delegates this step -- "the camera driver must align depth into RGB
+                pixels, resize/calibrate both to this grid" -- and names no method.
+                So these rules are ours to choose, and choosing them is not deferred
+                work.
 
-        What IS unreconciled is larger than interpolation. Measured on this
-        robot against the sealed contract:
+                What IS unreconciled is larger than interpolation. Measured on this
+                robot against the sealed contract:
 
-            trained   fy 156.39 @ 320x240  ->  75.0 deg vertical FOV
-            real      fy 603.70 @ 640x480  ->  43.4 deg vertical FOV
-                      (fy 301.85 once scaled to 320x240)
+                    trained   fy 156.39 @ 320x240  ->  75.0 deg vertical FOV
+                    real      fy 603.70 @ 640x480  ->  43.4 deg vertical FOV
+                              (fy 301.85 once scaled to 320x240)
 
-        The real camera's focal length at policy resolution is 1.93x what the
-        policy was trained on: it sees a little over half the angle, and
-        everything in frame is about twice the size the policy expects. No
-        choice of interpolation reaches across that, because a narrow camera
-        cannot be resampled into a wide one. Fixing it means adapting the
-        simulator to 43.4 deg or changing the lens -- not touching this method.
+                The real camera's focal length at policy resolution is 1.93x what the
+                policy was trained on: it sees a little over half the angle, and
+                everything in frame is about twice the size the policy expects. No
+                choice of interpolation reaches across that, because a narrow camera
+                cannot be resampled into a wide one. Fixing it means adapting the
+                simulator to 43.4 deg or changing the lens -- not touching this method.
         """
         with self._lock:
             if not self.settings.rgbd_enabled:
@@ -1265,7 +1307,7 @@ There is no training-time resize to match, and that is not an oversight:
 
     def tracking_rgbd_snapshot(self, after_frame_id=None, stream_id=None):
         """Atomically select the latest newer frame; never grow a client queue."""
-        deadline = time.monotonic() + .2
+        deadline = time.monotonic() + 0.2
         with self._frame_ready:
             while True:
                 if stream_id is not None and stream_id != self._stream_id:
@@ -1276,7 +1318,9 @@ There is no training-time resize to match, and that is not an oversight:
                         break
                 remaining = deadline - time.monotonic()
                 if remaining <= 0:
-                    raise RuntimeError("No advancing tracking camera frame within 200 ms")
+                    raise RuntimeError(
+                        "No advancing tracking camera frame within 200 ms"
+                    )
                 self._frame_ready.wait(remaining)
         return self.recorder_rgbd_snapshot(frame_id)
 
@@ -1293,34 +1337,48 @@ There is no training-time resize to match, and that is not an oversight:
             snapshot = self._rgbd_frames.get(frame_id)
             if snapshot is None or snapshot["meta"].get("stream_id") != stream_id:
                 raise KeyError("EXACT_RGBD_FRAME_UNAVAILABLE")
-        arrays = {"color_bgr.npy": snapshot.get("raw_color_bgr"),
-                  "depth_z16.npy": snapshot.get("raw_depth_z16"),
-                  "aligned_depth_z16.npy": snapshot.get("aligned_depth_z16"),
-                  "aligned_depth_m.npy": snapshot["depth_m"]}
+        arrays = {
+            "color_bgr.npy": snapshot.get("raw_color_bgr"),
+            "depth_z16.npy": snapshot.get("raw_depth_z16"),
+            "aligned_depth_z16.npy": snapshot.get("aligned_depth_z16"),
+            "aligned_depth_m.npy": snapshot["depth_m"],
+        }
         if any(value is None for value in arrays.values()):
             raise RuntimeError("RAW_SOURCE_UNAVAILABLE")
         meta = snapshot["meta"]
-        ok_color, jpeg = cv2.imencode(".jpg", snapshot["color_bgr"],
-                                    [cv2.IMWRITE_JPEG_QUALITY, self.settings.jpeg_quality])
-        ok_depth, png = cv2.imencode(".png", snapshot["aligned_depth_z16"],
-                                    [cv2.IMWRITE_PNG_COMPRESSION, 1])
+        ok_color, jpeg = cv2.imencode(
+            ".jpg",
+            snapshot["color_bgr"],
+            [cv2.IMWRITE_JPEG_QUALITY, self.settings.jpeg_quality],
+        )
+        ok_depth, png = cv2.imencode(
+            ".png", snapshot["aligned_depth_z16"], [cv2.IMWRITE_PNG_COMPRESSION, 1]
+        )
         if not ok_color or not ok_depth:
             raise RuntimeError("RGB-D image encoding failed")
         height, width = snapshot["depth_m"].shape
         metadata = {
             "schema": "wendy.realsense.rgbd-frame.v1",
             "raw_schema": "wendy.realsense.raw-rgbd.v1",
-            "source_frame_id": frame_id, "stream_id": stream_id,
+            "source_frame_id": frame_id,
+            "stream_id": stream_id,
             "captured_at_unix_ns": meta["captured_at_unix_ns"],
-            "source_metadata": meta, "raw_sources": snapshot["raw_sources"],
-            "arrays": {name: {"dtype": str(array.dtype), "shape": list(array.shape)}
-                       for name, array in arrays.items()},
+            "source_metadata": meta,
+            "raw_sources": snapshot["raw_sources"],
+            "arrays": {
+                name: {"dtype": str(array.dtype), "shape": list(array.shape)}
+                for name, array in arrays.items()
+            },
             "values": "as_received_no_correction",
             "calibration": {
                 "schema": "wendy.realsense.aligned-depth-calibration.v1",
-                "serial": meta["camera_serial"], "aligned_to": "color",
-                "depth_encoding": "z16_png", "depth_scale_m": meta["depth_scale_m"],
-                "width": width, "height": height, "intrinsics": meta["intrinsics"],
+                "serial": meta["camera_serial"],
+                "aligned_to": "color",
+                "depth_encoding": "z16_png",
+                "depth_scale_m": meta["depth_scale_m"],
+                "width": width,
+                "height": height,
+                "intrinsics": meta["intrinsics"],
             },
         }
         stream = io.BytesIO()
@@ -1497,7 +1555,9 @@ def infrared_preview():
         payload = runtime.infrared_preview()
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
-    return Response(payload, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+    return Response(
+        payload, media_type="image/jpeg", headers={"Cache-Control": "no-store"}
+    )
 
 
 @app.get("/streams/selection")
@@ -1540,7 +1600,9 @@ def raw_depth_preview():
         payload = runtime.raw_depth_preview()
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
-    return Response(payload, media_type="image/jpeg", headers={"Cache-Control": "no-store"})
+    return Response(
+        payload, media_type="image/jpeg", headers={"Cache-Control": "no-store"}
+    )
 
 
 #: One page refresh must not be able to occupy a worker for longer than this,
@@ -1553,7 +1615,8 @@ NEIGHBOUR_TIMEOUT_S = 1.5
 
 def _neighbour(url: str, deadline: float | None = None) -> dict[str, Any] | None:
     remaining = (
-        NEIGHBOUR_TIMEOUT_S if deadline is None
+        NEIGHBOUR_TIMEOUT_S
+        if deadline is None
         else min(NEIGHBOUR_TIMEOUT_S, deadline - time.monotonic())
     )
     if remaining <= 0:
@@ -1567,7 +1630,11 @@ def _neighbour(url: str, deadline: float | None = None) -> dict[str, Any] | None
 
 def _headroom(value, limit):
     """Fraction of a limit in use, so a guard can be watched approaching."""
-    if not isinstance(value, (int, float)) or not isinstance(limit, (int, float)) or limit <= 0:
+    if (
+        not isinstance(value, (int, float))
+        or not isinstance(limit, (int, float))
+        or limit <= 0
+    ):
         return None
     return {"value": value, "limit": limit, "used": round(abs(value) / limit, 4)}
 
@@ -1615,7 +1682,7 @@ def camera_check():
     claimed = (believed or {}).get("looking_below_horizontal_deg")
     if isinstance(measured, (int, float)) and isinstance(claimed, (int, float)):
         difference = measured - claimed
-        reach_m = 0.56                      # the reference trajectory's range to the can
+        reach_m = 0.56  # the reference trajectory's range to the can
         out["difference"] = {
             "degrees": round(difference, 3),
             "reach_error_mm_at_560mm": round(
@@ -1642,7 +1709,9 @@ def table_plane():
         return runtime.table_plane()
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
-    except Exception as error:  # noqa: BLE001 - a diagnostic that 500s tells nobody anything
+    except (
+        Exception
+    ) as error:  # noqa: BLE001 - a diagnostic that 500s tells nobody anything
         logger.exception("table-plane failed")
         raise HTTPException(
             status_code=500, detail=f"{type(error).__name__}: {error}"
@@ -1673,8 +1742,14 @@ def diagnostics():
     io = wrapper.get("io") or {}
 
     errors = [
-        key for key in ("body_errors", "left_hand_errors", "right_hand_errors",
-                        "left_hand_system_errors", "right_hand_system_errors")
+        key
+        for key in (
+            "body_errors",
+            "left_hand_errors",
+            "right_hand_errors",
+            "left_hand_system_errors",
+            "right_hand_system_errors",
+        )
         if any(int(v) != 0 for v in (live.get(key) or []))
     ]
     return {
@@ -1690,16 +1765,22 @@ def diagnostics():
             "latched": retarget.get("latched"),
             "reference_frame": retarget.get("reference_frame"),
             "distance_to_optimal_cm": retarget.get("distance_to_optimal_cm"),
-            "filtered_distance_to_optimal_m": retarget.get("filtered_distance_to_optimal_m"),
+            "filtered_distance_to_optimal_m": retarget.get(
+                "filtered_distance_to_optimal_m"
+            ),
             "raw_offset_world_xy_m": retarget.get("raw_offset_world_xy_m"),
             "detection_age_ms": retarget.get("detection_age_ms"),
             "detection_valid": retarget.get("detection_valid"),
-            "calibration_qualified": retarget.get("physical_camera_calibration_qualified"),
+            "calibration_qualified": retarget.get(
+                "physical_camera_calibration_qualified"
+            ),
             "calibration_source": retarget.get("calibration_source"),
         },
         # --- how close to the limits -----------------------------------------
         "guards": {
-            "state_skew_s": _headroom(live.get("state_skew_s"), wrapper.get("maximum_state_skew_s")),
+            "state_skew_s": _headroom(
+                live.get("state_skew_s"), wrapper.get("maximum_state_skew_s")
+            ),
             # `alignment` is the live commanded state against reference frame 0 --
             # how far the arm is from the START pose, not in-run tracking error.
             # Before entry it says whether a run can begin; it is not the guard
@@ -1714,7 +1795,9 @@ def diagnostics():
                 (wrapper.get("alignment") or {}).get("speed_limit_rad_s"),
             ),
             "maximum_policy_step_rad": runtime_state.get("maximum_policy_step_rad"),
-            "within_entry_limits": (wrapper.get("alignment") or {}).get("within_entry_limits"),
+            "within_entry_limits": (wrapper.get("alignment") or {}).get(
+                "within_entry_limits"
+            ),
         },
         # --- was it looking ---------------------------------------------------
         "vision": {
@@ -1753,7 +1836,9 @@ def diagnostics():
             "timing": runtime_state.get("timing"),
         },
         "reachable": {
-            "inference": bool(inference), "wrapper": bool(wrapper), "fsm_bridge": bool(fsm),
+            "inference": bool(inference),
+            "wrapper": bool(wrapper),
+            "fsm_bridge": bool(fsm),
         },
     }
 
@@ -1809,7 +1894,9 @@ def recognition():
             "confidence": {
                 "value": target.get("conf"),
                 "bound": threshold,
-                "pass": bool(threshold is not None and target.get("conf", 0) >= threshold),
+                "pass": bool(
+                    threshold is not None and target.get("conf", 0) >= threshold
+                ),
             },
             "clear_of_edge": {
                 "value": geometry.get("edge_margin_px"),
@@ -1849,8 +1936,12 @@ def recognition():
             ((segmentation.get("latest") or {}).get("selection") or {}).get("reason")
         ),
         "segmentation_confidence": (
-            (((segmentation.get("latest") or {}).get("selection") or {}).get("candidates")
-             or [{}])[0].get("confidence")
+            (
+                ((segmentation.get("latest") or {}).get("selection") or {}).get(
+                    "candidates"
+                )
+                or [{}]
+            )[0].get("confidence")
         ),
         "stats": out.get("segmentation_stats"),
     }
@@ -1868,17 +1959,23 @@ async def set_grasp_threshold(request: Request):
         body = await request.json()
         value = float(body["grasp_min_confidence"])
     except Exception as error:  # noqa: BLE001 - a bad body is a client error
-        raise HTTPException(status_code=400, detail="grasp_min_confidence required") from error
+        raise HTTPException(
+            status_code=400, detail="grasp_min_confidence required"
+        ) from error
     payload = json.dumps({"grasp_min_confidence": value}).encode()
     call = Request_(
-        f"{SEGMENTATION_URL}/config/grasp-confidence", data=payload,
-        headers={"Content-Type": "application/json"}, method="POST",
+        f"{SEGMENTATION_URL}/config/grasp-confidence",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
     )
     try:
         with urlopen(call, timeout=2.0) as response:
             return json.loads(response.read(10_000))
     except Exception as error:  # noqa: BLE001 - surface the detector's refusal
-        raise HTTPException(status_code=502, detail=f"{type(error).__name__}") from error
+        raise HTTPException(
+            status_code=502, detail=f"{type(error).__name__}"
+        ) from error
 
 
 @app.get("/streams")
@@ -1924,8 +2021,9 @@ def recorder_rgbd_frame(
 
 
 @app.get("/frame.raw-rgbd")
-def raw_rgbd_frame(frame_id: int, stream_id: str,
-                   x_camera_lease: str | None = Header(default=None)):
+def raw_rgbd_frame(
+    frame_id: int, stream_id: str, x_camera_lease: str | None = Header(default=None)
+):
     _authorize_frame(x_camera_lease)
     try:
         payload = runtime.raw_rgbd_snapshot(frame_id, stream_id)
@@ -1933,12 +2031,17 @@ def raw_rgbd_frame(frame_id: int, stream_id: str,
         raise HTTPException(status_code=409, detail=str(error)) from error
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
-    return Response(payload, media_type="application/zip", headers={"Cache-Control": "no-store"})
+    return Response(
+        payload, media_type="application/zip", headers={"Cache-Control": "no-store"}
+    )
 
 
 @app.get("/frame.tracking-rgbd")
-def tracking_rgbd_frame(after_frame_id: int | None = None, stream_id: str | None = None,
-                        x_camera_lease: str | None = Header(default=None)):
+def tracking_rgbd_frame(
+    after_frame_id: int | None = None,
+    stream_id: str | None = None,
+    x_camera_lease: str | None = Header(default=None),
+):
     _authorize_frame(x_camera_lease)
     try:
         payload, metadata = runtime.tracking_rgbd_snapshot(after_frame_id, stream_id)
@@ -1946,8 +2049,14 @@ def tracking_rgbd_frame(after_frame_id: int | None = None, stream_id: str | None
         raise HTTPException(status_code=409, detail=str(error)) from error
     except RuntimeError as error:
         raise HTTPException(status_code=503, detail=str(error)) from error
-    return Response(payload, media_type="application/zip", headers={
-        "Cache-Control": "no-store", "X-Frame-Id": str(metadata["source_frame_id"])})
+    return Response(
+        payload,
+        media_type="application/zip",
+        headers={
+            "Cache-Control": "no-store",
+            "X-Frame-Id": str(metadata["source_frame_id"]),
+        },
+    )
 
 
 def main() -> None:

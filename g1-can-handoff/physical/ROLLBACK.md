@@ -1,4 +1,27 @@
-# Restoring the version before visual/depth tracking
+# Saved versions and rollback
+
+## Before the readability cleanup — 2026-10-09
+
+The complete local source checkpoint is commit
+`f9464d3a54de0bebee8009a48d1257c8606dc364`, tagged
+`codex/g1-handoff-before-readability-20261009T181731Z`.
+
+The verified source/model/assets archive and per-file checksum manifest are at:
+
+`/Users/olivertaylor/Documents/Wendy/backups/g1-can-handoff-before-readability-20261009T181731Z/`
+
+Inspect the original in a separate checkout without replacing your edits:
+
+```sh
+git worktree add /tmp/g1-handoff-before-readability codex/g1-handoff-before-readability-20261009T181731Z
+```
+
+The archive's `RESTORE.md` describes its contents. Existing recordings and
+validation evidence stay in `physical/offline/`; they were not reformatted or
+removed. A source checkout is separate from a robot deployment. The normal
+supported-release preflight and Wendy deployment wrapper still apply.
+
+## Before visual/depth tracking
 
 Both rollback references are saved locally and on `origin`:
 

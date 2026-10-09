@@ -23,6 +23,7 @@ every consumer: the Commander (liveness, remote, measured joints, leash) and
 the arm controller (its velocity clip and startup pose). Decoding cost is
 now `hz` samples a second, once, instead of every sample twice.
 """
+
 from __future__ import annotations
 
 import os
@@ -46,7 +47,9 @@ def poll_hz_from_env(env=None):
     except ValueError:
         raise ValueError(f"G1_LOWSTATE_HZ={raw!r}: expected a number") from None
     if not POLL_HZ_MIN <= hz <= POLL_HZ_MAX:
-        raise ValueError(f"G1_LOWSTATE_HZ={raw!r}: expected {POLL_HZ_MIN:g}..{POLL_HZ_MAX:g}")
+        raise ValueError(
+            f"G1_LOWSTATE_HZ={raw!r}: expected {POLL_HZ_MIN:g}..{POLL_HZ_MAX:g}"
+        )
     return hz
 
 
@@ -105,7 +108,9 @@ class LowstateHub:
         for fn in self._listeners:
             try:
                 fn(msg)
-            except Exception as e:  # noqa: BLE001 -- one bad consumer must not stop the others
+            except (
+                Exception
+            ) as e:  # noqa: BLE001 -- one bad consumer must not stop the others
                 self.n_listener_errors += 1
                 if self.n_listener_errors <= 5 or self.n_listener_errors % 1000 == 0:
                     print(f"[lowstate] listener error ({self.n_listener_errors}): {e}")
@@ -116,7 +121,8 @@ class LowstateHub:
         # normal placement; with one available core both roles necessarily
         # resolve to that core.
         self.affinity = pin_current_thread(
-            "G1_LOWSTATE_CPU", default="auto", auto_offset=1)
+            "G1_LOWSTATE_CPU", default="auto", auto_offset=1
+        )
         cadence = DeadlineLoop(self.period)
         while not self._stop:
             try:
@@ -126,7 +132,9 @@ class LowstateHub:
             cadence.wait()
 
     def start(self):
-        self._thread = threading.Thread(target=self._run, name="lowstate-hub", daemon=True)
+        self._thread = threading.Thread(
+            target=self._run, name="lowstate-hub", daemon=True
+        )
         self._thread.start()
         return self
 
@@ -136,7 +144,11 @@ class LowstateHub:
     def status(self):
         with self._lock:
             age = (self._clock() - self._t) if self._t is not None else None
-        return {"poll_hz": self.hz, "rate_hz": self.rate_hz, "samples": self.n_samples,
-                "age_s": round(age, 4) if age is not None else None,
-                "listener_errors": self.n_listener_errors,
-                "affinity": self.affinity}
+        return {
+            "poll_hz": self.hz,
+            "rate_hz": self.rate_hz,
+            "samples": self.n_samples,
+            "age_s": round(age, 4) if age is not None else None,
+            "listener_errors": self.n_listener_errors,
+            "affinity": self.affinity,
+        }

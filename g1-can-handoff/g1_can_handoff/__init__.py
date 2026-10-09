@@ -16,6 +16,7 @@ def main():
     signal.signal(signal.SIGTERM, _signal_handler)
 
     from .cli import main as run
+
     run()
 
 

@@ -1,4 +1,5 @@
 """Low-overhead one-class detection decoding for the fixed TensorRT output."""
+
 from __future__ import annotations
 
 import numpy as np
@@ -71,9 +72,9 @@ def decode_one_class_candidates(
         current_area = max(0.0, xyxy[current, 2] - xyxy[current, 0]) * max(
             0.0, xyxy[current, 3] - xyxy[current, 1]
         )
-        remaining_areas = np.maximum(0.0, xyxy[remaining, 2] - xyxy[remaining, 0]) * np.maximum(
-            0.0, xyxy[remaining, 3] - xyxy[remaining, 1]
-        )
+        remaining_areas = np.maximum(
+            0.0, xyxy[remaining, 2] - xyxy[remaining, 0]
+        ) * np.maximum(0.0, xyxy[remaining, 3] - xyxy[remaining, 1])
         unions = current_area + remaining_areas - intersections
         ious = np.divide(
             intersections,

@@ -1,4 +1,5 @@
 """Small, reversible scheduling controls for the Python command hot path."""
+
 from __future__ import annotations
 
 import math
@@ -60,15 +61,27 @@ def pin_current_thread(env_name, *, env=None, default=None, auto_offset=0):
     """Pin only the calling Linux thread. Returns a status dictionary."""
     env = os.environ if env is None else env
     if not hasattr(os, "sched_setaffinity"):
-        return {"requested": env.get(env_name) or None, "cpu": None,
-                "active": False, "error": "unsupported platform"}
+        return {
+            "requested": env.get(env_name) or None,
+            "cpu": None,
+            "active": False,
+            "error": "unsupported platform",
+        }
     try:
         cpu = cpu_from_env(env, env_name, default=default, auto_offset=auto_offset)
         if cpu is None:
             return {"requested": None, "cpu": None, "active": False, "error": None}
         os.sched_setaffinity(0, {cpu})
-        return {"requested": env.get(env_name, default), "cpu": cpu,
-                "active": True, "error": None}
+        return {
+            "requested": env.get(env_name, default),
+            "cpu": cpu,
+            "active": True,
+            "error": None,
+        }
     except (OSError, ValueError) as exc:
-        return {"requested": env.get(env_name) or None, "cpu": None,
-                "active": False, "error": str(exc)}
+        return {
+            "requested": env.get(env_name) or None,
+            "cpu": None,
+            "active": False,
+            "error": str(exc),
+        }

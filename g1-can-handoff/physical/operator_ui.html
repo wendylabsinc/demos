@@ -1,0 +1,614 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>G1 operator controls</title>
+    <style>
+      body {
+        margin: 0;
+        background: #10151c;
+        color: #edf2f8;
+        font: 18px system-ui;
+      }
+      main {
+        max-width: 1000px;
+        margin: 32px auto;
+        padding: 24px;
+      }
+      h1 {
+        font-size: 26px;
+      }
+      button {
+        font: 700 22px system-ui;
+        background: #ffca68;
+        color: #181510;
+        border: 0;
+        border-radius: 12px;
+        padding: 22px;
+        width: 100%;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: default;
+      }
+      img {
+        display: block;
+        width: 100%;
+        max-width: 800px;
+        border-radius: 12px;
+      }
+      #state {
+        white-space: pre-wrap;
+        padding: 18px;
+        background: #1c2530;
+        border-radius: 10px;
+      }
+      #robot-card {
+        padding: 20px;
+        border: 2px solid #526275;
+        border-radius: 14px;
+        margin: 18px 0;
+        background: #1c2530;
+      }
+      #robot-title {
+        font-size: 28px;
+        margin: 0 0 10px;
+      }
+      #robot-card[data-tone="ready"] {
+        border-color: #8adeb2;
+      }
+      #robot-card[data-tone="busy"] {
+        border-color: #a8cafa;
+      }
+      #robot-card[data-tone="hold"],
+      #robot-card[data-tone="blocked"] {
+        border-color: #ffca68;
+      }
+      #robot-owner {
+        display: inline-block;
+        border-radius: 24px;
+        background: #303c4a;
+        padding: 6px 12px;
+        font-size: 16px;
+      }
+      #robot-next {
+        margin-bottom: 0;
+      }
+      #robot-error {
+        color: #ffb0a8;
+        overflow-wrap: anywhere;
+      }
+      details {
+        font-size: 14px;
+        color: #b7c4d2;
+        margin: 12px 0;
+      }
+      .camera-view {
+        position: relative;
+        max-width: 800px;
+      }
+      #pickup-overlay {
+        display: none;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+      #pickup-area {
+        fill: #62ffab33;
+        stroke: #62ffab;
+        stroke-width: 3;
+        vector-effect: non-scaling-stroke;
+      }
+      #pickup-overlay[data-reference="true"] #pickup-area {
+        fill: #ffca681a;
+        stroke: #ffca68;
+        stroke-dasharray: 9 6;
+      }
+      #placement-message {
+        color: #9df4c6;
+      }
+      #placement-message[data-reference="true"] {
+        color: #ffca68;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>G1 · Coke demo controls</h1>
+      <p>
+        Start runs one pickup attempt. Stop holds the measured arm position.
+        Release returns upper-body control to Unitree and relaxes both hands.
+        Support the can and raised arms before releasing.
+      </p>
+      <p>
+        Pressing Release confirms that the can and raised arms are supported.
+      </p>
+      <section id="robot-card" data-tone="unknown" aria-live="polite">
+        <h2 id="robot-title">Checking robot state…</h2>
+        <p id="robot-activity">Checking attempt…</p>
+        <span id="robot-owner">Control ownership unknown</span>
+        <p id="perception-summary">Checking perception mode…</p>
+        <p id="robot-next">Connecting to the controller.</p>
+        <p id="robot-error"></p>
+      </section>
+      <style>
+        .error-card {
+          background: #241c21;
+          border: 1px solid #995b60;
+          border-left: 5px solid #ffb0a8;
+          border-radius: 12px;
+          padding: 20px;
+          margin: 18px 0;
+          line-height: 1.5;
+        }
+        .error-card[hidden] {
+          display: none;
+        }
+        .error-card h2 {
+          font-size: 23px;
+          margin: 6px 0;
+          color: #ffd2cd;
+        }
+        .error-badge {
+          font-size: 12px;
+          letter-spacing: 0.08em;
+          color: #ffb0a8;
+          font-weight: 700;
+        }
+        .error-card p {
+          margin: 8px 0;
+        }
+        .error-next {
+          color: #ffda98;
+        }
+        .error-card details {
+          color: #d0bfc7;
+        }
+        .error-card pre,
+        #placement-error-raw {
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          font:
+            13px/1.5 ui-monospace,
+            monospace;
+          background: #10151c;
+          padding: 12px;
+          border-radius: 8px;
+        }
+        .error-note {
+          font-size: 12px;
+          color: #b6aab1;
+        }
+        .error-card code {
+          font-size: 13px;
+          color: #edf2f8;
+        }
+      </style>
+      <section
+        id="last-demo-error"
+        class="error-card"
+        role="status"
+        aria-labelledby="demo-error-title"
+        hidden
+      >
+        <span class="error-badge">LAST ATTEMPT</span>
+        <h2 id="demo-error-title"></h2>
+        <p id="demo-error-summary"></p>
+        <p class="error-next">
+          <strong>Next step:</strong> <span id="demo-error-next"></span>
+        </p>
+        <details>
+          <summary>Technical details</summary>
+          <p>Source: <code id="demo-error-source"></code></p>
+          <pre id="demo-error-raw"></pre>
+        </details>
+        <p class="error-note">
+          Kept until the next Start is accepted, including after refresh.
+        </p>
+      </section>
+      <button
+        id="start"
+        disabled
+        style="background: #8adeb2; margin-bottom: 12px"
+      >
+        Start demo
+      </button>
+      <button id="stop" style="background: #a8cafa; margin-bottom: 12px">
+        Stop and hold
+      </button>
+      <button id="release">Release upper body + fingers to Unitree</button>
+      <details>
+        <summary>Controller details</summary>
+        <p id="state">Checking controller…</p>
+      </details>
+      <p id="action-status" aria-live="polite"></p>
+      <div class="camera-view">
+        <img id="video" alt="Live color camera" /><svg
+          id="pickup-overlay"
+          preserveAspectRatio="none"
+          aria-label="Coke can pickup placement area"
+        >
+          <polygon id="pickup-area" />
+        </svg>
+      </div>
+      <p id="placement-message">Loading calibrated pickup area…</p>
+      <p id="video-state">Connecting to live camera…</p>
+      <p id="camera-health"></p>
+      <details id="placement-error-details" hidden>
+        <summary>Placement diagnostics</summary>
+        <pre id="placement-error-raw"></pre>
+      </details>
+      <script>
+        const button = document.querySelector("#release"),
+          state = document.querySelector("#state"),
+          videoState = document.querySelector("#video-state"),
+          cameraHealth = document.querySelector("#camera-health");
+        let video = document.querySelector("#video");
+        let busy = false,
+          lastImage = 0,
+          imagePending = false,
+          imageGeneration = 0,
+          cameraWaiting = false;
+        async function call(path, data) {
+          let r = await fetch(path, {
+            method: data ? "POST" : "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Operator-Token": "TOKEN_VALUE",
+            },
+            body: data ? JSON.stringify(data) : undefined,
+          });
+          let s = await r.json();
+          if (!r.ok) throw Error(s.error || "Controller request failed");
+          return s;
+        }
+        const actionStatus = document.querySelector("#action-status");
+        const start = document.querySelector("#start"),
+          stop = document.querySelector("#stop");
+        let starting = false,
+          polling = false,
+          stateRevision = 0;
+        const lastDemoError = document.querySelector("#last-demo-error");
+        let savedDemoError = "";
+        const demoErrorTitle = document.querySelector("#demo-error-title"),
+          demoErrorSummary = document.querySelector("#demo-error-summary"),
+          demoErrorNext = document.querySelector("#demo-error-next"),
+          demoErrorSource = document.querySelector("#demo-error-source"),
+          demoErrorRaw = document.querySelector("#demo-error-raw");
+        const errorCases = ERROR_CASES_JSON;
+        function describeDemoError(message) {
+          return (
+            errorCases.find((rule) =>
+              rule.triggers.some((trigger) => message.includes(trigger)),
+            ) || {
+              title: "Demo stopped",
+              summary:
+                "The attempt stopped. Technical details contain the full error.",
+              action: "Check the reported problem before retrying.",
+              source: "Not identified",
+            }
+          );
+        }
+        function rememberDemoError(message) {
+          if (!message) return;
+          if (savedDemoError !== message) {
+            savedDemoError = message;
+            try {
+              sessionStorage.setItem("g1-last-demo-error", message);
+            } catch (e) {}
+          }
+          const info = describeDemoError(savedDemoError);
+          demoErrorTitle.textContent = info.title;
+          demoErrorSummary.textContent = info.summary;
+          demoErrorNext.textContent = info.action;
+          demoErrorSource.textContent = info.source;
+          demoErrorRaw.textContent = savedDemoError;
+          lastDemoError.hidden = false;
+        }
+        function clearDemoError() {
+          savedDemoError = "";
+          lastDemoError.hidden = true;
+          try {
+            sessionStorage.removeItem("g1-last-demo-error");
+          } catch (e) {}
+        }
+        try {
+          rememberDemoError(sessionStorage.getItem("g1-last-demo-error"));
+        } catch (e) {}
+        function show(s) {
+          if (!s.demo_running)
+            rememberDemoError(
+              s.demo_error || s.error || s.presentation?.failure,
+            );
+          renderRobotState(s);
+          start.disabled =
+            !!s.deployment_in_progress ||
+            starting ||
+            !!s.demo_running ||
+            s.phase === "HOLDING_CAN";
+          state.textContent =
+            (s.deployment_in_progress
+              ? "Updating demo — Start will be available after verification\n"
+              : "") +
+            "Controller phase: " +
+            s.phase +
+            "\n" +
+            (s.presentation?.activity || "Checking attempt") +
+            (s.presentation?.failure ? "\n" + s.presentation.failure : "") +
+            (s.camera_max_age_ms
+              ? "\nCamera limit: " + s.camera_max_age_ms + " ms"
+              : "") +
+            (s.target_identity === "color_depth"
+              ? "\nDetector: color/depth + tracking · YOLO not required"
+              : s.yolo_confidence_strictly_above
+                ? "\nYOLO confidence: above " +
+                  Math.round(s.yolo_confidence_strictly_above * 100) +
+                  "%"
+                : "");
+        }
+        start.onclick = async () => {
+          if (starting) return;
+          const revision = ++stateRevision;
+          starting = true;
+          start.disabled = true;
+          demoActive = true;
+          placementVisible();
+          state.textContent = "Starting one pickup attempt…";
+          actionStatus.textContent = "Sending Start request…";
+          try {
+            let result = await call("/start", {});
+            if (revision !== stateRevision) return;
+            clearDemoError();
+            actionStatus.textContent =
+              "Start accepted — one pickup attempt requested.";
+            show(result);
+          } catch (e) {
+            if (revision !== stateRevision) return;
+            actionStatus.textContent = "Start request failed: " + e.message;
+            rememberDemoError("Start request failed: " + e.message);
+            state.textContent = e.message;
+          } finally {
+            starting = false;
+            poll();
+          }
+        };
+        stop.onclick = async () => {
+          const revision = ++stateRevision;
+          state.textContent = "Stopping and holding…";
+          try {
+            const result = await call("/stop", {});
+            if (revision === stateRevision) show(result);
+          } catch (e) {
+            if (revision === stateRevision) state.textContent = e.message;
+          }
+        };
+        button.onclick = async () => {
+          if (busy) return;
+          const revision = ++stateRevision;
+          busy = true;
+          button.disabled = true;
+          state.textContent = "Releasing upper body and fingers…";
+          try {
+            const result = await call("/release", { can_supported: true });
+            if (revision === stateRevision) show(result);
+          } catch (e) {
+            if (revision === stateRevision) state.textContent = e.message;
+          } finally {
+            busy = false;
+            button.disabled = false;
+          }
+        };
+        function cameraDisplayState() {
+          const age = lastImage ? Math.max(0, Date.now() - lastImage) : null;
+          videoState.textContent =
+            age === null
+              ? "Waiting for the first camera image…"
+              : cameraWaiting || age > 1000
+                ? "Camera display paused · showing last image received " +
+                  (age / 1000).toFixed(1) +
+                  " s ago · retrying…"
+                : "Camera display updating · image received " + age + " ms ago";
+        }
+        function refreshVideo() {
+          cameraDisplayState();
+          if (imagePending) return;
+          imagePending = true;
+          const generation = ++imageGeneration,
+            next = new Image();
+          let finished = false;
+          const timeout = setTimeout(failed, 3000);
+          function failed() {
+            if (finished || generation !== imageGeneration) return;
+            finished = true;
+            clearTimeout(timeout);
+            imagePending = false;
+            cameraWaiting = true;
+            guideValid = false;
+            cameraDisplayState();
+            placementVisible();
+          }
+          next.onerror = failed;
+          next.onload = async () => {
+            try {
+              await next.decode();
+              if (!next.naturalWidth) throw Error("Empty camera image");
+            } catch (e) {
+              failed();
+              return;
+            }
+            if (finished || generation !== imageGeneration) return;
+            finished = true;
+            clearTimeout(timeout);
+            next.id = "video";
+            next.alt = "Live color camera";
+            // Swap the already decoded image. Failed or late requests never touch the
+            // displayed frame, so camera contention cannot turn it into a broken image.
+            video.replaceWith(next);
+            video = next;
+            lastImage = Date.now();
+            imagePending = false;
+            cameraWaiting = false;
+            cameraDisplayState();
+            placementVisible();
+          };
+          next.src = "http://10.10.20.238:8001/frame.jpg?t=" + Date.now();
+        }
+        refreshVideo();
+        setInterval(refreshVideo, 250);
+        async function health() {
+          try {
+            let h = await call("/camera-health");
+            cameraHealth.textContent =
+              (h.healthy && h.frame_age_s >= 0 && h.frame_age_s <= 0.4
+                ? "Source camera fresh"
+                : "Source camera stale") +
+              " · frame " +
+              h.frame_id +
+              " · source frame " +
+              Math.round(h.frame_age_s * 1000) +
+              " ms old · " +
+              h.fps +
+              " fps";
+          } catch (e) {
+            cameraHealth.textContent = "Source camera health unavailable";
+          }
+        }
+        health();
+        setInterval(health, 1000);
+        async function poll() {
+          if (polling || busy || starting) return;
+          polling = true;
+          const revision = stateRevision;
+          try {
+            const result = await call("/status");
+            if (revision === stateRevision) show(result);
+          } catch (e) {
+            if (revision !== stateRevision) return;
+            state.textContent = e.message;
+            robotTitle.textContent = "Controller unavailable";
+            robotActivity.textContent = "Attempt state unknown";
+            robotCard.dataset.tone = "unknown";
+            robotOwner.textContent = "Control ownership unknown";
+            robotNext.textContent = "Check the controller connection.";
+            robotError.textContent = "";
+            guideValid = false;
+            placementVisible();
+          } finally {
+            polling = false;
+          }
+        }
+        poll();
+        setInterval(poll, 1000);
+        const perceptionSummary = document.querySelector("#perception-summary");
+        const robotCard = document.querySelector("#robot-card"),
+          robotTitle = document.querySelector("#robot-title"),
+          robotActivity = document.querySelector("#robot-activity"),
+          robotOwner = document.querySelector("#robot-owner"),
+          robotNext = document.querySelector("#robot-next"),
+          robotError = document.querySelector("#robot-error"),
+          pickupOverlay = document.querySelector("#pickup-overlay"),
+          pickupArea = document.querySelector("#pickup-area"),
+          placementMessage = document.querySelector("#placement-message");
+        let guideValid = false,
+          guidePresent = false,
+          guideReceived = 0,
+          demoActive = false,
+          placementPolling = false;
+        function placementVisible() {
+          const current =
+            guideValid &&
+            Date.now() - guideReceived < 2500 &&
+            lastImage &&
+            Date.now() - lastImage < 1000;
+          pickupOverlay.style.display =
+            guidePresent && lastImage ? "block" : "none";
+          pickupOverlay.dataset.reference = String(!current);
+          placementMessage.dataset.reference = String(!current);
+          if (
+            guidePresent &&
+            !current &&
+            !placementMessage.textContent.startsWith("Reference only")
+          )
+            placementMessage.textContent =
+              "Reference only — current placement is not verified. " +
+              placementMessage.textContent;
+        }
+        function renderRobotState(s) {
+          demoActive = !!s.demo_running;
+          perceptionSummary.textContent =
+            s.target_identity === "color_depth"
+              ? "Perception: color/depth tracking · YOLO not required"
+              : s.target_identity === "yolo_once"
+                ? "Perception: initial YOLO identity, then visual/depth tracking"
+                : "Perception: YOLO and visual/depth tracking";
+          const p = s.presentation;
+          if (p) {
+            robotTitle.textContent = p.title;
+            robotActivity.textContent = p.activity;
+            robotCard.dataset.tone = p.tone;
+            robotOwner.textContent = p.ownership;
+            robotNext.textContent = p.next_action;
+            robotError.textContent =
+              p.failure && p.failure_label === "Current problem"
+                ? p.failure_summary || p.failure
+                : "";
+          }
+          placementVisible();
+        }
+        function placementError(message) {
+          const details = document.querySelector("#placement-error-details"),
+            raw = document.querySelector("#placement-error-raw");
+          details.hidden = !message;
+          raw.textContent = message || "";
+          if (!message) return "Current placement is not verified.";
+          const info = describeDemoError(message);
+          return info.source === "Not identified"
+            ? "Placement feedback unavailable. Open diagnostics for details."
+            : info.summary;
+        }
+        async function placement() {
+          if (placementPolling) return;
+          placementPolling = true;
+          try {
+            const p = await call("/placement");
+            guideReceived = Date.now();
+            guideValid = !!p.valid;
+            const explanation = placementError(p.error);
+            if (p.polygon) {
+              guidePresent = true;
+              pickupOverlay.setAttribute(
+                "viewBox",
+                `0 0 ${p.width} ${p.height}`,
+              );
+              pickupArea.setAttribute(
+                "points",
+                p.polygon.map((point) => point.join(",")).join(" "),
+              );
+              placementMessage.textContent = guideValid
+                ? "Place the center of the can base inside the green area. " +
+                  p.label
+                : "Reference only — amber outline uses the last calibration. " +
+                  explanation;
+            } else {
+              guidePresent = false;
+              placementMessage.textContent = explanation;
+            }
+          } catch (e) {
+            guideValid = false;
+            placementMessage.textContent =
+              "Reference only — " + placementError(e.message);
+          } finally {
+            placementPolling = false;
+            placementVisible();
+          }
+        }
+        placement();
+        setInterval(placement, 1000);
+        setInterval(placementVisible, 250);
+      </script>
+    </main>
+  </body>
+</html>

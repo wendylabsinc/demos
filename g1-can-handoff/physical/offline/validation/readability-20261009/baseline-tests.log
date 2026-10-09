@@ -1,0 +1,368 @@
+........................................................FF........................................F........E.......F..................................................................................................................F........F...............E..................................................F......WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited
+
+FFFFF..............................................E.............F......../Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: divide by zero encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: overflow encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:52: RuntimeWarning: invalid value encountered in matmul
+  inside = np.abs((cloud-a) @ normal) < .006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: divide by zero encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: overflow encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:17: RuntimeWarning: invalid value encountered in matmul
+  selected=np.abs((points-seed_center)@seed_normal)<.025
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: divide by zero encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: overflow encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:27: RuntimeWarning: invalid value encountered in matmul
+  updated=np.abs((points-center)@normal)<.006
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: divide by zero encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: overflow encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:67: RuntimeWarning: invalid value encountered in matmul
+  check_error=(check_points-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: divide by zero encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: overflow encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:73: RuntimeWarning: invalid value encountered in matmul
+  if np.quantile(np.abs((tape-center)@normal),.9)>.008:
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: divide by zero encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: overflow encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/table_plane.py:75: RuntimeWarning: invalid value encountered in matmul
+  return normal,center,tape,dict(rmse_m=float(np.sqrt(np.mean(((broad-center)@normal)**2))),
+.........../Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: divide by zero encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: overflow encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:49: RuntimeWarning: invalid value encountered in matmul
+  distance=held@reference
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: divide by zero encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: overflow encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:50: RuntimeWarning: invalid value encountered in matmul
+  offset=np.median(tape@reference)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: divide by zero encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: overflow encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:56: RuntimeWarning: invalid value encountered in matmul
+  old=np.array(old_normals[fid]);offset=np.median(tape@old)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: divide by zero encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: overflow encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:57: RuntimeWarning: invalid value encountered in matmul
+  self.assertGreater(np.sqrt(np.mean((table@old-offset)**2)),.006)
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: divide by zero encountered in matmul
+  errors=(table-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: overflow encountered in matmul
+  errors=(table-center)@normal
+/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_table_plane.py:58: RuntimeWarning: invalid value encountered in matmul
+  errors=(table-center)@normal
+.....................F................................
+======================================================================
+ERROR: test_latest_trial_replay (unittest.loader._FailedTest.test_latest_trial_replay)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_latest_trial_replay
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_latest_trial_replay.py", line 13, in <module>
+    from runtime import Runtime
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/runtime.py", line 22, in <module>
+    DATA=Path(os.getenv('HANDOFF_DATA','/data'));DATA.mkdir(parents=True,exist_ok=True)
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+OSError: [Errno 30] Read-only file system: '/data'
+
+
+======================================================================
+ERROR: test_native_waist_and_planning_deadline_failures_reproduce_without_motion (test_real_stops_replay.RealStopsReplayTests.test_native_waist_and_planning_deadline_failures_reproduce_without_motion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_real_stops_replay.py", line 13, in test_native_waist_and_planning_deadline_failures_reproduce_without_motion
+    result=run(destination)
+           ^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/offline/replay_real_stops.py", line 54, in run
+    first=events(directory/'trial-01');second=events(directory/'trial-02')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/offline/replay_real_stops.py", line 42, in events
+    raise ValueError('Replay source differs from trial: '+name)
+ValueError: Replay source differs from trial: g1_can_handoff/task.py
+
+======================================================================
+ERROR: test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly (test_stale_trial_replay.NativeStaleReplayTests.test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_stale_trial_replay.py", line 10, in test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly
+    report=replay(500,'receipt',3)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/offline/stale_replay.py", line 163, in replay
+    outcome=command_tick(packet['exposure'],at,max_age_ms)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/offline/stale_replay.py", line 131, in command_tick
+    try:plant._execute_poses(np.zeros(7),[np.zeros(7)])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/physical_core.py", line 549, in _execute_poses
+    phase_name=self.ik.contact_phase,measured_arm=snap['body']['q'][15:29],
+               ^^^^^^^
+AttributeError: 'PhysicalPlant' object has no attribute 'ik'
+
+======================================================================
+FAIL: test_clearance_changes_proximity_checks_without_changing_measured_table (test_clearance_planning.ClearancePlanningTests.test_clearance_changes_proximity_checks_without_changing_measured_table)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_clearance_planning.py", line 67, in test_clearance_changes_proximity_checks_without_changing_measured_table
+    self.assertAlmostEqual(geom.pos[2]+geom.size[2],observation.table_height)
+AssertionError: np.float64(0.772) != 0.762 within 7 places (np.float64(0.010000000000000009) difference)
+
+======================================================================
+FAIL: test_infeasible_lift_does_not_spend_staging_search_budget (test_clearance_planning.ClearancePlanningTests.test_infeasible_lift_does_not_spend_staging_search_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_clearance_planning.py", line 147, in test_infeasible_lift_does_not_spend_staging_search_budget
+    self.assertTrue(any(e['phase']=='trajectory_collision' for e in logged))
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_real_p80_final_offset_reproduces_production_settling_failure (test_harness_regression.RecordedHarnessRegressionTests.test_real_p80_final_offset_reproduces_production_settling_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_harness_regression.py", line 52, in test_real_p80_final_offset_reproduces_production_settling_failure
+    with self.assertRaisesRegex(RuntimeError,'Physical arm did not settle'):
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_recorded_reach_settle_failure_reproduces_with_no_contact_inference (test_motion_tracking.MotionTrackingTests.test_recorded_reach_settle_failure_reproduces_with_no_contact_inference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_motion_tracking.py", line 41, in test_recorded_reach_settle_failure_reproduces_with_no_contact_inference
+    with self.assertRaisesRegex(RuntimeError,'Physical arm did not settle at the IK target'):
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_final_revalidation_cannot_overrun_original_planning_deadline (test_planner_tuning.PlannerTuningTests.test_final_revalidation_cannot_overrun_original_planning_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_planner_tuning.py", line 76, in test_final_revalidation_cannot_overrun_original_planning_deadline
+    with self.assertRaisesRegex(ValueError,'search time limit'):plan(plant,observation,validate=validate,include_offer=False)
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_recorded_orientation_timeout_is_bounded_before_any_motion (test_planning_deadline.PlanningDeadlineTests.test_recorded_orientation_timeout_is_bounded_before_any_motion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_planning_deadline.py", line 29, in test_recorded_orientation_timeout_is_bounded_before_any_motion
+    self.assertEqual(plant.solve.call_count,1)
+AssertionError: 3 != 1
+
+======================================================================
+FAIL: test_exposure_pose_does_not_bypass_live_snapshot_health (test_scene_refresh.SceneRefreshTests.test_exposure_pose_does_not_bypass_live_snapshot_health)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_scene_refresh.py", line 85, in test_exposure_pose_does_not_bypass_live_snapshot_health
+    with self.assertRaises(ValueError):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_initial_wrist_clearance_rejected_before_any_commands (test_sim_campaign_failures.CampaignFailureTests.test_initial_wrist_clearance_rejected_before_any_commands)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_campaign_failures.py", line 19, in test_initial_wrist_clearance_rejected_before_any_commands
+    self.assertEqual(result['command_count'],0)
+AssertionError: 40 != 0
+
+======================================================================
+FAIL: test_legacy_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_legacy_double_noise_stop_does_not_close_or_lift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_campaign_failures.py", line 39, in test_legacy_double_noise_stop_does_not_close_or_lift
+    self.assert_preclose_stop(3004,'legacy')
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_campaign_failures.py", line 29, in assert_preclose_stop
+    self.assertIn('moved during final reach; refusing to close',result['error'])
+AssertionError: 'moved during final reach; refusing to close' not found in 'Color/depth can target absent/ambiguous'
+
+======================================================================
+FAIL: test_tuned_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_tuned_double_noise_stop_does_not_close_or_lift)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_campaign_failures.py", line 42, in test_tuned_double_noise_stop_does_not_close_or_lift
+    self.assert_preclose_stop(3009,'tuned')
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_campaign_failures.py", line 29, in assert_preclose_stop
+    self.assertIn('moved during final reach; refusing to close',result['error'])
+AssertionError: 'moved during final reach; refusing to close' not found in 'Tracked can moved outside the checked pickup path'
+
+======================================================================
+FAIL: test_current_color_depth_path_lifts_and_holds_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_current_color_depth_path_lifts_and_holds_without_yolo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_color_depth.py", line 24, in test_current_color_depth_path_lifts_and_holds_without_yolo
+    self.assertTrue(result['lift_verified'], result.get('error'))
+AssertionError: False is not true : Independent camera did not verify the lift and hold
+
+======================================================================
+FAIL: test_head_camera_color_depth_lifts_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_head_camera_color_depth_lifts_without_yolo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_color_depth.py", line 41, in test_head_camera_color_depth_lifts_without_yolo
+    self.assertTrue(result['lift_verified'], result.get('error'))
+AssertionError: False is not true : Color/depth can target absent/ambiguous
+
+======================================================================
+FAIL: test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware (test_stochastic_sim_runtime.StochasticRuntimeTests.test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_stochastic_sim_runtime.py", line 14, in test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware
+    self.assertTrue(result['lift_verified'],result.get('error'))
+AssertionError: False is not true : Color/depth can target absent/ambiguous
+
+======================================================================
+FAIL: test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink (test_tracking_position_replay.TrackingPositionReplayTests.test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_tracking_position_replay.py", line 16, in test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink
+    self.assertEqual(len(new['baselines']),2)
+AssertionError: 1 != 2
+
+----------------------------------------------------------------------
+Ran 452 tests in 182.354s
+
+FAILED (failures=14, errors=3)
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpv_9_4qx6/20261009T181753Z-6704158b.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": false,
+  "artifact": null,
+  "artifact_error": "checksum mismatch",
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpzrwalw16/20261009T181753Z-781155de.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpflwo6pcg/20261009T181753Z-a9601541.json",
+  "phase": null,
+  "error": "RuntimeError: DEVICE_UNREACHABLE",
+  "physical_lift_verified": false,
+  "motion_commands_sent": null,
+  "motion_commands_this_attempt": null,
+  "adapter_initialized": null,
+  "evidence_verified": false,
+  "artifact": null,
+  "artifact_error": "Native Wendy connection was not established",
+  "recording_error": "Native Wendy connection was not established",
+  "runner_error": "RuntimeError: DEVICE_UNREACHABLE"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpp2heyjj0/20261009T181753Z-781b6fec.json",
+  "phase": "FROZEN",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": true,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpb8ycgpxv/20261009T181753Z-5b2e6f6d.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: start response lost"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpfuf909pm/20261009T181753Z-a4889c6e.json",
+  "phase": "HOLDING_CAN",
+  "error": "RuntimeError: Existing demo or arm ownership requires operator review before another attempt",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": true,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: Existing demo or arm ownership requires operator review before another attempt"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmpcg72w4az/20261009T181753Z-aa232c22.json",
+  "phase": "PASSIVE",
+  "error": null,
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": "RuntimeError: transport lost"
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmplinj2gum/20261009T181753Z-3c1fd88b.json",
+  "phase": "PASSIVE",
+  "error": "exposure stale (401.7 ms)",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 507,
+  "motion_commands_this_attempt": 7,
+  "adapter_initialized": false,
+  "evidence_verified": true,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": null,
+  "runner_error": null
+}
+{
+  "evidence": "/var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/tmplwdzfqbk/20261009T181753Z-29355a1b.json",
+  "phase": "PASSIVE",
+  "error": "RuntimeError: Recorder is unhealthy or required feedback is not being persisted",
+  "physical_lift_verified": false,
+  "motion_commands_sent": 0,
+  "motion_commands_this_attempt": 0,
+  "adapter_initialized": false,
+  "evidence_verified": false,
+  "artifact": "test.tar.gz",
+  "artifact_error": null,
+  "recording_error": "Recorder is unhealthy or required feedback is not being persisted",
+  "runner_error": "RuntimeError: Recorder is unhealthy or required feedback is not being persisted"
+}
+NX2 controller redeployed and PASSIVE startup verified. No demo started.

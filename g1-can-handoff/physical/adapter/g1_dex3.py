@@ -50,15 +50,21 @@ class Dex3_1_Right_JointIndex(IntEnum):
 # The bridge's order -> each hand's hardware slot. Left is the identity; the
 # right hand's enum puts INDEX before MIDDLE, which is the whole bug.
 _BRIDGE_TO_HW_LEFT = [
-    Dex3_1_Left_JointIndex.kLeftHandThumb0, Dex3_1_Left_JointIndex.kLeftHandThumb1,
-    Dex3_1_Left_JointIndex.kLeftHandThumb2, Dex3_1_Left_JointIndex.kLeftHandMiddle0,
-    Dex3_1_Left_JointIndex.kLeftHandMiddle1, Dex3_1_Left_JointIndex.kLeftHandIndex0,
+    Dex3_1_Left_JointIndex.kLeftHandThumb0,
+    Dex3_1_Left_JointIndex.kLeftHandThumb1,
+    Dex3_1_Left_JointIndex.kLeftHandThumb2,
+    Dex3_1_Left_JointIndex.kLeftHandMiddle0,
+    Dex3_1_Left_JointIndex.kLeftHandMiddle1,
+    Dex3_1_Left_JointIndex.kLeftHandIndex0,
     Dex3_1_Left_JointIndex.kLeftHandIndex1,
 ]
 _BRIDGE_TO_HW_RIGHT = [
-    Dex3_1_Right_JointIndex.kRightHandThumb0, Dex3_1_Right_JointIndex.kRightHandThumb1,
-    Dex3_1_Right_JointIndex.kRightHandThumb2, Dex3_1_Right_JointIndex.kRightHandMiddle0,
-    Dex3_1_Right_JointIndex.kRightHandMiddle1, Dex3_1_Right_JointIndex.kRightHandIndex0,
+    Dex3_1_Right_JointIndex.kRightHandThumb0,
+    Dex3_1_Right_JointIndex.kRightHandThumb1,
+    Dex3_1_Right_JointIndex.kRightHandThumb2,
+    Dex3_1_Right_JointIndex.kRightHandMiddle0,
+    Dex3_1_Right_JointIndex.kRightHandMiddle1,
+    Dex3_1_Right_JointIndex.kRightHandIndex0,
     Dex3_1_Right_JointIndex.kRightHandIndex1,
 ]
 
@@ -87,7 +93,7 @@ class _RIS_Mode:
 
     def to_uint8(self):
         m = 0
-        m |= (self.id & 0x0F)
+        m |= self.id & 0x0F
         m |= (self.status & 0x07) << 4
         m |= (self.timeout & 0x01) << 7
         return m
@@ -98,6 +104,7 @@ class Dex3Sender:
 
     # How often the hand state is actually read off DDS. See measured().
     STATE_PERIOD_S = 0.1
+
     def __init__(self, kp=1.5, kd=0.2, record_reading=None):
         self.record_reading = record_reading
         self._lpub = ChannelPublisher(kTopicDex3LeftCommand, HandCmd_)
@@ -108,10 +115,14 @@ class Dex3Sender:
         self._left = self._init_msg(Dex3_1_Left_JointIndex, kp, kd)
         self._right = self._init_msg(Dex3_1_Right_JointIndex, kp, kd)
         # The RIS mode byte per slot, rewritten every frame in ctrl_dual_hand.
-        self._mode = {jid: _RIS_Mode(id=jid, status=0x01).to_uint8() for jid in range(Dex3_Num_Motors)}
+        self._mode = {
+            jid: _RIS_Mode(id=jid, status=0x01).to_uint8()
+            for jid in range(Dex3_Num_Motors)
+        }
         self.kp = kp
         self.kd = kd
         from dex3_thermal import ThermalGuard
+
         self._thermal = ThermalGuard.from_env()
         self._last_state = {"left": None, "right": None}
         self._last_full = {"left": None, "right": None}
@@ -119,15 +130,22 @@ class Dex3Sender:
         # Feedback. Never fatal: a hand that will not report is still a hand
         # that grips, and this arrived long after the commands did.
         self._lsub = self._rsub = None
-        for name, topic in (("_lsub", kTopicDex3LeftState), ("_rsub", kTopicDex3RightState)):
+        for name, topic in (
+            ("_lsub", kTopicDex3LeftState),
+            ("_rsub", kTopicDex3RightState),
+        ):
             try:
                 sub = ChannelSubscriber(topic, HandState_)
                 sub.Init()
                 setattr(self, name, sub)
             except Exception as e:  # noqa: BLE001
                 logger.warning("Dex3 state %s unavailable: %s", topic, e)
-        logger.info("Dex3Sender ready (kp=%.2f kd=%.2f, state=%s)", kp, kd,
-                    bool(self._lsub and self._rsub))
+        logger.info(
+            "Dex3Sender ready (kp=%.2f kd=%.2f, state=%s)",
+            kp,
+            kd,
+            bool(self._lsub and self._rsub),
+        )
 
     def _init_msg(self, index_enum, kp, kd):
         msg = unitree_hg_msg_dds__HandCmd_()
@@ -158,7 +176,7 @@ class Dex3Sender:
         hand tracking, where the fingers move independently -- and the
         operator's report of the right hand doing "very small finger
         movement" while on hand tracking is consistent with it.
-        
+
         NOT yet confirmed on hardware; the enums are unambiguous but the
         physical check is one finger at a time with the operator watching.
         """
@@ -190,10 +208,12 @@ class Dex3Sender:
         # Position is untouched: the finger still closes where it was told,
         # with less holding torque, and holding torque is what makes the heat.
         # Moving the finger somewhere else would be a grip nobody asked for.
-        ls = self._thermal.scale("left",
-                                 (self._last_full.get("left") or {}).get("temperature"))
-        rs = self._thermal.scale("right",
-                                 (self._last_full.get("right") or {}).get("temperature"))
+        ls = self._thermal.scale(
+            "left", (self._last_full.get("left") or {}).get("temperature")
+        )
+        rs = self._thermal.scale(
+            "right", (self._last_full.get("right") or {}).get("temperature")
+        )
         for i, jid in enumerate(_BRIDGE_TO_HW_LEFT):
             self._left.motor_cmd[jid].mode = self._mode[jid]
             self._left.motor_cmd[jid].q = float(left_q7[i])
@@ -208,10 +228,14 @@ class Dex3Sender:
         right_result = self._rpub.Write(self._right)
         recorder = getattr(self, "record_reading", None)
         if recorder is not None:
-            recorder("rt/dex3/left/cmd.write", {"message": self._left,
-                                                "write_result": left_result})
-            recorder("rt/dex3/right/cmd.write", {"message": self._right,
-                                                 "write_result": right_result})
+            recorder(
+                "rt/dex3/left/cmd.write",
+                {"message": self._left, "write_result": left_result},
+            )
+            recorder(
+                "rt/dex3/right/cmd.write",
+                {"message": self._right, "write_result": right_result},
+            )
 
     def feedback_temperatures(self, left, right):
         """Use the runtime's fresh samples without blocking the command path.
@@ -273,8 +297,10 @@ class Dex3Sender:
         Same 10 Hz read as measured(); this is the same sample, more of it.
         """
         self._poll()
-        return {side: (dict(self._last_full[side]) if self._last_full.get(side) else None)
-                for side in ("left", "right")}
+        return {
+            side: (dict(self._last_full[side]) if self._last_full.get(side) else None)
+            for side in ("left", "right")
+        }
 
     @staticmethod
     def _field(ms, order, attr, conv=float):
@@ -295,7 +321,9 @@ class Dex3Sender:
         out = []
         for t in temps:
             try:
-                out.append(int(max(t)) if isinstance(t, (list, tuple)) and len(t) else int(t))
+                out.append(
+                    int(max(t)) if isinstance(t, (list, tuple)) and len(t) else int(t)
+                )
             except (TypeError, ValueError):
                 return None
         return out
@@ -306,8 +334,10 @@ class Dex3Sender:
         if now - self._state_t < self.STATE_PERIOD_S:
             return
         self._state_t = now
-        for side, sub, order in (("left", self._lsub, _BRIDGE_TO_HW_LEFT),
-                                 ("right", self._rsub, _BRIDGE_TO_HW_RIGHT)):
+        for side, sub, order in (
+            ("left", self._lsub, _BRIDGE_TO_HW_LEFT),
+            ("right", self._rsub, _BRIDGE_TO_HW_RIGHT),
+        ):
             try:
                 msg = sub.Read() if sub is not None else None
                 if msg is None:
@@ -320,12 +350,16 @@ class Dex3Sender:
             except Exception:  # noqa: BLE001 -- feedback must never cost a frame
                 continue
             self._last_state[side] = q
-            full = {"q": q,
-                    "dq": self._field(ms, order, "dq"),
-                    "tau_est": self._field(ms, order, "tau_est"),
-                    "temperature": self._hotter(self._field(ms, order, "temperature", conv=lambda v: v)),
-                    "mode": self._field(ms, order, "mode", conv=int),
-                    "motorstate": self._field(ms, order, "motorstate", conv=int)}
+            full = {
+                "q": q,
+                "dq": self._field(ms, order, "dq"),
+                "tau_est": self._field(ms, order, "tau_est"),
+                "temperature": self._hotter(
+                    self._field(ms, order, "temperature", conv=lambda v: v)
+                ),
+                "mode": self._field(ms, order, "mode", conv=int),
+                "motorstate": self._field(ms, order, "motorstate", conv=int),
+            }
             for name in ("power_v", "power_a"):
                 v = getattr(msg, name, None)
                 try:
@@ -343,7 +377,9 @@ class Dex3Sender:
         """Zero-stiffness both hands (kp=kd=0) — used on shutdown / e-stop."""
         for msg in (self._left, self._right):
             for jid in range(Dex3_Num_Motors):
-                msg.motor_cmd[jid].mode = _RIS_Mode(id=jid, status=0x01, timeout=1).to_uint8()
+                msg.motor_cmd[jid].mode = _RIS_Mode(
+                    id=jid, status=0x01, timeout=1
+                ).to_uint8()
                 msg.motor_cmd[jid].kp = 0.0
                 msg.motor_cmd[jid].kd = 0.0
                 msg.motor_cmd[jid].tau = 0.0
@@ -352,7 +388,11 @@ class Dex3Sender:
         right_result = self._rpub.Write(self._right)
         recorder = getattr(self, "record_reading", None)
         if recorder is not None:
-            recorder("rt/dex3/left/cmd.write", {"message": self._left,
-                                                "write_result": left_result})
-            recorder("rt/dex3/right/cmd.write", {"message": self._right,
-                                                 "write_result": right_result})
+            recorder(
+                "rt/dex3/left/cmd.write",
+                {"message": self._left, "write_result": left_result},
+            )
+            recorder(
+                "rt/dex3/right/cmd.write",
+                {"message": self._right, "write_result": right_result},
+            )

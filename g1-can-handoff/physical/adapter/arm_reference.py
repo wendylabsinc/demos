@@ -4,6 +4,7 @@ Velocity and acceleration bounds apply during ordinary tracking. A HOLD,
 position limit or measured-position leash takes precedence over smoothing.
 This generates commands; it does not model or guarantee physical tracking.
 """
+
 import numpy as np
 
 
@@ -29,7 +30,7 @@ class ArmReference:
 
     def advance(self, target, measured, dt, limits=None, tracking_error=np.deg2rad(10)):
         # Never turn a scheduling pause into a catch-up jump.
-        dt = min(.02, max(0., float(dt)))
+        dt = min(0.02, max(0.0, float(dt)))
         if dt == 0:
             return self.q.copy()
         target = np.asarray(target, dtype=float)
@@ -44,28 +45,42 @@ class ArmReference:
             hi = np.maximum(hi, limits[:, 0])
         destination = np.clip(target, lo, hi)
         # Critically damped second-order reference, with bounded acceleration.
-        acceleration = self.frequency**2 * (destination - self.q) - 2*self.frequency*self.velocity
-        acceleration = np.clip(acceleration, -self.max_acceleration, self.max_acceleration)
-        self.velocity = np.clip(self.velocity + acceleration*dt,
-                                -self.max_velocity, self.max_velocity)
-        proposed = self.q + self.velocity*dt
+        acceleration = (
+            self.frequency**2 * (destination - self.q)
+            - 2 * self.frequency * self.velocity
+        )
+        acceleration = np.clip(
+            acceleration, -self.max_acceleration, self.max_acceleration
+        )
+        self.velocity = np.clip(
+            self.velocity + acceleration * dt, -self.max_velocity, self.max_velocity
+        )
+        proposed = self.q + self.velocity * dt
         bounded = np.clip(proposed, lo, hi)
         hit = bounded != proposed
         self.guard_hits += int(np.count_nonzero(hit))
-        self.velocity[hit] = 0.
+        self.velocity[hit] = 0.0
         self.q = bounded
         return self.q.copy()
 
 
 def validate_motion_limits(values):
     """Validate the complete physical pair; never silently clamp a request."""
-    bounds = {"max_velocity_rad_s": (.25, 50.), "max_acceleration_rad_s2": (1., 30.)}
+    bounds = {
+        "max_velocity_rad_s": (0.25, 50.0),
+        "max_acceleration_rad_s2": (1.0, 30.0),
+    }
     if not isinstance(values, dict) or set(values) != set(bounds):
         raise ValueError("expected max_velocity_rad_s and max_acceleration_rad_s2")
     result = {}
     for name, (lo, hi) in bounds.items():
         value = values[name]
-        if isinstance(value, bool) or not isinstance(value, (int, float)) or not np.isfinite(value) or not lo <= value <= hi:
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not np.isfinite(value)
+            or not lo <= value <= hi
+        ):
             raise ValueError(f"{name} must be finite and between {lo:g} and {hi:g}")
         result[name] = float(value)
     return result

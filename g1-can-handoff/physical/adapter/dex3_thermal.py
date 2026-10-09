@@ -27,10 +27,10 @@ the finger still closes, just with less force -- which is the variable that
 makes the heat. Moving the finger somewhere else would be a grip the operator
 did not ask for.
 """
+
 import os
 
-ORDER = ["thumb_0", "thumb_1", "thumb_2", "middle_0", "middle_1",
-         "index_0", "index_1"]
+ORDER = ["thumb_0", "thumb_1", "thumb_2", "middle_0", "middle_1", "index_0", "index_1"]
 
 # Measured on the left hand: 39 -> 70 -> 90 C by thirds of a 49 s session, and
 # the joints that reached 90 C were the ones disabled at the end of it. The
@@ -57,7 +57,7 @@ class ThermalGuard:
         self.hot_c = max(float(hot_c), float(warm_c) + 1.0)
         self.min_scale = min(max(float(min_scale), 0.0), 1.0)
         self.enabled = bool(enabled)
-        self._last = {}          # (side, name) -> scale, for reporting
+        self._last = {}  # (side, name) -> scale, for reporting
 
     @classmethod
     def from_env(cls, env=None):
@@ -70,10 +70,12 @@ class ThermalGuard:
                 return default
             return v if lo <= v <= hi else default
 
-        return cls(warm_c=num("G1_DEX3_WARM_C", WARM_C, 30.0, 100.0),
-                   hot_c=num("G1_DEX3_HOT_C", HOT_C, 35.0, 110.0),
-                   min_scale=num("G1_DEX3_MIN_SCALE", MIN_SCALE, 0.0, 1.0),
-                   enabled=str(e.get("G1_DEX3_THERMAL", "1")).strip() not in ("0", "off"))
+        return cls(
+            warm_c=num("G1_DEX3_WARM_C", WARM_C, 30.0, 100.0),
+            hot_c=num("G1_DEX3_HOT_C", HOT_C, 35.0, 110.0),
+            min_scale=num("G1_DEX3_MIN_SCALE", MIN_SCALE, 0.0, 1.0),
+            enabled=str(e.get("G1_DEX3_THERMAL", "1")).strip() not in ("0", "off"),
+        )
 
     def scale(self, side, temps7):
         """-> [7] gain multipliers in the bridge's joint order.

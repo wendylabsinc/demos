@@ -16,6 +16,14 @@ dependencies = [
 g1_can_handoff = "g1_can_handoff:main"
 g1_can_probe = "g1_can_handoff.hardware:main"
 
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+# Recorded source snapshots are evidence. Never rewrite them with active code.
+force-exclude = '''
+/(offline/(validation|evidence|reference)|assets|sdk_native|benchmarks/results)/
+'''
+
 [build-system]
 requires = ["hatchling>=1.27,<2"]
 build-backend = "hatchling.build"

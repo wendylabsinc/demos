@@ -1,5 +1,9 @@
 # Physical handoff integration
 
+For the code tour, pickup sequence, settings and error locations, start with
+[CODE_GUIDE.md](CODE_GUIDE.md). The local controls page is in `operator_ui.html`;
+`operator_panel.py` handles its transport and requests.
+
 The service starts with passive body/hand readers and HTTP status on port 8102.
 It creates no command publisher at startup. It uses the downloaded handoff's IK
 model and planner, with the existing arm adapter and a Dex3 adapter that receives live motor temperatures.
@@ -26,8 +30,11 @@ edits; the launcher does not copy or rewrite controller code into a separate
 staging project. It explicitly selects `build.stagefile.yaml` and accepts CLI
 prompts. Readiness verifies the deployed Python source hashes against
 this checkout. Archive folders under `offline/validation/` are evidence, not
-deployment sources. The settling stop and its `arm_settle_failed` event live in
+deployment sources. The settling loop and `arm_settle_failed` event/raise site live in
 `physical_core.py`; `arm_settle_error_rad` is 0.04 rad with a two-second deadline.
+In the saved local version the timeout event and raise are commented out, so
+that timeout continues to measured-state sync. The readability cleanup
+preserves this existing behavior; the settling regression tests report it.
 The simulated torque loop, simulated contacts, and simulated can position are
 never used as physical evidence.
 

@@ -6,10 +6,12 @@ checks that the can remains held during lifting, and offers it above the table.
 The release operation requires explicit confirmation that the recipient supports
 the can. The demo stops in `waiting_for_acceptance` with the hand closed.
 
-The G1 NX2 [physical runtime](physical/README.md#coke-trained-yolo-on-g1-nx2)
-uses the trained Coca-Cola YOLOv8n model from the older G1 bartending demo,
-then fits aligned depth for grasp geometry. The original simulation commands
-below retain their synthetic red-cylinder detector.
+Start with the [code guide](physical/CODE_GUIDE.md) to find the pickup phases,
+planner, camera path, joint checks and error logging. The G1 NX2
+[physical runtime](physical/README.md) currently selects color/depth tracking
+in `physical/wendy.json`; the trained Coca-Cola YOLOv8n model remains available
+through the documented identity modes. The original simulation commands below
+retain their synthetic red-cylinder detector.
 
 ## Run locally
 

@@ -1,0 +1,183 @@
+{
+  "created_utc": "2026-10-09T18:28:53.284865+00:00",
+  "source_root": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff",
+  "checkpoint_commit": "f9464d3a54de0bebee8009a48d1257c8606dc364",
+  "checkpoint_tag": "codex/g1-handoff-before-readability-20261009T181731Z",
+  "backup_directory": "/Users/olivertaylor/Documents/Wendy/backups/g1-can-handoff-before-readability-20261009T181731Z",
+  "formatted_python_files": 223,
+  "python_executable_ast_parity": {
+    "verified_files": 221,
+    "excluded": [
+      "physical/operator_panel.py: template loading only; server AST separately verified",
+      "physical/test_operator_panel.py: browser-function extraction uses JavaScript parser instead of single-line regex"
+    ]
+  },
+  "controls_javascript_ast_equal": true,
+  "stagefile_parsed_configuration_equal": true,
+  "models_assets_archived_evidence_unchanged_files": 1194,
+  "baseline": {
+    "tests": 452,
+    "seconds": 182.354,
+    "failure_count": 14,
+    "error_count": 3,
+    "failures": [
+      {
+        "kind": "ERROR",
+        "test": "test_latest_trial_replay (unittest.loader._FailedTest.test_latest_trial_replay)"
+      },
+      {
+        "kind": "ERROR",
+        "test": "test_native_waist_and_planning_deadline_failures_reproduce_without_motion (test_real_stops_replay.RealStopsReplayTests.test_native_waist_and_planning_deadline_failures_reproduce_without_motion)"
+      },
+      {
+        "kind": "ERROR",
+        "test": "test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly (test_stale_trial_replay.NativeStaleReplayTests.test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_clearance_changes_proximity_checks_without_changing_measured_table (test_clearance_planning.ClearancePlanningTests.test_clearance_changes_proximity_checks_without_changing_measured_table)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_infeasible_lift_does_not_spend_staging_search_budget (test_clearance_planning.ClearancePlanningTests.test_infeasible_lift_does_not_spend_staging_search_budget)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_real_p80_final_offset_reproduces_production_settling_failure (test_harness_regression.RecordedHarnessRegressionTests.test_real_p80_final_offset_reproduces_production_settling_failure)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_recorded_reach_settle_failure_reproduces_with_no_contact_inference (test_motion_tracking.MotionTrackingTests.test_recorded_reach_settle_failure_reproduces_with_no_contact_inference)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_final_revalidation_cannot_overrun_original_planning_deadline (test_planner_tuning.PlannerTuningTests.test_final_revalidation_cannot_overrun_original_planning_deadline)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_recorded_orientation_timeout_is_bounded_before_any_motion (test_planning_deadline.PlanningDeadlineTests.test_recorded_orientation_timeout_is_bounded_before_any_motion)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_exposure_pose_does_not_bypass_live_snapshot_health (test_scene_refresh.SceneRefreshTests.test_exposure_pose_does_not_bypass_live_snapshot_health)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_initial_wrist_clearance_rejected_before_any_commands (test_sim_campaign_failures.CampaignFailureTests.test_initial_wrist_clearance_rejected_before_any_commands)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_legacy_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_legacy_double_noise_stop_does_not_close_or_lift)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_tuned_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_tuned_double_noise_stop_does_not_close_or_lift)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_current_color_depth_path_lifts_and_holds_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_current_color_depth_path_lifts_and_holds_without_yolo)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_head_camera_color_depth_lifts_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_head_camera_color_depth_lifts_without_yolo)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware (test_stochastic_sim_runtime.StochasticRuntimeTests.test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink (test_tracking_position_replay.TrackingPositionReplayTests.test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink)"
+      }
+    ]
+  },
+  "after": {
+    "tests": 455,
+    "seconds": 181.211,
+    "failure_count": 14,
+    "error_count": 3,
+    "failures": [
+      {
+        "kind": "ERROR",
+        "test": "test_latest_trial_replay (unittest.loader._FailedTest.test_latest_trial_replay)"
+      },
+      {
+        "kind": "ERROR",
+        "test": "test_native_waist_and_planning_deadline_failures_reproduce_without_motion (test_real_stops_replay.RealStopsReplayTests.test_native_waist_and_planning_deadline_failures_reproduce_without_motion)"
+      },
+      {
+        "kind": "ERROR",
+        "test": "test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly (test_stale_trial_replay.NativeStaleReplayTests.test_all_nine_original_stops_reproduce_and_same_input500ms_handoff_passes_repeatedly)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_clearance_changes_proximity_checks_without_changing_measured_table (test_clearance_planning.ClearancePlanningTests.test_clearance_changes_proximity_checks_without_changing_measured_table)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_infeasible_lift_does_not_spend_staging_search_budget (test_clearance_planning.ClearancePlanningTests.test_infeasible_lift_does_not_spend_staging_search_budget)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_real_p80_final_offset_reproduces_production_settling_failure (test_harness_regression.RecordedHarnessRegressionTests.test_real_p80_final_offset_reproduces_production_settling_failure)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_recorded_reach_settle_failure_reproduces_with_no_contact_inference (test_motion_tracking.MotionTrackingTests.test_recorded_reach_settle_failure_reproduces_with_no_contact_inference)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_final_revalidation_cannot_overrun_original_planning_deadline (test_planner_tuning.PlannerTuningTests.test_final_revalidation_cannot_overrun_original_planning_deadline)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_recorded_orientation_timeout_is_bounded_before_any_motion (test_planning_deadline.PlanningDeadlineTests.test_recorded_orientation_timeout_is_bounded_before_any_motion)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_exposure_pose_does_not_bypass_live_snapshot_health (test_scene_refresh.SceneRefreshTests.test_exposure_pose_does_not_bypass_live_snapshot_health)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_initial_wrist_clearance_rejected_before_any_commands (test_sim_campaign_failures.CampaignFailureTests.test_initial_wrist_clearance_rejected_before_any_commands)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_legacy_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_legacy_double_noise_stop_does_not_close_or_lift)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_tuned_double_noise_stop_does_not_close_or_lift (test_sim_campaign_failures.CampaignFailureTests.test_tuned_double_noise_stop_does_not_close_or_lift)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_current_color_depth_path_lifts_and_holds_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_current_color_depth_path_lifts_and_holds_without_yolo)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_head_camera_color_depth_lifts_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_head_camera_color_depth_lifts_without_yolo)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware (test_stochastic_sim_runtime.StochasticRuntimeTests.test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware)"
+      },
+      {
+        "kind": "FAIL",
+        "test": "test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink (test_tracking_position_replay.TrackingPositionReplayTests.test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink)"
+      }
+    ]
+  },
+  "focused": {
+    "tests": 100,
+    "seconds": 7.174,
+    "failure_count": 0,
+    "error_count": 0,
+    "failures": []
+  },
+  "new_failures": [],
+  "resolved_failures": [],
+  "format_check_passed": true,
+  "deployment_wrapper_audit_passed": true,
+  "deployment_issued": false,
+  "hardware_motion_issued": false
+}

@@ -1,4 +1,5 @@
 """Short-lived cooperative leases for the single-owner camera service."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -37,7 +38,9 @@ class CameraLeaseRegistry:
     def _owner_name(value: str) -> str:
         owner = " ".join(value.strip().split())
         if not owner or len(owner) > 64 or any(ord(char) < 32 for char in owner):
-            raise ValueError("camera lease owner must contain 1-64 printable characters")
+            raise ValueError(
+                "camera lease owner must contain 1-64 printable characters"
+            )
         return owner
 
     def _expire_locked(self, now: float) -> None:
@@ -63,7 +66,9 @@ class CameraLeaseRegistry:
             now = self._clock()
             self._expire_locked(now)
             if not token or token != self._token:
-                raise CameraLeaseDenied("camera lease token is absent, expired, or invalid")
+                raise CameraLeaseDenied(
+                    "camera lease token is absent, expired, or invalid"
+                )
             self._expires_at = now + self.timeout_s
             return LeaseGrant(token, str(self._owner), self.timeout_s)
 

@@ -8,18 +8,29 @@ from enum import IntEnum
 from fast_crc import FastHGLowCmdCRC
 from hotpath import DeadlineLoop, pin_current_thread
 
-from unitree_sdk2py.core.channel import ChannelPublisher, ChannelSubscriber, ChannelFactoryInitialize # dds
-from unitree_sdk2py.idl.unitree_hg.msg.dds_ import ( LowCmd_  as hg_LowCmd, LowState_ as hg_LowState) # idl for g1, h1_2
+from unitree_sdk2py.core.channel import (
+    ChannelPublisher,
+    ChannelSubscriber,
+    ChannelFactoryInitialize,
+)  # dds
+from unitree_sdk2py.idl.unitree_hg.msg.dds_ import (
+    LowCmd_ as hg_LowCmd,
+    LowState_ as hg_LowState,
+)  # idl for g1, h1_2
 from unitree_sdk2py.idl.default import unitree_hg_msg_dds__LowCmd_
 from unitree_sdk2py.utils.crc import CRC
 
-from unitree_sdk2py.idl.unitree_go.msg.dds_ import ( LowCmd_  as go_LowCmd, LowState_ as go_LowState)  # idl for h1
+from unitree_sdk2py.idl.unitree_go.msg.dds_ import (
+    LowCmd_ as go_LowCmd,
+    LowState_ as go_LowState,
+)  # idl for h1
 from unitree_sdk2py.idl.default import unitree_go_msg_dds__LowCmd_
 
 import logging
+
 logger_mp = logging.getLogger(__name__)
 
-kTopicLowCommand_Debug  = "rt/lowcmd"
+kTopicLowCommand_Debug = "rt/lowcmd"
 kTopicLowCommand_Motion = "rt/arm_sdk"
 kTopicLowState = "rt/lowstate"
 
@@ -28,28 +39,33 @@ G1_23_Num_Motors = 35
 H1_2_Num_Motors = 35
 H1_Num_Motors = 20
 H2_Num_Motors = 35
- 
+
 
 class MotorState:
     def __init__(self):
         self.q = None
         self.dq = None
 
+
 class G1_29_LowState:
     def __init__(self):
         self.motor_state = [MotorState() for _ in range(G1_29_Num_Motors)]
+
 
 class G1_23_LowState:
     def __init__(self):
         self.motor_state = [MotorState() for _ in range(G1_23_Num_Motors)]
 
+
 class H1_2_LowState:
     def __init__(self):
         self.motor_state = [MotorState() for _ in range(H1_2_Num_Motors)]
 
+
 class H1_LowState:
     def __init__(self):
         self.motor_state = [MotorState() for _ in range(H1_Num_Motors)]
+
 
 class H2_LowState:
     def __init__(self):
@@ -69,21 +85,28 @@ class DataBuffer:
         with self.lock:
             self.data = data
 
+
 class G1_29_ArmController:
-    def __init__(self, motion_mode=False, simulation_mode=False,
-                 record_reading=None, record_lowcmd=None, lowstate_hub=None):
-        '''WENDY: `lowstate_hub` (real/lowstate_hub.py) replaces this
+    def __init__(
+        self,
+        motion_mode=False,
+        simulation_mode=False,
+        record_reading=None,
+        record_lowcmd=None,
+        lowstate_hub=None,
+    ):
+        """WENDY: `lowstate_hub` (real/lowstate_hub.py) replaces this
         controller's own rt/lowstate reader. Two Python readers of a ~1 kHz
         topic -- this one polling every 2 ms and the onboard's listener
         decoding every sample -- starved the publish loop below of the GIL
         (see lowstate_hub.py). With a hub, the subscribe thread only copies the
-        sample the hub already decoded. None keeps the vendored reader.'''
+        sample the hub already decoded. None keeps the vendored reader."""
         logger_mp.info("Initialize G1_29_ArmController...")
         self.record_reading = record_reading
         self.record_lowcmd = record_lowcmd
         self.lowstate_hub = lowstate_hub
         self.q_target = np.zeros(14)
-        self.waist_yaw_target = None   # WENDY: motor 12 follows only once set
+        self.waist_yaw_target = None  # WENDY: motor 12 follows only once set
         # The websocket supplies a latest velocity, never repeated position
         # increments. Only the 50 Hz publisher integrates this value, once per
         # motor tick. A stale network command becomes zero locally.
@@ -105,7 +128,8 @@ class G1_29_ArmController:
         self.kp_low = 80.0
         self.kd_low = 3.0
         from adapter.arm_gains import arm_gains
-        self.kp_arm=float(arm_gains()[0][0])
+
+        self.kp_arm = float(arm_gains()[0][0])
         self.kp_wrist = 40.0
         self.kd_wrist = 1.5
 
@@ -142,8 +166,12 @@ class G1_29_ArmController:
         # sample it takes in Python, for the rest of the process's life.
         self._running_subscribe = True
         self.subscribe_thread = threading.Thread(
-            target=(self._subscribe_from_hub if self.lowstate_hub is not None
-                    else self._subscribe_motor_state))
+            target=(
+                self._subscribe_from_hub
+                if self.lowstate_hub is not None
+                else self._subscribe_motor_state
+            )
+        )
         self.subscribe_thread.daemon = True
         self.subscribe_thread.start()
 
@@ -157,7 +185,8 @@ class G1_29_ArmController:
             if time.time() > _deadline:
                 raise TimeoutError(
                     "no lowstate after 5 s -- is the robot powered and in Main "
-                    "Operation Control?")
+                    "Operation Control?"
+                )
             time.sleep(0.1)
             logger_mp.warning("[G1_29_ArmController] Waiting to subscribe dds...")
         logger_mp.info("[G1_29_ArmController] Subscribe dds ok.")
@@ -181,7 +210,9 @@ class G1_29_ArmController:
         self.arm_reference_t = None
         self.arm_position_limits = None
         logger_mp.debug(f"Current all body motor state q:\n{self.all_motor_q} \n")
-        logger_mp.debug(f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n")
+        logger_mp.debug(
+            f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n"
+        )
         logger_mp.info("Lock all joints except two arms...")
 
         arm_indices = set(member.value for member in G1_29_JointArmIndex)
@@ -201,17 +232,17 @@ class G1_29_ArmController:
                 else:
                     self.msg.motor_cmd[id].kp = self.kp_high
                     self.msg.motor_cmd[id].kd = self.kd_high
-            self.msg.motor_cmd[id].q  = self.all_motor_q[id]
+            self.msg.motor_cmd[id].q = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
         # initialize publish thread
-        self._running = True          # WENDY: see shutdown()
+        self._running = True  # WENDY: see shutdown()
         # WENDY: measured publish rate. The loop targets 1/control_dt (250 Hz);
         # on hardware it was running at ~16, which silently caps how fast the
         # arms can track. Reported so it is visible rather than inferred.
         self.loop_hz = 0.0
         self.loop_worst_ms = 0.0
-        self.crc_ms = 0.0          # WENDY: is the CRC the cost, or the write?
+        self.crc_ms = 0.0  # WENDY: is the CRC the cost, or the write?
         self.write_ms = 0.0
         self.record_ms = 0.0
         self.tick_interval_ms = None
@@ -232,7 +263,7 @@ class G1_29_ArmController:
             if msg is not None:
                 lowstate = G1_29_LowState()
                 for id in range(G1_29_Num_Motors):
-                    lowstate.motor_state[id].q  = msg.motor_state[id].q
+                    lowstate.motor_state[id].q = msg.motor_state[id].q
                     lowstate.motor_state[id].dq = msg.motor_state[id].dq
                 # WENDY: mode_machine BEFORE SetData, and the order matters.
                 # The constructor's wait gate is `lowstate_buffer.GetData()`,
@@ -245,11 +276,11 @@ class G1_29_ArmController:
             time.sleep(0.002)
 
     def _subscribe_from_hub(self):
-        '''WENDY: the same copy as _subscribe_motor_state, from the sample the
+        """WENDY: the same copy as _subscribe_motor_state, from the sample the
         onboard's LowstateHub already decoded. Copies only when the hub has a
         NEW sample, so it costs nothing between them. Same ordering rule:
         mode_machine before SetData, so "the buffer has data" implies
-        "mode_machine is set".'''
+        "mode_machine is set"."""
         last_seq = 0
         while self._running_subscribe:
             seq, msg, _t = self.lowstate_hub.latest()
@@ -257,7 +288,7 @@ class G1_29_ArmController:
                 last_seq = seq
                 lowstate = G1_29_LowState()
                 for id in range(G1_29_Num_Motors):
-                    lowstate.motor_state[id].q  = msg.motor_state[id].q
+                    lowstate.motor_state[id].q = msg.motor_state[id].q
                     lowstate.motor_state[id].dq = msg.motor_state[id].dq
                 self.mode_machine = msg.mode_machine
                 self.lowstate_buffer.SetData(lowstate)
@@ -277,12 +308,11 @@ class G1_29_ArmController:
         self.affinity = pin_current_thread("G1_MOTOR_CPU", default="auto")
         # Pass the module clock explicitly so simulator/tests can supply the
         # same deterministic clock used by the arm reference.
-        cadence = DeadlineLoop(self.control_dt, clock=time.monotonic,
-                               sleep=time.sleep)
+        cadence = DeadlineLoop(self.control_dt, clock=time.monotonic, sleep=time.sleep)
         intervals = deque(maxlen=512)
         previous_start = None
         if self.motion_mode:
-            self.msg.motor_cmd[G1_29_JointIndex.kNotUsedJoint0].q = 1.0;
+            self.msg.motor_cmd[G1_29_JointIndex.kNotUsedJoint0].q = 1.0
 
         while self._running:
             start_time = time.monotonic()
@@ -304,8 +334,11 @@ class G1_29_ArmController:
                     dt = self.control_dt if previous is None else now - previous
                     self.arm_reference_t = now
                     cliped_arm_q_target = self.arm_reference.advance(
-                        self.q_target, measured, dt,
-                        limits=getattr(self, "arm_position_limits", None))
+                        self.q_target,
+                        measured,
+                        dt,
+                        limits=getattr(self, "arm_position_limits", None),
+                    )
                     self._arm_reference_report = {
                         "q": cliped_arm_q_target.tolist(),
                         "requested_q": self.q_target.tolist(),
@@ -319,11 +352,12 @@ class G1_29_ArmController:
             for idx, id in enumerate(G1_29_JointArmIndex):
                 self.msg.motor_cmd[id].q = cliped_arm_q_target[idx]
                 self.msg.motor_cmd[id].dq = 0
-                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]   
+                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]
             # WENDY: integrate the latest bounded stick velocity exactly once
             # per LowCmd tick. Network message rate cannot alter distance.
             waist_yaw = self._advance_waist_velocity(
-                measured=self.get_current_waist_q(), now=time.monotonic())
+                measured=self.get_current_waist_q(), now=time.monotonic()
+            )
             write_waist_cmd(self.msg, waist_yaw)
 
             _t = time.monotonic()
@@ -338,8 +372,10 @@ class G1_29_ArmController:
             else:
                 recorder = getattr(self, "record_reading", None)
                 if recorder is not None:
-                    recorder("rt/arm_sdk.write", {"message": self.msg,
-                                                   "write_result": write_result})
+                    recorder(
+                        "rt/arm_sdk.write",
+                        {"message": self.msg, "write_result": write_result},
+                    )
             _tr = time.monotonic()
             self.crc_ms = round((_tc - _t) * 1000.0, 3)
             self.write_ms = round((_tw - _tc) * 1000.0, 3)
@@ -356,13 +392,19 @@ class G1_29_ArmController:
                 self._loop_n, self._loop_t0 = 0, current_time
                 if intervals:
                     ordered = sorted(intervals)
+
                     def percentile(fraction):
-                        i = min(len(ordered) - 1,
-                                max(0, int(np.ceil(len(ordered) * fraction)) - 1))
+                        i = min(
+                            len(ordered) - 1,
+                            max(0, int(np.ceil(len(ordered) * fraction)) - 1),
+                        )
                         return round(ordered[i], 3)
+
                     self.tick_interval_ms = {
-                        "p50": percentile(0.50), "p95": percentile(0.95),
-                        "p99": percentile(0.99), "max": round(ordered[-1], 3),
+                        "p50": percentile(0.50),
+                        "p95": percentile(0.95),
+                        "p99": percentile(0.99),
+                        "max": round(ordered[-1], 3),
                     }
                 self.loop_worst_ms = 0.0
             cadence.wait()
@@ -371,7 +413,7 @@ class G1_29_ArmController:
             # logger_mp.debug(f"sleep_time:{sleep_time}")
 
     def ctrl_dual_arm(self, q_target, tauff_target, waist_yaw=None):
-        '''Set control target values q & tau of the left and right arm motors.
+        """Set control target values q & tau of the left and right arm motors.
 
         WENDY: `waist_yaw` (radians, motor 12) is optional. None means "leave
         the waist as it is" -- NOT "reset it": the constructor already
@@ -379,7 +421,7 @@ class G1_29_ArmController:
         and the lock-all-joints loop above writes every motor's q), so the
         waist has been held by this publisher all along. Passing a value
         makes it follow; never passing one changes nothing about today.
-        '''
+        """
         with self.ctrl_lock:
             self.q_target = np.array(q_target, dtype=float, copy=True)
             self.tauff_target = np.array(tauff_target, dtype=float, copy=True)
@@ -393,7 +435,7 @@ class G1_29_ArmController:
         with self.ctrl_lock:
             report = dict(getattr(self, "_arm_reference_report", {}))
         if report:
-            report["age_s"] = max(0., time.monotonic() - report.pop("monotonic_s"))
+            report["age_s"] = max(0.0, time.monotonic() - report.pop("monotonic_s"))
         return report or None
 
     def hold_arm_measured(self):
@@ -413,36 +455,56 @@ class G1_29_ArmController:
 
     def set_arm_position_limits(self, limits):
         values = np.asarray(limits, dtype=float)
-        if values.shape != (14, 2) or not np.all(np.isfinite(values)) or np.any(values[:, 0] >= values[:, 1]):
+        if (
+            values.shape != (14, 2)
+            or not np.all(np.isfinite(values))
+            or np.any(values[:, 0] >= values[:, 1])
+        ):
             raise ValueError("expected 14 finite ordered arm limits")
         with self.ctrl_lock:
             self.arm_position_limits = values.copy()
 
     def set_waist_target(self, waist_yaw):
-        '''Update only motor 12's target for the existing publish loop.
+        """Update only motor 12's target for the existing publish loop.
 
         This does not write DDS and does not create a second motor publisher.
         The same 50 Hz ``_ctrl_motor_state`` loop continues to own the LowCmd;
         the independent waist websocket worker only refreshes this scalar.
-        '''
+        """
         with self.ctrl_lock:
             self.waist_yaw_target = float(waist_yaw)
             self.waist_velocity_rad_s = 0.0
             self.waist_velocity_t = 0.0
             self.waist_tick_t = None
 
-    def set_waist_velocity(self, velocity, *, limits, tracking_error,
-                           timeout_s=0.15, max_velocity=0.6, now=None):
+    def set_waist_velocity(
+        self,
+        velocity,
+        *,
+        limits,
+        tracking_error,
+        timeout_s=0.15,
+        max_velocity=0.6,
+        now=None,
+    ):
         """Store the newest velocity; never integrate on message arrival."""
         value = float(velocity)
         lo, hi = float(limits[0]), float(limits[1])
         leash = float(tracking_error)
         timeout = float(timeout_s)
         max_speed = float(max_velocity)
-        if (not np.isfinite(value) or not np.isfinite(lo) or not np.isfinite(hi)
-                or not np.isfinite(leash) or not np.isfinite(timeout)
-                or not np.isfinite(max_speed) or lo >= hi or leash <= 0.0
-                or timeout <= 0.0 or max_speed <= 0.0):
+        if (
+            not np.isfinite(value)
+            or not np.isfinite(lo)
+            or not np.isfinite(hi)
+            or not np.isfinite(leash)
+            or not np.isfinite(timeout)
+            or not np.isfinite(max_speed)
+            or lo >= hi
+            or leash <= 0.0
+            or timeout <= 0.0
+            or max_speed <= 0.0
+        ):
             raise ValueError("invalid waist velocity configuration")
         value = min(max_speed, max(-max_speed, value))
         stamp = time.monotonic() if now is None else float(now)
@@ -508,7 +570,7 @@ class G1_29_ArmController:
                 self.waist_yaw_target = float(measured)
 
     def get_mode_machine(self):
-        '''Return the robot's mode_machine as last seen on rt/lowstate.
+        """Return the robot's mode_machine as last seen on rt/lowstate.
 
         WENDY: this used to be `self.lowstate_subscriber.Read().mode_machine`,
         as upstream had it. Read() hands out each queued sample once, and the
@@ -519,29 +581,44 @@ class G1_29_ArmController:
         now records the value as it reads, and this refuses rather than
         guesses when nothing has arrived yet. Unitree made the same change
         upstream (xr_teleoperate 6738633, 2026-08-03).
-        '''
+        """
         if self.mode_machine is None:
             raise RuntimeError("G1 low state is not ready.")
         return self.mode_machine
 
     def get_current_motor_q(self):
-        '''Return current state q of all body motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in G1_29_JointIndex])
-    
+        """Return current state q of all body motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in G1_29_JointIndex
+            ]
+        )
+
     def get_current_dual_arm_q(self):
-        '''Return current state q of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in G1_29_JointArmIndex])
+        """Return current state q of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in G1_29_JointArmIndex
+            ]
+        )
 
     def get_current_waist_q(self):
-        '''Return the newest waist-yaw position without another DDS read.'''
+        """Return the newest waist-yaw position without another DDS read."""
         return float(self.lowstate_buffer.GetData().motor_state[12].q)
-    
+
     def get_current_dual_arm_dq(self):
-        '''Return current state dq of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].dq for id in G1_29_JointArmIndex])
-    
+        """Return current state dq of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].dq
+                for id in G1_29_JointArmIndex
+            ]
+        )
+
     def ctrl_dual_arm_go_home(self):
-        '''Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero.'''
+        """Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero."""
         logger_mp.info("[G1_29_ArmController] ctrl_dual_arm_go_home start...")
         max_attempts = 100
         current_attempts = 0
@@ -554,14 +631,16 @@ class G1_29_ArmController:
             if np.all(np.abs(current_q) < tolerance):
                 if self.motion_mode:
                     for weight in np.linspace(1, 0, num=101):
-                        self.msg.motor_cmd[G1_29_JointIndex.kNotUsedJoint0].q = weight;
+                        self.msg.motor_cmd[G1_29_JointIndex.kNotUsedJoint0].q = weight
                         time.sleep(0.02)
-                logger_mp.info("[G1_29_ArmController] both arms have reached the home position.")
+                logger_mp.info(
+                    "[G1_29_ArmController] both arms have reached the home position."
+                )
                 break
             current_attempts += 1
             time.sleep(0.05)
 
-    def set_arm_compliance(self, kp = None, kd = None):
+    def set_arm_compliance(self, kp=None, kd=None):
         """WENDY: make ONLY the arm joints soft, so they can be posed by hand.
 
         The alternative is the robot's own damping mode, which limps the legs
@@ -596,15 +675,23 @@ class G1_29_ArmController:
 
     def get_gains(self):
         """-> [(kp, kd)] x 14, what the wire currently carries."""
-        return [(float(self.msg.motor_cmd[j].kp), float(self.msg.motor_cmd[j].kd))
-                for j in G1_29_JointArmIndex]
+        return [
+            (float(self.msg.motor_cmd[j].kp), float(self.msg.motor_cmd[j].kd))
+            for j in G1_29_JointArmIndex
+        ]
 
     def default_gains(self):
         """-> [(kp, kd)] x 14, the constructor's values."""
-        return [(self.kp_wrist, self.kd_wrist) if self._Is_wrist_motor(j)
-                else (self.kp_arm, self.kd_low) for j in G1_29_JointArmIndex]
+        return [
+            (
+                (self.kp_wrist, self.kd_wrist)
+                if self._Is_wrist_motor(j)
+                else (self.kp_arm, self.kd_low)
+            )
+            for j in G1_29_JointArmIndex
+        ]
 
-    def shutdown(self, ramp_s = 1.0):
+    def shutdown(self, ramp_s=1.0):
         """Stop publishing and hand rt/arm_sdk back to the motion controller.
 
         WENDY: upstream has no way to stop this. _ctrl_motor_state is a bare
@@ -639,8 +726,8 @@ class G1_29_ArmController:
             if s is not None and s.is_alive():
                 s.join(timeout=0.5)
 
-    def set_arm_velocity_limit(self, velocity_limit = 50.0):
-        '''Set the per-cycle velocity clip on the arm joints, in rad/s.
+    def set_arm_velocity_limit(self, velocity_limit=50.0):
+        """Set the per-cycle velocity clip on the arm joints, in rad/s.
 
         WENDY: replaces speed_gradual_max()/speed_instant_max(), which ramped
         from 20 to 30 rad/s over 5 s after arming. The motor-clock reference
@@ -648,7 +735,7 @@ class G1_29_ArmController:
         only a final ceiling and must not undercut the validated 50 rad/s
         tuning range. Same fixed-clip shape Unitree made upstream
         (xr_teleoperate 4cbf6e2).
-        '''
+        """
         velocity_limit = float(velocity_limit)
         if not np.isfinite(velocity_limit) or velocity_limit <= 0.0:
             raise ValueError("arm_velocity_limit must be a positive finite value.")
@@ -670,7 +757,7 @@ class G1_29_ArmController:
             G1_29_JointIndex.kRightElbow.value,
         ]
         return motor_index.value in weak_motors
-    
+
     def _Is_wrist_motor(self, motor_index):
         wrist_motors = [
             G1_29_JointIndex.kLeftWristRoll.value,
@@ -682,18 +769,21 @@ class G1_29_ArmController:
         ]
         return motor_index.value in wrist_motors
 
-WAIST_YAW_MOTOR = 12      # WENDY: G1_29_JointIndex.kWaistYaw; roll/pitch (13, 14) are never written
+
+WAIST_YAW_MOTOR = (
+    12  # WENDY: G1_29_JointIndex.kWaistYaw; roll/pitch (13, 14) are never written
+)
 
 
 def write_waist_cmd(msg, waist_yaw):
-    '''WENDY: write motor 12's position target into a LowCmd, or leave it.
+    """WENDY: write motor 12's position target into a LowCmd, or leave it.
 
     Only motor 12. The waist roll and pitch slots exist in the message and on
     this robot they report no state at all (27 of 29 motors live); commanding
     them would be commanding motors nobody can see. Gains are whatever the
     constructor set for motor 12 (kp_high/kd_high, as for every non-arm,
     non-weak joint) -- this writes q only, dq and tau zero, like the arms.
-    '''
+    """
     if waist_yaw is None:
         return
     cmd = msg.motor_cmd[WAIST_YAW_MOTOR]
@@ -720,6 +810,7 @@ class G1_29_JointArmIndex(IntEnum):
     kRightWristRoll = 26
     kRightWristPitch = 27
     kRightWristYaw = 28
+
 
 class G1_29_JointIndex(IntEnum):
     # Left leg
@@ -759,7 +850,7 @@ class G1_29_JointIndex(IntEnum):
     kRightWristRoll = 26
     kRightWristPitch = 27
     kRightWristYaw = 28
-    
+
     # not used
     kNotUsedJoint0 = 29
     kNotUsedJoint1 = 30
@@ -768,8 +859,9 @@ class G1_29_JointIndex(IntEnum):
     kNotUsedJoint4 = 33
     kNotUsedJoint5 = 34
 
+
 class G1_23_ArmController:
-    def __init__(self, motion_mode = False, simulation_mode = False):
+    def __init__(self, motion_mode=False, simulation_mode=False):
         self.simulation_mode = simulation_mode
         self.motion_mode = motion_mode
 
@@ -792,7 +884,6 @@ class G1_23_ArmController:
         self._gradual_start_time = None
         self._gradual_time = None
 
-        
         if self.motion_mode:
             self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Motion, hg_LowCmd)
         else:
@@ -820,7 +911,9 @@ class G1_23_ArmController:
 
         self.all_motor_q = self.get_current_motor_q()
         logger_mp.info(f"Current all body motor state q:\n{self.all_motor_q} \n")
-        logger_mp.info(f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n")
+        logger_mp.info(
+            f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n"
+        )
         logger_mp.info("Lock all joints except two arms...")
 
         arm_indices = set(member.value for member in G1_23_JointArmIndex)
@@ -840,7 +933,7 @@ class G1_23_ArmController:
                 else:
                     self.msg.motor_cmd[id].kp = self.kp_high
                     self.msg.motor_cmd[id].kd = self.kd_high
-            self.msg.motor_cmd[id].q  = self.all_motor_q[id]
+            self.msg.motor_cmd[id].q = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
         # initialize publish thread
@@ -857,7 +950,7 @@ class G1_23_ArmController:
             if msg is not None:
                 lowstate = G1_23_LowState()
                 for id in range(G1_23_Num_Motors):
-                    lowstate.motor_state[id].q  = msg.motor_state[id].q
+                    lowstate.motor_state[id].q = msg.motor_state[id].q
                     lowstate.motor_state[id].dq = msg.motor_state[id].dq
                 self.lowstate_buffer.SetData(lowstate)
             time.sleep(0.002)
@@ -871,24 +964,26 @@ class G1_23_ArmController:
 
     def _ctrl_motor_state(self):
         if self.motion_mode:
-            self.msg.motor_cmd[G1_23_JointIndex.kNotUsedJoint0].q = 1.0;
+            self.msg.motor_cmd[G1_23_JointIndex.kNotUsedJoint0].q = 1.0
 
         while True:
             start_time = time.time()
 
             with self.ctrl_lock:
-                arm_q_target     = self.q_target
+                arm_q_target = self.q_target
                 arm_tauff_target = self.tauff_target
 
             if self.simulation_mode:
                 cliped_arm_q_target = arm_q_target
             else:
-                cliped_arm_q_target = self.clip_arm_q_target(arm_q_target, velocity_limit = self.arm_velocity_limit)
+                cliped_arm_q_target = self.clip_arm_q_target(
+                    arm_q_target, velocity_limit=self.arm_velocity_limit
+                )
 
             for idx, id in enumerate(G1_23_JointArmIndex):
                 self.msg.motor_cmd[id].q = cliped_arm_q_target[idx]
                 self.msg.motor_cmd[id].dq = 0
-                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]      
+                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]
 
             self.msg.crc = self.crc.Crc(self.msg)
             self.lowcmd_publisher.Write(self.msg)
@@ -905,29 +1000,44 @@ class G1_23_ArmController:
             # logger_mp.debug(f"sleep_time:{sleep_time}")
 
     def ctrl_dual_arm(self, q_target, tauff_target):
-        '''Set control target values q & tau of the left and right arm motors.'''
+        """Set control target values q & tau of the left and right arm motors."""
         with self.ctrl_lock:
             self.q_target = q_target
             self.tauff_target = tauff_target
 
     def get_mode_machine(self):
-        '''Return current dds mode machine.'''
+        """Return current dds mode machine."""
         return self.lowstate_subscriber.Read().mode_machine
-    
+
     def get_current_motor_q(self):
-        '''Return current state q of all body motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in G1_23_JointIndex])
-    
+        """Return current state q of all body motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in G1_23_JointIndex
+            ]
+        )
+
     def get_current_dual_arm_q(self):
-        '''Return current state q of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in G1_23_JointArmIndex])
-    
+        """Return current state q of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in G1_23_JointArmIndex
+            ]
+        )
+
     def get_current_dual_arm_dq(self):
-        '''Return current state dq of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].dq for id in G1_23_JointArmIndex])
-    
+        """Return current state dq of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].dq
+                for id in G1_23_JointArmIndex
+            ]
+        )
+
     def ctrl_dual_arm_go_home(self):
-        '''Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero.'''
+        """Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero."""
         logger_mp.info("[G1_23_ArmController] ctrl_dual_arm_go_home start...")
         max_attempts = 100
         current_attempts = 0
@@ -940,21 +1050,23 @@ class G1_23_ArmController:
             if np.all(np.abs(current_q) < tolerance):
                 if self.motion_mode:
                     for weight in np.linspace(1, 0, num=101):
-                        self.msg.motor_cmd[G1_23_JointIndex.kNotUsedJoint0].q = weight;
+                        self.msg.motor_cmd[G1_23_JointIndex.kNotUsedJoint0].q = weight
                         time.sleep(0.02)
-                logger_mp.info("[G1_23_ArmController] both arms have reached the home position.")
+                logger_mp.info(
+                    "[G1_23_ArmController] both arms have reached the home position."
+                )
                 break
             current_attempts += 1
             time.sleep(0.05)
 
-    def speed_gradual_max(self, t = 5.0):
-        '''Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0.'''
+    def speed_gradual_max(self, t=5.0):
+        """Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0."""
         self._gradual_start_time = time.time()
         self._gradual_time = t
         self._speed_gradual_max = True
 
     def speed_instant_max(self):
-        '''set arms velocity to the maximum value immediately, instead of gradually increasing.'''
+        """set arms velocity to the maximum value immediately, instead of gradually increasing."""
         self.arm_velocity_limit = 30.0
 
     def _Is_weak_motor(self, motor_index):
@@ -973,13 +1085,14 @@ class G1_23_ArmController:
             G1_23_JointIndex.kRightElbow.value,
         ]
         return motor_index.value in weak_motors
-    
+
     def _Is_wrist_motor(self, motor_index):
         wrist_motors = [
             G1_23_JointIndex.kLeftWristRoll.value,
             G1_23_JointIndex.kRightWristRoll.value,
         ]
         return motor_index.value in wrist_motors
+
 
 class G1_23_JointArmIndex(IntEnum):
     # Left arm
@@ -995,6 +1108,7 @@ class G1_23_JointArmIndex(IntEnum):
     kRightShoulderYaw = 24
     kRightElbow = 25
     kRightWristRoll = 26
+
 
 class G1_23_JointIndex(IntEnum):
     # Left leg
@@ -1034,7 +1148,7 @@ class G1_23_JointIndex(IntEnum):
     kRightWristRoll = 26
     kRightWristPitchNotUsed = 27
     kRightWristYawNotUsed = 28
-    
+
     # not used
     kNotUsedJoint0 = 29
     kNotUsedJoint1 = 30
@@ -1043,11 +1157,12 @@ class G1_23_JointIndex(IntEnum):
     kNotUsedJoint4 = 33
     kNotUsedJoint5 = 34
 
+
 class H1_2_ArmController:
-    def __init__(self, motion_mode = False, simulation_mode = False):
+    def __init__(self, motion_mode=False, simulation_mode=False):
         self.simulation_mode = simulation_mode
         self.motion_mode = motion_mode
-        
+
         logger_mp.info("Initialize H1_2_ArmController...")
         self.q_target = np.zeros(14)
         self.tauff_target = np.zeros(14)
@@ -1066,7 +1181,6 @@ class H1_2_ArmController:
         self._speed_gradual_max = False
         self._gradual_start_time = None
         self._gradual_time = None
-
 
         if self.motion_mode:
             self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Motion, hg_LowCmd)
@@ -1095,7 +1209,9 @@ class H1_2_ArmController:
 
         self.all_motor_q = self.get_current_motor_q()
         logger_mp.info(f"Current all body motor state q:\n{self.all_motor_q} \n")
-        logger_mp.info(f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n")
+        logger_mp.info(
+            f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n"
+        )
         logger_mp.info("Lock all joints except two arms...")
 
         arm_indices = set(member.value for member in H1_2_JointArmIndex)
@@ -1115,7 +1231,7 @@ class H1_2_ArmController:
                 else:
                     self.msg.motor_cmd[id].kp = self.kp_high
                     self.msg.motor_cmd[id].kd = self.kd_high
-            self.msg.motor_cmd[id].q  = self.all_motor_q[id]
+            self.msg.motor_cmd[id].q = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
         # initialize publish thread
@@ -1132,7 +1248,7 @@ class H1_2_ArmController:
             if msg is not None:
                 lowstate = H1_2_LowState()
                 for id in range(H1_2_Num_Motors):
-                    lowstate.motor_state[id].q  = msg.motor_state[id].q
+                    lowstate.motor_state[id].q = msg.motor_state[id].q
                     lowstate.motor_state[id].dq = msg.motor_state[id].dq
                 self.lowstate_buffer.SetData(lowstate)
             time.sleep(0.002)
@@ -1146,24 +1262,26 @@ class H1_2_ArmController:
 
     def _ctrl_motor_state(self):
         if self.motion_mode:
-            self.msg.motor_cmd[H1_2_JointIndex.kNotUsedJoint0].q = 1.0;
+            self.msg.motor_cmd[H1_2_JointIndex.kNotUsedJoint0].q = 1.0
 
         while True:
             start_time = time.time()
 
             with self.ctrl_lock:
-                arm_q_target     = self.q_target
+                arm_q_target = self.q_target
                 arm_tauff_target = self.tauff_target
 
             if self.simulation_mode:
                 cliped_arm_q_target = arm_q_target
             else:
-                cliped_arm_q_target = self.clip_arm_q_target(arm_q_target, velocity_limit = self.arm_velocity_limit)
+                cliped_arm_q_target = self.clip_arm_q_target(
+                    arm_q_target, velocity_limit=self.arm_velocity_limit
+                )
 
             for idx, id in enumerate(H1_2_JointArmIndex):
                 self.msg.motor_cmd[id].q = cliped_arm_q_target[idx]
                 self.msg.motor_cmd[id].dq = 0
-                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]      
+                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]
 
             self.msg.crc = self.crc.Crc(self.msg)
             self.lowcmd_publisher.Write(self.msg)
@@ -1180,29 +1298,41 @@ class H1_2_ArmController:
             # logger_mp.debug(f"sleep_time:{sleep_time}")
 
     def ctrl_dual_arm(self, q_target, tauff_target):
-        '''Set control target values q & tau of the left and right arm motors.'''
+        """Set control target values q & tau of the left and right arm motors."""
         with self.ctrl_lock:
             self.q_target = q_target
             self.tauff_target = tauff_target
 
     def get_mode_machine(self):
-        '''Return current dds mode machine.'''
+        """Return current dds mode machine."""
         return self.lowstate_subscriber.Read().mode_machine
-    
+
     def get_current_motor_q(self):
-        '''Return current state q of all body motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H1_2_JointIndex])
-    
+        """Return current state q of all body motors."""
+        return np.array(
+            [self.lowstate_buffer.GetData().motor_state[id].q for id in H1_2_JointIndex]
+        )
+
     def get_current_dual_arm_q(self):
-        '''Return current state q of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H1_2_JointArmIndex])
-    
+        """Return current state q of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in H1_2_JointArmIndex
+            ]
+        )
+
     def get_current_dual_arm_dq(self):
-        '''Return current state dq of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].dq for id in H1_2_JointArmIndex])
-    
+        """Return current state dq of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].dq
+                for id in H1_2_JointArmIndex
+            ]
+        )
+
     def ctrl_dual_arm_go_home(self):
-        '''Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero.'''
+        """Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero."""
         logger_mp.info("[H1_2_ArmController] ctrl_dual_arm_go_home start...")
         max_attempts = 100
         current_attempts = 0
@@ -1215,21 +1345,23 @@ class H1_2_ArmController:
             if np.all(np.abs(current_q) < tolerance):
                 if self.motion_mode:
                     for weight in np.linspace(1, 0, num=101):
-                        self.msg.motor_cmd[H1_2_JointIndex.kNotUsedJoint0].q = weight;
+                        self.msg.motor_cmd[H1_2_JointIndex.kNotUsedJoint0].q = weight
                         time.sleep(0.02)
-                logger_mp.info("[H1_2_ArmController] both arms have reached the home position.")
+                logger_mp.info(
+                    "[H1_2_ArmController] both arms have reached the home position."
+                )
                 break
             current_attempts += 1
             time.sleep(0.05)
 
-    def speed_gradual_max(self, t = 5.0):
-        '''Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0.'''
+    def speed_gradual_max(self, t=5.0):
+        """Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0."""
         self._gradual_start_time = time.time()
         self._gradual_time = t
         self._speed_gradual_max = True
 
     def speed_instant_max(self):
-        '''set arms velocity to the maximum value immediately, instead of gradually increasing.'''
+        """set arms velocity to the maximum value immediately, instead of gradually increasing."""
         self.arm_velocity_limit = 30.0
 
     def _Is_weak_motor(self, motor_index):
@@ -1248,7 +1380,7 @@ class H1_2_ArmController:
             H1_2_JointIndex.kRightElbowPitch.value,
         ]
         return motor_index.value in weak_motors
-    
+
     def _Is_wrist_motor(self, motor_index):
         wrist_motors = [
             H1_2_JointIndex.kLeftElbowRoll.value,
@@ -1259,7 +1391,8 @@ class H1_2_ArmController:
             H1_2_JointIndex.kRightWristYaw.value,
         ]
         return motor_index.value in wrist_motors
-    
+
+
 class H1_2_JointArmIndex(IntEnum):
     # Left arm
     kLeftShoulderPitch = 13
@@ -1278,6 +1411,7 @@ class H1_2_JointArmIndex(IntEnum):
     kRightElbowRoll = 24
     kRightWristPitch = 25
     kRightWristYaw = 26
+
 
 class H1_2_JointIndex(IntEnum):
     # Left leg
@@ -1325,10 +1459,11 @@ class H1_2_JointIndex(IntEnum):
     kNotUsedJoint6 = 33
     kNotUsedJoint7 = 34
 
+
 class H1_ArmController:
-    def __init__(self, simulation_mode = False):
+    def __init__(self, simulation_mode=False):
         self.simulation_mode = simulation_mode
-        
+
         logger_mp.info("Initialize H1_ArmController...")
         self.q_target = np.zeros(8)
         self.tauff_target = np.zeros(8)
@@ -1372,7 +1507,9 @@ class H1_ArmController:
 
         self.all_motor_q = self.get_current_motor_q()
         logger_mp.info(f"Current all body motor state q:\n{self.all_motor_q} \n")
-        logger_mp.info(f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n")
+        logger_mp.info(
+            f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n"
+        )
         logger_mp.info("Lock all joints except two arms...")
 
         for id in H1_JointIndex:
@@ -1384,7 +1521,7 @@ class H1_ArmController:
                 self.msg.motor_cmd[id].kp = self.kp_high
                 self.msg.motor_cmd[id].kd = self.kd_high
                 self.msg.motor_cmd[id].mode = 0x0A
-            self.msg.motor_cmd[id].q  = self.all_motor_q[id]
+            self.msg.motor_cmd[id].q = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
         # initialize publish thread
@@ -1401,7 +1538,7 @@ class H1_ArmController:
             if msg is not None:
                 lowstate = H1_LowState()
                 for id in range(H1_Num_Motors):
-                    lowstate.motor_state[id].q  = msg.motor_state[id].q
+                    lowstate.motor_state[id].q = msg.motor_state[id].q
                     lowstate.motor_state[id].dq = msg.motor_state[id].dq
                 self.lowstate_buffer.SetData(lowstate)
             time.sleep(0.002)
@@ -1418,18 +1555,20 @@ class H1_ArmController:
             start_time = time.time()
 
             with self.ctrl_lock:
-                arm_q_target     = self.q_target
+                arm_q_target = self.q_target
                 arm_tauff_target = self.tauff_target
 
             if self.simulation_mode:
                 cliped_arm_q_target = arm_q_target
             else:
-                cliped_arm_q_target = self.clip_arm_q_target(arm_q_target, velocity_limit = self.arm_velocity_limit)
+                cliped_arm_q_target = self.clip_arm_q_target(
+                    arm_q_target, velocity_limit=self.arm_velocity_limit
+                )
 
             for idx, id in enumerate(H1_JointArmIndex):
                 self.msg.motor_cmd[id].q = cliped_arm_q_target[idx]
                 self.msg.motor_cmd[id].dq = 0
-                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]      
+                self.msg.motor_cmd[id].tau = arm_tauff_target[idx]
 
             self.msg.crc = self.crc.Crc(self.msg)
             self.lowcmd_publisher.Write(self.msg)
@@ -1446,25 +1585,37 @@ class H1_ArmController:
             # logger_mp.debug(f"sleep_time:{sleep_time}")
 
     def ctrl_dual_arm(self, q_target, tauff_target):
-        '''Set control target values q & tau of the left and right arm motors.'''
+        """Set control target values q & tau of the left and right arm motors."""
         with self.ctrl_lock:
             self.q_target = q_target
             self.tauff_target = tauff_target
-    
+
     def get_current_motor_q(self):
-        '''Return current state q of all body motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H1_JointIndex])
-    
+        """Return current state q of all body motors."""
+        return np.array(
+            [self.lowstate_buffer.GetData().motor_state[id].q for id in H1_JointIndex]
+        )
+
     def get_current_dual_arm_q(self):
-        '''Return current state q of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H1_JointArmIndex])
-    
+        """Return current state q of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in H1_JointArmIndex
+            ]
+        )
+
     def get_current_dual_arm_dq(self):
-        '''Return current state dq of the left and right arm motors.'''
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].dq for id in H1_JointArmIndex])
-    
+        """Return current state dq of the left and right arm motors."""
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].dq
+                for id in H1_JointArmIndex
+            ]
+        )
+
     def ctrl_dual_arm_go_home(self):
-        '''Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero.'''
+        """Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero."""
         logger_mp.info("[H1_ArmController] ctrl_dual_arm_go_home start...")
         max_attempts = 100
         current_attempts = 0
@@ -1475,19 +1626,21 @@ class H1_ArmController:
         while current_attempts < max_attempts:
             current_q = self.get_current_dual_arm_q()
             if np.all(np.abs(current_q) < tolerance):
-                logger_mp.info("[H1_ArmController] both arms have reached the home position.")
+                logger_mp.info(
+                    "[H1_ArmController] both arms have reached the home position."
+                )
                 break
             current_attempts += 1
             time.sleep(0.05)
 
-    def speed_gradual_max(self, t = 5.0):
-        '''Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0.'''
+    def speed_gradual_max(self, t=5.0):
+        """Parameter t is the total time required for arms velocity to gradually increase to its maximum value, in seconds. The default is 5.0."""
         self._gradual_start_time = time.time()
         self._gradual_time = t
         self._speed_gradual_max = True
 
     def speed_instant_max(self):
-        '''set arms velocity to the maximum value immediately, instead of gradually increasing.'''
+        """set arms velocity to the maximum value immediately, instead of gradually increasing."""
         self.arm_velocity_limit = 30.0
 
     def _Is_weak_motor(self, motor_index):
@@ -1506,9 +1659,10 @@ class H1_ArmController:
             H1_JointIndex.kRightElbow.value,
         ]
         return motor_index.value in weak_motors
-    
+
+
 class H1_JointArmIndex(IntEnum):
-    # Unlike G1 and H1_2, the arm order in DDS messages for H1 is right then left. 
+    # Unlike G1 and H1_2, the arm order in DDS messages for H1 is right then left.
     # Therefore, the purpose of switching the order here is to maintain consistency with G1 and H1_2.
     # Left arm
     kLeftShoulderPitch = 16
@@ -1520,6 +1674,7 @@ class H1_JointArmIndex(IntEnum):
     kRightShoulderRoll = 13
     kRightShoulderYaw = 14
     kRightElbow = 15
+
 
 class H1_JointIndex(IntEnum):
     kRightHipRoll = 0
@@ -1545,6 +1700,7 @@ class H1_JointIndex(IntEnum):
     kLeftShoulderYaw = 18
     kLeftElbow = 19
 
+
 class H2_ArmController:
     def __init__(self, motion_mode=False, simulation_mode=False):
         logger_mp.info("Initialize H2_ArmController...")
@@ -1566,7 +1722,7 @@ class H2_ArmController:
         self._speed_gradual_max = False
         self._gradual_start_time = None
         self._gradual_time = None
-        
+
         if self.motion_mode:
             self.lowcmd_publisher = ChannelPublisher(kTopicLowCommand_Motion, hg_LowCmd)
         else:
@@ -1594,7 +1750,9 @@ class H2_ArmController:
 
         self.all_motor_q = self.get_current_motor_q()
         logger_mp.debug(f"Current all body motor state q:\n{self.all_motor_q} \n")
-        logger_mp.debug(f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n")
+        logger_mp.debug(
+            f"Current two arms motor state q:\n{self.get_current_dual_arm_q()}\n"
+        )
         logger_mp.info("Lock all joints except two arms...")
 
         arm_indices = set(member.value for member in H2_JointArmIndex)
@@ -1660,7 +1818,9 @@ class H2_ArmController:
             if self.simulation_mode:
                 cliped_arm_q_target = arm_q_target
             else:
-                cliped_arm_q_target = self.clip_arm_q_target(arm_q_target, velocity_limit=self.arm_velocity_limit)
+                cliped_arm_q_target = self.clip_arm_q_target(
+                    arm_q_target, velocity_limit=self.arm_velocity_limit
+                )
 
             for idx, id in enumerate(H2_JointArmIndex):
                 self.msg.motor_cmd[id].q = cliped_arm_q_target[idx]
@@ -1691,15 +1851,27 @@ class H2_ArmController:
 
     def get_current_motor_q(self):
         """Return current state q of all body motors."""
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H2_JointIndex])
+        return np.array(
+            [self.lowstate_buffer.GetData().motor_state[id].q for id in H2_JointIndex]
+        )
 
     def get_current_dual_arm_q(self):
         """Return current state q of the left and right arm motors."""
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].q for id in H2_JointArmIndex])
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].q
+                for id in H2_JointArmIndex
+            ]
+        )
 
     def get_current_dual_arm_dq(self):
         """Return current state dq of the left and right arm motors."""
-        return np.array([self.lowstate_buffer.GetData().motor_state[id].dq for id in H2_JointArmIndex])
+        return np.array(
+            [
+                self.lowstate_buffer.GetData().motor_state[id].dq
+                for id in H2_JointArmIndex
+            ]
+        )
 
     def ctrl_dual_arm_go_home(self):
         """Move both the left and right arms of the robot to their home position by setting the target joint angles (q) and torques (tau) to zero."""
@@ -1716,7 +1888,9 @@ class H2_ArmController:
                     for weight in np.linspace(1, 0, num=101):
                         self.msg.motor_cmd[H2_JointIndex.kNotUsedJoint0].q = weight
                         time.sleep(0.02)
-                logger_mp.info("[H2_ArmController] both arms have reached the home position.")
+                logger_mp.info(
+                    "[H2_ArmController] both arms have reached the home position."
+                )
                 break
             current_attempts += 1
             time.sleep(0.05)
@@ -1756,6 +1930,7 @@ class H2_ArmController:
             H2_JointIndex.kRightWristYaw.value,
         ]
         return motor_index.value in wrist_motors
+
 
 class H2_JointArmIndex(IntEnum):
     # Left arm
@@ -1826,11 +2001,12 @@ class H2_JointIndex(IntEnum):
     kNotUsedJoint2 = 33
     kNotUsedJoint3 = 34
 
+
 if __name__ == "__main__":
     from robot_arm_ik import G1_29_ArmIK, G1_23_ArmIK, H1_2_ArmIK, H1_ArmIK, H2_ArmIK
     import pinocchio as pin
 
-    ChannelFactoryInitialize(1) # 0 for real robot, 1 for simulation
+    ChannelFactoryInitialize(1)  # 0 for real robot, 1 for simulation
 
     # arm_ik = G1_29_ArmIK(Unit_Test = True, Visualization = False)
     # arm = G1_29_ArmController(simulation_mode=True)
@@ -1840,9 +2016,8 @@ if __name__ == "__main__":
     # arm = H1_2_ArmController()
     # arm_ik = H1_ArmIK(Unit_Test = True, Visualization = True)
     # arm = H1_ArmController()
-    arm_ik = H2_ArmIK(Unit_Test = True, Visualization = False)
+    arm_ik = H2_ArmIK(Unit_Test=True, Visualization=False)
     arm = H2_ArmController()
-
 
     # initial positon
     L_tf_target = pin.SE3(
@@ -1857,33 +2032,48 @@ if __name__ == "__main__":
 
     rotation_speed = 0.005  # Rotation speed in radians per iteration
 
-    user_input = input("Please enter the start signal (enter 's' to start the subsequent program): \n")
-    if user_input.lower() == 's':
+    user_input = input(
+        "Please enter the start signal (enter 's' to start the subsequent program): \n"
+    )
+    if user_input.lower() == "s":
         step = 0
         arm.speed_gradual_max()
         while True:
             if step <= 120:
                 angle = rotation_speed * step
-                L_quat = pin.Quaternion(np.cos(angle / 2), 0, np.sin(angle / 2), 0)  # y axis
-                R_quat = pin.Quaternion(np.cos(angle / 2), 0, 0, np.sin(angle / 2))  # z axis
+                L_quat = pin.Quaternion(
+                    np.cos(angle / 2), 0, np.sin(angle / 2), 0
+                )  # y axis
+                R_quat = pin.Quaternion(
+                    np.cos(angle / 2), 0, 0, np.sin(angle / 2)
+                )  # z axis
 
-                L_tf_target.translation += np.array([0.001,  0.001, 0.001])
+                L_tf_target.translation += np.array([0.001, 0.001, 0.001])
                 R_tf_target.translation += np.array([0.001, -0.001, 0.001])
             else:
                 angle = rotation_speed * (240 - step)
-                L_quat = pin.Quaternion(np.cos(angle / 2), 0, np.sin(angle / 2), 0)  # y axis
-                R_quat = pin.Quaternion(np.cos(angle / 2), 0, 0, np.sin(angle / 2))  # z axis
+                L_quat = pin.Quaternion(
+                    np.cos(angle / 2), 0, np.sin(angle / 2), 0
+                )  # y axis
+                R_quat = pin.Quaternion(
+                    np.cos(angle / 2), 0, 0, np.sin(angle / 2)
+                )  # z axis
 
-                L_tf_target.translation -= np.array([0.001,  0.001, 0.001])
+                L_tf_target.translation -= np.array([0.001, 0.001, 0.001])
                 R_tf_target.translation -= np.array([0.001, -0.001, 0.001])
 
             L_tf_target.rotation = L_quat.toRotationMatrix()
             R_tf_target.rotation = R_quat.toRotationMatrix()
 
-            current_lr_arm_q  = arm.get_current_dual_arm_q()
+            current_lr_arm_q = arm.get_current_dual_arm_q()
             current_lr_arm_dq = arm.get_current_dual_arm_dq()
 
-            sol_q, sol_tauff = arm_ik.solve_ik(L_tf_target.homogeneous, R_tf_target.homogeneous, current_lr_arm_q, current_lr_arm_dq)
+            sol_q, sol_tauff = arm_ik.solve_ik(
+                L_tf_target.homogeneous,
+                R_tf_target.homogeneous,
+                current_lr_arm_q,
+                current_lr_arm_dq,
+            )
 
             arm.ctrl_dual_arm(sol_q, sol_tauff)
 

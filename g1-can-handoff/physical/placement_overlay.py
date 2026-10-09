@@ -1,4 +1,5 @@
 """Read-only calibrated placement overlay shared by the local controls page."""
+
 import json
 import threading
 import time
@@ -8,50 +9,85 @@ from pose_alignment import corrected_config
 
 class PlacementGuide:
     """Separate read-only transport keeps projection off Stop/Release's path."""
+
     def __init__(self, client_factory):
-        self.client_factory=client_factory;self.lock=threading.Lock()
-        self.value=dict(valid=False,error='Loading calibrated pickup area…')
-        self.updated=0.;self.stop=threading.Event()
-        self.thread=threading.Thread(target=self.update,daemon=True,name='placement-guide')
+        self.client_factory = client_factory
+        self.lock = threading.Lock()
+        self.value = dict(valid=False, error="Loading calibrated pickup area…")
+        self.updated = 0.0
+        self.stop = threading.Event()
+        self.thread = threading.Thread(
+            target=self.update, daemon=True, name="placement-guide"
+        )
 
     def start(self):
-        self.thread.start();return self
+        self.thread.start()
+        return self
 
     def read(self):
         with self.lock:
-            if time.monotonic()-self.updated>3:
-                return dict(self.value,valid=False,reference_only=bool(self.value.get('polygon')),
-                            error='Placement feedback expired — last calibrated area shown as reference')
+            if time.monotonic() - self.updated > 3:
+                return dict(
+                    self.value,
+                    valid=False,
+                    reference_only=bool(self.value.get("polygon")),
+                    error="Placement feedback expired — last calibrated area shown as reference",
+                )
             return dict(self.value)
 
     def update(self):
-        client=None
+        client = None
         try:
-            client=self.client_factory()
+            client = self.client_factory()
             while not self.stop.is_set():
                 try:
-                    result=client.tool('container_exec',dict(app_name='DEV-g1-handoff-physical',
-                        command=['python3','-c',SCRIPT],timeout_seconds=10,max_bytes=18000))
-                    payload=result.get('structuredContent') or json.loads(next(c['text'] for c in result['content'] if c['type']=='text'))
-                    if payload.get('exit_code')!=0 or payload.get('truncated'):
-                        raise RuntimeError(payload.get('stderr') or 'Placement feedback unavailable')
-                    snapshot=json.loads(payload['stdout'])
+                    result = client.tool(
+                        "container_exec",
+                        dict(
+                            app_name="DEV-g1-handoff-physical",
+                            command=["python3", "-c", SCRIPT],
+                            timeout_seconds=10,
+                            max_bytes=18000,
+                        ),
+                    )
+                    payload = result.get("structuredContent") or json.loads(
+                        next(
+                            c["text"] for c in result["content"] if c["type"] == "text"
+                        )
+                    )
+                    if payload.get("exit_code") != 0 or payload.get("truncated"):
+                        raise RuntimeError(
+                            payload.get("stderr") or "Placement feedback unavailable"
+                        )
+                    snapshot = json.loads(payload["stdout"])
                     # A received snapshot must pass camera/calibration identity
                     # checks even when only a reference projection is available.
-                    try:value=project_status(snapshot)
-                    except Exception as exc:value=dict(valid=False,error=str(exc))
+                    try:
+                        value = project_status(snapshot)
+                    except Exception as exc:
+                        value = dict(valid=False, error=str(exc))
                 except Exception as exc:
-                    with self.lock:value=dict(self.value,valid=False,
-                        reference_only=bool(self.value.get('polygon')),error=str(exc))
-                with self.lock:self.value=value;self.updated=time.monotonic()
+                    with self.lock:
+                        value = dict(
+                            self.value,
+                            valid=False,
+                            reference_only=bool(self.value.get("polygon")),
+                            error=str(exc),
+                        )
+                with self.lock:
+                    self.value = value
+                    self.updated = time.monotonic()
                 self.stop.wait(1)
         finally:
-            if client is not None:client.process.terminate()
+            if client is not None:
+                client.process.terminate()
 
     def close(self):
-        self.stop.set();self.thread.join(1)
+        self.stop.set()
+        self.thread.join(1)
 
-SCRIPT = r'''import ast,io,json,pathlib,time,urllib.request,zipfile
+
+SCRIPT = r"""import ast,io,json,pathlib,time,urllib.request,zipfile
 s=json.load(urllib.request.urlopen('http://127.0.0.1:8102/status',timeout=3))
 c=json.loads(pathlib.Path('/data/calibration.json').read_text())
 h=json.load(urllib.request.urlopen('http://127.0.0.1:8001/health',timeout=3))
@@ -71,51 +107,80 @@ body=s.get('measured',{}).get('body')
 print(json.dumps(dict(config=c,bounds=bounds,intrinsics=m['calibration']['intrinsics'],
  camera_serial=source['camera_serial'],phase=s['phase'],demo_running=s['demo_running'],body=body,
  body_age_s=None if body is None else time.monotonic()-body['time'],camera_health=h)))
-'''
+"""
+
 
 def project_area(snapshot, *, reference=False):
-    config = snapshot['config']
-    if not config.get('operator_accepted') or not config.get('stationary_base_confirmed'):
-        raise ValueError('Placement guide requires accepted stationary-base calibration')
-    if config['camera_serial'] != snapshot['camera_serial']:
-        raise ValueError('Placement guide camera/calibration mismatch')
+    config = snapshot["config"]
+    if not config.get("operator_accepted") or not config.get(
+        "stationary_base_confirmed"
+    ):
+        raise ValueError(
+            "Placement guide requires accepted stationary-base calibration"
+        )
+    if config["camera_serial"] != snapshot["camera_serial"]:
+        raise ValueError("Placement guide camera/calibration mismatch")
     if not reference:
-        age = snapshot['body_age_s']
-        if age is None or not 0 <= age <= .2:
-            raise ValueError('Placement guide unavailable: body feedback is stale')
-        h = snapshot['camera_health']
-        if not h['healthy'] or not 0 <= h['frame_age_s'] <= .4:
-            raise ValueError('Placement guide unavailable: camera is stale')
-        body = snapshot['body']
-        config = corrected_config(config, dict(timestamp=body['time'], rpy=body['imu_rpy'], waist_q=body['q'][12:15]))
-    intrinsics = snapshot['intrinsics']
+        age = snapshot["body_age_s"]
+        if age is None or not 0 <= age <= 0.2:
+            raise ValueError("Placement guide unavailable: body feedback is stale")
+        h = snapshot["camera_health"]
+        if not h["healthy"] or not 0 <= h["frame_age_s"] <= 0.4:
+            raise ValueError("Placement guide unavailable: camera is stale")
+        body = snapshot["body"]
+        config = corrected_config(
+            config,
+            dict(timestamp=body["time"], rpy=body["imu_rpy"], waist_q=body["q"][12:15]),
+        )
+    intrinsics = snapshot["intrinsics"]
     # The verified NX2 aligned-color intrinsics have zero distortion. Fail
     # visibly if this camera contract changes rather than silently misproject.
-    if any(float(c) != 0 for c in intrinsics['coeffs']):
-        raise ValueError('Placement guide needs updated distortion projection')
-    bounds = snapshot['bounds']
-    x0, x1 = bounds['0']; y0, y1 = bounds['1']
+    if any(float(c) != 0 for c in intrinsics["coeffs"]):
+        raise ValueError("Placement guide needs updated distortion projection")
+    bounds = snapshot["bounds"]
+    x0, x1 = bounds["0"]
+    y0, y1 = bounds["1"]
     if not all(np.isfinite([x0, x1, y0, y1])) or not x0 < x1 or not y0 < y1:
-        raise ValueError('Invalid pickup workspace')
-    world = np.array([[x0,y0,config['table_height_m']], [x1,y0,config['table_height_m']],
-                      [x1,y1,config['table_height_m']], [x0,y1,config['table_height_m']]])
-    transform = np.asarray(config['camera_to_world'])
-    camera = (world - transform[:3,3]) @ transform[:3,:3]
-    if not np.isfinite(camera).all() or (camera[:,2] <= 0).any():
-        raise ValueError('Pickup area is outside the camera view')
-    pixels = np.column_stack((intrinsics['fx']*camera[:,0]/camera[:,2]+intrinsics['ppx'],
-                              intrinsics['fy']*camera[:,1]/camera[:,2]+intrinsics['ppy']))
-    return dict(polygon=pixels.tolist(),width=intrinsics['width'],height=intrinsics['height'],
-                bounds_m=bounds,phase=snapshot['phase'],table_height_m=config['table_height_m'],
-                label=f'Can base center: {x0*100:g}–{x1*100:g} cm forward · {y0*100:g}–{y1*100:g} cm robot-left')
+        raise ValueError("Invalid pickup workspace")
+    world = np.array(
+        [
+            [x0, y0, config["table_height_m"]],
+            [x1, y0, config["table_height_m"]],
+            [x1, y1, config["table_height_m"]],
+            [x0, y1, config["table_height_m"]],
+        ]
+    )
+    transform = np.asarray(config["camera_to_world"])
+    camera = (world - transform[:3, 3]) @ transform[:3, :3]
+    if not np.isfinite(camera).all() or (camera[:, 2] <= 0).any():
+        raise ValueError("Pickup area is outside the camera view")
+    pixels = np.column_stack(
+        (
+            intrinsics["fx"] * camera[:, 0] / camera[:, 2] + intrinsics["ppx"],
+            intrinsics["fy"] * camera[:, 1] / camera[:, 2] + intrinsics["ppy"],
+        )
+    )
+    return dict(
+        polygon=pixels.tolist(),
+        width=intrinsics["width"],
+        height=intrinsics["height"],
+        bounds_m=bounds,
+        phase=snapshot["phase"],
+        table_height_m=config["table_height_m"],
+        label=f"Can base center: {x0*100:g}–{x1*100:g} cm forward · {y0*100:g}–{y1*100:g} cm robot-left",
+    )
 
 
 def project_status(snapshot):
     """A stale projection is a visible reference, never current placement proof."""
     try:
-        return dict(project_area(snapshot),valid=True,reference_only=False)
-    except (ValueError,RuntimeError) as exc:
+        return dict(project_area(snapshot), valid=True, reference_only=False)
+    except (ValueError, RuntimeError) as exc:
         # Use the accepted calibration without pretending it follows a changed
         # robot pose. Identity, distortion and geometry checks still apply.
-        return dict(project_area(snapshot,reference=True),valid=False,
-                    reference_only=True,error=str(exc))
+        return dict(
+            project_area(snapshot, reference=True),
+            valid=False,
+            reference_only=True,
+            error=str(exc),
+        )

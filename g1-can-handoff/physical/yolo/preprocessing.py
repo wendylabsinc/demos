@@ -1,4 +1,5 @@
 """Fixed-shape image preprocessing shared by runtime and regression tests."""
+
 from __future__ import annotations
 
 import cv2

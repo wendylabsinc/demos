@@ -6,6 +6,7 @@ already accepts contiguous uint32 words, so the middle two Python passes are
 unnecessary.  A one-time comparison with the installed SDK guards the exact
 message layout; mismatch or missing native support retains the SDK path.
 """
+
 from __future__ import annotations
 
 import ctypes
@@ -31,8 +32,17 @@ class FastHGLowCmdCRC:
     def values(cls, message):
         values = [message.mode_pr, message.mode_machine]
         for motor in message.motor_cmd:
-            values.extend((motor.mode, motor.q, motor.dq, motor.tau,
-                           motor.kp, motor.kd, motor.reserve))
+            values.extend(
+                (
+                    motor.mode,
+                    motor.q,
+                    motor.dq,
+                    motor.tau,
+                    motor.kp,
+                    motor.kd,
+                    motor.reserve,
+                )
+            )
         values.extend(message.reserve)
         values.append(message.crc)
         return values

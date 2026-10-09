@@ -10,24 +10,28 @@ class CameraLeaseTests(unittest.TestCase):
         camera = Camera()
         renewed = threading.Event()
         calls = []
+
         def request(path, data=None):
             calls.append(path)
-            if path == '/lease/acquire':
-                return json.dumps({'token':'lease'}).encode()
-            if path == '/lease/renew':
+            if path == "/lease/acquire":
+                return json.dumps({"token": "lease"}).encode()
+            if path == "/lease/renew":
                 renewed.set()
-            return b'{}'
+            return b"{}"
+
         camera.request = request
         camera.acquire()
         worker = camera.lease_thread
         try:
-            self.assertTrue(renewed.wait(2), 'Lease must renew while planning has no camera frames')
+            self.assertTrue(
+                renewed.wait(2), "Lease must renew while planning has no camera frames"
+            )
         finally:
             camera.close()
         self.assertFalse(worker.is_alive())
         self.assertIsNone(camera.token)
-        self.assertEqual(calls[-1], '/lease/release')
+        self.assertEqual(calls[-1], "/lease/release")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

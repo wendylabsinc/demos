@@ -1,12 +1,13 @@
 """Capture a fresh real RGB-D/setup seed via Wendy; never opens a motor writer."""
+
 import argparse
 import json
 from pathlib import Path
 import tarfile
 from operator_panel import Wendy
-from trial_evidence import fetch_artifact,result_payload
+from trial_evidence import fetch_artifact, result_payload
 
-PROBE=r'''
+PROBE = r"""
 import hashlib,io,json,threading,time,tarfile
 from pathlib import Path
 import urllib.request
@@ -68,25 +69,51 @@ try:
                       can_center_world_m=setup['can_center_world_m'],exposure_age_ms=(time.monotonic()-frame['timestamp'])*1000,
                       motion_commands_added=after['motion_commands_sent']-before['motion_commands_sent'])))
 finally:camera.close();stop.set();thread.join(timeout=4)
-'''
+"""
 
 
-def capture(directory,allow_held=False):
-    directory=Path(directory);directory.mkdir(parents=True,exist_ok=True)
-    client=Wendy()
+def capture(directory, allow_held=False):
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    client = Wendy()
     try:
-        metadata=json.loads(result_payload(client.tool('container_exec',dict(app_name='DEV-g1-handoff-physical',
-            command=['python3','-c',PROBE.replace('ALLOW_HELD',repr(allow_held))],timeout_seconds=25,max_bytes=20000)))['stdout'])
-        archive=directory/'seed.tar.gz'
-        transfer=fetch_artifact(client,'DEV-g1-handoff-physical',metadata['path'],metadata,archive)
-        with tarfile.open(archive) as tar:tar.extractall(directory,filter='data')
-        (directory/'capture.json').write_text(json.dumps(transfer,indent=2)+'\n')
+        metadata = json.loads(
+            result_payload(
+                client.tool(
+                    "container_exec",
+                    dict(
+                        app_name="DEV-g1-handoff-physical",
+                        command=[
+                            "python3",
+                            "-c",
+                            PROBE.replace("ALLOW_HELD", repr(allow_held)),
+                        ],
+                        timeout_seconds=25,
+                        max_bytes=20000,
+                    ),
+                )
+            )["stdout"]
+        )
+        archive = directory / "seed.tar.gz"
+        transfer = fetch_artifact(
+            client, "DEV-g1-handoff-physical", metadata["path"], metadata, archive
+        )
+        with tarfile.open(archive) as tar:
+            tar.extractall(directory, filter="data")
+        (directory / "capture.json").write_text(json.dumps(transfer, indent=2) + "\n")
         print(json.dumps(transfer))
-        return directory/'setup.json'
-    finally:client.process.terminate()
+        return directory / "setup.json"
+    finally:
+        client.process.terminate()
 
 
-if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--directory',required=True)
-    parser.add_argument('--allow-held',action='store_true',help='Read only: capture a stable FROZEN controller hold')
-    args=parser.parse_args();capture(args.directory,args.allow_held)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--directory", required=True)
+    parser.add_argument(
+        "--allow-held",
+        action="store_true",
+        help="Read only: capture a stable FROZEN controller hold",
+    )
+    args = parser.parse_args()
+    capture(args.directory, args.allow_held)

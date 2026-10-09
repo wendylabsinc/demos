@@ -29,6 +29,7 @@ grip and the knuckles keep following late in a session. If it was a latch,
 `motorstate` goes non-zero at the moment they stop and stays there, and this
 back-off changes nothing -- which is also an answer.
 """
+
 import math
 import os
 import time
@@ -40,16 +41,38 @@ ORDER = ("thumb_0", "thumb_1", "thumb_2", "middle_0", "middle_1", "index_0", "in
 # retarget_g1.DEX3_RANGE, per hand, in ORDER. Copied because the bridge does
 # not run on the robot; tests/test_dex3_stall.py pins both tables to the
 # bridge's, so a drift fails a test rather than clamping a real finger wrong.
-RANGE_LEFT = ((-1.04719755, 1.04719755), (-0.72431163, 0.920), (0.0, 1.74532925),
-              (-1.57079632, 0.0), (-1.74532925, 0.0), (-1.57079632, 0.0), (-1.74532925, 0.0))
-RANGE_RIGHT = ((-1.04719755, 1.04719755), (-0.920, 0.72431163), (-1.74532925, 0.0),
-               (0.0, 1.57079632), (0.0, 1.74532925), (0.0, 1.57079632), (0.0, 1.74532925))
+RANGE_LEFT = (
+    (-1.04719755, 1.04719755),
+    (-0.72431163, 0.920),
+    (0.0, 1.74532925),
+    (-1.57079632, 0.0),
+    (-1.74532925, 0.0),
+    (-1.57079632, 0.0),
+    (-1.74532925, 0.0),
+)
+RANGE_RIGHT = (
+    (-1.04719755, 1.04719755),
+    (-0.920, 0.72431163),
+    (-1.74532925, 0.0),
+    (0.0, 1.57079632),
+    (0.0, 1.74532925),
+    (0.0, 1.57079632),
+    (0.0, 1.74532925),
+)
 
 # grip_q(side, 1.0) with GRIP_THUMB0 = 0: the onboard's FALLBACK closed pose,
 # used only when the bridge sent none (an older bridge). The bridge now sends
 # the pose it would command at a full squeeze with every `home`, thumb_0 knob
 # included, so the two cannot disagree about what "closed" means.
-CLOSED_LEFT = [0.0, 0.92, 1.74532925, -1.57079632, -1.74532925, -1.57079632, -1.74532925]
+CLOSED_LEFT = [
+    0.0,
+    0.92,
+    1.74532925,
+    -1.57079632,
+    -1.74532925,
+    -1.57079632,
+    -1.74532925,
+]
 CLOSED_RIGHT = [0.0, -0.92, -1.74532925, 1.57079632, 1.74532925, 1.57079632, 1.74532925]
 
 
@@ -114,8 +137,14 @@ class StallBackoff:
     # fingers at 30-45 C. At 0.15 they are held at measured + 0.15 like any
     # other stalled finger. Closing, opening and following are untouched: a
     # finger has to sit still for stall_s first.
-    def __init__(self, stall_s=0.5, gap_rad=0.15, margin_rad=0.15, enabled=True,
-                 clock=time.monotonic):
+    def __init__(
+        self,
+        stall_s=0.5,
+        gap_rad=0.15,
+        margin_rad=0.15,
+        enabled=True,
+        clock=time.monotonic,
+    ):
         self.stall_s = float(stall_s)
         self.gap_rad = float(gap_rad)
         self.margin_rad = float(margin_rad)
@@ -136,14 +165,24 @@ class StallBackoff:
                 return default
             v = float(raw)
             if not math.isfinite(v) or not lo <= v <= hi:
-                raise ValueError(f"{name}={raw!r}: expected a finite number in [{lo}, {hi}]")
+                raise ValueError(
+                    f"{name}={raw!r}: expected a finite number in [{lo}, {hi}]"
+                )
             return v
 
-        enabled = env.get("G1_DEX3_STALL_BACKOFF", "1").strip().lower() not in ("0", "off", "no", "false")
-        return cls(stall_s=num("G1_DEX3_STALL_S", 0.5, 0.05, 10.0),
-                   gap_rad=num("G1_DEX3_STALL_GAP_RAD", 0.15, 0.02, 2.0),
-                   margin_rad=num("G1_DEX3_HOLD_MARGIN_RAD", 0.15, 0.0, 2.0),
-                   enabled=enabled, clock=clock)
+        enabled = env.get("G1_DEX3_STALL_BACKOFF", "1").strip().lower() not in (
+            "0",
+            "off",
+            "no",
+            "false",
+        )
+        return cls(
+            stall_s=num("G1_DEX3_STALL_S", 0.5, 0.05, 10.0),
+            gap_rad=num("G1_DEX3_STALL_GAP_RAD", 0.15, 0.02, 2.0),
+            margin_rad=num("G1_DEX3_HOLD_MARGIN_RAD", 0.15, 0.0, 2.0),
+            enabled=enabled,
+            clock=clock,
+        )
 
     def apply(self, side, cmd7, meas7, mode7=None):
         """-> (command to send, [joint names backed off]). Never raises.
@@ -167,7 +206,7 @@ class StallBackoff:
         names = []
         for i, name in enumerate(ORDER):
             if i in disabled:
-                continue                     # faulted, not stalled
+                continue  # faulted, not stalled
             c, m = cmd[i], meas7[i]
             if not isinstance(m, (int, float)) or not isinstance(c, (int, float)):
                 continue
@@ -179,7 +218,12 @@ class StallBackoff:
             # comes back within the gap, or when it reverses across the
             # finger. Any of those means nothing is holding it against this
             # command any more, and the timer starts over.
-            if st is None or abs(m - st["q"]) > self.MOVE_RAD or abs(gap) <= self.gap_rad or d != st["dir"]:
+            if (
+                st is None
+                or abs(m - st["q"]) > self.MOVE_RAD
+                or abs(gap) <= self.gap_rad
+                or d != st["dir"]
+            ):
                 if abs(gap) > self.gap_rad and d != 0.0:
                     self._still[key] = {"q": m, "t": now, "dir": d}
                 else:

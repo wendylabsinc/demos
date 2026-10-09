@@ -1,4 +1,5 @@
 """NX2 startup verification; optional idle budget update, never starts motion."""
+
 import argparse
 import hashlib
 import json
@@ -10,26 +11,40 @@ from operator_panel import Wendy
 
 
 def main(argv=()):
-    root=Path(__file__).resolve().parent
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--configure-camera-max-age-ms',type=float)
-    args=parser.parse_args(argv)
-    configured_env=json.loads((root/'wendy.json').read_text())['env']
-    configured_limit=float(configured_env['HANDOFF_CAMERA_MAX_AGE_MS'])
-    configured_policy=configured_env['HANDOFF_PERCEPTION_POLICY']
-    configured_identity=configured_env['HANDOFF_TARGET_IDENTITY']
-    configured_kp=float(configured_env['HANDOFF_ARM_KP'])
-    if args.configure_camera_max_age_ms is not None and args.configure_camera_max_age_ms!=configured_limit:
-        parser.error('Requested budget must equal this deployment descriptor')
-    copied={s.strip() for group in re.findall(r'paths:\s*\[([^\]]+)\]',
-             (root/'build.stagefile.yaml').read_text()) for s in group.split(',')}
-    paths=[p for p in root.glob('*.py') if p.name in copied]
-    for directory in ['adapter','g1_can_handoff']:
-        paths.extend(p for p in (root/directory).rglob('*.py') if '__pycache__' not in p.parts)
-    paths.extend(root/name for name in ['yolo/frame_limits.py','yolo/confidence.py'])
-    paths.append(root/'g1_can_handoff/noise_aware_planner.json')
-    expected={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
-    script="""import hashlib,io,json,pathlib,time,urllib.request
+    root = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--configure-camera-max-age-ms", type=float)
+    args = parser.parse_args(argv)
+    configured_env = json.loads((root / "wendy.json").read_text())["env"]
+    configured_limit = float(configured_env["HANDOFF_CAMERA_MAX_AGE_MS"])
+    configured_policy = configured_env["HANDOFF_PERCEPTION_POLICY"]
+    configured_identity = configured_env["HANDOFF_TARGET_IDENTITY"]
+    configured_kp = float(configured_env["HANDOFF_ARM_KP"])
+    if (
+        args.configure_camera_max_age_ms is not None
+        and args.configure_camera_max_age_ms != configured_limit
+    ):
+        parser.error("Requested budget must equal this deployment descriptor")
+    copied = {
+        s.strip()
+        for group in re.findall(
+            r"paths:\s*\[([^\]]+)\]", (root / "build.stagefile.yaml").read_text()
+        )
+        for s in group.split(",")
+    }
+    paths = [p for p in root.glob("*.py") if p.name in copied]
+    for directory in ["adapter", "g1_can_handoff"]:
+        paths.extend(
+            p for p in (root / directory).rglob("*.py") if "__pycache__" not in p.parts
+        )
+    paths.extend(root / name for name in ["yolo/frame_limits.py", "yolo/confidence.py"])
+    paths.append(root / "g1_can_handoff/noise_aware_planner.json")
+    expected = {
+        str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
+        for p in paths
+    }
+    script = (
+        """import hashlib,io,json,pathlib,time,urllib.request
 from PIL import Image
 import control_settle
 import physical_core
@@ -80,23 +95,57 @@ for _ in range(2):
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_BODY_TEMP',repr(float(configured_env['HANDOFF_BODY_TEMPERATURE_LIMIT_C']))).replace('CONFIGURED_TABLE_OFFSET',repr(configured_env['HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M'])).replace('CONFIGURED_PROFILE',repr(configured_env.get('HANDOFF_PLANNER_PROFILE','legacy'))).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
-    client=Wendy()
+""".replace("EXPECTED", repr(expected))
+        .replace(
+            "CONFIGURED_BODY_TEMP",
+            repr(float(configured_env["HANDOFF_BODY_TEMPERATURE_LIMIT_C"])),
+        )
+        .replace(
+            "CONFIGURED_TABLE_OFFSET",
+            repr(configured_env["HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M"]),
+        )
+        .replace(
+            "CONFIGURED_PROFILE",
+            repr(configured_env.get("HANDOFF_PLANNER_PROFILE", "legacy")),
+        )
+        .replace("CONFIGURED_KP", repr(configured_kp))
+        .replace("CONFIGURED_LIMIT", repr(configured_limit))
+        .replace("CONFIGURED_POLICY", repr(configured_policy))
+        .replace("CONFIGURED_IDENTITY", repr(configured_identity))
+        .replace("APPLY_CONFIG", repr(args.configure_camera_max_age_ms is not None))
+    )
+    client = Wendy()
     try:
         for attempt in range(8):
             try:
-                result=client.tool('container_exec',{'app_name':'DEV-g1-handoff-physical',
-                    'command':['python3','-c',script],'timeout_seconds':25,'max_bytes':40000})
+                result = client.tool(
+                    "container_exec",
+                    {
+                        "app_name": "DEV-g1-handoff-physical",
+                        "command": ["python3", "-c", script],
+                        "timeout_seconds": 25,
+                        "max_bytes": 40000,
+                    },
+                )
             except RuntimeError:
-                if attempt==7:raise
-                time.sleep(1);continue
-            payload=result.get('structuredContent')
-            if payload is None:payload=json.loads(next(c['text'] for c in result['content'] if c['type']=='text'))
-            if payload.get('exit_code')==0:
-                print(payload['stdout'],end='');return 0
-            if attempt==7:raise RuntimeError(payload.get('stderr') or str(payload))
+                if attempt == 7:
+                    raise
+                time.sleep(1)
+                continue
+            payload = result.get("structuredContent")
+            if payload is None:
+                payload = json.loads(
+                    next(c["text"] for c in result["content"] if c["type"] == "text")
+                )
+            if payload.get("exit_code") == 0:
+                print(payload["stdout"], end="")
+                return 0
+            if attempt == 7:
+                raise RuntimeError(payload.get("stderr") or str(payload))
             time.sleep(1)
-    finally:client.process.terminate()
+    finally:
+        client.process.terminate()
 
 
-if __name__=='__main__':raise SystemExit(main(sys.argv[1:]))
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
