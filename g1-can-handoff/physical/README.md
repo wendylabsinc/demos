@@ -11,6 +11,15 @@ model and planner, with the existing arm adapter and a Dex3 adapter that receive
 covariance. Collision, feedback and freshness guards still apply. Effective
 settings and checksums of the profile and planner sources are saved in planning
 snapshots and exported with each trial for offline replay.
+
+To redeploy the controller from this checkout, run
+`python3 g1_can_handoff/redeploy.py` (the script is beside `task.py`). It checks
+that the NX2 controller is idle and owns no arms, runs the workspace deployment
+audit, deploys through `wendy-run-timed`, then verifies PASSIVE startup and fresh
+camera/recorder data. `--check` only reads readiness for replacement. It never
+starts a demo or releases joints. The script automatically uses the project
+virtual environment when present; `--python` can select another interpreter.
+The controls page runs locally: restart `operator_panel.py` for UI-only edits.
 The simulated torque loop, simulated contacts, and simulated can position are
 never used as physical evidence.
 
