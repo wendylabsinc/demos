@@ -104,7 +104,9 @@ class PhysicalSimulationTests(unittest.TestCase):
                  .265,-.286,.089,.798,-.00014,.0102,.00156]
         result=run(height=.762,initial_arm_q14=initial,staging_enabled=False)
         self.assertFalse(result['lift_verified'])
-        self.assertIn('trajectory intersects',result['error'])
+        self.assertIn('No reachable',result['error'])
+        rejections=[e['reason'] for e in result['events'] if e['phase']=='grasp_candidate_rejected']
+        self.assertTrue(any('trajectory intersects' in reason for reason in rejections))
         self.assertNotIn('target',result['event_counts'])
         self.assertEqual(result['command_count'],0)
 
@@ -114,7 +116,10 @@ class PhysicalSimulationTests(unittest.TestCase):
         result=run(height=.762,initial_arm_q14=initial)
         self.assertTrue(result['lift_verified'],result.get('error'))
         self.assertEqual(result['hold_verified_s'],1.)
-        self.assertEqual(result['event_counts']['staging_segment'],3)
+        planned=next(e for e in result['events'] if e['phase']=='staging_planned')
+        self.assertGreater(result['event_counts']['staging_segment'],0)
+        self.assertEqual(result['event_counts']['staging_segment'],len(planned['joint_waypoints']))
+        self.assertEqual(result['simulation_contact_audit']['pregrasp_contact_steps'],0)
         self.assertEqual(result['event_counts']['lift_observation'],5)
         self.assertLess(result['max_tracking_error_rad'],.15)
 

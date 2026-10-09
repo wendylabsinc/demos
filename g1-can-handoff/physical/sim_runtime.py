@@ -239,7 +239,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
     contact_audit={'pregrasp_contact_steps':0,'minimum_pregrasp_contact_distance_m':None,'bodies':[]}
     def audit_contacts(world):
-        if plant.ik.contact_phase not in ('pregrasp','staging','approach','align'):return
+        if plant.ik.contact_phase not in ('pregrasp','staging','approach','align','reach'):return
         for contact in world.data.contact:
             names=[world.model.body(world.model.geom_bodyid[g]).name for g in (contact.geom1,contact.geom2)]
             if 'can' not in names:continue

@@ -31,10 +31,12 @@ class PregraspCollisionTests(unittest.TestCase):
 
     def test_intentional_finger_contact_only_allowed_in_grasp_phases(self):
         plant,data=self.fixture(gap=-.002)
-        for phase in ('reach','close','lift','hold','offer'):
+        for phase in ('close','lift','hold','offer'):
             plant.set_contact_phase(phase)
             self.assertFalse(plant.pose_collision(data),phase)
         plant.set_contact_phase('align')
+        self.assertTrue(plant.pose_collision(data))
+        plant.set_contact_phase('reach')
         self.assertTrue(plant.pose_collision(data))
 
     def test_diagnostic_identifies_can_clearance_and_phase(self):
@@ -44,6 +46,8 @@ class PregraspCollisionTests(unittest.TestCase):
         self.assertEqual(set(detail['bodies']),{'can','left_hand_index_1_link'})
         self.assertAlmostEqual(detail['distance_m'],.005,places=5)
         plant.set_contact_phase('reach')
+        self.assertIsNone(plant.collision_details(data))
+        plant.set_contact_phase('close')
         self.assertIsNone(plant.collision_details(data))
 
     def test_wrist_contact_is_not_exempt_even_during_grasp(self):

@@ -25,3 +25,33 @@ Continue diagnosis and fixes here. Do not deploy over an active hold: restarting
 ## Continuous lift candidate, 0.2.10
 
 The current setup replay passed with a grasp point 10 mm higher on the can, a 127 mm visual lift, a one-second verified hold, and zero pregrasp contacts. `evidence/higher-grasp-current-simulation.json` records matching source hashes. Physical pickup now ignores the unused offer endpoint, tests grasp heights of 0/10/20 mm above can center, and validates full paths. Continuous lift IK uses bounded adaptive subdivisions. Earlier blocked replay results above describe the preceding code/setup tests; physical verification of this candidate is pending.
+
+## Local regression fixes, October 9
+
+The local controller now retains the arm target and renews bounded gravity
+feedforward during finger motion and hand-holding waits. It permits at most
+two additional seconds to meet the existing 0.04 rad settling tolerance after
+finger motion. Tracking, torque, slew, cancellation and starting-posture limits
+are unchanged.
+
+The final open-hand reach now uses checked Cartesian continuation and rejects
+can penetration. Finger/can contact is permitted only once closing begins.
+The simulation contact audit includes this reach phase. The measured arms-down
+integration test verifies staging completion, camera lift/hold evidence and
+zero pregrasp contacts, without assuming a fixed number of staging waypoints.
+
+Candidate selection delegates to full physical preflight, which checks the
+planned open/closed finger states and every connecting arm path. It no longer
+rejects a reach solely because the fingers are curled in the initial telemetry.
+
+These changes are local and have not been deployed or physically qualified.
+Fresh regression output is saved under `results/regression-fixes-20261009/`.
+Historical evidence files describe their recorded source hashes and are not
+automatically validation of this revision.
+
+Verification completed with all 86 physical-controller tests passing in the
+pinned Linux container. Replaying the earlier passing measured setup with the
+current source produced a 125.7 mm camera-verified lift, a one-second hold and
+zero pregrasp contacts, including the final reach. The replay's controller hashes
+match the current files. The test log, replay and summary are retained in the
+results directory above. These remain simulation results.

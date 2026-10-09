@@ -35,6 +35,7 @@ class SharedPickupTests(unittest.TestCase):
         self.assertEqual(plant.preflight.call_count,2)
         self.assertGreater(result[2][2][2],self.obs.center[2])
         self.assertIn('grasp_candidate_rejected',events)
+        plant.solve.assert_not_called()
         plant.move.assert_not_called()
 
     def test_orientation_search_never_swallows_operational_faults(self):

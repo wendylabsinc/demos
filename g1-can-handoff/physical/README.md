@@ -61,11 +61,20 @@ arm gains; they did not expose the zero-feedforward hardware failure.
 
 The FK collision model places the can at its camera-observed position.
 Staging, approach and alignment require 10 mm of clearance from the can;
-alignment descends 10 cm to the side before the final reach. Only left-finger
-contact is allowed during the intentional reach/grasp/lift phases. The former
+alignment descends 10 cm to the side before the final reach. The final reach
+uses Cartesian continuation with collision-checked connecting joint paths.
+Can penetration is forbidden during that open-hand reach. Only left-finger
+contact is allowed once closing begins and during the lift and hold. The former
 blanket can-contact exemption could allow a finger to push the can during
 alignment. A physical retry showed an approximately 35 mm shift after that
 descent; `premature-contact-camera-evidence.json` preserves the observations.
+
+Finger motion and hand-holding waits also retain the last commanded arm
+reference and refresh the same bounded gravity feedforward. Finger motion
+allows at most two additional seconds for the arm to settle within the existing
+0.04 rad tolerance. The 0.15 rad tracking guard, torque caps, torque slew bounds
+and start-posture checks remain active. This avoids advancing from hand opening
+while the initial feedforward ramp is still allowing arm drift.
 
 `POST /stop` freezes at measured arm positions; it does not home or open the
 hand. A watchdog also freezes on stale feedback, archive failure or a 90-second
