@@ -1,0 +1,322 @@
+{
+  "device": "Unitree G1 Nx 2",
+  "recorder_session": "20261009T191749Z-f6bb3fab",
+  "start_utc": "2026-10-09T19:24:31.294168+00:00",
+  "error_utc": "2026-10-09T19:26:11.409924+00:00",
+  "error": "ValueError: body temperature 85 C reaches the 85 C guard or is invalid",
+  "error_source": "watchdog",
+  "error_after_start_s": 100.1157557,
+  "records": 150423,
+  "invalid_temperature_rows": 0,
+  "empty_250ms_bins": 0,
+  "first_threshold_crossing_s": 100.0984525,
+  "first_threshold_joints": [
+    {
+      "index": 16,
+      "name": "left_shoulder_roll",
+      "sensors_c": [
+        53,
+        85
+      ]
+    }
+  ],
+  "start_hottest_c": 54,
+  "ranking_at_or_before_stop": [
+    {
+      "index": 16,
+      "name": "left_shoulder_roll",
+      "peak_c": 85,
+      "near_stop_sensors_c": [
+        53,
+        85
+      ]
+    },
+    {
+      "index": 24,
+      "name": "right_shoulder_yaw",
+      "peak_c": 54,
+      "near_stop_sensors_c": [
+        54,
+        53
+      ]
+    },
+    {
+      "index": 23,
+      "name": "right_shoulder_roll",
+      "peak_c": 54,
+      "near_stop_sensors_c": [
+        52,
+        54
+      ]
+    },
+    {
+      "index": 20,
+      "name": "left_wrist_pitch",
+      "peak_c": 54,
+      "near_stop_sensors_c": [
+        43,
+        52
+      ]
+    },
+    {
+      "index": 28,
+      "name": "right_wrist_yaw",
+      "peak_c": 53,
+      "near_stop_sensors_c": [
+        53,
+        47
+      ]
+    },
+    {
+      "index": 26,
+      "name": "right_wrist_roll",
+      "peak_c": 52,
+      "near_stop_sensors_c": [
+        51,
+        50
+      ]
+    },
+    {
+      "index": 22,
+      "name": "right_shoulder_pitch",
+      "peak_c": 52,
+      "near_stop_sensors_c": [
+        52,
+        52
+      ]
+    },
+    {
+      "index": 15,
+      "name": "left_shoulder_pitch",
+      "peak_c": 52,
+      "near_stop_sensors_c": [
+        50,
+        52
+      ]
+    },
+    {
+      "index": 25,
+      "name": "right_elbow",
+      "peak_c": 51,
+      "near_stop_sensors_c": [
+        51,
+        51
+      ]
+    },
+    {
+      "index": 27,
+      "name": "right_wrist_pitch",
+      "peak_c": 51,
+      "near_stop_sensors_c": [
+        51,
+        48
+      ]
+    },
+    {
+      "index": 5,
+      "name": "left_ankle_roll",
+      "peak_c": 50,
+      "near_stop_sensors_c": [
+        47,
+        50
+      ]
+    },
+    {
+      "index": 18,
+      "name": "left_elbow",
+      "peak_c": 50,
+      "near_stop_sensors_c": [
+        47,
+        50
+      ]
+    },
+    {
+      "index": 17,
+      "name": "left_shoulder_yaw",
+      "peak_c": 49,
+      "near_stop_sensors_c": [
+        48,
+        48
+      ]
+    },
+    {
+      "index": 4,
+      "name": "left_ankle_pitch",
+      "peak_c": 49,
+      "near_stop_sensors_c": [
+        48,
+        48
+      ]
+    },
+    {
+      "index": 11,
+      "name": "right_ankle_roll",
+      "peak_c": 49,
+      "near_stop_sensors_c": [
+        47,
+        49
+      ]
+    },
+    {
+      "index": 10,
+      "name": "right_ankle_pitch",
+      "peak_c": 49,
+      "near_stop_sensors_c": [
+        49,
+        49
+      ]
+    },
+    {
+      "index": 6,
+      "name": "right_hip_pitch",
+      "peak_c": 47,
+      "near_stop_sensors_c": [
+        41,
+        47
+      ]
+    },
+    {
+      "index": 19,
+      "name": "left_wrist_roll",
+      "peak_c": 46,
+      "near_stop_sensors_c": [
+        46,
+        45
+      ]
+    },
+    {
+      "index": 21,
+      "name": "left_wrist_yaw",
+      "peak_c": 46,
+      "near_stop_sensors_c": [
+        46,
+        40
+      ]
+    },
+    {
+      "index": 7,
+      "name": "right_hip_roll",
+      "peak_c": 42,
+      "near_stop_sensors_c": [
+        39,
+        42
+      ]
+    },
+    {
+      "index": 0,
+      "name": "left_hip_pitch",
+      "peak_c": 42,
+      "near_stop_sensors_c": [
+        41,
+        42
+      ]
+    },
+    {
+      "index": 8,
+      "name": "right_hip_yaw",
+      "peak_c": 40,
+      "near_stop_sensors_c": [
+        39,
+        40
+      ]
+    },
+    {
+      "index": 9,
+      "name": "right_knee",
+      "peak_c": 40,
+      "near_stop_sensors_c": [
+        40,
+        40
+      ]
+    },
+    {
+      "index": 3,
+      "name": "left_knee",
+      "peak_c": 40,
+      "near_stop_sensors_c": [
+        39,
+        40
+      ]
+    },
+    {
+      "index": 1,
+      "name": "left_hip_roll",
+      "peak_c": 40,
+      "near_stop_sensors_c": [
+        38,
+        40
+      ]
+    },
+    {
+      "index": 2,
+      "name": "left_hip_yaw",
+      "peak_c": 39,
+      "near_stop_sensors_c": [
+        39,
+        39
+      ]
+    },
+    {
+      "index": 12,
+      "name": "waist_yaw",
+      "peak_c": 38,
+      "near_stop_sensors_c": [
+        38,
+        38
+      ]
+    },
+    {
+      "index": 13,
+      "name": "waist_roll",
+      "peak_c": 0,
+      "near_stop_sensors_c": [
+        0,
+        0
+      ]
+    },
+    {
+      "index": 14,
+      "name": "waist_pitch",
+      "peak_c": 0,
+      "near_stop_sensors_c": [
+        0,
+        0
+      ]
+    }
+  ],
+  "max_record_gap_ms": 16.60482,
+  "segments": [
+    {
+      "file": "/records/20261009T191749Z-f6bb3fab/samples-000006.jsonl.gz",
+      "sha256": "063f188a63fba2b1f91aeb55d4dcaec977bb69e795d6e17dc5ba7acde345b0d4",
+      "records": 24177,
+      "first_ns": 1791573866294228000,
+      "last_ns": 1791573889261318700,
+      "max_gap_ns": 13149565,
+      "peak_c": 54,
+      "at_or_above_85_records": 0
+    },
+    {
+      "file": "/records/20261009T191749Z-f6bb3fab/samples-000007.jsonl.gz",
+      "sha256": "8b300a7ac0514e6af9c9ae9989ec0aa1fbd5042bb6ee30526f39d45e64b2f1ae",
+      "records": 63159,
+      "first_ns": 1791573889261356000,
+      "last_ns": 1791573949261335000,
+      "max_gap_ns": 16604820,
+      "peak_c": 59,
+      "at_or_above_85_records": 0
+    },
+    {
+      "file": "/records/20261009T191749Z-f6bb3fab/samples-000008.jsonl.gz",
+      "sha256": "488ece61fc593c919ac7901bdabeb58e8713ca9d5faf724b354fe0ef0f7c65f4",
+      "records": 63087,
+      "first_ns": 1791573949263499800,
+      "last_ns": 1791574009193961200,
+      "max_gap_ns": 11467879,
+      "peak_c": 85,
+      "at_or_above_85_records": 208
+    }
+  ],
+  "display": "250 ms peak bins, each joint uses hotter of two reported sensors; times are recorder callback receipt times.",
+  "coverage": "All delivered rt/lowstate rows in the selected sealed interval; upstream DDS loss is unknown."
+}

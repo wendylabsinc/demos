@@ -1,0 +1,199 @@
+{
+  "schema": "g1-recorded-shoulder-load/1",
+  "source_file": "samples-000008.jsonl.gz",
+  "source_sha256": "488ece61fc593c919ac7901bdabeb58e8713ca9d5faf724b354fe0ef0f7c65f4",
+  "recorder_session": "20261009T191749Z-f6bb3fab",
+  "demo_start_unix_ns": 1791573871294168300,
+  "joint": "left_shoulder_roll",
+  "body_motor_index": 16,
+  "method": "First callback sample per topic at least 100 ms after the previous selected sample; one-second summaries. Command and feedback streams are sampled independently. Torque is firmware-reported tau_est, not a calibrated external measurement. Temperatures are last selected samples, not per-second maxima. No publishers, live subscriptions or robot commands.",
+  "bins": [
+    {
+      "seconds_after_start": 94,
+      "state_samples": 10,
+      "command_samples": 10,
+      "measured_q_mean_rad": -0.036804753541946414,
+      "measured_speed_abs_max_rad_s": 0.11658254265785217,
+      "reported_torque_mean_nm": 0.95625,
+      "reported_torque_abs_max_nm": 1.3125,
+      "last_casing_winding_c": [
+        53,
+        55
+      ],
+      "commanded_q_mean_rad": -0.04207423198968172,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.570334005355835
+    },
+    {
+      "seconds_after_start": 95,
+      "state_samples": 10,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.07571633458137512,
+      "measured_speed_abs_max_rad_s": 0.0782330185174942,
+      "reported_torque_mean_nm": -1.01875,
+      "reported_torque_abs_max_nm": 4,
+      "last_casing_winding_c": [
+        53,
+        55
+      ],
+      "commanded_q_mean_rad": -0.0915420659714275,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.2751441796620686
+    },
+    {
+      "seconds_after_start": 96,
+      "state_samples": 10,
+      "command_samples": 10,
+      "measured_q_mean_rad": -0.08411128520965576,
+      "measured_speed_abs_max_rad_s": 0.01073786523193121,
+      "reported_torque_mean_nm": -7.33125,
+      "reported_torque_abs_max_nm": 10.375,
+      "last_casing_winding_c": [
+        53,
+        56
+      ],
+      "commanded_q_mean_rad": -0.14130482748150824,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.1720398545265198
+    },
+    {
+      "seconds_after_start": 97,
+      "state_samples": 10,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.08693237081170083,
+      "measured_speed_abs_max_rad_s": 0.03067961521446705,
+      "reported_torque_mean_nm": -14.36875,
+      "reported_torque_abs_max_nm": 17,
+      "last_casing_winding_c": [
+        53,
+        63
+      ],
+      "commanded_q_mean_rad": -0.1900125824742847,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.0975311994552612
+    },
+    {
+      "seconds_after_start": 98,
+      "state_samples": 10,
+      "command_samples": 10,
+      "measured_q_mean_rad": -0.08795582354068757,
+      "measured_speed_abs_max_rad_s": 0.02454369328916073,
+      "reported_torque_mean_nm": -17.00625,
+      "reported_torque_abs_max_nm": 17.0625,
+      "last_casing_winding_c": [
+        53,
+        73
+      ],
+      "commanded_q_mean_rad": -0.20743008106946945,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.0599819540977478
+    },
+    {
+      "seconds_after_start": 99,
+      "state_samples": 10,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.08806727752089501,
+      "measured_speed_abs_max_rad_s": 0.03067961521446705,
+      "reported_torque_mean_nm": -16.96875,
+      "reported_torque_abs_max_nm": 17,
+      "last_casing_winding_c": [
+        53,
+        83
+      ],
+      "commanded_q_mean_rad": -0.20743048191070557,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 1.0584637191560533
+    },
+    {
+      "seconds_after_start": 100,
+      "state_samples": 10,
+      "command_samples": 10,
+      "measured_q_mean_rad": -0.08004863187670708,
+      "measured_speed_abs_max_rad_s": 0.01073786523193121,
+      "reported_torque_mean_nm": -2.98125,
+      "reported_torque_abs_max_nm": 17,
+      "last_casing_winding_c": [
+        53,
+        83
+      ],
+      "commanded_q_mean_rad": -0.10003068074584007,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 0.10578694343566894
+    },
+    {
+      "seconds_after_start": 101,
+      "state_samples": 10,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.07913423627614975,
+      "measured_speed_abs_max_rad_s": 0.016873788088560104,
+      "reported_torque_mean_nm": -1.44375,
+      "reported_torque_abs_max_nm": 1.5,
+      "last_casing_winding_c": [
+        53,
+        81
+      ],
+      "commanded_q_mean_rad": -0.08809603750705719,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 0
+    },
+    {
+      "seconds_after_start": 102,
+      "state_samples": 10,
+      "command_samples": 10,
+      "measured_q_mean_rad": -0.07911865562200546,
+      "measured_speed_abs_max_rad_s": 0.016873788088560104,
+      "reported_torque_mean_nm": -1.43125,
+      "reported_torque_abs_max_nm": 1.4375,
+      "last_casing_winding_c": [
+        53,
+        79
+      ],
+      "commanded_q_mean_rad": -0.08809603750705719,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 0
+    },
+    {
+      "seconds_after_start": 103,
+      "state_samples": 9,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.07911452733808094,
+      "measured_speed_abs_max_rad_s": 0.013805827125906944,
+      "reported_torque_mean_nm": -1.4236111111111112,
+      "reported_torque_abs_max_nm": 1.4375,
+      "last_casing_winding_c": [
+        53,
+        77
+      ],
+      "commanded_q_mean_rad": -0.08809603750705719,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 0
+    },
+    {
+      "seconds_after_start": 104,
+      "state_samples": 10,
+      "command_samples": 9,
+      "measured_q_mean_rad": -0.07911026626825332,
+      "measured_speed_abs_max_rad_s": 0.01073786523193121,
+      "reported_torque_mean_nm": -1.4375,
+      "reported_torque_abs_max_nm": 1.4375,
+      "last_casing_winding_c": [
+        53,
+        76
+      ],
+      "commanded_q_mean_rad": -0.08809603750705719,
+      "kp": 150,
+      "kd": 3,
+      "feedforward_mean_nm": 0
+    }
+  ]
+}

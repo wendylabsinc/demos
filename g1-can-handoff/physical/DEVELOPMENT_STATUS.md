@@ -1,5 +1,21 @@
 # Physical pickup development
 
+## Evidence update, 2026-10-09
+
+The recorded reach exposes sustained left shoulder-roll load: approximately
+17 Nm reported torque with almost no motion, Kp 150 and approximately 0.12 rad
+target error. Winding temperature reaches 85 C while casing stays 53 C. This is
+the main demonstrated controller blocker; high stiffness and an obstructed
+target are the leading explanation. The later saved retry stops on table-depth
+perception, so overheating is not established as the sole remaining issue.
+Full physical pickup/lift and repeatability remain to be verified.
+
+See [THERMAL_FINDINGS.md](THERMAL_FINDINGS.md) for current recorded evidence,
+the distinction between gain tuning and contact planning, and completion
+criteria. This documentation update makes no controller or deployment change.
+
+## Historical development notes
+
 Work now lives in `g1-can-handoff/physical/` on the local `demos` repository's `main` branch. The imported controller files are tracked in local commit `8531d34`; these documentation updates are uncommitted. The temporary review checkout is no longer the working location. `MIGRATION.json` records hashes of the 251 imported source/evidence files.
 
 The robot runs version 0.2.9-retry-from-hold. It automatically refreshes the approved model-based scene estimate per requested pickup, checks complete paths, holds on failure, and permits an explicit retry from a pregrasp hold without releasing control. A possible held can prevents a fresh pickup. Startup sends no commands.

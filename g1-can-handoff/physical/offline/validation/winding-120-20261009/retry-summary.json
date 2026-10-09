@@ -1,0 +1,92 @@
+{
+  "deployed_version": {
+    "app_id": "DEV-g1-handoff-physical",
+    "app_version": "0.3.25-winding-120",
+    "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+    "dirty": true,
+    "source_digest": "ee038c3838c9e15774883bd73be562d85170ab3105d8e6ffb07a3eb0606b0343",
+    "built_at_utc": "2026-10-09T21:10:08.064736+00:00"
+  },
+  "temperature_limits_c": {
+    "casing": 85.0,
+    "winding": 120.0
+  },
+  "focused_tests": {
+    "passed": 61,
+    "failed": 0,
+    "command": "HANDOFF_DATA=/tmp/g1-thermal-tests python -m unittest test_body_temperature_sensors test_physical_core test_control_settle test_passive_deployment test_runtime_lifecycle test_pickup"
+  },
+  "start_accepted": {
+    "build_info": {
+      "app_id": "DEV-g1-handoff-physical",
+      "app_version": "0.3.25-winding-120",
+      "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+      "dirty": true,
+      "source_digest": "ee038c3838c9e15774883bd73be562d85170ab3105d8e6ffb07a3eb0606b0343",
+      "built_at_utc": "2026-10-09T21:10:08.064736+00:00"
+    },
+    "phase": "PASSIVE",
+    "error": null,
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "telemetry_healthy": true,
+    "camera_max_age_ms": 500.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "target_identity": "color_depth",
+    "yolo_required": false,
+    "demo_running": true,
+    "demo_result": null,
+    "demo_error": null,
+    "deployment_in_progress": false,
+    "presentation": {
+      "title": "Starting pickup",
+      "tone": "busy",
+      "ownership": "Upper-body control released to Unitree",
+      "next_action": "One attempt is running. Stop and hold remains available.",
+      "activity": "Attempt running",
+      "failure": null,
+      "failure_summary": null,
+      "failure_label": "Current problem",
+      "phase": "PASSIVE"
+    }
+  },
+  "result_error": "ValueError: Too few yellow tape depth points",
+  "phase_after": "BLOCKED",
+  "arm_ownership_after": false,
+  "motion_commands_sent": 0,
+  "shoulder_casing_winding_c": [
+    44,
+    43
+  ],
+  "artifact": {
+    "path": "/data/trial-exports/1791580298716131118-trial-01.tar.gz",
+    "bytes": 523631,
+    "sha256": "d333b8d5a81fd5e34f2e56ee7adb84c5fcd20e7a995fef6edbdec0f8fd899d24",
+    "events": 5,
+    "selected_frames": 1,
+    "primary_failure": {
+      "unix_ns": 1791580300694298453,
+      "monotonic_ns": 189858992602,
+      "phase": "primary_failure",
+      "error": "ValueError: Too few yellow tape depth points",
+      "source": "execution"
+    },
+    "local_path": "offline/validation/winding-120-20261009/retry-trial/trial-01.tar.gz",
+    "verified": true
+  },
+  "attention_beep": [
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    }
+  ],
+  "physical_lift_verified": false
+}

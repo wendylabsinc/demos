@@ -1,0 +1,48 @@
+{
+  "files": {
+    "summary.json": {
+      "bytes": 6276,
+      "sha256": "9c9d3d1d579c24c0886ed5ac8e32330dfb3831526c6e7defc38215d3b9ffa228"
+    },
+    "events.json": {
+      "bytes": 4652,
+      "sha256": "87c7cb89ca9d97ea067bb27961791f22248df881c6377933316cb92de9aa1264"
+    },
+    "segment-008.json": {
+      "bytes": 250267,
+      "sha256": "e6637f0f4ed87632441b3c12582ab9c686d85d75c4bbf92a6acfede3ccd10b2c"
+    },
+    "extract_recorded_temperatures.py": {
+      "bytes": 2217,
+      "sha256": "acd48d0e6ebd8d81869484b97cb320f4bbcf7fa7c11e13d349393755ee5c461f"
+    },
+    "README.md": {
+      "bytes": 2237,
+      "sha256": "bdad9f52bfac6e19add7bc500d7f457086293779f656ccaefb84f5df6a95c379"
+    },
+    "body-temperature-demo.pdf": {
+      "bytes": 60764,
+      "sha256": "e9ddb8f5cd1a520d8170a56efeb67e75f1d52172c13bf053a73bcee17cc2fa13"
+    },
+    "body-temperature-demo.png": {
+      "bytes": 207903,
+      "sha256": "23d29b0e023f31d7ae14eba053d527197fea92bf21e5403c3d7c0142f6fd4069"
+    },
+    "segment-006.json": {
+      "bytes": 95798,
+      "sha256": "0d205c586cecbc80c569c4cfa261b12e14a4a5625c303bd793f7909d2bf6273d"
+    },
+    "segment-007.json": {
+      "bytes": 249957,
+      "sha256": "9670d14f2cae2b9a5019b1819bbabf36fe15f785dc4eb4d9351a6245593b990c"
+    },
+    "plot_body_temperatures.py": {
+      "bytes": 7706,
+      "sha256": "a06af21c4a5be96d47ecd5eba92b0afc42ecb2f56c67d2b115244623dec4664a"
+    },
+    "body-temperatures.csv": {
+      "bytes": 204906,
+      "sha256": "d0e9c20c27867e9949e0d240ae96061a13c2fdbfb98bcaa126b40b861c7ede39"
+    }
+  }
+}

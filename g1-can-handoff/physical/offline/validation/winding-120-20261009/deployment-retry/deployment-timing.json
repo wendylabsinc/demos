@@ -1,0 +1,121 @@
+{
+  "app_id": "DEV-g1-handoff-physical",
+  "app_version": "0.3.25-winding-120",
+  "arguments": [
+    "--device",
+    "unitree-g1-nx-2.local:50052",
+    "--dockerfile",
+    "build.stagefile.yaml",
+    "--yes",
+    "--detach"
+  ],
+  "built_services": [],
+  "cache_state": "unknown",
+  "cli_version": "wendy version 2026.10.01-013419",
+  "command": "wendy run",
+  "deployment_exit_code": 0,
+  "deployment_id": "ce40e86b-1950-4979-8067-9aece0b3f1e6",
+  "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+  "exit_code": 0,
+  "functional_readiness": {
+    "configured": true,
+    "evidence_source": "configured_command_exit_status",
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "git_branch": "codex/g1-nx2-trial-fixes",
+  "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+  "git_dirty": true,
+  "note": null,
+  "outcome": "success",
+  "phase_seconds": {
+    "agent_diagnosis_s": null,
+    "analysis_s": null,
+    "build_lock_wait_s": null,
+    "code_test_s": null,
+    "command_elapsed_s": 2.710101,
+    "device_replacement_s": null,
+    "functional_readiness_s": 5.93637,
+    "physical_execution_s": null,
+    "readiness_s": null,
+    "runtime_diagnostics_s": 0.314586,
+    "service_build_s": null,
+    "stagefile_compile_s": null,
+    "target_metadata_s": 1.282276,
+    "upload_s": null
+  },
+  "project": "physical",
+  "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical",
+  "recorded_at_utc": "2026-10-09T21:10:19.214859Z",
+  "replaced_services": [],
+  "restarted_services": [],
+  "runtime_diagnostics": {
+    "app_state": {
+      "failure_count": null,
+      "observed_at_utc": "2026-10-09T21:10:18.900283Z",
+      "running_state": "RUNNING",
+      "status": "available"
+    },
+    "device": "unitree-g1-nx-2.local:50052",
+    "diagnostic_target": null,
+    "evidence_source": [
+      "wendy_run_output",
+      "wendy_device_apps_list"
+    ],
+    "failure_kind": null,
+    "log_probe_status": "not_requested",
+    "port_conflict": null,
+    "status": "available"
+  },
+  "schema_version": 4,
+  "scope": "whole-project",
+  "source_changes": {
+    "added_files": 327,
+    "approx_text_line_churn": 64655,
+    "approx_text_lines_added": 64655,
+    "approx_text_lines_deleted": 0,
+    "baseline_available": false,
+    "changed_files": 327,
+    "current_input_bytes": 42333178,
+    "current_input_files": 327,
+    "current_text_lines": 64655,
+    "deleted_files": 0,
+    "layer_counts_can_overlap": false,
+    "layers": {
+      "project:manifest": {
+        "approx_text_line_churn": 37,
+        "changed_files": 1
+      },
+      "project:packaging": {
+        "approx_text_line_churn": 396,
+        "changed_files": 10
+      },
+      "project:source": {
+        "approx_text_line_churn": 64222,
+        "changed_files": 316
+      }
+    },
+    "line_churn_unmeasured_files": 63,
+    "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+    "modified_files": 0,
+    "state_key": "4793d7e51c465568273ec48701562a8a"
+  },
+  "stagefiles": [
+    "build.stagefile.yaml"
+  ],
+  "started_at_utc": "2026-10-09T21:10:10.253784Z",
+  "target": "unitree-g1-nx-2.local:50052",
+  "target_metadata": {
+    "agent_version": "2026.10.05-134249",
+    "cpu_architecture": "arm64",
+    "device_type": null,
+    "gpu_arch": "sm_87",
+    "observed_at_utc": "2026-10-09T21:10:08.215671Z",
+    "os": "ubuntu",
+    "os_version": "22.04",
+    "status": "available"
+  },
+  "transferred_services": [],
+  "wrapper_exit_code": 0,
+  "wrapper_version": "wendy-run-timed.v4"
+}
