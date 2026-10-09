@@ -1,0 +1,91 @@
+{
+  "cases": [
+    {
+      "case": 0,
+      "name": "orientation-timeout",
+      "original_failure": "ValueError: Grasp orientation search time limit reached",
+      "input_sha256": "416c3df06d2c83d9cd271503b0e55bc91587d9f440a3d7c195e342f00dab8cde",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "case": 1,
+      "name": "owned-staging-collision",
+      "original_failure": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+      "input_sha256": "4ba00caf3c59e56565a209b8b3ef1ad833c10f6f92c26b74da74cdb266fe241f",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [
+        "full measured body and both hand feedback"
+      ],
+      "feedback_source": "scene-only diagnostic with explicit fallback feedback"
+    },
+    {
+      "case": 2,
+      "name": "owned-search-timeout",
+      "original_failure": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "input_sha256": "1ae632d86820a369bb973d50c8c83e7988d49d6b7bb52bcb429142e7395fb78f",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "case": 3,
+      "name": "additional-owned-search-timeout",
+      "original_failure": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "input_sha256": "6db0425da006ce509dea62a1413c5d45c028fc58769c2428f5dbf8e3fe834791",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [
+        "full measured body and both hand feedback",
+        "exact RGB-D planning frame",
+        "captured controller source"
+      ],
+      "feedback_source": "scene-only diagnostic with explicit fallback feedback"
+    },
+    {
+      "case": 4,
+      "name": "clearance-search-timeout-01",
+      "original_failure": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "input_sha256": "fba87e301039ee861fff9b90eb5fd657ae16ef1aa3dca660bb7fa8859093f42e",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    },
+    {
+      "case": 5,
+      "name": "clearance-search-timeout-03",
+      "original_failure": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "input_sha256": "a3888f11be1eb31f37e11d8e3b293a567ac7bc8b37759514308aa6d5f0ea200c",
+      "identical_inputs": true,
+      "legacy_pass": true,
+      "tuned_pass": true,
+      "legacy_error": null,
+      "tuned_error": null,
+      "missing_fields": [],
+      "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start"
+    }
+  ],
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "limitation": "Both policies receive identical reconstructed recorded-scene inputs; historical planning-time feedback is not fully available, and two cases use explicitly recorded fallback feedback."
+}

@@ -1,0 +1,258 @@
+{
+  "passed": true,
+  "points": [
+    [
+      0.3255121864660354,
+      0.2109447179798453,
+      0.983
+    ],
+    [
+      0.3255121864660354,
+      0.2109447179798453,
+      0.823
+    ],
+    [
+      0.3255121864660354,
+      0.11094471797984529,
+      0.823
+    ],
+    [
+      0.3255121864660354,
+      0.11094471797984529,
+      0.973
+    ],
+    [
+      0.34551218646603543,
+      0.11094471797984529,
+      0.973
+    ]
+  ],
+  "rotation": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "policy": "legacy",
+  "input_sha256": "fba87e301039ee861fff9b90eb5fd657ae16ef1aa3dca660bb7fa8859093f42e",
+  "provenance": {
+    "name": "clearance-search-timeout-01",
+    "input_file": "offline/evidence/clearance-demos-20261008-preserved/trial-01/events.jsonl.gz",
+    "input_sha256": "e9669bce102c44722846c70bc4f9aa8e1263d64ffbdfcba019a516ad812e14c2",
+    "original_failure": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "missing_fields": [],
+    "captured_feedback_available": true,
+    "feedback_source": "captured terminal snapshot with recorded calibration/base and staging start",
+    "historical_source": null
+  },
+  "clearance": {
+    "samples": 2393,
+    "min_table_distance_m": 0.017013739272242256,
+    "min_elbow_torso_distance_m": 0.00295579168456839,
+    "required_clearance_m": 0.01
+  },
+  "events": [
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3255121864660354,
+        0.11094471797984529,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3255121864660354,
+        0.11094471797984529,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.009353313269210775,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.2067619991995093,
+        0.3312482585439145,
+        -0.01177266580504105,
+        0.5823065171240762,
+        -0.1253810377905697,
+        0.08609093429955611,
+        -0.007927094294185748
+      ],
+      "path_fraction": 0.287292817679558
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32551218646601976,
+        0.21094471797984232,
+        0.9829999999999759
+      ],
+      "target": [
+        0.3255121864660354,
+        0.2109447179798453,
+        0.823
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32551218641930035,
+        0.2109447179381585,
+        0.8230000001193022
+      ],
+      "target": [
+        0.3255121864660354,
+        0.11094471797984529,
+        0.823
+      ]
+    },
+    {
+      "phase": "cartesian_lift_planned",
+      "phase_name": "lift",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32551218659944103,
+        0.11094471817466439,
+        0.8229999995267885
+      ],
+      "target": [
+        0.3255121864660354,
+        0.11094471797984529,
+        0.973
+      ]
+    },
+    {
+      "phase": "staging_planned",
+      "start_q": [
+        0.24658742547035217,
+        0.2739354074001312,
+        -0.08318250626325607,
+        0.8246704936027527,
+        0.001689775730483234,
+        0.009449321776628494,
+        -0.004410195164382458
+      ],
+      "joint_waypoints": [
+        [
+          0.3230545194163777,
+          0.4876190413995181,
+          1.0114468245229133,
+          0.06591200235775602,
+          -0.5536785649757364,
+          0.6625696732272423,
+          -0.0030819466065673262
+        ],
+        [
+          0.04764612615448662,
+          0.5602322318584453,
+          0.27353348587909987,
+          -0.3860184783148681,
+          -0.6330713584023142,
+          0.39229976192714994,
+          -0.02197828037928293
+        ]
+      ],
+      "collision_checks": 3473,
+      "nodes": 27,
+      "seed": 7,
+      "edge_resolution_rad": 0.004,
+      "rejected_candidates": 0
+    },
+    {
+      "phase": "path_preflight_passed",
+      "waypoints_checked": 4,
+      "hand_paths_checked": 2,
+      "motion_commands_sent": 0,
+      "table_clearance_m": 0.01
+    },
+    {
+      "phase": "plan",
+      "waypoints": [
+        [
+          0.3255121864660354,
+          0.2109447179798453,
+          0.983
+        ],
+        [
+          0.3255121864660354,
+          0.2109447179798453,
+          0.823
+        ],
+        [
+          0.3255121864660354,
+          0.11094471797984529,
+          0.823
+        ],
+        [
+          0.3255121864660354,
+          0.11094471797984529,
+          0.973
+        ],
+        [
+          0.34551218646603543,
+          0.11094471797984529,
+          0.973
+        ]
+      ],
+      "rotation": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "observation": {
+        "source": "identical_saved_scene"
+      }
+    }
+  ],
+  "elapsed_s": 2.4836199580458924,
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "adapters_absent": true
+}

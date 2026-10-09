@@ -1,0 +1,23 @@
+{
+  "evidence_verified": 143,
+  "source_sha256": {
+    "offline/compare_planner_inputs.py": "38b4de966a00acca06dff972ae4c6551d827b1f2f0b38601daff713c7f82d624",
+    "offline/planning_failures_replay.py": "6ebcf801770c6f2e1099b30d6c07b8a818b7a4f751bb911fb73b19fa4f1ccdf7",
+    "offline/planner_replay.py": "54106c8d2f6ac7eb8a008dcdfdcf08589fa18eb9ebae499fb1a366199c117477",
+    "physical_core.py": "6e2834e969f354fc51ebaf26fd05e2e3303962c00c5575f90dd51f718d970384",
+    "pickup.py": "61cf8ec9fbfe618d2890cd3ef912f6b6897fca860fb9d3da36378f55de4330a2",
+    "planner_tuning.py": "96805d01513c2a15003fbee33c0dbd09c418ad1a477907017a3de96369072a5f",
+    "g1_can_handoff/task.py": "bd2625e5b39f01f437d3e5cc003e3a05179ee631436184e9ea71021e871239eb",
+    "g1_can_handoff/sim.py": "e4cb87f54adf0f7a471e78a7473895ac8293d746a4b97042e114686ed66e010c",
+    "g1_can_handoff/noise_aware_planner.json": "21a42487d32c1f99844acb439a88679cc935d7b4bafd34adf9239587f0136267"
+  },
+  "dependencies": {
+    "mujoco": "3.14.0",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3"
+  },
+  "paired_inputs_verified": 6,
+  "plan_preparations_passed": 12,
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}
