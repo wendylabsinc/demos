@@ -12,8 +12,9 @@ covariance. Collision, feedback and freshness guards still apply. Effective
 settings and checksums of the profile and planner sources are saved in planning
 snapshots and exported with each trial for offline replay.
 
-To redeploy the controller from this checkout, run
-`python3 g1_can_handoff/redeploy.py` (the script is beside `task.py`). It checks
+To redeploy the controller from the demo's `g1-can-handoff` root folder, run
+`python3 redeploy.py`. From the `physical` folder, run
+`python3 g1_can_handoff/redeploy.py` (that script is beside `task.py`). It checks
 that the NX2 controller is idle and owns no arms, runs the workspace deployment
 audit, deploys through `wendy-run-timed`, then verifies PASSIVE startup and fresh
 camera/recorder data. `--check` only reads readiness for replacement. It never
