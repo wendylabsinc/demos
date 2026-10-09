@@ -61,6 +61,8 @@ stages:
         dest: /app/yolo/
       - from: local
         paths: [
+          deployment_version.py,
+          deployment-version.json,
           harness_replay.py,
           planning_snapshot.py,
           table_plane.py,

@@ -25,6 +25,10 @@ PAGE = (
     .with_name("operator_ui.html")
     .read_text(encoding="utf-8")
     .replace("ERROR_CASES_JSON", json.dumps(ERROR_CASES))
+    .replace(
+        "UI_VERSION_VALUE",
+        json.loads(Path(__file__).with_name("wendy.json").read_text())["version"],
+    )
 )
 
 
@@ -130,7 +134,7 @@ request=urllib.request.Request(url"""
             + """)
 try:
  response=urllib.request.urlopen(request,timeout=12);s=json.load(response)
- print(json.dumps({k:s.get(k) for k in ['phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}))
+ print(json.dumps({k:s.get(k) for k in ['build_info','phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}))
 except urllib.error.HTTPError as e:
  print(json.dumps({'error':json.load(e).get('error')}))
 """

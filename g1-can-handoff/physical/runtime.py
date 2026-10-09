@@ -210,8 +210,10 @@ class Runtime:
     def status(self):
         """Report controller state and readiness without acquiring motor ownership."""
         from yolo.confidence import confidence_threshold
+        from deployment_version import deployed_version
 
         result = {
+            "build_info": deployed_version(),
             "phase": self.phase,
             "error": self.error,
             "motion_commands_sent": self.motion_commands_sent,

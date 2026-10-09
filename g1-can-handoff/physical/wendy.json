@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.22-local-checkout",
+  "version": "0.3.23-versioned-controls",
   "entitlements": [
     {
       "type": "network",

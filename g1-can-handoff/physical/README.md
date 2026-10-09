@@ -4,6 +4,22 @@ For the code tour, pickup sequence, settings and error locations, start with
 [CODE_GUIDE.md](CODE_GUIDE.md). The local controls page is in `operator_ui.html`;
 `operator_panel.py` handles its transport and requests.
 
+The controls page displays the **running controller's** app version, source
+fingerprint, Git revision/local-edit marker and build time, separately from
+the controls UI version. Missing controller metadata is labelled unreported;
+a lost connection does not claim a fresh version read.
+
+`python3 redeploy.py` from the demo root prints the source folder and target,
+requested version, current running build, each deployment stage, and a final
+`VERIFIED RUNNING` readback. `--check` prints the version/ownership preflight
+without deploying. Every deployment stamps `deployment-version.json` in the
+local physical folder and copies it into the image; readiness compares that
+stamp and deployed source hashes with this checkout. Local edits remain
+deployable and change the source fingerprint even if the app label is unchanged.
+The generated stamp is ignored by Git. If a configured Docker credential helper
+is unavailable, the script uses a filtered temporary configuration for that build
+and preserves your Docker settings and resolved Docker endpoint.
+
 The service starts with passive body/hand readers and HTTP status on port 8102.
 It creates no command publisher at startup. It uses the downloaded handoff's IK
 model and planner, with the existing arm adapter and a Dex3 adapter that receives live motor temperatures.

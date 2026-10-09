@@ -43,6 +43,14 @@ def main(argv=()):
         str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in paths
     }
+    version_path = root / "deployment-version.json"
+    expected_version = (
+        json.loads(version_path.read_text()) if version_path.exists() else None
+    )
+    if version_path.exists():
+        expected["deployment-version.json"] = hashlib.sha256(
+            version_path.read_bytes()
+        ).hexdigest()
     script = (
         """import hashlib,io,json,pathlib,time,urllib.request
 from PIL import Image
@@ -59,6 +67,7 @@ effective={}
 planner_tuning.configure(SimpleNamespace(ik=SimpleNamespace(IK_SETTINGS={'x_scale':1.})),effective)
 def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+str(port)+path,timeout=5))
 status=get(8102,'/status')
+assert BUILDSTAMP is not None and status.get('build_info')==BUILDSTAMP,'Running build stamp differs from requested deployment'
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['telemetry_healthy'],status
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
@@ -96,6 +105,7 @@ for _ in range(2):
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
 """.replace("EXPECTED", repr(expected))
+        .replace("BUILDSTAMP", repr(expected_version))
         .replace(
             "CONFIGURED_BODY_TEMP",
             repr(float(configured_env["HANDOFF_BODY_TEMPERATURE_LIMIT_C"])),

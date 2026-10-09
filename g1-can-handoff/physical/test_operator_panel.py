@@ -158,7 +158,7 @@ const sessionStorage={setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k),
 const lastDemoError={hidden:true},start={},state={};
 const demoErrorTitle={},demoErrorSummary={},demoErrorNext={},demoErrorSource={},demoErrorRaw={};
 const placementDetails={},placementRaw={};const document={querySelector:s=>s==='#placement-error-details'?placementDetails:placementRaw};
-let savedDemoError='',starting=false;function renderRobotState(s){}
+let savedDemoError='',starting=false;function renderRobotState(s){}function renderVersion(s){}
 """
             + "const errorCases="
             + json.dumps(panel.ERROR_CASES)
@@ -209,6 +209,26 @@ assert.equal(pickupOverlay.style.display,'block');assert.equal(pickupOverlay.dat
 assert.match(placementMessage.textContent,/Reference only/);
 guideValid=false;placementVisible();assert.equal(pickupOverlay.style.display,'block');
 guidePresent=false;placementVisible();assert.equal(pickupOverlay.style.display,'none');
+"""
+        )
+        subprocess.run(
+            ["node", "-e", script], check=True, capture_output=True, text=True
+        )
+
+    @unittest.skipUnless(shutil.which("node"), "JavaScript runtime unavailable")
+    def test_version_uses_running_controller_metadata_and_labels_missing_metadata(self):
+        script = (
+            """
+const assert=require('node:assert/strict');const label={},details={};
+const document={querySelector:selector=>selector==='#controller-version'?label:details};
+"""
+            + browser_functions("renderVersion")
+            + """
+renderVersion({});assert.match(label.textContent,/not reported/);
+renderVersion({build_info:{app_version:'0.3.23-test',git_commit:'1234567890abcdef',dirty:true,source_digest:'abcdef1234567890',built_at_utc:'2026-10-09'}});
+assert.match(label.textContent,/0.3.23-test/);assert.match(label.textContent,/abcdef123456/);
+assert.match(details.textContent,/1234567890ab/);assert.match(details.textContent,/local edits/);
+assert.match(details.textContent,/2026-10-09/);
 """
         )
         subprocess.run(

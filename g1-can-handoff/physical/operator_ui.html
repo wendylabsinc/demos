@@ -118,6 +118,14 @@
   <body>
     <main>
       <h1>G1 · Coke demo controls</h1>
+      <p id="controller-version" aria-live="polite">
+        Controller version: connecting…
+      </p>
+      <details>
+        <summary>Version details</summary>
+        <p>Controls UI: UI_VERSION_VALUE</p>
+        <p id="controller-build">Waiting for the controller build…</p>
+      </details>
       <p>
         Start runs one pickup attempt. Stop holds the measured arm position.
         Release returns upper-body control to Unitree and relaxes both hands.
@@ -319,6 +327,7 @@
           rememberDemoError(sessionStorage.getItem("g1-last-demo-error"));
         } catch (e) {}
         function show(s) {
+          renderVersion(s);
           if (!s.demo_running)
             rememberDemoError(
               s.demo_error || s.error || s.presentation?.failure,
@@ -348,6 +357,29 @@
                   Math.round(s.yolo_confidence_strictly_above * 100) +
                   "%"
                 : "");
+        }
+        function renderVersion(s) {
+          const build = s.build_info;
+          const label = document.querySelector("#controller-version");
+          const details = document.querySelector("#controller-build");
+          if (!build?.app_version) {
+            label.textContent =
+              "Controller version: not reported by this controller";
+            details.textContent =
+              "Redeploy to receive version and source details.";
+            return;
+          }
+          label.textContent =
+            "Controller: " +
+            build.app_version +
+            " · source " +
+            (build.source_digest || "unknown").slice(0, 12);
+          details.textContent =
+            "Git: " +
+            (build.git_commit || "unknown").slice(0, 12) +
+            (build.dirty ? " + local edits" : "") +
+            " · Built: " +
+            (build.built_at_utc || "unknown");
         }
         start.onclick = async () => {
           if (starting) return;
@@ -489,6 +521,8 @@
             if (revision !== stateRevision) return;
             state.textContent = e.message;
             robotTitle.textContent = "Controller unavailable";
+            document.querySelector("#controller-version").textContent =
+              "Controller version unavailable — connection lost";
             robotActivity.textContent = "Attempt state unknown";
             robotCard.dataset.tone = "unknown";
             robotOwner.textContent = "Control ownership unknown";
