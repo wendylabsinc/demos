@@ -1,0 +1,100 @@
+{
+  "files": {
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/summary.json": {
+      "bytes": 6276,
+      "sha256": "9c9d3d1d579c24c0886ed5ac8e32330dfb3831526c6e7defc38215d3b9ffa228"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/shoulder-load-summary.json": {
+      "bytes": 6097,
+      "sha256": "1a240d432807b7e3af644ba10da20ca3eddd176d80dd385958e99233efd83d0d"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/events.json": {
+      "bytes": 4652,
+      "sha256": "87c7cb89ca9d97ea067bb27961791f22248df881c6377933316cb92de9aa1264"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/segment-008.json": {
+      "bytes": 250267,
+      "sha256": "e6637f0f4ed87632441b3c12582ab9c686d85d75c4bbf92a6acfede3ccd10b2c"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/extract_shoulder_load.py": {
+      "bytes": 3314,
+      "sha256": "ebbafdcb63aba304e3d9c36758da6fe6f4fade0b1a4bfdecc381db5609ba07c0"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/extract_recorded_temperatures.py": {
+      "bytes": 2217,
+      "sha256": "acd48d0e6ebd8d81869484b97cb320f4bbcf7fa7c11e13d349393755ee5c461f"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/README.md": {
+      "bytes": 2237,
+      "sha256": "bdad9f52bfac6e19add7bc500d7f457086293779f656ccaefb84f5df6a95c379"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/body-temperature-demo.pdf": {
+      "bytes": 60764,
+      "sha256": "e9ddb8f5cd1a520d8170a56efeb67e75f1d52172c13bf053a73bcee17cc2fa13"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/artifact-manifest.json": {
+      "bytes": 1569,
+      "sha256": "1aab35f2ba887056e41809570f6fc33ed9009137e712d34ad566090e35014449"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/body-temperature-demo.png": {
+      "bytes": 207903,
+      "sha256": "23d29b0e023f31d7ae14eba053d527197fea92bf21e5403c3d7c0142f6fd4069"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/segment-006.json": {
+      "bytes": 95798,
+      "sha256": "0d205c586cecbc80c569c4cfa261b12e14a4a5625c303bd793f7909d2bf6273d"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/segment-007.json": {
+      "bytes": 249957,
+      "sha256": "9670d14f2cae2b9a5019b1819bbabf36fe15f785dc4eb4d9351a6245593b990c"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/plot_body_temperatures.py": {
+      "bytes": 7706,
+      "sha256": "a06af21c4a5be96d47ecd5eba92b0afc42ecb2f56c67d2b115244623dec4664a"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/body-temperatures.csv": {
+      "bytes": 204906,
+      "sha256": "d0e9c20c27867e9949e0d240ae96061a13c2fdbfb98bcaa126b40b861c7ede39"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/startup-verified.json": {
+      "bytes": 12956,
+      "sha256": "6cc56e58a94eab56f72d30c44a63df9c01b50efc149a4adc7713ee3e29b56622"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/README.md": {
+      "bytes": 2671,
+      "sha256": "e06c8c1389af158bc728066dc8969d2bcba5a299f0688c7add25a8a329e523cf"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/retry-summary.json": {
+      "bytes": 2829,
+      "sha256": "3050e70d4323fe2bee42e3397393b259fa0fda08d221c881f53c699a916e65f0"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/blocked-readiness.json": {
+      "bytes": 22661,
+      "sha256": "bdb577077ba7232f048fa0e249b638d8a9c59da204a165cbf921343d547da7e6"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/deployment-retry/deployment-timing.json": {
+      "bytes": 3543,
+      "sha256": "217e4e7e437721efad02d66b43cab08248fe51c7423fb0979251bb13da25f1fd"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/deployment-retry/README.md": {
+      "bytes": 1239,
+      "sha256": "cd8072451289220e61d259283eeda1153d6e6588f2feadd056ddc3aafec26b83"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/deployment-retry/readback.json": {
+      "bytes": 8038,
+      "sha256": "f6bd1399283f30cf2dfe028ba12d5cd411683f17ce1918f039b109860e85c0d5"
+    },
+    "g1-can-handoff/physical/offline/validation/winding-120-20261009/retry-trial/trial-01.json": {
+      "bytes": 52765,
+      "sha256": "b7146bcc55aa319fe4ebb903820480522d20d83ce8fd8698d3c96d5aa976c3d9"
+    },
+    "g1-can-handoff/physical/THERMAL_FINDINGS.md": {
+      "bytes": 8836,
+      "sha256": "032a6a7facf7f520833662a51b0e36f7e76b5b870e742235e2cd3db88cd04da3"
+    },
+    "g1-can-handoff/physical/offline/validation/body-temperature-demo-20261009T192431Z/.gitattributes": {
+      "bytes": 122,
+      "sha256": "d0e8b5ce0b34064c296ce9edaff0b27ecd35682070953fb51c163e22fc08e1f8"
+    }
+  }
+}

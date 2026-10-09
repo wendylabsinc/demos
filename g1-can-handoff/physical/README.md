@@ -1,5 +1,11 @@
 # Physical handoff integration
 
+**2026-10-09 recorded status:** sustained shoulder load and winding heating are
+the main motion blocker demonstrated in the analyzed reach. A later retry also
+stopped before motion on table-depth perception; a complete physical pickup is
+still unverified. See [thermal findings and completion criteria](THERMAL_FINDINGS.md)
+for the measured command/feedback comparison, graphs and preserved evidence.
+
 The service starts with passive body/hand readers and HTTP status on port 8102.
 It creates no command publisher at startup. It uses the downloaded handoff's IK
 model and planner, with the existing arm adapter and a Dex3 adapter that receives live motor temperatures.
