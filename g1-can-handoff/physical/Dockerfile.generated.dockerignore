@@ -12,6 +12,12 @@
 !yolo/confidence.py
 !yolo/confidence.py/
 !yolo/confidence.py/**
+!deployment_version.py
+!deployment_version.py/
+!deployment_version.py/**
+!deployment-version.json
+!deployment-version.json/
+!deployment-version.json/**
 !harness_replay.py
 !harness_replay.py/
 !harness_replay.py/**
