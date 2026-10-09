@@ -28,7 +28,7 @@ COVERAGE = [
     ('Planning and collision', ['test_planning_acceptance', 'test_clearance_planning'],
      'Recorded rejected grasp/staging scenes, sampled arm paths and head-camera offset.',
      'Replan feasible scenes with positive clearance. Preserve genuine collision and >40 mm tracking rejections.'),
-    ('Simulated estimate noise', ['test_simulation_position_noise', 'test_sim_position_noise', 'test_stochastic_position_noise', 'test_planner_tuning', 'test_stochastic_sim_runtime'],
+    ('Simulated estimate noise', ['test_simulation_position_noise', 'test_sim_position_noise', 'test_stochastic_position_noise', 'test_planner_tuning', 'test_stochastic_sim_runtime', 'test_sim_campaign_failures'],
      'Two fixed failure traces plus fresh jitter/drift/jumps fitted across 26 deduplicated real trial groups.',
      'Replay fixed errors and test the tuned planner with fresh seeded noise; preserve physical truth, movement bounds and checked paths.'),
     ('Position changes', ['test_tracking_position_replay'],

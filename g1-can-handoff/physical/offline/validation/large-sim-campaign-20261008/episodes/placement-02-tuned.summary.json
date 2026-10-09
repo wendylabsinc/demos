@@ -1,0 +1,24 @@
+{
+  "case_id": "placement-02",
+  "condition": "nearby_placement",
+  "seed": 2002,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    -0.015,
+    0.005
+  ],
+  "policy": "tuned",
+  "lift_verified": false,
+  "error": "No reachable grasp and offer path for this can position; preflight rejected: Planned finger trajectory intersects robot/table",
+  "failure_phase": "planning",
+  "simulated_time_s": 0.0,
+  "wall_time_s": 0.8777494169771671,
+  "max_tracking_error_rad": 0.0,
+  "command_count": 0,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 0,
+  "episode": "episodes/placement-02-tuned.json.gz",
+  "episode_sha256": "68feb8f6c7201a222c0d9617d8b39c87f3029447ab542233a04281022e4494c7",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

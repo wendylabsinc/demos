@@ -462,3 +462,31 @@ The planner candidate reduced joint-target sensitivity by 2.5% on 24 held-out
 fresh draws. Both policies lifted in all four paired full simulations. These are
 offline results, not physical pickup evidence. See
 [the comparison and archived results](validation/stochastic-noise-20261008/README.md).
+
+## Larger paired simulation campaign
+
+Run the frozen baseline and tuned planner on 64 new cases (128 full simulations),
+then verify every compressed episode and render a comparison:
+
+```sh
+python offline/sim_campaign.py --directory offline/reports/large-campaign --jobs 4 --timeout 180
+python offline/sim_campaign_report.py --directory offline/reports/large-campaign
+python offline/run.py --test test_sim_campaign
+```
+
+Thirty-two cases sample fitted noise at the captured setup; sixteen vary can XY
+by a 4x4 grid within +/-15 mm; sixteen double the estimate-noise scale. Each case
+uses both planner versions with the same seed. Different policy timing and
+viewing conditions affect sampled noise, so equal seeds do not imply identical
+exposure sequences. All cases use the same captured posture, table and camera
+calibration. This isolates noise/nearby-placement robustness; it does not sweep
+motor dynamics or qualify the full physical workspace.
+
+Each worker has network/DDS blocking, a wall deadline and single-threaded BLAS.
+Compressed episodes retain full commands, observations, noise metadata, source
+hashes and backend assumptions. Outcomes, worker logs and checksum manifests are
+saved incrementally. Rerunning the command resumes verified completed episodes;
+it refuses changed sources or inputs. Worker failures remain counted separately
+from controller stops. The report shows condition-specific completion intervals,
+paired outcomes, duration and failure families; mixed stress cases are not a
+real-world success-rate estimate. The earlier fixed failures remain regressions.

@@ -1,0 +1,24 @@
+{
+  "case_id": "stress-05",
+  "condition": "double_noise",
+  "seed": 3005,
+  "noise_scale": 2.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "tuned",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 50.100000000015264,
+  "wall_time_s": 24.021960124955513,
+  "max_tracking_error_rad": 0.029335102706729052,
+  "command_count": 4977,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 0,
+  "episode": "episodes/stress-05-tuned.json.gz",
+  "episode_sha256": "0db9ff09f07d50ecc4f12c50d7d3c6c6816f1c094436789434083480801d3a86",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

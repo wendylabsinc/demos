@@ -1,0 +1,24 @@
+{
+  "case_id": "stress-09",
+  "condition": "double_noise",
+  "seed": 3009,
+  "noise_scale": 2.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "tuned",
+  "lift_verified": false,
+  "error": "Can or table moved during final reach; refusing to close",
+  "failure_phase": "pre-close",
+  "simulated_time_s": 31.999999999993143,
+  "wall_time_s": 18.043176917009987,
+  "max_tracking_error_rad": 0.029555776366163175,
+  "command_count": 3167,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 1,
+  "episode": "episodes/stress-09-tuned.json.gz",
+  "episode_sha256": "ded8b04ec7e35dd1c6bb9cd68c9d2d0b8c7ca363a9ad5488be7541686d1f64c3",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

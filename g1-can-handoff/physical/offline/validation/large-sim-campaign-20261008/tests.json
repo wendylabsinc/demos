@@ -1,0 +1,15 @@
+{
+  "tests_run": 17,
+  "successful": true,
+  "evidence_verified": 143,
+  "reports": [
+    "campaign-tests.json",
+    "failure-regressions.json",
+    "fixed-noise-tests.json",
+    "fixed-reach-regression.json",
+    "lab-integration-tests.json"
+  ],
+  "full_campaign_episodes": 128,
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

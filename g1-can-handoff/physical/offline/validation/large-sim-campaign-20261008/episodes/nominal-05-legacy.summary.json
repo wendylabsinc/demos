@@ -1,0 +1,24 @@
+{
+  "case_id": "nominal-05",
+  "condition": "fitted_noise",
+  "seed": 1005,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "legacy",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 51.92000000001749,
+  "wall_time_s": 13.928854958969168,
+  "max_tracking_error_rad": 0.02934125982887697,
+  "command_count": 5159,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 2,
+  "episode": "episodes/nominal-05-legacy.json.gz",
+  "episode_sha256": "ca31bcd16109e1ab3a4b04f8adb464901b5d475050c13ac23ff8abb40a079133",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

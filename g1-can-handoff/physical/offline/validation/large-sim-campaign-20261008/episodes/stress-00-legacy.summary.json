@@ -1,0 +1,24 @@
+{
+  "case_id": "stress-00",
+  "condition": "double_noise",
+  "seed": 3000,
+  "noise_scale": 2.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "legacy",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 51.66000000001717,
+  "wall_time_s": 14.453039334039204,
+  "max_tracking_error_rad": 0.029364021099102793,
+  "command_count": 5133,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 1,
+  "episode": "episodes/stress-00-legacy.json.gz",
+  "episode_sha256": "d91c4b87146e440ec859ec07fa2ff98abe294d987f38e889ad22eb004e1536db",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

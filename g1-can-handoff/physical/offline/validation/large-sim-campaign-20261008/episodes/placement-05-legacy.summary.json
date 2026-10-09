@@ -1,0 +1,24 @@
+{
+  "case_id": "placement-05",
+  "condition": "nearby_placement",
+  "seed": 2005,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    -0.005,
+    -0.005
+  ],
+  "policy": "legacy",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 51.24000000001666,
+  "wall_time_s": 14.451582707930356,
+  "max_tracking_error_rad": 0.029555772401882188,
+  "command_count": 5091,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 0,
+  "episode": "episodes/placement-05-legacy.json.gz",
+  "episode_sha256": "555a022155ae5dfadf686fc0e2afadc0f9958701a7d2ceff9be094238749f062",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}
