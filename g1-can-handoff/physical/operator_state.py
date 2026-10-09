@@ -1,22 +1,55 @@
 """Plain-language presentation of controller state; no control decisions."""
 
+ERROR_CASES=[
+    dict(triggers=['Grasp orientation search time limit'],title='Planning took too long',
+         summary='The grasp search exceeded its configured time limit.',
+         action='Review the trial log and planner timing before another attempt.',source='g1_can_handoff/task.py'),
+    dict(triggers=['Waist moved beyond','Body attitude exceeds'],title='Robot posture changed',
+         summary='The robot moved beyond the camera alignment limits after calibration.',
+         action='Keep the robot stationary and refresh the scene before retrying.',source='pose_alignment.py'),
+    dict(triggers=['exposure stale','exposure timestamp invalid/stale'],title='Camera observation is too old',
+         summary='The latest observation did not meet the freshness limit.',
+         action='Check that the live camera is advancing before another attempt.',source='camera_input.py'),
+    dict(triggers=['Coke YOLO target absent/ambiguous'],title='Coke identity could not be confirmed',
+         summary='YOLO could not identify one unambiguous Coke can.',
+         action='Give the detector a clear view of the can before retrying.',source='yolo_client.py'),
+    dict(triggers=['Target has too few','No sufficiently visible red can'],title='Can detection needs a clearer view',
+         summary='The detector could not obtain an unambiguous can position.',
+         action='Place the upright can inside the placement area with an unobstructed view.',source='camera_input.py'),
+    dict(triggers=['Can is outside the left-hand pickup area'],title='Can is outside the pickup area',
+         summary='The measured can position is outside the supported reach.',
+         action='Move the can base inside the placement outline, then retry.',source='g1_can_handoff/task.py'),
+    dict(triggers=['Too few yellow tape depth points'],title='Table markers are not visible enough',
+         summary='There are too few valid depth points on the yellow tape.',
+         action='Restore the marked table to the camera view before refreshing the scene.',source='factory_table_candidate.py'),
+    dict(triggers=['Control handover did not settle'],title='Arm control did not settle',
+         summary='The arms did not stabilize during control handover.',
+         action='Support the arms and can, release control, then reset the setup.',source='control_settle.py'),
+    dict(triggers=['intersects','collides','clearance'],title='Planned path is blocked',
+         summary='The arm or finger path does not have the required clearance.',
+         action='Reposition the can within the pickup area and replan with clearance.',source='physical_core.py'),
+    dict(triggers=['Continuous Cartesian lift IK'],title='Lift path could not be solved',
+         summary='The planner could not maintain the grasp through the lift.',
+         action='Save the trial log and check the lift plan before retrying.',source='physical_core.py'),
+    dict(triggers=['HTTP Error 423','423: Locked'],title='Camera is busy',
+         summary='Another camera operation currently holds the camera lease.',
+         action='Wait for that operation to finish. The placement outline is a reference meanwhile.',source='camera_input.py'),
+    dict(triggers=['Operator cancelled'],title='Demo stopped',summary='The operator stopped this attempt.',
+         action='Check the setup before starting another attempt.',source='runtime.py')]
+
+
+def describe_error(message):
+    return next((rule for rule in ERROR_CASES if any(trigger in message for trigger in rule['triggers'])),
+                dict(title='Demo stopped',summary='The attempt stopped. Technical details contain the full error.',
+                     action='Check the reported problem before retrying.',source='Not identified'))
+
 
 def describe_state(state):
     owned = state.get('adapter_initialized')
     phase = state.get('phase') or 'UNKNOWN'
     running = bool(state.get('demo_running'))
     failure = state.get('demo_error') or state.get('error')
-    summary = failure
-    for trigger, message in [
-        ('Grasp orientation search time limit', 'The pickup planner could not find a valid grasp in time.'),
-        ('Coke YOLO target absent/ambiguous', 'The Coke can could not be identified unambiguously.'),
-        ('Control handover did not settle', 'The arms did not settle after the demo took control.'),
-        ('intersects robot/table', 'The planned arm or finger path intersects the robot or table.'),
-        ('exposure stale', 'The camera observation is too old for movement.'),
-        ('Continuous Cartesian lift IK', 'The lift cannot preserve the planned grasp.'),
-        ('Operator cancelled', 'The operator stopped the attempt.')]:
-        if failure and trigger in failure:
-            summary = message; break
+    summary = describe_error(failure)['summary'] if failure else None
     result = state.get('demo_result') or {}
     owner = 'Demo controls arms + fingers' if owned else 'Upper-body control released to Unitree' if owned is False else 'Control ownership unknown'
     if state.get('deployment_in_progress'):
