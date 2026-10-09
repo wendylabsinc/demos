@@ -22,7 +22,9 @@ from stochastic_position_noise import StochasticPositionNoise
 
 
 class SimulationIO:
-    def __init__(self, world, force_zero_feedforward=False,*,arm_kp=None):
+    def __init__(self, world, force_zero_feedforward=False,*,arm_kp=None,tracking_profile='baseline',tracking_environment=None):
+        from simulation_tracking_limits import profile
+        self.tracking_limits = profile(tracking_profile,tracking_environment)
         self.world = world
         self.origin = time.monotonic()
         self.commands = 0
@@ -60,7 +62,8 @@ class SimulationIO:
             # The real SDK writer advances ArmReference at G1_CONTROL_HZ=100.
             if self.servo_ticks%5==0:
                 self.wire_arm_q=self.arm_reference.advance(self.world.targets[self.arm_ids],measured,.01,
-                                                          limits=self.arm_limits)
+                                                          limits=self.arm_limits,
+                                                          tracking_error=self.tracking_limits['motor_reference_leash_rad'])
             error=self.world.targets-d.qpos[self.world.qadr]
             velocity=d.qvel[self.world.dadr]
             effort=self.world.kp*error-self.world.kd*velocity+d.qfrc_bias[self.world.dadr]
@@ -142,9 +145,12 @@ class SimulationCamera:
     def close(self):self.renderer.close()
 
 
-def setup_scene(setup):
+def setup_scene(setup, *, planning=False):
     """Apply supplied setup geometry to a supported-base model, without fitting it."""
-    config=setup['config'];intrinsics=setup['camera_intrinsics']
+    config=dict(setup['config']);intrinsics=setup['camera_intrinsics']
+    # The assumed correction belongs to the controller model. The dynamics
+    # world still uses the supplied measured table and can geometry.
+    if not planning:config['planning_table_height_offset_m']=0.
     from physical_core import rigid, calibrated_scene
     optical=rigid(config['camera_to_world'])
     if (intrinsics['width'],intrinsics['height'])!=(640,480):
@@ -212,7 +218,14 @@ def apply_measured_state(world, io, measured):
 
 def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=None, staging_enabled=True, setup=None, force_zero_feedforward=False,
         *, identity_mode='synthetic_red', fault=None, capture_animation=False,
-        position_noise='stochastic', noise_seed=7, noise_scale=1., noise_trace=None, noise_profile=None, planner_profile=None, planner_mode='legacy'):
+        position_noise='stochastic', noise_seed=7, noise_scale=1., noise_trace=None, noise_profile=None, planner_profile=None, planner_mode='legacy',
+        tracking_profile='baseline', tracking_env_file=None):
+    from simulation_tracking_limits import plant_class, profile, environment_file
+    if tracking_env_file is not None and tracking_profile!='env':
+        raise ValueError('A tracking environment file requires --tracking-profile env')
+    tracking_environment=environment_file(tracking_env_file)
+    simulation_plant = plant_class(tracking_profile,tracking_environment)
+    tracking_limits = profile(tracking_profile,tracking_environment)
     if planner_mode not in ('legacy','tuned'):raise ValueError('Planner mode must be legacy or tuned')
     if planner_profile is None and planner_mode=='tuned':
         planner_profile=json.loads((Path(__file__).parent/'g1_can_handoff/noise_aware_planner.json').read_text())
@@ -238,7 +251,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     # simulated torque servo are explicit backend assumptions.
     for i in range(world.model.nu):
         if 'hand' in world.model.actuator(i).name:world.kp[i]=hand_kp
-    io=SimulationIO(world,force_zero_feedforward=force_zero_feedforward)
+    io=SimulationIO(world,force_zero_feedforward=force_zero_feedforward,tracking_profile=tracking_profile,
+                    tracking_environment=tracking_environment)
     if initial_arm_q14 is not None:
         initial=np.asarray(initial_arm_q14,dtype=float)
         if initial.shape!=(14,) or not np.all(np.isfinite(initial)):
@@ -283,8 +297,8 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         config=dict(setup['config'],staging_enabled=staging_enabled)
     if planner_profile is not None:config.update(planner_profile)
     io.arm_limits=np.asarray(config['arm_limits_rad'],dtype=float)
-    model=scene(height=height) if setup is None else setup_scene(setup)
-    plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+    model=scene(height=height) if setup is None else setup_scene(setup,planning=True)
+    plant=simulation_plant(model,io,io,io.read,config,event,clock=io)
     planning_recorder=None
     if output:
         from planning_snapshot import PlanningRecorder
@@ -345,13 +359,13 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
         event('camera',phase_name=phase,vision=vision)
         return observation,vision
     try:
-        # As on hardware, reject an invalid pickup before taking SDK ownership.
-        prepare(plant,observe,event)
+        # As on hardware, establish a measured hold first and plan only once.
+        # Pickup commands still require the complete settled-state preflight.
         # Use the same bounded commanded hold as hardware ownership settling.
         # No simulation gravity or object truth is injected into the planner.
         plant.settle_control()
         held_plant=plant
-        plant=PhysicalPlant(model,io,io,io.read,config,event,clock=io)
+        plant=simulation_plant(model,io,io,io.read,config,event,clock=io)
         plant.planning_recorder=planning_recorder
         plant.inherit_control_hold(held_plant)
         prepared=prepare(plant,observe,event)
@@ -376,6 +390,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
     result.update(perception=dict(identity_mode=identity_mode,yolo_calls=detector.calls,tracking_modes=sorted(tracking_modes)),
                   position_noise=dict(noise.description,generated_jumps=getattr(noise,'jump_events',[])),planner_profile=planner_profile,noise_profile_input=noise_profile,
                   planner_settings={key:config[key] for key in ('ik_reference_weight_m_per_rad','ik_position_tolerance_m','ik_variable_scale','grasp_candidate_budget','grasp_orientation_step_rad','planning_position_cov_m2')},
+                  tracking_tolerances=tracking_limits,
                   fault=fault_record,failure_phase=observation_phase if result.get('error') else None)
     result.update(simulation_contact_audit=contact_audit,command_count=io.commands,simulated_time_s=float(world.data.time),
                   truth_can_position_m=world.can_position().tolist(),events=rows,event_counts=counts,trajectory=trajectory,
@@ -405,7 +420,7 @@ def run(output=None, hand_kp=2., camera='observe', height=.75, initial_arm_q14=N
                      'runtime.py','sim_runtime.py','planner_tuning.py','simulation_position_noise.py','stochastic_position_noise.py',
                      'g1_can_handoff/position_noise_profile.json','g1_can_handoff/stochastic_noise_profile.json','g1_can_handoff/noise_aware_planner.json',
                      'g1_can_handoff/sim.py','g1_can_handoff/task.py',
-                     'adapter/arm_reference.py','adapter/g1_arm.py')}
+                     'adapter/arm_reference.py','adapter/g1_arm.py','simulation_tracking_limits.py','control_settle.py')}
     if output:
         Path(output).write_text(json.dumps(result,indent=2)+'\n')
         if result['lift_verified']:Path(output).with_suffix('.png').unlink(missing_ok=True)
@@ -430,6 +445,9 @@ if __name__=='__main__':
     parser.add_argument('--noise-seed',type=int,default=7,help='Repeatable fresh stochastic sequence or fixed-recording selection')
     parser.add_argument('--noise-scale',type=float,default=1.,help='1 uses the fitted distribution or original recorded offsets; other values are stress tests')
     parser.add_argument('--planner-mode',choices=['legacy','tuned'],default='tuned',help='Tuned sim controller by default; legacy retains deployed controller settings')
+    parser.add_argument('--tracking-profile',choices=['baseline','double','env'],default='baseline',
+                        help='Simulation only: double joint tracking, settling, FK and motor-reference deviation tolerances')
+    parser.add_argument('--tracking-env-file',help='Simulation only: multiplier assignments for --tracking-profile env')
     parser.add_argument('--planner-profile-json',help='Bounded candidate IK/planner settings for offline evaluation')
     parser.add_argument('--noise-profile-json',help='Alternative fitted stochastic profile for offline evaluation')
     parser.add_argument('--noise-trace',choices=['handover','approach-drift'],help='Select one recorded pattern explicitly')
@@ -441,6 +459,7 @@ if __name__=='__main__':
                identity_mode=args.identity_mode,fault=fault,capture_animation=args.capture_animation,
                position_noise=args.position_noise,noise_seed=args.noise_seed,noise_scale=args.noise_scale,noise_trace=args.noise_trace,
                noise_profile=None if args.noise_profile_json is None else json.loads(Path(args.noise_profile_json).read_text()),
-               planner_profile=None if args.planner_profile_json is None else json.loads(Path(args.planner_profile_json).read_text()),planner_mode=args.planner_mode)
+               planner_profile=None if args.planner_profile_json is None else json.loads(Path(args.planner_profile_json).read_text()),planner_mode=args.planner_mode,
+               tracking_profile=args.tracking_profile,tracking_env_file=args.tracking_env_file)
     print(json.dumps({k:v for k,v in result.items() if k!='events'},indent=2))
     raise SystemExit(0 if result['lift_verified'] else 1)

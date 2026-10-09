@@ -97,6 +97,8 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertGreater(result['command_count'],0)
         phases=[e['phase'] for e in result['events']]
         self.assertIn('contact_proxy',phases)
+        self.assertLess(phases.index('control_settled'),phases.index('plan'))
+        self.assertEqual(phases.count('plan'),1)
         self.assertEqual(phases[-1],'lift_verified')
 
     def test_measured_arms_down_start_rejects_interpolated_collision(self):
@@ -106,7 +108,10 @@ class PhysicalSimulationTests(unittest.TestCase):
         self.assertFalse(result['lift_verified'])
         self.assertIn('trajectory intersects',result['error'])
         self.assertNotIn('target',result['event_counts'])
-        self.assertEqual(result['command_count'],0)
+        # Taking ownership now issues a measured hold before planning; rejected
+        # paths must still issue no pickup trajectory or finger-open commands.
+        self.assertGreater(result['command_count'],0)
+        self.assertNotIn('hand_target',result['event_counts'])
 
     def test_measured_arms_down_stages_then_lifts_and_holds(self):
         initial=[.246,.265,-.092,.820,.0029,.00794,-.00446,

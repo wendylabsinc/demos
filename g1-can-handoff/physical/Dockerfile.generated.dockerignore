@@ -69,6 +69,9 @@
 !sim_runtime.py
 !sim_runtime.py/
 !sim_runtime.py/**
+!simulation_tracking_limits.py
+!simulation_tracking_limits.py/
+!simulation_tracking_limits.py/**
 !simulation_position_noise.py
 !simulation_position_noise.py/
 !simulation_position_noise.py/**

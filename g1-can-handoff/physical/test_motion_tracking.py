@@ -1,5 +1,7 @@
 """Fresh accepted tracking is required before the next physical command."""
 import os
+import json
+from pathlib import Path
 import tempfile
 import threading
 import time
@@ -16,6 +18,33 @@ from physical_core import PhysicalPlant
 
 
 class MotionTrackingTests(unittest.TestCase):
+    def test_recorded_reach_settle_failure_reproduces_with_no_contact_inference(self):
+        fixture=Path(__file__).parent/'offline/fixtures/reach-settle-20261009.json'
+        recorded=json.loads(fixture.read_text())
+        failure=next(e for e in recorded['events'] if e['phase']=='arm_settle_failed')
+        goal=np.asarray(failure['goal_q'])
+        measured=np.asarray(failure['measured_q'])
+        np.testing.assert_allclose(measured-goal,failure['error_rad'])
+        self.assertEqual(recorded['last_target']['phase_name'],'reach')
+        self.assertAlmostEqual(float(np.max(np.abs(measured-goal))),.07511741998107052)
+        # Drive the actual settling loop with the captured feedback. No SDK or
+        # physics world is involved; this reproduces the guard, not contact.
+        class Clock:
+            now=0.
+            def monotonic(self):return self.now
+            def sleep(self,seconds):self.now+=seconds
+        plant=PhysicalPlant.__new__(PhysicalPlant)
+        plant.clock=Clock();plant.command_lock=threading.RLock()
+        plant.check=Mock(return_value={'body':{'q':[0.]*15+measured.tolist()}})
+        plant.command_arm=Mock();plant.event=Mock();plant.sync=Mock()
+        plant.arm_tau_command=np.asarray(failure['gravity_feedforward_nm'])
+        with self.assertRaisesRegex(RuntimeError,'Physical arm did not settle at the IK target'):
+            plant._execute_poses(goal,[])
+        self.assertGreaterEqual(plant.clock.now,2.)
+        self.assertEqual(plant.event.call_args.args,('arm_settle_failed',))
+        np.testing.assert_allclose(plant.event.call_args.kwargs['error_rad'],failure['error_rad'])
+        plant.sync.assert_not_called()
+
     def runtime(self,age=.2,error=None):
         runtime=Runtime.__new__(Runtime);runtime.lock=threading.RLock()
         runtime.tracking_error=error

@@ -57,7 +57,8 @@ def main(argv=None):
         subprocess.run([args.python,'-c',PREFLIGHT,DEVICE],cwd=ROOT,check=True)
         env=os.environ.copy()
         env['WENDY_TIMING_FUNCTIONAL_READINESS_COMMAND']=shlex.join([args.python,str(ROOT/'verify_passive_deployment.py')])
-        subprocess.run([sys.executable,str(WRAPPER),'--device',DEVICE,'--detach'],cwd=ROOT,env=env,check=True)
+        subprocess.run([sys.executable,str(WRAPPER),'--device',DEVICE,'--dockerfile',
+                        'build.stagefile.yaml','--yes','--detach'],cwd=ROOT,env=env,check=True)
         print('NX2 controller redeployed and PASSIVE startup verified. No demo started.')
     finally:
         MARKER.unlink(missing_ok=True)

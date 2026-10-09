@@ -41,7 +41,10 @@ def prepare(plant, observe, event):
             abs(refreshed.table_height-observation.table_height) > .005):
         raise RuntimeError('Can or table moved during planning')
     event('plan', waypoints=[p.tolist() for p in points],
-          rotation=rotation.tolist(), observation=track)
+          rotation=rotation.tolist(), observation=track,
+          measured_table_height_m=float(observation.table_height),
+          planning_table_height_offset_m=float(getattr(plant,'planning_table_height_offset_m',0.)),
+          planning_table_height_m=float(observation.table_height+getattr(plant,'planning_table_height_offset_m',0.)))
     return observation, baseline, points, rotation
 
 

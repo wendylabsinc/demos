@@ -519,7 +519,9 @@ class Runtime:
             try:self.demo_result=self.run(True,preserve_cancel=True)
             except Exception as exc:self.demo_error=self.record_failure(exc,'demo')
             finally:self.demo_running=False;self.operation_lock.release()
-        try:threading.Thread(target=work,daemon=True,name='operator-demo').start()
+        try:
+            self.event('demo_start_accepted',control_already_owned=self.arm is not None)
+            threading.Thread(target=work,daemon=True,name='operator-demo').start()
         except Exception:
             self.demo_running=False;self.operation_lock.release();raise
         return self.status()
@@ -564,12 +566,8 @@ class Runtime:
         try:
             config=self.config(refresh=True)
             from target_tracker import TargetTracker
-            self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
             self.last_phase_check=None
-            self.event('perception_policy',policy=perception_policy(),target_identity=target_identity_mode(),
-                       periodic_yolo_recheck_s=semantic_recheck_interval_s())
             from perception_worker import PerceptionWorker
-            self.perception=PerceptionWorker(self.camera.token)
             def observe(phase, require_table, expected_center_xy=None):
                 observation,vision=self.observe_frame(config,phase,require_table,expected_center_xy)
                 self.last_phase_check={'phase':phase,'frame_id':vision.get('frame_id'),
@@ -582,34 +580,27 @@ class Runtime:
                 self.phase='HOLDING_CAN' if phase=='lift_verified' else phase
                 self.event(phase,**fields)
             plant=self.make_plant(config)
-            prepared=prepare(plant,observe,phase_event)
-            calibration_start_guard(config,self.read())
-            if config.get('scene_refresh_automatic'):
-                pending=DATA/'calibration.pending.json'
-                pending.write_text(json.dumps(config,indent=2)+'\n')
-                pending.replace(DATA/'calibration.json')
-            self.event('plan_context',calibration=config,motion_enabled=actuate)
-            if not actuate:
-                if resuming:self.phase='FROZEN'
-                return {'planned':True,'motion_commands_sent':self.motion_commands_sent}
-            self.configure_motion_perception(plant,config,prepared[0])
             # Old teleop service must be stopped, not merely STANDBY, before a
             # separate publisher can take ownership. Refuse any reachable service.
-            try:http_json(8090)
-            except Exception:pass
-            else:raise RuntimeError('Existing onboard controller is still running; ownership not exclusive')
-            archive=self.archive_guard()
-            if not resuming and archive['age_s'].get('rt/arm_sdk') is not None and archive['age_s']['rt/arm_sdk']<2:
-                raise RuntimeError('Another arm SDK publisher is active')
-            if self.cancel.is_set():raise RuntimeError('Operator cancelled before control acquisition')
-            plant.validate_start()
-            if not resuming:
+            if actuate:
+                try:http_json(8090)
+                except Exception:pass
+                else:raise RuntimeError('Existing onboard controller is still running; ownership not exclusive')
+                archive=self.archive_guard()
+                if not resuming and archive['age_s'].get('rt/arm_sdk') is not None and archive['age_s']['rt/arm_sdk']<2:
+                    raise RuntimeError('Another arm SDK publisher is active')
+                if self.cancel.is_set():raise RuntimeError('Operator cancelled before control acquisition')
+                plant.check()
+            if actuate and not resuming:
                 # Ownership changes balance and the measured camera frame.
-                # Stop the old tracker before establishing a new reference.
+                # Take a measured hold first, then plan once from its settled
+                # state. No pickup path is commanded before full preflight.
                 self.stop_tracking();self.stop_perception();plant.perception_guard=None
                 from g1_arm import G1_29_ArmController
                 from g1_dex3 import Dex3Sender
+                self.phase='CONTROL_ACQUIRING'
                 self.arm=G1_29_ArmController(motion_mode=True,simulation_mode=False,lowstate_hub=self.hub,record_lowcmd=self.command_written)
+                plant.adapter=self.arm;self.plant=plant
                 if self.cancel.is_set():raise RuntimeError('Operator cancelled during control acquisition')
                 self.arm.set_arm_motion_limits({'max_velocity_rad_s':.25,'max_acceleration_rad_s2':1.})
                 self.arm.set_arm_position_limits(config['arm_limits_rad'])
@@ -618,23 +609,31 @@ class Runtime:
                 self.event('ownership_acquired',recorder_session=archive['session'],right_arm_hold=plant.right_arm.tolist(),
                            right_hand_hold=plant.right_hand.tolist(),blend_affects_both_arms=True,arm_gains=self.arm.get_gains())
                 self.wait_for_control_settle()
-                if self.cancel.is_set():raise RuntimeError('Operator cancelled before owned replanning')
+                if self.cancel.is_set():raise RuntimeError('Operator cancelled before owned planning')
                 config=self.config(refresh=True)
-                self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
-                self.perception=PerceptionWorker(self.camera.token)
                 held_plant=plant
                 plant=self.make_plant(config);plant.inherit_control_hold(held_plant);self.plant=plant
-                prepared=prepare(plant,observe,phase_event)
-                calibration_start_guard(config,self.read())
-                if config.get('scene_refresh_automatic'):
-                    pending=DATA/'calibration.pending.json'
-                    pending.write_text(json.dumps(config,indent=2)+'\n');pending.replace(DATA/'calibration.json')
-                self.event('owned_plan_context',calibration=config,reference_after_control_handover=True)
-                self.configure_motion_perception(plant,config,prepared[0])
-                plant.validate_start()
-            else:
+            elif actuate:
                 self.arm.set_arm_position_limits(config['arm_limits_rad'])
                 self.event('ownership_reused',recorder_session=archive['session'])
+            if self.cancel.is_set():raise RuntimeError('Operator cancelled before pickup planning')
+            self.phase='PLANNING'
+            self.tracker=TargetTracker(recheck_interval_s=semantic_recheck_interval_s())
+            self.event('perception_policy',policy=perception_policy(),target_identity=target_identity_mode(),
+                       periodic_yolo_recheck_s=semantic_recheck_interval_s())
+            self.perception=PerceptionWorker(self.camera.token)
+            prepared=prepare(plant,observe,phase_event)
+            calibration_start_guard(config,self.read())
+            if config.get('scene_refresh_automatic'):
+                pending=DATA/'calibration.pending.json'
+                pending.write_text(json.dumps(config,indent=2)+'\n');pending.replace(DATA/'calibration.json')
+            self.event('plan_context',calibration=config,motion_enabled=actuate)
+            if not actuate:
+                if resuming:self.phase='FROZEN'
+                return {'planned':True,'motion_commands_sent':self.motion_commands_sent}
+            if not resuming:self.event('owned_plan_context',calibration=config,reference_after_control_handover=True)
+            self.configure_motion_perception(plant,config,prepared[0])
+            plant.validate_start()
             if self.cancel.is_set():raise RuntimeError('Operator cancelled before pickup execution')
             self.error=None;self.grasp_started=False
             plant.adapter=self.arm;plant.sender=self.hand;self.plant=plant

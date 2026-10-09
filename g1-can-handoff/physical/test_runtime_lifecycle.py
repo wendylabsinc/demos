@@ -7,6 +7,7 @@ from unittest.mock import Mock, patch
 from pathlib import Path
 import json
 import time
+from types import SimpleNamespace
 from concurrent.futures import ThreadPoolExecutor
 
 # Runtime import creates only its event directory; no device connections.
@@ -52,6 +53,70 @@ class RuntimeLifecycleTests(unittest.TestCase):
         runtime.phase='FROZEN';runtime.active=False;runtime.grasp_started=False
         return runtime
 
+    def test_fresh_start_takes_control_and_settles_before_its_only_plan(self):
+        runtime=self.runtime();runtime.arm=None;runtime.hand=None;runtime.plant=None
+        runtime.phase='PASSIVE';runtime.hub=Mock();runtime.command_written=Mock()
+        runtime.read=Mock();runtime.archive_guard=Mock(return_value={'age_s':{},'session':'test'})
+        order=[]
+        runtime.config=Mock(side_effect=lambda **kw:order.append('refresh') or {'arm_limits_rad':[]})
+        hold_plant=Mock();planning_plant=Mock()
+        runtime.make_plant=Mock(side_effect=[hold_plant,planning_plant])
+        runtime.wait_for_control_settle=Mock(side_effect=lambda:order.append('settled'))
+        runtime.configure_motion_perception=Mock()
+        arm=Mock();hand=Mock()
+        def take_control(**kw):order.append('control');return arm
+        result={'lift_verified':True,'visual_rise_m':.13,'hold_verified_s':1}
+        with patch.dict('sys.modules',{'g1_arm':SimpleNamespace(G1_29_ArmController=take_control),
+                                      'g1_dex3':SimpleNamespace(Dex3Sender=Mock(return_value=hand))}),\
+             patch('runtime.snapshot_guard'),patch('runtime.calibration_start_guard'),\
+             patch('runtime.http_json',side_effect=ConnectionError),\
+             patch('pickup.prepare',side_effect=lambda *a:order.append('plan') or ('observation',{},[],[])) as prepare,\
+             patch('pickup.execute',side_effect=lambda *a:order.append('execute') or result):
+            self.assertTrue(runtime.run(True)['physical_lift_verified'])
+        self.assertEqual(order,['refresh','control','settled','refresh','plan','execute'])
+        prepare.assert_called_once()
+        planning_plant.inherit_control_hold.assert_called_once_with(hold_plant)
+        hold_plant.validate_start.assert_not_called()
+        planning_plant.validate_start.assert_called()
+
+    def test_fresh_start_faults_never_execute_a_pickup_and_owned_failures_hold(self):
+        for fault in ('competing_controller','competing_publisher','feedback',
+                      'cancel_on_acquisition','settling','planning'):
+            with self.subTest(fault=fault):
+                runtime=self.runtime();runtime.arm=None;runtime.hand=None;runtime.plant=None
+                runtime.phase='PASSIVE';runtime.hub=Mock();runtime.command_written=Mock()
+                runtime.read=Mock();runtime.config=Mock(return_value={'arm_limits_rad':[]})
+                runtime.archive_guard=Mock(return_value={'age_s':{'rt/arm_sdk':0} if fault=='competing_publisher' else {},'session':'test'})
+                plant=Mock();runtime.make_plant=Mock(return_value=plant)
+                runtime.wait_for_control_settle=Mock()
+                if fault=='feedback':plant.check.side_effect=RuntimeError('invalid feedback')
+                if fault=='settling':runtime.wait_for_control_settle.side_effect=RuntimeError('settling failed')
+                arm=Mock();hand=Mock()
+                def acquire(**kw):
+                    if fault=='cancel_on_acquisition':runtime.cancel.set()
+                    return arm
+                constructor=Mock(side_effect=acquire)
+                modules={'g1_arm':SimpleNamespace(G1_29_ArmController=constructor),
+                         'g1_dex3':SimpleNamespace(Dex3Sender=Mock(return_value=hand))}
+                with patch.dict('sys.modules',modules),patch('runtime.snapshot_guard'),\
+                     patch('runtime.http_json',side_effect=None if fault=='competing_controller' else ConnectionError),\
+                     patch('pickup.prepare',side_effect=RuntimeError('planning failed')) as prepare,\
+                     patch('pickup.execute') as execute:
+                    with self.assertRaises(RuntimeError):runtime.run(True)
+                execute.assert_not_called()
+                runtime.camera.close.assert_called_once()
+                if fault in ('competing_controller','competing_publisher','feedback'):
+                    constructor.assert_not_called();prepare.assert_not_called()
+                    self.assertIsNone(runtime.arm)
+                else:
+                    constructor.assert_called_once();plant.freeze.assert_called_once()
+                    self.assertIs(plant.adapter,arm)
+                    self.assertEqual(runtime.phase,'FROZEN')
+                    arm.shutdown.assert_not_called();hand.relax.assert_not_called()
+                    if fault=='planning':prepare.assert_called_once()
+                    else:prepare.assert_not_called()
+
+
     def test_release_cancels_but_never_relaxes_while_trial_running(self):
         runtime=self.runtime();runtime.operation_lock.acquire()
         with self.assertRaisesRegex(RuntimeError,'cancellation is pending'):runtime.release(True)
@@ -71,9 +136,9 @@ class RuntimeLifecycleTests(unittest.TestCase):
 
     def test_failure_holds_measured_pose_and_retains_control(self):
         runtime=self.runtime();arm=runtime.arm;hand=runtime.hand;plant=runtime.plant
-        runtime.camera=Mock();runtime.archive_guard=Mock();runtime.read=Mock()
-        runtime.config=Mock(return_value={});runtime.make_plant=Mock(return_value=plant)
-        with patch('runtime.snapshot_guard'), patch('pickup.prepare',side_effect=RuntimeError('Target lost')):
+        runtime.camera=Mock();runtime.archive_guard=Mock(return_value={'age_s':{},'session':'test'});runtime.read=Mock()
+        runtime.config=Mock(return_value={'arm_limits_rad':[]});runtime.make_plant=Mock(return_value=plant)
+        with patch('runtime.snapshot_guard'), patch('runtime.http_json',side_effect=ConnectionError), patch('pickup.prepare',side_effect=RuntimeError('Target lost')):
             with self.assertRaisesRegex(RuntimeError,'Target lost'):runtime.run(True)
         plant.freeze.assert_called_once()
         arm.shutdown.assert_not_called();hand.relax.assert_not_called()

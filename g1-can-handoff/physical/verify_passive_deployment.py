@@ -32,6 +32,7 @@ def main(argv=()):
     script="""import hashlib,io,json,pathlib,time,urllib.request
 from PIL import Image
 import control_settle
+import physical_core
 import planner_tuning
 from types import SimpleNamespace
 import os
@@ -45,6 +46,8 @@ def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+s
 status=get(8102,'/status')
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['telemetry_healthy'],status
+assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
+assert os.environ.get('HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M')==CONFIGURED_TABLE_OFFSET
 assert status['arm_gains']['configured_kp']==[CONFIGURED_KP]*4+[40.]*3+[CONFIGURED_KP]*4+[40.]*3,status
 assert status['arm_gains']['configured_kd']==[3.]*4+[1.5]*3+[3.]*4+[1.5]*3,status
 assert status['arm_gains']['active'] is None,status
@@ -77,7 +80,7 @@ for _ in range(2):
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
 print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_PROFILE',repr(configured_env.get('HANDOFF_PLANNER_PROFILE','legacy'))).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
+""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_BODY_TEMP',repr(float(configured_env['HANDOFF_BODY_TEMPERATURE_LIMIT_C']))).replace('CONFIGURED_TABLE_OFFSET',repr(configured_env['HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M'])).replace('CONFIGURED_PROFILE',repr(configured_env.get('HANDOFF_PLANNER_PROFILE','legacy'))).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
     client=Wendy()
     try:
         for attempt in range(8):

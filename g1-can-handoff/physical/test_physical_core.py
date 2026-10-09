@@ -1,6 +1,7 @@
 import unittest
+from unittest.mock import patch
 import numpy as np
-from physical_core import rigid,calibration,sim_hand_to_bridge,snapshot_guard
+from physical_core import rigid,calibration,sim_hand_to_bridge,snapshot_guard,body_temperature_limit_c
 
 class PhysicalGuards(unittest.TestCase):
     def test_finger_mapping_is_not_hidden_by_symmetric_grip(self):
@@ -32,16 +33,33 @@ class PhysicalGuards(unittest.TestCase):
     def test_uncommissioned_and_other_camera_calibration_rejected(self):
         with self.assertRaises(ValueError):calibration({'commissioned':False},'338622073335')
         with self.assertRaises(ValueError):calibration({'commissioned':True,'camera_serial':'other'},'338622073335')
-    def test_all_motors_accept_below_75_but_reject_at_75(self):
+    def test_body_accepts_below_85_and_hands_below_75_but_reject_at_limits(self):
         snapshot={name:{'time':10,'q':[0]*n,'dq':[0]*n,'tau_est':[0]*n,
                         'imu_rpy':[0,0,0],'faults':[0]*n,'temperature_max':74.99}
                   for name,n in [('body',29),('left',7),('right',7)]}
         snapshot_guard(snapshot,10.1)
         for name in snapshot:
-            snapshot[name]['temperature_max']=75
-            with self.assertRaisesRegex(ValueError,'reaches the 75 C guard'):
+            limit=85 if name=='body' else 75
+            snapshot[name]['temperature_max']=limit-.01
+            snapshot_guard(snapshot,10.1)
+            snapshot[name]['temperature_max']=limit
+            with self.assertRaisesRegex(ValueError,f'reaches the {limit} C guard'):
                 snapshot_guard(snapshot,10.1)
             snapshot[name]['temperature_max']=74.99
+
+    def test_body_temperature_limit_can_be_lowered_but_not_exceed_85(self):
+        snapshot={name:{'time':10,'q':[0]*n,'dq':[0]*n,'tau_est':[0]*n,
+                        'imu_rpy':[0,0,0],'faults':[0]*n,'temperature_max':35}
+                  for name,n in [('body',29),('left',7),('right',7)]}
+        snapshot['body']['temperature_max']=75
+        with patch.dict('os.environ',HANDOFF_BODY_TEMPERATURE_LIMIT_C='85'):
+            snapshot_guard(snapshot,10.1)
+        with patch.dict('os.environ',HANDOFF_BODY_TEMPERATURE_LIMIT_C='75'):
+            with self.assertRaisesRegex(ValueError,'body temperature 75 C reaches the 75 C guard'):
+                snapshot_guard(snapshot,10.1)
+        for value in ('85.01','nan','inf','0','-1','invalid'):
+            with self.subTest(value=value),patch.dict('os.environ',HANDOFF_BODY_TEMPERATURE_LIMIT_C=value):
+                with self.assertRaisesRegex(ValueError,'at most 85 C'):body_temperature_limit_c()
 
     def test_nonfinite_temperature_velocity_and_attitude_rejected(self):
         import copy

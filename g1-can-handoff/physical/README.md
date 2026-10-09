@@ -21,6 +21,13 @@ camera/recorder data. `--check` only reads readiness for replacement. It never
 starts a demo or releases joints. The script automatically uses the project
 virtual environment when present; `--python` can select another interpreter.
 The controls page runs locally: restart `operator_panel.py` for UI-only edits.
+The local `physical/` checkout is the deployment source, including uncommitted
+edits; the launcher does not copy or rewrite controller code into a separate
+staging project. It explicitly selects `build.stagefile.yaml` and accepts CLI
+prompts. Readiness verifies the deployed Python source hashes against
+this checkout. Archive folders under `offline/validation/` are evidence, not
+deployment sources. The settling stop and its `arm_settle_failed` event live in
+`physical_core.py`; `arm_settle_error_rad` is 0.04 rad with a two-second deadline.
 The simulated torque loop, simulated contacts, and simulated can position are
 never used as physical evidence.
 
@@ -76,6 +83,17 @@ The half-second position-stability requirements remain: IMU span <=0.002 rad,
 base/leg/waist joint span <=0.005 rad, and arm joint span <=0.015 rad, with a
 five-second timeout. This limit changes handover admission, not commanded
 motion speed. It does not exempt table collisions or robot self-collisions.
+
+The planner assumes the table is 1 cm higher than the measured plane. Set
+`HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M` in the controller environment (metres,
+default `0.01`, finite range `0`–`0.03`; `0` restores the original assumption).
+The correction raises the collision table and all pickup waypoints together;
+raw camera observations and calibration height remain unchanged. Effective
+values are recorded in the plan event and planning configuration for replay;
+a saved `planning_table_height_offset_m` takes precedence over the environment.
+It is additional to the clearance margin below. Restart the controller to
+change its environment; no motion is automatically started. In seeded
+simulation the correction affects the controller model, not the dynamics world.
 
 The physical FK model now requires positive table clearance, configured with
 `HANDOFF_TABLE_CLEARANCE_M` (metres, default `0.01`, finite range
@@ -193,7 +211,16 @@ refreshes directly from the camera without the legacy aiming guide or detector
 dashboard. The server binds only to loopback with a per-run operator token.
 
 Start demo issues one asynchronous `POST /demo/start` on the controller. It
-retains the full planning, confidence, depth, freshness, ownership and recorder
+checks recorder/feedback health, accepted calibration and exclusive ownership,
+then takes a measured arm hold and waits for control to settle. It refreshes the
+scene after takeover and performs one complete grasp search/preflight before
+issuing pickup movements. A planning failure therefore retains arm control and
+requires supported Release. Passive `/plan` requests still create no adapters.
+The `demo_start_accepted`, `ownership_acquired`, `control_settled`, `plan` and
+`staging_segment` events measure startup stages from the accepted Start request.
+The controller and simulation use the same settle-before-planning order.
+
+Start demo retains the full planning, confidence, depth, freshness, ownership and recorder
 gates. A second start is refused while the job runs, and Stop remains reachable
 throughout preparation and motion. Cancellation is latched before the worker
 starts, so an early Stop cannot be cleared by the queued demo. Stop holds the
@@ -289,6 +316,40 @@ This is not a verified physical pickup. See the dated `yolo/validation-*.json`
 files for exact artifacts, samples, dataset metrics, and simulation failures.
 
 ## Shared simulation regression
+
+Per-joint simulation multipliers live in `.env.sim-tracking` (copy the tracked
+`.env.sim-tracking.example` if missing). Every multiplier starts at **1** and
+the effective tolerance is **baseline joint tolerance × that joint's multiplier ×
+`SIM_TRACKING_GLOBAL_MULTIPLIER`**. The global multiplier defaults to **1** and
+applies to every tracking field, including the Cartesian endpoint tolerance.
+Run `python sim_runtime.py --tracking-profile env --tracking-env-file .env.sim-tracking`.
+The explicitly supplied file takes precedence over shell environment values;
+without a file, the `env` profile reads `SIM_TRACKING_*` from the process environment.
+Seven-entry values use left shoulder pitch/roll/yaw, elbow, wrist roll/pitch/yaw
+order. Fourteen-entry values use that left-arm order then the right-arm order.
+One scalar applies to all joints. `SIM_TRACKING_FK_MULTIPLIER` scales the scalar
+Cartesian endpoint tolerance. Values must be finite and between 0 (exclusive)
+and 2 (inclusive), and each global × individual product must be at most 2.
+Effective arrays and multipliers appear in the result JSON.
+These variables are read only by simulation; the physical controller does not
+consume them, and the experimental plant rejects hardware adapters.
+
+For a simulation-only comparison with doubled joint tracking tolerances, run
+`python -m offline.compare_tracking_limits --workers 2`. It runs eight paired
+scenes with the same starting states and noise seeds, retaining baseline and
+double profiles. Add `--saved-trial offline/validation/sim-real-20261008/real/trial-01.tar.gz`
+to compare a saved reach's exact commands at unchanged P=150. A single run uses
+`python sim_runtime.py --tracking-profile double --planner-mode tuned --position-noise stochastic --noise-seed 7`.
+The default remains `--tracking-profile baseline`. Both profiles require
+simulation I/O and cannot wrap a hardware command adapter. Effective tolerances,
+source hashes, event traces and measured errors are saved with each result.
+The experiment doubles arm tracking/holding error, arm settling error, starting
+arm posture deviation, FK endpoint tolerance, arm settling pose span and motor
+reference tracking leash. It leaves collision, torque, velocity, acceleration,
+calibration, freshness, perception displacement and lift-verification limits
+unchanged. A larger acceptance tolerance does not imply improved tracking or
+qualify table contact on hardware. See the
+[comparison](offline/validation/tracking-limits-2x-20261009/README.md).
 
 The simulation CLI now defaults to fresh, seeded XY jitter, correlated drift and
 jumps fitted across 26 deduplicated real trial groups (1,993 observations), with
@@ -398,9 +459,15 @@ fill missing measurements from the simulator or treat the historical head
 camera estimate as a verified transform.
 
 The runtime preserves per-motor temperature readings in status even if a guard
-fails. The operator-selected guard allows temperatures below 75 C for all body and
-hand motors, and refuses values at or above 75 C. This is a commissioning setting,
-not a manufacturer-qualified limit. The packaged Dex3 thermal
+fails. `HANDOFF_BODY_TEMPERATURE_LIMIT_C` sets the body guard in degrees Celsius
+(default `85`, finite range greater than `0` and at most `85`). Body readings at
+or above the limit stop the run; missing/nonfinite readings and motor faults
+also stop it. The SDK reports casing and winding temperatures; the runtime uses
+the hotter reading. Unitree's G1 SDK uses an 85 C default casing-overheat limit:
+https://github.com/unitreerobotics/unitree_sdk2/blob/main/include/unitree/robot/g1/common/terminations.hpp
+This does not qualify sustained contact operation. The separate hand guard
+remains 75 C. Restart the controller after changing its process environment;
+no trial starts automatically. The packaged Dex3 thermal
 module receives fresh hand temperatures from the same telemetry snapshots used
 by the motion guards, without adding blocking reads to the command loop.
 

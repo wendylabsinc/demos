@@ -16,6 +16,13 @@ def plan(plant, observation, validate=None, include_offer=True):
         raise ValueError("Invalid observed can pose")
     if time.monotonic()-observation.timestamp>.5: raise ValueError("Observation expired before planning")
     if not (.645<=observation.table_height<=.955): raise ValueError("Table height is outside the supported 65–95 cm range")
+    table_offset=getattr(plant,'planning_table_height_offset_m',0.)
+    # Apply the assumed table correction to targets, without altering the
+    # camera observation used by stationary-can and table movement checks.
+    if not np.isfinite(table_offset) or not 0 <= table_offset <= .03:
+        raise ValueError('Invalid planning table height offset')
+    if not .645 <= observation.table_height+table_offset <= .955:
+        raise ValueError('Adjusted planning table height is outside the supported workspace')
     # Recorded 25.7 cm forward and 6.8 cm left scenes pass complete
     # measured-start physical preflight.
     # Physical admission stays bounded and still requires IK,
@@ -28,7 +35,7 @@ def plan(plant, observation, validate=None, include_offer=True):
             'Reposition the can inside that area and recheck perception before starting.')
     # The cylinder permits yaw changes. A downward approach expands the
     # reachable workspace on lower tables without changing the can location.
-    deadline=time.monotonic()+30.
+    deadline=time.monotonic()+70
     orientations=[(0,0),(0,.5),(0,1.),(-.4,0),(-.4,.5),(.4,0),(.4,.5),(.7,0),(.7,.5),(.7,1.)]
     step=getattr(plant,'grasp_orientation_step_rad',0.)
     if step:orientations=[(0,0),(0,step),(0,-step)]+orientations[1:]
@@ -43,7 +50,7 @@ def plan(plant, observation, validate=None, include_offer=True):
         cp,sp,cy,sy=np.cos(pitch),np.sin(pitch),np.cos(yaw),np.sin(yaw)
         rotation=np.array([[cy,-sy,0],[sy,cy,0],[0,0,1]])@np.array([[cp,0,sp],[0,1,0],[-sp,0,cp]])
         offset=rotation@np.array([0,.10,0])
-        grasp=c+np.array([0,0,height])
+        grasp=c+np.array([0,0,height+table_offset])
         waypoints=[grasp+offset+[0,0,.16],grasp+offset,grasp,grasp+[0,0,.15],grasp+[.02,0,.15]]
         # A full-path validator solves sequentially from the measured start,
         # including Cartesian transfers, fingers and every joint segment.

@@ -29,7 +29,7 @@ class SharedPickupTests(unittest.TestCase):
         return self.obs,dict(top_quantile_z_m=1.01,center_xy_m=[.35,.18])
     def test_full_path_rejection_searches_another_orientation(self):
         self.obs.timestamp=time.monotonic()
-        plant=Mock();plant.preflight.side_effect=[RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose'),None]
+        plant=Mock(grasp_orientation_step_rad=0.,grasp_candidate_budget=1,planning_table_height_offset_m=0.);plant.preflight.side_effect=[RuntimeError('Continuous Cartesian lift IK cannot preserve the grasp pose'),None]
         events=[]
         result=prepare(plant,self.observe,lambda phase,**kw:events.append(phase))
         self.assertEqual(plant.preflight.call_count,2)
@@ -40,13 +40,13 @@ class SharedPickupTests(unittest.TestCase):
     def test_orientation_search_never_swallows_operational_faults(self):
         for reason in ('Operator cancelled trial','body temperature reaches guard','Base attitude moved'):
             self.obs.timestamp=time.monotonic()
-            plant=Mock();plant.preflight.side_effect=RuntimeError(reason)
+            plant=Mock(grasp_orientation_step_rad=0.,grasp_candidate_budget=1,planning_table_height_offset_m=0.);plant.preflight.side_effect=RuntimeError(reason)
             with self.assertRaisesRegex(RuntimeError,reason):prepare(plant,self.observe,lambda *a,**k:None)
             self.assertEqual(plant.preflight.call_count,1)
 
     def test_orientation_candidates_are_bounded(self):
         self.obs.timestamp=time.monotonic()
-        plant=Mock();plant.preflight.side_effect=RuntimeError('Interpolated physical trajectory intersects robot/table')
+        plant=Mock(grasp_orientation_step_rad=0.,grasp_candidate_budget=1,planning_table_height_offset_m=0.);plant.preflight.side_effect=RuntimeError('Interpolated physical trajectory intersects robot/table')
         with self.assertRaisesRegex(ValueError,'No reachable.*preflight rejected: Interpolated physical trajectory intersects robot/table'):
             prepare(plant,self.observe,lambda *a,**k:None)
         self.assertEqual(plant.preflight.call_count,30)

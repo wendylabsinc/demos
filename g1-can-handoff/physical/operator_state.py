@@ -13,7 +13,7 @@ ERROR_CASES=[
     dict(triggers=['Coke YOLO target absent/ambiguous'],title='Coke identity could not be confirmed',
          summary='YOLO could not identify one unambiguous Coke can.',
          action='Give the detector a clear view of the can before retrying.',source='yolo_client.py'),
-    dict(triggers=['Target has too few','No sufficiently visible red can'],title='Can detection needs a clearer view',
+    dict(triggers=['Target has too few','No sufficiently visible red can','Color/depth can target absent/ambiguous'],title='Can detection needs a clearer view',
          summary='The detector could not obtain an unambiguous can position.',
          action='Place the upright can inside the placement area with an unobstructed view.',source='camera_input.py'),
     dict(triggers=['Can is outside the left-hand pickup area'],title='Can is outside the pickup area',
@@ -32,7 +32,7 @@ ERROR_CASES=[
          summary='The planner could not maintain the grasp through the lift.',
          action='Save the trial log and check the lift plan before retrying.',source='physical_core.py'),
     dict(triggers=['HTTP Error 423','423: Locked'],title='Camera is busy',
-         summary='Another camera operation currently holds the camera lease.',
+         summary='Camera is temporarily busy. The last image stays visible while the feed retries.',
          action='Wait for that operation to finish. The placement outline is a reference meanwhile.',source='camera_input.py'),
     dict(triggers=['Operator cancelled'],title='Demo stopped',summary='The operator stopped this attempt.',
          action='Check the setup before starting another attempt.',source='runtime.py')]
@@ -48,19 +48,32 @@ def describe_state(state):
     owned = state.get('adapter_initialized')
     phase = state.get('phase') or 'UNKNOWN'
     running = bool(state.get('demo_running'))
-    failure = state.get('demo_error') or state.get('error')
+    stopped = phase in ('FROZEN', 'BLOCKED')
+    active = running and not stopped
+    # A previous failure can remain in backend fields until the worker replaces
+    # it. It must not describe a newly accepted attempt as already stopped.
+    failure = (state.get('demo_error') or state.get('error')) if not active else None
     summary = describe_error(failure)['summary'] if failure else None
     result = state.get('demo_result') or {}
     owner = 'Demo controls arms + fingers' if owned else 'Upper-body control released to Unitree' if owned is False else 'Control ownership unknown'
     if state.get('deployment_in_progress'):
         title, tone, next_action = 'Updating demo', 'busy', 'Wait for deployment verification.'
-    elif owned and (phase == 'HOLDING_CAN' or result.get('physical_lift_verified')):
+    elif stopped:
+        if owned:
+            title, tone, next_action = 'Stopped — arms held', 'hold', 'Support the can and arms, then release control before resetting.'
+        else:
+            title, tone, next_action = 'Pickup blocked — control released', 'blocked', 'Correct the reported problem, reset the setup, then start again.'
+        if running:
+            next_action += ' The attempt is finishing cleanup.'
+    elif owned and (phase == 'HOLDING_CAN' or (not running and result.get('physical_lift_verified'))):
         title, tone, next_action = 'Holding the can', 'hold', 'Support the can and raised arms before releasing control.'
     elif running:
-        if phase == 'CONTROL_SETTLING':
+        if phase in ('CONTROL_ACQUIRING','CONTROL_SETTLING'):
             title = 'Taking arm control'
-        elif phase in ('staging_segment', 'target', 'close', 'lift'):
-            title = {'staging_segment':'Moving to pickup', 'target':'Moving the arm', 'close':'Closing fingers', 'lift':'Lifting the can'}[phase]
+        elif phase in ('staging_segment', 'target', 'approach', 'align', 'reach', 'close', 'lift'):
+            title = {'staging_segment':'Moving to pickup', 'target':'Moving the arm',
+                     'approach':'Approaching the can', 'align':'Aligning the hand',
+                     'reach':'Reaching the can', 'close':'Closing fingers', 'lift':'Lifting the can'}[phase]
         else:
             title = 'Planning pickup'
         tone, next_action = 'busy', 'One attempt is running. Stop and hold remains available.'
@@ -74,6 +87,8 @@ def describe_state(state):
         title, tone, next_action = 'Pickup blocked — control released', 'blocked', 'Correct the reported problem, reset the setup, then start again.'
     else:
         title, tone, next_action = 'Control released · ready to start', 'ready', 'Place the can base inside the green area, then start one demo.'
-    return dict(title=title, tone=tone, ownership=owner, next_action=next_action,
+    activity = ('Attempt stopped' if stopped else 'Attempt complete' if phase == 'HOLDING_CAN'
+                else 'Attempt running' if running else 'No attempt running')
+    return dict(title=title, tone=tone, ownership=owner, next_action=next_action, activity=activity,
                 failure=failure, failure_summary=summary,
                 failure_label='Last attempt' if not owned and not running else 'Current problem', phase=phase)

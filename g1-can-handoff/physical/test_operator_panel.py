@@ -39,6 +39,60 @@ class OperatorPanelTests(unittest.TestCase):
         self.assertIn('<button id="stop"',html)
         self.server.wendy.request.assert_not_called()
     @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
+    def test_camera_load_failure_and_timeout_never_replace_the_last_good_image(self):
+        javascript=re.search(r'<script>([\s\S]*?)</script>',panel.PAGE).group(1)
+        harness=r'''
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const elements=new Map(),images=[],timeouts=[];let clock=1000;
+function element(id){if(!elements.has(id))elements.set(id,{id,src:id==='#video'?'last-good.jpg':'',textContent:'',style:{},dataset:{},setAttribute(){},replaceWith(next){elements.set(id,next);}});return elements.get(id);}
+class Image {constructor(){images.push(this);this.naturalWidth=640;this.naturalHeight=480;}decode(){return Promise.resolve();}replaceWith(next){elements.set('#video',next);}}
+class TestDate extends Date {static now(){return clock;}}
+const context={document:{querySelector:element},Image,Date:TestDate,console,
+ sessionStorage:{getItem(){return null;},setItem(){},removeItem(){}},
+ fetch(){return new Promise(()=>{});},setInterval(){},clearTimeout(){},
+ setTimeout(fn){timeouts.push(fn);return timeouts.length;}};
+vm.createContext(context);vm.runInContext(PAGE_SCRIPT,context);
+(async()=>{
+ assert.equal(elements.get('#video').src,'last-good.jpg','Pending request must not replace the visible frame');
+ images[0].onerror();assert.equal(elements.get('#video').src,'last-good.jpg');
+ vm.runInContext('refreshVideo()',context);const good=images.at(-1);await good.onload();
+ assert.equal(elements.get('#video'),good,'Only a decoded successful frame may become visible');
+ clock+=250;vm.runInContext('refreshVideo()',context);const failed=images.at(-1);failed.onerror();
+ assert.equal(elements.get('#video'),good,'Transient failure must retain the good frame');
+ clock+=250;vm.runInContext('refreshVideo()',context);const late=images.at(-1);timeouts.at(-1)();
+ await late.onload();assert.equal(elements.get('#video'),good,'A timed-out frame must not replace the good frame');
+ assert.match(elements.get('#video-state').textContent,/last image|Waiting|paused/i);
+})().catch(e=>{console.error(e);process.exitCode=1;});
+'''.replace('PAGE_SCRIPT',json.dumps(javascript))
+        result=subprocess.run(['node','-e',harness],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
+    def test_status_response_from_before_start_cannot_overwrite_new_attempt(self):
+        javascript=re.search(r'<script>([\s\S]*?)</script>',panel.PAGE).group(1)
+        harness=r'''
+const assert=require('node:assert/strict'),vm=require('node:vm');
+const elements=new Map();let finishOldStatus;
+function element(id){if(!elements.has(id))elements.set(id,{textContent:'',style:{},dataset:{},setAttribute(){}});return elements.get(id);}
+const context={document:{querySelector:element},Image:class {},Date,console,
+ sessionStorage:{getItem(){return null;},setItem(){},removeItem(){}},setInterval(){},setTimeout(){},
+ fetch(path){if(path==='/status')return new Promise(resolve=>{finishOldStatus=resolve;});
+ if(path==='/start')return Promise.resolve({ok:true,json:async()=>({phase:'PLANNING',demo_running:true,presentation:{title:'Planning pickup',activity:'Attempt running',tone:'busy',ownership:'Demo controls arms + fingers',next_action:'One attempt is running.'}})});
+ return new Promise(()=>{});}};
+vm.createContext(context);vm.runInContext(PAGE_SCRIPT,context);
+(async()=>{
+ await elements.get('#start').onclick();
+ finishOldStatus({ok:true,json:async()=>({phase:'FROZEN',demo_running:false,error:'Old failure',presentation:{title:'Stopped — arms held',activity:'Attempt stopped',tone:'hold',failure:'Old failure'}})});
+ await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(elements.get('#robot-title').textContent,'Planning pickup');
+ assert.equal(elements.get('#robot-activity').textContent,'Attempt running');
+ assert.equal(elements.get('#last-demo-error').hidden,true);
+})().catch(e=>{console.error(e);process.exitCode=1;});
+'''.replace('PAGE_SCRIPT',json.dumps(javascript))
+        result=subprocess.run(['node','-e',harness],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stderr)
+
+    @unittest.skipUnless(shutil.which('node'), 'JavaScript runtime unavailable')
     def test_demo_error_survives_poll_release_and_reload_until_next_accepted_start(self):
         functions='\n'.join(re.search(r'function '+name+r'\([^\n]+',panel.PAGE).group()
                             for name in ('describeDemoError','rememberDemoError','clearDemoError','show','placementError'))
@@ -67,7 +121,7 @@ show({phase:'BLOCKED',demo_running:false,demo_error:'New attempt failed'});
 assert.match(demoErrorRaw.textContent,/New attempt failed/);
 assert.equal(demoErrorTitle.textContent,'Demo stopped');
 const transport='Traceback: HTTP Error 423: Locked';
-assert.equal(placementError(transport),'Another camera operation currently holds the camera lease.');
+assert.equal(placementError(transport),'Camera is temporarily busy. The last image stays visible while the feed retries.');
 assert.equal(placementRaw.textContent,transport);assert.equal(placementDetails.hidden,false);
 placementError(null);assert.equal(placementDetails.hidden,true);
 """

@@ -1,0 +1,160 @@
+{
+  "source_device": "10.10.20.238:50052",
+  "source_app": "DEV-g1-handoff-physical",
+  "source_events": "/data/events-20261009T161632Z.jsonl",
+  "reported_contact": "Operator attributes failed reach to intentional table contact; contact not established by this evidence.",
+  "last_target": {
+    "unix_ns": 1791562838745407500,
+    "monotonic_ns": 1614548393728,
+    "phase": "target",
+    "arm": [
+      -0.032921968204317364,
+      -0.15978597434670544,
+      0.4618567384935699,
+      0.48502128404589445,
+      0.15622524089630946,
+      -0.5297281563196875,
+      -0.28096968369667036,
+      0.2622627913951874,
+      -0.284217894077301,
+      0.08771254122257233,
+      0.7821863889694214,
+      -0.000215716048842296,
+      0.013146216049790382,
+      0.0012655341997742653
+    ],
+    "tracking_error_rad": 0.07540504219443417,
+    "phase_name": "reach",
+    "measured_arm": [
+      -0.04405401274561882,
+      -0.08438093215227127,
+      0.47145941853523254,
+      0.48298823833465576,
+      0.13798636198043823,
+      -0.5288628935813904,
+      -0.2850673198699951,
+      0.2619871497154236,
+      -0.28228843212127686,
+      0.08744889497756958,
+      0.7826657891273499,
+      -0.000215716048842296,
+      0.016682041808962822,
+      0.001273204106837511
+    ],
+    "gravity_feedforward_nm": [
+      -3.16079801419892,
+      1.054638757818383,
+      -0.23649117734107314,
+      -2.9906330339105907,
+      -0.2535475056899401,
+      -1.1765739565387459,
+      0.04629188920085682,
+      -0.189818702083017,
+      -1.9623554655076791,
+      -0.6117297837212414,
+      -1.3430696672719034,
+      0.026803444309821067,
+      -0.5207086689955905,
+      -0.11714461608282178
+    ]
+  },
+  "events": [
+    {
+      "unix_ns": 1791562831499131000,
+      "monotonic_ns": 1607302117242,
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 11,
+      "ik_attempts": 11,
+      "start": [
+        0.3055841914583316,
+        0.25230447669719747,
+        0.8316655191721525
+      ],
+      "target": [
+        0.3133643899819087,
+        0.1515620939195153,
+        0.823
+      ]
+    },
+    {
+      "unix_ns": 1791562840762289200,
+      "monotonic_ns": 1616565275125,
+      "phase": "arm_settle_failed",
+      "goal_q": [
+        -0.032921968204317364,
+        -0.15978597434670544,
+        0.4618567384935699,
+        0.48502128404589445,
+        0.15622524089630946,
+        -0.5297281563196875,
+        -0.28096968369667036
+      ],
+      "measured_q": [
+        -0.0433109886944294,
+        -0.08466855436563492,
+        0.4686431288719177,
+        0.48289236426353455,
+        0.14521285891532898,
+        -0.531677782535553,
+        -0.2809639275074005
+      ],
+      "error_rad": [
+        -0.010389020490112033,
+        0.07511741998107052,
+        0.0067863903783478285,
+        -0.002128919782359906,
+        -0.011012381980980479,
+        -0.0019496262158654742,
+        0.0000057561892698454464
+      ],
+      "gravity_feedforward_nm": [
+        -3.159432777780201,
+        1.0419448169421077,
+        -0.23685679476682303,
+        -2.9898509983081327,
+        -0.2546844075640986,
+        -1.1770987861376154,
+        0.051239464990572386,
+        -0.18899437462889923,
+        -1.9629979228703949,
+        -0.6119471746456042,
+        -1.3427891991620133,
+        0.026799667619546552,
+        -0.5206207422112823,
+        -0.11720099866619726
+      ]
+    },
+    {
+      "unix_ns": 1791562840763175700,
+      "monotonic_ns": 1616566161403,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Physical arm did not settle at the IK target",
+      "source": "execution"
+    },
+    {
+      "unix_ns": 1791562840769883600,
+      "monotonic_ns": 1616572869864,
+      "phase": "error",
+      "error": "RuntimeError: Physical arm did not settle at the IK target",
+      "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 642, in run\n    result=execute(plant,prepared,observe,phase_event)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 66, in execute\n    plant.move(point, rotation=rotation)\n  File \"/app/physical_core.py\", line 508, in move\n    self._execute_poses(goal,poses)\n  File \"/app/physical_core.py\", line 535, in _execute_poses\n    raise RuntimeError('Physical arm did not settle at the IK target')\nRuntimeError: Physical arm did not settle at the IK target\n"
+    },
+    {
+      "unix_ns": 1791562840774123500,
+      "monotonic_ns": 1616577110468,
+      "phase": "failure_hold",
+      "grasp_started": false,
+      "control_retained": true,
+      "automatic_release": false
+    },
+    {
+      "unix_ns": 1791562967921925400,
+      "monotonic_ns": 1743724912469,
+      "phase": "released",
+      "can_supported": true,
+      "automatic_home": false,
+      "reason": "supported_can_release"
+    }
+  ],
+  "arm_settle_error_rad": 0.04
+}

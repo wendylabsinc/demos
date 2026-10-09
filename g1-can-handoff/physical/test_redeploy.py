@@ -22,7 +22,8 @@ class RedeployTests(unittest.TestCase):
             self.assertEqual(redeploy.main([]),0)
             argv=run.call_args.args[0]
             self.assertEqual(argv[1],str(redeploy.WRAPPER))
-            self.assertEqual(argv[2:],['--device',redeploy.DEVICE,'--detach'])
+            self.assertEqual(argv[2:],['--device',redeploy.DEVICE,'--dockerfile',
+                                    'build.stagefile.yaml','--yes','--detach'])
             self.assertIn('verify_passive_deployment.py',run.call_args.kwargs['env']['WENDY_TIMING_FUNCTIONAL_READINESS_COMMAND'])
             self.assertFalse(redeploy.MARKER.exists())
 

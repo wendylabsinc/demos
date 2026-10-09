@@ -32,7 +32,8 @@ def load(trial,phase='reach'):
     return decisions[0],commands,next((r for r in rows if r['phase']=='arm_settle_failed'),None)
 
 
-def replay(snapshot,commands,kp):
+def replay(snapshot,commands,kp,*,tracking_profile='baseline'):
+    from simulation_tracking_limits import plant_class, profile
     config=copy.deepcopy(snapshot['config'])
     # The recorded model proxy is camera-measured; no can truth is supplied.
     can_adr=None
@@ -45,7 +46,7 @@ def replay(snapshot,commands,kp):
                stationary_lower_body_support=True,
                camera_intrinsics=dict(width=640,height=480,fx=603.59765625,fy=603.7045288085938,
                                       ppx=318.05902099609375,ppy=261.0997619628906,coeffs=[0.]*5))
-    world=setup_scene(setup);io=SimulationIO(world,arm_kp=kp)
+    world=setup_scene(setup);io=SimulationIO(world,arm_kp=kp,tracking_profile=tracking_profile)
     apply_measured_state(world,io,snapshot['measured'])
     if world.model.nq!=len(snapshot['qpos']):raise ValueError('Recorded joint model no longer matches replay model')
     world.data.qpos[:]=snapshot['qpos']
@@ -55,7 +56,7 @@ def replay(snapshot,commands,kp):
     world.targets[:]=world.data.qpos[world.qadr]
     mujoco.mj_forward(world.model,world.data)
     fk=calibrated_scene(config)
-    plant=PhysicalPlant(fk,io,io,io.read,config,lambda *a,**k:None,clock=io)
+    plant=plant_class(tracking_profile)(fk,io,io,io.read,config,lambda *a,**k:None,clock=io)
     plant.observe_can(type('Observation',(),{'center':center})())
     plant.set_contact_phase(snapshot['collision_phase'])
     samples=[];collision=None
@@ -68,7 +69,8 @@ def replay(snapshot,commands,kp):
         measured=np.asarray(io.read()['body']['q'][15:29])
         error=measured-q
         samples.append(dict(time_s=float(world.data.time),target=q.tolist(),measured=measured.tolist(),error_rad=error.tolist()))
-        if np.max(np.abs(error[:7]))>.15:collision='Tracking error exceeds 0.15 rad';break
+        try:plant._enforce_arm_tracking(error[:7])
+        except RuntimeError as exc:collision=str(exc);break
         io.ctrl_dual_arm(q,ff);io.ctrl_dual_hand(left_hand,right_hand);io.sleep(.02)
     goal=np.asarray(commands[-1]['arm']);feedforward=np.asarray(commands[-1]['gravity_feedforward_nm'])
     if collision is None:
@@ -85,7 +87,8 @@ def replay(snapshot,commands,kp):
                 trajectory_rms_error_rad=float(np.sqrt(np.mean(errors**2))) if len(errors) else None,
                 shoulder_roll_rms_error_rad=float(np.sqrt(np.mean(errors[:,1]**2))) if len(errors) else None,
                 final_error_rad=final.tolist(),final_max_abs_error_rad=float(np.max(np.abs(final[:7]))),
-                final_shoulder_roll_error_rad=float(abs(final[1])),final_settle_pass=bool(collision is None and np.max(np.abs(final[:7]))<.04),
+                final_shoulder_roll_error_rad=float(abs(final[1])),final_settle_pass=bool(collision is None and np.all(np.abs(final[:7])<plant.arm_settle_error_rad)),
+                tracking_tolerances=profile(tracking_profile),
                 simulation_only=True,physical_tracking_verified=False,samples=samples)
 
 
