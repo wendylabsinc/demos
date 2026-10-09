@@ -1,0 +1,16 @@
+{
+  "path": "/data/trial-exports/1791506743952199000-trial-01.tar.gz",
+  "bytes": 499093,
+  "sha256": "8433b4f87e46b096b5c27927dccfb08619b7b7ed1d574977bf7afff884f63d97",
+  "events": 6,
+  "selected_frames": 1,
+  "primary_failure": {
+    "unix_ns": 1791506749304622716,
+    "monotonic_ns": 364464399805,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+    "source": "execution"
+  },
+  "local_path": "offline/validation/tuned-real-replay-20261008/trial-01.tar.gz",
+  "verified": true
+}

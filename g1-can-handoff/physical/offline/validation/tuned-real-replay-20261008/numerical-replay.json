@@ -1,0 +1,2410 @@
+{
+  "hardware_used": false,
+  "decisions": 267,
+  "all_identical": false,
+  "results": [
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819232003999-0001-preflight.json",
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819279085899-0002-ik.json",
+      "kind": "ik",
+      "identical": false,
+      "max_abs_error_rad": 7.738867380258085e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819398928104-0003-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.009256923581207407, 'required_clearance_m': 0.01}",
+      "captured_error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.009256923581207407, 'required_clearance_m': 0.01}",
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819494763901-0004-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 8.719980293392382e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819523874397-0005-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819561846975-0006-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.2510739111348812e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819593166064-0007-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819629388850-0008-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.38373456926422e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819659258222-0009-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819697054377-0010-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.759116017411969e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819728846539-0011-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819764956041-0012-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.2369386626076562e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819797725934-0013-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819836658355-0014-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.916424490795322e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819863522177-0015-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819903216130-0016-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.879328466411152e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819933347751-0017-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819972145831-0018-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.345430208527404e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820006488357-0019-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820045383657-0020-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.204189632683324e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820082376648-0021-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820125643658-0022-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.202479280708161e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820157185444-0023-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820202116867-0024-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.728643787117349e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820232442927-0025-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820276971840-0026-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.718759993333933e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820310816525-0027-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820360145547-0028-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.178997902228645e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820398874441-0029-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820448319212-0030-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.419214316708775e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820482253468-0031-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820538644603-0032-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.0412631140942494e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820568131241-0033-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820643260177-0034-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.095991654156194e-07,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820700260646-0035-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820805978980-0036-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.287346423379688e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820849897118-0037-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820910268814-0038-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.6542580073017916e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506820946628885-0039-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821001981263-0040-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.093126086488155e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821047278748-0041-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821112550750-0042-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.1962890678063332e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821162794719-0043-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821220299720-0044-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.0820996321214693e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821265407886-0045-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821335400028-0046-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.627398629888148e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821367257793-0047-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821407966439-0048-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.025186768810471e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821438980110-0049-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821483621411-0050-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.5364721162036687e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821523319973-0051-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821582930106-0052-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.0066269484632073e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821637841860-0053-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821706482881-0054-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.3259523751484323e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821768132992-0055-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506821978268175-0056-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.9836814119963435e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822078730225-0057-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822236511030-0058-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.694482261402015e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822345222340-0059-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822500338472-0060-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.859181029244098e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822591799395-0061-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822736836697-0062-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 8.536641560308311e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822839977180-0063-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506822994970908-0064-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.9083514202786773e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823258705230-0065-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823384663857-0066-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.108509085864469e-12,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823576293510-0067-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823704607423-0068-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.4495364070453718e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823864044386-0069-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506823988686005-0070-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.3868572956710068e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824169945780-0071-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824298737632-0072-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.2250924153487404e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824472827290-0073-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824573606891-0074-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.9541754459350145e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824705667246-0075-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824808161053-0076-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.85459727972426e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506824953205815-0077-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825043039067-0078-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.379979464033454e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825159049559-0079-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825238783788-0080-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.941025201153025e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825344685721-0081-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825429136153-0082-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.5871298719716265e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825543061162-0083-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825602432730-0084-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.421713495350588e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825676697832-0085-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825723498158-0086-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.875299025071001e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506825799429753-0087-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830004187736-0088-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830259339501-0089-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830436424708-0090-preflight.json",
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830481589875-0091-ik.json",
+      "kind": "ik",
+      "identical": false,
+      "max_abs_error_rad": 1.0956164919750933e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830593355677-0092-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.008960232298499059, 'required_clearance_m': 0.01}",
+      "captured_error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.008960232298499059, 'required_clearance_m': 0.01}",
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830695422214-0093-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.3599937004625815e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830722366652-0094-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830764007210-0095-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.1143367339983001e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830792014311-0096-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830836580672-0097-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.263594478524311e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830873973619-0098-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830927911105-0099-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.2718666392584907e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830959207158-0100-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830997954426-0101-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.340555720932059e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831029369844-0102-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831072824740-0103-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.821282567097796e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831102131441-0104-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831142481713-0105-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.8761832344433884e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831174034223-0106-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831227499533-0107-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.350504650447618e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831272709598-0108-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831318281052-0109-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.3152987577445003e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831349315783-0110-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831392704054-0111-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.8152795877579564e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831423877894-0112-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831466860934-0113-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.002239307685727e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831502626430-0114-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831550444718-0115-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.339558268284804e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831582190868-0116-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831631330868-0117-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.998190946039813e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831663636334-0118-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831712546405-0119-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.524189534116374e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831747031087-0120-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831797014702-0121-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.220808329044814e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831828846455-0122-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831881767328-0123-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.9856083079477e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831918242035-0124-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506831977955668-0125-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.736991106504604e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832011639905-0126-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832055110931-0127-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.717921774423985e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832088002819-0128-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832129877754-0129-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.1417524965225994e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832161474587-0130-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832207451272-0131-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.2105373087555336e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832253558394-0132-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832301897342-0133-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.408918868354817e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832338500117-0134-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832378834260-0135-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.949569394810169e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832412098930-0136-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832452509300-0137-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.257688728832477e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832484698538-0138-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832524608826-0139-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.8659503376337057e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832559418704-0140-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832604021227-0141-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.0601354783499346e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832644192325-0142-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832692637964-0143-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.5798718716885105e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832748762956-0144-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506832946230448-0145-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.4743814347184525e-07,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833041578246-0146-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833194936067-0147-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.101246954211433e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833462580523-0148-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833619434567-0149-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.23093227119864e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833837492637-0150-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506833984584277-0151-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.3267139870906135e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834179096082-0152-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834315109847-0153-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 8.061518119717448e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834504466200-0154-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834628143804-0155-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.195086110771797e-12,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834787959174-0156-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506834906451244-0157-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.58416352153057e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835057244718-0158-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835158246743-0159-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.992407710511458e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835298709696-0160-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835388043199-0161-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.2452278631598404e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835519702695-0162-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835610720131-0163-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.3885283468038097e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835748164191-0164-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835831412415-0165-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.6723455953382427e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506835938635275-0166-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836015545284-0167-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.2101959151754613e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836143428292-0168-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836237635126-0169-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.481146145962072e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836331144846-0170-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836391573998-0171-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.968516069738584e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836477575796-0172-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836537786187-0173-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.829993792756284e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836640365039-0174-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836706112017-0175-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.201851422358516e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506836799607081-0176-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841102382456-0177-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841381713158-0178-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841557170811-0179-preflight.json",
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841600601072-0180-ik.json",
+      "kind": "ik",
+      "identical": false,
+      "max_abs_error_rad": 1.7379237033932071e-06,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841721244815-0181-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.00884982841693782, 'required_clearance_m': 0.01}",
+      "captured_error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'approach', 'bodies': ['world', 'left_hand_index_0_link'], 'geoms': ['table', ''], 'distance_m': 0.00884982841693782, 'required_clearance_m': 0.01}",
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841800832208-0182-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.332602194205947e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841826504187-0183-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841864925017-0184-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 8.804157403119461e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841894133606-0185-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841931393018-0186-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.432548994515173e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841959255957-0187-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841996942872-0188-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.6880934700379555e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842022790954-0189-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842059585677-0190-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.042690709444742e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842097889608-0191-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842142072569-0192-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 5.517406531652114e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842170082298-0193-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842212868409-0194-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.5749185278710627e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842245293052-0195-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842297974020-0196-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.468203751439859e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842333757986-0197-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842378404580-0198-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.9969185027779446e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842408326092-0199-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842453417150-0200-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.1028752517082694e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842487323192-0201-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842539406410-0202-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.428901039301493e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842578887279-0203-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842636781815-0204-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.339102323472119e-07,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842679593462-0205-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842732419652-0206-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.764900612322151e-07,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842762019711-0207-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842811380078-0208-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.250133915448487e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842840991754-0209-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842893765910-0210-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.771623311558784e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842932397532-0211-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506842998490192-0212-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 8.829417863509548e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843075851488-0213-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843153940460-0214-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.1476431683330475e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843201637055-0215-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843269917731-0216-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.7436874106001596e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843308979449-0217-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843367512729-0218-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 9.923505572828617e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843404972916-0219-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843454850519-0220-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.3427865486193014e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843486959631-0221-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843530391653-0222-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.4689992272897143e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843562612545-0223-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843604643012-0224-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.5531222691554945e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843636587510-0225-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843688622023-0226-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.462141101058137e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843733261066-0227-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843787159743-0228-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.9811887120322353e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843829227140-0229-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843883515560-0230-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.3605729593256797e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843935151531-0231-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506843998835015-0232-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.401248254737311e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844079079202-0233-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844325697099-0234-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 3.8682074099405384e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844432762397-0235-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844593868746-0236-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.258274684445837e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844689042409-0237-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844859775382-0238-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.4989102270490662e-07,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506844972469942-0239-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845132483037-0240-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.238586396951519e-10,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845227751616-0241-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845373990734-0242-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.473099420223889e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845579575163-0243-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845720386434-0244-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.7341242037646225e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506845912645191-0245-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846039109025-0246-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.8580804389832792e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846218361515-0247-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846328126626-0248-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.278414956702335e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846476785131-0249-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846578349621-0250-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 2.0122140065303995e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846759041428-0251-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506846871568624-0252-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.9386270366794633e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847042800149-0253-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847144183033-0254-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.127487240879191e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847293017002-0255-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847380992836-0256-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 6.13714357111661e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847491381523-0257-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847572970146-0258-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 7.346509511840793e-11,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847658606854-0259-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847728581643-0260-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 4.011161625072646e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847826343403-0261-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847886995835-0262-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.49606166344185e-09,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506847974933203-0263-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506848025150276-0264-continuous_ik.json",
+      "kind": "continuous_ik",
+      "identical": false,
+      "max_abs_error_rad": 1.5730787006340563e-08,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506848063479522-0265-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506852319289080-0266-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506852572083801-0267-joint_poses.json",
+      "kind": "joint_poses",
+      "identical": true,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    }
+  ]
+}

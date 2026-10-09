@@ -69,6 +69,15 @@
 !sim_runtime.py
 !sim_runtime.py/
 !sim_runtime.py/**
+!simulation_position_noise.py
+!simulation_position_noise.py/
+!simulation_position_noise.py/**
+!stochastic_position_noise.py
+!stochastic_position_noise.py/
+!stochastic_position_noise.py/**
+!planner_tuning.py
+!planner_tuning.py/
+!planner_tuning.py/**
 !calibration_points.py
 !calibration_points.py/
 !calibration_points.py/**
