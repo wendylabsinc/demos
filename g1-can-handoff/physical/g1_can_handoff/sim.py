@@ -128,7 +128,7 @@ class Plant:
                 # Table support is expected. Only the designated left fingers
                 # may touch the can, and only in the intentional grasp phases.
                 if other=='world':continue
-                intentional=(self.contact_phase in ('reach','close','lift','hold','offer') and
+                intentional=(self.contact_phase in ('close','lift','hold','offer') and
                              any(other.startswith('left_hand_'+finger) for finger in ('thumb','index','middle')))
                 if intentional:continue
                 threshold=.01 if self.contact_phase in ('pregrasp','staging','approach','align') else 0.

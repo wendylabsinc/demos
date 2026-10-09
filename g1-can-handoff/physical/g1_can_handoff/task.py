@@ -24,11 +24,15 @@ def plan(plant, observation, validate=None, include_offer=True):
         offset=rotation@np.array([0,.10,0])
         grasp=c+np.array([0,0,height])
         waypoints=[grasp+offset+[0,0,.16],grasp+offset,grasp,grasp+[0,0,.15],grasp+[.02,0,.15]]
-        try:
-            for phase,target in zip(('approach','align','reach','lift','offer'),waypoints[:5 if include_offer else 4]):
-                plant.set_contact_phase(phase)
-                plant.solve(target,rotation)
-        except ValueError:continue
+        if validate is None:
+            try:
+                for phase,target in zip(('approach','align','reach','lift','offer'),waypoints[:5 if include_offer else 4]):
+                    plant.set_contact_phase(phase)
+                    plant.solve(target,rotation)
+            except ValueError:continue
+        # Physical preflight solves the entire path with its planned OPEN and
+        # CLOSED finger states. Solving isolated endpoints with the currently
+        # measured curl would reject a valid post-opening reach.
         plant.set_contact_phase('pregrasp')
         if validate is not None and not validate(waypoints,rotation):continue
         return waypoints,rotation

@@ -16,7 +16,8 @@ class ArmGravityTests(unittest.TestCase):
         clock.monotonic = lambda: clock.now
         def read():
             return {name:dict(q=q if name=='body' else [0]*n, dq=[0]*n, tau_est=[0]*n,
-                              faults=[0]*n, temperature_max=30., imu_rpy=[0]*3, time=clock.now)
+                              faults=[0]*n, temperature_max=30., temperatures=[[30.,30.]]*n,
+                              imu_rpy=[0]*3, time=clock.now)
                     for name,n in [('body',29),('left',7),('right',7)]}
         adapter = Mock()
         config = dict(arm_limits_rad=model.model.jnt_range[ids[15:]].tolist(),
@@ -45,6 +46,32 @@ class ArmGravityTests(unittest.TestCase):
         clock.now += .02
         p.command_arm(np.asarray(read()['body']['q'][15:22]), read())
         np.testing.assert_array_equal(adapter.ctrl_dual_arm.call_args.args[1], np.zeros(14))
+
+    def test_hand_wait_retains_arm_target_and_refreshes_bounded_gravity(self):
+        p, adapter, read, clock = self.plant()
+        p.sender = Mock()
+        target = np.asarray(read()['body']['q'][15:22]) + .01
+        clock.now += .02
+        p.command_arm(target, read())
+        previous = p.arm_tau_command.copy()
+        for _ in range(20):
+            clock.now += .02
+            p.maintain_hand()
+            q, torque = adapter.ctrl_dual_arm.call_args.args
+            np.testing.assert_array_equal(q[:7], target)
+            self.assertTrue(np.all(np.abs(torque) <= ARM_GRAVITY_LIMITS_NM))
+            self.assertLessEqual(np.max(np.abs(torque-previous)), .10000001)
+            previous = torque.copy()
+        self.assertGreater(np.max(np.abs(previous)), .5)
+
+    def test_arm_tracking_fault_during_hand_wait_sends_no_commands(self):
+        p, adapter, read, clock = self.plant()
+        p.sender = Mock()
+        p.left_arm += .16
+        with self.assertRaisesRegex(RuntimeError, 'tracking error'):
+            p.maintain_hand()
+        adapter.ctrl_dual_arm.assert_not_called()
+        p.sender.ctrl_dual_hand.assert_not_called()
 
 
 if __name__ == '__main__':

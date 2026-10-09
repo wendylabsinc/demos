@@ -69,4 +69,17 @@ class CartesianLiftTests(unittest.TestCase):
                 plant._cartesian_lift_poses(start+delta)
         plant.adapter.ctrl_dual_arm.assert_not_called()
 
+    def test_final_reach_uses_checked_cartesian_segments(self):
+        plant=self.plant()
+        plant.set_contact_phase('reach')
+        start=plant.ik.data.site_xpos[plant.ik.site].copy()
+        rotation=plant.ik.data.site_xmat[plant.ik.site].reshape(3,3).copy()
+        checked=plant._joint_poses
+        plant._joint_poses=Mock(wraps=checked)
+        original=plant.ik.data.qpos.copy()
+        plant._move_poses(start+[.005,0,-.01],rotation=rotation)
+        self.assertGreaterEqual(plant._joint_poses.call_count,2)
+        np.testing.assert_array_equal(plant.ik.data.qpos,original)
+        plant.adapter.ctrl_dual_arm.assert_not_called()
+
 if __name__=='__main__':unittest.main()

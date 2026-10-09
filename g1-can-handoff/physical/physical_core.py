@@ -166,6 +166,7 @@ class PhysicalPlant:
         self.base_joints = np.array(snap['body']['q'][:15])
         self.base_rpy = np.array(snap['body'].get('imu_rpy',[0,0,0]))
         self.right_arm = np.array(snap['body']['q'][22:29])
+        self.left_arm = np.array(snap['body']['q'][15:22])
         self.right_hand = np.array(snap['right']['q'])[SIM_TO_BRIDGE]
         self.left_hand = np.array(snap['left']['q'])
         self.cancelled = False
@@ -231,12 +232,13 @@ class PhysicalPlant:
         return snap
 
     def _move_poses(self, position, duration=2., rotation=None):
-        if self.ik.contact_phase == 'lift':
-            return self._cartesian_lift_poses(position,duration,rotation)
+        if self.ik.contact_phase in ('reach','lift'):
+            return self._cartesian_lift_poses(position,duration,rotation,
+                                            require_ascent=self.ik.contact_phase=='lift')
         return self._joint_poses(self.ik.solve(position,rotation),duration)
 
-    def _cartesian_lift_poses(self, position, duration=2., rotation=None):
-        """Lift along the Cartesian line, checking every connecting joint path."""
+    def _cartesian_lift_poses(self, position, duration=2., rotation=None, *, require_ascent=True):
+        """Follow a Cartesian line, checking every connecting joint path."""
         import mujoco
         original=self.ik.data.qpos.copy()
         start=self.ik.data.site_xpos[self.ik.site].copy()
@@ -244,7 +246,7 @@ class PhysicalPlant:
         if target.shape!=(3,) or not np.isfinite(target).all():
             raise ValueError('Expected finite Cartesian lift target')
         distance=float(np.linalg.norm(target-start))
-        if distance>.20 or target[2]<start[2]-.005:
+        if distance>.20 or (require_ascent and target[2]<start[2]-.005):
             raise RuntimeError('Cartesian lift must ascend by at most 0.20 m')
         count=max(1,int(np.ceil(distance/.01)))
         poses=[]
@@ -277,7 +279,7 @@ class PhysicalPlant:
                 self.ik.data.qpos[self.ik.qadr[self.ik.arm]]=goal
                 mujoco.mj_forward(self.ik.model,self.ik.data)
                 completed+=1
-            self.event('cartesian_lift_planned',waypoints=completed,ik_attempts=attempts,
+            self.event('cartesian_lift_planned' if require_ascent else 'cartesian_reach_planned',waypoints=completed,ik_attempts=attempts,
                        start=start.tolist(),target=target.tolist())
             return goal,poses
         finally:
@@ -358,9 +360,9 @@ class PhysicalPlant:
             for index,position in enumerate(points[:4]):
                 self.set_contact_phase(('approach','align','reach','lift')[index])
                 if index==3:fingers(CLOSED)
-                goal=None if index==3 else self.ik.solve(position,rotation)
+                goal=None if index in (2,3) else self.ik.solve(position,rotation)
                 try:
-                    if index==3:goal,_=self._cartesian_lift_poses(position,rotation=rotation)
+                    if index in (2,3):goal,_=self._cartesian_lift_poses(position,rotation=rotation,require_ascent=index==3)
                     else:self._joint_poses(goal)
                 except RuntimeError as exc:
                     if (index!=0 or not self.config.get('staging_enabled',True) or
@@ -457,15 +459,33 @@ class PhysicalPlant:
         self.arm_tau_command += np.clip(target-self.arm_tau_command, -change, change)
         self.arm_tau_time = now
         self.adapter.ctrl_dual_arm(np.r_[left_q, self.right_arm], self.arm_tau_command.copy())
+        self.left_arm = np.array(left_q, dtype=float, copy=True)
+
+    def hold_arm(self, snapshot):
+        """Keep the last arm reference and renew bounded gravity feedforward."""
+        if np.max(np.abs(np.asarray(snapshot['body']['q'][15:22])-self.left_arm))>.15:
+            raise RuntimeError('Measured arm tracking error exceeds 0.15 rad')
+        self.command_arm(self.left_arm, snapshot)
 
     def hand(self, goal, duration=1.):
         end=sim_hand_to_bridge(goal);start=self.left_hand.copy()
         for t in np.linspace(0,1,max(2,int(duration/.02))):
             with self.command_lock:
-                self.check();self.left_hand=start+t*(end-start)
+                self.hold_arm(self.check());self.left_hand=start+t*(end-start)
                 self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
                 self.event('hand_target',left=self.left_hand.tolist(),right=self.right_hand.tolist())
             self.clock.sleep(.02)
+        # Gravity feedforward ramps from zero on acquisition. Wait for the
+        # unchanged arm-settling tolerance before validating a staged start.
+        deadline=self.clock.monotonic()+2.
+        while self.clock.monotonic()<deadline:
+            with self.command_lock:
+                snap=self.check();self.hold_arm(snap)
+                self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
+                if np.max(np.abs(np.asarray(snap['body']['q'][15:22])-self.left_arm))<.04:
+                    return
+            self.clock.sleep(.02)
+        raise RuntimeError('Physical arm did not settle while moving the hand')
 
     def contacts(self):
         # Evidence is an obstruction/torque proxy, not simulated contact or proof
@@ -487,7 +507,7 @@ class PhysicalPlant:
 
     def maintain_hand(self):
         with self.command_lock:
-            self.check()
+            self.hold_arm(self.check())
             self.sender.ctrl_dual_hand(self.left_hand,self.right_hand)
 
     def freeze(self):
