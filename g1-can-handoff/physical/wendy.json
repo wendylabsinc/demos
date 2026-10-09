@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.18-arm-kp150",
+  "version": "0.3.19-noise-aware-ik",
   "entitlements": [
     {
       "type": "network",
@@ -19,6 +19,7 @@
     "timeoutSeconds": 60
   },
   "env": {
+    "HANDOFF_PLANNER_PROFILE": "tuned",
     "HANDOFF_ARM_KP": "150",
     "HANDOFF_PERCEPTION_POLICY": "phase_boundary",
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",

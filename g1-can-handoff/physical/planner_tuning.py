@@ -1,9 +1,17 @@
 """Bounded IK/planner tuning; defaults preserve the deployed policy."""
 import os
+import json
+from pathlib import Path
 import numpy as np
 
 
 def configure(plant,config):
+    profile=config.get('planner_profile',os.environ.get('HANDOFF_PLANNER_PROFILE','legacy'))
+    if profile not in ('legacy','tuned'):raise ValueError('Planner profile must be legacy or tuned')
+    if profile=='tuned':
+        defaults=json.loads((Path(__file__).parent/'g1_can_handoff/noise_aware_planner.json').read_text())
+        config.update({**defaults,**config})
+    config['planner_profile']=profile
     weight=float(config.get('ik_reference_weight_m_per_rad',os.environ.get('HANDOFF_IK_REFERENCE_WEIGHT_M_PER_RAD','0')))
     tolerance=float(config.get('ik_position_tolerance_m',float(os.environ.get('HANDOFF_IK_POSITION_TOLERANCE_MM','12'))/1000))
     scaling=config.get('ik_variable_scale',os.environ.get('HANDOFF_IK_VARIABLE_SCALE','unit'))

@@ -3,6 +3,14 @@
 The service starts with passive body/hand readers and HTTP status on port 8102.
 It creates no command publisher at startup. It uses the downloaded handoff's IK
 model and planner, with the existing arm adapter and a Dex3 adapter that receives live motor temperatures.
+
+`HANDOFF_PLANNER_PROFILE=legacy|tuned` selects the physical planner (default
+`legacy`; this experiment's descriptor selects `tuned`). The tuned profile loads
+`g1_can_handoff/noise_aware_planner.json`: three checked grasp candidates,
+0.1 rad orientation spacing, 5 mm endpoint tolerance and the fitted position
+covariance. Collision, feedback and freshness guards still apply. Effective
+settings and checksums of the profile and planner sources are saved in planning
+snapshots and exported with each trial for offline replay.
 The simulated torque loop, simulated contacts, and simulated can position are
 never used as physical evidence.
 

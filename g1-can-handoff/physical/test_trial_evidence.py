@@ -50,6 +50,19 @@ class EvidenceTests(unittest.TestCase):
             log.write_text(json.dumps(dict(unix_ns=1,phase='phase_camera_evidence',path='/etc/test.npz'))+'\n')
             with self.assertRaisesRegex(RuntimeError,'outside controller'):create_export(log,1,2,root/'trial.tar.gz')
 
+    def test_export_preserves_planner_dependencies_and_tuned_profile(self):
+        from planning_snapshot import SOURCE_NAMES
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);log=root/'events.jsonl';log.write_text('')
+            for name in SOURCE_NAMES:
+                path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(name.encode())
+            info=create_export(log,1,2,root/'trial.tar.gz',root)
+            with tarfile.open(info['path']) as tar:
+                manifest=json.load(tar.extractfile('manifest.json'))
+                for name in SOURCE_NAMES:
+                    self.assertEqual(tar.extractfile('source/'+name).read(),name.encode())
+                    self.assertEqual(manifest['source_hashes'][name],hashlib.sha256(name.encode()).hexdigest())
+
     def transfer_client(self, metadata, raw):
         def tool(name,arguments):
             argv=arguments['command']

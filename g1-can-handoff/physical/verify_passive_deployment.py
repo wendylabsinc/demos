@@ -27,13 +27,20 @@ def main(argv=()):
     for directory in ['adapter','g1_can_handoff']:
         paths.extend(p for p in (root/directory).rglob('*.py') if '__pycache__' not in p.parts)
     paths.extend(root/name for name in ['yolo/frame_limits.py','yolo/confidence.py'])
+    paths.append(root/'g1_can_handoff/noise_aware_planner.json')
     expected={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
     script="""import hashlib,io,json,pathlib,time,urllib.request
 from PIL import Image
 import control_settle
+import planner_tuning
+from types import SimpleNamespace
+import os
 expected=EXPECTED
 actual={name:hashlib.sha256((pathlib.Path('/app')/name).read_bytes()).hexdigest() for name in expected}
 assert actual==expected,'Deployed source hashes differ from checkout'
+assert os.environ.get('HANDOFF_PLANNER_PROFILE','legacy')==CONFIGURED_PROFILE
+effective={}
+planner_tuning.configure(SimpleNamespace(ik=SimpleNamespace(IK_SETTINGS={'x_scale':1.})),effective)
 def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+str(port)+path,timeout=5))
 status=get(8102,'/status')
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
@@ -69,8 +76,8 @@ for _ in range(2):
  frames.append({'frame_id':health['frame_id'],'age_s':health['frame_age_s'],'jpeg_sha256':hashlib.sha256(raw).hexdigest()})
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
-print(json.dumps({'startup_verified':True,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
-""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
+print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
+""".replace('EXPECTED',repr(expected)).replace('CONFIGURED_PROFILE',repr(configured_env.get('HANDOFF_PLANNER_PROFILE','legacy'))).replace('CONFIGURED_KP',repr(configured_kp)).replace('CONFIGURED_LIMIT',repr(configured_limit)).replace('CONFIGURED_POLICY',repr(configured_policy)).replace('CONFIGURED_IDENTITY',repr(configured_identity)).replace('APPLY_CONFIG',repr(args.configure_camera_max_age_ms is not None))
     client=Wendy()
     try:
         for attempt in range(8):

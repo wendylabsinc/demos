@@ -17,6 +17,7 @@ import mujoco
 import numpy as np
 
 SOURCE_NAMES=('physical_core.py','pickup.py','staging.py','planning_snapshot.py',
+              'planner_tuning.py','g1_can_handoff/noise_aware_planner.json',
               'g1_can_handoff/sim.py','g1_can_handoff/task.py','pose_alignment.py',
               'adapter/arm_reference.py','adapter/g1_arm.py','adapter/arm_gains.py')
 

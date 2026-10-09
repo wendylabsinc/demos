@@ -55,7 +55,10 @@ def create_export(events_path,start_ns,end_ns,output,app_root=Path('/app')):
             bundle=io.BytesIO();np.savez_compressed(bundle,rays=rays,metadata_json=metadata)
             member('rgbd/rays.npz',bundle.getvalue())
     sources={}
-    for name in ('runtime.py','camera_input.py','physical_core.py','table_plane.py','pickup.py','target_tracker.py'):
+    for name in ('runtime.py','camera_input.py','physical_core.py','table_plane.py','pickup.py','target_tracker.py',
+                 'planner_tuning.py','planning_snapshot.py','staging.py','pose_alignment.py',
+                 'g1_can_handoff/sim.py','g1_can_handoff/task.py','g1_can_handoff/noise_aware_planner.json',
+                 'adapter/arm_reference.py','adapter/g1_arm.py','adapter/arm_gains.py'):
         path=Path(app_root)/name
         if path.exists():
             raw=path.read_bytes();sources[name]=hashlib.sha256(raw).hexdigest()

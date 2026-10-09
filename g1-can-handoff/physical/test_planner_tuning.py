@@ -33,6 +33,20 @@ class PlannerTuningTests(unittest.TestCase):
                          {'planning_position_cov_m2':np.diag([-1.,1.,0]).tolist()}):
             with self.assertRaises(ValueError):configure(self.plant(),settings)
 
+    def test_tuned_physical_profile_matches_sim_and_replays_without_environment(self):
+        import json
+        from pathlib import Path
+        expected=json.loads((Path(__file__).parent/'g1_can_handoff/noise_aware_planner.json').read_text())
+        config={}
+        with patch.dict('os.environ',HANDOFF_PLANNER_PROFILE='tuned'):
+            configure(self.plant(),config)
+        for key,value in expected.items():self.assertEqual(config[key],value)
+        with patch.dict('os.environ',HANDOFF_PLANNER_PROFILE='legacy'):
+            configure(self.plant(),config)
+        self.assertEqual(config['planner_profile'],'tuned')
+        self.assertEqual(config['grasp_candidate_budget'],3)
+        with self.assertRaisesRegex(ValueError,'profile'):configure(self.plant(),{'planner_profile':'typo'})
+
     def test_selects_and_revalidates_lowest_sensitivity_candidate(self):
         scored=[];validated=[]
         plant=SimpleNamespace(grasp_candidate_budget=3,grasp_orientation_step_rad=.1,
