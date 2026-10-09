@@ -14,7 +14,7 @@ import threading
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-DEVICE = "10.10.20.238:50052"
+DEVICE = "unitree-g1-nx-2.local:50052"
 PORT = 8197
 DEPLOYING = Path("/tmp/wendy-g1-nx2-deployment.lock")
 TOKEN = secrets.token_urlsafe(32)
@@ -125,7 +125,7 @@ class Wendy:
             )
         )
         script = (
-            """import json,urllib.request,urllib.error
+            """import json,math,time,urllib.request,urllib.error
 url='http://127.0.0.1:8102/"""
             + paths[action]
             + """'
@@ -134,7 +134,19 @@ request=urllib.request.Request(url"""
             + """)
 try:
  response=urllib.request.urlopen(request,timeout=12);s=json.load(response)
- print(json.dumps({k:s.get(k) for k in ['build_info','phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}))
+ out={k:s.get(k) for k in ['build_info','phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','telemetry_error','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}
+ out['hand_feedback']={}
+ for side in ['left','right']:
+  sample=(s.get('measured') or {}).get(side) or {}
+  received=sample.get('time')
+  age_ms=(time.monotonic()-received)*1000 if isinstance(received,(int,float)) and math.isfinite(received) else None
+  out['hand_feedback'][side]={'faults':sample.get('faults'),'temperatures':sample.get('temperatures'),'age_ms':age_ms}
+ def finite_json(value):
+  if isinstance(value,float) and not math.isfinite(value):return None
+  if isinstance(value,dict):return {k:finite_json(v) for k,v in value.items()}
+  if isinstance(value,list):return [finite_json(v) for v in value]
+  return value
+ print(json.dumps(finite_json(out),allow_nan=False))
 except urllib.error.HTTPError as e:
  print(json.dumps({'error':json.load(e).get('error')}))
 """
@@ -146,7 +158,7 @@ except urllib.error.HTTPError as e:
                     "app_name": "DEV-g1-handoff-physical",
                     "command": ["python3", "-c", script],
                     "timeout_seconds": 20,
-                    "max_bytes": 4000,
+                    "max_bytes": 8000,
                 },
             )
         payload = result.get("structuredContent")
@@ -154,7 +166,7 @@ except urllib.error.HTTPError as e:
             payload = json.loads(
                 next(c["text"] for c in result["content"] if c["type"] == "text")
             )
-        if payload.get("exit_code") != 0:
+        if payload.get("exit_code") != 0 or payload.get("truncated"):
             raise RuntimeError(payload.get("stderr") or "Controller unavailable")
         state = json.loads(payload["stdout"])
         state["deployment_in_progress"] = DEPLOYING.is_file()

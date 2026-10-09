@@ -8,10 +8,29 @@ import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
+from unittest.mock import Mock
+import sys
 from g1_can_handoff import redeploy
 
 
 class RedeployTests(unittest.TestCase):
+    def run_preflight(self, state):
+        client = SimpleNamespace(request=Mock(return_value=state), process=Mock())
+        module = SimpleNamespace(Wendy=lambda: client, DEVICE=redeploy.DEVICE)
+        with patch.dict(sys.modules, {'operator_panel': module}), patch.object(sys, 'argv', ['preflight', redeploy.DEVICE]):
+            exec(redeploy.PREFLIGHT, {})
+        client.process.terminate.assert_called_once()
+
+    def test_passive_fault_does_not_prevent_motion_zero_software_update(self):
+        self.run_preflight(dict(phase='PASSIVE', adapter_initialized=False,
+            demo_running=False, telemetry_healthy=False, telemetry_error='left motor fault'))
+
+    def test_fault_never_allows_redeployment_over_owned_arms(self):
+        with self.assertRaisesRegex(RuntimeError, 'owns the arms'):
+            self.run_preflight(dict(phase='FROZEN', adapter_initialized=True,
+                demo_running=False, telemetry_healthy=False))
+
     def setUp(self):
         self.info = dict(
             app_version="test-version",

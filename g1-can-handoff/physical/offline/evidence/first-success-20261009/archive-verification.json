@@ -1,0 +1,16 @@
+{
+  "path": "/data/trial-exports/first-success-20261009.tar.gz",
+  "bytes": 63192020,
+  "sha256": "87ef2066836d402e658af7af55aebe1354d44e720ac2479ad23bb47906432fe1",
+  "events": 3523,
+  "selected_frames": 5,
+  "primary_failure": {
+    "unix_ns": 1791588766491055875,
+    "monotonic_ns": 1121536848821,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+    "source": "watchdog"
+  },
+  "local_path": "offline/evidence/first-success-20261009/trial.tar.gz",
+  "verified": true
+}

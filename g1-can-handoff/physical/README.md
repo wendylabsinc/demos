@@ -487,6 +487,19 @@ fails. Body guards check each motor's two sensors separately:
 default `85`, finite positive values at most `85` C), and
 `HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C` checks `temperature[1]` (internal
 winding; default `95`, finite positive values at most `120` C).
+The local controls page displays live left/right DDS hand feedback, including
+nonzero motor-state and hand-error codes, raw temperature sensor pairs and
+receipt age. Slots 0–6 are motor slots; later slots are the hand message's
+additional error fields. Decimal and hexadecimal codes are preserved without
+assigning an unverified meaning. Missing/stale feedback is shown as unknown,
+and the prior attempt's temperature error remains separate from current faults.
+Release relaxes the hands but is not a verified hardware fault-reset command.
+The public Dex3 example inspected has no documented reset operation; a
+hands-only power reset while the G1 stays on needs a vendor-supported procedure.
+
+The Nx2 deployment descriptor selects `120` C winding for the operator-requested
+retry; the casing guard remains `85` C. The library fallback remains `95` C
+when no winding limit is configured.
 `HANDOFF_BODY_TEMPERATURE_LIMIT_C` remains a casing-only compatibility alias
 when the new casing variable is absent. Readings at or above either guard,
 invalid sensor arrays and motor faults stop the run. Errors name the joint

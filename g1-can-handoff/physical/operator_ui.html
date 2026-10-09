@@ -79,6 +79,15 @@
         color: #ffb0a8;
         overflow-wrap: anywhere;
       }
+      .hand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+      .hand-card { background: #1c2530; border: 1px solid #526275; border-radius: 12px; padding: 16px; }
+      .hand-card[data-tone="fault"] { border-color: #ffb0a8; }
+      .hand-card[data-tone="clear"] { border-color: #8adeb2; }
+      .hand-card h3 { margin: 0 0 8px; font-size: 20px; }
+      .hand-card p { margin: 8px 0; }
+      .hand-card pre { font: 14px/1.7 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+      .hand-card[data-tone="fault"] .hand-summary { color: #ffb0a8; }
+      .hand-age, .hand-note { color: #b7c4d2; font-size: 14px; }
       details {
         font-size: 14px;
         color: #b7c4d2;
@@ -141,6 +150,26 @@
         <p id="perception-summary">Checking perception mode…</p>
         <p id="robot-next">Connecting to the controller.</p>
         <p id="robot-error"></p>
+      </section>
+      <section aria-labelledby="hand-feedback-title">
+        <h2 id="hand-feedback-title">Hand feedback</h2>
+        <div class="hand-grid">
+          <article id="hand-left" class="hand-card" data-tone="unknown">
+            <h3>Left hand · DDS</h3>
+            <p id="hand-left-summary" class="hand-summary">Waiting for feedback…</p>
+            <p id="hand-left-age" class="hand-age"></p>
+            <pre id="hand-left-faults"></pre>
+            <details><summary>All motor temperatures and raw codes</summary><pre id="hand-left-details"></pre></details>
+          </article>
+          <article id="hand-right" class="hand-card" data-tone="unknown">
+            <h3>Right hand · DDS</h3>
+            <p id="hand-right-summary" class="hand-summary">Waiting for feedback…</p>
+            <p id="hand-right-age" class="hand-age"></p>
+            <pre id="hand-right-faults"></pre>
+            <details><summary>All motor temperatures and raw codes</summary><pre id="hand-right-details"></pre></details>
+          </article>
+        </div>
+        <p class="hand-note">Codes are reported by the hand; 512 = 0x0200. Its exact fault meaning is unverified. Temperature pairs are sensor 0 / sensor 1. Release relaxes the hands; it does not confirm a hardware fault reset.</p>
       </section>
       <style>
         .error-card {
@@ -328,6 +357,7 @@
         } catch (e) {}
         function show(s) {
           renderVersion(s);
+          renderHandFeedback(s.hand_feedback);
           if (!s.demo_running)
             rememberDemoError(
               s.demo_error || s.error || s.presentation?.failure,
@@ -357,6 +387,40 @@
                   Math.round(s.yolo_confidence_strictly_above * 100) +
                   "%"
                 : "");
+        }
+        function describeHandFeedback(sample) {
+          const faults = sample?.faults;
+          const temperatures = sample?.temperatures;
+          const valid = Array.isArray(faults) && faults.length >= 7 &&
+            faults.every(code => Number.isSafeInteger(code) && code >= 0);
+          const age = sample?.age_ms;
+          const fresh = Number.isFinite(age) && age >= 0 && age <= 200;
+          const active = valid ? faults.flatMap((code, slot) => code ? [{slot, code}] : []) : [];
+          const pair = slot => {
+            const values = temperatures?.[slot];
+            return Array.isArray(values) && values.length === 2 && values.every(Number.isFinite)
+              ? values.map(value => value.toFixed(0)).join(" / ") + "°C" : "temperature unavailable";
+          };
+          const row = (slot, code) => (slot < 7 ? "Motor slot " : "Hand error slot ") + slot +
+            ": " + code + " (0x" + code.toString(16).padStart(4, "0") + ")" +
+            (slot < 7 ? " · " + pair(slot) : "");
+          return {
+            tone: active.length ? "fault" : valid && fresh ? "clear" : "unknown",
+            summary: !valid ? "Fault feedback unavailable" : active.length
+              ? active.length + " nonzero fault code" + (active.length === 1 ? "" : "s") + (fresh ? "" : " · stale sample")
+              : fresh ? "No motor faults reported" : "Feedback stale · current faults unknown",
+            age: Number.isFinite(age) ? "Feedback age at last check: " + Math.round(age) + " ms" : "Feedback age unknown",
+            faults: active.map(({slot, code}) => row(slot, code)).join("\n"),
+            details: valid ? faults.map((code, slot) => row(slot, code)).join("\n") : "No valid raw fault array received",
+          };
+        }
+        function renderHandFeedback(feedback) {
+          for (const side of ["left", "right"]) {
+            const info = describeHandFeedback(feedback?.[side]);
+            document.querySelector("#hand-" + side).dataset.tone = info.tone;
+            for (const field of ["summary", "age", "faults", "details"])
+              document.querySelector("#hand-" + side + "-" + field).textContent = info[field];
+          }
         }
         function renderVersion(s) {
           const build = s.build_info;
@@ -528,6 +592,7 @@
             robotOwner.textContent = "Control ownership unknown";
             robotNext.textContent = "Check the controller connection.";
             robotError.textContent = "";
+            renderHandFeedback(null);
             guideValid = false;
             placementVisible();
           } finally {

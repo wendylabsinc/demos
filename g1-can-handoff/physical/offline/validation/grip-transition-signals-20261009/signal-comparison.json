@@ -1,0 +1,142 @@
+{
+  "cases": [
+    {
+      "name": "earlier-211444",
+      "stop_s": 5.521647244,
+      "baseline_thumb2_winding_C": 29,
+      "candidate_signals": {
+        "encoder_plateau_only": {
+          "trigger_s": 1.838808142,
+          "lead_before_stop_s": 3.6828391020000004,
+          "thumb2_winding_C": 31,
+          "thumb2_q": 0.39193716645240784,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "tactile_channels": 3,
+          "observed_command_age_s": 0.01295505600000002
+        },
+        "tactile_only": {
+          "trigger_s": 1.95905604,
+          "lead_before_stop_s": 3.5625912040000003,
+          "thumb2_winding_C": 32,
+          "thumb2_q": 0.39194610714912415,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3
+          ],
+          "tactile_channels": 4,
+          "observed_command_age_s": 0.01122511100000012
+        },
+        "tactile_and_encoder_plateau": {
+          "trigger_s": 1.95905604,
+          "lead_before_stop_s": 3.5625912040000003,
+          "thumb2_winding_C": 32,
+          "thumb2_q": 0.39194610714912415,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3
+          ],
+          "tactile_channels": 4,
+          "observed_command_age_s": 0.01122511100000012
+        },
+        "temperature_rise_5C": {
+          "trigger_s": 2.464874012,
+          "lead_before_stop_s": 3.0567732320000003,
+          "thumb2_winding_C": 38,
+          "thumb2_q": 0.39196938276290894,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "tactile_channels": 4,
+          "observed_command_age_s": 0.006658042000000197
+        }
+      },
+      "preclose_max_tactile_channels": 0,
+      "lost_counters_unchanged": true,
+      "source_file": "/records/20261009T210904Z-e2785e7e/samples-000005.jsonl.gz",
+      "source_sha256": "33e80758e2b03a20ed07ef11189e20804d4fc7b509ac04cfed8072afc7d6551f"
+    },
+    {
+      "name": "latest-224522",
+      "stop_s": 4.855926582,
+      "baseline_thumb2_winding_C": 36,
+      "candidate_signals": {
+        "tactile_only": {
+          "trigger_s": 1.669001619,
+          "lead_before_stop_s": 3.186924963,
+          "thumb2_winding_C": 37,
+          "thumb2_q": 0.39618098735809326,
+          "blocked_joint_slots": [
+            2
+          ],
+          "tactile_channels": 3,
+          "observed_command_age_s": 0.017633381000000004
+        },
+        "encoder_plateau_only": {
+          "trigger_s": 1.789176618,
+          "lead_before_stop_s": 3.0667499640000004,
+          "thumb2_winding_C": 38,
+          "thumb2_q": 0.3962078094482422,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "tactile_channels": 3,
+          "observed_command_age_s": 0.019927606999999847
+        },
+        "tactile_and_encoder_plateau": {
+          "trigger_s": 1.789176618,
+          "lead_before_stop_s": 3.0667499640000004,
+          "thumb2_winding_C": 38,
+          "thumb2_q": 0.3962078094482422,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "tactile_channels": 3,
+          "observed_command_age_s": 0.019927606999999847
+        },
+        "temperature_rise_5C": {
+          "trigger_s": 2.305883757,
+          "lead_before_stop_s": 2.5500428250000002,
+          "thumb2_winding_C": 44,
+          "thumb2_q": 0.39679643511772156,
+          "blocked_joint_slots": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "tactile_channels": 5,
+          "observed_command_age_s": 0.03636143599999997
+        }
+      },
+      "preclose_max_tactile_channels": 0,
+      "lost_counters_unchanged": true,
+      "source_file": "/records/20261009T223912Z-557353c3/samples-000006.jsonl.gz",
+      "source_sha256": "796e4bea8072034da39117ded38f6aa3b2b562eeddf5cc7d2a86abe4d0b9f7c2"
+    }
+  ],
+  "candidate_rule": "During close: >=2 tactile channels rise >=max(2000 raw,6 baseline MAD), AND a loaded joint spans <=0.02 rad over >=0.18 s with >=0.12 rad target gap and nominal proportional effort >0.5 Nm; require combined condition for >=0.15 s.",
+  "scope": "Candidate calibrated and evaluated on two known failures. No independent held-out success/failure validation, no grip controller change, no deployment, no motion.",
+  "limits": [
+    "Raw pressure units and anatomical mapping unverified.",
+    "SDK temperature and motor torque/current semantics are not calibrated here.",
+    "Pressure samples may repeat; callback receipt age is not sensor exposure age.",
+    "This predicts trigger timing only; cannot prove reduced heating or grip retention without a physical test."
+  ]
+}

@@ -11,7 +11,7 @@ class ArmGainTests(unittest.TestCase):
     def test_selected_physical_and_simulator_defaults_match(self):
         with patch.dict(os.environ, {}, clear=True):
             kp, kd = arm_gains()
-            np.testing.assert_array_equal(kp, [150] * 4 + [40] * 3)
+            np.testing.assert_array_equal(kp, [75] * 4 + [40] * 3)
             world = scene()
             io = SimulationIO(world)
             np.testing.assert_array_equal(io.arm_kp, np.tile(kp, 2))

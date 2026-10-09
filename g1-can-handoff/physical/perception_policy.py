@@ -3,6 +3,14 @@
 import os
 
 
+def post_grasp_camera_checks():
+    """0 finishes on robot feedback; 1 retains diagnostic visual lift checks."""
+    value = os.getenv("HANDOFF_POST_GRASP_CAMERA_CHECKS", "0")
+    if value not in ("0", "1"):
+        raise ValueError("HANDOFF_POST_GRASP_CAMERA_CHECKS must be 0 or 1")
+    return value == "1"
+
+
 def perception_policy():
     value = os.getenv("HANDOFF_PERCEPTION_POLICY", "phase_boundary")
     if value not in ("phase_boundary", "continuous"):

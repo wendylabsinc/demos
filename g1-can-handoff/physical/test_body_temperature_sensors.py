@@ -68,6 +68,19 @@ class BodyTemperatureSensors(unittest.TestCase):
         ):
             snapshot_guard(self.snapshot, 10.1)
 
+    def test_requested_120_winding_guard_accepts_95_but_stops_at_120(self):
+        with patch.dict('os.environ', {'HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C':'120'}):
+            self.snapshot['body']['temperatures'][16]=[53,95]
+            snapshot_guard(self.snapshot,10.1)
+            self.snapshot['body']['temperatures'][16]=[53,119.99]
+            snapshot_guard(self.snapshot,10.1)
+            self.snapshot['body']['temperatures'][16]=[53,120]
+            with self.assertRaisesRegex(ValueError,'body winding temperature 120 C at left_shoulder_roll_joint reaches the 120 C guard'):
+                snapshot_guard(self.snapshot,10.1)
+            self.snapshot['body']['temperatures'][16]=[85,95]
+            with self.assertRaisesRegex(ValueError,'body casing temperature 85 C'):
+                snapshot_guard(self.snapshot,10.1)
+
     def test_every_joint_and_both_sensors_checked(self):
         for joint in range(29):
             for sensor, limit in ((0, 85), (1, 95)):

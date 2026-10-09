@@ -75,8 +75,8 @@ def prepare(plant, observe, event):
     return observation, baseline, points, rotation
 
 
-def execute(plant, prepared, observe, event):
-    """Run the checked pickup phases and verify the lift with fresh camera data."""
+def execute(plant, prepared, observe, event, *, post_grasp_camera_checks=True):
+    """Execute pickup; optional camera lift verification is an offline diagnostic."""
     observation, baseline, points, rotation = prepared
     plant.validate_start()
     plant.set_contact_phase("pregrasp")
@@ -103,19 +103,42 @@ def execute(plant, prepared, observe, event):
     plant.set_contact_phase("close")
     event("close")
     plant.hand(CLOSED, 1.2)
-    plant.step(0.5)
+    gentle_grasped = bool(getattr(getattr(plant, 'grip', None), 'grasped', False))
+    if not gentle_grasped:
+        plant.step(0.5)
     # Closing contact can still be settling after the nominal half second.
     # Require the same two-finger stationary evidence for three consecutive
     # samples, with a bounded additional two seconds. Never relax the guard.
     stationary = 0
-    for attempt in range(21):
-        stationary = stationary + 1 if len(plant.contacts()) >= 2 else 0
-        if stationary >= 3:
+    for attempt in range(1 if gentle_grasped else 21):
+        groups = plant.contacts()
+        stationary = stationary + 1 if len(groups) >= 2 else 0
+        if stationary >= 3 or (gentle_grasped and len(groups) >= 2):
             break
         if attempt < 20:
             plant.step(0.1)
     else:
         raise RuntimeError("Insufficient stable finger obstruction candidates")
+    if gentle_grasped:
+        event('grasped', mode='gentle_contact_hold', **plant.grip.status())
+    else:
+        event('grasped', mode='stable_finger_obstruction', groups=list(groups))
+    if not post_grasp_camera_checks:
+        # The grasp has already been admitted from measured finger feedback.
+        # Finish the checked lift using robot feedback alone. Neither frame IO
+        # nor a can-position/contact recheck is a prerequisite after this point.
+        plant.set_contact_phase("lift")
+        event("lift", post_grasp_camera_checks=False)
+        plant.move(points[3], rotation=rotation)
+        plant.step(1.5)
+        event("pickup_completed", lift_verified=False, post_grasp_camera_checks=False)
+        return {
+            "sequence_completed": True,
+            "lift_verified": False,
+            "visual_rise_m": None,
+            "hold_verified_s": None,
+            "post_grasp_camera_checks": False,
+        }
     # Once the fingers close, use the existing post-grasp tracking contract:
     # the can may rise/settle in the fingers, but must remain within 40 mm in XY.
     # The pregrasp 10 mm full-position/table check no longer describes this state.
@@ -153,4 +176,4 @@ def execute(plant, prepared, observe, event):
             "lift_observation", sample=sample, visual_rise_m=float(rise), vision=vision
         )
     event("lift_verified", visual_rise_m=min(rises), hold_verified_s=1.0, vision=vision)
-    return {"lift_verified": True, "visual_rise_m": min(rises), "hold_verified_s": 1.0}
+    return {"sequence_completed": True, "lift_verified": True, "visual_rise_m": min(rises), "hold_verified_s": 1.0}

@@ -1,0 +1,817 @@
+{
+  "status": {
+    "build_info": {
+      "app_id": "DEV-g1-handoff-physical",
+      "app_version": "0.3.29-post-grasp-feedback",
+      "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+      "dirty": true,
+      "source_digest": "69e62188a2f4684701d2c38076f66fb13f7721496d3117f6c0b2b373de7988a3",
+      "built_at_utc": "2026-10-09T23:25:36.831650+00:00"
+    },
+    "body_temperature_limits_c": {
+      "casing": 85,
+      "winding": 120
+    },
+    "phase": "PASSIVE",
+    "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+    "motion_commands_sent": 33439,
+    "adapter_initialized": false,
+    "automatic_home": false,
+    "events": "/data/events-20261009T232543Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200,
+      "rate_hz": 196,
+      "samples": 283093,
+      "age_s": 0.0011,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 500,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "color_depth_tracker",
+    "target_identity": "color_depth",
+    "yolo_required": false,
+    "perception_policy": "phase_boundary",
+    "post_grasp_camera_checks": false,
+    "post_grasp_perception_disabled": true,
+    "periodic_yolo_recheck_s": null,
+    "last_phase_check": {
+      "phase": "pre-close",
+      "frame_id": 10979,
+      "exposure_time": 1081.5556287765503,
+      "tracking": {
+        "mode": "visual_depth",
+        "semantic_frame_id": null,
+        "semantic_age_s": null,
+        "visual_agreement": 0.8505624478181386,
+        "support_pixels": 1308,
+        "roi_shape": [
+          185,
+          178
+        ]
+      }
+    },
+    "tracking_error": null,
+    "tracking_exposure_age_ms": null,
+    "tracking_vision": null,
+    "first_failure": {
+      "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+      "source": "watchdog"
+    },
+    "grip": null,
+    "arm_gains": {
+      "configured_kp": [
+        75,
+        75,
+        75,
+        75,
+        40,
+        40,
+        40,
+        75,
+        75,
+        75,
+        75,
+        40,
+        40,
+        40
+      ],
+      "configured_kd": [
+        3,
+        3,
+        3,
+        3,
+        1.5,
+        1.5,
+        1.5,
+        3,
+        3,
+        3,
+        3,
+        1.5,
+        1.5,
+        1.5
+      ],
+      "active": null
+    },
+    "demo_running": false,
+    "demo_result": {
+      "sequence_completed": true,
+      "physical_lift_verified": false,
+      "visual_rise_m": null,
+      "hold_verified_s": null,
+      "awaiting_operator_take": true,
+      "post_grasp_camera_checks": false
+    },
+    "demo_error": null,
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.020086241886019707,
+          0.0328228697180748,
+          -2.322293996810913
+        ],
+        "q": [
+          -0.14826995134353638,
+          -0.03573152795433998,
+          0.00575851509347558,
+          0.33029162883758545,
+          -0.14702457189559937,
+          0.028221284970641136,
+          -0.15991628170013428,
+          -0.00791704561561346,
+          0.03441717103123665,
+          0.3127872049808502,
+          -0.13138000667095184,
+          0.0005925054429098964,
+          0.0089993542060256,
+          0,
+          0,
+          0.24752219021320343,
+          0.2743908166885376,
+          -0.08366187661886215,
+          0.8252217769622803,
+          0.0011744541116058826,
+          0.008153107948601246,
+          -0.004456214606761932,
+          0.26257437467575073,
+          -0.2902459502220154,
+          0.08810802549123764,
+          0.7914741635322571,
+          -0.00028762139845639467,
+          0.010484758764505386,
+          0.0014956312952563167
+        ],
+        "dq": [
+          0.023998277261853218,
+          0,
+          0.0051424880512058735,
+          -0.004363323096185923,
+          -0.00054103386355564,
+          -0.0008958534453995526,
+          -0.01714162714779377,
+          -0.003272492438554764,
+          0.008570813573896885,
+          0.014180800877511501,
+          0.002197740599513054,
+          4.447118442385545e-7,
+          0.0051424880512058735,
+          0,
+          0,
+          0.012271846644580364,
+          -0.019941750913858414,
+          -0.006135923322290182,
+          -0.015339807607233524,
+          -0.00920388475060463,
+          0.004908738657832146,
+          0,
+          -0.003067961661145091,
+          -0.0015339808305725455,
+          -0.003067961661145091,
+          0.004601942375302315,
+          -0.0015339808305725455,
+          0,
+          0.010799224488437176
+        ],
+        "tau_est": [
+          1.0626776218414307,
+          6.50390625,
+          -2.1812856197357178,
+          -4.39453125,
+          4.622525215148926,
+          -2.1495702266693115,
+          2.4050071239471436,
+          -5.80078125,
+          1.6219815015792847,
+          -1.40625,
+          7.1544718742370605,
+          -0.8329696655273438,
+          0.055930398404598236,
+          0,
+          0,
+          0.3125,
+          2.1875,
+          0.8125,
+          -1.0625,
+          -0.1875,
+          -0.361328125,
+          0.1953125,
+          0.1875,
+          -2.375,
+          -0.3125,
+          -1.5,
+          -0.0625,
+          -0.390625,
+          -0.029296875
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            38,
+            38
+          ],
+          [
+            37,
+            38
+          ],
+          [
+            38,
+            38
+          ],
+          [
+            37,
+            38
+          ],
+          [
+            47,
+            47
+          ],
+          [
+            48,
+            52
+          ],
+          [
+            38,
+            39
+          ],
+          [
+            39,
+            40
+          ],
+          [
+            38,
+            39
+          ],
+          [
+            38,
+            38
+          ],
+          [
+            51,
+            54
+          ],
+          [
+            47,
+            48
+          ],
+          [
+            37,
+            37
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            51,
+            51
+          ],
+          [
+            53,
+            55
+          ],
+          [
+            48,
+            48
+          ],
+          [
+            48,
+            48
+          ],
+          [
+            47,
+            46
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            47,
+            41
+          ],
+          [
+            53,
+            53
+          ],
+          [
+            53,
+            55
+          ],
+          [
+            54,
+            53
+          ],
+          [
+            51,
+            51
+          ],
+          [
+            52,
+            50
+          ],
+          [
+            50,
+            49
+          ],
+          [
+            52,
+            45
+          ]
+        ],
+        "temperature_max": 55,
+        "time": 2173.680575424
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          0.6408135890960693,
+          0.48216649889945984,
+          -0.08578506857156754,
+          -0.28455105423927307,
+          -0.8232904076576233,
+          -0.36984947323799133,
+          -0.43526706099510193
+        ],
+        "dq": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          5861.07958984375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            42,
+            38
+          ],
+          [
+            42,
+            41
+          ],
+          [
+            37,
+            37
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            37,
+            36
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            38,
+            38
+          ]
+        ],
+        "temperature_max": 42,
+        "time": 2173.673725394
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          0.5692458152770996,
+          -0.9105809330940247,
+          -0.04031616449356079,
+          1.1603668928146362,
+          1.6980301141738892,
+          0.8510615229606628,
+          0.5111878514289856
+        ],
+        "dq": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          3349.188232421875,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            45,
+            43
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            42,
+            40
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            45,
+            45
+          ],
+          [
+            45,
+            44
+          ],
+          [
+            43,
+            41
+          ]
+        ],
+        "temperature_max": 47,
+        "time": 2173.662017104
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "milestones": [
+    {
+      "unix_ns": 1791588459238073000,
+      "monotonic_ns": 814283866728,
+      "phase": "ownership_acquired",
+      "recorder_session": "20261009T231424Z-43ce47f5",
+      "right_arm_hold": [
+        0.26564234495162964,
+        -0.2867705225944519,
+        0.0896659716963768,
+        0.7979336977005005,
+        -0.0001917476038215682,
+        0.009503011591732502,
+        0.0013959226198494434
+      ],
+      "right_hand_hold": [
+        0.5692404508590698,
+        -0.9126831889152527,
+        -0.03605714440345764,
+        0.8975296020507812,
+        0.5205879211425781,
+        1.1898176670074463,
+        1.6981312036514282
+      ],
+      "blend_affects_both_arms": true,
+      "arm_gains": [
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ]
+      ]
+    },
+    {
+      "unix_ns": 1791588564681202200,
+      "monotonic_ns": 919726994514,
+      "phase": "primary_failure",
+      "error": "RuntimeError: RuntimeError: Color/depth can target absent/ambiguous",
+      "source": "execution"
+    },
+    {
+      "unix_ns": 1791588564687035400,
+      "monotonic_ns": 919732828270,
+      "phase": "error",
+      "error": "RuntimeError: RuntimeError: Color/depth can target absent/ambiguous",
+      "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 1164, in run\n    result = execute(plant, prepared, observe, phase_event,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 102, in execute\n    checkpoint(\"pre-close\", \"Can or table moved during final reach; refusing to close\")\n  File \"/app/pickup.py\", line 85, in checkpoint\n    fresh, vision = observe(phase, True)\n                    ^^^^^^^^^^^^^^^^^^^^\n  File \"/app/runtime.py\", line 1029, in observe\n    observation, vision = self.observe_frame(\n                          ^^^^^^^^^^^^^^^^^^^\n  File \"/app/runtime.py\", line 377, in observe_frame\n    result = worker.observe(\n             ^^^^^^^^^^^^^^^\n  File \"/app/perception_worker.py\", line 180, in observe\n    raise receipt_error\n  File \"/app/perception_worker.py\", line 152, in observe\n    raise RuntimeError(response[\"error\"])\nRuntimeError: RuntimeError: Color/depth can target absent/ambiguous\n"
+    },
+    {
+      "unix_ns": 1791588588037781800,
+      "monotonic_ns": 943083575056,
+      "phase": "released",
+      "can_supported": true,
+      "automatic_home": false,
+      "reason": "supported_can_release"
+    },
+    {
+      "unix_ns": 1791588619323349500,
+      "monotonic_ns": 974369142186,
+      "phase": "ownership_acquired",
+      "recorder_session": "20261009T231424Z-43ce47f5",
+      "right_arm_hold": [
+        0.2654985189437866,
+        -0.2859196364879608,
+        0.08898287266492844,
+        0.7957046031951904,
+        -0.0003115898580290377,
+        0.009334273636341095,
+        0.0013345633633434772
+      ],
+      "right_hand_hold": [
+        0.5692363381385803,
+        -0.9119246006011963,
+        -0.03610902652144432,
+        0.8625924587249756,
+        0.517696738243103,
+        1.1730026006698608,
+        1.6981151103973389
+      ],
+      "blend_affects_both_arms": true,
+      "arm_gains": [
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          75,
+          3
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ],
+        [
+          40,
+          1.5
+        ]
+      ]
+    },
+    {
+      "unix_ns": 1791588726724886500,
+      "monotonic_ns": 1081770679073,
+      "phase": "close"
+    },
+    {
+      "unix_ns": 1791588729527712800,
+      "monotonic_ns": 1084573505455,
+      "phase": "gentle_grasp_started",
+      "grasped": true,
+      "groups": [
+        "thumb",
+        "middle",
+        "index"
+      ],
+      "stopped_for_s": 0.2,
+      "nominal_hold_effort_nm": 0.5,
+      "stop_span_rad": 0.005,
+      "holding_joint_slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "all_closing_fingers_stopped": true,
+      "trigger_time": 1084.539955421,
+      "measured_fingers": [
+        -0.024580208584666252,
+        0.18385984003543854,
+        0.47289517521858215,
+        -0.5449371337890625,
+        -0.7870408892631531,
+        -0.498861700296402,
+        -0.8874959945678711
+      ],
+      "hold_target": [
+        0,
+        0.43385984003543854,
+        0.7155033946037292,
+        -0.7907416224479675,
+        -1,
+        -0.7487615048885345,
+        -1
+      ],
+      "finger_position_error_rad": [
+        0.024580208584666252,
+        0.25,
+        0.2426082193851471,
+        -0.24580448865890503,
+        -0.21295911073684692,
+        -0.24989980459213257,
+        -0.1125040054321289
+      ]
+    },
+    {
+      "unix_ns": 1791588729542778600,
+      "monotonic_ns": 1084588571478,
+      "phase": "grasped",
+      "mode": "gentle_contact_hold",
+      "grasped": true,
+      "groups": [
+        "thumb",
+        "middle",
+        "index"
+      ],
+      "stopped_for_s": 0.2,
+      "nominal_hold_effort_nm": 0.5,
+      "stop_span_rad": 0.005,
+      "holding_joint_slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "all_closing_fingers_stopped": true,
+      "trigger_time": 1084.539955421
+    },
+    {
+      "unix_ns": 1791588729543313400,
+      "monotonic_ns": 1084589106010,
+      "phase": "lift",
+      "post_grasp_camera_checks": false
+    },
+    {
+      "unix_ns": 1791588749260347400,
+      "monotonic_ns": 1104306140615,
+      "phase": "pickup_completed",
+      "lift_verified": false,
+      "post_grasp_camera_checks": false
+    },
+    {
+      "unix_ns": 1791588749263815200,
+      "monotonic_ns": 1104309608033,
+      "phase": "physical_pickup_completed",
+      "physical_success_scope": "commanded lift completed; visual outcome unverified"
+    },
+    {
+      "unix_ns": 1791588766491055900,
+      "monotonic_ns": 1121536848821,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+      "source": "watchdog"
+    },
+    {
+      "unix_ns": 1791588835308137700,
+      "monotonic_ns": 1190353930927,
+      "phase": "released",
+      "can_supported": true,
+      "automatic_home": false,
+      "reason": "supported_can_release"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+.......................................................Docker endpoint: unix:///tmp/test-daemon.sock
+Unavailable credential helpers omitted for this build only; your Docker settings are unchanged.
+.Project: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical
+Device: unitree-g1-nx-2.local:50052
+Requested source: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+Read-only version/ownership check; no deployment.
+.Project: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical
+Device: unitree-g1-nx-2.local:50052
+Requested source: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+[1/4] Auditing the native Wendy deployment path…
+[2/4] Reading running version and verifying released ownership…
+.Currently running: unreported | commit unknown | source unknown
+.Currently running: unreported | commit unknown | source unknown
+Motion remains blocked: left motor fault. Released PASSIVE software deployment is allowed.
+.Read-only preflight passed: controller idle, arm ownership released.
+Project: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical
+Device: unitree-g1-nx-2.local:50052
+Requested source: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+[1/4] Auditing the native Wendy deployment path…
+[2/4] Reading running version and verifying released ownership…
+[3/4] Building and deploying: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+Build stamp: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/deployment-version.json
+[4/4] Reading back the version from the running controller…
+.Project: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical
+Device: unitree-g1-nx-2.local:50052
+Requested source: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+[1/4] Auditing the native Wendy deployment path…
+[2/4] Reading running version and verifying released ownership…
+[3/4] Building and deploying: test-version | commit aaaaaaaaaaaa | source bbbbbbbbbbbb
+Build stamp: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/deployment-version.json
+[4/4] Reading back the version from the running controller…
+NX2 controller redeployed and PASSIVE startup verified. No demo started.
+........
+----------------------------------------------------------------------
+Ran 69 tests in 0.645s
+
+OK

@@ -1,0 +1,33 @@
+Project: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical
+Device: unitree-g1-nx-2.local:50052
+Requested source: 0.3.29-post-grasp-feedback | commit f78dfab5feea + local edits | source 69e62188a2f4
+[1/4] Auditing the native Wendy deployment path…
+PASS: all audited operator deployments use wendy-run-timed
+[2/4] Reading running version and verifying released ownership…
+Currently running: 0.3.28-gentle-grasp | commit f78dfab5feea + local edits | source 1e77f9fb9051
+Read-only preflight passed: controller idle, arm ownership released.
+[3/4] Building and deploying: 0.3.29-post-grasp-feedback | commit f78dfab5feea + local edits | source 69e62188a2f4
+Build stamp: /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/deployment-version.json
+Docker endpoint: unix:///Users/olivertaylor/.colima/default/docker.sock
+Unavailable credential helpers omitted for this build only; your Docker settings are unchanged.
+Registered DEV-g1-handoff-physical in Cloud Apps (organization 76).
+Notifications for DEV-g1-handoff-physical are disabled; an owner or admin can enable its grant in the Cloud app settings.
+App layer(s) rebuilt natively (deps unchanged; container builder skipped)
+Diffing 15 layer(s) (1.4GB compressed) against device...
+Reusing 14 layer(s) already on device; chunking 1.
+Sent 6 chunk(s) (368.6kB) in 0.0s (16.5MB/s); device already had 0 chunk(s) and 14 full layer(s). The device then took 0.2s to prepare the image.
+Application DEV-g1-handoff-physical running in detached mode.
+{
+  "status": "started",
+  "app": "DEV-g1-handoff-physical",
+  "device": "10.10.20.238:50052",
+  "readiness": "not_checked",
+  "endpoints": []
+}
+Deployment timing appended to global ledger /Users/olivertaylor/Documents/Wendy/benchmarks/results/deployment-timings.jsonl
+Deployment timing mirrored to /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/benchmarks/results/deployment-timings.jsonl
+[4/4] Reading back the version from the running controller…
+VERIFIED RUNNING: 0.3.29-post-grasp-feedback | commit f78dfab5feea + local edits | source 69e62188a2f4
+Built at: 2026-10-09T23:25:36.831650+00:00
+Controller phase: PASSIVE | arm ownership: False
+NX2 controller redeployed and PASSIVE startup verified. No demo started.

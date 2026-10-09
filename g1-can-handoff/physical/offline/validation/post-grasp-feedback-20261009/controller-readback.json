@@ -1,0 +1,18 @@
+{
+  "build_info": {
+    "app_id": "DEV-g1-handoff-physical",
+    "app_version": "0.3.29-post-grasp-feedback",
+    "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+    "dirty": true,
+    "source_digest": "69e62188a2f4684701d2c38076f66fb13f7721496d3117f6c0b2b373de7988a3",
+    "built_at_utc": "2026-10-09T23:25:36.831650+00:00"
+  },
+  "phase": "PASSIVE",
+  "adapter_initialized": false,
+  "demo_running": false,
+  "motion_commands_sent": 0,
+  "telemetry_healthy": true,
+  "telemetry_error": null,
+  "post_grasp_camera_checks": false,
+  "post_grasp_perception_disabled": false
+}

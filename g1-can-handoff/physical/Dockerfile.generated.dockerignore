@@ -21,6 +21,9 @@
 !harness_replay.py
 !harness_replay.py/
 !harness_replay.py/**
+!harness_calibration.py
+!harness_calibration.py/
+!harness_calibration.py/**
 !planning_snapshot.py
 !planning_snapshot.py/
 !planning_snapshot.py/**
@@ -51,6 +54,9 @@
 !physical_core.py
 !physical_core.py/
 !physical_core.py/**
+!gentle_grasp.py
+!gentle_grasp.py/
+!gentle_grasp.py/**
 !control_settle.py
 !control_settle.py/
 !control_settle.py/**

@@ -31,6 +31,7 @@ from perception_policy import (
     perception_policy,
     semantic_recheck_interval_s,
     target_identity_mode,
+    post_grasp_camera_checks,
 )
 
 DATA = Path(os.getenv("HANDOFF_DATA", "/data"))
@@ -82,6 +83,7 @@ class Runtime:
         self.tracking_observation = None
         self.tracking_vision = None
         self.tracking_baseline = None
+        self.post_grasp_perception_disabled = False
         saved = DATA / "perception-config.json"
         if saved.exists():
             os.environ["HANDOFF_CAMERA_MAX_AGE_MS"] = str(
@@ -169,16 +171,21 @@ class Runtime:
         ):
             print(json.dumps(row), flush=True)
 
+    def poll_hand_once(self, side, sub):
+        msg = sub.Read()
+        if msg is not None:
+            with self.lock:
+                self.latest[side] = (msg, time.monotonic())
+
     def poll_hand(self, side, sub):
         while True:
             try:
-                msg = sub.Read()
-                if msg is not None:
-                    with self.lock:
-                        self.latest[side] = (msg, time.monotonic())
+                self.poll_hand_once(side, sub)
             except Exception as exc:
                 self.event("hand_reader_error", side=side, error=str(exc))
-            time.sleep(0.1)
+            # A 100 ms sleep consumed half the 200 ms freshness budget.
+            # Poll new DDS samples more often; absent samples do not refresh it.
+            time.sleep(0.02)
 
     @staticmethod
     def sample(msg, t, body=False):
@@ -241,6 +248,8 @@ class Runtime:
             target_identity=target_identity_mode(),
             yolo_required=target_identity_mode() != "color_depth",
             perception_policy=perception_policy(),
+            post_grasp_camera_checks=post_grasp_camera_checks(),
+            post_grasp_perception_disabled=getattr(self, "post_grasp_perception_disabled", False),
             periodic_yolo_recheck_s=semantic_recheck_interval_s(),
             last_phase_check=getattr(self, "last_phase_check", None),
             tracking_error=getattr(self, "tracking_error", None),
@@ -252,6 +261,8 @@ class Runtime:
             tracking_vision=getattr(self, "tracking_vision", None),
         )
         result["first_failure"] = getattr(self, "first_failure", None)
+        grip = getattr(getattr(self, 'plant', None), 'grip', None)
+        result['grip'] = None if grip is None else grip.status()
         from adapter.arm_gains import arm_gains
 
         kp, kd = arm_gains()
@@ -384,6 +395,8 @@ class Runtime:
             return result
 
     def publish_tracking_observation(self, observation, vision, require_table):
+        if getattr(self, "post_grasp_perception_disabled", False):
+            return
         baseline = getattr(self, "tracking_baseline", None)
         if baseline is None:
             return
@@ -523,6 +536,8 @@ class Runtime:
 
     def tracking_guard(self):
         with self.lock:
+            if getattr(self, "post_grasp_perception_disabled", False):
+                return
             error = self.tracking_error
             observation = self.tracking_observation
         if error:
@@ -572,19 +587,33 @@ class Runtime:
                     sample()
                 except Exception as exc:
                     with self.lock:
+                        # A frame request already in flight at grasp admission
+                        # must not reintroduce a post-grasp perception stop.
+                        if getattr(self, "post_grasp_perception_disabled", False):
+                            break
                         self.tracking_error = f"{type(exc).__name__}: {exc}"
-                    self.event("tracking_failed", error=self.tracking_error)
-                    if self.active and self.plant:
-                        self.record_failure(exc, "tracking")
-                        self.plant.freeze()
-                        self.active = False
-                        self.phase = "FROZEN"
+                        self.event("tracking_failed", error=self.tracking_error)
+                        if self.active and self.plant:
+                            self.record_failure(exc, "tracking")
+                            self.plant.freeze()
+                            self.active = False
+                            self.phase = "FROZEN"
                     break
 
         self.tracking_thread = threading.Thread(
             target=work, daemon=True, name="visual-depth-tracking"
         )
         self.tracking_thread.start()
+
+    def finish_grasp_perception(self, plant):
+        """Detach visual guards without waiting for an in-flight frame request."""
+        with self.lock:
+            self.post_grasp_perception_disabled = True
+            plant.perception_guard = None
+            self.tracking_stop.set()
+            self.tracking_error = None
+            self.tracking_baseline = None
+        self.event("post_grasp_perception_disabled", lift_verification="not_requested")
 
     def configure_motion_perception(self, plant, config, baseline):
         if perception_policy() == "continuous":
@@ -931,7 +960,10 @@ class Runtime:
 
         def work():
             try:
-                from harness_replay import run
+                if data.get("experiment") == "calibration":
+                    from harness_calibration import run
+                else:
+                    from harness_replay import run
 
                 self.demo_result = run(self, data)
             except Exception as exc:
@@ -981,6 +1013,8 @@ class Runtime:
         grasp_started = False
         self.first_failure = None
         self.grasp_started = False
+        self.post_grasp_perception_disabled = False
+        verify_after_grasp = post_grasp_camera_checks()
         self.archive_guard()
         snapshot_guard(self.read())
         self.camera.acquire()
@@ -1008,7 +1042,9 @@ class Runtime:
                 if phase == "close":
                     grasp_started = True
                     self.grasp_started = True
-                self.phase = "HOLDING_CAN" if phase == "lift_verified" else phase
+                if phase == "grasped" and not verify_after_grasp:
+                    self.finish_grasp_perception(plant)
+                self.phase = "HOLDING_CAN" if phase in ("lift_verified", "pickup_completed") else phase
                 self.event(phase, **fields)
 
             plant = self.make_plant(config)
@@ -1125,16 +1161,20 @@ class Runtime:
             self.plant = plant
             self.active = True
             self.trial_deadline = time.monotonic() + 90
-            result = execute(plant, prepared, observe, phase_event)
+            result = execute(plant, prepared, observe, phase_event,
+                             post_grasp_camera_checks=verify_after_grasp)
             self.event(
-                "physical_pickup_verified",
-                physical_success_scope="single calibrated stationary pickup",
+                "physical_pickup_verified" if result["lift_verified"] else "physical_pickup_completed",
+                physical_success_scope=("single calibrated stationary pickup"
+                                        if result["lift_verified"] else "commanded lift completed; visual outcome unverified"),
             )
             return {
+                "sequence_completed": result.get("sequence_completed", True),
                 "physical_lift_verified": result["lift_verified"],
                 "visual_rise_m": result["visual_rise_m"],
                 "hold_verified_s": result["hold_verified_s"],
                 "awaiting_operator_take": True,
+                "post_grasp_camera_checks": verify_after_grasp,
             }
         except Exception as exc:
             self.record_failure(exc, "execution")
@@ -1164,7 +1204,8 @@ class Runtime:
         while True:
             if self.active and self.plant:
                 try:
-                    self.plant.check()
+                    snapshot = self.plant.check()
+                    self.plant.refresh_grip(snapshot)
                     if time.monotonic() > self.trial_deadline:
                         raise RuntimeError("Bounded trial deadline reached")
                     if time.monotonic() - last_archive > 1:
@@ -1230,6 +1271,25 @@ runtime = None
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if self.path.startswith("/calibration-artifacts/"):
+            parts = self.path.split("/")
+            if (len(parts) != 4 or not parts[2].isdigit() or
+                    parts[3] not in ("model.mjb", "request.json", "result.json", "samples.jsonl", "replay.json")):
+                self.respond({"error": "Invalid calibration artifact"}, 404)
+                return
+            directory = DATA / "calibration-trials" / parts[2]
+            path = directory / parts[3]
+            if not (directory / "result.json").is_file() or not path.is_file():
+                self.respond({"error": "Calibration artifact is not sealed"}, 404)
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "application/octet-stream")
+            self.send_header("Content-Length", str(path.stat().st_size))
+            self.end_headers()
+            with path.open("rb") as source:
+                while chunk := source.read(131072):
+                    self.wfile.write(chunk)
+            return
         self.respond(runtime.status())
 
     def do_POST(self):

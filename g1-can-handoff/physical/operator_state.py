@@ -2,6 +2,20 @@
 
 ERROR_CASES = [
     dict(
+        triggers=["left temperature", "right temperature"],
+        title="Hand temperature limit reached",
+        summary="A hand temperature reading reached the configured guard, or was invalid.",
+        action="Check live hand temperatures and fault codes below before retrying.",
+        source="physical_core.py · snapshot_guard",
+    ),
+    dict(
+        triggers=["left motor fault", "right motor fault"],
+        title="Hand reports a motor fault",
+        summary="A hand reported a nonzero fault code, or fault feedback was missing.",
+        action="Review the hand feedback below. Release is not a confirmed hardware fault reset.",
+        source="physical_core.py · snapshot_guard",
+    ),
+    dict(
         triggers=["Grasp orientation search time limit"],
         title="Planning took too long",
         summary="The grasp search exceeded its configured time limit.",

@@ -1,0 +1,9 @@
+{
+  "gentle_grasp.py": "068d47b4451abebe658716a0a32039dee757dd1a1c95e60e103ad31adab69b8d",
+  "physical_core.py": "c6ef05dfd7a33b60d89145cc95a4907c29a6399719ea37877510d9ca88f44813",
+  "pickup.py": "0e6e355d468d18800dd25607a21373c85eaca2b8dd7f7e9722fe1f07e0cac0a5",
+  "runtime.py": "010aa51206f83cecc2a7ea22fb6a295aa3c1fb12596af5a49c47604db99e224a",
+  "sim_runtime.py": "806209b1b6e8952bd67cad384883d1779b5bf8cbc47a5e1e60a04a39d29fbaea",
+  "wendy.json": "e1a502781aaf0bd40823791a11216fd6ee880a035398fa493b9ab047ba6a4aa2",
+  "build.stagefile.yaml": "e004755b50fc842ecd8169a17636000af9e873dba4273bb9f8ee7d9ea8cdd5c0"
+}

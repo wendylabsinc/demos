@@ -17,6 +17,19 @@ from runtime import Runtime
 
 
 class RuntimeLifecycleTests(unittest.TestCase):
+    def test_hand_reader_does_not_make_missing_feedback_fresh(self):
+        runtime = self.runtime()
+        runtime.latest = {'left':('old', 5)}
+        sub=Mock()
+        sub.Read.return_value=None
+        with patch('runtime.time.monotonic',return_value=10):
+            runtime.poll_hand_once('left',sub)
+        self.assertEqual(runtime.latest['left'],('old',5))
+        sub.Read.return_value='new'
+        with patch('runtime.time.monotonic',return_value=11):
+            runtime.poll_hand_once('left',sub)
+        self.assertEqual(runtime.latest['left'],('new',11))
+
     def setUp(self):
         self.worker_patch = patch("perception_worker.PerceptionWorker")
         self.worker_patch.start()
@@ -109,7 +122,13 @@ class RuntimeLifecycleTests(unittest.TestCase):
             order.append("control")
             return arm
 
-        result = {"lift_verified": True, "visual_rise_m": 0.13, "hold_verified_s": 1}
+        result = {"sequence_completed": True, "lift_verified": False, "visual_rise_m": None, "hold_verified_s": None}
+        def execute_pickup(plant, prepared, observe, event, **kwargs):
+            self.assertFalse(kwargs["post_grasp_camera_checks"])
+            order.append("execute")
+            event("grasped")
+            event("pickup_completed", lift_verified=False)
+            return result
         with (
             patch.dict(
                 "sys.modules",
@@ -128,10 +147,16 @@ class RuntimeLifecycleTests(unittest.TestCase):
             ) as prepare,
             patch(
                 "pickup.execute",
-                side_effect=lambda *a: order.append("execute") or result,
+                side_effect=execute_pickup,
             ),
         ):
-            self.assertTrue(runtime.run(True)["physical_lift_verified"])
+            completed = runtime.run(True)
+            self.assertTrue(completed["sequence_completed"])
+            self.assertFalse(completed["physical_lift_verified"])
+            self.assertIsNone(completed["visual_rise_m"])
+        self.assertEqual(runtime.phase, "HOLDING_CAN")
+        self.assertIsNone(planning_plant.perception_guard)
+        self.assertNotIn("physical_pickup_verified", [call.args[0] for call in runtime.event.call_args_list])
         self.assertEqual(
             order, ["refresh", "control", "settled", "refresh", "plan", "execute"]
         )

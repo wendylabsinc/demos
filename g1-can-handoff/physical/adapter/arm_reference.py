@@ -67,8 +67,10 @@ class ArmReference:
 def validate_motion_limits(values):
     """Validate the complete physical pair; never silently clamp a request."""
     bounds = {
-        "max_velocity_rad_s": (0.25, 50.0),
-        "max_acceleration_rad_s2": (1.0, 30.0),
+        # Admit gentle harness characterization without increasing the
+        # existing upper limits or changing the default reference profile.
+        "max_velocity_rad_s": (0.05, 50.0),
+        "max_acceleration_rad_s2": (0.1, 30.0),
     }
     if not isinstance(values, dict) or set(values) != set(bounds):
         raise ValueError("expected max_velocity_rad_s and max_acceleration_rad_s2")

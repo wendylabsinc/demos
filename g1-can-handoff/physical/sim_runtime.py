@@ -51,6 +51,10 @@ class SimulationIO:
         self.all_hand_ids = np.array(
             [i for i in range(world.model.nu) if "hand" in world.model.actuator(i).name]
         )
+        # Match the physical Dex3 sender instead of the generic scene's P=12.
+        self.kp, self.kd = 2.0, 0.2
+        world.kp[self.all_hand_ids] = self.kp
+        world.kd[self.all_hand_ids] = self.kd
         from adapter.arm_gains import arm_gains
 
         kp, kd = arm_gains(arm_kp)
@@ -338,6 +342,7 @@ def run(
     planner_mode="legacy",
     tracking_profile="baseline",
     tracking_env_file=None,
+    post_grasp_camera_checks=True,
 ):
     from simulation_tracking_limits import plant_class, profile, environment_file
 
@@ -642,7 +647,8 @@ def run(
         plant.planning_recorder = planning_recorder
         plant.inherit_control_hold(held_plant)
         prepared = prepare(plant, observe, event)
-        result = execute(plant, prepared, observe, event)
+        result = execute(plant, prepared, observe, event,
+                         post_grasp_camera_checks=post_grasp_camera_checks)
         result.update(simulation_only=True, physical_pickup_verified=False)
     except Exception as exc:
         commands_at_failure = io.commands

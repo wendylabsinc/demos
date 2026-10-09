@@ -190,7 +190,7 @@ class SharedPickupTests(unittest.TestCase):
         self.assertTrue(result["lift_verified"])
         self.assertEqual(
             events,
-            ["approach", "align", "reach", "close", "lift"]
+            ["approach", "align", "reach", "close", "grasped", "lift"]
             + ["lift_observation"] * 5
             + ["lift_verified"],
         )

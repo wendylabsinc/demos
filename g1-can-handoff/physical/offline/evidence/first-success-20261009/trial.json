@@ -1,0 +1,88 @@
+{
+  "schema": "wendy.g1.operator-confirmed-outcome.v1",
+  "success_number": 1,
+  "outcome": "success",
+  "success_basis": "operator_confirmation",
+  "operator_confirmation": "record that last one as our first success",
+  "recorded_at_utc": "2026-10-09T23:51:10.524703+00:00",
+  "device": "unitree-g1-nx-2.local:50052",
+  "build_info": {
+    "app_id": "DEV-g1-handoff-physical",
+    "app_version": "0.3.29-post-grasp-feedback",
+    "git_commit": "f78dfab5feea30c90c03a34c37afd78c0d447391",
+    "dirty": true,
+    "source_digest": "69e62188a2f4684701d2c38076f66fb13f7721496d3117f6c0b2b373de7988a3",
+    "built_at_utc": "2026-10-09T23:25:36.831650+00:00"
+  },
+  "native_event_file": "/data/events-20261009T232543Z.jsonl",
+  "ownership_acquired_unix_ns": 1791588619323349500,
+  "completed_unix_ns": 1791588749263815200,
+  "completed_at_utc": "2026-10-09T23:32:29.263815+00:00",
+  "ownership_to_completion_s": 129.9404657,
+  "grasp": {
+    "unix_ns": 1791588729542778600,
+    "monotonic_ns": 1084588571478,
+    "phase": "grasped",
+    "mode": "gentle_contact_hold",
+    "grasped": true,
+    "groups": [
+      "thumb",
+      "middle",
+      "index"
+    ],
+    "stopped_for_s": 0.2,
+    "nominal_hold_effort_nm": 0.5,
+    "stop_span_rad": 0.005,
+    "holding_joint_slots": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "all_closing_fingers_stopped": true,
+    "trigger_time": 1084.539955421
+  },
+  "sequence_completed": true,
+  "operator_confirmed_success": true,
+  "physical_lift_verified": false,
+  "visual_rise_m": null,
+  "hold_verified_s": null,
+  "post_grasp_camera_checks": false,
+  "post_completion_events": [
+    {
+      "unix_ns": 1791588766491055900,
+      "monotonic_ns": 1121536848821,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+      "source": "watchdog"
+    },
+    {
+      "unix_ns": 1791588835308137700,
+      "monotonic_ns": 1190353930927,
+      "phase": "released",
+      "can_supported": true,
+      "automatic_home": false,
+      "reason": "supported_can_release"
+    }
+  ],
+  "final_phase": "PASSIVE",
+  "final_adapter_initialized": false,
+  "evidence_boundary": "Operator-confirmed physical success; controller confirms grasp and commanded lift completion. Visual lift verification was intentionally disabled. Later waist guard and supported release preserved separately.",
+  "artifact": {
+    "path": "/data/trial-exports/first-success-20261009.tar.gz",
+    "bytes": 63192020,
+    "sha256": "87ef2066836d402e658af7af55aebe1354d44e720ac2479ad23bb47906432fe1",
+    "events": 3523,
+    "selected_frames": 5,
+    "primary_failure": {
+      "unix_ns": 1791588766491055875,
+      "monotonic_ns": 1121536848821,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+      "source": "watchdog"
+    },
+    "local_path": "offline/evidence/first-success-20261009/trial.tar.gz",
+    "verified": true
+  }
+}

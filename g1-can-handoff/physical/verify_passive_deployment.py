@@ -69,7 +69,8 @@ def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+s
 status=get(8102,'/status')
 assert BUILDSTAMP is not None and status.get('build_info')==BUILDSTAMP,'Running build stamp differs from requested deployment'
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
-assert status['telemetry_healthy'],status
+# Faulted feedback blocks motion, not replacement of a released PASSIVE app.
+motion_readiness='not_checked' if status.get('telemetry_healthy') else 'blocked'
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
 assert physical_core.body_winding_temperature_limit_c()==CONFIGURED_WINDING_TEMP
 assert status['body_temperature_limits_c']=={'casing':CONFIGURED_BODY_TEMP,'winding':CONFIGURED_WINDING_TEMP},status
@@ -91,6 +92,8 @@ if APPLY_CONFIG and previous_budget!=budget:
  assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 assert status['camera_max_age_ms']==budget and status['yolo_confidence_strictly_above']==.1,status
 assert status['perception_policy']==CONFIGURED_POLICY,status
+assert status['post_grasp_camera_checks']==CONFIGURED_POST_GRASP,status
+assert status['post_grasp_perception_disabled'] is False,status
 assert status['periodic_yolo_recheck_s']==(None if CONFIGURED_POLICY=='phase_boundary' or CONFIGURED_IDENTITY!='yolo_reacquire' else 1.),status
 recorder=get(8101,'/status')
 assert recorder['recording'] and not recorder['error'] and not sum(recorder['dropped'].values()) and not recorder['missing_or_stale_required'],recorder
@@ -105,7 +108,7 @@ for _ in range(2):
  frames.append({'frame_id':health['frame_id'],'age_s':health['frame_age_s'],'jpeg_sha256':hashlib.sha256(raw).hexdigest()})
  time.sleep(.15)
 assert frames[1]['frame_id']>frames[0]['frame_id'],'Camera frame counter did not advance'
-print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':'not_checked','previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
+print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_readiness':motion_readiness,'previous_camera_max_age_ms':previous_budget,'controller':status,'source_sha256':actual,'camera_frames':frames,'yolo':yolo,'recorder':recorder}))
 """.replace("EXPECTED", repr(expected))
         .replace("BUILDSTAMP", repr(expected_version))
         .replace(
@@ -134,6 +137,7 @@ print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_r
         .replace("CONFIGURED_KP", repr(configured_kp))
         .replace("CONFIGURED_LIMIT", repr(configured_limit))
         .replace("CONFIGURED_POLICY", repr(configured_policy))
+        .replace("CONFIGURED_POST_GRASP", repr(configured_env.get("HANDOFF_POST_GRASP_CAMERA_CHECKS", "0") == "1"))
         .replace("CONFIGURED_IDENTITY", repr(configured_identity))
         .replace("APPLY_CONFIG", repr(args.configure_camera_max_age_ms is not None))
     )

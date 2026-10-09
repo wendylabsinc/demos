@@ -1,0 +1,83 @@
+{
+  "offline_exact_frame_replay": [
+    {
+      "phase": "planning",
+      "frame_id": 7046,
+      "pixels": 2850,
+      "mode": "color_depth_acquisition",
+      "error": null
+    },
+    {
+      "phase": "plan-refresh",
+      "frame_id": 7898,
+      "pixels": 2395,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "pre-open",
+      "frame_id": 7899,
+      "pixels": 2341,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "pre-stage",
+      "frame_id": 7924,
+      "pixels": 2416,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "approach",
+      "frame_id": 8113,
+      "pixels": 2032,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "align",
+      "frame_id": 8150,
+      "pixels": 2076,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "reach",
+      "frame_id": 8397,
+      "pixels": 2177,
+      "mode": "visual_depth",
+      "error": null
+    },
+    {
+      "phase": "pre-close",
+      "frame_id": 8550,
+      "error": "Color/depth can target absent/ambiguous"
+    }
+  ],
+  "acquisition_diagnostics": [
+    {
+      "frame_id": 7046,
+      "reacquisition_reason": "initial_identity",
+      "red_depth_pixels_in_roi": 4123,
+      "components_above_100": [
+        4997
+      ],
+      "roi_center": null
+    },
+    {
+      "frame_id": 8550,
+      "reacquisition_reason": "visual_identity_uncertain",
+      "red_depth_pixels_in_roi": 2136,
+      "components_above_100": [
+        1701,
+        897
+      ],
+      "roi_center": [
+        0.29749238955008606,
+        0.1542015696198149
+      ]
+    }
+  ],
+  "freshness_check_disabled_only_for_historical_offline_replay": true
+}

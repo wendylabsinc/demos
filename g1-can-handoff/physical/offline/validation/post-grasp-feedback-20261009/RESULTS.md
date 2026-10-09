@@ -1,0 +1,11 @@
+Deployed 0.3.29-post-grasp-feedback to NX2 10.10.20.238:50052.
+
+Once measured finger evidence admits grasp, the physical runtime detaches its camera/depth guard and finishes the planned lift and 1.5-second held pose without pre-lift, visual lift/hold, identity, can-position or contact revalidation. In-flight continuous perception failures after admission cannot freeze the run. Pre-grasp perception and existing robot feedback, arm, collision, temperature, fault, cancellation and recorder guards remain active.
+
+Completion is reported as sequence_completed=true and physical_lift_verified=false; visual rise and visual hold evidence are null. This does not establish can retention or successful physical pickup. Saved legacy camera verification remains an explicit offline simulator diagnostic; simulate the new path with post_grasp_camera_checks=False. Runtime env HANDOFF_POST_GRASP_CAMERA_CHECKS=0 is configured in wendy.json; 1 restores the diagnostic post-grasp camera checks.
+
+69 focused tests passed (tests.log), including exact post-grasp call-boundary checks, retained robot-failure stops, missing grasp, in-flight camera-disconnect race and truthful runtime completion reporting. Existing recorded grip regressions and legacy visual-verification cases passed. No new full dynamics or physical pickup was run; the prior gentle-grip simulation retention limitation is not resolved by removing visual admission.
+
+Native deployment 48e545f4-89b3-4f81-9290-44472e74b739 succeeded with functional readiness passed. The verifier checked packaged source hashes, build stamp, fresh decoded advancing camera frames, fresh recorder writes, robot feedback and PASSIVE zero-command startup. Live readback: PASSIVE, ownership false, demo_running false, motion_commands_sent=0, telemetry_healthy=true, post_grasp_camera_checks=false.
+
+Source digest 69e62188a2f4684701d2c38076f66fb13f7721496d3117f6c0b2b373de7988a3; base commit f78dfab5feea30c90c03a34c37afd78c0d447391 plus preserved local edits. Your canonical g1_can_handoff/redeploy.py remains the deployment entry point and verified this version. Evidence: deploy.log, controller-readback.json, tests.log and benchmarks/results/deployment-timings.jsonl.

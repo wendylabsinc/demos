@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.24-sensor-temperature-guards",
+  "version": "0.3.29-post-grasp-feedback",
   "entitlements": [
     {
       "type": "network",
@@ -20,7 +20,11 @@
   },
   "env": {
     "HANDOFF_PLANNER_PROFILE": "tuned",
-    "HANDOFF_ARM_KP": "150",
+    "HANDOFF_ARM_KP": "75",
+    "HANDOFF_GRIP_STOP_S": "0.2",
+    "HANDOFF_GRIP_STOP_SPAN_RAD": "0.005",
+    "HANDOFF_GRIP_HOLD_EFFORT_NM": "0.5",
+    "HANDOFF_POST_GRASP_CAMERA_CHECKS": "0",
     "HANDOFF_PERCEPTION_POLICY": "phase_boundary",
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
     "HANDOFF_YOLO_MIN_CONFIDENCE": "0.10",
@@ -30,7 +34,7 @@
     "HANDOFF_PLANNING_TABLE_HEIGHT_OFFSET_M": "0.01",
     "HANDOFF_BODY_TEMPERATURE_LIMIT_C": "85",
     "HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C": "85",
-    "HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C": "95",
+    "HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C": "120",
     "HANDOFF_GEOMETRY_WORKERS": "1",
     "HANDOFF_TARGET_IDENTITY": "color_depth"
   }

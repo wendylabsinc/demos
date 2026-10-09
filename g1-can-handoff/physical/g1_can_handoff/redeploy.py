@@ -22,7 +22,7 @@ WORKSPACE = ROOT.parents[2]
 WRAPPER = WORKSPACE / "scripts/wendy-run-timed"
 AUDIT = WORKSPACE / "scripts/check-wendy-deployment-wrappers"
 MARKER = Path("/tmp/wendy-g1-nx2-deployment.lock")
-DEVICE = "10.10.20.238:50052"
+DEVICE = "unitree-g1-nx-2.local:50052"
 VENV = WORKSPACE / "demos-g1-nx2-yolo/.venv/bin/python"
 
 sys.path.insert(0, str(ROOT))
@@ -39,8 +39,10 @@ try:
     print('Currently running: '+describe_version(state.get('build_info') or {}),flush=True)
     if state.get('adapter_initialized') is not False or state.get('demo_running') is not False:
         raise RuntimeError('Controller owns the arms or a demo is running. Support and release before redeploying.')
-    if state.get('phase') not in ('PASSIVE','BLOCKED') or state.get('telemetry_healthy') is not True:
-        raise RuntimeError('Idle controller state or healthy robot feedback could not be verified: '+json.dumps(state))
+    if state.get('phase') not in ('PASSIVE','BLOCKED'):
+        raise RuntimeError('Idle controller state could not be verified: '+json.dumps(state))
+    if state.get('telemetry_healthy') is not True:
+        print('Motion remains blocked: '+str(state.get('telemetry_error') or 'robot feedback unverified')+'. Released PASSIVE software deployment is allowed.',flush=True)
     print('Read-only preflight passed: controller idle, arm ownership released.')
 finally:
     client.process.terminate()
@@ -60,6 +62,8 @@ try:
     print('VERIFIED RUNNING: '+describe_version(actual),flush=True)
     print('Built at: '+actual['built_at_utc'],flush=True)
     print('Controller phase: '+state['phase']+' | arm ownership: '+str(state['adapter_initialized']),flush=True)
+    if not state.get('telemetry_healthy'):
+        print('Motion readiness BLOCKED: '+str(state.get('telemetry_error')),flush=True)
 finally:
     client.process.terminate()
 """

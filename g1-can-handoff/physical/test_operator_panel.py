@@ -87,6 +87,34 @@ class OperatorPanelTests(unittest.TestCase):
         self.server.wendy.request.assert_not_called()
 
     @unittest.skipUnless(shutil.which("node"), "JavaScript runtime unavailable")
+    def test_hand_faults_clear_and_missing_or_stale_feedback_never_looks_clear(self):
+        functions = browser_functions("describeHandFeedback", "renderHandFeedback")
+        script = r"""
+const assert=require('node:assert/strict');const elements=new Map();
+const document={querySelector(id){if(!elements.has(id))elements.set(id,{dataset:{},textContent:''});return elements.get(id);}};
+""" + functions + r"""
+const reported={age_ms:20,faults:[0,512,512,0,0,0,0,0,0],temperatures:Array(7).fill([38,37])};
+const clear={...reported,faults:Array(9).fill(0)};
+renderHandFeedback({left:reported,right:clear});
+assert.equal(elements.get('#hand-left').dataset.tone,'fault');
+assert.match(elements.get('#hand-left-summary').textContent,/2 nonzero fault codes/);
+assert.match(elements.get('#hand-left-faults').textContent,/Motor slot 1: 512 \(0x0200\).*38 \/ 37°C/);
+assert.match(elements.get('#hand-left-faults').textContent,/Motor slot 2: 512/);
+assert.equal(elements.get('#hand-right').dataset.tone,'clear');
+renderHandFeedback({left:clear});
+assert.equal(elements.get('#hand-left-faults').textContent,'');
+assert.equal(elements.get('#hand-right').dataset.tone,'unknown');
+assert.equal(describeHandFeedback({...clear,age_ms:201}).tone,'unknown');
+assert.equal(describeHandFeedback({...clear,age_ms:-1}).tone,'unknown');
+assert.equal(describeHandFeedback({...clear,age_ms:null}).tone,'unknown');
+assert.equal(describeHandFeedback({...clear,faults:[0,null,0,0,0,0,0]}).tone,'unknown');
+assert.match(describeHandFeedback({...reported,age_ms:300}).summary,/stale/);
+assert.match(describeHandFeedback({...clear,faults:[0,0,0,0,0,0,0,512,0]}).faults,/Hand error slot 7: 512/);
+renderHandFeedback(null);assert.equal(elements.get('#hand-left').dataset.tone,'unknown');
+"""
+        subprocess.run(["node", "-e", script], check=True, capture_output=True, text=True)
+
+    @unittest.skipUnless(shutil.which("node"), "JavaScript runtime unavailable")
     def test_camera_load_failure_and_timeout_never_replace_the_last_good_image(self):
         javascript = re.search(r"<script>([\s\S]*?)</script>", panel.PAGE).group(1)
         harness = r"""
@@ -158,7 +186,7 @@ const sessionStorage={setItem:(k,v)=>storage.set(k,v),getItem:k=>storage.get(k),
 const lastDemoError={hidden:true},start={},state={};
 const demoErrorTitle={},demoErrorSummary={},demoErrorNext={},demoErrorSource={},demoErrorRaw={};
 const placementDetails={},placementRaw={};const document={querySelector:s=>s==='#placement-error-details'?placementDetails:placementRaw};
-let savedDemoError='',starting=false;function renderRobotState(s){}function renderVersion(s){}
+let savedDemoError='',starting=false;function renderRobotState(s){}function renderVersion(s){}function renderHandFeedback(s){}
 """
             + "const errorCases="
             + json.dumps(panel.ERROR_CASES)

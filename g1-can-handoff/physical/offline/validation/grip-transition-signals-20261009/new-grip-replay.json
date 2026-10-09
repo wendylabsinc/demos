@@ -1,0 +1,64 @@
+[
+  {
+    "case": "earlier-211444",
+    "first_thumb_hold": {
+      "t": 1.593913915,
+      "temperature_C": 30,
+      "target": 0.6402133405208588
+    },
+    "grasped_s": 2.701098757,
+    "recorded_winding_at_grasped_C": 42,
+    "lead_before_stop_s": 2.8205484870000004,
+    "settings": {
+      "grasped": true,
+      "groups": [
+        "thumb",
+        "middle",
+        "index"
+      ],
+      "stopped_for_s": 0.2,
+      "nominal_hold_effort_nm": 0.5,
+      "stop_span_rad": 0.005,
+      "holding_joint_slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "all_closing_fingers_stopped": true,
+      "trigger_time": 2.701098757
+    }
+  },
+  {
+    "case": "latest-224522",
+    "first_thumb_hold": {
+      "t": 1.430843028,
+      "temperature_C": 36,
+      "target": 0.6461362540721893
+    },
+    "grasped_s": 2.663281408,
+    "recorded_winding_at_grasped_C": 51,
+    "lead_before_stop_s": 2.1926451740000004,
+    "settings": {
+      "grasped": true,
+      "groups": [
+        "thumb",
+        "middle",
+        "index"
+      ],
+      "stopped_for_s": 0.2,
+      "nominal_hold_effort_nm": 0.5,
+      "stop_span_rad": 0.005,
+      "holding_joint_slots": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "all_closing_fingers_stopped": true,
+      "trigger_time": 2.663281408
+    }
+  }
+]
