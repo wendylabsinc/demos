@@ -137,3 +137,16 @@ The 0.3.37 recording measured median worker time 119.6 ms, with a rare 529.6 ms
 last-accepted exposure gap immediately before the next fresh result arrived.
 90 affected tests pass, including planning resumption, immediate motion-stop,
 missing-frame timeout, cancellation, future timestamps and invalid wait limits.
+
+
+## Original reference retry, 0.3.39
+
+At the operator's request, `HANDOFF_SCENE_REFERENCE=0` disables the experimental
+static-table landmark requirement and its camera/FK correction together.
+Camera exposures and measured robot FK return to their existing IMU-corrected
+calibration path; no scene-pose provider is installed. The undeployed planning
+wait from 0.3.38 is also withdrawn. ACT continuous pregrasp observations and
+the original invalid-input, 500 ms freshness, 10 mm can displacement, collision,
+joint, thermal, cancellation and failure-hold guards remain enforced.
+The prior false estimated can displacement may therefore recur.
+No release, home or physical start occurs during deployment.

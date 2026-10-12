@@ -64,7 +64,6 @@ class Runtime:
         self.operation_lock = threading.Lock()
         self.cancel = threading.Event()
         self.lock = threading.RLock()
-        self.observation_condition = threading.Condition(self.lock)
         self.phase = "PASSIVE"
         self.error = None
         self.plant = None
@@ -481,9 +480,6 @@ class Runtime:
             self.tracking_vision = vision
             if scene is not None:
                 self.scene_pose_data = deepcopy(scene)
-            condition = getattr(self, 'observation_condition', None)
-            if condition is not None:
-                condition.notify_all()
 
     def exposure_config(self, config, timestamp):
         if config.get("calibration_method") != "operator_accepted_factory_table":
@@ -611,43 +607,20 @@ class Runtime:
         return frame
 
     def tracking_guard(self):
-        deadline = None
-        began = None
-        while True:
-            with self.lock:
-                if getattr(self, 'post_grasp_perception_disabled', False):
-                    return
-                if self.tracking_error:
-                    raise RuntimeError('Visual/depth tracking uncertain: ' + self.tracking_error)
-                observation = self.tracking_observation
-                if observation is None:
-                    raise RuntimeError('Visual/depth tracking has no accepted observation')
-                now = time.monotonic()
-                age = now-observation.timestamp
-                if 0 <= age <= frame_age_limit_s():
-                    if began is None:
-                        return
-                    waited_ms = (now-began)*1000
-                    break
-                condition = getattr(self, 'observation_condition', None)
-                planning = (getattr(self, 'demo_running', False)
-                            and not getattr(self, 'active', False)
-                            and not getattr(self, 'grasp_started', False)
-                            and not self.cancel.is_set() and condition is not None)
-                # Only non-actuating planning can pause. Motion still rejects
-                # an old/future sample immediately and never relabels it.
-                if not planning or age < 0:
-                    raise RuntimeError(f'Visual/depth tracking exposure stale ({age*1000:.1f} ms)')
-                if deadline is None:
-                    limit = float(os.getenv('HANDOFF_PLANNING_FRAME_WAIT_MS', '500'))
-                    if not np.isfinite(limit) or not 0 < limit <= 500:
-                        raise ValueError('Planning frame wait must be finite within (0, 500] ms')
-                    began, deadline = now, now+limit/1000
-                if now >= deadline:
-                    raise RuntimeError('No fresh camera observation during bounded planning wait')
-                condition.wait(timeout=min(.02, deadline-now))
-        self.event('planning_frame_wait_resolved', waited_ms=waited_ms,
-                   accepted_exposure_age_ms=age*1000)
+        with self.lock:
+            if getattr(self, "post_grasp_perception_disabled", False):
+                return
+            error = self.tracking_error
+            observation = self.tracking_observation
+        if error:
+            raise RuntimeError("Visual/depth tracking uncertain: " + error)
+        if observation is None:
+            raise RuntimeError("Visual/depth tracking has no accepted observation")
+        age = time.monotonic() - observation.timestamp
+        if not 0 <= age <= frame_age_limit_s():
+            raise RuntimeError(
+                f"Visual/depth tracking exposure stale ({age*1000:.1f} ms)"
+            )
 
     def select_planning_observation(self):
         """Pin the latest accepted sample before checking any pickup path."""
