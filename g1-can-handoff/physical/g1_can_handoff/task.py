@@ -48,7 +48,8 @@ def plan(plant, observation, validate=None, include_offer=True):
     # Its recorded training region remains provenance, not an admission gate.
     # The cylinder permits yaw changes. A downward approach expands the
     # reachable workspace on lower tables without changing the can location.
-    deadline = time.monotonic() + 70
+    cuda = getattr(plant, "planning_backend", "cpu") == "cuda"
+    deadline = time.monotonic() + (1.0 if cuda else 70.0)
     orientations = [
         (0, 0),
         (0, 0.5),
@@ -68,7 +69,7 @@ def plan(plant, observation, validate=None, include_offer=True):
     # Higher candidates are still checked against the positive table margin.
     heights = (0.0,) if include_offer else (0.0, 0.01, 0.02)
     candidate_budget = (
-        getattr(plant, "grasp_candidate_budget", 1) if validate is not None else 1
+        getattr(plant, "grasp_candidate_budget", 1) if validate is not None and not cuda else 1
     )
     feasible = []
     seen_orientations = set()
@@ -107,8 +108,16 @@ def plan(plant, observation, validate=None, include_offer=True):
                 continue
         plant.set_contact_phase("pregrasp")
         if validate is not None and not validate(waypoints, rotation):
+            if cuda:
+                # One prepared route, one validation pass. An unsafe or
+                # unreachable request returns immediately for a new observation.
+                raise ValueError("CUDA pickup path rejected; replan required")
             continue
         if candidate_budget == 1:
+            if time.monotonic() > deadline:
+                if hasattr(plant, "path_preflight_ok"):
+                    plant.path_preflight_ok = False
+                raise ValueError("Grasp orientation search time limit reached")
             return waypoints, rotation
         feasible.append((plant.grasp_noise_score(), waypoints, rotation))
         seen_orientations.add((pitch, yaw))

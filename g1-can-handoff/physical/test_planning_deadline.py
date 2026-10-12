@@ -1,4 +1,4 @@
-"""A recorded planner stop is reproduced with a controlled clock, no 30s sleep."""
+"""A recorded planner stop is reproduced with a controlled clock, no long sleep."""
 
 import gzip
 import json
@@ -31,7 +31,7 @@ class PlanningDeadlineTests(unittest.TestCase):
 
         def blocked_candidate(*args):
             # Reproduce expensive failed IK/preflight, advancing virtual time.
-            state["time"] += 30.001
+            state["time"] += 70.001
             raise ValueError("No candidate IK solution")
 
         plant.solve.side_effect = blocked_candidate

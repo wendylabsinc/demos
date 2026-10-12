@@ -23,6 +23,8 @@ SOURCE_NAMES = (
     "staging.py",
     "planning_snapshot.py",
     "planner_tuning.py",
+    "gpu_kinematics.py",
+    "gpu_planner.py",
     "g1_can_handoff/noise_aware_planner.json",
     "g1_can_handoff/sim.py",
     "g1_can_handoff/task.py",
@@ -158,6 +160,13 @@ class PlanningRecorder:
                 "Measured base translation and IMU angular velocity are unavailable in this feedback source.",
             ],
         )
+        snapshot["solver_settings"]["backend"] = plant.planning_backend
+        if plant.planning_backend == "cuda":
+            snapshot["solver_settings"]["cuda"] = dict(
+                iterations=160, local_bound_rad=0.2, max_step_rad=0.15,
+                orientation_weight=0.15, collision_passes=1, wrap_angles=False,
+                dependencies={n: importlib.metadata.version(n) for n in ("warp-lang", "mujoco-warp")},
+            )
         path = self.directory / name
         # Persist before planning so failed decisions retain their exact inputs.
         path.write_text(json.dumps(plain(snapshot), separators=(",", ":")) + "\n")
@@ -203,6 +212,9 @@ def replay(path):
     current = {n: importlib.metadata.version(n) for n in ("mujoco", "numpy", "scipy")}
     if current != snapshot["provenance"]["dependencies"]:
         raise ValueError("Planner dependency versions differ")
+    cuda = snapshot.get("solver_settings", {}).get("cuda")
+    if cuda and any(importlib.metadata.version(n) != version for n, version in cuda["dependencies"].items()):
+        raise ValueError("CUDA planner dependency versions differ")
     root = Path(__file__).parent
     if any(
         hashlib.sha256((root / n).read_bytes()).hexdigest() != v

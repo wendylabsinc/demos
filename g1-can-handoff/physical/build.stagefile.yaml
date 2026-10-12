@@ -48,7 +48,7 @@ stages:
       OMP_NUM_THREADS: "1"
     install:
       pip:
-        - packages: ["numpy==2.2.6", "scipy==1.15.3", "mujoco==3.14.0", "pillow==11.3.0", "opencv-python-headless==4.11.0.86"]
+        - packages: ["numpy==2.2.6", "scipy==1.15.3", "mujoco==3.14.0", "pillow==11.3.0", "opencv-python-headless==4.11.0.86", "warp-lang==1.15.0", "mujoco-warp==3.15.0"]
     copy:
       - from: local
         paths: [adapter]
@@ -81,6 +81,8 @@ stages:
           scene_refresh.py,
           factory_table_candidate.py,
           physical_core.py,
+          gpu_kinematics.py,
+          gpu_planner.py,
           gentle_grasp.py,
           control_settle.py,
           camera_input.py,
