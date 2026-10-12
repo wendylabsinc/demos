@@ -4,6 +4,7 @@ import unittest
 from unittest.mock import patch
 import test_model_calibration
 from scene_refresh import refresh_scene
+from physical_core import body_temperature_limit_c, body_winding_temperature_limit_c
 
 
 class SceneRefreshTests(unittest.TestCase):
@@ -124,7 +125,8 @@ class SceneRefreshTests(unittest.TestCase):
     def test_exposure_pose_does_not_bypass_live_snapshot_health(self):
         self.frame["timestamp"] = 100.0
         pose = dict(timestamp=100.0, rpy=[0.0, 0.0, 0.0], waist_q=[0.0, 0.0, 0.0])
-        for changes in ({"time": time.monotonic() - 1.0}, {"temperature_max": 78.0}):
+        hot = min(body_temperature_limit_c(), body_winding_temperature_limit_c()) + 1
+        for changes in ({"time": time.monotonic() - 1.0}, {"temperature_max": hot}):
             snapshot = copy.deepcopy(self.snapshot)
             snapshot["body"].update(changes)
             with patch("scene_refresh.candidate") as observe:

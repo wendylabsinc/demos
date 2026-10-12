@@ -2,6 +2,7 @@
 
 import os
 import time
+import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
@@ -34,6 +35,13 @@ def fake_worker(connection, token):
 
 
 class WorkerTests(unittest.TestCase):
+    def setUp(self):
+        directory = tempfile.TemporaryDirectory(prefix='act-worker-test-')
+        self.addCleanup(directory.cleanup)
+        override = patch.dict(os.environ, {'HANDOFF_DATA': directory.name})
+        override.start()
+        self.addCleanup(override.stop)
+
     def test_real_worker_reports_ready_only_after_camera_warmup(self):
         order = []
         connection = Mock()
