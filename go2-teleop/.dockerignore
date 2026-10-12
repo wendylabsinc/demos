@@ -1,9 +1,0 @@
-*
-!LICENSE
-!go.mod
-!go.sum
-!backend.go
-!main.go
-!index.html
-!internal/
-!internal/**

@@ -11,7 +11,7 @@ and the manifests used by the asset provisioning scripts.
 | `g1-can-handoff/g1_can_handoff/assets/locomotion` | Unitree RL Lab locomotion policy and conventions used by `walking_policy.py` | [Source manifest](g1-can-handoff/g1_can_handoff/assets/locomotion/SOURCE.json) and [Apache license](g1-can-handoff/g1_can_handoff/assets/locomotion/licenses/unitree_rl_lab.LICENSE) |
 | `g1-minigolf/menagerie`, `warehouse-demo/menagerie` | Downloaded MuJoCo Menagerie robot models | Pinned revision in each `run.sh`; upstream and model-specific licenses in each downloaded bundle |
 | `go2-assistant/go2_assistant/_physics` | Vendored WendyOS simulator code | `PROVENANCE.json`, `LICENSE`, and `NOTICE` in that directory |
-| `go2-teleop/proto`, `go2-teleop/internal/agentpb` | WendyOS Go2 teleop protocol snapshot and generated bindings | [Source](go2-teleop/internal/agentpb/SOURCE.md), `LICENSE`, and `NOTICE` under `internal/agentpb` |
+| `go2-air-remote/tools/prepare_unitree_msgs.py` | WendyOS Go2 message preparation script; at build time it fetches the pinned `unitree_ros2` message packages | `LICENSE-WendyOS` and `NOTICE-WendyOS` next to the script; `unitree_ros2` license in the fetched archive |
 | `go2-showcase/sim/_physics` | Vendored WendyOS simulator code | `PROVENANCE.json`, `LICENSE`, and `NOTICE` in that directory |
 | `go2-assistant/assets`, `go2-showcase/sim/assets` | Downloaded Go2 robot geometry, policy, and vision models | Checksummed `assets.lock.json` manifests and fetched license files |
 | `go2-assistant/go2_assistant/scene_assets/person` | Converted Cesium Man geometry and textures | [CC BY attribution](go2-assistant/go2_assistant/scene_assets/person/LICENSE.md) |

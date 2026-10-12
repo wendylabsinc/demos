@@ -19,11 +19,13 @@
   #login { display: flex; gap: 8px; max-width: 360px; margin: 0 auto 16px; }
   #login input { flex: 1; font: inherit; padding: 10px; border-radius: 8px; border: 0; }
   #login button { padding: 10px 16px; font-size: 16px; }
+  #video { display: block; width: 100%; max-width: 640px; margin: 0 auto 16px; border-radius: 8px; background: #000; aspect-ratio: 16 / 9; object-fit: contain; }
 </style>
 </head>
 <body>
 <form id="login"><input id="key" type="password" placeholder="Access key" autocomplete="current-password"><button>Connect</button></form>
 <div id="status">Not connected</div>
+<img id="video" alt="Robot camera">
 <div class="pad">
   <span></span><button data-move="1,0">▲</button><span></span>
   <button data-move="0,1">⟲</button><button data-move="-1,0">▼</button><button data-move="0,-1">⟳</button>
@@ -48,6 +50,7 @@ function connect() {
   try { localStorage.setItem('go2key', keyEl.value); } catch {}
   ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws');
   ws.onopen = () => send({ token: keyEl.value });
+  document.getElementById('video').src = '/video.mjpg?key=' + encodeURIComponent(keyEl.value);
   ws.onmessage = e => {
     const m = JSON.parse(e.data);
     if (m.error) return setStatus(m.error, 'bad');

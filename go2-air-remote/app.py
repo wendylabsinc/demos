@@ -1,117 +1,153 @@
-"""Go2 Air web remote: one page on the Jetson, robot commands via the Wendy agent.
+"""Go2 web remote: one page on the Jetson, a plain ROS 2 app.
 
-The agent owns the paired robot connection and its key. Hold a button to move,
-release to stop. The server stops the robot when commands stop arriving, when
-the page disconnects, and on Stop; the agent also stops a move after 500 ms
-unless it is refreshed.
+Publishes /cmd_vel and /api/sport/request and shows /camera/color/image_raw,
+the same contract as the WendyOS Go2 simulator and the Go2 ROS 2 bridge, so it
+drives either. Hold a button to move, release to stop. The app sends zero
+velocity when commands stop arriving, when the page disconnects, and on Stop.
 """
 
 import asyncio
 import hmac
+import io
 import json
 import logging
 import os
+import threading
 import time
 from pathlib import Path
 
-import grpc
+import rclpy
 from aiohttp import WSMsgType, web
-
-import unitree_service_pb2 as pairing_pb
-import unitree_service_pb2_grpc as pairing_grpc
-import unitree_teleop_service_pb2 as teleop_pb
-import unitree_teleop_service_pb2_grpc as teleop_grpc
+from geometry_msgs.msg import Twist
+from PIL import Image as PILImage
+from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy
+from sensor_msgs.msg import Image
+from unitree_api.msg import Request
+from unitree_go.msg import LowState
 
 log = logging.getLogger("go2-air-remote")
 
-SERIAL = os.environ["GO2_SERIAL"]
-AGENT_SOCKET = os.environ["WENDY_AGENT_SOCKET"]  # set by the admin entitlement
 TOKEN = os.environ["GO2_REMOTE_TOKEN"]
 PORT = int(os.environ.get("PORT", "8883"))
-MAX_X = float(os.environ.get("GO2_MAX_SPEED", "0.3"))  # m/s, agent limit 0.3
-MAX_YAW = float(os.environ.get("GO2_MAX_YAW", "0.6"))  # rad/s, agent limit 0.6
+MAX_X = float(os.environ.get("GO2_MAX_SPEED", "0.3"))  # m/s
+MAX_YAW = float(os.environ.get("GO2_MAX_YAW", "0.6"))  # rad/s
 WATCHDOG_S = 0.4  # stop if no move command arrives for this long
+VIDEO_WIDTH = 640
 
-ACTIONS = {
-    "stand": teleop_pb.UNITREE_COMMAND_STAND_UP,
-    "sit": teleop_pb.UNITREE_COMMAND_LIE_DOWN,
-    "hello": teleop_pb.UNITREE_COMMAND_HELLO,
-}
+# Unitree sport API ids.
+ACTIONS = {"stand": 1006, "sit": 1005, "hello": 1016}
 
 
 def clamp(v, limit):
     return max(-limit, min(limit, float(v)))
 
 
-class Robot:
+class Robot(Node):
     def __init__(self):
-        self.status = "connecting"
+        super().__init__("go2_air_remote")
+        qos = QoSProfile(depth=1, reliability=ReliabilityPolicy.RELIABLE)
+        self.cmd_vel = self.create_publisher(Twist, "/cmd_vel", 10)
+        self.sport = self.create_publisher(Request, "/api/sport/request", 10)
+        self.create_subscription(LowState, "/lowstate", self.on_lowstate, qos)
+        self.image_sub = None
+        self.last_state = 0.0
+        self.jpeg = None
+        self.jpeg_time = 0.0
+        self.viewers = 0
         self.moving = False
         self.last_move = 0.0
+        self.request_id = 0
 
-    async def start(self):
-        channel = grpc.aio.insecure_channel(f"unix:{AGENT_SOCKET}")
-        self.pairing = pairing_grpc.WendyUnitreeServiceStub(channel)
-        self.teleop = teleop_grpc.WendyUnitreeTeleopServiceStub(channel)
+    @property
+    def status(self):
+        return "connected" if time.monotonic() - self.last_state < 2 else "no robot data on /lowstate"
 
-    async def watch_status(self):
-        while True:
-            try:
-                reply = await self.pairing.ListUnitreePairings(
-                    pairing_pb.ListUnitreePairingsRequest(), timeout=2
-                )
-                robot = next((r for r in reply.robots if r.serial == SERIAL), None)
-                if robot is None:
-                    self.status = f"not paired with {SERIAL}"
-                elif robot.connected:
-                    self.status = "connected"
-                else:
-                    self.status = "agent is reconnecting to the robot"
-            except grpc.aio.AioRpcError as e:
-                self.status = f"agent unavailable: {e.details()}"
-            await asyncio.sleep(1)
+    def on_lowstate(self, _):
+        self.last_state = time.monotonic()
 
-    async def _send(self, command, x=0.0, yaw=0.0):
-        try:
-            await self.teleop.Command(
-                teleop_pb.UnitreeCommandRequest(serial=SERIAL, command=command, forward=x, yaw=yaw),
-                timeout=1,
-            )
-            return True
-        except grpc.aio.AioRpcError as e:
-            log.warning("command %s failed: %s", command, e.details())
-            return False
+    def watch_video(self, watching):
+        """Subscribe to the camera only while someone watches, so the bridge
+        decodes video only then."""
+        self.viewers += 1 if watching else -1
+        if self.viewers > 0 and self.image_sub is None:
+            self.image_sub = self.create_subscription(Image, "/camera/color/image_raw", self.on_image, 1)
+        elif self.viewers == 0 and self.image_sub is not None:
+            self.destroy_subscription(self.image_sub)
+            self.image_sub = None
 
-    async def move(self, x, yaw):
+    def on_image(self, msg):
+        if msg.encoding != "rgb8" or time.monotonic() - self.jpeg_time < 0.1:
+            return  # at most 10 frames per second
+        image = PILImage.frombuffer("RGB", (msg.width, msg.height), bytes(msg.data), "raw", "RGB", msg.step, 1)
+        if msg.width > VIDEO_WIDTH:
+            image = image.resize((VIDEO_WIDTH, msg.height * VIDEO_WIDTH // msg.width))
+        out = io.BytesIO()
+        image.save(out, format="JPEG", quality=70)
+        self.jpeg, self.jpeg_time = out.getvalue(), time.monotonic()
+
+    def move(self, x, yaw):
         x, yaw = clamp(x, MAX_X), clamp(yaw, MAX_YAW)
         if x == 0 and yaw == 0:
-            return await self.stop()
+            return self.stop()
         self.moving = True
         self.last_move = time.monotonic()
-        return await self._send(teleop_pb.UNITREE_COMMAND_MOVE, x, yaw)
+        twist = Twist()
+        twist.linear.x, twist.angular.z = x, yaw
+        self.cmd_vel.publish(twist)
 
-    async def stop(self):
+    def stop(self):
         self.moving = False
-        return await self._send(teleop_pb.UNITREE_COMMAND_STOP)
+        self.cmd_vel.publish(Twist())
 
-    async def action(self, name):
-        self.moving = False
-        return await self._send(ACTIONS[name])
+    def action(self, name):
+        self.stop()
+        self.request_id += 1
+        request = Request()
+        request.header.identity.id = self.request_id
+        request.header.identity.api_id = ACTIONS[name]
+        self.sport.publish(request)
 
     async def watchdog(self):
         while True:
             await asyncio.sleep(0.1)
             if self.moving and time.monotonic() - self.last_move > WATCHDOG_S:
                 log.info("watchdog stop")
-                await self.stop()
+                self.stop()
 
 
-robot = Robot()
+robot = None
 controller = None  # only the newest page may drive
+
+
+def authorized(key):
+    return hmac.compare_digest(key or "", TOKEN)
 
 
 async def index(_):
     return web.FileResponse(Path(__file__).with_name("index.html"))
+
+
+async def video(request):
+    if not authorized(request.query.get("key")):
+        raise web.HTTPForbidden()
+    response = web.StreamResponse(headers={"Content-Type": "multipart/x-mixed-replace; boundary=frame",
+                                           "Cache-Control": "no-store"})
+    await response.prepare(request)
+    robot.watch_video(True)
+    sent = None
+    try:
+        while True:
+            jpeg = robot.jpeg
+            if jpeg is not None and jpeg is not sent:
+                await response.write(b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + jpeg + b"\r\n")
+                sent = jpeg
+            await asyncio.sleep(0.05)
+    except (ConnectionResetError, asyncio.CancelledError):
+        pass
+    finally:
+        robot.watch_video(False)
+    return response
 
 
 async def ws_handler(request):
@@ -120,15 +156,13 @@ async def ws_handler(request):
     await ws.prepare(request)
 
     first = await ws.receive(timeout=10)
-    if first.type != WSMsgType.TEXT or not hmac.compare_digest(
-        json.loads(first.data).get("token", ""), TOKEN
-    ):
+    if first.type != WSMsgType.TEXT or not authorized(json.loads(first.data).get("token")):
         await ws.send_json({"error": "wrong key"})
         await ws.close()
         return ws
 
     if controller is not None:
-        await robot.stop()
+        robot.stop()
         await controller.close()
     controller = ws
 
@@ -144,34 +178,39 @@ async def ws_handler(request):
                 break
             m = json.loads(msg.data)
             if "move" in m:
-                await robot.move(*m["move"])
+                robot.move(*m["move"])
             elif m.get("action") in ACTIONS:
-                await robot.action(m["action"])
+                robot.action(m["action"])
             else:
-                await robot.stop()
+                robot.stop()
     finally:
         reporter.cancel()
-        await robot.stop()
+        robot.stop()
         if controller is ws:
             controller = None
     return ws
 
 
 async def start_background(app):
-    await robot.start()
-    app["tasks"] = [
-        asyncio.create_task(robot.watch_status()),
-        asyncio.create_task(robot.watchdog()),
-    ]
+    app["tasks"] = [asyncio.create_task(robot.watchdog())]
 
 
 def main():
+    global robot
     logging.basicConfig(level=logging.INFO)
+    rclpy.init()
+    robot = Robot()
+    threading.Thread(target=rclpy.spin, args=(robot,), daemon=True).start()
     app = web.Application()
     app.router.add_get("/", index)
     app.router.add_get("/ws", ws_handler)
+    app.router.add_get("/video.mjpg", video)
     app.on_startup.append(start_background)
-    web.run_app(app, port=PORT)
+    try:
+        web.run_app(app, port=PORT)
+    finally:
+        robot.stop()
+        rclpy.try_shutdown()
 
 
 if __name__ == "__main__":
