@@ -143,13 +143,19 @@ class ACTTests(unittest.TestCase):
             plant.maintain_hand()
         self.assertEqual(io.commands, count)
 
-    def test_domain_admission_rejects_unqualified_placement(self):
+    def test_placement_admission_accepts_finite_pose_outside_training_region(self):
         plant, io, policy, events = self.plant()
         origin = np.asarray(policy.model.metadata['can_initial'])
         policy.validate_can(origin)
         for delta in ([.011, 0, 0], [0, .011, 0], [0, 0, .02]):
+            policy.validate_can(origin + delta)
+        policy.validate_can([0.2974807866, 0.1546655026, 0.823])
+
+    def test_placement_admission_still_rejects_invalid_pose(self):
+        plant, io, policy, events = self.plant()
+        for center in ([0, 0], [0.3, np.nan, 0.823], [np.inf, 0.16, 0.823]):
             with self.assertRaises(ValueError):
-                policy.validate_can(origin + delta)
+                policy.validate_can(center)
 
 
 if __name__ == '__main__':

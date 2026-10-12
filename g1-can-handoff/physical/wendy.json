@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.31-act-v016-budget40",
+  "version": "0.3.32-act-v016-ik-workspace",
   "entitlements": [
     {
       "type": "network",

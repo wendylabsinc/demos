@@ -71,6 +71,7 @@ assert BUILDSTAMP is not None and status.get('build_info')==BUILDSTAMP,'Running 
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
 if status.get('controller_mode')=='act_residual':
  assert status.get('act_inference_budget_ms')==CONFIGURED_ACT_BUDGET,status
+ assert status.get('act_training_placement_enforced') is False,status
 # Faulted feedback blocks motion, not replacement of a released PASSIVE app.
 motion_readiness='not_checked' if status.get('telemetry_healthy') else 'blocked'
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP

@@ -87,14 +87,10 @@ class ACTResidual:
         return q[:7].copy()
 
     def validate_can(self, center):
+        """Validate the input; physical placement admission belongs to IK."""
         center = np.asarray(center, dtype=float)
-        origin = np.asarray(self.model.metadata['can_initial'])
         if center.shape != (3,) or not np.isfinite(center).all():
             raise ValueError('ACT can position is invalid')
-        if np.any(np.abs(center[:2] - origin[:2]) > .01 + 1e-8):
-            raise ValueError('ACT v0.1.6 is qualified only within 1 cm XY of its recorded can position')
-        if abs(center[2] - origin[2]) > .015:
-            raise ValueError('ACT can height differs by more than 15 mm from its training scene')
 
     def update(self, nominal_target, snapshot):
         import mujoco

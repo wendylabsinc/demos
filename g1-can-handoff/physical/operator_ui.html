@@ -279,7 +279,7 @@
           aria-label="Coke can pickup placement area"
         >
           <polygon id="ik-reference-area"><title>Original IK workspace reference</title></polygon>
-          <polygon id="pickup-area"><title>Current ACT can-center region</title></polygon>
+          <polygon id="pickup-area"><title>Current can-center placement area</title></polygon>
         </svg>
       </div>
       <p id="placement-message">Loading calibrated pickup area…</p>
@@ -698,13 +698,15 @@
                 "points",
                 p.polygon.map((point) => point.join(",")).join(" "),
               );
+              const separateReference = p.ik_reference_polygon && ['0','1'].some(axis =>
+                (p.bounds_m?.[axis] || []).some((value, index) => value !== p.ik_reference_bounds_m?.[axis]?.[index]));
               document.querySelector('#ik-reference-area').setAttribute(
-                'points', (p.ik_reference_polygon || []).map(point => point.join(',')).join(' '),
+                'points', (separateReference ? p.ik_reference_polygon : []).map(point => point.join(',')).join(' '),
               );
               placementMessage.textContent = guideValid
-                ? "Blue outline: original IK area, 19.5 × 22.5 cm. Place the can center inside the smaller green ACT area. " +
+                ? (separateReference ? "Blue outline: original IK area, 19.5 × 22.5 cm. Place the can center inside the smaller green ACT area. " : "Place the center of the can base inside the green area. ") +
                   p.label
-                : "Reference only — blue outline: original IK area, 19.5 × 22.5 cm; smaller amber outline: current ACT area. Both use the last calibration. " +
+                : (separateReference ? "Reference only — blue outline: original IK area, 19.5 × 22.5 cm; smaller amber outline: current ACT area. Both use the last calibration. " : "Reference only — amber outline uses the last calibration. ") +
                   explanation;
             } else {
               guidePresent = false;

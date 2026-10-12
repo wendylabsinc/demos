@@ -97,6 +97,22 @@ class WorkspaceTests(unittest.TestCase):
                     ):
                         m.plan(Probe(), self.observation(*xy))
 
+    def test_act_uses_the_same_ik_workspace_including_saved_trial_placement(self):
+        m = next(m for m in self.modules if self.bounds(m)[0] == 0.255)
+        with patch.dict('os.environ', {'HANDOFF_ACT_POLICY_DIR': '/act-enabled'}):
+            for xy in ((0.255, 0.065), (0.45, 0.29), (0.2974807866, 0.1546655026)):
+                with self.subTest(xy=xy), patch.object(m.time, 'monotonic', return_value=100.29):
+                    with self.assertRaises(ReachedPlanner):
+                        m.plan(Probe(), self.observation(*xy))
+
+    def test_act_still_rejects_outside_the_original_ik_workspace(self):
+        m = next(m for m in self.modules if self.bounds(m)[0] == 0.255)
+        with patch.dict('os.environ', {'HANDOFF_ACT_POLICY_DIR': '/act-enabled'}):
+            for xy in ((0.2549, 0.12), (0.4501, 0.12), (0.3, 0.0649), (0.3, 0.2901)):
+                with self.subTest(xy=xy), patch.object(m.time, 'monotonic', return_value=100.29):
+                    with self.assertRaisesRegex(ValueError, 'outside the left-hand pickup area'):
+                        m.plan(Probe(), self.observation(*xy))
+
 
 if __name__ == "__main__":
     unittest.main()

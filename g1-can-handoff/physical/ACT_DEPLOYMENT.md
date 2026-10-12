@@ -37,10 +37,15 @@ training used a fixed reference path; the physical adapter and perception are
 new integration surfaces. The 97.7% simulation result is not a measured robot
 success rate. First physical execution remains to be tested by the operator.
 
-The green guide is narrowed to the trained placement region: can center
-**28.8–30.8 cm forward and 15.5–17.5 cm robot-left**. Measured can height must
-be within 15 mm of the training center height 82.3 cm. This checkpoint was not
-trained on the separately collected expanded IK dataset or the wider table.
+At the operator's explicit request, ACT's training-region XY and height
+rejections are removed. The green guide and planner use the original IK area:
+can center **25.5–45 cm forward and 6.5–29 cm robot-left**. Accepted calibration,
+fresh observations, measured table/can geometry, full-path IK/collision checks,
+joint limits and bounded residual corrections still apply. The checkpoint was
+trained only around **28.8–30.8 cm forward, 15.5–17.5 cm robot-left, 82.3 cm
+center height**; removing admission restrictions does not establish wider ACT
+training coverage or physical success. The separate wider-table training work
+is unchanged. Runtime reports `act_training_placement_enforced=false`.
 
 Before grasp admission ACT requires fresh continuous color/depth tracking.
 This adds a continuous pregrasp input requirement compared with the original
