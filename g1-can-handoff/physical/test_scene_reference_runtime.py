@@ -44,3 +44,32 @@ class ScenePublicationTests(unittest.TestCase):
         r.finish_grasp_perception(plant)
         self.assertTrue(r.post_grasp_perception_disabled)
         self.assertFalse(r.tracking_stop.is_set());self.assertIsNone(plant.perception_guard)
+
+
+class PlanningHandoffTests(unittest.TestCase):
+    def test_recorded_handoff_selects_fresh_tracking_sample_instead_of_expired_first(self):
+        r=Runtime.__new__(Runtime);r.lock=threading.RLock();r.tracking_error=None
+        old=SimpleNamespace(timestamp=8558.93770647049,center=np.array([.31,.15,.823]))
+        new=SimpleNamespace(timestamp=8559.20454788208,center=np.array([.311,.15,.823]))
+        r.tracking_observation=new;r.tracking_vision={'frame_id':85184}
+        with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'500'}),patch('runtime.time.monotonic',return_value=8559.505758736):
+            self.assertGreater(8559.505758736-old.timestamp,.5)
+            selected,vision=r.select_planning_observation()
+            self.assertLess(8559.505758736-selected.timestamp,.5)
+            self.assertEqual(vision['frame_id'],85184)
+            self.assertEqual(selected.timestamp,new.timestamp)
+        new.center[0]=.4
+        self.assertEqual(r.tracking_baseline.center[0],.311)
+        self.assertFalse(r.tracking_baseline.center.flags.writeable)
+
+    def test_missing_stale_future_or_faulted_planning_samples_never_rebase(self):
+        r=Runtime.__new__(Runtime);r.lock=threading.RLock();r.tracking_error=None
+        baseline=object();r.tracking_baseline=baseline;r.tracking_vision={}
+        with patch.dict('os.environ',{'HANDOFF_CAMERA_MAX_AGE_MS':'500'}),patch('runtime.time.monotonic',return_value=100.):
+            for value in [None,SimpleNamespace(timestamp=99.49),SimpleNamespace(timestamp=100.01)]:
+                r.tracking_observation=value
+                with self.assertRaisesRegex(RuntimeError,'No fresh'):r.select_planning_observation()
+                self.assertIs(r.tracking_baseline,baseline)
+            r.tracking_error='static scene lost'
+            with self.assertRaisesRegex(RuntimeError,'uncertain'):r.select_planning_observation()
+            self.assertIs(r.tracking_baseline,baseline)

@@ -622,6 +622,18 @@ class Runtime:
                 f"Visual/depth tracking exposure stale ({age*1000:.1f} ms)"
             )
 
+    def select_planning_observation(self):
+        """Pin the latest accepted sample before checking any pickup path."""
+        with self.lock:
+            if self.tracking_error:
+                raise RuntimeError('Planning tracking uncertain: ' + self.tracking_error)
+            current = self.tracking_observation
+            if current is None or not 0 <= time.monotonic()-current.timestamp <= frame_age_limit_s():
+                raise RuntimeError('No fresh accepted planning observation')
+            self.tracking_baseline = deepcopy(current)
+            self.tracking_baseline.center.setflags(write=False)
+            return deepcopy(current), deepcopy(self.tracking_vision)
+
     def start_tracking(self, config, baseline):
         from copy import deepcopy
 
@@ -1121,7 +1133,11 @@ class Runtime:
                 if (phase == 'planning' and os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1'):
                     plant.scene_pose_provider = self.scene_pose
                     self.start_tracking(config, observation)
+                    observation, vision = self.select_planning_observation()
                     plant.perception_guard = self.tracking_guard
+                    self.event('planning_observation_selected', frame_id=vision.get('frame_id'),
+                               exposure_time=observation.timestamp,
+                               center_m=observation.center.tolist())
                 return observation, vision
 
             def phase_event(phase, **fields):

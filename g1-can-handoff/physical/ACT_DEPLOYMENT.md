@@ -106,3 +106,12 @@ unchanged. Three native motion-zero readiness observations finished at 391.5,
 336.5 and 379.4 ms exposure age, all below 500 ms. Exact saved-frame runtime replay
 reduces the failed estimate to 1.864 mm. These are readiness/replay measurements,
 not a physical pickup outcome.
+
+
+Version 0.3.36 pins the latest accepted tracking sample before initial path
+planning. The 0.3.35 trial's first observation aged to 568 ms while synchronous
+tracking startup obtained a second sample (301 ms old at plan admission). The
+planner now receives that fresh accepted sample and fixes its path baseline
+before any path is checked. It never relabels timestamps or rebases an already
+checked path. The 500 ms planning/freshness guards remain unchanged; 85 affected
+tests pass, including the recorded handoff and stale/future/error rejections.
