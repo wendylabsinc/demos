@@ -17,6 +17,29 @@ from runtime import Runtime
 
 
 class RuntimeLifecycleTests(unittest.TestCase):
+    def test_cuda_warmup_does_not_acquire_robot_control(self):
+        runtime = self.runtime()
+        runtime.arm = None
+        runtime.cuda_planner_ready = False
+        runtime.cuda_planner_error = None
+        with patch("gpu_planner.warmup_cuda", return_value=dict(device="cuda:0", motion_commands_sent=0)):
+            runtime.warm_cuda_planner()
+        self.assertTrue(runtime.cuda_planner_ready)
+        self.assertIsNone(runtime.arm)
+        runtime.event.assert_called_with("cuda_planner_ready", device="cuda:0", motion_commands_sent=0)
+
+    def test_start_cannot_acquire_control_before_cuda_is_ready(self):
+        runtime = self.runtime()
+        runtime.arm = None
+        runtime.camera = Mock()
+        runtime.cuda_planner_ready = False
+        runtime.cuda_planner_error = None
+        with patch.dict(os.environ, HANDOFF_PLANNING_BACKEND="cuda"):
+            with self.assertRaisesRegex(RuntimeError, "warming up"):
+                runtime.run(actuate=True)
+        self.assertIsNone(runtime.arm)
+        runtime.camera.acquire.assert_not_called()
+
     def test_hand_reader_does_not_make_missing_feedback_fresh(self):
         runtime = self.runtime()
         runtime.latest = {'left':('old', 5)}

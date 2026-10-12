@@ -21,6 +21,11 @@ def configure(plant, config):
         )
         config.update({**defaults, **config})
     config["planner_profile"] = profile
+    backend = config.get("planning_backend", os.environ.get("HANDOFF_PLANNING_BACKEND", "cpu"))
+    if backend not in ("cpu", "cuda"):
+        raise ValueError("Planning backend must be cpu or cuda")
+    plant.planning_backend = backend
+    config["planning_backend"] = backend
     weight = float(
         config.get(
             "ik_reference_weight_m_per_rad",
@@ -75,7 +80,7 @@ def configure(plant, config):
         plant.ik.IK_SETTINGS, x_scale=1.0 if scaling == "unit" else "jac"
     )
     plant.grasp_orientation_step_rad = orientation_step
-    plant.grasp_candidate_budget = budget
+    plant.grasp_candidate_budget = 1 if backend == "cuda" else budget
     plant.planning_position_covariance = covariance
     # Store effective values so planning snapshots replay settings rather than
     # depending on the future operator environment.
@@ -84,7 +89,7 @@ def configure(plant, config):
         ik_position_tolerance_m=tolerance,
         ik_variable_scale=scaling,
         grasp_orientation_step_rad=orientation_step,
-        grasp_candidate_budget=budget,
+        grasp_candidate_budget=plant.grasp_candidate_budget,
         planning_position_cov_m2=covariance.tolist(),
     )
 

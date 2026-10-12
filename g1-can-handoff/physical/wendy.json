@@ -1,7 +1,10 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.43-act-v016-flow",
+  "version": "0.3.44-act-v016-gpu1",
   "entitlements": [
+    {
+      "type": "gpu"
+    },
     {
       "type": "network",
       "mode": "host"
@@ -20,6 +23,8 @@
   },
   "env": {
     "HANDOFF_PLANNER_PROFILE": "tuned",
+    "HANDOFF_PLANNING_BACKEND": "cuda",
+    "WARP_CACHE_PATH": "/data/warp-cache",
     "HANDOFF_ARM_KP": "75",
     "HANDOFF_GRIP_STOP_S": "0.2",
     "HANDOFF_GRIP_STOP_SPAN_RAD": "0.005",

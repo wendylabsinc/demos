@@ -131,6 +131,22 @@ class Runtime:
             ).start()
         threading.Thread(target=self.watchdog, daemon=True).start()
         self.event("startup", motion_enabled=False, automatic_home=False)
+        self.cuda_planner_ready = False
+        self.cuda_planner_error = None
+        if os.getenv("HANDOFF_PLANNING_BACKEND", "cpu") == "cuda":
+            threading.Thread(target=self.warm_cuda_planner, daemon=True, name="cuda-planner-warmup").start()
+
+    def warm_cuda_planner(self):
+        """Warm compute while passive, without creating an arm/hand controller."""
+        try:
+            from gpu_planner import warmup_cuda
+            details = warmup_cuda()
+            self.cuda_planner_ready = True
+            self.event("cuda_planner_ready", **details)
+        except Exception as exc:
+            self.cuda_planner_ready = False
+            self.cuda_planner_error = f"{type(exc).__name__}: {exc}"
+            self.event("cuda_planner_unavailable", error=self.cuda_planner_error, motion_commands_sent=0)
 
     def command_written(self, values, result):
         with self.lock:
@@ -233,6 +249,9 @@ class Runtime:
         from deployment_version import deployed_version
 
         result = {
+            "planning_backend": os.getenv("HANDOFF_PLANNING_BACKEND", "cpu"),
+            "cuda_planner_ready": getattr(self, "cuda_planner_ready", False),
+            "cuda_planner_error": getattr(self, "cuda_planner_error", None),
             "build_info": deployed_version(),
             "controller_mode": "act_residual" if getattr(self, 'act_policy_metadata', None) else "ik",
             "act_policy": getattr(self, 'act_policy_metadata', None),
@@ -878,6 +897,8 @@ class Runtime:
 
     def make_plant(self, config):
         """Create a calibrated planning model from the current measured robot state."""
+        if "HANDOFF_PLANNING_BACKEND" in os.environ:
+            config["planning_backend"] = os.environ["HANDOFF_PLANNING_BACKEND"]
         p = calibrated_scene(config)
         plant = PhysicalPlant(
             p, self.arm, self.hand, self.read, config, self.event, cancel=self.cancel
@@ -1100,6 +1121,8 @@ class Runtime:
         """Plan once from owned state, then optionally execute the bounded pickup."""
         from pickup import prepare, execute
 
+        if os.getenv("HANDOFF_PLANNING_BACKEND", "cpu") == "cuda" and not getattr(self, "cuda_planner_ready", False):
+            raise RuntimeError(getattr(self, "cuda_planner_error", None) or "CUDA planner is warming up; retry when cuda_planner_ready is true")
         resuming = self.arm is not None
         if self.active or (
             resuming

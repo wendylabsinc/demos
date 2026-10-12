@@ -111,7 +111,7 @@ class PlannerTuningTests(unittest.TestCase):
         def validate(*args):
             calls.append(1)
             if len(calls) == 3:
-                clock["time"] += 30.001
+                clock["time"] += 70.001
             return True
 
         with patch(

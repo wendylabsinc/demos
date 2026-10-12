@@ -1,0 +1,171 @@
+{
+  "actuation": false,
+  "backend": "cuda",
+  "recording": true,
+  "source_base": "28df52d0f22a72328585f88196fc050c0a465dd1",
+  "trials": [
+    {
+      "trial": 1,
+      "passed": true,
+      "initialization_s": 0.11566058918833733,
+      "cold_prepare_s": 0.1342729227617383,
+      "warm_prepare_s": [
+        0.0584525428712368,
+        0.050938891246914864,
+        0.0503661478869617,
+        0.056954622734338045,
+        0.057279571890830994
+      ],
+      "validation_passes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "device": "cuda:0",
+      "independent_cpu_audit": {
+        "samples": 2782,
+        "min_table_distance_m": 0.01710408513649897,
+        "passed": true
+      },
+      "rejected_candidates": 0,
+      "unsafe_inputs_rejected": {
+        "direct_table_crossing": "Interpolated physical trajectory intersects robot/table: CUDA robot/table collision at sample 82",
+        "joint_flip": "Interpolated physical trajectory intersects robot/table: CUDA joint limit/continuity at sample 627"
+      },
+      "snapshot_replay": {
+        "path": "../snapshots-1/1791842256487213890-0006-preflight.json",
+        "kind": "preflight",
+        "identical": true,
+        "max_abs_error_rad": null,
+        "error": null,
+        "captured_error": null,
+        "hardware_used": false
+      }
+    },
+    {
+      "trial": 2,
+      "passed": true,
+      "initialization_s": 0.11335787596181035,
+      "cold_prepare_s": 0.12753758020699024,
+      "warm_prepare_s": [
+        0.04670163104310632,
+        0.04913799557834864,
+        0.049974551890045404,
+        0.049175853841006756,
+        0.039964078925549984
+      ],
+      "validation_passes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "device": "cuda:0",
+      "independent_cpu_audit": {
+        "samples": 2710,
+        "min_table_distance_m": 0.017091158185930544,
+        "passed": true
+      },
+      "rejected_candidates": 0,
+      "unsafe_inputs_rejected": {
+        "direct_table_crossing": "Interpolated physical trajectory intersects robot/table: CUDA robot/table collision at sample 87",
+        "joint_flip": "Interpolated physical trajectory intersects robot/table: CUDA joint limit/continuity at sample 627"
+      },
+      "snapshot_replay": {
+        "path": "../snapshots-2/1791842257876010749-0006-preflight.json",
+        "kind": "preflight",
+        "identical": true,
+        "max_abs_error_rad": null,
+        "error": null,
+        "captured_error": null,
+        "hardware_used": false
+      }
+    },
+    {
+      "trial": 3,
+      "passed": true,
+      "initialization_s": 0.1192823532037437,
+      "cold_prepare_s": 0.12963865092024207,
+      "warm_prepare_s": [
+        0.05006883991882205,
+        0.051247436087578535,
+        0.04024196928367019,
+        0.05461975792422891,
+        0.05105176381766796
+      ],
+      "validation_passes": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "device": "cuda:0",
+      "independent_cpu_audit": {
+        "samples": 2735,
+        "min_table_distance_m": 0.01707939596604957,
+        "passed": true
+      },
+      "rejected_candidates": 0,
+      "unsafe_inputs_rejected": {
+        "direct_table_crossing": "Interpolated physical trajectory intersects robot/table: CUDA robot/table collision at sample 89",
+        "joint_flip": "Interpolated physical trajectory intersects robot/table: CUDA joint limit/continuity at sample 627"
+      },
+      "snapshot_replay": {
+        "path": "../snapshots-3/1791842259260897580-0006-preflight.json",
+        "kind": "preflight",
+        "identical": true,
+        "max_abs_error_rad": null,
+        "error": null,
+        "captured_error": null,
+        "hardware_used": false
+      }
+    }
+  ],
+  "passive_warmup": {
+    "device": "cuda:0",
+    "warmup_s": 0.7401528628543019,
+    "motion_commands_sent": 0
+  },
+  "host": "wendy-LEGION-T7-34IAS10.local",
+  "hardware": "NVIDIA GeForce RTX 5090",
+  "scope": "Frozen recorded feedback and compiled G1 models; no robot connections or motor commands. Timed prepare includes snapshot recording. Independent geometry audits and negative tests run outside timing.",
+  "nx2_validated": false,
+  "deployed": false,
+  "nx2_blocker": "Saved Wendy identity pin mismatch: asset 474/org 2 versus reachable asset 501/org 76. Pin unchanged.",
+  "runtime_scope": "IK, command interpolation, initial joint/geometry checks run on CUDA. CPU handles orchestration, model metadata, I/O and existing per-command live guards and gravity feedforward.",
+  "limitations": [
+    "GPU timings are not NX2 timings or Start-button-to-motion timings.",
+    "Three nearby recorded scenes do not qualify physical pickup.",
+    "A proposed fixed staging posture replaces CPU RRT. An unsafe route is rejected rather than searched again.",
+    "The one-second planning deadline rejects a late result; Python orchestration is not a hard real-time deadline."
+  ],
+  "source_sha256": {
+    "gpu_kinematics.py": "871a92bea17f78ad8ea1c14a09c6034df9196d8436ecc8de0653ebd05d4de347",
+    "gpu_planner.py": "3ef16762dcd783613027f213f4f09cdbf1bab128f107d90422510ced5bd59cca",
+    "physical_core.py": "2f8a5b136094c580b20240b95143c310f2aac30564f3a8c4dadac5f9547b23de",
+    "planner_tuning.py": "2f970e92ae242cf7adec6547b82682056ac5ce6eb09e97886da9274a88606854",
+    "planning_snapshot.py": "3c4cd49a000194464cb2988f3b52df70f81a555a2900d2d0747f19f2c1f18228",
+    "g1_can_handoff/task.py": "d3bbadbee0ab8c7d750f928b6d146bca1628083bcf9f6ae410da3b53318bd4ff",
+    "benchmark_gpu_planning.py": "632a8b67b5874db6b329788048ef5447d0031d5739bcf73e81fb40cd3870a663"
+  },
+  "focused_tests": {
+    "run": 122,
+    "passed": 122,
+    "kernel_tests_device": "Warp CPU development runtime; actual CUDA tested in replay benchmark"
+  },
+  "broader_test_limitations": {
+    "failures_observed": 6,
+    "baseline_reproductions": [
+      "test_motion_tracking reach settling guard disabled in original source",
+      "test_sim_runtime independent camera did not verify lift/hold on original source",
+      "test_stochastic_sim_runtime gentle grasp admission failed on original source"
+    ],
+    "all_six_reproduced_on_original_physical_core": true,
+    "baseline_source": "28df52d0f22a72328585f88196fc050c0a465dd1:g1-can-handoff/physical/physical_core.py"
+  },
+  "candidate_app_version": "0.3.43-act-v016-gpu1"
+}

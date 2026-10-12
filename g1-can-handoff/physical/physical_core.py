@@ -409,6 +409,10 @@ class PhysicalPlant:
         self.staging_waypoints = []
         self.staging_start = None
         self.path_preflight_ok = False
+        self.prepared_steps = {}
+        self.prepared_staging = []
+        self.cuda_planner = None
+        self.prepared_scene = None
         self.sync(snap)
         import mujoco
 
@@ -544,7 +548,50 @@ class PhysicalPlant:
 
     def solve(self, position, rotation=None):
         self.sync(self.check())
+        if self.planning_backend == "cuda":
+            return self._cuda().arm.solve(
+                position, np.eye(3) if rotation is None else rotation,
+                self.ik.data.qpos[self.ik.qadr[self.ik.arm]],
+                np.asarray(self.config["arm_limits_rad"])[:7],
+            )
         return self.ik.solve(position, rotation)
+
+    def _cuda(self):
+        if self.cuda_planner is None:
+            from gpu_planner import CudaPlanner
+            self.cuda_planner = CudaPlanner(self.ik)
+        return self.cuda_planner
+
+    def _scene_stamp(self):
+        model = self.ik.model
+        # Measured joints naturally change during execution. check() enforces
+        # their existing posture/hold bounds, and command_arm() still checks
+        # live geometry at every command, including sync()'s measured pelvis
+        # transform. Cache identity covers the table and fixed robot geometry.
+        # observe_can() refreshes the can proxy within the existing checkpoint
+        # displacement bounds. Live geometry checks use that refreshed proxy.
+        pelvis = model.body("pelvis").id
+        return (np.delete(model.body_pos, pelvis, axis=0), np.delete(model.body_quat, pelvis, axis=0), model.geom_pos.copy(),
+                model.geom_quat.copy(), model.geom_size.copy())
+
+    def _check_prepared_scene(self):
+        if self.prepared_scene is None or any(
+            not np.allclose(actual, saved, rtol=0, atol=1e-6)
+            for actual, saved in zip(self._scene_stamp(), self.prepared_scene)
+        ):
+            raise RuntimeError("Fixed scene geometry changed after planning; replan required")
+
+    def _prepared_segment(self, phase, position, rotation):
+        self._check_prepared_scene()
+        step = self.prepared_steps.get(phase)
+        if step is None:
+            raise RuntimeError("Prepared pickup segment unavailable; replan required")
+        rotation = np.eye(3) if rotation is None else np.asarray(rotation)
+        if (not np.allclose(position, step["position"], rtol=0, atol=1e-8)
+                or not np.allclose(rotation, step["rotation"], rtol=0, atol=1e-8)
+                or np.max(np.abs(self.ik.data.qpos[self.ik.qadr[self.ik.arm]] - step["start"])) > self.starting_arm_error_rad):
+            raise RuntimeError("Prepared target or starting joints changed; replan required")
+        return step["goal"], step["poses"]
 
     def check(self):
         """Read feedback and apply the live cancellation, posture and health checks."""
@@ -787,6 +834,10 @@ class PhysicalPlant:
     def preflight(self, points, rotation):
         """Check open, reach, close and lift paths without any command output."""
         self.sync(self.check())
+        self.prepared_steps = {}
+        self.prepared_staging = []
+        self.prepared_scene = None
+        self.path_preflight_ok = False
         return self._preflight(points, rotation)
 
     @recorded("preflight")
@@ -794,6 +845,18 @@ class PhysicalPlant:
         import mujoco
         from g1_can_handoff.task import OPEN, CLOSED
 
+        if self.planning_backend == "cuda":
+            self.staging_start = self.ik.data.qpos[self.ik.qadr[self.ik.arm]].copy()
+            self.staging_waypoints = []
+            self.prepared_steps = self._cuda().prepare(self, points, rotation)
+            self.candidate_joint_goals = [self.prepared_steps[p]["goal"].copy() for p in ("approach", "align", "reach", "lift")]
+            self.candidate_grasp_q = self.prepared_steps["reach"]["goal"].copy()
+            self.prepared_scene = self._scene_stamp()
+            self.path_preflight_ok = True
+            self.event("path_preflight_passed", waypoints_checked=4, hand_paths_checked=2,
+                       motion_commands_sent=0, backend="cuda", validation_passes=1,
+                       table_clearance_m=getattr(self.ik, "table_clearance_m", 0.0))
+            return
         original = self.ik.data.qpos.copy()
         self.staging_start = original[self.ik.qadr[self.ik.arm]].copy()
         self.staging_waypoints = []
@@ -889,6 +952,11 @@ class PhysicalPlant:
             self.set_contact_phase("pregrasp")
             self.ik.data.qpos[:] = original
             mujoco.mj_forward(self.ik.model, self.ik.data)
+            if self.path_preflight_ok:
+                self.prepared_scene = self._scene_stamp()
+            else:
+                self.prepared_steps = {}
+                self.prepared_staging = []
 
     def validate_start(self):
         """Reject a measured starting arm pose that differs from the checked plan."""
@@ -918,7 +986,13 @@ class PhysicalPlant:
         self.sync(self.validate_start())
         for index, waypoint in enumerate(self.staging_waypoints):
             self.sync(self.check())
-            goal, poses = self._joint_poses(waypoint)
+            if self.prepared_staging:
+                self._check_prepared_scene()
+                start, goal, poses = self.prepared_staging[index]
+                if np.max(np.abs(self.ik.data.qpos[self.ik.qadr[self.ik.arm]] - start)) > self.starting_arm_error_rad:
+                    raise RuntimeError("Prepared staging start changed; replan required")
+            else:
+                goal, poses = self._joint_poses(waypoint)
             self.event("staging_segment", index=index, goal_q=goal.tolist())
             self._execute_poses(goal, poses)
 
@@ -926,7 +1000,12 @@ class PhysicalPlant:
         """Execute a target trajectory, then compare measured FK to its metre tolerance."""
         snap = self.check()
         self.sync(snap)
-        goal, poses = self._move_poses(position, duration, rotation)
+        if self.path_preflight_ok and self.prepared_steps:
+            goal, poses = self._prepared_segment(self.ik.contact_phase, position, rotation)
+        elif self.planning_backend == "cuda":
+            raise RuntimeError("CUDA movement requires a prepared path; CPU fallback is disabled")
+        else:
+            goal, poses = self._move_poses(position, duration, rotation)
         self._execute_poses(goal, poses)
         # if (
         #     np.linalg.norm(self.ik.data.site_xpos[self.ik.site] - position)
@@ -1065,7 +1144,7 @@ class PhysicalPlant:
 
     def check_live_geometry(self, left_q=None, hand_q=None):
         """Recheck commands against the current measured base attitude."""
-        if self.config.get("calibration_method") not in (
+        if self.planning_backend != "cuda" and self.config.get("calibration_method") not in (
             "operator_accepted_factory_table",
             "harness_clear_workspace_joint_replay",
         ):
