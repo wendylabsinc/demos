@@ -150,3 +150,15 @@ the original invalid-input, 500 ms freshness, 10 mm can displacement, collision,
 joint, thermal, cancellation and failure-hold guards remain enforced.
 The prior false estimated can displacement may therefore recur.
 No release, home or physical start occurs during deployment.
+
+
+## SDK motor reference allowance, 0.3.40
+
+`HANDOFF_ACT_MOTOR_REFERENCE_MAX_AGE_MS` configures the age allowance for the
+existing SDK motor-clock reference, default 40 ms, finite range (0, 100] ms.
+This deployment requests 80 ms. Missing/nonfinite/negative-age references still
+stop ACT. Reference shape and training servo speed/acceleration checks remain.
+The error now records the observed age and effective allowance. The preceding
+failure message did not record the precise age, so no exact failed gap is claimed.
+The 100 Hz SDK writer, ACT 10 Hz inference, inference deadline, camera freshness,
+feedback/thermal/joint/stop guards are unchanged.

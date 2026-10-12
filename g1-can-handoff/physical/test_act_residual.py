@@ -160,3 +160,36 @@ class ACTTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+class MotorReferenceAgeTests(unittest.TestCase):
+    def policy(self, report, limit='80'):
+        from act_residual import motor_reference_max_age_ms
+        policy=ACTResidual.__new__(ACTResidual)
+        with patch.dict('os.environ', {'HANDOFF_ACT_MOTOR_REFERENCE_MAX_AGE_MS':limit}):
+            policy.motor_reference_max_age_ms=motor_reference_max_age_ms()
+        policy.plant=SimpleNamespace(adapter=SimpleNamespace(arm_reference_report=lambda:report))
+        return policy
+
+    def report(self, age):
+        return dict(q=np.zeros(14),age_s=age,max_velocity_rad_s=.25,max_acceleration_rad_s2=1)
+
+    def test_configured_eighty_ms_admits_sixty_and_boundary_but_stops_over_limit(self):
+        for age in [.06,.08]:
+            np.testing.assert_array_equal(self.policy(self.report(age)).motor_reference({}),np.zeros(7))
+        with self.assertRaisesRegex(RuntimeError,'age 80.1 ms; limit 80 ms'):
+            self.policy(self.report(.0801)).motor_reference({})
+        with self.assertRaises(RuntimeError):self.policy(self.report(.06),'40').motor_reference({})
+
+    def test_missing_invalid_and_future_references_still_stop(self):
+        for report in [None,{},self.report(float('nan')),self.report(float('inf')),self.report(-.001)]:
+            with self.subTest(report=report),self.assertRaisesRegex(RuntimeError,'missing or stale'):
+                self.policy(report).motor_reference({})
+        report=self.report(.06);report['q']=np.zeros(13)
+        with self.assertRaisesRegex(RuntimeError,'fourteen finite'):self.policy(report).motor_reference({})
+        report=self.report(.06);report['max_velocity_rad_s']=.3
+        with self.assertRaisesRegex(RuntimeError,'training servo'):self.policy(report).motor_reference({})
+
+    def test_nonfinite_unbounded_and_nonpositive_allowances_rejected(self):
+        for value in ['0','-1','101','nan','inf','bad']:
+            with self.subTest(value=value),self.assertRaisesRegex(ValueError,'within'):
+                self.policy(self.report(.01),value)

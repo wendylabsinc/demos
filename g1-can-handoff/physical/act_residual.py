@@ -20,6 +20,17 @@ def inference_budget_ms():
     return value
 
 
+def motor_reference_max_age_ms():
+    """Bounded SDK-reference age, in milliseconds; at most one ACT period."""
+    try:
+        value = float(os.getenv('HANDOFF_ACT_MOTOR_REFERENCE_MAX_AGE_MS', '40'))
+        if not np.isfinite(value) or not 0 < value <= 100:
+            raise ValueError()
+    except (TypeError, ValueError) as exc:
+        raise ValueError('ACT motor reference age must be finite and within (0, 100] ms') from exc
+    return value
+
+
 def actor_observation(q, velocity, arm_target, hand_position, nominal_hand_position,
                       estimated_can, held_age_s, phase_index, previous_action,
                       grasped, finger_target):
@@ -41,6 +52,7 @@ class ACTResidual:
         import mujoco
         self.model, self.plant, self.pose_supplier = model, plant, pose_supplier
         self.inference_budget_ms = inference_budget_ms()
+        self.motor_reference_max_age_ms = motor_reference_max_age_ms()
         if model.metadata['active_names'][:14] != BODY_NAMES[15:29]:
             raise ValueError('ACT body joint order differs from the robot adapter')
         if not np.allclose(plant.ik.model.site_pos[plant.ik.site], model.metadata['grasp_local'], atol=1e-8, rtol=0):
@@ -70,8 +82,11 @@ class ACTResidual:
         adapter = self.plant.adapter
         if hasattr(adapter, 'arm_reference_report'):
             report = adapter.arm_reference_report()
-            if not report or not 0 <= report.get('age_s', float('inf')) <= .04:
-                raise RuntimeError('ACT motor reference is missing or stale')
+            age = report.get('age_s', float('inf')) if report else float('inf')
+            if not report or not 0 <= age <= self.motor_reference_max_age_ms / 1000:
+                measured = f'{age * 1000:.1f} ms' if np.isfinite(age) else 'missing/nonfinite'
+                raise RuntimeError('ACT motor reference is missing or stale '
+                                   f'(age {measured}; limit {self.motor_reference_max_age_ms:g} ms)')
             if (report.get('max_velocity_rad_s') != .25
                     or report.get('max_acceleration_rad_s2') != 1):
                 raise RuntimeError('ACT motor reference limits differ from its training servo')
@@ -113,7 +128,10 @@ class ACTResidual:
         # geometry remains unchanged and is checked on the returned command.
         self.scratch.qpos[:] = plant.ik.data.qpos
         self.scratch.qpos[self.qadr[:7]] = self.nominal_target
-        mujoco.mj_forward(plant.ik.model, self.scratch)
+        # Site pose needs kinematics; its Jacobian also needs the current
+        # center-of-mass/dof axes. Scratch dynamics and contacts are unused.
+        mujoco.mj_kinematics(plant.ik.model, self.scratch)
+        mujoco.mj_comPos(plant.ik.model, self.scratch)
         nominal_position = self.scratch.site_xpos[plant.ik.site].copy()
         if self.last_inference is None or now - self.last_inference >= .1 - 1e-7:
             if not grasped:
