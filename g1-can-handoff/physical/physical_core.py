@@ -405,6 +405,7 @@ class PhysicalPlant:
         self.contact_evidence = None
         self.grip = None
         self.act_residual = None
+        self.scene_pose_provider = None
         self.staging_waypoints = []
         self.staging_start = None
         self.path_preflight_ok = False
@@ -438,6 +439,14 @@ class PhysicalPlant:
         import mujoco
 
         self.last_synced_snapshot = snap
+        scene_provider = getattr(self, "scene_pose_provider", None)
+        if (
+            scene_provider is not None
+            and self.config.get("calibration_method") != "operator_accepted_factory_table"
+        ):
+            raise RuntimeError(
+                "Scene pose correction requires accepted factory/table calibration"
+            )
         if self.config.get("calibration_method") == "operator_accepted_factory_table":
             from pose_alignment import corrected_config
 
@@ -450,6 +459,30 @@ class PhysicalPlant:
                     "waist_q": body["q"][12:15],
                 },
             )
+            if scene_provider is not None:
+                from scene_reference import (
+                    apply_scene_transform,
+                    validate_scene_transform,
+                )
+                from yolo_client import frame_age_limit_s
+
+                # The camera and robot model must share the same accepted world
+                # transform. A configured provider may never silently vanish.
+                scene_pose = scene_provider()
+                if scene_pose is None:
+                    raise RuntimeError("Scene pose correction unavailable")
+                transform, exposure_timestamp = scene_pose
+                transform = validate_scene_transform(transform)
+                if isinstance(exposure_timestamp, bool):
+                    raise ValueError("Scene pose exposure timestamp must be finite")
+                exposure_timestamp = float(exposure_timestamp)
+                if not np.isfinite(exposure_timestamp):
+                    raise ValueError("Scene pose exposure timestamp must be finite")
+                age = self.clock.monotonic() - exposure_timestamp
+                if not 0 <= age <= frame_age_limit_s():
+                    raise RuntimeError("Scene pose correction stale or future")
+                corrected = apply_scene_transform(corrected, transform)
+                self.last_scene_pose = dict(transform=transform.tolist(), timestamp=exposure_timestamp)
             root = np.asarray(corrected["pelvis_to_world"])
             pelvis = self.ik.model.body("pelvis").id
             self.ik.model.body_pos[pelvis] = root[:3, 3]

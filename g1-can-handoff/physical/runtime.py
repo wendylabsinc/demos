@@ -3,6 +3,7 @@ Reuses the existing physical arm/Dex3 adapters. No simulated grasp evidence.
 """
 
 import json
+from copy import deepcopy
 import os
 import signal
 import sys
@@ -85,6 +86,7 @@ class Runtime:
         self.tracking_observation = None
         self.tracking_vision = None
         self.tracking_baseline = None
+        self.scene_pose_data = None
         self.post_grasp_perception_disabled = False
         self.act_policy_directory = os.getenv('HANDOFF_ACT_POLICY_DIR')
         self.act_policy_metadata = None
@@ -236,6 +238,7 @@ class Runtime:
             "act_policy": getattr(self, 'act_policy_metadata', None),
             "act_policy_parity": getattr(self, 'act_policy_parity', None),
             "act_training_placement_enforced": False,
+            "scene_reference_enabled": os.getenv("HANDOFF_SCENE_REFERENCE", "0") == "1",
             "pose_alignment_max_skew_ms": max_pose_skew_ms(),
             "act_inference_budget_ms": (
                 inference_budget_ms()
@@ -412,11 +415,45 @@ class Runtime:
                 self.publish_tracking_observation(*result, require_table)
             return result
 
+    def scene_pose(self):
+        from scene_reference import validate_scene_transform
+        with self.lock:
+            if self.tracking_error:
+                raise RuntimeError('Static scene pose uncertain: ' + self.tracking_error)
+            value = self.scene_pose_data
+            if value is None:
+                raise RuntimeError('No accepted independent static scene pose')
+            return validate_scene_transform(value['transform']), value['timestamp']
+
     def publish_tracking_observation(self, observation, vision, require_table):
+        scene = None
+        if os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1':
+            from scene_reference import validate_scene_transform
+            scene = vision.get('scene_pose')
+            if (not isinstance(scene, dict)
+                    or scene.get('source') != 'independent_static_table_landmarks'
+                    or scene.get('frame_id') != vision.get('frame_id')
+                    or not scene.get('stream_id')
+                    or scene.get('camera_serial') != self.camera.serial
+                    or not np.isfinite(scene.get('timestamp', float('nan')))
+                    or abs(scene['timestamp'] - observation.timestamp) > 1e-9
+                    or not 0 <= time.monotonic()-scene['timestamp'] <= frame_age_limit_s()):
+                raise RuntimeError('Independent static scene pose identity/timestamp invalid')
+            validate_scene_transform(scene['transform'])
+            with self.lock:
+                previous = self.scene_pose_data
+                if previous is not None and (scene['timestamp'] <= previous['timestamp'] or scene['frame_id'] <= previous['frame_id']):
+                    raise RuntimeError('Independent scene pose exposure did not advance')
         if getattr(self, "post_grasp_perception_disabled", False):
+            if scene is not None:
+                with self.lock:
+                    self.scene_pose_data = deepcopy(scene)
             return
         baseline = getattr(self, "tracking_baseline", None)
         if baseline is None:
+            if scene is not None:
+                with self.lock:
+                    self.scene_pose_data = deepcopy(scene)
             return
         checked = np.asarray(baseline.center, dtype=float)
         observed = np.asarray(observation.center, dtype=float)
@@ -441,6 +478,8 @@ class Runtime:
                 raise RuntimeError("Tracking observation exposure did not advance")
             self.tracking_observation = observation
             self.tracking_vision = vision
+            if scene is not None:
+                self.scene_pose_data = deepcopy(scene)
 
     def exposure_config(self, config, timestamp):
         if config.get("calibration_method") != "operator_accepted_factory_table":
@@ -483,7 +522,8 @@ class Runtime:
             raise RuntimeError(
                 f"Camera could not supply an exposure within the {acquisition_budget*1000:.0f} ms acquisition budget"
             )
-        config = self.exposure_config(config, frame["timestamp"])
+        scene = getattr(self, 'scene_reference', None)
+        scene_pose = None
         # Persist this exact frame while inference/geometric fitting runs.
         # Join the single archive job before returning any usable observation;
         # IO failure or excess exposure age still blocks the next motor action.
@@ -503,14 +543,28 @@ class Runtime:
         if tracker is not None:
             tracker.detector = SimpleNamespace(detect=detect)
         try:
-            result = geometry(
-                frame,
-                config,
-                require_table=require_table,
-                expected_center_xy=expected_center_xy,
-                detector=SimpleNamespace(detect=detect),
-                tracker=tracker,
-            )
+            config = self.exposure_config(config, frame['timestamp'])
+            if scene is not None and scene.anchor is not None:
+                config, scene_pose = scene.correct(frame, config)
+            if phase == 'scene-pose':
+                if scene_pose is None:
+                    raise RuntimeError('Independent static scene anchor missing')
+                result = (SimpleNamespace(timestamp=frame['timestamp']),
+                          dict(frame_id=frame['meta']['frame_id'], scene_pose=scene_pose,
+                               pose_only=True))
+            else:
+                result = geometry(
+                    frame,
+                    config,
+                    require_table=require_table,
+                    expected_center_xy=expected_center_xy,
+                    detector=SimpleNamespace(detect=detect),
+                    tracker=tracker,
+                )
+            if scene is not None and scene_pose is None:
+                scene_pose = scene.capture(frame, config, result[0].center)
+            if scene_pose is not None:
+                result[1]['scene_pose'] = scene_pose
             archived.result()
             fresh(frame)
         except Exception as exc:
@@ -533,7 +587,7 @@ class Runtime:
                 exposure_age_ms=(time.monotonic() - frame["timestamp"]) * 1000,
             )
         fresh(frame)
-        if tracker is not None:
+        if tracker is not None and phase != "scene-pose":
             tracker.accept(result[0], result[1], frame)
         return result
 
@@ -589,12 +643,21 @@ class Runtime:
 
         def sample():
             require_table = not self.grasp_started
-            observation, vision = self.observe_frame(
-                config,
-                "motion-tracking",
-                require_table,
-                None if require_table else baseline.center[:2],
-            )
+            pose_only = (self.post_grasp_perception_disabled
+                         and os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1')
+            try:
+                self.observe_frame(
+                    config, 'scene-pose' if pose_only else 'motion-tracking',
+                    True if pose_only else require_table,
+                    None if require_table or pose_only else baseline.center[:2],
+                )
+            except Exception:
+                if (not pose_only and self.post_grasp_perception_disabled
+                        and os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1'):
+                    # Discard only an obsolete in-flight can check. The next
+                    # sample measures static scene pose; its faults stay fatal.
+                    return
+                raise
 
         sample()
         self.tracking_guard()
@@ -607,7 +670,8 @@ class Runtime:
                     with self.lock:
                         # A frame request already in flight at grasp admission
                         # must not reintroduce a post-grasp perception stop.
-                        if getattr(self, "post_grasp_perception_disabled", False):
+                        if (getattr(self, "post_grasp_perception_disabled", False)
+                                and os.getenv('HANDOFF_SCENE_REFERENCE', '0') != '1'):
                             break
                         self.tracking_error = f"{type(exc).__name__}: {exc}"
                         self.event("tracking_failed", error=self.tracking_error)
@@ -628,7 +692,8 @@ class Runtime:
         with self.lock:
             self.post_grasp_perception_disabled = True
             plant.perception_guard = None
-            self.tracking_stop.set()
+            if os.getenv('HANDOFF_SCENE_REFERENCE', '0') != '1':
+                self.tracking_stop.set()
             self.tracking_error = None
             self.tracking_baseline = None
         self.event("post_grasp_perception_disabled", lift_verification="not_requested")
@@ -1053,6 +1118,10 @@ class Runtime:
                     "exposure_time": observation.timestamp,
                     "tracking": vision.get("tracking"),
                 }
+                if (phase == 'planning' and os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1'):
+                    plant.scene_pose_provider = self.scene_pose
+                    self.start_tracking(config, observation)
+                    plant.perception_guard = self.tracking_guard
                 return observation, vision
 
             def phase_event(phase, **fields):
@@ -1147,6 +1216,7 @@ class Runtime:
                 target_identity=target_identity_mode(),
                 periodic_yolo_recheck_s=semantic_recheck_interval_s(),
             )
+            self.scene_pose_data = None
             self.perception = PerceptionWorker(self.camera.token)
             prepared = prepare(plant, observe, phase_event)
             calibration_start_guard(config, self.read())
@@ -1168,6 +1238,8 @@ class Runtime:
                     calibration=config,
                     reference_after_control_handover=True,
                 )
+            if os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1':
+                self.stop_tracking()
             self.configure_motion_perception(plant, config, prepared[0])
             if getattr(self, 'act_policy_directory', None):
                 from act_numpy import NumpyACT

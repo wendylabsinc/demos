@@ -28,6 +28,10 @@ def worker_main(connection, token):
     )
     runtime.frame_prefetch = None
     runtime.pending_frame = None
+    import os
+    if os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1':
+        from scene_reference import TableSceneReference
+        runtime.scene_reference = TableSceneReference()
     runtime.latest_frames = LatestFrameBuffer(runtime.camera)
     events = []
     event_lock = threading.Lock()

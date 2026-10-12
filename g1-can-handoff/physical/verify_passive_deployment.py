@@ -73,6 +73,10 @@ if status.get('controller_mode')=='act_residual':
  assert status.get('act_inference_budget_ms')==CONFIGURED_ACT_BUDGET,status
  assert status.get('act_training_placement_enforced') is False,status
  assert status.get('pose_alignment_max_skew_ms')==CONFIGURED_POSE_SKEW,status
+ assert status.get('scene_reference_enabled') is (os.getenv('HANDOFF_SCENE_REFERENCE','0')=='1'),status
+ if status.get('scene_reference_enabled'):
+  import scene_reference,cv2
+  assert os.getenv('HANDOFF_SCENE_REFERENCE')=='1'
 # Faulted feedback blocks motion, not replacement of a released PASSIVE app.
 motion_readiness='not_checked' if status.get('telemetry_healthy') else 'blocked'
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP

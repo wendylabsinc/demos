@@ -29,7 +29,7 @@ def create_export(events_path, start_ns, end_ns, output, app_root=Path("/app")):
     cameras = [e for e in events if e["phase"] == "phase_camera_evidence"]
     # Scene/planning baseline and the final three exposures bracket failures.
     selected = []
-    for row in cameras[:2] + cameras[-3:]:
+    for row in cameras[:2] + [e for e in cameras if e.get('phase_name') == 'planning'][:1] + cameras[-3:]:
         if row["path"] not in selected:
             selected.append(row["path"])
     files = {}
@@ -97,6 +97,8 @@ def create_export(events_path, start_ns, end_ns, output, app_root=Path("/app")):
         "planning_snapshot.py",
         "staging.py",
         "pose_alignment.py",
+        "scene_reference.py",
+        "perception_worker.py",
         "g1_can_handoff/sim.py",
         "g1_can_handoff/task.py",
         "g1_can_handoff/noise_aware_planner.json",

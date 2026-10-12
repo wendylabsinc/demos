@@ -56,8 +56,10 @@ is unchanged. Runtime reports `act_training_placement_enforced=false`.
 Before grasp admission ACT requires fresh continuous color/depth tracking.
 This adds a continuous pregrasp input requirement compared with the original
 phase-boundary IK demo. No periodic YOLO identity classification is added.
-After the measured gentle grasp, the last can estimate is retained, its age
-advances, and no new camera/depth observation is requested. ACT stops after
+After the measured gentle grasp, the last can estimate is retained and its age
+advances. Independent static-table pose frames continue through lift/hold when
+`HANDOFF_SCENE_REFERENCE=1`; they do not estimate the held can or claim visual
+lift verification. ACT stops after
 the bounded lift/hold; the existing controller retains the final gentle hold.
 
 Deploy this copy with `python3 g1_can_handoff/redeploy.py`. The script preserves
@@ -75,3 +77,24 @@ An additional robot archive is
 After supporting and releasing the arms/hands, run `python3 rollback_to_ik.py`.
 It verifies the pinned IK source and uses the same checked deployment path.
 Neither deployment nor rollback starts a demo or returns arms home.
+
+
+## Static scene reference
+
+Version 0.3.34 enables `HANDOFF_SCENE_REFERENCE=1` (boolean 0/1, default 0).
+An immutable first planning exposure anchors independent tabletop landmarks;
+pixels within 90 mm of the can are excluded. Advancing exact exposures retain
+camera serial, stream and calibration identity. At least 30 correspondences,
+60% inliers, broad two-dimensional support and bounded residuals are required.
+The fitted proper rigid correction is bounded to 0.04 rad rotation and 20 mm
+translation. It transforms BOTH camera and pelvis coordinates after the same
+IMU correction; every arm command still rechecks current collision geometry.
+Missing/uncertain references and exposure age beyond the existing 500 ms gate
+fail closed. Tracking starts during planning to keep the FK reference fresh.
+Post-grasp pose-only observations continue without can fitting. Native trial
+exports include the immutable anchor image, correction metrics and source.
+
+Local validation: 83 affected tests pass. Full runtime replay of five exact
+recorded exposures reduces the failing frame's apparent XY drift from 10.037 mm
+to 2.312 mm. Shared camera/FK, invalid/stale pose rejection and 25 mm independent
+can displacement guard regressions pass. This is not physical pickup proof.
