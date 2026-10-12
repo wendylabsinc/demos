@@ -10,8 +10,39 @@ import threading
 import time
 
 
+def configure_visual_worker():
+    """Restrict only this child to two CPUs outside the configured control CPUs."""
+    import os
+    from scene_reference import visual_threads
+    from adapter.hotpath import cpu_from_env
+
+    threads = visual_threads()
+    result = dict(threads=threads, cpu_pool=None, reserved_control_cpus=None,
+                  active=False, error=None)
+    if threads == 1 or not hasattr(os, 'sched_setaffinity'):
+        return result
+    try:
+        allowed = sorted(os.sched_getaffinity(0))
+        reserved = {cpu_from_env(os.environ, 'G1_MOTOR_CPU', available=allowed,
+                                 default='auto'),
+                    cpu_from_env(os.environ, 'G1_LOWSTATE_CPU', available=allowed,
+                                 default='auto', auto_offset=1)} - {None}
+        pool = [cpu for cpu in allowed if cpu not in reserved][-2:]
+        if len(pool) != 2:
+            raise ValueError('Two non-control CPUs are unavailable')
+        os.sched_setaffinity(0, set(pool))
+        result.update(cpu_pool=pool, reserved_control_cpus=sorted(reserved), active=True)
+    except (OSError, ValueError) as exc:
+        # This performance option must not make startup depend on Linux CPU
+        # layout or place a parallel vision pool on a reserved control CPU.
+        os.environ['HANDOFF_VISUAL_THREADS'] = '1'
+        result.update(threads=1, error=str(exc))
+    return result
+
+
 def worker_main(connection, token):
     """Run exact-frame perception in a child process that never owns robot joints."""
+    scheduling = configure_visual_worker()
     from concurrent.futures import ThreadPoolExecutor
     from runtime import Runtime
     from camera_input import Camera
@@ -79,6 +110,7 @@ def worker_main(connection, token):
             with event_lock:
                 response["events"] = list(events)
             response["worker_ms"] = (time.monotonic() - started) * 1000
+            response["worker_scheduling"] = scheduling
             connection.send(response)
     except (EOFError, BrokenPipeError):
         pass
@@ -178,6 +210,7 @@ class PerceptionWorker:
             event_relay_ms=(time.monotonic() - relay_started) * 1000,
             error=response["error"],
             receipt_error=None if receipt_error is None else str(receipt_error),
+            worker_scheduling=response.get('worker_scheduling'),
         )
         if receipt_error is not None:
             raise receipt_error

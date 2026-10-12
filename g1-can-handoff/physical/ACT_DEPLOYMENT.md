@@ -189,3 +189,18 @@ Latest recorded-frame production replay: corrected displacement 1.888,3.411,
 The rejected frame has 132/143 robust inliers, median residual 2.927 mm, p95
 9.071 mm. Local processing including geometry is about 51 ms for that frame;
 native performance and physical pickup are not established by this replay.
+
+
+## Visual processing parallelism, 0.3.42
+
+`HANDOFF_VISUAL_THREADS` is1(default) or2. This deployment uses2 OpenCV
+threads. On Linux, only the perception child is restricted to two available
+CPUs outside the configured motor and lowstate CPUs (NX2 CPUs4–5, control6–7).
+If that pool is unavailable, the child falls back to one vision thread and
+records the reason. Worker-result diagnostics report its effective CPU pool.
+No DDS publisher, motor/feedback thread or global system affinity changes.
+Native recorded-image feature extraction median121.657→101.300ms, p95
+124.773→118.430ms across40samples/setting. Keypoints and descriptors were
+bitwise identical. Every exposure still gets independent background alignment;
+fit thresholds, correspondence requirements, transform bounds, camera/FK
+consistency, freshness, collision and other physical guards are unchanged.

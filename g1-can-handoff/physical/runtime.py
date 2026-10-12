@@ -241,6 +241,7 @@ class Runtime:
             "scene_reference_enabled": os.getenv("HANDOFF_SCENE_REFERENCE", "0") == "1",
             "scene_reference_region": os.getenv("HANDOFF_SCENE_REFERENCE_REGION", "table"),
             "scene_fit_residual_mm": float(os.getenv("HANDOFF_SCENE_FIT_RESIDUAL_MM", "6")),
+            "visual_threads": int(os.getenv("HANDOFF_VISUAL_THREADS", "1")),
             "pose_alignment_max_skew_ms": max_pose_skew_ms(),
             "act_inference_budget_ms": (
                 inference_budget_ms()

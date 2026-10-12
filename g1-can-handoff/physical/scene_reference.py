@@ -33,6 +33,14 @@ def reference_source():
             else 'independent_static_table_landmarks')
 
 
+def visual_threads():
+    """Use one or two OpenCV threads; robot control has separate CPU affinity."""
+    raw = os.getenv('HANDOFF_VISUAL_THREADS', '1')
+    if raw not in ('1', '2'):
+        raise ValueError('Visual threads must be 1 or 2')
+    return int(raw)
+
+
 def _rigid(source, reference):
     a, b = source.mean(0), reference.mean(0)
     u, _, vt = np.linalg.svd((source - a).T @ (reference - b))
@@ -128,7 +136,7 @@ class TableSceneReference:
     """One immutable exact-frame tabletop anchor; never track the can as a landmark."""
     def __init__(self):
         import cv2
-        cv2.setNumThreads(1)
+        cv2.setNumThreads(visual_threads())
         self.cv2 = cv2
         self.region = reference_region()
         self.detector = (cv2.SIFT_create(nfeatures=1800) if self.region == 'background'

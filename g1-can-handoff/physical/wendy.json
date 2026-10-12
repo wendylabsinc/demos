@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.41-act-v016-background12",
+  "version": "0.3.42-act-v016-visual2",
   "entitlements": [
     {
       "type": "network",
@@ -43,6 +43,7 @@
     "HANDOFF_SCENE_REFERENCE": "1",
     "HANDOFF_ACT_MOTOR_REFERENCE_MAX_AGE_MS": "80",
     "HANDOFF_SCENE_REFERENCE_REGION": "background",
-    "HANDOFF_SCENE_FIT_RESIDUAL_MM": "12"
+    "HANDOFF_SCENE_FIT_RESIDUAL_MM": "12",
+    "HANDOFF_VISUAL_THREADS": "2"
   }
 }
