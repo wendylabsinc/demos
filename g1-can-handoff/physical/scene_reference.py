@@ -62,21 +62,44 @@ def estimate_scene_reference(source, reference, *, seed=17):
     best = np.zeros(len(source), dtype=bool)
     rng = np.random.default_rng(seed)
     iterations = 1000
-    for iteration in range(1000):
-        ids = rng.choice(len(source), 3, replace=False)
-        if np.linalg.norm(np.cross(source[ids[1]]-source[ids[0]],
-                                   source[ids[2]]-source[ids[0]])) < 1e-6:
-            continue
-        r, t = _rigid(source[ids], reference[ids])
-        inside = np.linalg.norm(source @ r.T + t - reference, axis=1) < residual_limit
-        if inside.sum() > best.sum():
-            best = inside
-            ratio = float(best.mean())
-            if ratio >= 1:
-                iterations = 32
-            elif ratio > 0:
-                iterations = max(32, int(np.ceil(np.log(.001)/np.log(1-ratio**3))))
-        if iteration+1 >= iterations:
+    # Evaluate the same seeded, ordered hypotheses in small matrix batches.
+    # Adaptive termination and first-best tie behavior match the scalar path;
+    # this removes Python/SVD overhead without thinning measured landmarks.
+    done = False
+    for offset in range(0, 1000, 32):
+        ids = np.asarray([rng.choice(len(source), 3, replace=False)
+                          for _ in range(min(32, 1000 - offset))])
+        samples, targets = source[ids], reference[ids]
+        usable = (np.linalg.norm(np.cross(samples[:, 1] - samples[:, 0],
+                                          samples[:, 2] - samples[:, 0]), axis=1) >= 1e-6)
+        centers, target_centers = samples.mean(1), targets.mean(1)
+        covariance = ((samples - centers[:, None]).transpose(0, 2, 1)
+                      @ (targets - target_centers[:, None]))
+        u, _, vt = np.linalg.svd(covariance)
+        rotations = vt.transpose(0, 2, 1) @ u.transpose(0, 2, 1)
+        reflected = np.linalg.det(rotations) < 0
+        vt[reflected, -1] *= -1
+        rotations = vt.transpose(0, 2, 1) @ u.transpose(0, 2, 1)
+        translations = target_centers - (rotations @ centers[..., None])[..., 0]
+        residuals = np.linalg.norm(source[None] @ rotations.transpose(0, 2, 1)
+                                   + translations[:, None] - reference[None], axis=2)
+        candidates = residuals < residual_limit
+        for index in range(len(ids)):
+            iteration = offset + index
+            if not usable[index]:
+                continue
+            inside = candidates[index]
+            if inside.sum() > best.sum():
+                best = inside
+                ratio = float(best.mean())
+                if ratio >= 1:
+                    iterations = 32
+                elif ratio > 0:
+                    iterations = max(32, int(np.ceil(np.log(.001)/np.log(1-ratio**3))))
+            if iteration + 1 >= iterations:
+                done = True
+                break
+        if done:
             break
     if best.sum() < 30 or best.mean() < .6:
         raise ValueError('Stationary landmark correspondence is insufficient/ambiguous')
@@ -144,6 +167,9 @@ class TableSceneReference:
         self.norm = cv2.NORM_L2 if self.region == 'background' else cv2.NORM_HAMMING
         self.anchor = None
         self.center = None
+        self.tracking = os.getenv('HANDOFF_SCENE_TRACKING', 'sift')
+        if self.tracking not in ('sift', 'flow'):
+            raise ValueError('Scene tracking must be sift or flow')
 
     def _features(self, frame, config):
         from yolo_client import fresh
@@ -191,6 +217,14 @@ class TableSceneReference:
         fresh(frame)
         self.anchor = dict(world=world,keypoints=keypoints,descriptors=descriptors,
                            metadata=dict(frame['meta']),timestamp=frame['timestamp'])
+        if self.tracking == 'flow' and self.region == 'background':
+            # The reference image and its measured XYZ remain immutable. Every
+            # exposure is tracked directly against this image, never a chain
+            # of estimated motions that can accumulate drift.
+            self.anchor['gray'] = self.cv2.cvtColor(frame['color_bgr'], self.cv2.COLOR_BGR2GRAY)
+            self.anchor['pixels'] = np.asarray([k.pt for k in keypoints], np.float32).reshape(-1, 1, 2)
+            self.anchor['gray'].setflags(write=False)
+            self.anchor['pixels'].setflags(write=False)
         return self._diagnostic(frame, np.eye(4), dict(anchor=True,landmarks=len(keypoints)))
 
     def _diagnostic(self, frame, transform, metrics):
@@ -212,6 +246,30 @@ class TableSceneReference:
                 raise RuntimeError('Static scene reference camera/stream/calibration changed')
         if frame['timestamp']<=a['timestamp'] or frame['meta']['frame_id']<=a['metadata']['frame_id']:
             raise RuntimeError('Static scene reference requires advancing exact frames')
+        fresh(frame)
+        recovery = None
+        method = 'sift' if self.region == 'background' else 'orb'
+        if self.tracking == 'flow' and self.region == 'background':
+            try:
+                source, reference = self._flow_correspondences(frame, config)
+                transform, metrics = estimate_scene_reference(source, reference)
+                method = 'immutable_anchor_flow'
+            except (ValueError, RuntimeError) as exc:
+                # Loss of optical correspondence never reuses a transform.
+                # Recover with the original descriptors on this same exposure;
+                # the existing rigid-fit and freshness bounds still apply.
+                recovery = str(exc)
+        if method != 'immutable_anchor_flow':
+            source, reference = self._descriptor_correspondences(frame, config)
+            transform, metrics = estimate_scene_reference(source, reference)
+        metrics['tracking_method'] = method
+        if recovery is not None:
+            metrics['flow_recovery_reason'] = recovery
+        fresh(frame)
+        return apply_scene_transform(config,transform),self._diagnostic(frame,transform,metrics)
+
+    def _descriptor_correspondences(self, frame, config):
+        a = self.anchor
         world,keypoints,descriptors=self._features(frame,config)
         pairs=self.cv2.BFMatcher(self.norm).knnMatch(a['descriptors'],descriptors,k=2)
         source, reference=[],[]
@@ -224,6 +282,37 @@ class TableSceneReference:
             p,q=world[v,u],a['world'][v0,u0]
             if np.isfinite(p).all() and np.isfinite(q).all():
                 source.append(p);reference.append(q)
-        transform,metrics=estimate_scene_reference(source,reference)
-        fresh(frame)
-        return apply_scene_transform(config,transform),self._diagnostic(frame,transform,metrics)
+        return source, reference
+
+    def _flow_correspondences(self, frame, config):
+        a = self.anchor
+        gray = self.cv2.cvtColor(frame['color_bgr'], self.cv2.COLOR_BGR2GRAY)
+        parameters = dict(winSize=(21, 21), maxLevel=3,
+                          criteria=(self.cv2.TERM_CRITERIA_EPS | self.cv2.TERM_CRITERIA_COUNT, 30, .01))
+        pixels, forward, error = self.cv2.calcOpticalFlowPyrLK(a['gray'], gray, a['pixels'], None, **parameters)
+        if pixels is None or forward is None or error is None or not np.isfinite(pixels).all():
+            raise RuntimeError('Static scene optical correspondence unavailable')
+        back, backward, _ = self.cv2.calcOpticalFlowPyrLK(gray, a['gray'], pixels, None, **parameters)
+        if back is None or backward is None or not np.isfinite(back).all():
+            raise RuntimeError('Static scene reverse correspondence unavailable')
+        valid = ((forward[:, 0] > 0) & (backward[:, 0] > 0)
+                 & (np.linalg.norm(back - a['pixels'], axis=2)[:, 0] < .75)
+                 & (error[:, 0] < 15))
+        height, width = frame['depth_m'].shape
+        u, v = np.rint(pixels[:, 0]).astype(int).T
+        valid &= (u >= 0) & (u < width) & (v >= 0) & (v < height)
+        valid &= ~((v >= int(height * 255 / 480)) & (u < int(width * 260 / 640)))
+        indices = np.flatnonzero(valid)
+        u, v = u[indices], v[indices]
+        depth = frame['depth_m'][v, u]
+        transform = np.asarray(config['camera_to_world'])
+        points = ((frame['rays'][v, u] * depth[:, None]) @ transform[:3, :3].T
+                  + transform[:3, 3])
+        valid = (np.isfinite(points).all(axis=1) & (depth > .1) & (depth < 2.5)
+                 & (np.sum((points[:, :2] - self.center)**2, axis=1) > .09**2))
+        source = points[valid]
+        reference = []
+        for index in indices[valid]:
+            u0, v0 = np.rint(a['keypoints'][index].pt).astype(int)
+            reference.append(a['world'][v0, u0])
+        return source, reference
