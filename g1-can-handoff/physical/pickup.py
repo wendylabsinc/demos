@@ -130,7 +130,12 @@ def execute(plant, prepared, observe, event, *, post_grasp_camera_checks=True):
         plant.set_contact_phase("lift")
         event("lift", post_grasp_camera_checks=False)
         plant.move(points[3], rotation=rotation)
+        policy = getattr(plant, 'act_residual', None)
+        if policy is not None:
+            plant.set_contact_phase('hold')
         plant.step(1.5)
+        if policy is not None:
+            policy.stop()
         event("pickup_completed", lift_verified=False, post_grasp_camera_checks=False)
         return {
             "sequence_completed": True,

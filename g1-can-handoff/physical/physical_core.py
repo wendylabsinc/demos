@@ -404,6 +404,7 @@ class PhysicalPlant:
         self.cancelled = False
         self.contact_evidence = None
         self.grip = None
+        self.act_residual = None
         self.staging_waypoints = []
         self.staging_start = None
         self.path_preflight_ok = False
@@ -938,6 +939,9 @@ class PhysicalPlant:
         import mujoco
 
         self.sync(snapshot)
+        policy = getattr(self, 'act_residual', None)
+        if policy is not None and policy.active:
+            left_q = policy.update(left_q, snapshot)
         self.check_live_geometry(left_q=left_q, hand_q=self.left_hand)
         self.gravity_data.qpos[:] = self.ik.data.qpos
         self.gravity_data.qvel[:] = 0
@@ -980,7 +984,9 @@ class PhysicalPlant:
         self._enforce_arm_tracking(
             np.asarray(snapshot["body"]["q"][15:22]) - self.left_arm
         )
-        self.command_arm(self.left_arm, snapshot)
+        policy = getattr(self, 'act_residual', None)
+        target = policy.nominal_target if policy is not None and policy.active else self.left_arm
+        self.command_arm(target, snapshot)
 
     def settle_control(self, archive_guard=lambda: None):
         """Hold the bounded SDK reference until measured control is stable."""
@@ -1180,6 +1186,9 @@ class PhysicalPlant:
         """Stop progression and hold measured arms without opening the hands."""
         self.cancelled = True
         with self.command_lock:
+            policy = getattr(self, 'act_residual', None)
+            if policy is not None and policy.active:
+                policy.stop()
             if self.adapter is not None:
                 self.adapter.hold_arm_measured()
             self.event("frozen", automatic_home=False, hand_release=False)

@@ -1,6 +1,7 @@
 """Observed-pose grasp, lift verification, and offer. Release requires acceptance."""
 
 import time
+import os
 import numpy as np
 
 OPEN = [0, 0, 0, 0, 0, 0, 0]
@@ -44,6 +45,12 @@ def plan(plant, observation, validate=None, include_offer=True):
             "requires forward=25.5–45 cm and robot-left=6.5–29 cm. "
             "Reposition the can inside that area and recheck perception before starting."
         )
+    if os.getenv('HANDOFF_ACT_POLICY_DIR') and not (
+        0.2877838471362683 <= c[0] <= 0.3077838471362683
+        and 0.1553066192042131 <= c[1] <= 0.1753066192042131
+    ):
+        raise ValueError('ACT v0.1.6 requires can center forward=28.8–30.8 cm '
+                         'and robot-left=15.5–17.5 cm; wider ACT coverage is unqualified')
     # The cylinder permits yaw changes. A downward approach expands the
     # reachable workspace on lower tables without changing the can location.
     deadline = time.monotonic() + 70

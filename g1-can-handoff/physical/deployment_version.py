@@ -43,6 +43,9 @@ def source_hashes(root=ROOT):
             "build.stagefile.yaml",
         )
     )
+    for name in ('act_policy/policy.json', 'act_policy/weights.npz', 'act_policy/parity-fixtures.npz'):
+        if (root / name).is_file():
+            paths.append(root / name)
     return {
         str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
         for p in sorted(set(paths))

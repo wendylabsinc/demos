@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.29-post-grasp-feedback",
+  "version": "0.3.30-act-v016",
   "entitlements": [
     {
       "type": "network",
@@ -25,7 +25,7 @@
     "HANDOFF_GRIP_STOP_SPAN_RAD": "0.005",
     "HANDOFF_GRIP_HOLD_EFFORT_NM": "0.5",
     "HANDOFF_POST_GRASP_CAMERA_CHECKS": "0",
-    "HANDOFF_PERCEPTION_POLICY": "phase_boundary",
+    "HANDOFF_PERCEPTION_POLICY": "continuous",
     "HANDOFF_YOLO_URL": "http://127.0.0.1:8112",
     "HANDOFF_YOLO_MIN_CONFIDENCE": "0.10",
     "HANDOFF_CAMERA_MAX_AGE_MS": "500",
@@ -36,6 +36,7 @@
     "HANDOFF_BODY_CASING_TEMPERATURE_LIMIT_C": "85",
     "HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C": "120",
     "HANDOFF_GEOMETRY_WORKERS": "1",
-    "HANDOFF_TARGET_IDENTITY": "color_depth"
+    "HANDOFF_TARGET_IDENTITY": "color_depth",
+    "HANDOFF_ACT_POLICY_DIR": "/app/act_policy"
   }
 }

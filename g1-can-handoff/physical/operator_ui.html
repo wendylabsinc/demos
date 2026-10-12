@@ -637,6 +637,7 @@
         }
         function renderRobotState(s) {
           demoActive = !!s.demo_running;
+          document.querySelector('#start').textContent = s.controller_mode === 'act_residual' ? 'Start ACT demo' : 'Start IK demo';
           perceptionSummary.textContent =
             s.target_identity === "color_depth"
               ? "Perception: color/depth tracking · YOLO not required"

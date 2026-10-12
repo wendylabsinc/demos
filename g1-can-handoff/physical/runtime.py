@@ -84,6 +84,13 @@ class Runtime:
         self.tracking_vision = None
         self.tracking_baseline = None
         self.post_grasp_perception_disabled = False
+        self.act_policy_directory = os.getenv('HANDOFF_ACT_POLICY_DIR')
+        self.act_policy_metadata = None
+        self.act_policy_parity = None
+        if self.act_policy_directory:
+            from act_numpy import NumpyACT, verify_parity
+            self.act_policy_metadata = NumpyACT(self.act_policy_directory).metadata
+            self.act_policy_parity = verify_parity(self.act_policy_directory)
         saved = DATA / "perception-config.json"
         if saved.exists():
             os.environ["HANDOFF_CAMERA_MAX_AGE_MS"] = str(
@@ -223,6 +230,9 @@ class Runtime:
 
         result = {
             "build_info": deployed_version(),
+            "controller_mode": "act_residual" if getattr(self, 'act_policy_metadata', None) else "ik",
+            "act_policy": getattr(self, 'act_policy_metadata', None),
+            "act_policy_parity": getattr(self, 'act_policy_parity', None),
             "body_temperature_limits_c": {
                 "casing": body_temperature_limit_c(),
                 "winding": body_winding_temperature_limit_c(),
@@ -1151,6 +1161,22 @@ class Runtime:
                     reference_after_control_handover=True,
                 )
             self.configure_motion_perception(plant, config, prepared[0])
+            if getattr(self, 'act_policy_directory', None):
+                from act_numpy import NumpyACT
+                from act_residual import ACTResidual
+                if perception_policy() != 'continuous':
+                    raise RuntimeError('ACT requires continuously refreshed pregrasp tracking inputs')
+                def policy_pose():
+                    with self.lock:
+                        observation = self.tracking_observation
+                        if observation is None:
+                            raise RuntimeError('ACT has no fresh measured can position')
+                        return np.asarray(observation.center).copy(), observation.timestamp
+                plant.act_residual = ACTResidual(NumpyACT(self.act_policy_directory), plant, policy_pose)
+                plant.act_residual.validate_can(prepared[0].center)
+                self.event('act_policy_enabled', checkpoint_sha256=plant.act_residual.model.metadata['checkpoint_sha256'],
+                           policy_hz=10, xyz_limit_m=.01, rotation_limit_degrees=3,
+                           joint_correction_limit_rad=.1, fingers_controlled_by_policy=False)
             plant.validate_start()
             if self.cancel.is_set():
                 raise RuntimeError("Operator cancelled before pickup execution")

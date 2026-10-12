@@ -57,11 +57,16 @@ stages:
         paths: [g1_can_handoff]
         dest: /app/g1_can_handoff/
       - from: local
+        paths: [act_policy]
+        dest: /app/act_policy/
+      - from: local
         paths: [yolo/frame_limits.py, yolo/confidence.py]
         dest: /app/yolo/
       - from: local
         paths: [
           deployment_version.py,
+          act_numpy.py,
+          act_residual.py,
           deployment-version.json,
           harness_replay.py,
           harness_calibration.py,
@@ -95,6 +100,7 @@ stages:
           shadow_approach.py,
           shadow_staging.py,
           test_camera_input.py,
+          test_act_residual.py,
         ]
         dest: /app/
       - from: local
