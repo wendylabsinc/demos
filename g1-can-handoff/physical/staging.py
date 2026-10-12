@@ -38,7 +38,8 @@ def joint_path(
         if np.any(q < lo) or np.any(q > hi):
             return False
         data.qpos[adr] = q
-        mujoco.mj_forward(model, data)
+        # Staging checks consume collision geometry; skip velocity/dynamics.
+        mujoco.mj_fwdPosition(model, data)
         checks += 1
         return not plant.pose_collision(data)
 

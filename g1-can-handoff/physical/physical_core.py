@@ -651,7 +651,8 @@ class PhysicalPlant:
 
         def error(q, avoid_torso=False):
             data.qpos[adr] = q
-            mujoco.mj_forward(model, data)
+            # Residuals need FK and geom poses, not dynamics or contact forces.
+            mujoco.mj_kinematics(model, data)
             pose = np.r_[
                 data.site_xpos[self.ik.site] - position,
                 0.15 * (data.site_xmat[self.ik.site].reshape(3, 3) - rotation).ravel(),
@@ -679,6 +680,7 @@ class PhysicalPlant:
             error, np.clip(start, lo, hi), bounds=(lo, hi), max_nfev=250
         )
         error(result.x)
+        mujoco.mj_forward(model, data)
         gaps = [
             mujoco.mj_geomDistance(model, data, a, b, 0.1, None)
             for a, b in self.elbow_torso_pairs
@@ -691,6 +693,7 @@ class PhysicalPlant:
                 max_nfev=250,
             )
             error(result.x)
+            mujoco.mj_forward(model, data)
         if (
             np.linalg.norm(result.fun[:3]) > 0.008
             or np.linalg.norm(result.fun[3:12]) > 0.02
@@ -730,13 +733,17 @@ class PhysicalPlant:
         self.ik.ik_data.qpos[:] = self.ik.data.qpos
         for pose_index, q in enumerate(poses):
             self.ik.ik_data.qpos[self.ik.qadr[self.ik.arm]] = q
-            mujoco.mj_forward(self.ik.model, self.ik.ik_data)
+            # Keep every interpolated collision check; omit unused dynamics.
+            mujoco.mj_fwdPosition(self.ik.model, self.ik.ik_data)
             details = self.ik.collision_details(self.ik.ik_data)
             if details is not None:
+                mujoco.mj_forward(self.ik.model, self.ik.ik_data)
                 # self.event('trajectory_collision',phase_name=self.ik.contact_phase,collision=details,joint_q=q.tolist(),path_fraction=pose_index/(len(poses)-1))
                 raise RuntimeError(
                     f"Interpolated physical trajectory intersects robot/table: {details}"
                 )
+        # Preserve the complete final data state exposed to later planning.
+        mujoco.mj_forward(self.ik.model, self.ik.ik_data)
         return goal, poses
 
     def grasp_noise_score(self):

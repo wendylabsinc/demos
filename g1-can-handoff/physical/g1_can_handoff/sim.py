@@ -227,7 +227,8 @@ class Plant:
 
         def error(q):
             d.qpos[adr] = q
-            mujoco.mj_forward(m, d)
+            # Numerical residuals only consume the site FK.
+            mujoco.mj_kinematics(m, d)
             pose = np.r_[
                 d.site_xpos[self.site] - position,
                 0.15 * (d.site_xmat[self.site].reshape(3, 3) - rotation).ravel(),
@@ -249,6 +250,7 @@ class Plant:
         valid = []
         for r in candidates:
             error(r.x)
+            mujoco.mj_forward(m, d)
             if (
                 np.linalg.norm(r.fun[:3]) < min(0.008, position_tolerance)
                 and np.linalg.norm(r.fun[3:12]) < 0.02
@@ -261,6 +263,7 @@ class Plant:
             else min(candidates, key=lambda r: np.linalg.norm(r.fun))
         )
         error(best.x)
+        mujoco.mj_forward(m, d)
         if (
             np.linalg.norm(d.site_xpos[self.site] - position) > position_tolerance
             or np.linalg.norm(d.site_xmat[self.site].reshape(3, 3) - rotation) > 0.18

@@ -5,6 +5,7 @@ or changed waist joints. It never reads hardware or changes acceptance gates.
 """
 
 from collections import deque
+from bisect import bisect_left
 from copy import deepcopy
 import threading
 import os
@@ -77,13 +78,19 @@ class PoseHistory:
         with self._lock:
             if not self._samples:
                 raise RuntimeError("No recorded pose for camera exposure")
-            sample = min(
-                self._samples,
-                key=lambda item: abs(item["timestamp"] - exposure_timestamp),
+            # Samples are strictly ordered. Only the bracketing pair can be
+            # nearest; prefer the earlier sample on a tie, as the scan did.
+            index = bisect_left(
+                self._samples, exposure_timestamp, key=lambda item: item["timestamp"]
             )
-            skew_ms = validate_pose_skew(sample['timestamp'], exposure_timestamp, self.max_skew_ms)
-            return dict(deepcopy(sample), alignment_skew_ms=skew_ms,
-                        alignment_limit_ms=self.max_skew_ms)
+            before = self._samples[max(0, index - 1)]
+            after = self._samples[min(index, len(self._samples) - 1)]
+            sample = min((before, after), key=lambda item: abs(item["timestamp"] - exposure_timestamp))
+        # Published sample dictionaries never mutate. Copying after releasing
+        # the history lock lets lowstate ingestion continue during validation.
+        skew_ms = validate_pose_skew(sample['timestamp'], exposure_timestamp, self.max_skew_ms)
+        return dict(deepcopy(sample), alignment_skew_ms=skew_ms,
+                    alignment_limit_ms=self.max_skew_ms)
 
 
 def corrected_config(config, pose):
