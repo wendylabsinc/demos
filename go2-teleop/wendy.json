@@ -1,0 +1,7 @@
+{
+  "appId": "sh.wendy.go2-teleop",
+  "version": "0.1.0",
+  "entitlements": [
+    { "type": "network", "mode": "host" }
+  ]
+}
