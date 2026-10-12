@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.36-act-v016-scene-freshplan",
+  "version": "0.3.37-act-v016-scene-sparse",
   "entitlements": [
     {
       "type": "network",

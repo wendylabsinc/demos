@@ -73,3 +73,23 @@ class PlanningHandoffTests(unittest.TestCase):
             r.tracking_error='static scene lost'
             with self.assertRaisesRegex(RuntimeError,'uncertain'):r.select_planning_observation()
             self.assertIs(r.tracking_baseline,baseline)
+
+
+class SparseFeatureProjectionTests(unittest.TestCase):
+    def test_feature_depth_projection_matches_dense_math_and_excludes_invalid_target_pixels(self):
+        from scene_reference import TableSceneReference
+        from camera_input import world_points
+        ref=TableSceneReference.__new__(TableSceneReference);ref.center=np.array([-.3,0.])
+        xx,yy=np.meshgrid(np.linspace(.2,.8,8),np.linspace(-.4,.4,8))
+        rays=np.stack([xx,yy,np.full_like(xx,.762)],axis=2)
+        frame=dict(timestamp=99.9,rays=rays,depth_m=np.ones((8,8)),color_bgr=np.zeros((8,8,3),dtype=np.uint8))
+        config=dict(table_height_m=.762,camera_to_world=np.eye(4).tolist())
+        frame['depth_m'][0,0]=0;rays[0,1,2]=2;rays[0,2]=[-.3,0.,.762]
+        points=[SimpleNamespace(pt=(float(x),float(y))) for y in range(8) for x in range(8)]
+        ref.detector=SimpleNamespace(detectAndCompute=lambda *args:(points,np.zeros((64,32),dtype=np.uint8)))
+        dense=world_points(frame,config)
+        with patch('time.monotonic',return_value=100.),patch('camera_input.world_points',side_effect=AssertionError('Dense projection on scene path')):
+            world,keypoints,descriptors=ref._features(frame,config)
+        self.assertEqual(len(keypoints),61);self.assertEqual(len(descriptors),61)
+        for pixel,value in world.items():np.testing.assert_allclose(value,dense[pixel],atol=1e-12,rtol=0)
+        self.assertNotIn((0,0),world);self.assertNotIn((0,1),world);self.assertNotIn((0,2),world)

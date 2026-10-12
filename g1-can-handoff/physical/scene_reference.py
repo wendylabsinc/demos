@@ -109,16 +109,27 @@ class TableSceneReference:
         self.center = None
 
     def _features(self, frame, config):
-        from camera_input import world_points
         from yolo_client import fresh
         fresh(frame)
-        world = world_points(frame, config)
-        mask = np.isfinite(world).all(axis=2) & (np.abs(world[:,:,2]-config['table_height_m']) < .01)
-        mask &= np.sum((world[:,:,:2]-self.center)**2,axis=2) > .09**2
-        keypoints, descriptors = self.detector.detectAndCompute(frame['color_bgr'], (mask*255).astype(np.uint8))
-        if descriptors is None or len(keypoints)<30:
+        # Descriptor extraction proposes image features. Project only their
+        # measured depth pixels, then retain independent tabletop support;
+        # can geometry still receives its separate full exact-frame fit.
+        keypoints, descriptors = self.detector.detectAndCompute(frame['color_bgr'], None)
+        if descriptors is None:
             raise RuntimeError('Static tabletop landmarks absent/insufficient')
-        return world,keypoints,descriptors
+        xy = np.rint([keypoint.pt for keypoint in keypoints]).astype(int)
+        u, v = xy[:, 0], xy[:, 1]
+        depth = frame['depth_m'][v, u]
+        transform = np.asarray(config['camera_to_world'])
+        points = (frame['rays'][v, u] * depth[:, None]) @ transform[:3, :3].T + transform[:3, 3]
+        valid = (np.isfinite(points).all(axis=1) & (depth > .1) & (depth < 2.5)
+                 & (np.abs(points[:, 2]-config['table_height_m']) < .01))
+        valid &= np.sum((points[:, :2]-self.center)**2, axis=1) > .09**2
+        indices = np.flatnonzero(valid)
+        if len(indices) < 30:
+            raise RuntimeError('Static tabletop landmarks absent/insufficient')
+        world = {(int(v[i]), int(u[i])): points[i] for i in indices}
+        return world, [keypoints[i] for i in indices], descriptors[indices]
 
     def capture(self, frame, config, center):
         from yolo_client import fresh

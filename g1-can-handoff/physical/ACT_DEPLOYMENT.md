@@ -115,3 +115,13 @@ planner now receives that fresh accepted sample and fixes its path baseline
 before any path is checked. It never relabels timestamps or rebases an already
 checked path. The 500 ms planning/freshness guards remain unchanged; 85 affected
 tests pass, including the recorded handoff and stale/future/error rejections.
+
+
+Version 0.3.37 projects measured depth only at candidate table feature pixels;
+it avoids a redundant dense 480x640 world cloud on the scene reference path.
+The can still receives its full independent geometric fit. Table support,
+target exclusion, robust fit, pose/identity/freshness and collision bounds are
+unchanged. Local runtime replay changes median steady-frame processing from
+approximately 45 ms to 30 ms; the recorded false-shift frame remains within 2.43 mm
+of its checked center. 86 affected tests pass. A native passive candidate check
+accepted three observations at 345.0, 368.3 and 405.7 ms without motion commands.
