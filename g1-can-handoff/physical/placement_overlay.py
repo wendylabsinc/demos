@@ -110,7 +110,7 @@ print(json.dumps(dict(config=c,bounds=bounds,intrinsics=m['calibration']['intrin
 """
 
 
-def project_area(snapshot, *, reference=False):
+def project_area(snapshot, *, reference=False, bounds=None):
     config = snapshot["config"]
     if not config.get("operator_accepted") or not config.get(
         "stationary_base_confirmed"
@@ -137,7 +137,7 @@ def project_area(snapshot, *, reference=False):
     # visibly if this camera contract changes rather than silently misproject.
     if any(float(c) != 0 for c in intrinsics["coeffs"]):
         raise ValueError("Placement guide needs updated distortion projection")
-    bounds = snapshot["bounds"]
+    bounds = snapshot["bounds"] if bounds is None else bounds
     x0, x1 = bounds["0"]
     y0, y1 = bounds["1"]
     if not all(np.isfinite([x0, x1, y0, y1])) or not x0 < x1 or not y0 < y1:
@@ -174,13 +174,21 @@ def project_area(snapshot, *, reference=False):
 def project_status(snapshot):
     """A stale projection is a visible reference, never current placement proof."""
     try:
-        return dict(project_area(snapshot), valid=True, reference_only=False)
+        result = dict(project_area(snapshot), valid=True, reference_only=False)
     except (ValueError, RuntimeError) as exc:
         # Use the accepted calibration without pretending it follows a changed
         # robot pose. Identity, distortion and geometry checks still apply.
-        return dict(
+        result = dict(
             project_area(snapshot, reference=True),
             valid=False,
             reference_only=True,
             error=str(exc),
         )
+    # Original IK release e3119fae4a55. This is a visual reference only;
+    # snapshot['bounds'] remains the deployed controller's admitted area.
+    ik_bounds = {"0": [0.255, 0.45], "1": [0.065, 0.29]}
+    result["ik_reference_polygon"] = project_area(
+        snapshot, reference=result["reference_only"], bounds=ik_bounds
+    )["polygon"]
+    result["ik_reference_bounds_m"] = ik_bounds
+    return result

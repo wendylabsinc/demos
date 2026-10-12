@@ -47,6 +47,21 @@ class PickupAreaTests(unittest.TestCase):
         )
         self.assertEqual(result["bounds_m"], {"0": [0.27, 0.45], "1": [0.09, 0.29]})
 
+    def test_act_guide_retains_small_policy_area_inside_original_ik_reference(self):
+        snapshot = self.snapshot()
+        snapshot["bounds"] = {"0": [0.2878, 0.3078], "1": [0.1553, 0.1753]}
+        result = project_status(snapshot)
+        self.assertEqual(result["bounds_m"], snapshot["bounds"])
+        np.testing.assert_allclose(result["polygon"],
+            [[28.78, 15.53], [30.78, 15.53], [30.78, 17.53], [28.78, 17.53]])
+        np.testing.assert_allclose(result["ik_reference_polygon"],
+            [[25.5, 6.5], [45, 6.5], [45, 29], [25.5, 29]])
+        snapshot["body_age_s"] = 0.8
+        reference = project_status(snapshot)
+        self.assertFalse(reference["valid"])
+        self.assertTrue(reference["reference_only"])
+        self.assertEqual(reference["ik_reference_polygon"], result["ik_reference_polygon"])
+
     def test_uses_camera_translation_and_current_attitude(self):
         snapshot = self.snapshot()
         snapshot["config"]["camera_to_world"][0][3] = 0.1

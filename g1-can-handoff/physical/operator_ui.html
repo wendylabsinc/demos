@@ -111,6 +111,16 @@
         stroke-width: 3;
         vector-effect: non-scaling-stroke;
       }
+      #ik-reference-area {
+        fill: none;
+        stroke: #8bc7ff;
+        stroke-width: 2;
+        stroke-dasharray: 7 5;
+        vector-effect: non-scaling-stroke;
+      }
+      #pickup-overlay[data-reference="true"] #ik-reference-area {
+        opacity: 0.65;
+      }
       #pickup-overlay[data-reference="true"] #pickup-area {
         fill: #ffca681a;
         stroke: #ffca68;
@@ -268,7 +278,8 @@
           preserveAspectRatio="none"
           aria-label="Coke can pickup placement area"
         >
-          <polygon id="pickup-area" />
+          <polygon id="ik-reference-area"><title>Original IK workspace reference</title></polygon>
+          <polygon id="pickup-area"><title>Current ACT can-center region</title></polygon>
         </svg>
       </div>
       <p id="placement-message">Loading calibrated pickup area…</p>
@@ -687,10 +698,13 @@
                 "points",
                 p.polygon.map((point) => point.join(",")).join(" "),
               );
+              document.querySelector('#ik-reference-area').setAttribute(
+                'points', (p.ik_reference_polygon || []).map(point => point.join(',')).join(' '),
+              );
               placementMessage.textContent = guideValid
-                ? "Place the center of the can base inside the green area. " +
+                ? "Blue outline: original IK area, 19.5 × 22.5 cm. Place the can center inside the smaller green ACT area. " +
                   p.label
-                : "Reference only — amber outline uses the last calibration. " +
+                : "Reference only — blue outline: original IK area, 19.5 × 22.5 cm; smaller amber outline: current ACT area. Both use the last calibration. " +
                   explanation;
             } else {
               guidePresent = false;
