@@ -14,6 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
+from act_residual import inference_budget_ms
 
 sys.path.insert(0, str(Path(__file__).parent / "adapter"))
 from physical_core import (
@@ -233,6 +234,10 @@ class Runtime:
             "controller_mode": "act_residual" if getattr(self, 'act_policy_metadata', None) else "ik",
             "act_policy": getattr(self, 'act_policy_metadata', None),
             "act_policy_parity": getattr(self, 'act_policy_parity', None),
+            "act_inference_budget_ms": (
+                inference_budget_ms()
+                if getattr(self, 'act_policy_metadata', None) else None
+            ),
             "body_temperature_limits_c": {
                 "casing": body_temperature_limit_c(),
                 "winding": body_winding_temperature_limit_c(),

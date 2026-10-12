@@ -2,6 +2,8 @@
 
 from contextlib import redirect_stdout
 import io
+import json
+from pathlib import Path
 from types import SimpleNamespace
 import unittest
 from unittest.mock import Mock, patch
@@ -38,7 +40,9 @@ class PassiveDeploymentTests(unittest.TestCase):
             # Verify the policy on the deployed status, as well as source
             # hashes; a correct build with the old environment is insufficient.
             script = call.args[1]["command"][2]
-            self.assertIn("status['perception_policy']=='phase_boundary'", script)
+            configured = json.loads(Path(verify_passive_deployment.__file__).with_name('wendy.json').read_text())['env']
+            self.assertIn("status['perception_policy']==" + repr(configured['HANDOFF_PERCEPTION_POLICY']), script)
+            self.assertIn("status.get('act_inference_budget_ms')==40.0", script)
             self.assertIn("status['periodic_yolo_recheck_s']", script)
 
     def test_persistent_transport_failure_stops_at_the_attempt_limit(self):

@@ -69,6 +69,8 @@ def get(port,path):return json.load(urllib.request.urlopen('http://127.0.0.1:'+s
 status=get(8102,'/status')
 assert BUILDSTAMP is not None and status.get('build_info')==BUILDSTAMP,'Running build stamp differs from requested deployment'
 assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not status['demo_running'] and status['motion_commands_sent']==0,status
+if status.get('controller_mode')=='act_residual':
+ assert status.get('act_inference_budget_ms')==CONFIGURED_ACT_BUDGET,status
 # Faulted feedback blocks motion, not replacement of a released PASSIVE app.
 motion_readiness='not_checked' if status.get('telemetry_healthy') else 'blocked'
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
@@ -139,6 +141,7 @@ print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_r
         .replace("CONFIGURED_POLICY", repr(configured_policy))
         .replace("CONFIGURED_POST_GRASP", repr(configured_env.get("HANDOFF_POST_GRASP_CAMERA_CHECKS", "0") == "1"))
         .replace("CONFIGURED_IDENTITY", repr(configured_identity))
+        .replace("CONFIGURED_ACT_BUDGET", repr(float(configured_env.get("HANDOFF_ACT_INFERENCE_BUDGET_MS", "40"))))
         .replace("APPLY_CONFIG", repr(args.configure_camera_max_age_ms is not None))
     )
     client = Wendy()

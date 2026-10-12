@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.30-act-v016",
+  "version": "0.3.31-act-v016-budget40",
   "entitlements": [
     {
       "type": "network",
@@ -37,6 +37,7 @@
     "HANDOFF_BODY_WINDING_TEMPERATURE_LIMIT_C": "120",
     "HANDOFF_GEOMETRY_WORKERS": "1",
     "HANDOFF_TARGET_IDENTITY": "color_depth",
-    "HANDOFF_ACT_POLICY_DIR": "/app/act_policy"
+    "HANDOFF_ACT_POLICY_DIR": "/app/act_policy",
+    "HANDOFF_ACT_INFERENCE_BUDGET_MS": "40"
   }
 }

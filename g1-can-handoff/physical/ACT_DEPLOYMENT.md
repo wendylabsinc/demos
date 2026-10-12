@@ -11,6 +11,19 @@ ensemble. Its parity fixtures contain 1,000 recorded PyTorch inputs/outputs.
 NX2 maximum chunk-action difference is 5.7e-7; median inference 1.49 ms,
 95th percentile 1.56 ms. No Torch installation or GPU inference is required.
 
+The per-inference deadline is 40 ms (previously 20 ms); ACT still updates at
+10 Hz. `HANDOFF_ACT_INFERENCE_BUDGET_MS` configures this deadline in milliseconds,
+default 40, valid range greater than zero through 100. An invalid value or an
+overrun fails before the corrected target is admitted. The policy's correction,
+motor speed, feedback freshness and placement limits are unchanged.
+
+The optimized NumPy decoder caches its observation-independent first
+self-attention/norm sublayer and temporal coefficients. Five alternating
+1,000-observation rounds on NX2 measured median 1.520 -> 1.243 ms and p95
+1.622 -> 1.336 ms. All 1,000 actions matched the previous implementation
+bit for bit; maximum PyTorch chunk difference stayed 5.66e-7. This was a
+read-only CPU benchmark with no hardware commands, not trial latency evidence.
+
 ACT runs at 10 Hz from 94 measured/model-state features. Its five outputs
 correct XYZ by at most 1 cm and rotation about world Y/Z by at most 3 degrees.
 The same damped IK Jacobian maps them to left-arm corrections capped at 0.1 rad.

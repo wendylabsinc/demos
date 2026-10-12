@@ -4,8 +4,20 @@ The policy controls the left arm only. The commissioned hand/contact controller,
 right-arm hold, collision checks, telemetry guards and stop/release stay outside
 the learned policy. This module never opens a DDS publisher.
 """
+import os
 import numpy as np
 from physical_core import SIM_TO_BRIDGE, BODY_NAMES
+
+
+def inference_budget_ms():
+    """Per-call deadline in milliseconds, bounded by ACT's 100 ms period."""
+    try:
+        value = float(os.getenv('HANDOFF_ACT_INFERENCE_BUDGET_MS', '40'))
+        if not np.isfinite(value) or not 0 < value <= 100:
+            raise ValueError()
+    except (TypeError, ValueError) as exc:
+        raise ValueError('ACT inference budget must be finite and within (0, 100] ms') from exc
+    return value
 
 
 def actor_observation(q, velocity, arm_target, hand_position, nominal_hand_position,
@@ -28,6 +40,7 @@ class ACTResidual:
     def __init__(self, model, plant, pose_supplier):
         import mujoco
         self.model, self.plant, self.pose_supplier = model, plant, pose_supplier
+        self.inference_budget_ms = inference_budget_ms()
         if model.metadata['active_names'][:14] != BODY_NAMES[15:29]:
             raise ValueError('ACT body joint order differs from the robot adapter')
         if not np.allclose(plant.ik.model.site_pos[plant.ik.site], model.metadata['grasp_local'], atol=1e-8, rtol=0):
@@ -128,14 +141,15 @@ class ACTResidual:
             started = plant.clock.monotonic()
             self.action = self.model.predict(observation)
             elapsed = plant.clock.monotonic() - started
-            if elapsed > .02:
-                raise RuntimeError(f'ACT inference exceeds the 20 ms control budget ({elapsed*1000:.1f} ms)')
+            if elapsed > self.inference_budget_ms / 1000:
+                raise RuntimeError(f'ACT inference exceeds the {self.inference_budget_ms:g} ms control budget ({elapsed*1000:.1f} ms)')
             self.last_inference = now
             self.last_observation = observation
             self.observation_count += 1
             plant.event('act_inference', action=self.action.tolist(),
                         observation=observation.tolist(), phase_name=phase_name,
-                        elapsed_ms=elapsed*1000, checkpoint_sha256=self.model.metadata['checkpoint_sha256'])
+                        elapsed_ms=elapsed*1000, budget_ms=self.inference_budget_ms,
+                        checkpoint_sha256=self.model.metadata['checkpoint_sha256'])
         mujoco.mj_jacSite(plant.ik.model, self.scratch, self.jac_position,
                          self.jac_rotation, plant.ik.site)
         jac = np.vstack((self.jac_position[:, self.dofs], self.jac_rotation[1:3, self.dofs]))

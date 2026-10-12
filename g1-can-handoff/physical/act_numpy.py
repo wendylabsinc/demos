@@ -32,6 +32,20 @@ class NumpyACT:
         if self.weights['queries'].shape != (1, self.chunk_size, 64):
             raise ValueError('ACT query shape mismatch')
         self.history = deque(maxlen=self.chunk_size)
+        # The first self-attention sees only the frozen learned queries. With
+        # dropout absent at inference, this entire sublayer is independent of
+        # the observation and can be evaluated once without approximating ACT.
+        prefix = 'decoder.layers.0.'
+        queries = self.weights['queries'][0]
+        self._initial_value = self.norm(
+            queries + self.attention(queries, queries, prefix + 'self_attn'),
+            prefix + 'norm1')
+        # Temporal ensemble coefficients depend only on the history length.
+        self._temporal_weights = np.exp(
+            -np.float32(.05) * np.arange(self.chunk_size, dtype=np.float32))
+        self._temporal_sums = np.array([
+            self._temporal_weights[:length].sum()
+            for length in range(1, self.chunk_size + 1)])
 
     def reset(self):
         self.history.clear()
@@ -66,10 +80,11 @@ class NumpyACT:
             raise ValueError('ACT requires 94 finite observation values')
         # ACT uses a zero latent at inference; its embedding is the trained bias.
         memory = np.stack((self.linear(obs, 'obs_embed'), self.weights['latent_embed.bias']))
-        value = self.weights['queries'][0].copy()
+        value = self._initial_value
         for index in range(2):
             prefix = f'decoder.layers.{index}.'
-            value = self.norm(value + self.attention(value, value, prefix + 'self_attn'), prefix + 'norm1')
+            if index:
+                value = self.norm(value + self.attention(value, value, prefix + 'self_attn'), prefix + 'norm1')
             value = self.norm(value + self.attention(value, memory, prefix + 'multihead_attn'), prefix + 'norm2')
             feedforward = self.linear(np.maximum(self.linear(value, prefix + 'linear1'), 0), prefix + 'linear2')
             value = self.norm(value + feedforward, prefix + 'norm3')
@@ -81,8 +96,8 @@ class NumpyACT:
     def predict(self, observation):
         self.history.append(self.predict_chunk(observation))
         predictions = np.stack([chunk[age] for age, chunk in enumerate(reversed(self.history))])
-        weights = np.exp(-np.float32(.05) * np.arange(len(predictions), dtype=np.float32))
-        action = (predictions * weights[:, None]).sum(axis=0) / weights.sum()
+        weights = self._temporal_weights[:len(predictions)]
+        action = (predictions * weights[:, None]).sum(axis=0) / self._temporal_sums[len(predictions) - 1]
         if not np.isfinite(action).all() or np.any(np.abs(action) > 1.000001):
             raise RuntimeError('ACT residual exceeds its trained action bounds')
         return np.clip(action, -1, 1)

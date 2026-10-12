@@ -3,6 +3,7 @@ from pathlib import Path
 from types import SimpleNamespace
 import threading
 import unittest
+from unittest.mock import patch
 import numpy as np
 from act_numpy import NumpyACT, verify_parity
 from act_residual import ACTResidual, actor_observation
@@ -77,6 +78,34 @@ class ACTTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'exposure stale'):
             plant.maintain_hand()
         self.assertEqual(io.commands, 0)
+
+    def test_inference_between_20_and_40_ms_is_admitted_without_motor_io(self):
+        plant, io, policy, events = self.plant()
+        now = io.monotonic()
+        snapshot = io.read()
+        policy.pose_supplier = lambda: (policy.model.metadata['can_initial'], now)
+        with patch.object(io, 'monotonic', side_effect=[now, now, now + .030]):
+            target = policy.update(plant.left_arm, snapshot)
+        self.assertTrue(np.isfinite(target).all())
+        self.assertEqual(policy.observation_count, 1)
+        self.assertEqual(io.commands, 0)
+
+    def test_inference_over_40_ms_fails_before_any_motor_io(self):
+        plant, io, policy, events = self.plant()
+        now = io.monotonic()
+        snapshot = io.read()
+        policy.pose_supplier = lambda: (policy.model.metadata['can_initial'], now)
+        with patch.object(io, 'monotonic', side_effect=[now, now, now + .041]):
+            with self.assertRaisesRegex(RuntimeError, '40 ms control budget'):
+                policy.update(plant.left_arm, snapshot)
+        self.assertEqual(policy.observation_count, 0)
+        self.assertEqual(io.commands, 0)
+
+    def test_invalid_inference_budget_is_rejected_before_adapter_activation(self):
+        for value in ('0', '-1', 'nan', 'inf', '101', 'not-a-number'):
+            with self.subTest(value=value), patch.dict('os.environ', {'HANDOFF_ACT_INFERENCE_BUDGET_MS': value}):
+                with self.assertRaisesRegex(ValueError, 'inference budget'):
+                    self.plant()
 
     def test_invalid_velocity_fails_before_any_simulated_motor_command(self):
         plant, io, policy, events = self.plant()
