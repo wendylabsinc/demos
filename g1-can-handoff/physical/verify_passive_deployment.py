@@ -72,6 +72,7 @@ assert status['phase']=='PASSIVE' and not status['adapter_initialized'] and not 
 if status.get('controller_mode')=='act_residual':
  assert status.get('act_inference_budget_ms')==CONFIGURED_ACT_BUDGET,status
  assert status.get('act_training_placement_enforced') is False,status
+ assert status.get('pose_alignment_max_skew_ms')==CONFIGURED_POSE_SKEW,status
 # Faulted feedback blocks motion, not replacement of a released PASSIVE app.
 motion_readiness='not_checked' if status.get('telemetry_healthy') else 'blocked'
 assert physical_core.body_temperature_limit_c()==CONFIGURED_BODY_TEMP
@@ -143,6 +144,7 @@ print(json.dumps({'startup_verified':True,'planner_settings':effective,'motion_r
         .replace("CONFIGURED_POST_GRASP", repr(configured_env.get("HANDOFF_POST_GRASP_CAMERA_CHECKS", "0") == "1"))
         .replace("CONFIGURED_IDENTITY", repr(configured_identity))
         .replace("CONFIGURED_ACT_BUDGET", repr(float(configured_env.get("HANDOFF_ACT_INFERENCE_BUDGET_MS", "40"))))
+        .replace("CONFIGURED_POSE_SKEW", repr(float(configured_env.get("HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS", "40"))))
         .replace("APPLY_CONFIG", repr(args.configure_camera_max_age_ms is not None))
     )
     client = Wendy()

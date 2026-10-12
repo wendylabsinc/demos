@@ -41,7 +41,7 @@ def worker_main(connection, token):
     def exposure_config(config, timestamp):
         if config.get("calibration_method") != "operator_accepted_factory_table":
             return config
-        from pose_alignment import corrected_config
+        from pose_alignment import corrected_config, validate_pose_skew
 
         connection.send({"pose_request": timestamp})
         if not connection.poll(0.5):
@@ -50,8 +50,7 @@ def worker_main(connection, token):
         if response.get("error"):
             raise RuntimeError(response["error"])
         pose = response["pose"]
-        if abs(pose["timestamp"] - timestamp) > 0.02:
-            raise RuntimeError("Exposure pose skew exceeds 20 ms")
+        validate_pose_skew(pose['timestamp'], timestamp)
         event("exposure_pose", frame_timestamp=timestamp, pose=pose)
         return corrected_config(config, pose)
 

@@ -8,6 +8,9 @@ from scene_refresh import refresh_scene
 
 class SceneRefreshTests(unittest.TestCase):
     def setUp(self):
+        override = patch.dict('os.environ', {'HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS': '20'})
+        override.start()
+        self.addCleanup(override.stop)
         fixture = test_model_calibration.ModelCalibrationTests()
         fixture.setUp()
         self.config = fixture.config
@@ -19,6 +22,13 @@ class SceneRefreshTests(unittest.TestCase):
             calibration_method="factory_mount_and_table_plane_candidate",
             source_frame_id=101,
         )
+
+    def test_configured_40_ms_refresh_accepts_35_ms_skew(self):
+        self.frame['timestamp'] = 100.0
+        pose = dict(timestamp=100.035, rpy=[0.0] * 3, waist_q=[0.0] * 3)
+        with patch.dict('os.environ', {'HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS': '40'}), patch('scene_refresh.candidate', return_value=self.fresh):
+            result = refresh_scene(self.config, self.frame, self.snapshot, 'camera', exposure_pose=pose)
+        self.assertAlmostEqual(result['calibration_exposure_pose']['skew_ms'], 35.0)
 
     def test_expired_scene_replaced_by_new_observation_and_current_pose(self):
         self.config["accepted_at_unix_s"] = time.time() - 3600

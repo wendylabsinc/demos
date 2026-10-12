@@ -17,6 +17,12 @@ default 40, valid range greater than zero through 100. An invalid value or an
 overrun fails before the corrected target is admitted. The policy's correction,
 motor speed, feedback freshness and placement limits are unchanged.
 
+Camera/pose pairing now permits 40 ms skew (previously 20), consistently in
+the pose history, perception worker and scene refresh. Configure with
+`HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS`, default 40, valid range (0, 100] ms.
+The ACT inference deadline stays at 40 ms. Pose failures now report the measured
+skew and both timestamps; accepted pose evidence records its skew and limit.
+
 The optimized NumPy decoder caches its observation-independent first
 self-attention/norm sublayer and temporal coefficients. Five alternating
 1,000-observation rounds on NX2 measured median 1.520 -> 1.243 ms and p95

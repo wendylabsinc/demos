@@ -1,6 +1,6 @@
 {
   "appId": "DEV-g1-handoff-physical",
-  "version": "0.3.32-act-v016-ik-workspace",
+  "version": "0.3.33-act-v016-pose40",
   "entitlements": [
     {
       "type": "network",
@@ -38,6 +38,7 @@
     "HANDOFF_GEOMETRY_WORKERS": "1",
     "HANDOFF_TARGET_IDENTITY": "color_depth",
     "HANDOFF_ACT_POLICY_DIR": "/app/act_policy",
-    "HANDOFF_ACT_INFERENCE_BUDGET_MS": "40"
+    "HANDOFF_ACT_INFERENCE_BUDGET_MS": "40",
+    "HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS": "40"
   }
 }

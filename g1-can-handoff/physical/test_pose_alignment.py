@@ -1,5 +1,6 @@
 import copy
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 from scipy.spatial.transform import Rotation
@@ -9,6 +10,9 @@ from pose_alignment import PoseHistory, corrected_config
 
 class PoseAlignmentTests(unittest.TestCase):
     def setUp(self):
+        override = patch.dict('os.environ', {'HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS': '20'})
+        override.start()
+        self.addCleanup(override.stop)
         self.reference = [0.02, 0.035, 2.9]
         pelvis = np.eye(4)
         pelvis[:3, :3] = Rotation.from_euler(
@@ -28,6 +32,20 @@ class PoseAlignmentTests(unittest.TestCase):
             assumptions=["original provenance"],
         )
         self.pose = dict(timestamp=100.0, rpy=list(self.reference), waist_q=[0.0] * 3)
+
+    def test_configured_40_ms_admits_35_ms_and_reports_larger_gap(self):
+        with patch.dict('os.environ', {'HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS': '40'}):
+            history = PoseHistory()
+            history.add(100.0, [0] * 3, [0] * 3)
+            self.assertEqual(history.nearest(100.035)['timestamp'], 100.0)
+            with self.assertRaisesRegex(RuntimeError, '40 ms.*41.000 ms'):
+                history.nearest(100.041)
+
+    def test_invalid_pose_skew_configuration_rejected(self):
+        for value in ('0', '-1', 'nan', 'inf', '101', 'invalid'):
+            with self.subTest(value=value), patch.dict('os.environ', {'HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS': value}):
+                with self.assertRaisesRegex(ValueError, 'Pose alignment'):
+                    PoseHistory()
 
     def test_nearest_uses_exposure_not_wall_clock_and_copies_sample(self):
         history = PoseHistory()

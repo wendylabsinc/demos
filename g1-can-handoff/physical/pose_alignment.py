@@ -7,9 +7,34 @@ or changed waist joints. It never reads hardware or changes acceptance gates.
 from collections import deque
 from copy import deepcopy
 import threading
+import os
 
 import numpy as np
 from scipy.spatial.transform import Rotation
+
+
+def max_pose_skew_ms():
+    """Configured camera/pose pairing tolerance, in milliseconds."""
+    try:
+        value = float(os.getenv('HANDOFF_POSE_ALIGNMENT_MAX_SKEW_MS', '40'))
+        if not np.isfinite(value) or not 0 < value <= 100:
+            raise ValueError()
+    except (TypeError, ValueError) as exc:
+        raise ValueError('Pose alignment limit must be finite and within (0, 100] ms') from exc
+    return value
+
+
+def validate_pose_skew(pose_timestamp, exposure_timestamp, limit_ms=None):
+    if not np.isfinite([pose_timestamp, exposure_timestamp]).all():
+        raise ValueError('Pose/exposure timestamps must be finite')
+    limit_ms = max_pose_skew_ms() if limit_ms is None else limit_ms
+    skew_ms = abs(pose_timestamp - exposure_timestamp) * 1000
+    if skew_ms > limit_ms + 1e-9:
+        raise RuntimeError(
+            f'Recorded pose differs from camera exposure by more than {limit_ms:g} ms '
+            f'(nearest skew={skew_ms:.3f} ms, exposure={exposure_timestamp:.6f}, '
+            f'pose={pose_timestamp:.6f})')
+    return skew_ms
 
 
 def _vector(value, name):
@@ -29,6 +54,7 @@ class PoseHistory:
             raise ValueError("Pose history capacity must be between 1 and 512")
         self._samples = deque(maxlen=max_samples)
         self._lock = threading.Lock()
+        self.max_skew_ms = max_pose_skew_ms()
 
     def add(self, timestamp, rpy, waist_q):
         timestamp = float(timestamp)
@@ -55,12 +81,9 @@ class PoseHistory:
                 self._samples,
                 key=lambda item: abs(item["timestamp"] - exposure_timestamp),
             )
-            # Numerical slack only accommodates binary representation of 20 ms.
-            if abs(sample["timestamp"] - exposure_timestamp) > 0.020 + 1e-12:
-                raise RuntimeError(
-                    "Recorded pose differs from camera exposure by more than 20 ms"
-                )
-            return deepcopy(sample)
+            skew_ms = validate_pose_skew(sample['timestamp'], exposure_timestamp, self.max_skew_ms)
+            return dict(deepcopy(sample), alignment_skew_ms=skew_ms,
+                        alignment_limit_ms=self.max_skew_ms)
 
 
 def corrected_config(config, pose):

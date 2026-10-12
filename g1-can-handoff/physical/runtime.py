@@ -15,6 +15,7 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from act_residual import inference_budget_ms
+from pose_alignment import max_pose_skew_ms
 
 sys.path.insert(0, str(Path(__file__).parent / "adapter"))
 from physical_core import (
@@ -235,6 +236,7 @@ class Runtime:
             "act_policy": getattr(self, 'act_policy_metadata', None),
             "act_policy_parity": getattr(self, 'act_policy_parity', None),
             "act_training_placement_enforced": False,
+            "pose_alignment_max_skew_ms": max_pose_skew_ms(),
             "act_inference_budget_ms": (
                 inference_budget_ms()
                 if getattr(self, 'act_policy_metadata', None) else None

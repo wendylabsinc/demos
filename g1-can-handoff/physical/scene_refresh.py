@@ -9,6 +9,7 @@ from copy import deepcopy
 import numpy as np
 from factory_table_candidate import candidate
 from physical_core import calibration, snapshot_guard
+from pose_alignment import validate_pose_skew
 
 
 def refresh_scene(previous, frame, snapshot, serial, exposure_pose=None):
@@ -31,11 +32,10 @@ def refresh_scene(previous, frame, snapshot, serial, exposure_pose=None):
     if exposure_pose is not None:
         timestamp = float(exposure_pose["timestamp"])
         exposure = float(frame["timestamp"])
-        if (
-            not np.isfinite([timestamp, exposure]).all()
-            or abs(timestamp - exposure) > 0.020 + 1e-12
-        ):
-            raise ValueError("Calibration exposure pose must be within 20 ms of frame")
+        try:
+            validate_pose_skew(timestamp, exposure)
+        except (ValueError, RuntimeError) as exc:
+            raise ValueError('Calibration exposure pose invalid: ' + str(exc)) from exc
         for key in ("rpy", "waist_q"):
             values = np.asarray(exposure_pose[key], dtype=float)
             if values.shape != (3,) or not np.isfinite(values).all():

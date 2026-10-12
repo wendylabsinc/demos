@@ -134,7 +134,7 @@ request=urllib.request.Request(url"""
             + """)
 try:
  response=urllib.request.urlopen(request,timeout=12);s=json.load(response)
- out={k:s.get(k) for k in ['build_info','controller_mode','act_policy','act_policy_parity','act_inference_budget_ms','act_training_placement_enforced','phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','telemetry_error','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}
+ out={k:s.get(k) for k in ['build_info','controller_mode','act_policy','act_policy_parity','act_inference_budget_ms','pose_alignment_max_skew_ms','act_training_placement_enforced','phase','error','motion_commands_sent','adapter_initialized','telemetry_healthy','telemetry_error','camera_max_age_ms','yolo_confidence_strictly_above','target_identity','yolo_required','demo_running','demo_result','demo_error']}
  out['hand_feedback']={}
  for side in ['left','right']:
   sample=(s.get('measured') or {}).get(side) or {}
