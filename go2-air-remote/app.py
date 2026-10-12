@@ -30,7 +30,8 @@ log = logging.getLogger("go2-air-remote")
 
 TOKEN = os.environ["GO2_REMOTE_TOKEN"]
 PORT = int(os.environ.get("PORT", "8883"))
-MAX_X = float(os.environ.get("GO2_MAX_SPEED", "0.3"))  # m/s
+# The physical Go2 ignores forward requests below about 0.5 m/s.
+MAX_X = float(os.environ.get("GO2_MAX_SPEED", "0.55"))  # m/s
 MAX_YAW = float(os.environ.get("GO2_MAX_YAW", "0.6"))  # rad/s
 WATCHDOG_S = 0.4  # stop if no move command arrives for this long
 VIDEO_WIDTH = 640

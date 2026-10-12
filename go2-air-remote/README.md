@@ -10,8 +10,9 @@ it drives either one. It needs no robot key, serial or agent access.
 Browser ──WebSocket / MJPEG──▶ this app ──ROS 2──▶ Go2 bridge ──▶ Wendy agent ──▶ Go2
 ```
 
-- Hold ▲ ▼ ⟲ ⟳ to move; letting go stops the robot. Speed is capped at
-  `GO2_MAX_SPEED` (default 0.3 m/s) and `GO2_MAX_YAW` (default 0.6 rad/s).
+- Hold ▲ ▼ ⟲ ⟳ to move; letting go stops the robot. Forward speed is
+  `GO2_MAX_SPEED` (default 0.55 m/s; the physical Go2 ignores forward requests
+  below about 0.5 m/s) and turning `GO2_MAX_YAW` (default 0.6 rad/s).
 - The app publishes zero velocity when no command arrives for 0.4 s, when the page
   disconnects or is backgrounded, and when STOP is pressed. On a real Go2 the
   agent also stops any move after 500 ms unless it is refreshed.
