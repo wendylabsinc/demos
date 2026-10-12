@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Go2 Remote</title>
+<style>
+  * { box-sizing: border-box; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  body { margin: 0; padding: 16px; font: 16px system-ui, sans-serif; background: #111; color: #eee; touch-action: none; }
+  #status { padding: 8px 12px; border-radius: 8px; background: #333; margin-bottom: 16px; }
+  #status.ok { background: #1d5e2c; }
+  #status.bad { background: #6b1f1f; }
+  .pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 360px; margin: 0 auto; }
+  button { font: inherit; font-size: 20px; padding: 22px 0; border: 0; border-radius: 12px; background: #2b4a7a; color: #fff; }
+  button:active, button.held { background: #4a7bc4; }
+  #stop { grid-column: 1 / 4; background: #b3261e; font-size: 24px; padding: 26px 0; }
+  .actions { display: flex; gap: 10px; max-width: 360px; margin: 16px auto 0; }
+  .actions button { flex: 1; font-size: 16px; padding: 14px 0; background: #444; }
+  #login { display: flex; gap: 8px; max-width: 360px; margin: 0 auto 16px; }
+  #login input { flex: 1; font: inherit; padding: 10px; border-radius: 8px; border: 0; }
+  #login button { padding: 10px 16px; font-size: 16px; }
+</style>
+</head>
+<body>
+<form id="login"><input id="key" type="password" placeholder="Access key" autocomplete="current-password"><button>Connect</button></form>
+<div id="status">Not connected</div>
+<div class="pad">
+  <span></span><button data-move="1,0">▲</button><span></span>
+  <button data-move="0,1">⟲</button><button data-move="-1,0">▼</button><button data-move="0,-1">⟳</button>
+  <button id="stop">STOP</button>
+</div>
+<div class="actions">
+  <button data-action="stand">Stand up</button>
+  <button data-action="sit">Lie down</button>
+  <button data-action="hello">Hello</button>
+</div>
+<script>
+let ws = null, held = null, timer = null;
+const statusEl = document.getElementById('status');
+const keyEl = document.getElementById('key');
+try { keyEl.value = localStorage.getItem('go2key') || ''; } catch {}
+
+function setStatus(text, cls) { statusEl.textContent = text; statusEl.className = cls || ''; }
+function send(m) { if (ws && ws.readyState === 1) ws.send(JSON.stringify(m)); }
+
+function connect() {
+  if (ws) ws.close();
+  try { localStorage.setItem('go2key', keyEl.value); } catch {}
+  ws = new WebSocket((location.protocol === 'https:' ? 'wss://' : 'ws://') + location.host + '/ws');
+  ws.onopen = () => send({ token: keyEl.value });
+  ws.onmessage = e => {
+    const m = JSON.parse(e.data);
+    if (m.error) return setStatus(m.error, 'bad');
+    const ok = m.status === 'connected';
+    setStatus(ok ? (m.moving ? 'Robot: moving' : 'Robot: connected') : 'Robot: ' + m.status, ok ? 'ok' : 'bad');
+  };
+  ws.onclose = () => { release(); setStatus('Page disconnected — tap Connect', 'bad'); };
+}
+
+function press(btn) {
+  release();
+  held = btn; btn.classList.add('held');
+  const [x, z] = btn.dataset.move.split(',').map(Number);
+  // Server caps the speed; send a full-scale request and repeat while held.
+  const tick = () => send({ move: [x * 10, z * 10] });
+  tick(); timer = setInterval(tick, 100);
+}
+function release() {
+  if (timer) { clearInterval(timer); timer = null; }
+  if (held) { held.classList.remove('held'); held = null; send({ stop: 1 }); }
+}
+
+document.getElementById('login').onsubmit = e => { e.preventDefault(); connect(); };
+document.querySelectorAll('[data-move]').forEach(b => {
+  b.addEventListener('pointerdown', e => { e.preventDefault(); b.setPointerCapture(e.pointerId); press(b); });
+  ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(t => b.addEventListener(t, release));
+});
+document.getElementById('stop').addEventListener('pointerdown', () => { release(); send({ stop: 1 }); });
+document.querySelectorAll('[data-action]').forEach(b => b.addEventListener('click', () => send({ action: b.dataset.action })));
+document.addEventListener('visibilitychange', release);
+window.addEventListener('blur', release);
+</script>
+</body>
+</html>
