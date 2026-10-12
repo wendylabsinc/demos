@@ -125,3 +125,15 @@ unchanged. Local runtime replay changes median steady-frame processing from
 approximately 45 ms to 30 ms; the recorded false-shift frame remains within 2.43 mm
 of its checked center. 86 affected tests pass. A native passive candidate check
 accepted three observations at 345.0, 368.3 and 405.7 ms without motion commands.
+
+
+Version 0.3.38 adds a bounded fresh-frame wait only during non-actuating path
+planning. `HANDOFF_PLANNING_FRAME_WAIT_MS` defaults 500 ms, valid (0, 500] ms.
+Planning yields its lock while awaiting a newly accepted camera observation;
+it never relabels/reuses an expired exposure. Motion still stops immediately
+on a stale/future observation; perception uncertainty and cancellation are not
+recovered automatically. Missing fresh data at the wait deadline aborts.
+The 0.3.37 recording measured median worker time 119.6 ms, with a rare 529.6 ms
+last-accepted exposure gap immediately before the next fresh result arrived.
+90 affected tests pass, including planning resumption, immediate motion-stop,
+missing-frame timeout, cancellation, future timestamps and invalid wait limits.
