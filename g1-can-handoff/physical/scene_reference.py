@@ -1,12 +1,36 @@
-"""Independent measured tabletop reference shared by RGB-D and robot FK.
+"""Independent measured static-scene reference shared by RGB-D and robot FK.
 
 This module opens no endpoints or publishers. Static table landmarks exclude
 the target; one bounded correction transforms camera and pelvis together.
 Failure never falls back to an uncorrected or relabeled stale observation.
 """
 
+import os
 import numpy as np
 from scipy.spatial.transform import Rotation
+
+
+def scene_fit_residual_m():
+    """Existing rigid-fit residual allowance, configurable up to 12 mm."""
+    try:
+        value = float(os.getenv('HANDOFF_SCENE_FIT_RESIDUAL_MM', '6'))
+        if not np.isfinite(value) or not 0 < value <= 12:
+            raise ValueError()
+    except (TypeError, ValueError) as exc:
+        raise ValueError('Scene fit residual must be finite and within (0, 12] mm') from exc
+    return value / 1000
+
+
+def reference_region():
+    region = os.getenv('HANDOFF_SCENE_REFERENCE_REGION', 'table')
+    if region not in ('table', 'background'):
+        raise ValueError('Scene reference region must be table or background')
+    return region
+
+
+def reference_source():
+    return ('independent_static_background_landmarks' if reference_region() == 'background'
+            else 'independent_static_table_landmarks')
 
 
 def _rigid(source, reference):
@@ -21,6 +45,7 @@ def _rigid(source, reference):
 
 def estimate_scene_reference(source, reference, *, seed=17):
     """Fit current-to-reference rigid coordinates from independent landmarks."""
+    residual_limit = scene_fit_residual_m()
     source, reference = np.asarray(source, float), np.asarray(reference, float)
     if (source.ndim != 2 or source.shape[1:] != (3,) or source.shape != reference.shape
             or len(source) < 30 or len(source) > 2000
@@ -35,7 +60,7 @@ def estimate_scene_reference(source, reference, *, seed=17):
                                    source[ids[2]]-source[ids[0]])) < 1e-6:
             continue
         r, t = _rigid(source[ids], reference[ids])
-        inside = np.linalg.norm(source @ r.T + t - reference, axis=1) < .006
+        inside = np.linalg.norm(source @ r.T + t - reference, axis=1) < residual_limit
         if inside.sum() > best.sum():
             best = inside
             ratio = float(best.mean())
@@ -54,7 +79,7 @@ def estimate_scene_reference(source, reference, *, seed=17):
     r, t = _rigid(source[best], reference[best])
     residual = np.linalg.norm(source[best] @ r.T + t - reference[best], axis=1)
     angle = float(np.linalg.norm(Rotation.from_matrix(r).as_rotvec()))
-    if np.quantile(residual, .95) > .006 or np.median(residual) > .003:
+    if np.quantile(residual, .95) > residual_limit or np.median(residual) > residual_limit / 2:
         raise ValueError('Stationary landmark rigid fit exceeds depth uncertainty bounds')
     if angle > .04 or np.linalg.norm(t) > .02:
         raise ValueError('Scene correction exceeds bounded offline candidate range')
@@ -63,7 +88,8 @@ def estimate_scene_reference(source, reference, *, seed=17):
     return transform, dict(matches=len(source), inliers=int(best.sum()),
                           median_residual_mm=float(np.median(residual)*1000),
                           p95_residual_mm=float(np.quantile(residual,.95)*1000),
-                          rotation_rad=angle, translation_m=float(np.linalg.norm(t)))
+                          rotation_rad=angle, translation_m=float(np.linalg.norm(t)),
+                          residual_limit_mm=residual_limit * 1000)
 
 
 def transform_point(point, transform):
@@ -104,7 +130,10 @@ class TableSceneReference:
         import cv2
         cv2.setNumThreads(1)
         self.cv2 = cv2
-        self.detector = cv2.ORB_create(nfeatures=2000, fastThreshold=7)
+        self.region = reference_region()
+        self.detector = (cv2.SIFT_create(nfeatures=1800) if self.region == 'background'
+                         else cv2.ORB_create(nfeatures=2000, fastThreshold=7))
+        self.norm = cv2.NORM_L2 if self.region == 'background' else cv2.NORM_HAMMING
         self.anchor = None
         self.center = None
 
@@ -114,7 +143,17 @@ class TableSceneReference:
         # Descriptor extraction proposes image features. Project only their
         # measured depth pixels, then retain independent tabletop support;
         # can geometry still receives its separate full exact-frame fit.
-        keypoints, descriptors = self.detector.detectAndCompute(frame['color_bgr'], None)
+        region = getattr(self, 'region', 'table')
+        feature_mask = None
+        if region == 'background':
+            # The fixed NX2 camera view's lower-left area contains the pickup
+            # target and approaching hand. Reuse the recorded diagnostic's
+            # exclusion, scaled with image dimensions; the world-space can
+            # exclusion below independently covers target placement changes.
+            height, width = frame['depth_m'].shape
+            feature_mask = np.full((height, width), 255, np.uint8)
+            feature_mask[int(height * 255 / 480):, :int(width * 260 / 640)] = 0
+        keypoints, descriptors = self.detector.detectAndCompute(frame['color_bgr'], feature_mask)
         if descriptors is None:
             raise RuntimeError('Static tabletop landmarks absent/insufficient')
         xy = np.rint([keypoint.pt for keypoint in keypoints]).astype(int)
@@ -122,8 +161,9 @@ class TableSceneReference:
         depth = frame['depth_m'][v, u]
         transform = np.asarray(config['camera_to_world'])
         points = (frame['rays'][v, u] * depth[:, None]) @ transform[:3, :3].T + transform[:3, 3]
-        valid = (np.isfinite(points).all(axis=1) & (depth > .1) & (depth < 2.5)
-                 & (np.abs(points[:, 2]-config['table_height_m']) < .01))
+        valid = np.isfinite(points).all(axis=1) & (depth > .1) & (depth < 2.5)
+        if region == 'table':
+            valid &= np.abs(points[:, 2]-config['table_height_m']) < .01
         valid &= np.sum((points[:, :2]-self.center)**2, axis=1) > .09**2
         indices = np.flatnonzero(valid)
         if len(indices) < 30:
@@ -152,7 +192,7 @@ class TableSceneReference:
                     stream_id=frame['meta'].get('stream_id'),
                     reference_frame_id=self.anchor['metadata']['frame_id'],
                     reference_timestamp=self.anchor['timestamp'],metrics=metrics,
-                    source='independent_static_table_landmarks')
+                    source=reference_source(), region=getattr(self, 'region', 'table'))
 
     def correct(self, frame, config):
         from yolo_client import fresh
@@ -165,7 +205,7 @@ class TableSceneReference:
         if frame['timestamp']<=a['timestamp'] or frame['meta']['frame_id']<=a['metadata']['frame_id']:
             raise RuntimeError('Static scene reference requires advancing exact frames')
         world,keypoints,descriptors=self._features(frame,config)
-        pairs=self.cv2.BFMatcher(self.cv2.NORM_HAMMING).knnMatch(a['descriptors'],descriptors,k=2)
+        pairs=self.cv2.BFMatcher(self.norm).knnMatch(a['descriptors'],descriptors,k=2)
         source, reference=[],[]
         for pair in pairs:
             if len(pair)!=2:continue

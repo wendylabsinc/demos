@@ -162,3 +162,30 @@ The error now records the observed age and effective allowance. The preceding
 failure message did not record the precise age, so no exact failed gap is claimed.
 The 100 Hz SDK writer, ACT 10 Hz inference, inference deadline, camera freshness,
 feedback/thermal/joint/stop guards are unchanged.
+
+
+## Per-frame broad background alignment, 0.3.41
+
+`HANDOFF_SCENE_REFERENCE=1`, `HANDOFF_SCENE_REFERENCE_REGION=background`
+enable an immutable first-frame reference using SIFT/L2 correspondences across
+the static background, including objects above the tabletop. The NX2 camera
+view's lower-left pickup/approaching-hand area and an independent 90 mm world
+region around the can are excluded. `table` remains the legacy ORB/table-only
+mode. Each new exposure fits one proper rigid correction and applies it to
+BOTH camera and measured robot FK. It never estimates alignment from the can,
+accumulates corrections, rebases an active path or falls back after fit loss.
+
+`HANDOFF_SCENE_FIT_RESIDUAL_MM` has default 6 and finite range (0,12] mm.
+This deployment uses 12 mm inlier/p95 error and 6 mm median fit error, doubling
+the former 6/3 mm allowances. Original minimum 30 correspondences/inliers,
+60% inlier ratio, 50 mm second-axis spread, 20 mm translation and 0.04 rad
+rotation bounds remain. These are background fit allowances; the existing
+10 mm pregrasp target displacement guard remains and uses the corrected center.
+The original collision, joint, thermal, stop, identity and 500 ms freshness
+guards remain, including post-grasp scene-pose freshness.
+
+Latest recorded-frame production replay: corrected displacement 1.888,3.411,
+4.214 mm over the final three source frames, with unchanged camera-relative FK.
+The rejected frame has 132/143 robust inliers, median residual 2.927 mm, p95
+9.071 mm. Local processing including geometry is about 51 ms for that frame;
+native performance and physical pickup are not established by this replay.

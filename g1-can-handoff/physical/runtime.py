@@ -239,6 +239,8 @@ class Runtime:
             "act_policy_parity": getattr(self, 'act_policy_parity', None),
             "act_training_placement_enforced": False,
             "scene_reference_enabled": os.getenv("HANDOFF_SCENE_REFERENCE", "0") == "1",
+            "scene_reference_region": os.getenv("HANDOFF_SCENE_REFERENCE_REGION", "table"),
+            "scene_fit_residual_mm": float(os.getenv("HANDOFF_SCENE_FIT_RESIDUAL_MM", "6")),
             "pose_alignment_max_skew_ms": max_pose_skew_ms(),
             "act_inference_budget_ms": (
                 inference_budget_ms()
@@ -432,10 +434,10 @@ class Runtime:
     def publish_tracking_observation(self, observation, vision, require_table):
         scene = None
         if os.getenv('HANDOFF_SCENE_REFERENCE', '0') == '1':
-            from scene_reference import validate_scene_transform
+            from scene_reference import validate_scene_transform, reference_source
             scene = vision.get('scene_pose')
             if (not isinstance(scene, dict)
-                    or scene.get('source') != 'independent_static_table_landmarks'
+                    or scene.get('source') != reference_source()
                     or scene.get('frame_id') != vision.get('frame_id')
                     or not scene.get('stream_id')
                     or scene.get('camera_serial') != self.camera.serial
