@@ -104,7 +104,7 @@ class TableSceneReference:
         import cv2
         cv2.setNumThreads(1)
         self.cv2 = cv2
-        self.detector = cv2.SIFT_create(nfeatures=1800)
+        self.detector = cv2.ORB_create(nfeatures=2000, fastThreshold=7)
         self.anchor = None
         self.center = None
 
@@ -154,7 +154,7 @@ class TableSceneReference:
         if frame['timestamp']<=a['timestamp'] or frame['meta']['frame_id']<=a['metadata']['frame_id']:
             raise RuntimeError('Static scene reference requires advancing exact frames')
         world,keypoints,descriptors=self._features(frame,config)
-        pairs=self.cv2.BFMatcher().knnMatch(a['descriptors'],descriptors,k=2)
+        pairs=self.cv2.BFMatcher(self.cv2.NORM_HAMMING).knnMatch(a['descriptors'],descriptors,k=2)
         source, reference=[],[]
         for pair in pairs:
             if len(pair)!=2:continue

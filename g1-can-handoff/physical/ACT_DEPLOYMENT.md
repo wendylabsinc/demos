@@ -98,3 +98,11 @@ Local validation: 83 affected tests pass. Full runtime replay of five exact
 recorded exposures reduces the failing frame's apparent XY drift from 10.037 mm
 to 2.312 mm. Shared camera/FK, invalid/stale pose rejection and 25 mm independent
 can displacement guard regressions pass. This is not physical pickup proof.
+
+
+Version 0.3.35 uses ORB/Hamming tabletop features to reduce registration cost.
+All rigid-fit, identity, spatial support, transform and freshness bounds remain
+unchanged. Three native motion-zero readiness observations finished at 391.5,
+336.5 and 379.4 ms exposure age, all below 500 ms. Exact saved-frame runtime replay
+reduces the failed estimate to 1.864 mm. These are readiness/replay measurements,
+not a physical pickup outcome.
