@@ -4,7 +4,9 @@ A phone-friendly page with hold-to-move buttons and the robot's camera. It is a
 plain ROS 2 app: it publishes `/cmd_vel` and `/api/sport/request` and shows
 `/camera/color/image_raw`. This is the same contract the WendyOS Go2 simulator
 and the WendyOS Go2 ROS 2 bridge (`go/ros2/go2-bridge` in WendyOS) provide, so
-it drives either one. It needs no robot key, serial or agent access.
+it drives either one. It needs no robot key, serial or agent access. Like the
+simulator examples it declares ROS 2 scope `peripherals` on domain 0, so it
+reaches the bridge on the device and nothing on the LAN reaches the robot.
 
 ```
 Browser ──WebSocket / MJPEG──▶ this app ──ROS 2──▶ Go2 bridge ──▶ Wendy agent ──▶ Go2
