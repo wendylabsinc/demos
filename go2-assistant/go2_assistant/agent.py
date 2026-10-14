@@ -57,7 +57,22 @@ TOOL_DESCRIPTIONS = {
 }
 
 
-def tool_definitions() -> list[dict[str, Any]]:
+def tool_definitions(capabilities: dict | None = None) -> list[dict[str, Any]]:
+    capabilities = capabilities or {}
+    enabled = set(TOOL_PARAMETERS)
+    if capabilities.get("spatial_people") is False:
+        enabled -= {"follow_person", "come_here"}
+    if capabilities.get("explore") is False:
+        enabled.discard("explore")
+    if capabilities.get("find_object") is False:
+        enabled.discard("find_object")
+    actions = list(ACTIONS)
+    if capabilities.get("posture") is False:
+        actions = [action for action in actions if action == "spin"]
+    if capabilities.get("spin") is False:
+        actions = [action for action in actions if action != "spin"]
+    if not actions:
+        enabled.discard("perform_action")
     return [
         {
             "type": "function",
@@ -70,7 +85,7 @@ def tool_definitions() -> list[dict[str, Any]]:
                     "properties": {
                         key: {"type": ["string", "null"] if key in OPTIONAL_ARGUMENTS.get(name, set()) else "string",
                               "description": description,
-                              **({"enum": list(ACTIONS)} if name == "perform_action" and key == "action" else {})}
+                              **({"enum": actions} if name == "perform_action" and key == "action" else {})}
                         for key, description in parameters.items()
                     },
                     "required": list(parameters),
@@ -78,7 +93,7 @@ def tool_definitions() -> list[dict[str, Any]]:
                 },
             },
         }
-        for name, parameters in TOOL_PARAMETERS.items()
+        for name, parameters in TOOL_PARAMETERS.items() if name in enabled
     ]
 
 
@@ -435,8 +450,9 @@ class RobotAgent:
                 remaining = deadline - time.monotonic()
                 if remaining <= 0:
                     raise RuntimeError("The conversation reached its time limit.")
+                capabilities = getattr(self.assistant.backend, "capabilities", None)
                 response = self.provider.complete(
-                    messages, tool_definitions(), timeout=min(self.provider.config.timeout, remaining)
+                    messages, tool_definitions(capabilities), timeout=min(self.provider.config.timeout, remaining)
                 )
                 calls = response.get("calls", [])
                 if not isinstance(calls, list) or len(calls) > 4 or len(executed) + len(calls) > 4:

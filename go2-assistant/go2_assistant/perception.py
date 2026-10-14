@@ -746,6 +746,145 @@ class OpticalFlowTracker:
         return [item for item in result if item["track_id"] not in lost], lost
 
 
+class RgbPerception:
+    """Bounded RGB-only recognition for cameras without metric depth.
+
+    Results deliberately contain image boxes but no map coordinates. They can
+    confirm that an object is visible, but cannot authorize person following or
+    manufacture a spatial object observation.
+    """
+
+    def __init__(self, detector=None, max_age=None, clock=time.monotonic):
+        provider = os.getenv("GO2_VISION_PROVIDER", "local")
+        if provider not in {"local", "yolos", "detr", "ollama"}:
+            raise ValueError("Vision provider must be local, detr, yolos or ollama")
+        self.detector = detector or (HybridDetector() if provider == "local" else YolosDetector()
+                                    if provider == "yolos" else DetrDetector()
+                                    if provider == "detr" else OllamaDetector())
+        self.provider = getattr(self.detector, "provider", "ollama")
+        self.model = getattr(self.detector, "model", "rgb-model")
+        self.selected_model = self.model
+        self.max_age = float(max_age if max_age is not None else os.getenv("GO2_VISION_MAX_AGE", "10"))
+        _number(self.max_age, "Vision maximum age", .1, 30)
+        self.clock = clock
+        self.lock = threading.RLock()
+        self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="go2-rgb-perception")
+        self.future = None
+        self.pending = None
+        self.target = None
+        self.generation = 0
+        self.last = None
+        self.error = None
+        self.closed = False
+
+    def set_target(self, label):
+        label = None if label is None else _text(label, "Search target", 160)
+        if label is not None and hasattr(self.detector, "target_class"):
+            self.detector.target_class(label)
+        selected = (self.detector.model_for_target(label)
+                    if hasattr(self.detector, "model_for_target") else self.model)
+        with self.lock:
+            if label != self.target:
+                self.target, self.selected_model = label, selected
+                self.generation += 1
+                self.last = None
+                self.error = None
+
+    @staticmethod
+    def _pose(value):
+        if not isinstance(value, dict) or not {"x", "y", "yaw"} <= set(value):
+            raise ValueError("RGB capture pose needs x, y and yaw")
+        result = {key: _number(value[key], "RGB capture pose") for key in ("x", "y", "yaw")}
+        return result
+
+    def submit(self, rgb, capture_pose, captured_at):
+        image = _rgb_image(rgb)
+        pose = self._pose(capture_pose)
+        captured_at = _number(captured_at, "Capture timestamp", 0)
+        with self.lock:
+            self._collect_locked()
+            if self.closed or not 0 <= self.clock() - captured_at <= self.max_age or self.future is not None:
+                return False
+            exposure = {"image": image, "pose": pose, "timestamp": captured_at,
+                        "target": self.target, "generation": self.generation,
+                        "model": self.selected_model, "started": self.clock()}
+            self.pending = exposure
+            self.future = self.executor.submit(self.detector.detect, image, self.target)
+            return True
+
+    def _collect_locked(self):
+        if self.future is None or not self.future.done():
+            return
+        future, exposure = self.future, self.pending
+        self.future = self.pending = None
+        if exposure["generation"] != self.generation:
+            return
+        try:
+            observation = future.result()
+            if not isinstance(observation, ModelObservation):
+                raise ValueError("Detector must return a validated model observation")
+            if not 0 <= self.clock() - exposure["timestamp"] <= self.max_age:
+                self.last = None
+                self.error = None
+                return
+            detections = []
+            for item in observation.detections:
+                if item.confidence < .55:
+                    continue
+                label = (exposure["target"].lower() if item.matches_target and exposure["target"] else item.label)
+                box_key = ":".join(str(round(value, 2)) for value in item.bbox)
+                detections.append({
+                    "label": label, "recognized_label": item.label,
+                    "track_id": f"visual:{label}:{box_key}", "bbox": list(item.bbox),
+                    "confidence": item.confidence, "timestamp": exposure["timestamp"],
+                    "capture_pose": dict(exposure["pose"]), "source": "vision:" + exposure["model"],
+                    "spatial": False, "matches_target": bool(item.matches_target),
+                })
+            room = None
+            if observation.room is not None:
+                room = {**observation.room, "timestamp": exposure["timestamp"],
+                        "capture_pose": dict(exposure["pose"]),
+                        "source": "vision:" + exposure["model"], "model": exposure["model"]}
+            self.last = {"timestamp": exposure["timestamp"], "capture_pose": dict(exposure["pose"]),
+                         "detections": detections, "room": room, "model": exposure["model"],
+                         "latency_s": self.clock() - exposure["started"]}
+            self.error = None
+        except Exception as error:
+            self.last = None
+            self.error = (str(error) if isinstance(error, PerceptionUnavailable)
+                          else "RGB vision request failed validation")
+
+    def poll(self, now=None):
+        with self.lock:
+            self._collect_locked()
+            now = self.clock() if now is None else _number(now, "Poll timestamp", 0)
+            age = now - self.last["timestamp"] if self.last else None
+            available = bool(self.last and 0 <= age <= self.max_age and not self.closed)
+            return {"state": "closed" if self.closed else "pending" if self.future else
+                    "error" if self.error else "ready" if available else "waiting",
+                    "provider": self.provider, "model": self.last["model"] if self.last else self.selected_model,
+                    "available": available, "pending": self.future is not None, "error": self.error,
+                    "capture_age_s": age, "captured_at": self.last["timestamp"] if self.last else None,
+                    "capture_pose": dict(self.last["capture_pose"]) if self.last else None,
+                    "latency_s": self.last["latency_s"] if self.last else None,
+                    "vocabulary": "fixed learned classes" if self.provider in {"local", "yolos", "detr"} else "vision-language",
+                    "spatial": False,
+                    "detections": json.loads(json.dumps(self.last["detections"])) if available else [],
+                    "room": json.loads(json.dumps(self.last["room"])) if available else None}
+
+    def status(self, now=None):
+        result = self.poll(now)
+        return {key: value for key, value in result.items() if key not in {"detections", "room"}}
+
+    def close(self, wait=False):
+        with self.lock:
+            self.closed = True
+            if self.future is not None:
+                self.future.cancel()
+            self.last = None
+        self.executor.shutdown(wait=wait, cancel_futures=True)
+
+
 class ModelPerception:
     """Pixel inference and tracking run off the renderer; snapshots never wait.
 

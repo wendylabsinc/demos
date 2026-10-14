@@ -18,6 +18,17 @@ def build_assistant(args):
             result = backend.arm()
             if not result['accepted']:
                 raise ValueError(result['reason'])
+    elif args.backend == 'air':
+        from .air import AirBackend
+        if not args.map_id:
+            raise ValueError('Go2 Air needs an explicit --map-id that changes after an odometry/map reset.')
+        mapping_path = args.mapping or str(Path(args.memory).with_suffix('.map.npz'))
+        backend = AirBackend(args.map_id, mapping_path=mapping_path)
+        memory = Memory(args.memory, args.map_id)
+        if args.arm:
+            result = backend.arm()
+            if not result['accepted']:
+                raise ValueError(result['reason'])
     else:
         if args.arm:
             raise ValueError('--arm is only for commissioned hardware.')
@@ -31,7 +42,7 @@ def build_assistant(args):
 def parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode', choices=['serve', 'demo', 'evaluate'], nargs='?', default='serve')
-    p.add_argument('--backend', choices=['sim', 'hardware'], default=os.getenv('GO2_BACKEND', 'sim'))
+    p.add_argument('--backend', choices=['sim', 'hardware', 'air'], default=os.getenv('GO2_BACKEND', 'sim'))
     p.add_argument('--memory', default=os.getenv('GO2_MEMORY', 'results/memory.sqlite3'))
     p.add_argument('--assets', default=os.getenv('GO2_ASSETS'))
     p.add_argument('--mapping', default=os.getenv('GO2_MAPPING'), help='Persistent sensor-built occupancy map')
@@ -45,7 +56,8 @@ def parser():
     p.add_argument('--map-id', default=os.getenv('GO2_MAP_ID'))
     p.add_argument('--navigator-url', default=os.getenv('GO2_NAVIGATOR_URL', 'http://127.0.0.1:3202'))
     p.add_argument('--motion-url', default=os.getenv('GO2_MOTION_URL', 'http://127.0.0.1:3201'))
-    p.add_argument('--arm', action='store_true', help='Operator arms commissioned hardware; still waits for a task command')
+    p.add_argument('--arm', action='store_true', default=os.getenv('GO2_ARM', '').lower() in {'1', 'true', 'yes'},
+                   help='Operator arms physical hardware after fresh sensors arrive; still waits for a task command')
     return p
 
 
@@ -54,7 +66,7 @@ def validate_args(args, p):
         p.error('Port must be between 1 and 65535.')
     if bool(args.ssl_certfile) != bool(args.ssl_keyfile):
         p.error('HTTPS needs both --ssl-certfile and --ssl-keyfile.')
-    if args.backend == 'hardware' and args.mode != 'serve':
+    if args.backend in {'hardware', 'air'} and args.mode != 'serve':
         p.error('Demo and evaluation are simulator-only.')
     if args.mode == 'serve' and args.host not in {'127.0.0.1', 'localhost', '::1'} and not os.getenv('GO2_HTTP_TOKEN'):
         p.error('Set GO2_HTTP_TOKEN before exposing the phone server beyond localhost.')

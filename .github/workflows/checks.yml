@@ -37,7 +37,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install lightweight test dependencies
-        run: python -m pip install 'numpy==1.26.4' 'pytest>=8,<9' 'scipy>=1.15,<2'
+        run: python -m pip install 'numpy==1.26.4' 'pytest>=8,<9' 'scipy>=1.15,<2' 'Pillow==11.3.0' 'opencv-python-headless==4.11.0.86'
       - name: Go2 vision agent and transport
         working-directory: go2-showcase
         run: |
@@ -56,7 +56,7 @@ jobs:
         run: python -m unittest discover -s tests -p test_faults.py -v
       - name: Go2 assistant control, mapping, and hardware adapter
         working-directory: go2-assistant
-        run: python -m pytest tests/test_core.py tests/test_hardware.py tests/test_mapping.py -q
+        run: python -m pytest tests/test_air.py tests/test_core.py tests/test_hardware.py tests/test_mapping.py -q
       - name: Drone perception
         working-directory: ConstructionDroneMujoco
         run: python -m pytest tests/test_perception.py -q
