@@ -130,7 +130,9 @@ def _compact(value, depth=0):
 def compact_sensors(sensors):
     state = _json_safe(sensors)
     allowed = {'x', 'y', 'yaw', 'pose', 'fresh', 'scan_fresh', 'front_clearance',
-               'sensor_ages', 'motion', 'executor', 'healthy', 'capture_id'}
+               'front_coverage_complete', 'scan_coverage_complete', 'scan_coverage',
+               'scan_gaps_allowed', 'sensor_ages', 'motion', 'executor', 'healthy',
+               'capture_id'}
     summary = _compact({key: val for key, val in state.items() if key in allowed})
     rays = state.get('scan_sectors', state.get('sectors', []))
     buckets = {}

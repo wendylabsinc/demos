@@ -1,8 +1,8 @@
-"""ROS sensor bridge and separate Unitree SDK motion process.
+"""ROS sensor transports for the Go2 Air bridge and legacy Go2 EDU.
 
-No motion at startup. Every motion request needs fresh pose, scan and camera.
-Topic defaults come from Wendy's checked-in unitree-sim2real bridge. Hardware
-requires an existing ROS sensor bridge and an explicit network interface.
+No motion occurs at startup. Every motion request needs fresh pose, obstacle and
+camera observations. The Air uses the Wendy Go2 bridge's ROS 2 contract; the
+legacy hardware profile retains its separate Unitree SDK motion worker.
 """
 import json
 import math
@@ -11,6 +11,15 @@ import subprocess
 import sys
 import threading
 import time
+
+
+def _enabled(name):
+    value = os.getenv(name, "").strip().lower()
+    if value in ("", "0", "false", "no"):
+        return False
+    if value in ("1", "true", "yes"):
+        return True
+    raise ValueError(f"{name} must be true or false")
 
 
 class SafetyGate:
@@ -26,7 +35,7 @@ class SafetyGate:
 
     def arm(self, now):
         if not self.fresh(now):
-            raise RuntimeError('Fresh pose, scan and camera are required')
+            raise RuntimeError('Fresh pose, obstacle data and camera are required')
         self.armed = True
         self.fault = ''
 
@@ -38,19 +47,25 @@ class SafetyGate:
 
 
 class ROSTransport:
-    def __init__(self, profile='sim'):
+    def __init__(self, profile='ros-sim'):
         import rclpy
         from geometry_msgs.msg import Twist
         from nav_msgs.msg import Odometry
-        from sensor_msgs.msg import LaserScan, Image, CameraInfo
         from rclpy.qos import qos_profile_sensor_data
+        from sensor_msgs.msg import Image
+
         self.profile = profile
+        self.bridge_contract = profile in ('air', 'ros-sim')
         self.rclpy = rclpy
         self.Twist = Twist
         self.lock = threading.RLock()
         self.gate = SafetyGate(float(os.getenv('SENSOR_MAX_AGE', '.6')))
         self.pose = (0., 0., 0.)
         self.scan = ()
+        self.scan_coverage_flags = ()
+        self.scan_error = None
+        self.allow_scan_gaps = _enabled('GO2_ALLOW_SCAN_GAPS') if self.bridge_contract else False
+        self.latest_odom = None
         self.depth = self.rgb = self.intrinsics = None
         self.preview = None
         self.stamps = {}
@@ -61,25 +76,36 @@ class ROSTransport:
         rclpy.init()
         from rclpy.parameter import Parameter
         self.node = rclpy.create_node('go2_showcase', parameter_overrides=[
-            Parameter('use_sim_time', Parameter.Type.BOOL, profile == 'sim')])
-        self.publisher = self.node.create_publisher(Twist, os.getenv('CMD_TOPIC', '/go2/cmd_vel'), 10)
-        topics = [(Odometry, 'ODOM_TOPIC', '/go2/odom', self._odom),
-                  (LaserScan, 'SCAN_TOPIC', '/go2/scan', self._scan),
-                  (Image, 'RGB_TOPIC', '/go2/front_camera/image_raw', self._rgb),
-                  (Image, 'DEPTH_TOPIC', '/go2/front_camera/depth/image_raw', self._depth),
-                  (CameraInfo, 'CAMERA_INFO_TOPIC', '/go2/front_camera/camera_info', self._info)]
-        self.topic_names = {}
+            Parameter('use_sim_time', Parameter.Type.BOOL, False)])
+        command_topic = os.getenv('CMD_TOPIC', '/cmd_vel' if self.bridge_contract else '/go2/cmd_vel')
+        self.publisher = self.node.create_publisher(Twist, command_topic, 10)
+        self.topic_names = {'CMD_TOPIC': command_topic}
         self.subs = []
+
+        if self.bridge_contract:
+            from sensor_msgs.msg import PointCloud2
+            topics = [(Odometry, 'ODOM_TOPIC', '/utlidar/robot_odom', self._odom),
+                      (PointCloud2, 'CLOUD_TOPIC', '/utlidar/cloud_base', self._cloud),
+                      (Image, 'RGB_TOPIC', '/camera/color/image_raw', self._rgb)]
+        else:
+            from sensor_msgs.msg import CameraInfo, LaserScan
+            topics = [(Odometry, 'ODOM_TOPIC', '/go2/odom', self._odom),
+                      (LaserScan, 'SCAN_TOPIC', '/go2/scan', self._scan),
+                      (Image, 'RGB_TOPIC', '/go2/front_camera/image_raw', self._rgb),
+                      (Image, 'DEPTH_TOPIC', '/go2/front_camera/depth/image_raw', self._depth),
+                      (CameraInfo, 'CAMERA_INFO_TOPIC', '/go2/front_camera/camera_info', self._info)]
         for kind, key, default, callback in topics:
             topic = os.getenv(key, default)
             self.topic_names[key] = topic
             self.subs.append(self.node.create_subscription(kind, topic, callback, qos_profile_sensor_data))
+
         if profile == 'hardware':
             if not os.getenv('UNITREE_INTERFACE'):
-                raise RuntimeError('Set UNITREE_INTERFACE to the confirmed robot network interface')
+                raise RuntimeError('Set UNITREE_INTERFACE to the confirmed EDU robot network interface')
             if not all(os.getenv(key) for key in ('ODOM_TOPIC', 'SCAN_TOPIC', 'RGB_TOPIC')):
-                raise RuntimeError('Hardware requires measured ROS pose, scan and RGB camera topic settings')
-            self.sdk = subprocess.Popen([sys.executable, '-m', 'showcase.transport', '--sdk-worker'], stdin=subprocess.PIPE, text=True, bufsize=1)
+                raise RuntimeError('EDU hardware requires measured ROS pose, scan and RGB topic settings')
+            self.sdk = subprocess.Popen([sys.executable, '-m', 'showcase.transport', '--sdk-worker'],
+                                        stdin=subprocess.PIPE, text=True, bufsize=1)
         self.thread = threading.Thread(target=self._run, daemon=True)
         self.thread.start()
 
@@ -98,28 +124,67 @@ class ROSTransport:
             p, q = msg.pose.pose.position, msg.pose.pose.orientation
             vals = (p.x, p.y, q.x, q.y, q.z, q.w)
             norm = q.x*q.x+q.y*q.y+q.z*q.z+q.w*q.w
-            if not all(math.isfinite(v) for v in vals) or not .9 < norm < 1.1:
+            frames_invalid = (msg.header.frame_id != 'odom' or msg.child_frame_id != 'base_link')
+            if ((self.bridge_contract and frames_invalid)
+                    or not all(math.isfinite(v) for v in vals) or not .9 < norm < 1.1):
                 self.gate.timestamps.pop('pose', None)
+                self.latest_odom = None
                 return
             if self._capture('pose', msg):
-                self.pose = (p.x, p.y, math.atan2(2*(q.w*q.z+q.x*q.y), 1-2*(q.y*q.y+q.z*q.z)))
+                self.pose = (p.x, p.y, math.atan2(2*(q.w*q.z+q.x*q.y),
+                                                  1-2*(q.y*q.y+q.z*q.z)))
+                self.latest_odom = msg
 
     def _scan(self, msg):
+        """Legacy LaserScan input used only by the EDU profile."""
         with self.lock:
             if not self._capture('scan', msg):
                 return
-            rays = tuple((msg.angle_min+i*msg.angle_increment, float(r)) for i, r in enumerate(msg.ranges))
-            # NaNs or inadequate frontal coverage are observation faults.
+            rays = tuple((msg.angle_min+i*msg.angle_increment, float(r))
+                         for i, r in enumerate(msg.ranges))
             frontal = [r for a, r in rays if abs(math.atan2(math.sin(a), math.cos(a))) < .45]
-            if len(frontal) < 8 or sum((math.isfinite(r) and msg.range_min <= r <= msg.range_max) or r == math.inf for r in frontal) < .9*len(frontal):
+            valid = lambda r: ((math.isfinite(r) and msg.range_min <= r <= msg.range_max)
+                               or r == math.inf)
+            if len(frontal) < 8 or sum(valid(r) for r in frontal) < .9*len(frontal):
                 self.gate.timestamps.pop('scan', None)
+                return
             self.scan = rays
+            self.scan_coverage_flags = tuple(valid(r) for _, r in rays)
+            self.scan_error = None
+
+    def _cloud(self, msg):
+        """Convert the Air bridge's occupied voxel cloud without inventing free space."""
+        from .pointcloud import project_cloud
+        with self.lock:
+            if not self._capture('scan', msg):
+                return
+            if self.latest_odom is None:
+                self.gate.timestamps.pop('scan', None)
+                self.scan_error = 'waiting for matching odometry'
+                return
+            try:
+                projected = project_cloud(msg, self.latest_odom)
+            except (ValueError, TypeError, AttributeError, OverflowError) as exc:
+                self.gate.timestamps.pop('scan', None)
+                self.scan = ()
+                self.scan_coverage_flags = ()
+                self.scan_error = str(exc)
+                return
+            self.scan_coverage_flags = projected.coverage
+            self.scan = tuple((projected.angle_min+i*projected.angle_increment, distance)
+                              for i, distance in enumerate(projected.ranges)
+                              if math.isfinite(distance))
+            self.scan_error = None
 
     def _rgb(self, msg):
         from .perception import decode_image
         with self.lock:
             if self._capture('camera', msg):
-                self.rgb = decode_image(msg)
+                try:
+                    self.rgb = decode_image(msg)
+                except (ValueError, TypeError):
+                    self.gate.timestamps.pop('camera', None)
+                    return
                 self.preview = self.rgb
                 self.capture_id += 1
 
@@ -158,13 +223,33 @@ class ROSTransport:
                     px, py = x+r*math.cos(yaw+a), y+r*math.sin(yaw+a)
                     voxels.setdefault((round(px/.2), round(py/.2)), (px, py, .12))
             obstacles = tuple(list(voxels.values())[:200])
-            front = [r for a, r in self.scan if abs(math.atan2(math.sin(a), math.cos(a))) < .45 and r > 0]
             sectors = tuple((math.atan2(math.sin(a), math.cos(a)), min(12., r))
                             for a, r in self.scan if r > 0 and not math.isnan(r))
+            coverage = self.scan_coverage_flags
+            if self.bridge_contract:
+                front_indices = [i for i in range(len(coverage))
+                                 if abs(math.atan2(math.sin(-math.pi+i*2*math.pi/len(coverage)),
+                                                  math.cos(-math.pi+i*2*math.pi/len(coverage)))) < .45]
+                front_complete = bool(front_indices) and all(coverage[i] for i in front_indices)
+                front = [r for a, r in sectors
+                         if abs(math.atan2(math.sin(a), math.cos(a))) < .45]
+                front_clearance = min(front) if front and (front_complete or self.allow_scan_gaps) else None
+                scan_complete = bool(coverage) and all(coverage)
+                coverage_ratio = sum(coverage)/len(coverage) if coverage else 0.
+            else:
+                front = [r for a, r in sectors
+                         if abs(math.atan2(math.sin(a), math.cos(a))) < .45]
+                front_clearance = min(front) if front else None
+                front_complete = scan_complete = True
+                coverage_ratio = 1.
             return Observation(x=x, y=y, yaw=yaw, fresh=self.gate.fresh(now),
                                scan_fresh=now-self.gate.timestamps.get('scan', -math.inf) < self.gate.max_age,
                                obstacles=obstacles, detections=(), sectors=sectors, gesture=None,
-                               front_clearance=min(12., min(front)) if front else None)
+                               front_clearance=front_clearance,
+                               front_coverage_complete=front_complete,
+                               scan_coverage_complete=scan_complete,
+                               scan_coverage=coverage_ratio,
+                               scan_gaps_allowed=self.allow_scan_gaps)
 
     def arm(self):
         with self.lock:
@@ -175,7 +260,8 @@ class ROSTransport:
             if self.sdk.poll() is not None:
                 self.gate.armed = False
                 raise RuntimeError('Unitree SDK worker exited')
-            self.sdk.stdin.write(json.dumps({'sent_at': time.monotonic(), 'velocity': [vx, vy, wz]})+'\n')
+            self.sdk.stdin.write(json.dumps({'sent_at': time.monotonic(),
+                                             'velocity': [vx, vy, wz]})+'\n')
             self.sdk.stdin.flush()
         else:
             msg = self.Twist()
@@ -193,11 +279,12 @@ class ROSTransport:
                 return False
             obs = self.read()
             vx = max(0., min(.55, command.vx))
-            # No strafing or reverse; SDK vendor avoidance does not protect Move.
+            # No strafing or reverse. The bridge's Move path has no obstacle avoidance.
             wz = max(-.6, min(.6, command.yaw_rate))
             if obs.front_clearance is None or obs.front_clearance < .65:
                 vx = 0.
-            if wz and any(r < .45 for a, r in obs.sectors):
+            if wz and (not obs.scan_coverage_complete and not obs.scan_gaps_allowed
+                       or any(r < .45 for _, r in obs.sectors)):
                 wz = 0.
             self.last_command = time.monotonic()
             self._write(vx, 0., wz)
@@ -211,11 +298,14 @@ class ROSTransport:
     def status(self):
         with self.lock:
             now = time.monotonic()
+            coverage = self.scan_coverage_flags
             return {'profile': self.profile, 'armed': self.gate.armed, 'fault': self.gate.fault,
                     'ready': self.gate.fresh(now), 'topics': self.topic_names,
                     'sensor_ages': {k: round(now-v, 3) for k, v in self.gate.timestamps.items()},
                     'vision': 'Raw RGB camera frame sent to configured vision model',
-                    'capture_id': self.capture_id}
+                    'capture_id': self.capture_id, 'scan_error': self.scan_error,
+                    'scan_coverage': round(sum(coverage)/len(coverage), 3) if coverage else 0,
+                    'scan_gaps_allowed': self.allow_scan_gaps}
 
     def sensor_snapshot(self):
         """Only measured navigation data; no object labels or fixture positions."""
@@ -227,6 +317,10 @@ class ROSTransport:
                 sectors[index] = min(sectors.get(index, 12.), distance)
             return {'pose': {'x': obs.x, 'y': obs.y, 'yaw': obs.yaw},
                     'front_clearance': obs.front_clearance,
+                    'front_coverage_complete': obs.front_coverage_complete,
+                    'scan_coverage_complete': obs.scan_coverage_complete,
+                    'scan_coverage': obs.scan_coverage,
+                    'scan_gaps_allowed': obs.scan_gaps_allowed,
                     'scan_sectors': [[-math.pi+(index+.5)*2*math.pi/18, distance]
                                      for index, distance in sorted(sectors.items())],
                     'healthy': obs.fresh, 'fresh': obs.fresh, 'scan_fresh': obs.scan_fresh,
@@ -257,14 +351,14 @@ class ROSTransport:
         self.rclpy.shutdown()
 
 
-def build_transport(profile='sim'):
-    if profile not in ('sim', 'ros-sim', 'hardware'):
-        raise ValueError('ROS transport profile must be ros-sim or hardware')
-    return ROSTransport('sim' if profile == 'ros-sim' else profile)
+def build_transport(profile='ros-sim'):
+    if profile not in ('ros-sim', 'air', 'hardware'):
+        raise ValueError('ROS transport profile must be ros-sim, air or hardware')
+    return ROSTransport(profile)
 
 
 def sdk_worker():
-    """SDK process has an independent .35 second input watchdog."""
+    """Legacy EDU SDK process with an independent .35 second input watchdog."""
     import select
     from unitree_sdk2py.core.channel import ChannelFactoryInitialize
     from unitree_sdk2py.go2.sport.sport_client import SportClient

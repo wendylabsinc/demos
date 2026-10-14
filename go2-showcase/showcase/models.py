@@ -30,7 +30,11 @@ class Observation:
     gesture: Optional[str] = None
     front_clearance: Optional[float] = None
     scan_fresh: bool = False
-    sectors: tuple = ()  # robot-relative bearing, clearance
+    sectors: tuple = ()  # measured robot-relative bearing, clearance
+    front_coverage_complete: bool = True
+    scan_coverage_complete: bool = True
+    scan_coverage: float = 1.0
+    scan_gaps_allowed: bool = False
 
 
 @dataclass(frozen=True)

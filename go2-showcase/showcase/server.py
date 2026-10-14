@@ -298,7 +298,7 @@ def handler(runtime):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--profile", choices=["sim", "ros-sim", "hardware"], default=os.getenv("GO2_PROFILE", "sim"))
+    parser.add_argument("--profile", choices=["sim", "ros-sim", "air", "hardware"], default=os.getenv("GO2_PROFILE", "sim"))
     parser.add_argument("--host", default=os.getenv("GO2_HTTP_HOST", "127.0.0.1"))
     parser.add_argument("--port", type=int, default=int(os.getenv("GO2_HTTP_PORT", "8788")))
     args = parser.parse_args()
