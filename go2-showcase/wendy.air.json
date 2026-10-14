@@ -17,6 +17,7 @@
   ],
   "env": {
     "GO2_PROFILE": "air",
+    "GO2_ALLOW_SCAN_GAPS": "true",
     "GO2_HTTP_HOST": "0.0.0.0",
     "GO2_HTTP_PORT": "8788"
   },

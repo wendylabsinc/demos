@@ -74,12 +74,12 @@ simulator.
 
 The Air sends an accumulated occupied-voxel map rather than raw lidar scans.
 The app projects body-height points into five-degree obstacle sectors. Missing
-sectors are unknown, not clear. By default a complete measured front corridor
-is required for forward motion and complete coverage is required to rotate.
-This can deliberately stop the showcase in a wide or sparsely mapped room.
-`--env GO2_ALLOW_SCAN_GAPS=true` permits measured partial coverage, matching the
-simulator examples' compatibility policy, but cannot protect against obstacles
-in unobserved directions.
+sectors remain unknown, not fabricated clear space. Because the short-range map
+leaves gaps in wide rooms, the Air profile defaults to
+`GO2_ALLOW_SCAN_GAPS=true`: motion still needs measured front clearance and
+measured turn sectors, but it cannot protect against obstacles in unobserved
+directions. Set `--env GO2_ALLOW_SCAN_GAPS=false` to require a complete measured
+front corridor for forward motion and complete coverage for rotation.
 
 ## Go2 EDU legacy profile
 
