@@ -210,12 +210,27 @@ verifies that this app is the only `/cmd_vel` publisher, and still waits for a
 user task. The bridge's command expiry provides an additional stop after 500 ms,
 while this app refreshes an active command at 20 Hz.
 
+The local RGB models are not downloaded during the container build. Run
+`python3 scripts/prepare_assets.py` and then
+`python3 scripts/prepare_assets.py --check` **before** `wendy run` so the
+ignored `assets/vision/` directory is copied into the image. Without those
+assets, Air mapping, camera preview and navigation still run, but local object
+recognition reports unavailable and object searches stop rather than guessing.
+Alternatively, configure the documented `ollama` vision provider and a trusted
+reachable endpoint.
+
 ## Go2 Air integration status
 
 The ROS adapter and controller are tested with synthetic odometry, accumulated
-voxel maps, camera inputs and recorded command sinks. The Go2 bridge's fake robot
-and the managed simulator are the integration targets before physical use. No
-physical Go2 was accessed or moved while adding this backend.
+voxel maps, camera inputs and recorded command sinks. A first supervised hardware
+run confirmed the page, live camera and sensor map, then exposed callback lag:
+large voxel updates on a single ROS executor thread could drop the matching
+odometry sample and falsely disarm. The adapter now gives odometry, cloud and
+camera independent executor lanes, waits briefly for odometry to reach each
+cloud stamp, integrates voxels without holding the backend state lock, and skips
+a single unpaired cloud. Repeated pairing failures still make the map stale and
+stop motion. This fix awaits supervised hardware re-test; no device was accessed
+or moved while implementing it.
 
 Air motion uses a fixed 0.55 m/s forward request because the physical robot
 ignores lower forward speeds. It turns before walking, requires a current route

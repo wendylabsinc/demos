@@ -1,6 +1,7 @@
 """Go2 Air tests use synthetic ROS-shaped inputs and never contact hardware."""
 from types import SimpleNamespace
 import math
+import threading
 import time
 
 import numpy as np
@@ -104,6 +105,82 @@ def test_stale_voxels_latch_fault_and_zero_motion():
     assert backend.navigate(1., 0.)["accepted"]
     backend.tick()
     clock[0] += .6
+    backend.tick()
+    assert backend.status()["state"] == "fault"
+    assert backend.status()["armed"] is False
+    assert commands[-1] == (0., 0., 0.)
+
+
+def test_cloud_waits_for_matching_odom_and_slow_mapping_does_not_block_new_odom():
+    started, release = threading.Event(), threading.Event()
+
+    class SlowMapper(OccupancyMapper):
+        def update_voxels(self, *args, **kwargs):
+            started.set()
+            if not release.wait(1):
+                raise RuntimeError("test mapper release timed out")
+            return super().update_voxels(*args, **kwargs)
+
+    now = [100.]
+    backend = AirBackend("air-rates", mapper=SlowMapper(robot_radius=.22, map_id="air-rates"),
+                         perception=Vision(), clock=lambda: now[0], start_ros=False)
+    backend.update_odometry(0., 0., (0., 0., 0., 1.), 1_000_000_000, now[0])
+    outcome = []
+
+    def cloud_callback():
+        try:
+            outcome.append(backend.update_voxels(
+                room_voxels(), 1_050_000_000, now[0], pair_timeout=.25))
+        except Exception as error:  # surfaced by the assertion below
+            outcome.append(error)
+
+    cloud = threading.Thread(target=cloud_callback)
+    cloud.start()
+    time.sleep(.02)
+    assert outcome == []  # the 7.5 Hz cloud is held for its exact 20 Hz odometry stamp
+    backend.update_odometry(0., 0., (0., 0., 0., 1.), 1_050_000_000, now[0])
+    try:
+        assert started.wait(.2)
+        odom_done = threading.Event()
+
+        def later_odom_callback():
+            backend.update_odometry(0., 0., (0., 0., 0., 1.), 1_100_000_000, now[0])
+            odom_done.set()
+
+        later_odom = threading.Thread(target=later_odom_callback)
+        later_odom.start()
+        assert odom_done.wait(.2), "odometry callback was blocked by voxel integration"
+        later_odom.join(timeout=1)
+    finally:
+        release.set()
+        cloud.join(timeout=1)
+    assert outcome == [True]
+    assert backend.status()["voxel_pairing"] == {"processing": False, "skipped_unpaired": 0}
+
+
+def test_one_unpaired_cloud_is_skipped_without_disarming_and_can_be_retried():
+    backend, commands, clock = ready_backend()
+    assert backend.arm(timeout=0)["accepted"]
+    clock[0] += .05
+    source = 1_050_000_000
+    assert backend.update_voxels(room_voxels(), source, clock[0], pair_timeout=.01) is False
+    assert backend.status()["armed"] is True
+    assert backend.status()["voxel_pairing"]["skipped_unpaired"] == 1
+    assert backend.status()["sensor_errors"] == {}
+    backend.update_odometry(0., 0., (0., 0., 0., 1.), source, clock[0])
+    assert backend.update_voxels(room_voxels(), source, clock[0]) is True
+    assert backend.status()["armed"] is True
+    assert not any(command[0] for command in commands)
+
+
+def test_unpaired_clouds_still_stop_motion_when_last_good_map_expires():
+    backend, commands, clock = ready_backend()
+    assert backend.arm(timeout=0)["accepted"]
+    assert backend.navigate(1., 0.)["accepted"]
+    clock[0] += .1
+    assert backend.update_voxels(
+        room_voxels(), 1_100_000_000, clock[0], pair_timeout=.01) is False
+    clock[0] += .5
     backend.tick()
     assert backend.status()["state"] == "fault"
     assert backend.status()["armed"] is False

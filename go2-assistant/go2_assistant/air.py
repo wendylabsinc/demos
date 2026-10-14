@@ -154,12 +154,17 @@ class AirBackend:
         self.perception = perception if perception is not None else RgbPerception()
         self.clock = clock
         self.lock = threading.RLock()
+        self._odom_ready = threading.Condition(self.lock)
+        self._cloud_update_lock = threading.Lock()
         self._command_sink = command_sink or (lambda command: None)
         self._writer_count = writer_count or (lambda: 1)
         self._ros = None
         self._odom = deque(maxlen=32)
         self._last_source = {}
         self._cloud_at = None
+        self._cloud_processing = False
+        self._cloud_processing_since = None
+        self._skipped_clouds = 0
         self._camera_at = None
         self._scan_ranges = None
         self._scan_angles = None
@@ -181,7 +186,7 @@ class AirBackend:
         self._last_source[key] = source_ns
 
     def update_odometry(self, x, y, quaternion, source_ns, captured_at):
-        with self.lock:
+        with self._odom_ready:
             self._advance("odom", source_ns)
             x, y = _finite(x, "odometry x"), _finite(y, "odometry y")
             captured_at = _finite(captured_at, "odometry capture")
@@ -192,40 +197,75 @@ class AirBackend:
             self._odom.append({"source_ns": int(source_ns), "captured": captured_at,
                                "pose": (x, y, yaw), "level": level})
             self._sensor_errors.pop("odom", None)
+            self._odom_ready.notify_all()
             return True
 
-    def _paired_odom(self, source_ns):
-        if not self._odom:
-            raise ValueError("Voxel map is waiting for odometry")
+    def _wait_for_paired_odom(self, source_ns, timeout):
+        """Wait until odometry reaches a cloud stamp; caller holds _odom_ready."""
+        deadline = time.monotonic() + timeout
+        while not self._odom or self._odom[-1]["source_ns"] < source_ns:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return None
+            self._odom_ready.wait(remaining)
         sample = min(self._odom, key=lambda item: abs(item["source_ns"] - source_ns))
         if abs(sample["source_ns"] - source_ns) > 100_000_000:
-            raise ValueError("Voxel map and odometry differ by more than 100 ms")
-        return sample
+            return None
+        return {"source_ns": sample["source_ns"], "captured": sample["captured"],
+                "pose": tuple(sample["pose"]), "level": sample["level"].copy()}
 
-    def update_voxels(self, points, source_ns, captured_at):
-        with self.lock:
-            self._advance("cloud", source_ns)
-            captured_at = _finite(captured_at, "voxel capture")
-            odom = self._paired_odom(int(source_ns))
-            leveled = np.asarray(points, dtype=np.float64) @ odom["level"].T
-            result = self.mapper.update_voxels(leveled, odom["pose"], timestamp=captured_at)
-            self._scan_ranges = result["ranges"]
-            self._scan_angles = np.linspace(-math.pi, math.pi, len(self._scan_ranges), endpoint=False)
-            self._cloud_at = captured_at
-            self._sensor_errors.pop("cloud", None)
-            self._refresh_route()
-            return True
+    def update_voxels(self, points, source_ns, captured_at, *, pair_timeout=.25):
+        """Pair one cloud after odometry catches up, then integrate off the state lock.
+
+        A single cloud without a matching odometry sample is skipped. Sustained
+        pairing failure still makes the last successful cloud stale and stops
+        motion through the normal readiness deadline.
+        """
+        source_ns = int(source_ns)
+        captured_at = _finite(captured_at, "voxel capture")
+        pair_timeout = _finite(pair_timeout, "voxel pairing timeout")
+        if not 0 <= pair_timeout <= 1.:
+            raise ValueError("Voxel pairing timeout must be between zero and one second")
+        with self._cloud_update_lock:
+            with self._odom_ready:
+                if source_ns <= self._last_source.get("cloud", -1):
+                    raise ValueError("cloud capture did not advance")
+                self._cloud_processing = True
+                self._cloud_processing_since = self.clock()
+            try:
+                with self._odom_ready:
+                    odom = self._wait_for_paired_odom(source_ns, pair_timeout)
+                    if odom is None:
+                        self._skipped_clouds += 1
+                        return False
+                    self._advance("cloud", source_ns)
+                leveled = np.asarray(points, dtype=np.float64) @ odom["level"].T
+                result = self.mapper.update_voxels(leveled, odom["pose"], timestamp=captured_at)
+                with self.lock:
+                    self._scan_ranges = result["ranges"]
+                    self._scan_angles = np.linspace(
+                        -math.pi, math.pi, len(self._scan_ranges), endpoint=False)
+                    self._cloud_at = captured_at
+                    self._sensor_errors.pop("cloud", None)
+                    self._refresh_route()
+                return True
+            finally:
+                with self.lock:
+                    self._cloud_processing = False
+                    self._cloud_processing_since = None
 
     def update_camera(self, image, source_ns, captured_at):
+        captured_at = _finite(captured_at, "camera capture")
+        frame = Image.fromarray(np.asarray(image, dtype=np.uint8), mode="RGB")
         with self.lock:
             self._advance("camera", source_ns)
-            captured_at = _finite(captured_at, "camera capture")
             if not self._odom:
                 raise ValueError("Camera is waiting for odometry")
             pose = dict(zip(("x", "y", "yaw"), self._odom[-1]["pose"]))
-            self._frame = Image.fromarray(np.asarray(image, dtype=np.uint8), mode="RGB")
+        self.perception.submit(frame, pose, captured_at)
+        with self.lock:
+            self._frame = frame
             self._camera_at = captured_at
-            self.perception.submit(self._frame, pose, captured_at)
             self._sensor_errors.pop("camera", None)
             return True
 
@@ -244,7 +284,11 @@ class AirBackend:
         now = self.clock()
         if not self._odom or not 0 <= now - self._odom[-1]["captured"] <= .5:
             return "Odometry is unavailable or stale"
-        if self._cloud_at is None or not 0 <= now - self._cloud_at <= .5:
+        cloud_fresh = self._cloud_at is not None and 0 <= now - self._cloud_at <= .5
+        processing_grace = (self._cloud_at is not None and self._cloud_processing
+                            and self._cloud_processing_since is not None
+                            and 0 <= now - self._cloud_processing_since <= .5)
+        if not cloud_fresh and not processing_grace:
             return "Voxel map is unavailable or stale"
         if not self.mapper.localization.get("valid"):
             return "Voxel map localization is not ready"
@@ -429,6 +473,13 @@ class AirBackend:
             if not self._armed:
                 self._publish((0., 0., 0.))
                 return self.status()
+            if self._cloud_processing:
+                if (self._cloud_processing_since is None
+                        or self.clock() - self._cloud_processing_since > .5):
+                    self._fault("Voxel map processing exceeded 500 ms")
+                else:
+                    self._publish((0., 0., 0.))
+                return self.status()
             self._publish(self._motion())
             return self.status()
 
@@ -450,6 +501,8 @@ class AirBackend:
                     "perception": "learned RGB recognition without metric depth",
                     "spatial_perception": False, "front_coverage": coverage,
                     "front_clearance": clearance, "sensor_errors": dict(self._sensor_errors),
+                    "voxel_pairing": {"processing": self._cloud_processing,
+                                      "skipped_unpaired": self._skipped_clouds},
                     "capabilities": dict(self.capabilities)}
 
     def frame(self, view="robot"):
@@ -476,6 +529,8 @@ class AirRosAdapter:
         import rclpy
         from geometry_msgs.msg import Twist
         from nav_msgs.msg import Odometry
+        from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
+        from rclpy.executors import MultiThreadedExecutor
         from rclpy.qos import QoSProfile, ReliabilityPolicy
         from sensor_msgs.msg import Image as RosImage, PointCloud2
 
@@ -486,12 +541,20 @@ class AirRosAdapter:
         self.node = rclpy.create_node("wendy_go2_assistant_air")
         sensors = QoSProfile(depth=1, reliability=ReliabilityPolicy.BEST_EFFORT)
         self.publisher = self.node.create_publisher(Twist, "/cmd_vel", QoSProfile(depth=1))
-        self.node.create_subscription(Odometry, "/odom", self._odom, sensors)
-        self.node.create_subscription(PointCloud2, "/utlidar/cloud_base", self._cloud, sensors)
-        self.node.create_subscription(RosImage, "/camera/color/image_raw", self._camera, sensors)
+        self.callback_groups = [MutuallyExclusiveCallbackGroup() for _ in range(3)]
+        self.subscriptions = [
+            self.node.create_subscription(Odometry, "/odom", self._odom, sensors,
+                                          callback_group=self.callback_groups[0]),
+            self.node.create_subscription(PointCloud2, "/utlidar/cloud_base", self._cloud, sensors,
+                                          callback_group=self.callback_groups[1]),
+            self.node.create_subscription(RosImage, "/camera/color/image_raw", self._camera, sensors,
+                                          callback_group=self.callback_groups[2]),
+        ]
         backend._command_sink = self.publish
         backend._writer_count = self.writer_count
-        self.thread = threading.Thread(target=rclpy.spin, args=(self.node,),
+        self.executor = MultiThreadedExecutor(num_threads=3)
+        self.executor.add_node(self.node)
+        self.thread = threading.Thread(target=self.executor.spin,
                                        name="go2-air-ros2", daemon=True)
         self.thread.start()
 
@@ -513,6 +576,8 @@ class AirRosAdapter:
     def _cloud(self, message):
         try:
             source, captured = self._captured(message)
+            # A missing pair is a safe skipped sample, not a malformed sensor.
+            # Persistent skips still trip the backend's 500 ms stale-map guard.
             self.backend.update_voxels(point_cloud_xyz(message), source, captured)
         except Exception as error:
             self.backend.sensor_error("cloud", error)
@@ -536,7 +601,8 @@ class AirRosAdapter:
         try:
             self.publish((0., 0., 0.))
         finally:
+            self.executor.shutdown(timeout_sec=2.)
+            self.thread.join(timeout=2.)
             self.node.destroy_node()
             if self.rclpy.ok():
                 self.rclpy.shutdown()
-            self.thread.join(timeout=2.)
