@@ -1,8 +1,8 @@
 [project]
 name = "go2-assistant"
 version = "0.1.0"
-description = "Voice and text room assistant with a torque-driven Go2 simulator and a commissioned Nav2 adapter"
-requires-python = ">=3.11,<3.14"
+description = "Voice and text room assistant for the Go2 simulator, Go2 Air ROS bridge, and commissioned navigation"
+requires-python = ">=3.10,<3.14"
 dependencies = [
   "mujoco==3.3.7", "numpy==1.26.4", "onnxruntime==1.23.2",
   "Pillow==11.3.0", "PyYAML==6.0.3", "fastapi==0.135.3", "uvicorn>=0.34,<1",
