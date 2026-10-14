@@ -151,6 +151,7 @@ class AirBackend:
                 raise ValueError("Saved voxel map does not match GO2_MAP_ID")
         else:
             self.mapper = OccupancyMapper(robot_radius=.4, map_id=self.map_id)
+        self._mapping_status = self.mapper.status()
         self.perception = perception if perception is not None else RgbPerception()
         self.clock = clock
         self.lock = threading.RLock()
@@ -241,11 +242,13 @@ class AirBackend:
                     self._advance("cloud", source_ns)
                 leveled = np.asarray(points, dtype=np.float64) @ odom["level"].T
                 result = self.mapper.update_voxels(leveled, odom["pose"], timestamp=captured_at)
+                mapping_status = self.mapper.status()
                 with self.lock:
                     self._scan_ranges = result["ranges"]
                     self._scan_angles = np.linspace(
                         -math.pi, math.pi, len(self._scan_ranges), endpoint=False)
                     self._cloud_at = captured_at
+                    self._mapping_status = mapping_status
                     self._sensor_errors.pop("cloud", None)
                     self._refresh_route()
                 return True
@@ -497,7 +500,7 @@ class AirBackend:
             return {"state": self.state, "reason": self.reason, "armed": self._armed,
                     "backend": "go2-air-ros2", "map_id": self.map_id, "pose": self._pose(),
                     "goal": self.goal, "route": list(self.path), "velocity": self.last_command,
-                    "mapping": self.mapper.status(), "vision": self.perception.status(),
+                    "mapping": dict(self._mapping_status), "vision": self.perception.status(),
                     "perception": "learned RGB recognition without metric depth",
                     "spatial_perception": False, "front_coverage": coverage,
                     "front_clearance": clearance, "sensor_errors": dict(self._sensor_errors),

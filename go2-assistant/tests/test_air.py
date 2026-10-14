@@ -141,6 +141,7 @@ def test_cloud_waits_for_matching_odom_and_slow_mapping_does_not_block_new_odom(
     backend.update_odometry(0., 0., (0., 0., 0., 1.), 1_050_000_000, now[0])
     try:
         assert started.wait(.2)
+        assert backend.status()["voxel_pairing"]["processing"] is True
         odom_done = threading.Event()
 
         def later_odom_callback():
