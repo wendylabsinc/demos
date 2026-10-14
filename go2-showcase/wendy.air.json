@@ -1,0 +1,24 @@
+{
+  "appId": "sh.wendy.go2-showcase",
+  "version": "0.1.0",
+  "platform": "linux",
+  "language": "python",
+  "frameworks": {
+    "ros2": {
+      "distro": "humble",
+      "rmw": "rmw_cyclonedds_cpp",
+      "domainId": 0,
+      "scope": "peripherals"
+    }
+  },
+  "entitlements": [
+    {"type": "network", "mode": "host"},
+    {"type": "http", "port": 8788}
+  ],
+  "env": {
+    "GO2_PROFILE": "air",
+    "GO2_HTTP_HOST": "0.0.0.0",
+    "GO2_HTTP_PORT": "8788"
+  },
+  "readiness": {"tcpSocket": {"port": 8788}, "timeoutSeconds": 60}
+}

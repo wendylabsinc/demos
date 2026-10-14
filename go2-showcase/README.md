@@ -45,8 +45,8 @@ python3 scripts/deploy.py --profile sim --device vm:chatgpt-go2 \
 
 The local QEMU user-network gateway exposes the host Ollama service at
 `10.0.2.2:11434`. A different VM or physical device needs a reachable inference
-service URL. The model runs on the host Mac; the app and physics run on WendyOS.
-The app does not bundle the model weights in its container.
+service URL. The model runs as a separate service; neither physical profile
+bundles model weights or Ollama in its container.
 
 OpenAI-compatible multimodal endpoints are also supported. Set `GO2_AI_URL`
 to the service's `/v1` base or full chat completions endpoint,
@@ -54,7 +54,36 @@ to the service's `/v1` base or full chat completions endpoint,
 The model must accept image input and the structured action schema. Frames are
 sent to the configured service, so use a destination appropriate for your data.
 
-## Physical Go2
+## Go2 Air through the Wendy bridge
+
+The Air profile uses the Go2 bridge's ROS 2 Humble/CycloneDDS contract. It reads
+`/utlidar/robot_odom`, `/utlidar/cloud_base` and
+`/camera/color/image_raw`, and publishes bounded commands to `/cmd_vel`.
+It needs no robot key, admin entitlement, Unitree SDK or robot network interface.
+
+```sh
+python3 scripts/deploy.py --profile air --device YOUR_WENDYOS_DEVICE --domain 0 \
+  --env GO2_AI_URL=http://127.0.0.1:11434 \
+  --env GO2_AI_PROVIDER=ollama --env GO2_AI_MODEL=qwen3-vl:4b
+```
+
+`127.0.0.1` works only when an Ollama service is already reachable in the
+WendyOS host network. Otherwise use a trusted endpoint reachable from the
+Jetson. `--profile ros-sim` uses the same ROS contract against a managed Go2
+simulator.
+
+The Air sends an accumulated occupied-voxel map rather than raw lidar scans.
+The app projects body-height points into five-degree obstacle sectors. Missing
+sectors are unknown, not clear. By default a complete measured front corridor
+is required for forward motion and complete coverage is required to rotate.
+This can deliberately stop the showcase in a wide or sparsely mapped room.
+`--env GO2_ALLOW_SCAN_GAPS=true` permits measured partial coverage, matching the
+simulator examples' compatibility policy, but cannot protect against obstacles
+in unobserved directions.
+
+## Go2 EDU legacy profile
+
+The existing EDU-only SDK path remains separate:
 
 ```sh
 python3 scripts/deploy.py --profile hardware --device YOUR_GO2_COMPANION --domain 0 \
@@ -65,17 +94,16 @@ python3 scripts/deploy.py --profile hardware --device YOUR_GO2_COMPANION --domai
   --env RGB_TOPIC=YOUR_RGB_CAMERA_TOPIC
 ```
 
-Hardware remains uncommissioned. A Go2 EDU needs developer access, a WendyOS
+The EDU profile remains uncommissioned. It needs developer access, a WendyOS
 companion and a verified ROS sensor bridge. Inspect its actual DDS domain,
 frames, QoS and timestamps. Odometry, scan and RGB topics are required; depth
-is optional. The raw RGB image goes to the same agent used in simulation.
-The Unitree SDK motion worker runs separately from the ROS DDS library.
+is optional. Its Unitree SDK motion worker remains separate from ROS DDS.
 
-The safety executor permits only forward steps and in-place turns lasting at
-most one second. It enforces scan clearance, freshness, geofence and session
-budgets; the hardware worker also has an independent real-time watchdog.
-It does not guard drop-offs. Physical operation requires a bounded flat area
-and commissioning with the robot's stop control.
+Both physical profiles permit only forward steps and in-place turns lasting at
+most one second. They enforce measured clearance, freshness, geofence and
+session budgets and have independent command watchdogs. They do not guard
+drop-offs. The operator must put the already-standing robot in a bounded flat
+area and keep its stop control ready; the app sends no posture commands.
 
 A model's completion report is explicitly unverified. Visual-language models
 can misidentify objects or fail a task. The app shows those outcomes instead of
