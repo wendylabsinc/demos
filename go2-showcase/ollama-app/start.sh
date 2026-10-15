@@ -1,17 +1,22 @@
 #!/bin/bash
-# Downloads Ollama into the container (the volume is noexec), serves it on loopback and
-# pulls the showcase's vision model in the background.
+# Downloads a pinned Ollama release into the container (the volume is noexec), serves it on
+# loopback and pulls the showcase's vision model in the background.
 set -u
+# 0.40.4 is the release verified on the Jetson Orin (its cuda_v13 libraries). Override with
+# OLLAMA_VERSION only after checking a newer one.
+VERSION=${OLLAMA_VERSION:-0.40.4}
 BIN=/opt/ollama  # the persist volume is mounted noexec
 if [ ! -x $BIN/bin/ollama ]; then
-  echo "downloading Ollama"
-  mkdir -p $BIN.tmp
-  if curl -fsSL https://ollama.com/download/ollama-linux-arm64.tar.zst | zstd -d | tar -x -C $BIN.tmp \
-     || curl -fsSL https://ollama.com/download/ollama-linux-arm64.tgz | tar -xz -C $BIN.tmp; then
+  echo "downloading Ollama $VERSION"
+  rm -rf $BIN.tmp && mkdir -p $BIN.tmp
+  set -o pipefail
+  if curl -fsSL "https://github.com/ollama/ollama/releases/download/v$VERSION/ollama-linux-arm64.tar.zst" \
+     | zstd -d | tar -x -C $BIN.tmp; then
     rm -rf $BIN && mv $BIN.tmp $BIN
   else
-    echo "Ollama download failed"; sleep 60; exit 1
+    echo "Ollama $VERSION download failed"; sleep 60; exit 1
   fi
+  set +o pipefail
 fi
 export LD_LIBRARY_PATH=$BIN/lib/ollama:${LD_LIBRARY_PATH:-}
 $BIN/bin/ollama --version

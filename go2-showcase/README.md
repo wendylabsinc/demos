@@ -100,17 +100,19 @@ python3 scripts/deploy.py --profile air --device YOUR_WENDYOS_DEVICE --domain 0 
 
 `GO2_AI_URL=http://127.0.0.1:11434` works when Ollama runs as its own Wendy app
 on the same Jetson, because both apps use host networking. `ollama-app/` is a
-small reference app for that: it downloads Ollama for arm64 at first start
-(needing internet access, and into the container because the persist volume is
-mounted noexec), serves it on loopback, keeps the model files in a persist volume
-and pulls `qwen3-vl:4b` in the background.
+small reference app for that: at each start it downloads Ollama 0.40.4 for arm64
+from its GitHub release (needing internet access, and into the container because
+the persist volume is mounted noexec), serves it on loopback, keeps the model files
+in a persist volume and pulls `qwen3-vl:4b` in the background. 0.40.4 is the release
+verified on a Jetson Orin; its `cuda_v13` libraries match that device. Another
+release can be tried with `OLLAMA_VERSION`, after checking that the GPU is used.
 
 ```sh
 cd ollama-app
 wendy run --device YOUR_WENDYOS_DEVICE --detach --yes   # add --builder apple-container without Docker
 ```
 
-The first start downloads about 3 GB, and the page says "Model loading" until
+The first start downloads about 1.5 GB of Ollama and 3.3 GB of model, and the page says "Model loading" until
 the model is resident. Two settings in its Dockerfile matter on a Jetson:
 
 - `OLLAMA_CONTEXT_LENGTH=8192`. Left alone, Ollama picked a 262k-token context
