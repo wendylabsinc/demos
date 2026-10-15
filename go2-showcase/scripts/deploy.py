@@ -12,6 +12,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--profile", choices=["sim", "air", "hardware", "ros-sim"], default="sim")
 parser.add_argument("--device", required=True)
 parser.add_argument("--domain", type=int, default=0)
+parser.add_argument("--builder", choices=["docker", "apple-container", "buildkit"], default="docker",
+                    help="image builder for wendy run; apple-container needs no Docker on a Mac")
 parser.add_argument("--env", action="append", default=[])
 args = parser.parse_args()
 if not 0 <= args.domain <= 232:
@@ -45,4 +47,4 @@ with tempfile.TemporaryDirectory(prefix="go2-showcase-deploy-") as folder:
                   "air": "Dockerfile.air", "ros-sim": "Dockerfile.air"}[args.profile]
     shutil.copy2(root / dockerfile, stage / "Dockerfile")
     subprocess.run(["wendy", "--json", "--device", args.device, "run", "--prefix", str(stage),
-                    "--builder", "docker", "--detach", "--yes"], check=True)
+                    "--builder", args.builder, "--detach", "--yes"], check=True)
