@@ -48,6 +48,33 @@ The local QEMU user-network gateway exposes the host Ollama service at
 service URL. The model runs as a separate service; neither physical profile
 bundles model weights or Ollama in its container.
 
+`deploy.py` builds with Docker by default. On a Mac without Docker, add
+`--builder apple-container` (Apple's `container` tool); `--builder buildkit` is
+also accepted. The option is passed straight to `wendy run --builder`.
+
+The page loads the model before it accepts a run. While Ollama is loading it,
+the page shows "Model loading" and Start AI stays disabled; if the service is
+unreachable it shows that and keeps retrying. A slow model therefore never
+starts a run that then fails.
+
+### Protecting the page
+
+The operator page and its motion endpoints are open by default, which is fine on
+`127.0.0.1` and unsafe on a shared network. Set `GO2_HTTP_TOKEN` to require
+`Authorization: Bearer <token>` on `/status`, `/health`, `/camera.jpg` and every
+POST, including Stop. The page itself and `/config` stay open so the browser can
+ask for the token, then keeps it for the browser session.
+
+```sh
+python3 scripts/deploy.py --profile air --device YOUR_WENDYOS_DEVICE \
+  --env GO2_HTTP_TOKEN=$(openssl rand -hex 16) ...
+curl -H "Authorization: Bearer <token>" http://DEVICE:8788/status
+```
+
+Pass the token with `--env` rather than committing it. It is sent over plain
+HTTP, so on anything but a trusted LAN or tunnel it only deters casual access.
+Without a token, a server bound beyond localhost prints a warning at start.
+
 OpenAI-compatible multimodal endpoints are also supported. Set `GO2_AI_URL`
 to the service's `/v1` base or full chat completions endpoint,
 `GO2_AI_PROVIDER=openai-compatible`, `GO2_AI_MODEL`, and optionally `GO2_AI_KEY`.
@@ -67,10 +94,37 @@ python3 scripts/deploy.py --profile air --device YOUR_WENDYOS_DEVICE --domain 0 
   --env GO2_AI_PROVIDER=ollama --env GO2_AI_MODEL=qwen3-vl:4b
 ```
 
-`127.0.0.1` works only when an Ollama service is already reachable in the
-WendyOS host network. Otherwise use a trusted endpoint reachable from the
-Jetson. `--profile ros-sim` uses the same ROS contract against a managed Go2
-simulator.
+`--profile ros-sim` uses the same ROS contract against a managed Go2 simulator.
+
+### Ollama on the Jetson
+
+`GO2_AI_URL=http://127.0.0.1:11434` works when Ollama runs as its own Wendy app
+on the same Jetson, because both apps use host networking. `ollama-app/` is a
+small reference app for that: it downloads Ollama for arm64 at first start
+(needing internet access, and into the container because the persist volume is
+mounted noexec), serves it on loopback, keeps the model files in a persist volume
+and pulls `qwen3-vl:4b` in the background.
+
+```sh
+cd ollama-app
+wendy run --device YOUR_WENDYOS_DEVICE --detach --yes   # add --builder apple-container without Docker
+```
+
+The first start downloads about 3 GB, and the page says "Model loading" until
+the model is resident. Two settings in its Dockerfile matter on a Jetson:
+
+- `OLLAMA_CONTEXT_LENGTH=8192`. Left alone, Ollama picked a 262k-token context
+  for this model, a roughly 43 GB allocation and a 102 s first load on the test
+  Orin. At 8192 (the size the showcase asks for) it is about 4.4 GB.
+- `OLLAMA_KEEP_ALIVE=-1` keeps the model loaded between runs so Start does not
+  wait for a reload. The page's warm-up also pins it.
+
+Put the Jetson in its maximum power mode before judging speed. On the test Orin
+the default 30 W mode gave about 9.7 tokens/s; MAXN (`sudo nvpmodel -m 0`, then
+reboot) gave about 31.8 tokens/s warm and a 16 s cold load with the settings
+above. Check the active mode with `sudo nvpmodel -q`. A different Jetson will
+differ. Another reachable Ollama or OpenAI-compatible endpoint also works; set
+`GO2_AI_URL` to it.
 
 The Air sends an accumulated occupied-voxel map rather than raw lidar scans.
 The app projects body-height points into five-degree obstacle sectors. Missing
