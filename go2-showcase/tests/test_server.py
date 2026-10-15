@@ -99,8 +99,8 @@ class LoadingAgent(Agent):
             raise ModelUnavailable('Model service is unreachable or timed out')
 
 
-def serve(runtime):
-    server = ThreadingHTTPServer(('127.0.0.1', 0), handler(runtime))
+def serve(runtime, token=None):
+    server = ThreadingHTTPServer(('127.0.0.1', 0), handler(runtime, token))
     threading.Thread(target=server.serve_forever, daemon=True).start()
     return server, f'http://127.0.0.1:{server.server_port}'
 
@@ -226,3 +226,49 @@ def test_idle_robot_gets_one_stop_not_one_per_control_cycle():
         assert r.transport.stops == settled
     finally:
         r.close()
+
+
+def test_token_protects_status_camera_and_motion_but_not_the_page():
+    r = Runtime(CountingTransport, hz=50, agent_factory=Agent)
+    server, base = serve(r, 'correct horse battery')
+    try:
+        assert call(base + '/')[0] == 200
+        assert json.loads(call(base + '/config')[1]) == {'token_required': True}
+        for route in ('/status', '/health', '/camera.jpg'):
+            assert call(base + route)[0] == 401
+            assert call(base + route, token='wrong')[0] == 401
+            assert call(base + route, token='correct horse battery')[0] in (200, 404)
+        stops = r.transport.stops
+        for route, body in (('/start', {'instruction': 'Explore'}), ('/stop', {})):
+            assert call(base + route, 'POST', body)[0] == 401
+            assert call(base + route, 'POST', body, token='wrong')[0] == 401
+        assert r.transport.stops == stops and r.status()['mission']['state'] == 'disabled'
+        code, _ = call(base + '/start', 'POST', {'instruction': 'Explore'}, token='correct horse battery')
+        assert code == 200 and r.status()['mission']['state'] != 'disabled'
+        assert call(base + '/stop', 'POST', {}, token='correct horse battery')[0] == 200
+        assert call(base + '/nope', token='correct horse battery')[0] == 404
+    finally:
+        server.shutdown(); server.server_close(); r.close()
+
+
+def test_without_a_token_everything_stays_open(monkeypatch):
+    monkeypatch.delenv('GO2_HTTP_TOKEN', raising=False)
+    r = Runtime(CountingTransport, hz=50, agent_factory=Agent)
+    server, base = serve(r)
+    try:
+        assert json.loads(call(base + '/config')[1]) == {'token_required': False}
+        assert call(base + '/status')[0] == 200
+        assert call(base + '/stop', 'POST', {})[0] == 200
+    finally:
+        server.shutdown(); server.server_close(); r.close()
+
+
+def test_token_from_the_environment_is_enforced(monkeypatch):
+    monkeypatch.setenv('GO2_HTTP_TOKEN', ' from-env ')
+    r = Runtime(CountingTransport, hz=50, agent_factory=Agent)
+    server, base = serve(r)
+    try:
+        assert call(base + '/status')[0] == 401
+        assert call(base + '/status', token='from-env')[0] == 200
+    finally:
+        server.shutdown(); server.server_close(); r.close()

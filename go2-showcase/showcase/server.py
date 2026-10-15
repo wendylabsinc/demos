@@ -8,6 +8,8 @@ import json
 import math
 import os
 import queue
+import secrets
+import sys
 from concurrent.futures import Future
 from pathlib import Path
 import threading
@@ -251,10 +253,22 @@ class Runtime:
         self.inference.shutdown(wait=False, cancel_futures=True)
 
 
-def handler(runtime):
+def handler(runtime, token=None):
+    """HTTP routes. With a token, everything except the page and /config needs it."""
+    token = (os.getenv("GO2_HTTP_TOKEN", "") if token is None else token).strip()
+
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_):
             pass
+
+        def authorized(self):
+            if not token:
+                return True
+            supplied = self.headers.get("Authorization", "")
+            if secrets.compare_digest(supplied.encode(), ("Bearer " + token).encode()):
+                return True
+            self.respond(401, {"error": "Enter the server's access token."})
+            return False
 
         def respond(self, code, body, content_type="application/json"):
             if not isinstance(body, bytes):
@@ -270,19 +284,25 @@ def handler(runtime):
             path = urlsplit(self.path).path
             if path == "/":
                 self.respond(200, Path(__file__).with_name("dashboard.html").read_bytes(), "text/html; charset=utf-8")
+            elif path == "/config":
+                self.respond(200, {"token_required": bool(token)})
+            elif path not in ("/status", "/health", "/camera.jpg"):
+                self.respond(404, {"error": "Unknown route"})
+            elif not self.authorized():
+                return
             elif path in ("/status", "/health"):
                 data = runtime.status()
                 self.respond(503 if path == "/health" and data["error"] else 200, data)
-            elif path == "/camera.jpg":
+            else:
                 with runtime.lock:
                     if runtime.jpeg:
                         self.respond(200, runtime.jpeg, "image/jpeg")
                     else:
                         self.respond(404, {"error": "Camera preview is unavailable"})
-            else:
-                self.respond(404, {"error": "Unknown route"})
 
         def do_POST(self):
+            if not self.authorized():
+                return
             # A local/LAN operator app. Cross-origin browser mutation is rejected.
             origin = self.headers.get("Origin")
             if origin and origin.split("://", 1)[-1] != self.headers.get("Host"):
@@ -346,9 +366,14 @@ def main():
     else:
         from showcase.transport import build_transport
         transport_factory = lambda: build_transport(args.profile)
+    token = os.getenv("GO2_HTTP_TOKEN", "").strip()
+    if not token and args.host not in ("127.0.0.1", "localhost", "::1"):
+        print("warning: the operator page and its motion controls are open to anyone who can reach "
+              f"{args.host}:{args.port}; set GO2_HTTP_TOKEN to require a bearer token", file=sys.stderr, flush=True)
     runtime = Runtime(transport_factory)
-    server = ThreadingHTTPServer((args.host, args.port), handler(runtime))
-    print(json.dumps({"event": "ready", "profile": args.profile, "url": f"http://{args.host}:{args.port}", "motion": "disabled"}), flush=True)
+    server = ThreadingHTTPServer((args.host, args.port), handler(runtime, token))
+    print(json.dumps({"event": "ready", "profile": args.profile, "url": f"http://{args.host}:{args.port}",
+                      "motion": "disabled", "auth": "bearer-token" if token else "none"}), flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
