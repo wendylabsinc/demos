@@ -14,7 +14,9 @@ import threading
 import time
 from urllib.parse import urlsplit
 
+from showcase.ai import ModelUnavailable
 from showcase.models import Command
+from showcase.readiness import ModelReadiness
 
 DEMOS = {
     "object_search": "Find my keys",
@@ -33,6 +35,10 @@ GOALS = {
 }
 
 
+class ModelNotReady(RuntimeError):
+    """Start was refused because the model is not loaded; nothing was started."""
+
+
 class Runtime:
     def __init__(self, transport_factory, hz=20, agent_factory=None):
         from concurrent.futures import ThreadPoolExecutor
@@ -41,6 +47,7 @@ class Runtime:
         self.transport_factory = transport_factory
         self.transport = None
         self.agent = (agent_factory or VisionAgent)()
+        self.readiness = ModelReadiness(self.agent)
         self.executor = ActionExecutor(budget_s=180, geofence_m=5)
         self.hz = hz
         self.lock = threading.RLock()
@@ -111,6 +118,13 @@ class Runtime:
         self.executor.begin(decision, self.observation, self.control_time())
         print(json.dumps({"event": "model_decision", "model": getattr(self.agent, "model", "configured"), **data}), flush=True)
 
+    def _log_fault(self, reason):
+        """Record what the sensors and the model were doing when a run faulted."""
+        status = self.transport.status()
+        waiting = round(time.monotonic()-self.pending[2], 1) if self.pending and not self.pending[0].done() else None
+        print(json.dumps({"event": "fault", "reason": reason, "sensor_ages": status.get("sensor_ages"),
+                          "model_request_seconds": waiting, "model": self.readiness.snapshot()["state"]}), flush=True)
+
     def loop(self):
         try:
             self.transport = self.transport_factory()
@@ -137,6 +151,8 @@ class Runtime:
                         self._accept_decision()
                     self.command = self.executor.step(self.observation, self.control_time())
                     new_state = self.executor.status()["state"]
+                    if new_state == "fault" and state != "fault":
+                        self._log_fault(self.executor.status()["reason"])
                     if state == "running" and new_state == "waiting" and self.history:
                         self.history[-1]["execution"] = {"status": self.executor.status(),
                             "pose": [self.observation.x, self.observation.y, self.observation.yaw]}
@@ -160,6 +176,8 @@ class Runtime:
                         self.last_frame = began
                     self.error_stopped = False
                 except Exception as exc:
+                    if isinstance(exc, ModelUnavailable):
+                        self.readiness.invalidate()
                     self.error = f"{type(exc).__name__}: {exc}"
                     self.executor.stop(self.error)
                     self.generation += 1
@@ -179,6 +197,9 @@ class Runtime:
         instruction = payload.get("instruction") or GOALS.get(payload.get("demo"))
         if not isinstance(instruction, str) or not 1 <= len(instruction.strip()) <= 2000:
             raise ValueError("Describe what you want the robot to do")
+        model = self.readiness.snapshot()
+        if model["state"] != ModelReadiness.READY:
+            raise ModelNotReady(model["detail"] or "The model is still loading")
         if self.pending and not self.pending[0].done():
             raise RuntimeError("The previous model request is still finishing; the robot is stopped")
         self.transport.stop()
@@ -212,12 +233,15 @@ class Runtime:
                 "observation": asdict(self.observation) if self.observation else None,
                 "command": asdict(self.command), "transport": self.transport.status(),
                 "ai": {"model": getattr(self.agent, "model", os.getenv("GO2_AI_MODEL", "configured")),
+                       "model_state": self.readiness.snapshot(),
                        "thinking": bool(self.pending and not self.pending[0].done()),
                        "last_decision": self.last_decision, "decisions": len(self.history)},
                 "history": self.history[-12:], "error": self.error,
             }
 
     def close(self):
+        self.readiness.close()
+
         def shutdown():
             self._stop()
             self.transport.close()
@@ -300,6 +324,9 @@ def handler(runtime):
                     self.respond(404, {"error": "Unknown route"})
                     return
                 self.respond(200, data)
+            except ModelNotReady as exc:
+                # Nothing was started, so nothing else is disturbed.
+                self.respond(503, {"error": str(exc), "model": runtime.readiness.snapshot()})
             except (ValueError, RuntimeError, TypeError, KeyError) as exc:
                 runtime.stop()
                 self.respond(409, {"error": str(exc)})

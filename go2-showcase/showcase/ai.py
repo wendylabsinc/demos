@@ -18,6 +18,11 @@ class ModelUnavailable(RuntimeError):
     """The caller must stop rather than replace model decisions with scripts."""
 
 
+# Ollama reloads a model whose context size differs from the loaded runner, so
+# the warm-up and every decision must ask for the same value.
+NUM_CTX = 8192
+
+
 SCHEMA = {
     'type': 'object', 'additionalProperties': False,
     'properties': {
@@ -207,6 +212,63 @@ class VisionAgent:
             return self.url if path.endswith('/api/chat') else self.url.rstrip('/')+'/api/chat'
         return self.url if path.endswith('/chat/completions') else self.url.rstrip('/')+'/chat/completions'
 
+    @staticmethod
+    def _failure_reason(exc):
+        # Do not log response bodies, URLs with secrets, or authorization data.
+        if isinstance(exc, ModelUnavailable):
+            return str(exc)
+        if isinstance(exc, HTTPError):
+            return 'Model service HTTP '+str(exc.code)
+        if isinstance(exc, (URLError, TimeoutError, OSError)):
+            return 'Model service is unreachable or timed out'
+        return 'Model request or response failed validation'
+
+    def _json_request(self, url, payload=None):
+        headers = {'Content-Type': 'application/json'}
+        if self.key:
+            headers['Authorization'] = 'Bearer '+self.key
+        data = None if payload is None else json.dumps(payload, allow_nan=False).encode()
+        request = Request(url, data=data, headers=headers, method='GET' if data is None else 'POST')
+        with self.opener(request, timeout=self.timeout) as response:
+            raw = response.read(1024*1024+1)
+        if len(raw) > 1024*1024:
+            raise ValueError('Model response exceeds size limit')
+        return json.loads(raw)
+
+    def warm_up(self):
+        """Load the model without sending an image, so the first run is not the load.
+
+        Blocks until the service reports the model loaded. Raises ModelUnavailable
+        when the service is unreachable or refuses the model.
+        """
+        try:
+            endpoint = self._endpoint()
+            if self.provider == 'ollama':
+                # An empty message list loads the model; keep_alive pins it for the session.
+                result = self._json_request(endpoint, {'model': self.model, 'messages': [], 'stream': False,
+                                                       'keep_alive': -1, 'options': {'num_ctx': NUM_CTX}})
+                if result.get('done') is not True:
+                    raise ValueError('Model did not finish loading')
+            else:
+                self._json_request(endpoint, {'model': self.model, 'max_tokens': 1, 'stream': False,
+                                              'messages': [{'role': 'user', 'content': 'ok'}]})
+        except Exception as exc:
+            raise ModelUnavailable(self._failure_reason(exc)) from None
+
+    def loaded(self):
+        """Whether the model is resident now; None when the provider cannot say."""
+        if self.provider != 'ollama':
+            return None
+        try:
+            endpoint = self._endpoint()
+            base = endpoint[:-len('/api/chat')]
+            names = set()
+            for item in self._json_request(base+'/api/ps').get('models', []):
+                names.update(item.get(key) for key in ('name', 'model'))
+            return self.model in names or (':' not in self.model and self.model+':latest' in names)
+        except Exception as exc:
+            raise ModelUnavailable(self._failure_reason(exc)) from None
+
     def decide(self, goal, jpeg, sensors, history):
         started = time.monotonic()
         self.last_status = {'source': 'model', 'state': 'thinking', 'model': self.model, 'provider': self.provider}
@@ -226,7 +288,7 @@ class VisionAgent:
                 payload = {'model': self.model, 'stream': False, 'think': False, 'format': SCHEMA,
                            'messages': [{'role': 'system', 'content': SYSTEM},
                                         {'role': 'user', 'content': text, 'images': [encoded]}],
-                           'options': {'temperature': 0, 'num_predict': 300, 'num_ctx': 8192}}
+                           'options': {'temperature': 0, 'num_predict': 300, 'num_ctx': NUM_CTX}}
             else:
                 payload = {'model': self.model, 'stream': False,
                            'messages': [{'role': 'system', 'content': SYSTEM},
@@ -264,15 +326,7 @@ class VisionAgent:
                                 'latency_s': round(time.monotonic()-started, 3), 'decision': asdict(decision)}
             return decision
         except Exception as exc:
-            # Do not log response bodies, URLs with secrets, or authorization data.
-            if isinstance(exc, ModelUnavailable):
-                reason = str(exc)
-            elif isinstance(exc, HTTPError):
-                reason = 'Model service HTTP '+str(exc.code)
-            elif isinstance(exc, (URLError, TimeoutError, OSError)):
-                reason = 'Model service is unreachable or timed out'
-            else:
-                reason = 'Model request or response failed validation'
+            reason = self._failure_reason(exc)
             self.last_status = {'source': 'model', 'state': 'error', 'model': self.model,
                                 'provider': self.provider, 'error': reason}
             raise ModelUnavailable(reason) from None

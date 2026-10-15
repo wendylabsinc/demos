@@ -67,6 +67,9 @@ def test_camera_cache_busting_query_returns_image():
 # --- model readiness, sensor faults, idle stops and access token ---------------------------
 
 import json
+import urllib.error
+from showcase.ai import ModelUnavailable
+from showcase.server import ModelNotReady
 
 
 class CountingTransport(FakeTransport):
@@ -83,6 +86,121 @@ class CountingTransport(FakeTransport):
         super().stop()
     def status(self):
         return {'armed': self.armed, 'sensor_ages': {'pose': 0.1}}
+
+
+class LoadingAgent(Agent):
+    """Model whose first load is slow, like a cold Ollama."""
+    def __init__(self):
+        self.loaded_now = threading.Event()
+        self.fail = False
+    def warm_up(self):
+        self.loaded_now.wait(5)
+        if self.fail:
+            raise ModelUnavailable('Model service is unreachable or timed out')
+
+
+def serve(runtime):
+    server = ThreadingHTTPServer(('127.0.0.1', 0), handler(runtime))
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    return server, f'http://127.0.0.1:{server.server_port}'
+
+
+def call(url, method='GET', body=None, token=None):
+    headers = {'Content-Type': 'application/json'}
+    if token:
+        headers['Authorization'] = 'Bearer ' + token
+    request = urllib.request.Request(url, data=None if body is None else json.dumps(body).encode(),
+                                     headers=headers, method=method)
+    try:
+        with urllib.request.urlopen(request) as response:
+            return response.status, response.read()
+    except urllib.error.HTTPError as error:
+        return error.code, error.read()
+
+
+def test_start_waits_for_the_model_instead_of_faulting_a_run():
+    agent = LoadingAgent()
+    r = Runtime(CountingTransport, hz=50, agent_factory=lambda: agent)
+    server, base = serve(r)
+    try:
+        status = r.status()
+        assert status['ai']['model_state']['state'] == 'loading'
+        code, body = call(base + '/start', 'POST', {'instruction': 'Turn left'})
+        assert code == 503 and json.loads(body)['model']['state'] == 'loading'
+        try:
+            r.start({'instruction': 'Turn left'})
+            raise AssertionError('start must be refused while the model loads')
+        except ModelNotReady:
+            pass
+        time.sleep(.2)  # the control loop keeps running; nothing was armed or faulted
+        assert r.status()['mission']['state'] == 'disabled' and not r.transport.armed
+        assert r.status()['error'] is None
+        agent.loaded_now.set()
+        wait_for(lambda: r.status()['ai']['model_state']['state'] == 'ready')
+        code, body = call(base + '/start', 'POST', {'instruction': 'Turn left'})
+        assert code == 200 and json.loads(body)['mission']['state'] in ('waiting', 'running')
+    finally:
+        agent.loaded_now.set()
+        server.shutdown(); server.server_close(); r.close()
+
+
+def test_model_error_is_shown_and_a_failed_decision_requires_a_working_model_again():
+    agent = LoadingAgent()
+    agent.fail = True
+    agent.loaded_now.set()
+    r = Runtime(CountingTransport, hz=50, agent_factory=lambda: agent)
+    try:
+        wait_for(lambda: r.status()['ai']['model_state']['state'] == 'error')
+        assert 'unreachable' in r.status()['ai']['model_state']['detail']
+        try:
+            r.start({'instruction': 'Explore'})
+            raise AssertionError('start must be refused while the model is unavailable')
+        except ModelNotReady:
+            pass
+    finally:
+        r.close()
+
+
+def test_slow_model_call_with_healthy_sensors_never_faults_the_run():
+    release = threading.Event()
+    class SlowAgent(Agent):
+        def decide(self, *args):
+            release.wait(5)
+            return super().decide(*args)
+    r = Runtime(CountingTransport, hz=50, agent_factory=SlowAgent)
+    try:
+        r.start({'instruction': 'Explore'})
+        wait_for(lambda: r.pending is not None)
+        for _ in range(30):  # 1.5 s of control cycles with the model still thinking
+            assert r.status()['mission']['state'] == 'waiting'
+            assert r.status()['ai']['thinking']
+            time.sleep(.05)
+        assert r.status()['error'] is None and r.transport.armed
+        release.set()
+        wait_for(lambda: any(c.vx > 0 for c in r.transport.commands))
+    finally:
+        release.set(); r.close()
+
+
+def test_sensors_really_going_stale_during_a_model_call_still_stop_the_robot(capsys):
+    release = threading.Event()
+    class SlowAgent(Agent):
+        def decide(self, *args):
+            release.wait(5)
+            return super().decide(*args)
+    r = Runtime(CountingTransport, hz=50, agent_factory=SlowAgent)
+    try:
+        r.start({'instruction': 'Explore'})
+        wait_for(lambda: r.pending is not None)
+        r.transport.healthy = False
+        wait_for(lambda: r.status()['mission']['state'] == 'fault')
+        assert 'stale' in r.status()['mission']['reason'] and not r.transport.armed
+        release.set(); time.sleep(.1)
+        assert not any(c.vx > 0 for c in r.transport.commands)
+        fault = [json.loads(line) for line in capsys.readouterr().out.splitlines() if '"fault"' in line]
+        assert fault and fault[0]['sensor_ages'] == {'pose': 0.1} and fault[0]['model_request_seconds'] is not None
+    finally:
+        release.set(); r.close()
 
 
 def test_idle_robot_gets_one_stop_not_one_per_control_cycle():
