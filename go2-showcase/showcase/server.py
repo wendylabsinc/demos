@@ -58,6 +58,8 @@ class Runtime:
         self.pending = None
         self.generation = 0
         self.last_decision = None
+        self.terminal_stopped = False
+        self.error_stopped = False
         self.inference = ThreadPoolExecutor(max_workers=1, thread_name_prefix="go2-vision-agent")
         self.thread = threading.Thread(target=self.loop, daemon=True)
         self.thread.start()
@@ -142,23 +144,32 @@ class Runtime:
                     if state in ("waiting", "waiting_model") and self.pending is None and self.goal:
                         self._think()
                     self.transport.send(self.command)
+                    # One stop when a run ends; the transport rate-limits the zero
+                    # commands that follow, so an idle robot is not flooded.
                     if state in ("fault", "complete", "disabled"):
-                        self.transport.stop()
+                        if not self.terminal_stopped:
+                            self.transport.stop()
+                            self.terminal_stopped = True
+                    else:
+                        self.terminal_stopped = False
                     if hasattr(self.transport, "advance"):
                         self.transport.advance(1 / self.hz)
                         self.sim_time += 1 / self.hz
                     if hasattr(self.transport, "frame_jpeg") and began-self.last_frame >= .5:
                         self.jpeg = self.transport.camera_jpeg() if hasattr(self.transport, "camera_jpeg") else self.transport.frame_jpeg()
                         self.last_frame = began
+                    self.error_stopped = False
                 except Exception as exc:
                     self.error = f"{type(exc).__name__}: {exc}"
                     self.executor.stop(self.error)
                     self.generation += 1
                     self.command = Command()
-                    try:
-                        self.transport.stop()
-                    except Exception:
-                        pass
+                    if not self.error_stopped:
+                        self.error_stopped = True
+                        try:
+                            self.transport.stop()
+                        except Exception:
+                            pass
             time.sleep(max(0, 1 / self.hz - (time.monotonic()-began)))
 
     def start(self, payload):

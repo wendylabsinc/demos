@@ -47,6 +47,14 @@ class SafetyGate:
 
 
 class ROSTransport:
+    # The agent expires a motion command after 500 ms. Zero commands go out at
+    # the control rate while a nonzero one could still be acting, and only as a
+    # slow heartbeat after that, so an idle or unconnected robot is not flooded.
+    MOTION_MARGIN_S = 1.0
+    IDLE_STOP_S = 1.0
+    _motion_until = 0.
+    _last_stop = -math.inf
+
     def __init__(self, profile='ros-sim'):
         import rclpy
         from geometry_msgs.msg import Twist
@@ -204,13 +212,13 @@ class ROSTransport:
                 self.rclpy.spin_once(self.node, timeout_sec=.03)
                 with self.lock:
                     now = time.monotonic()
-                    if not self.gate.check(now) or now-self.last_command > .35:
+                    if not self._check_gate(now) or now-self.last_command > .35:
                         self._write(0, 0, 0)
             except Exception as exc:
                 with self.lock:
                     self.gate.armed = False
                     self.gate.fault = str(exc)
-                    self._write(0, 0, 0)
+                    self._write(0, 0, 0, force=True)
 
     def read(self):
         from .models import Observation
@@ -255,7 +263,25 @@ class ROSTransport:
         with self.lock:
             self.gate.arm(time.monotonic())
 
-    def _write(self, vx, vy, wz):
+    def _check_gate(self, now):
+        """Gate check that sends an immediate stop when an armed gate is lost."""
+        was_armed = self.gate.armed
+        armed = self.gate.check(now)
+        if was_armed and not armed:
+            self._write(0, 0, 0, force=True)
+        return armed
+
+    def _write(self, vx, vy, wz, force=False):
+        now = time.monotonic()
+        if vx or vy or wz:
+            self._motion_until = now+self.MOTION_MARGIN_S
+        elif not (force or now < self._motion_until or now-self._last_stop >= self.IDLE_STOP_S):
+            return
+        else:
+            self._last_stop = now
+        self._publish(vx, vy, wz)
+
+    def _publish(self, vx, vy, wz):
         if self.sdk:
             if self.sdk.poll() is not None:
                 self.gate.armed = False
@@ -274,7 +300,7 @@ class ROSTransport:
             if not all(math.isfinite(v) for v in vals):
                 self.stop()
                 return False
-            if not self.gate.check(time.monotonic()):
+            if not self._check_gate(time.monotonic()):
                 self._write(0, 0, 0)
                 return False
             obs = self.read()
@@ -293,7 +319,7 @@ class ROSTransport:
     def stop(self):
         with self.lock:
             self.gate.armed = False
-            self._write(0, 0, 0)
+            self._write(0, 0, 0, force=True)
 
     def status(self):
         with self.lock:

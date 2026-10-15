@@ -62,3 +62,49 @@ def test_camera_cache_busting_query_returns_image():
         assert response.headers['Content-Type']=='image/jpeg'
         assert response.read().startswith(b'\xff\xd8')
     finally:server.shutdown();server.server_close();r.close()
+
+
+# --- model readiness, sensor faults, idle stops and access token ---------------------------
+
+import json
+
+
+class CountingTransport(FakeTransport):
+    """Fake robot whose sensors can be made stale and whose stops are counted."""
+    def __init__(self):
+        super().__init__()
+        self.stops = 0
+        self.healthy = True
+    def read(self):
+        return Observation(fresh=self.healthy, scan_fresh=self.healthy, front_clearance=8,
+                           sectors=tuple((a, 8) for a in (-3, -2, -1, 0, 1, 2, 3)))
+    def stop(self):
+        self.stops += 1
+        super().stop()
+    def status(self):
+        return {'armed': self.armed, 'sensor_ages': {'pose': 0.1}}
+
+
+def test_idle_robot_gets_one_stop_not_one_per_control_cycle():
+    r = Runtime(CountingTransport, hz=100, agent_factory=Agent)
+    try:
+        time.sleep(.4)  # about 40 control cycles while disabled
+        assert r.transport.stops <= 2
+        stops = r.transport.stops
+        r.start({'instruction': 'Explore'})
+        assert r.transport.stops == stops + 1  # stop-on-start is kept
+        r.stop()
+        time.sleep(.1)
+        settled = r.transport.stops  # the operator stop plus one at the end-of-run transition
+        assert settled <= stops + 3
+        time.sleep(.4)  # about 40 more control cycles while stopped
+        assert r.transport.stops == settled
+        r.start({'instruction': 'Explore'})
+        r.transport.healthy = False
+        wait_for(lambda: r.status()['mission']['state'] == 'fault')
+        time.sleep(.1)
+        settled = r.transport.stops
+        time.sleep(.4)
+        assert r.transport.stops == settled
+    finally:
+        r.close()

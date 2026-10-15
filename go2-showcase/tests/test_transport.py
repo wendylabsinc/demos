@@ -66,7 +66,7 @@ class SafetyTests(unittest.TestCase):
         transport.gate = SafetyGate()
         transport.gate.timestamps = dict.fromkeys(('pose', 'scan', 'camera'), time.monotonic())
         outputs = []
-        transport._write = lambda *values: outputs.append(values)
+        transport._publish = lambda *values: outputs.append(values)
         transport.read = lambda: Observation(fresh=True, scan_fresh=True, front_clearance=2., sectors=((0., 2.),))
         self.assertFalse(transport.send(Command(vx=.55)))
         self.assertEqual(outputs[-1], (0, 0, 0))
@@ -126,6 +126,68 @@ class SafetyTests(unittest.TestCase):
         observation = transport.read()
         self.assertAlmostEqual(observation.front_clearance, 3.)
         self.assertTrue(observation.scan_gaps_allowed)
+
+
+class IdleStopTests(unittest.TestCase):
+    """Zero commands are for a robot that could be moving, not a flood while idle."""
+
+    def make(self, armed=False):
+        import time
+        transport = ROSTransport.__new__(ROSTransport)
+        transport.lock = threading.RLock()
+        transport.gate = SafetyGate()
+        transport.gate.armed = armed
+        transport.gate.timestamps = dict.fromkeys(('pose', 'scan', 'camera'), time.monotonic())
+        transport.published = []
+        transport._publish = lambda *values: transport.published.append(values)
+        transport.read = lambda: Observation(fresh=True, scan_fresh=True, front_clearance=2., sectors=((0., 2.),))
+        return transport
+
+    def at(self, seconds):
+        from unittest import mock
+        return mock.patch('showcase.transport.time.monotonic', return_value=seconds)
+
+    def test_unconnected_robot_gets_a_slow_heartbeat_not_a_stream(self):
+        transport = self.make()
+        transport.gate.timestamps = {}
+        for tick in range(400):  # 20 s at the 20 Hz control rate
+            with self.at(100 + tick/20):
+                transport.send(Command())
+        self.assertLessEqual(len(transport.published), 21)
+        self.assertGreaterEqual(len(transport.published), 19)
+        self.assertTrue(all(values == (0, 0, 0) for values in transport.published))
+
+    def test_stops_follow_motion_at_full_rate_then_back_off(self):
+        transport = self.make(armed=True)
+        with self.at(100.):
+            transport._write(.4, 0., 0.)
+        for tick in range(1, 20):  # one second of 20 Hz stops after the last motion
+            with self.at(100 + tick/20):
+                transport._write(0, 0, 0)
+        self.assertEqual(len(transport.published), 1 + 19)
+        count = len(transport.published)
+        for tick in range(21, 80):  # then idle: a stop at most once a second
+            with self.at(100 + tick/20):
+                transport._write(0, 0, 0)
+        self.assertLessEqual(len(transport.published) - count, 3)
+
+    def test_explicit_stop_and_gate_loss_always_publish(self):
+        transport = self.make(armed=True)
+        with self.at(50.):
+            transport.stop()
+        with self.at(50.01):
+            transport.stop()
+        self.assertEqual(transport.published, [(0, 0, 0), (0, 0, 0)])
+        transport.published.clear()
+        transport.gate.armed = True
+        transport.gate.timestamps = dict.fromkeys(('pose', 'scan', 'camera'), 10.)
+        with self.at(50.02):  # throttled idle heartbeat just went out; loss must still stop now
+            self.assertFalse(transport._check_gate(50.02))
+        self.assertEqual(transport.published, [(0, 0, 0)])
+        self.assertFalse(transport.gate.armed)
+        with self.at(50.03):  # already disarmed: no repeat
+            transport._check_gate(50.03)
+        self.assertEqual(len(transport.published), 1)
 
 
 if __name__ == '__main__':
