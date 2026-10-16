@@ -13,6 +13,7 @@ inference, or a Wendy deployment configuration.
 | [Construction yard drone](ConstructionDroneMujoco/README.md) | Surveys a simulated yard, compares camera evidence, and follows a tagged worker | Provisioned speech and language models; container builder for Wendy deployment |
 | [G1 can handoff](g1-can-handoff/README.md) | Grasps a can with a simulated Dex3 hand and waits for supervised release | uv; bundled G1 geometry and policy |
 | [G1 minigolf](g1-minigolf/README.md) | Balances a G1 and strikes a golf ball through physical contact | Git for pinned Menagerie assets; Wendy Sandbox runtime for interactive playback |
+| [Go2 web remote](go2-air-remote/README.md) | Hold-to-move browser controls and camera view for a Go2 over ROS 2; drives the simulator or a real Go2 through the WendyOS Go2 bridge | ROS 2 Humble in its container; WendyOS Go2 bridge for hardware |
 | [Go2 assistant](go2-assistant/README.md) | Maps measured observations and accepts room tasks through voice or text | Downloaded robot, policy, and vision assets |
 | [Go2 vision agent](go2-showcase/README.md) | Lets a vision-language model choose bounded Go2 actions | Ollama or a compatible vision inference endpoint; downloaded simulator assets |
 | [Sassy ROSMASTER](sassy-rosmaster/README.md) | Explores a simulated room and responds to camera-observed people | uv and Ollama |

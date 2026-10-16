@@ -44,6 +44,9 @@ jobs:
           python -m unittest discover -s tests -p test_ai.py -v
           python -m unittest discover -s tests -p test_action_executor.py -v
           python -m unittest discover -s tests -p test_transport.py -v
+      - name: Go2 showcase server, model readiness and deploy
+        working-directory: go2-showcase
+        run: python -m pytest tests/test_server.py tests/test_readiness.py tests/test_deploy.py -q
       - name: ROSMASTER controller and sensor bridge
         working-directory: sassy-rosmaster
         run: |

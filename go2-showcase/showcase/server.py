@@ -8,13 +8,17 @@ import json
 import math
 import os
 import queue
+import secrets
+import sys
 from concurrent.futures import Future
 from pathlib import Path
 import threading
 import time
 from urllib.parse import urlsplit
 
+from showcase.ai import ModelUnavailable
 from showcase.models import Command
+from showcase.readiness import ModelReadiness
 
 DEMOS = {
     "object_search": "Find my keys",
@@ -33,6 +37,10 @@ GOALS = {
 }
 
 
+class ModelNotReady(RuntimeError):
+    """Start was refused because the model is not loaded; nothing was started."""
+
+
 class Runtime:
     def __init__(self, transport_factory, hz=20, agent_factory=None):
         from concurrent.futures import ThreadPoolExecutor
@@ -41,6 +49,7 @@ class Runtime:
         self.transport_factory = transport_factory
         self.transport = None
         self.agent = (agent_factory or VisionAgent)()
+        self.readiness = ModelReadiness(self.agent)
         self.executor = ActionExecutor(budget_s=180, geofence_m=5)
         self.hz = hz
         self.lock = threading.RLock()
@@ -58,6 +67,8 @@ class Runtime:
         self.pending = None
         self.generation = 0
         self.last_decision = None
+        self.terminal_stopped = False
+        self.error_stopped = False
         self.inference = ThreadPoolExecutor(max_workers=1, thread_name_prefix="go2-vision-agent")
         self.thread = threading.Thread(target=self.loop, daemon=True)
         self.thread.start()
@@ -109,6 +120,13 @@ class Runtime:
         self.executor.begin(decision, self.observation, self.control_time())
         print(json.dumps({"event": "model_decision", "model": getattr(self.agent, "model", "configured"), **data}), flush=True)
 
+    def _log_fault(self, reason):
+        """Record what the sensors and the model were doing when a run faulted."""
+        status = self.transport.status()
+        waiting = round(time.monotonic()-self.pending[2], 1) if self.pending and not self.pending[0].done() else None
+        print(json.dumps({"event": "fault", "reason": reason, "sensor_ages": status.get("sensor_ages"),
+                          "model_request_seconds": waiting, "model": self.readiness.snapshot()["state"]}), flush=True)
+
     def loop(self):
         try:
             self.transport = self.transport_factory()
@@ -135,6 +153,8 @@ class Runtime:
                         self._accept_decision()
                     self.command = self.executor.step(self.observation, self.control_time())
                     new_state = self.executor.status()["state"]
+                    if new_state == "fault" and state != "fault":
+                        self._log_fault(self.executor.status()["reason"])
                     if state == "running" and new_state == "waiting" and self.history:
                         self.history[-1]["execution"] = {"status": self.executor.status(),
                             "pose": [self.observation.x, self.observation.y, self.observation.yaw]}
@@ -142,23 +162,34 @@ class Runtime:
                     if state in ("waiting", "waiting_model") and self.pending is None and self.goal:
                         self._think()
                     self.transport.send(self.command)
+                    # One stop when a run ends; the transport rate-limits the zero
+                    # commands that follow, so an idle robot is not flooded.
                     if state in ("fault", "complete", "disabled"):
-                        self.transport.stop()
+                        if not self.terminal_stopped:
+                            self.transport.stop()
+                            self.terminal_stopped = True
+                    else:
+                        self.terminal_stopped = False
                     if hasattr(self.transport, "advance"):
                         self.transport.advance(1 / self.hz)
                         self.sim_time += 1 / self.hz
                     if hasattr(self.transport, "frame_jpeg") and began-self.last_frame >= .5:
                         self.jpeg = self.transport.camera_jpeg() if hasattr(self.transport, "camera_jpeg") else self.transport.frame_jpeg()
                         self.last_frame = began
+                    self.error_stopped = False
                 except Exception as exc:
+                    if isinstance(exc, ModelUnavailable):
+                        self.readiness.invalidate()
                     self.error = f"{type(exc).__name__}: {exc}"
                     self.executor.stop(self.error)
                     self.generation += 1
                     self.command = Command()
-                    try:
-                        self.transport.stop()
-                    except Exception:
-                        pass
+                    if not self.error_stopped:
+                        self.error_stopped = True
+                        try:
+                            self.transport.stop()
+                        except Exception:
+                            pass
             time.sleep(max(0, 1 / self.hz - (time.monotonic()-began)))
 
     def start(self, payload):
@@ -168,6 +199,9 @@ class Runtime:
         instruction = payload.get("instruction") or GOALS.get(payload.get("demo"))
         if not isinstance(instruction, str) or not 1 <= len(instruction.strip()) <= 2000:
             raise ValueError("Describe what you want the robot to do")
+        model = self.readiness.snapshot()
+        if model["state"] != ModelReadiness.READY:
+            raise ModelNotReady(model["detail"] or "The model is still loading")
         if self.pending and not self.pending[0].done():
             raise RuntimeError("The previous model request is still finishing; the robot is stopped")
         self.transport.stop()
@@ -201,12 +235,15 @@ class Runtime:
                 "observation": asdict(self.observation) if self.observation else None,
                 "command": asdict(self.command), "transport": self.transport.status(),
                 "ai": {"model": getattr(self.agent, "model", os.getenv("GO2_AI_MODEL", "configured")),
+                       "model_state": self.readiness.snapshot(),
                        "thinking": bool(self.pending and not self.pending[0].done()),
                        "last_decision": self.last_decision, "decisions": len(self.history)},
                 "history": self.history[-12:], "error": self.error,
             }
 
     def close(self):
+        self.readiness.close()
+
         def shutdown():
             self._stop()
             self.transport.close()
@@ -216,10 +253,22 @@ class Runtime:
         self.inference.shutdown(wait=False, cancel_futures=True)
 
 
-def handler(runtime):
+def handler(runtime, token=None):
+    """HTTP routes. With a token, everything except the page and /config needs it."""
+    token = (os.getenv("GO2_HTTP_TOKEN", "") if token is None else token).strip()
+
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_):
             pass
+
+        def authorized(self):
+            if not token:
+                return True
+            supplied = self.headers.get("Authorization", "")
+            if secrets.compare_digest(supplied.encode(), ("Bearer " + token).encode()):
+                return True
+            self.respond(401, {"error": "Enter the server's access token."})
+            return False
 
         def respond(self, code, body, content_type="application/json"):
             if not isinstance(body, bytes):
@@ -235,19 +284,25 @@ def handler(runtime):
             path = urlsplit(self.path).path
             if path == "/":
                 self.respond(200, Path(__file__).with_name("dashboard.html").read_bytes(), "text/html; charset=utf-8")
+            elif path == "/config":
+                self.respond(200, {"token_required": bool(token)})
+            elif path not in ("/status", "/health", "/camera.jpg"):
+                self.respond(404, {"error": "Unknown route"})
+            elif not self.authorized():
+                return
             elif path in ("/status", "/health"):
                 data = runtime.status()
                 self.respond(503 if path == "/health" and data["error"] else 200, data)
-            elif path == "/camera.jpg":
+            else:
                 with runtime.lock:
                     if runtime.jpeg:
                         self.respond(200, runtime.jpeg, "image/jpeg")
                     else:
                         self.respond(404, {"error": "Camera preview is unavailable"})
-            else:
-                self.respond(404, {"error": "Unknown route"})
 
         def do_POST(self):
+            if not self.authorized():
+                return
             # A local/LAN operator app. Cross-origin browser mutation is rejected.
             origin = self.headers.get("Origin")
             if origin and origin.split("://", 1)[-1] != self.headers.get("Host"):
@@ -289,6 +344,9 @@ def handler(runtime):
                     self.respond(404, {"error": "Unknown route"})
                     return
                 self.respond(200, data)
+            except ModelNotReady as exc:
+                # Nothing was started, so nothing else is disturbed.
+                self.respond(503, {"error": str(exc), "model": runtime.readiness.snapshot()})
             except (ValueError, RuntimeError, TypeError, KeyError) as exc:
                 runtime.stop()
                 self.respond(409, {"error": str(exc)})
@@ -298,7 +356,7 @@ def handler(runtime):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--profile", choices=["sim", "ros-sim", "hardware"], default=os.getenv("GO2_PROFILE", "sim"))
+    parser.add_argument("--profile", choices=["sim", "ros-sim", "air", "hardware"], default=os.getenv("GO2_PROFILE", "sim"))
     parser.add_argument("--host", default=os.getenv("GO2_HTTP_HOST", "127.0.0.1"))
     parser.add_argument("--port", type=int, default=int(os.getenv("GO2_HTTP_PORT", "8788")))
     args = parser.parse_args()
@@ -308,9 +366,14 @@ def main():
     else:
         from showcase.transport import build_transport
         transport_factory = lambda: build_transport(args.profile)
+    token = os.getenv("GO2_HTTP_TOKEN", "").strip()
+    if not token and args.host not in ("127.0.0.1", "localhost", "::1"):
+        print("warning: the operator page and its motion controls are open to anyone who can reach "
+              f"{args.host}:{args.port}; set GO2_HTTP_TOKEN to require a bearer token", file=sys.stderr, flush=True)
     runtime = Runtime(transport_factory)
-    server = ThreadingHTTPServer((args.host, args.port), handler(runtime))
-    print(json.dumps({"event": "ready", "profile": args.profile, "url": f"http://{args.host}:{args.port}", "motion": "disabled"}), flush=True)
+    server = ThreadingHTTPServer((args.host, args.port), handler(runtime, token))
+    print(json.dumps({"event": "ready", "profile": args.profile, "url": f"http://{args.host}:{args.port}",
+                      "motion": "disabled", "auth": "bearer-token" if token else "none"}), flush=True)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
