@@ -56,6 +56,21 @@ class ExecutorTests(unittest.TestCase):
         self.assertEqual(runner.step(observed(sectors=((0, 5),)), .2).yaw_rate, 0)
         self.assertEqual(runner.state, "fault")
 
+    def test_unknown_cloud_coverage_is_blocked_unless_explicitly_allowed(self):
+        runner = ActionExecutor()
+        runner.enable(observed(front_coverage_complete=False), 0)
+        self.assertEqual(runner.state, "fault")
+        partial = observed(front_coverage_complete=False, scan_coverage_complete=False,
+                           scan_coverage=.5, scan_gaps_allowed=True)
+        runner.enable(partial, 0)
+        self.assertEqual(runner.begin(MotionAction("forward"), partial, .1).vx, .55)
+
+        runner = ActionExecutor()
+        strict = observed(scan_coverage_complete=False, scan_coverage=.5)
+        runner.enable(strict, 0)
+        self.assertEqual(runner.begin(MotionAction("turn_left"), strict, .1).yaw_rate, 0)
+        self.assertEqual(runner.state, "fault")
+
     def test_new_obstacle_stops_during_segment(self):
         runner = ActionExecutor()
         runner.enable(observed(), 0)

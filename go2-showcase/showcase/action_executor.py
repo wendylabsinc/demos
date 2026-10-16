@@ -60,9 +60,14 @@ class ActionExecutor:
         if not obs.fresh or not all(math.isfinite(v) for v in (obs.x, obs.y, obs.yaw)):
             return "pose or camera missing, stale or invalid"
         if not obs.scan_fresh or obs.front_clearance is None:
-            return "fresh scan required"
+            return "fresh scan with measured front clearance required"
+        if not obs.front_coverage_complete and not obs.scan_gaps_allowed:
+            return "complete front scan coverage required"
         if not math.isfinite(obs.front_clearance) or obs.front_clearance < 0:
             return "invalid scan clearance"
+        if (not isinstance(obs.scan_coverage, (int, float)) or isinstance(obs.scan_coverage, bool)
+                or not math.isfinite(obs.scan_coverage) or not 0 <= obs.scan_coverage <= 1):
+            return "invalid scan coverage"
         for ray in obs.sectors:
             if len(ray) != 2 or not all(math.isfinite(v) for v in ray) or ray[1] < 0:
                 return "invalid scan sector"
@@ -163,6 +168,8 @@ class ActionExecutor:
             return Command(vx=0.55, reason=self.reason)
         if self.action in {"turn_left", "turn_right"}:
             # Full swept-footprint clearance needs measured front, sides and rear.
+            if not obs.scan_coverage_complete and not obs.scan_gaps_allowed:
+                return self._fault("rotation requires complete scan coverage")
             bearings = [math.atan2(math.sin(a), math.cos(a)) for a, _ in obs.sectors]
             if not all(any(abs(math.atan2(math.sin(a-required), math.cos(a-required))) < 0.4
                            for a in bearings) for required in (0, math.pi/2, -math.pi/2, math.pi)):

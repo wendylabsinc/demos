@@ -1,0 +1,10 @@
+{
+  "appId": "sh.wendy.ollama",
+  "version": "0.1.0",
+  "platform": "linux",
+  "entitlements": [
+    { "type": "network", "mode": "host" },
+    { "type": "gpu" },
+    { "type": "persist", "name": "ollama", "path": "/data" }
+  ]
+}

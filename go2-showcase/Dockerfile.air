@@ -1,0 +1,16 @@
+FROM ros:humble-ros-base
+
+# ROS_DOMAIN_ID, RMW_IMPLEMENTATION and discovery scope come from wendy.air.json.
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 GO2_HTTP_HOST=0.0.0.0
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      python3-pip ros-humble-rmw-cyclonedds-cpp ros-humble-geometry-msgs \
+      ros-humble-sensor-msgs ros-humble-nav-msgs \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY requirements-air.txt ./
+RUN python3 -m pip install --no-cache-dir -r requirements-air.txt
+COPY showcase ./showcase
+EXPOSE 8788
+ENTRYPOINT ["/ros_entrypoint.sh"]
+CMD ["python3", "-m", "showcase.server"]

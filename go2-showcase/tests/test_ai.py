@@ -2,7 +2,8 @@ import base64
 import json
 import math
 import unittest
-from showcase.ai import Decision, VisionAgent, ModelUnavailable
+from urllib.error import URLError
+from showcase.ai import Decision, VisionAgent, ModelUnavailable, NUM_CTX
 
 
 class Reply:
@@ -117,6 +118,62 @@ class AITests(unittest.TestCase):
                             opener=lambda *args, **kwargs: Reply({'done': True, 'message': {'content': 'not JSON'}}))
         with self.assertRaises(ModelUnavailable):
             agent.decide('Find keys', self.jpeg, {}, [])
+
+
+class WarmUpTests(unittest.TestCase):
+    def test_ollama_warm_up_loads_with_the_decision_context_and_no_image(self):
+        seen = []
+        def opener(request, timeout):
+            seen.append((request.full_url, request.get_method(), json.loads(request.data)))
+            return Reply({'done': True, 'done_reason': 'load'})
+        VisionAgent(url='http://127.0.0.1:11434', provider='ollama', model='qwen3-vl:4b', opener=opener).warm_up()
+        url, method, payload = seen[0]
+        self.assertEqual((url, method), ('http://127.0.0.1:11434/api/chat', 'POST'))
+        self.assertEqual(payload['messages'], [])
+        self.assertEqual(payload['keep_alive'], -1)
+        self.assertEqual(payload['options']['num_ctx'], NUM_CTX)
+
+    def test_decisions_use_the_warm_up_context_size(self):
+        seen = []
+        def opener(request, timeout):
+            seen.append(json.loads(request.data))
+            return Reply({'done': True, 'done_reason': 'stop', 'message': {'content': json.dumps(AITests.valid)}})
+        VisionAgent(url='http://m.test/api/chat', model='v', opener=opener).decide('Find keys', AITests.jpeg, {}, [])
+        self.assertEqual(seen[0]['options']['num_ctx'], NUM_CTX)
+
+    def test_openai_compatible_warm_up_is_a_one_token_text_request(self):
+        seen = []
+        def opener(request, timeout):
+            seen.append(json.loads(request.data))
+            return Reply({'choices': []})
+        agent = VisionAgent(url='https://model.test/v1', model='vision', opener=opener)
+        agent.warm_up()
+        self.assertEqual(seen[0]['max_tokens'], 1)
+        self.assertNotIn('image', json.dumps(seen[0]))
+        self.assertIsNone(agent.loaded())
+
+    def test_warm_up_failures_are_model_unavailable_without_details(self):
+        def refuse(request, timeout):
+            raise URLError('connection refused to http://secret-host')
+        agent = VisionAgent(url='http://127.0.0.1:11434', provider='ollama', model='m', opener=refuse)
+        for call in (agent.warm_up, agent.loaded):
+            with self.assertRaisesRegex(ModelUnavailable, 'unreachable or timed out') as caught:
+                call()
+            self.assertNotIn('secret-host', str(caught.exception))
+        unfinished = VisionAgent(url='http://m.test', provider='ollama', model='m',
+                                 opener=lambda *a, **k: Reply({'done': False}))
+        with self.assertRaises(ModelUnavailable):
+            unfinished.warm_up()
+
+    def test_loaded_reads_ollama_resident_models(self):
+        seen = []
+        def opener(request, timeout):
+            seen.append((request.full_url, request.get_method()))
+            return Reply({'models': [{'name': 'qwen3-vl:4b', 'model': 'qwen3-vl:4b'}]})
+        agent = VisionAgent(url='http://127.0.0.1:11434/api/chat', provider='ollama', model='qwen3-vl:4b', opener=opener)
+        self.assertTrue(agent.loaded())
+        self.assertEqual(seen[0], ('http://127.0.0.1:11434/api/ps', 'GET'))
+        self.assertFalse(VisionAgent(url='http://127.0.0.1:11434', provider='ollama', model='other', opener=opener).loaded())
 
 
 if __name__ == '__main__':
