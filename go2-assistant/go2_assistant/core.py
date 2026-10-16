@@ -46,7 +46,7 @@ class Assistant:
             raise ValueError("Robot localization is invalid.")
         self.last_observation = obs
         for detection in obs.get('detections', []):
-            if self._fresh_detection(detection):
+            if self._fresh_detection(detection, spatial=True):
                 self.memory.observe_object(detection)
         room = obs.get('room')
         if isinstance(room, dict) and self._fresh_visual_observation(room):
@@ -73,15 +73,19 @@ class Assistant:
         except (KeyError, TypeError, ValueError, OverflowError):
             return False
 
-    def _fresh_detection(self, detection, *, following=False):
+    def _fresh_detection(self, detection, *, following=False, spatial=False):
         try:
             age = self.clock() - float(detection['timestamp'])
             fresh = 0 <= age <= self.max_age
             if str(detection.get('source', '')).startswith('vision:'):
                 fresh = self._fresh_visual_observation(detection) and (fresh if following else True)
-            return (fresh and float(detection['confidence']) >= .65
-                    and all(math.isfinite(float(detection[k])) for k in ('x', 'y', 'confidence'))
-                    and bool(detection['track_id']) and bool(detection['label']))
+            valid = (fresh and math.isfinite(float(detection['confidence']))
+                     and float(detection['confidence']) >= .65
+                     and bool(detection['track_id']) and bool(detection['label']))
+            if spatial:
+                valid = valid and detection.get('spatial') is not False \
+                    and all(math.isfinite(float(detection[k])) for k in ('x', 'y'))
+            return bool(valid)
         except (KeyError, TypeError, ValueError, OverflowError):
             return False
 
@@ -194,8 +198,10 @@ class Assistant:
                                 'task': dict(self.task)}
                     return {'reply': self.last_result['reply'], 'result': self.last_result}
                 if name in {'follow_person', 'come_here'}:
+                    if getattr(self.backend, 'spatial_perception', True) is not True:
+                        return {'reply': "I can recognize people in the camera, but this connection does not provide safe distance measurements for following.", 'error': True}
                     people = [d for d in obs.get('detections', []) if d.get('label') == 'person'
-                              and self._fresh_detection(d, following=True)]
+                              and self._fresh_detection(d, following=True, spatial=True)]
                     requested = args.get('track_id')
                     if requested:
                         people = [d for d in people if d['track_id'] == requested]
@@ -299,15 +305,22 @@ class Assistant:
             return
         matches = [d for d in obs.get('detections', []) if d.get('label') == label
                    and self._fresh_detection(d)
-                   and (room is None or self.memory.nearest_room(d['x'], d['y']) == room)]
+                   and (room is None
+                        or (d.get('spatial') is not False and 'x' in d and 'y' in d
+                            and self.memory.nearest_room(d['x'], d['y']) == room)
+                        or (isinstance(d.get('capture_pose'), dict)
+                            and self.memory.nearest_room(d['capture_pose']['x'], d['capture_pose']['y']) == room))]
         if len(matches) > 1:
             self._finish('failed', f"I can see more than one {label}. Please specify which one.")
             return
         if matches:
             d = matches[0]
-            location = self.memory.nearest_room(d['x'], d['y'])
-            where = f" in {location}" if location else ""
-            self._finish('succeeded', f"I found {label}{where}. Its map position is {d['x']:.1f}, {d['y']:.1f} metres.")
+            if d.get('spatial') is False or 'x' not in d or 'y' not in d:
+                self._finish('succeeded', f"I can see {label} in the camera. This RGB-only view cannot measure its map position.")
+            else:
+                location = self.memory.nearest_room(d['x'], d['y'])
+                where = f" in {location}" if location else ""
+                self._finish('succeeded', f"I found {label}{where}. Its map position is {d['x']:.1f}, {d['y']:.1f} metres.")
             self.last_result['object'] = dict(d)
             return
         state = self.backend.status()['state']
@@ -325,7 +338,7 @@ class Assistant:
                 return
             if self._search_views < 8 and hasattr(self.backend, 'scan'):
                 self._search_views += 1
-                self.backend.scan()
+                self._accept(self.backend.scan())
                 self._search_phase = 'scan'
                 return
             self._search_phase = 'choose'
@@ -353,7 +366,8 @@ class Assistant:
 
     def _tick_follow(self, obs):
         matches = [d for d in obs.get('detections', []) if d.get('label') == 'person'
-                   and d.get('track_id') == self._target_track and self._fresh_detection(d, following=True)]
+                   and d.get('track_id') == self._target_track
+                   and self._fresh_detection(d, following=True, spatial=True)]
         if len(matches) != 1:
             self._finish('target_lost', "I've lost sight of you, so I stopped. Ask me to follow again when I can see you.")
             return

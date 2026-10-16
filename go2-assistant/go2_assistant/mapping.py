@@ -32,6 +32,35 @@ def _angle(value):
     return (value + math.pi) % (2 * math.pi) - math.pi
 
 
+def voxel_scan(points, *, sectors=72, min_height=-.2, max_height=.4, max_range=12.):
+    """Project an accumulated body-frame voxel map into conservative sectors.
+
+    Each finite sector contains the nearest occupied voxel in the robot-height
+    band. A missing sector remains NaN (unknown); it is never converted to a
+    synthetic maximum-range return.
+    """
+    points = np.asarray(points, dtype=np.float64)
+    if (points.ndim != 2 or points.shape[1:] != (3,) or not 8 <= len(points) <= 200_000
+            or not np.isfinite(points).all() or not isinstance(sectors, int) or not 36 <= sectors <= 720
+            or not all(math.isfinite(v) for v in (min_height, max_height, max_range))
+            or not min_height < max_height or not .1 <= max_range <= 30.):
+        raise ValueError("Invalid bounded voxel map or projection settings.")
+    radii = np.hypot(points[:, 0], points[:, 1])
+    usable = ((points[:, 2] >= min_height) & (points[:, 2] <= max_height)
+              & (radii >= .05) & (radii <= max_range))
+    if np.count_nonzero(usable) < 8:
+        raise ValueError("Voxel map has too few robot-height obstacle returns.")
+    angles = np.arctan2(points[usable, 1], points[usable, 0])
+    distances = radii[usable]
+    increment = 2 * math.pi / sectors
+    bins = np.floor((angles + math.pi) / increment + .5).astype(int) % sectors
+    ranges = np.full(sectors, np.inf, dtype=np.float64)
+    np.minimum.at(ranges, bins, distances)
+    ranges[~np.isfinite(ranges)] = np.nan
+    scan_angles = -math.pi + np.arange(sectors) * increment
+    return ranges, scan_angles
+
+
 class OccupancyMapper:
     def __init__(self, resolution=.1, robot_radius=.4, half_extent_m=12., map_id=None):
         if not (.05 <= resolution <= .5 and 0.05 <= robot_radius <= 1.0
@@ -247,6 +276,62 @@ class OccupancyMapper:
             return {"pose": self.pose(), "localization": dict(self.localization),
                     "map_id": self.map_id, "timestamp": stamp}
 
+    def update_voxels(self, points, pose, *, timestamp=None, min_height=-.2,
+                      max_height=.4, max_range=12., sectors=72):
+        """Integrate an accumulated occupied-voxel map paired with odometry.
+
+        Occupied cells come directly from every body-height voxel. Known-free
+        evidence is limited to the line from the robot to the nearest occupied
+        voxel in each populated angular sector. Empty sectors remain unknown.
+        Unlike ``update_scan``, this path performs no scan matching: the bridge
+        has already expressed the map in the odometry frame.
+        """
+        points = np.asarray(points, dtype=np.float64)
+        pose_values = np.asarray(pose, dtype=np.float64)
+        ranges, angles = voxel_scan(points, sectors=sectors, min_height=min_height,
+                                    max_height=max_height, max_range=max_range)
+        stamp = time.monotonic() if timestamp is None else float(timestamp)
+        if pose_values.shape != (3,) or not np.isfinite(pose_values).all() or not math.isfinite(stamp):
+            raise ValueError("Voxel odometry pose and capture timestamp must be finite.")
+        usable_points = ((points[:, 2] >= min_height) & (points[:, 2] <= max_height)
+                         & (np.hypot(points[:, 0], points[:, 1]) >= .05)
+                         & (np.hypot(points[:, 0], points[:, 1]) <= max_range))
+        local_occupied = points[usable_points, :2]
+        populated = np.isfinite(ranges)
+        local_nearest = np.column_stack((ranges[populated] * np.cos(angles[populated]),
+                                         ranges[populated] * np.sin(angles[populated])))
+        with self.lock:
+            if self.timestamp is not None and stamp <= self.timestamp:
+                raise ValueError("Voxel maps must have increasing capture timestamps.")
+            if not self._inside(self._cell(*pose_values[:2])):
+                self.localization = {"valid": False, "method": "map_bounds", "score": 0.}
+                self.timestamp = stamp
+                return {"pose": self.pose(), "localization": dict(self.localization),
+                        "map_id": self.map_id, "timestamp": stamp, "ranges": ranges}
+            self._pose = pose_values.copy()
+            self._pose[2] = _angle(self._pose[2])
+            self.localization = {"valid": True, "method": "voxel_map_odometry",
+                                 "score": 1., "observed_sectors": int(np.count_nonzero(populated)),
+                                 "total_sectors": sectors}
+            self._integrate(local_nearest, np.ones(len(local_nearest), dtype=bool), np.zeros(2))
+            c, s = math.cos(self._pose[2]), math.sin(self._pose[2])
+            world = local_occupied @ np.array(((c, s), (-s, c))) + self._pose[:2]
+            cells = np.rint((world + self.half_extent_m) / self.resolution).astype(int)
+            inside = ((cells[:, 0] >= 0) & (cells[:, 1] >= 0)
+                      & (cells[:, 0] < self.size) & (cells[:, 1] < self.size))
+            cells = cells[inside]
+            if len(cells):
+                self.observed[cells[:, 1], cells[:, 0]] = True
+                self.log_odds[cells[:, 1], cells[:, 0]] = np.maximum(
+                    .95, self.log_odds[cells[:, 1], cells[:, 0]])
+            self.timestamp = stamp
+            self.scans += 1
+            self.revision += 1
+            self._loaded = False
+            self._walk_cache = self._score_cache = None
+            return {"pose": self.pose(), "localization": dict(self.localization),
+                    "map_id": self.map_id, "timestamp": stamp, "ranges": ranges}
+
     def _integrate(self, local, hits, origin):
         c, s = math.cos(self._pose[2]), math.sin(self._pose[2])
         endpoints = local @ np.array(((c, s), (-s, c))) + self._pose[:2]
@@ -392,7 +477,8 @@ class OccupancyMapper:
 
     def status(self):
         with self.lock:
-            return {"map_id": self.map_id, "source": "measured lidar rays",
+            return {"map_id": self.map_id,
+                    "source": "accumulated occupied voxels" if self.localization.get("method") == "voxel_map_odometry" else "measured lidar rays",
                     "resolution_m": self.resolution, "size_cells": self.size,
                     "robot_radius_m": self.robot_radius, "revision": self.revision,
                     "scans": self.scans, "observed_cells": int(np.count_nonzero(self.observed)),

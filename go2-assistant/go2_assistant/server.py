@@ -83,7 +83,7 @@ def create_app(assistant, *, agent=None, token: str | None = None,
         and callable(getattr(assistant.backend, "set_person", None))
     )
     if tick_interval is None:
-        tick_interval = .05 if simulator_controls else .1
+        tick_interval = float(getattr(assistant.backend, 'tick_interval', .05 if simulator_controls else .1))
     if not math.isfinite(frame_interval) or frame_interval <= 0:
         raise ValueError('Frame interval must be positive and finite.')
     frame_cache = {}
@@ -160,7 +160,11 @@ def create_app(assistant, *, agent=None, token: str | None = None,
     @app.get("/api/config")
     def config():
         return {"mode": agent.mode, "token_required": bool(token), "transcription": agent.transcription_available,
-                "simulator": simulator_controls, "frame_rate": 1 / frame_interval}
+                "simulator": simulator_controls, "frame_rate": 1 / frame_interval,
+                "views": list(getattr(assistant.backend, 'available_views', ("map", "overview", "camera"))),
+                "capabilities": dict(getattr(assistant.backend, 'capabilities', {
+                    "explore": True, "find_object": True, "spin": True,
+                    "spatial_people": True, "posture": True}))}
 
     @app.get("/api/status")
     def status(request: Request):

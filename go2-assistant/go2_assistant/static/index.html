@@ -82,11 +82,11 @@
         <section class="play" aria-label="Simple robot commands">
           <h2>What shall we do?</h2>
           <div class="quick-actions">
-            <button class="quick-action" type="button" data-prompt="Follow me"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="5" r="2"/><path d="m7 20 3-7 3 3 1 4M4 12l4-4 4 2 2 4m2-6h5m-2-2 2 2-2 2"/></svg>Follow me</button>
-            <button class="quick-action" type="button" data-prompt="Come here"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h14m-5-5 5 5-5 5M20 5v14"/></svg>Come here</button>
-            <button class="quick-action" type="button" data-prompt="Spin"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M19 8a8 8 0 1 0 1 7M19 3v5h-5"/></svg>Spin</button>
-            <button class="quick-action" type="button" data-prompt="Lie down"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 19h18M5 16h14l1-6h-4l-2 3H7l-2 3ZM7 13V9m0 0h4"/></svg>Lie down</button>
-            <button class="quick-action" type="button" data-prompt="Stand up"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 10h12l3-4h2v8h-4l-2 6h-2l-1-6H9l-2 6H5l1-10ZM3 21h18"/></svg>Stand up</button>
+            <button class="quick-action" type="button" data-prompt="Follow me" data-capability="spatial_people"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="5" r="2"/><path d="m7 20 3-7 3 3 1 4M4 12l4-4 4 2 2 4m2-6h5m-2-2 2 2-2 2"/></svg>Follow me</button>
+            <button class="quick-action" type="button" data-prompt="Come here" data-capability="spatial_people"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h14m-5-5 5 5-5 5M20 5v14"/></svg>Come here</button>
+            <button class="quick-action" type="button" data-prompt="Spin" data-capability="spin"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M19 8a8 8 0 1 0 1 7M19 3v5h-5"/></svg>Spin</button>
+            <button class="quick-action" type="button" data-prompt="Lie down" data-capability="posture"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 19h18M5 16h14l1-6h-4l-2 3H7l-2 3ZM7 13V9m0 0h4"/></svg>Lie down</button>
+            <button class="quick-action" type="button" data-prompt="Stand up" data-capability="posture"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 10h12l3-4h2v8h-4l-2 6h-2l-1-6H9l-2 6H5l1-10ZM3 21h18"/></svg>Stand up</button>
           </div>
           <div class="sim-person" id="sim-person-controls" hidden>
             <h3>Take your buddy for a walk</h3>
@@ -104,13 +104,13 @@
           </div>
         </section>
         <div class="memory"><div class="section-line"><h2>Remembered rooms</h2><span class="count" id="room-count"></span></div><div class="rooms" id="rooms"><span class="empty">Room memory will appear here.</span></div><div class="observations" id="observations"></div></div>
-        <p class="footnote">The map comes from lidar. Room names come from camera suggestions or names you teach. Select a saved room to send it there.</p>
+        <p class="footnote">The map comes from robot sensors. Room names come from camera suggestions or names you teach. Select a saved room to send it there.</p>
       </section>
       <section class="panel chat" aria-label="Chat with Go2">
         <div class="chat-head"><h2>Talk to your buddy</h2><span class="mode" id="mode">Connecting</span></div>
         <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation"></div>
         <div class="thinking" id="thinking" role="status">Thinking...</div>
-        <div class="suggestions"><button class="suggestion" data-prompt="Explore the house">Explore the house</button><button class="suggestion" data-prompt="Find a cup">Find a cup</button><button class="suggestion" data-prompt="Remember this as kitchen">Remember this room</button></div>
+        <div class="suggestions"><button class="suggestion" data-prompt="Explore the house" data-capability="explore">Explore the house</button><button class="suggestion" data-prompt="Find a cup" data-capability="find_object">Find a cup</button><button class="suggestion" data-prompt="Remember this as kitchen">Remember this room</button></div>
         <form class="composer" id="composer">
           <div class="input-line"><textarea id="message" aria-label="Message Go2" rows="1" maxlength="2000" placeholder="Ask Go2 to do something..."></textarea><button class="send" id="send" aria-label="Send message">Send</button></div>
           <div class="voice-row"><button class="voice" id="dictate" type="button">Dictate</button><button class="voice" id="record" type="button" hidden>Record</button><label class="voice" id="upload-label" hidden>Upload audio<input type="file" id="audio-file" accept="audio/*" hidden></label><label class="speak"><input type="checkbox" id="speak">Speak replies</label></div>
@@ -227,19 +227,18 @@
         byId('connection').textContent='Connected';byId('connection-dot').classList.add('online');byId('token-box').style.display='none';
         byId('mode').textContent=latest.mode === 'llm' ? 'LLM connected' : 'Offline commands';
         byId('task-name').textContent=describeStatus(state);
-        const pose=state.pose || state.position;let detail=state.message || state.detail || (state.task && state.task.args && (state.task.args.room || state.task.args.object)) || (state.last_result && state.last_result.reply) || state.last_event || '';
+        const pose=state.pose || state.position;const backend=state.backend || state.runtime || 'simulator';let detail=state.message || state.detail || (state.task && state.task.args && (state.task.args.room || state.task.args.object)) || (state.last_result && state.last_result.reply) || (backend && backend.reason) || state.last_event || '';
         if(typeof detail !== 'string') detail=JSON.stringify(detail);
         if(!detail && pose) detail='Position ' + (Array.isArray(pose) ? pose.slice(0,2).map(n => Number(n).toFixed(1)).join(', ') : [pose.x,pose.y].filter(n => n !== undefined).map(n => Number(n).toFixed(1)).join(', ')) + ' m';
         byId('task-detail').textContent=detail || 'Ready for your next command.';
-        const backend=state.backend || state.runtime || 'simulator';
         const vision=backend.vision || {}, mapping=backend.mapping || {};
-        byId('backend-label').textContent=view === 'map' ? 'Lidar map · dark areas unknown' : view === 'overview' ? 'Simulator scene · observer view' : (vision.model ? vision.model + (vision.pending ? ' · observing' : vision.error ? ' · unavailable' : ' · camera') : 'Live camera');
+        byId('backend-label').textContent=view === 'map' ? 'Sensor map · dark areas unknown' : view === 'overview' ? 'Simulator scene · observer view' : (vision.model ? vision.model + (vision.pending ? ' · observing' : vision.error ? ' · unavailable' : ' · camera') : 'Live camera');
         if(mapping.localization && !mapping.localization.valid) byId('task-detail').textContent='Waiting for lidar localization before moving.';
         const rooms=latest.rooms || [];byId('room-count').textContent=rooms.length + ' saved';byId('rooms').replaceChildren();
         rooms.forEach(room => {const name=room.name || room.room; if(!name)return;const button=document.createElement('button');button.className='room';button.textContent=name;button.disabled=pending;button.addEventListener('click',() => sendMessage('Go to ' + name));byId('rooms').append(button);});
         if(!rooms.length){const empty=document.createElement('span');empty.className='empty';empty.textContent="Say 'remember this as kitchen' to save a room.";byId('rooms').append(empty);}
         const objects=latest.objects || [];byId('observations').textContent=objects.length ? 'Last observed: ' + [...new Set(objects.map(item => item.label || item.name || item.object || 'object'))].slice(0,5).join(', ') : '';
-        if(!loadedHistory){loadedHistory=true;byId('messages').replaceChildren();const history=latest.history || [];history.forEach(item => {if(['user','assistant'].includes(item.role) && typeof item.content === 'string')addMessage(item.role,item.content);});if(!history.length)addMessage('assistant',"Hi! Want to take a walk, find something, or try a little spin? Say 'follow me' or tap a command.");}
+        if(!loadedHistory){loadedHistory=true;byId('messages').replaceChildren();const history=latest.history || [];history.forEach(item => {if(['user','assistant'].includes(item.role) && typeof item.content === 'string')addMessage(item.role,item.content);});if(!history.length)addMessage('assistant',"Hi! Want to map the room, find something, remember a place, or try a little spin?");}
         if(latest.error)notice(latest.error);
         flushCompletion();
       } catch(error){byId('connection').textContent='Disconnected';byId('connection-dot').classList.remove('online');statusNotice=error.message;notice(statusNotice);}
@@ -312,7 +311,7 @@
       catch(error){if(recordingStream)recordingStream.getTracks().forEach(track => track.stop());notice('Microphone unavailable. ' + error.message);}
     });
     async function initialize(){
-      try{config=await (await fetch(endpoint('/api/config'),{cache:'no-store'})).json();frameConfigReady=true;frameInterval=1000/Math.min(20,Math.max(1,Number(config.frame_rate) || 20));byId('sim-person-controls').hidden=!config.simulator;byId('mode').textContent=config.mode === 'llm' ? 'LLM connected' : 'Offline commands';if(config.token_required && !token)byId('token-box').style.display='flex';byId('upload-label').hidden=!config.transcription;byId('record').hidden=!config.transcription;byId('record').disabled=!(window.isSecureContext && navigator.mediaDevices && window.MediaRecorder);byId('voice-note').textContent='Browser dictation needs a supported browser and microphone permission, usually on HTTPS or localhost. ' + (config.transcription ? 'Record or upload audio for provider transcription. Recordings go to your configured provider.' : 'Text works without a microphone.');refreshStatus();await refreshFrame();}
+      try{config=await (await fetch(endpoint('/api/config'),{cache:'no-store'})).json();frameConfigReady=true;frameInterval=1000/Math.min(20,Math.max(1,Number(config.frame_rate) || 20));byId('sim-person-controls').hidden=!config.simulator;const views=Array.isArray(config.views)?config.views:['map','overview','camera'];document.querySelectorAll('[data-view]').forEach(button=>{button.hidden=!views.includes(button.dataset.view);button.classList.remove('active');});if(!views.includes(view)){view=views.includes('camera')?'camera':views[0];}const selectedView=[...document.querySelectorAll('[data-view]')].find(button=>button.dataset.view===view);if(selectedView)selectedView.classList.add('active');const capabilities=config.capabilities||{};document.querySelectorAll('[data-capability]').forEach(button=>{button.hidden=capabilities[button.dataset.capability]===false;});byId('mode').textContent=config.mode === 'llm' ? 'LLM connected' : 'Offline commands';if(config.token_required && !token)byId('token-box').style.display='flex';byId('upload-label').hidden=!config.transcription;byId('record').hidden=!config.transcription;byId('record').disabled=!(window.isSecureContext && navigator.mediaDevices && window.MediaRecorder);byId('voice-note').textContent='Browser dictation needs a supported browser and microphone permission, usually on HTTPS or localhost. ' + (config.transcription ? 'Record or upload audio for provider transcription. Recordings go to your configured provider.' : 'Text works without a microphone.');refreshStatus();await refreshFrame();}
       catch(error){notice('Could not connect. ' + error.message);}
     }
     initialize();statusTimer=setInterval(refreshStatus,1000);
