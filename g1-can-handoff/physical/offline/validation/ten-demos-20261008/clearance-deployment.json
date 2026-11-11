@@ -1,0 +1,136 @@
+{
+  "app_id": "DEV-g1-handoff-physical",
+  "app_version": "0.3.9-clearance-path",
+  "arguments": [
+    "--device",
+    "10.10.20.238:50052",
+    "--build-host=10.10.20.208:50052",
+    "--detach",
+    "--yes"
+  ],
+  "built_services": [],
+  "cache_state": "warm",
+  "cli_version": "wendy version 2026.10.01-013419",
+  "command": "wendy run",
+  "deployment_exit_code": 0,
+  "deployment_id": "203760dd-6204-4fec-b473-9faa4137133c",
+  "evidence_source": "wrapper_monotonic_clock_and_cli_output",
+  "exit_code": 0,
+  "functional_readiness": {
+    "configured": true,
+    "evidence_source": "configured_command_exit_status",
+    "exit_code": 0,
+    "status": "passed"
+  },
+  "git_branch": "codex/g1-nx2-trial-fixes",
+  "git_commit": "e7b6a93c587c069170aad5889966f6ae07d7f3c8",
+  "git_dirty": true,
+  "note": "NX2 clearance planner and all-joint settling; source e7b6a93; controller-only PASSIVE deployment",
+  "outcome": "success",
+  "phase_seconds": {
+    "agent_diagnosis_s": null,
+    "analysis_s": null,
+    "build_lock_wait_s": null,
+    "code_test_s": null,
+    "command_elapsed_s": 9.437778,
+    "device_replacement_s": null,
+    "functional_readiness_s": 3.870108,
+    "physical_execution_s": null,
+    "readiness_s": null,
+    "runtime_diagnostics_s": 0.380678,
+    "service_build_s": null,
+    "stagefile_compile_s": null,
+    "target_metadata_s": 0.65391,
+    "upload_s": null
+  },
+  "project": "physical",
+  "project_path": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical",
+  "recorded_at_utc": "2026-10-08T18:27:47.009463Z",
+  "replaced_services": [],
+  "restarted_services": [],
+  "runtime_diagnostics": {
+    "app_state": {
+      "failure_count": null,
+      "observed_at_utc": "2026-10-08T18:27:46.628751Z",
+      "running_state": "RUNNING",
+      "status": "available"
+    },
+    "device": "10.10.20.238:50052",
+    "diagnostic_target": null,
+    "evidence_source": [
+      "wendy_run_output",
+      "wendy_device_apps_list"
+    ],
+    "failure_kind": null,
+    "log_probe_status": "not_requested",
+    "port_conflict": null,
+    "status": "available"
+  },
+  "schema_version": 4,
+  "scope": "whole-project",
+  "source_changes": {
+    "added_files": 25,
+    "approx_text_line_churn": 7959,
+    "approx_text_lines_added": 7935,
+    "approx_text_lines_deleted": 24,
+    "baseline_available": true,
+    "changed_files": 34,
+    "current_input_bytes": 40513990,
+    "current_input_files": 190,
+    "current_text_lines": 27458,
+    "deleted_files": 0,
+    "layer_counts_can_overlap": false,
+    "layers": {
+      "project:manifest": {
+        "approx_text_line_churn": 6,
+        "changed_files": 1
+      },
+      "project:packaging": {
+        "approx_text_line_churn": 7,
+        "changed_files": 3
+      },
+      "project:source": {
+        "approx_text_line_churn": 7946,
+        "changed_files": 30
+      }
+    },
+    "line_churn_unmeasured_files": 0,
+    "measurement_basis": "selected_service_inputs_vs_previous_successful_same_target_scope",
+    "modified_files": 9,
+    "state_key": "19fc1a81ad3beeb3e6c87e89ecdcb807"
+  },
+  "stagefiles": [
+    "build.stagefile.yaml"
+  ],
+  "started_at_utc": "2026-10-08T18:27:33.320768Z",
+  "target": "10.10.20.238:50052",
+  "target_metadata": {
+    "agent_version": "2026.10.05-134249",
+    "cpu_architecture": "arm64",
+    "device_type": null,
+    "gpu_arch": "sm_87",
+    "observed_at_utc": "2026-10-08T18:27:32.507638Z",
+    "os": "ubuntu",
+    "os_version": "22.04",
+    "status": "available"
+  },
+  "transferred_services": [],
+  "wrapper_exit_code": 0,
+  "wrapper_version": "wendy-run-timed.v4",
+  "verified_environment": {
+    "HANDOFF_CONTROL_SETTLE_MAX_SPEED_RAD_S": "1",
+    "HANDOFF_TABLE_CLEARANCE_M": "0.01",
+    "HANDOFF_CAMERA_MAX_AGE_MS": "400",
+    "HANDOFF_YOLO_MIN_CONFIDENCE": "0.10"
+  },
+  "calibration_sha256": {
+    "/data/calibration-before-reset-1791399985.json": "0ce1e73cbbc33677ab32a76a7e7d28b1242f246be7f2f5a2f1340f3a53d30024",
+    "/data/calibration.candidate.json": "79d31bc1b02189c73fe5c0b34a9b60dc063fc4157101d79dc4c1d7d8d0b5c13f",
+    "/data/calibration-before-retry-1791400197.json": "1c8e8097ae57baedaf2b29149ad7a08a4dfcfd2e18cb9bd780426c0a6150b57a",
+    "/data/calibration.json": "4804eb3fe35e238935dd5ed6d6631b43dad881049a976ab914b118c58f443310"
+  },
+  "demo_started": false,
+  "physical_pickup_verified": false,
+  "rollback_archive_sha256": "3f00e744e222355db6ce2f2985462101eee3ac5347354014c1b9586693a6d77e",
+  "calibration_preserved": true
+}

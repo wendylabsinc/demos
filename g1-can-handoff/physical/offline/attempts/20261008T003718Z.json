@@ -1,0 +1,1334 @@
+{
+  "started_unix_ns": 1791419838529589000,
+  "device": "10.10.20.238:50052",
+  "start_requested": true,
+  "before": {
+    "status": {
+      "phase": "PASSIVE",
+      "error": null,
+      "motion_commands_sent": 0,
+      "adapter_initialized": false,
+      "automatic_home": false,
+      "events": "/data/events-20261008T003715Z.jsonl",
+      "calibration_present": true,
+      "lowstate": {
+        "poll_hz": 200.0,
+        "rate_hz": 196.1,
+        "samples": 694,
+        "age_s": 0.0033,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      },
+      "camera_max_age_ms": 400.0,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth",
+      "tracking_error": null,
+      "tracking_exposure_age_ms": null,
+      "tracking_vision": null,
+      "first_failure": null,
+      "demo_running": false,
+      "demo_result": null,
+      "demo_error": null,
+      "measured": {
+        "body": {
+          "imu_rpy": [
+            0.012293829582631588,
+            0.05159049108624458,
+            -2.9984219074249268
+          ],
+          "q": [
+            -0.12736520171165466,
+            -0.024934004992246628,
+            0.0043523660860955715,
+            0.31382688879966736,
+            -0.18179698288440704,
+            0.02992410399019718,
+            -0.11296428740024567,
+            -0.017410682514309883,
+            0.022793006151914597,
+            0.31446605920791626,
+            -0.20330582559108734,
+            -0.004747677594423294,
+            0.003964001312851906,
+            0.0,
+            0.0,
+            0.24711471796035767,
+            0.27085548639297485,
+            -0.088791124522686,
+            0.8321126699447632,
+            -0.0068669612519443035,
+            0.009357282891869545,
+            -0.004509903956204653,
+            0.25470075011253357,
+            -0.2861233651638031,
+            0.08680174499750137,
+            0.8023439049720764,
+            -0.00015579492901451886,
+            0.013905536383390427,
+            0.001173495315015316
+          ],
+          "dq": [
+            -0.0051424880512058735,
+            -0.01636246219277382,
+            -0.011999138630926609,
+            0.009817477315664291,
+            0.006504386197775602,
+            0.01268187165260315,
+            -0.01714162714779377,
+            -0.014180800877511501,
+            0.0,
+            0.0,
+            -0.0005470267497003078,
+            0.0009141986374743283,
+            -0.003428325057029724,
+            0.0,
+            0.0,
+            0.013805827125906944,
+            -0.003067961661145091,
+            0.013805827125906944,
+            0.0015339808305725455,
+            -0.013805827125906944,
+            -0.007853981107473373,
+            0.006872233934700489,
+            0.012271846644580364,
+            0.0015339808305725455,
+            0.003067961661145091,
+            -0.0015339808305725455,
+            -0.0015339808305725455,
+            0.0,
+            0.003926990553736687
+          ],
+          "tau_est": [
+            3.4117543697357178,
+            5.80078125,
+            -1.9016335010528564,
+            -0.3515625,
+            11.647255897521973,
+            -2.216468572616577,
+            0.615234375,
+            -3.603515625,
+            0.615234375,
+            0.615234375,
+            14.518546104431152,
+            0.4025408923625946,
+            -0.22372159361839294,
+            0.0,
+            0.0,
+            0.4375,
+            2.125,
+            0.9375,
+            -1.375,
+            0.25,
+            -0.390625,
+            0.185546875,
+            0.1875,
+            -2.125,
+            -0.5,
+            -1.25,
+            -0.0625,
+            -0.5078125,
+            -0.009765625
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              42,
+              43
+            ],
+            [
+              40,
+              41
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              54,
+              58
+            ],
+            [
+              55,
+              67
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              41,
+              42
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              43,
+              43
+            ],
+            [
+              55,
+              66
+            ],
+            [
+              56,
+              72
+            ],
+            [
+              40,
+              40
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              56,
+              58
+            ],
+            [
+              50,
+              50
+            ],
+            [
+              51,
+              51
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              49,
+              50
+            ],
+            [
+              51,
+              43
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              55,
+              56
+            ],
+            [
+              56,
+              55
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              54,
+              51
+            ],
+            [
+              56,
+              48
+            ]
+          ],
+          "temperature_max": 72,
+          "time": 2809.017824963
+        },
+        "left": {
+          "imu_rpy": null,
+          "q": [
+            -0.03491028770804405,
+            0.40636029839515686,
+            0.012999900616705418,
+            -0.032231174409389496,
+            -0.021729854866862297,
+            -0.04393388703465462,
+            -0.03450240567326546
+          ],
+          "dq": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "tau_est": [
+            11722.1591796875,
+            3349.188232421875,
+            -1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              45,
+              41
+            ],
+            [
+              45,
+              44
+            ],
+            [
+              41,
+              40
+            ],
+            [
+              44,
+              41
+            ],
+            [
+              40,
+              38
+            ],
+            [
+              45,
+              43
+            ],
+            [
+              41,
+              40
+            ]
+          ],
+          "temperature_max": 45,
+          "time": 2808.926466745
+        },
+        "right": {
+          "imu_rpy": null,
+          "q": [
+            -0.038819652050733566,
+            -0.8953278064727783,
+            -1.5217034816741943,
+            1.1080983877182007,
+            1.6995329856872559,
+            0.7365949153900146,
+            1.695368766784668
+          ],
+          "dq": [
+            0.0,
+            0.0,
+            -0.11450418829917908,
+            -0.0,
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "tau_est": [
+            -5861.07958984375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              49,
+              46
+            ],
+            [
+              51,
+              49
+            ],
+            [
+              46,
+              45
+            ],
+            [
+              50,
+              49
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              46,
+              46
+            ]
+          ],
+          "temperature_max": 51,
+          "time": 2808.926944361
+        }
+      },
+      "telemetry_healthy": true
+    },
+    "native_event_file": "/data/events-20261008T003715Z.jsonl",
+    "event_counts": {},
+    "events": [],
+    "perception_tail": []
+  },
+  "start_response": {
+    "phase": "PASSIVE",
+    "error": null,
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "telemetry_healthy": true,
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "demo_running": true,
+    "demo_result": null,
+    "demo_error": null
+  },
+  "after": {
+    "status": {
+      "phase": "BLOCKED",
+      "error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "motion_commands_sent": 0,
+      "adapter_initialized": false,
+      "automatic_home": false,
+      "events": "/data/events-20261008T003715Z.jsonl",
+      "calibration_present": true,
+      "lowstate": {
+        "poll_hz": 200.0,
+        "rate_hz": 200.1,
+        "samples": 1989,
+        "age_s": 0.0021,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      },
+      "camera_max_age_ms": 400.0,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth",
+      "tracking_error": null,
+      "tracking_exposure_age_ms": null,
+      "tracking_vision": null,
+      "first_failure": {
+        "error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+        "source": "execution"
+      },
+      "demo_running": false,
+      "demo_result": null,
+      "demo_error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "measured": {
+        "body": {
+          "imu_rpy": [
+            0.012075681239366531,
+            0.05225536972284317,
+            -2.9987258911132812
+          ],
+          "q": [
+            -0.12736520171165466,
+            -0.024934004992246628,
+            0.0043523660860955715,
+            0.313852459192276,
+            -0.18178844451904297,
+            0.029924076050519943,
+            -0.11291072517633438,
+            -0.017419204115867615,
+            0.022766223177313805,
+            0.314483106136322,
+            -0.2033015787601471,
+            -0.004740562289953232,
+            0.004004176706075668,
+            0.0,
+            0.0,
+            0.2471267133951187,
+            0.2708674669265747,
+            -0.08880311250686646,
+            0.8321126699447632,
+            -0.006902913562953472,
+            0.009357282891869545,
+            -0.004509903956204653,
+            0.2547127306461334,
+            -0.2861233651638031,
+            0.08683769404888153,
+            0.802379846572876,
+            -0.00022770027862861753,
+            0.013897866941988468,
+            0.0011581555008888245
+          ],
+          "dq": [
+            0.0,
+            -0.0021816615480929613,
+            0.008570813573896885,
+            0.006544984877109528,
+            -0.007081563584506512,
+            -0.006328487768769264,
+            0.01714162714779377,
+            -0.01636246219277382,
+            -0.001714162528514862,
+            -0.0021816615480929613,
+            0.0032865421380847692,
+            -0.007310441229492426,
+            -0.013713300228118896,
+            0.0,
+            0.0,
+            -0.00920388475060463,
+            0.012271846644580364,
+            0.00920388475060463,
+            0.0,
+            -0.007669903803616762,
+            -0.010799224488437176,
+            0.0,
+            0.0,
+            -0.00920388475060463,
+            -0.003067961661145091,
+            0.006135923322290182,
+            0.0,
+            -0.004908738657832146,
+            0.0029452431481331587
+          ],
+          "tau_est": [
+            3.4117543697357178,
+            5.712890625,
+            -1.9575639963150024,
+            -0.439453125,
+            11.910314559936523,
+            -2.1623904705047607,
+            0.615234375,
+            -3.779296875,
+            0.615234375,
+            0.791015625,
+            14.430712699890137,
+            0.45485642552375793,
+            -0.11186079680919647,
+            0.0,
+            0.0,
+            0.5,
+            2.0625,
+            0.9375,
+            -1.3125,
+            0.1875,
+            -0.41015625,
+            0.1953125,
+            0.25,
+            -2.0625,
+            -0.4375,
+            -1.1875,
+            -0.125,
+            -0.5078125,
+            -0.048828125
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              42,
+              43
+            ],
+            [
+              40,
+              41
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              54,
+              58
+            ],
+            [
+              55,
+              67
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              41,
+              42
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              43,
+              43
+            ],
+            [
+              55,
+              67
+            ],
+            [
+              56,
+              72
+            ],
+            [
+              40,
+              40
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              56,
+              58
+            ],
+            [
+              50,
+              50
+            ],
+            [
+              51,
+              51
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              49,
+              50
+            ],
+            [
+              51,
+              43
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              55,
+              56
+            ],
+            [
+              56,
+              55
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              54,
+              51
+            ],
+            [
+              56,
+              48
+            ]
+          ],
+          "temperature_max": 72,
+          "time": 2816.003465183
+        },
+        "left": {
+          "imu_rpy": null,
+          "q": [
+            -0.034911055117845535,
+            0.40636029839515686,
+            0.013007950969040394,
+            -0.032231174409389496,
+            -0.02173522114753723,
+            -0.043918676674366,
+            -0.03450419753789902
+          ],
+          "dq": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "tau_est": [
+            5861.07958984375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              45,
+              41
+            ],
+            [
+              45,
+              44
+            ],
+            [
+              41,
+              40
+            ],
+            [
+              44,
+              41
+            ],
+            [
+              40,
+              38
+            ],
+            [
+              45,
+              43
+            ],
+            [
+              41,
+              40
+            ]
+          ],
+          "temperature_max": 45,
+          "time": 2815.920243556
+        },
+        "right": {
+          "imu_rpy": null,
+          "q": [
+            -0.038820162415504456,
+            -0.8953349590301514,
+            -1.5216890573501587,
+            1.108095645904541,
+            1.6995329856872559,
+            0.7365949153900146,
+            1.6953669786453247
+          ],
+          "dq": [
+            0.0,
+            0.0,
+            -0.0,
+            -0.0,
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "tau_est": [
+            -5861.07958984375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            1674.5941162109375,
+            -3349.188232421875,
+            1674.5941162109375,
+            -1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              49,
+              46
+            ],
+            [
+              51,
+              49
+            ],
+            [
+              46,
+              45
+            ],
+            [
+              50,
+              49
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              46,
+              46
+            ]
+          ],
+          "temperature_max": 51,
+          "time": 2815.935994924
+        }
+      },
+      "telemetry_healthy": true
+    },
+    "native_event_file": "/data/events-20261008T003715Z.jsonl",
+    "event_counts": {
+      "phase_camera_evidence": 2,
+      "scene_refreshed": 1,
+      "exposure_pose": 1,
+      "perception_result": 1,
+      "perception_worker_result": 1,
+      "observed_can_collision_proxy": 1,
+      "primary_failure": 1,
+      "error": 1,
+      "failure_hold": 1
+    },
+    "events": [
+      {
+        "unix_ns": 1791419841813673716,
+        "monotonic_ns": 2811532502740,
+        "phase": "scene_refreshed",
+        "calibration": {
+          "commissioned": true,
+          "calibration_method": "operator_accepted_factory_table",
+          "camera_serial": "338622073335",
+          "device": "unitree-g1-nx-2.local",
+          "camera_to_world": [
+            [
+              0.0013185315742757478,
+              -0.850155961208947,
+              0.5265292993703,
+              0.07827886396948515
+            ],
+            [
+              -0.9998349831224524,
+              0.00841898825452259,
+              0.0160974271638434,
+              0.011934774320799112
+            ],
+            [
+              -0.018118167650528868,
+              -0.5264636381153606,
+              -0.8500045704249628,
+              1.2717100138664246
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "pelvis_to_world": [
+            [
+              0.9986347600612449,
+              0.0006403016594923906,
+              0.0522322315357567,
+              0.0
+            ],
+            [
+              5.421010862427522e-20,
+              0.9999248700408488,
+              -0.01225782500249045,
+              0.0
+            ],
+            [
+              -0.0522361560360259,
+              0.01224109013023478,
+              0.9985597326725144,
+              0.8011046016391974
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "table_height_m": 0.762,
+          "table_center_xy_m": [
+            5.167664963289006,
+            0
+          ],
+          "table_half_size_xy_m": [
+            5,
+            5
+          ],
+          "table_near_edge_conservative_x_m": 0.1676649632890063,
+          "table_extent_source": "conservative extension beyond reachable workspace",
+          "can_radius_m": 0.033,
+          "can_height_m": 0.122,
+          "arm_limits_rad": [
+            [
+              -3.0892,
+              2.6704
+            ],
+            [
+              -1.5882,
+              2.2515
+            ],
+            [
+              -2.618,
+              2.618
+            ],
+            [
+              -1.0472,
+              2.0944
+            ],
+            [
+              -1.97222,
+              1.97222
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -3.0892,
+              2.6704
+            ],
+            [
+              -2.2515,
+              1.5882
+            ],
+            [
+              -2.618,
+              2.618
+            ],
+            [
+              -1.0472,
+              2.0944
+            ],
+            [
+              -1.97222,
+              1.97222
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -1.61443,
+              1.61443
+            ]
+          ],
+          "source_frame_id": 41836,
+          "tilt_correction_deg": 7.641680068989222,
+          "table_plane_rmse_m": 0.0013439897447824478,
+          "independent_validation": false,
+          "assumptions": [
+            "operator confirms factory mount position and stationary base",
+            "camera tilt adjusted; pivot translation not modeled",
+            "horizontal 0.762 m table; nearest yellow tape marks near edge",
+            "factory d435 frame approximates aligned RGB optical origin",
+            "model arm limits; body IMU describes pelvis orientation"
+          ],
+          "operator_accepted": true,
+          "factory_mount_position_confirmed": true,
+          "stationary_base_confirmed": true,
+          "position_validation_rmse_m": null,
+          "accepted_at_unix_s": 1791419841.8125937,
+          "reference_base_q": [
+            -0.1273518204689026,
+            -0.024925485253334045,
+            0.004365758039057255,
+            0.3138609826564789,
+            -0.18178844451904297,
+            0.029924076050519943,
+            -0.11289732903242111,
+            -0.017410682514309883,
+            0.022779613733291626,
+            0.31447458267211914,
+            -0.2033015787601471,
+            -0.004740562289953232,
+            0.004004176706075668,
+            0.0,
+            0.0
+          ],
+          "reference_imu_rpy": [
+            0.012258131988346577,
+            0.05225994065403938,
+            -2.9986608028411865
+          ],
+          "operator_with_stop": true,
+          "support": "factory_balance",
+          "factory_mount_source": {
+            "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+            "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+            "operator_confirmed_original_mount": true,
+            "parent": "torso_link",
+            "child": "d435_link",
+            "xyz_m": [
+              0.0576235,
+              0.01753,
+              0.41987
+            ],
+            "rpy_rad": [
+              0,
+              0.8307767239493009,
+              0
+            ],
+            "commissioned": false
+          },
+          "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+          "scene_refresh_automatic": true,
+          "calibration_exposure_pose": {
+            "timestamp": 2810.537792994,
+            "frame_timestamp": 2810.5431048870087,
+            "skew_ms": -5.311893008638435,
+            "rpy": [
+              0.012258131988346577,
+              0.05225994065403938,
+              -2.9986608028411865
+            ],
+            "waist_q": [
+              0.004004176706075668,
+              0.0,
+              0.0
+            ]
+          }
+        },
+        "independent_validation": false
+      },
+      {
+        "unix_ns": 1791419844639817584,
+        "monotonic_ns": 2814358645584,
+        "phase": "exposure_pose",
+        "frame_timestamp": 2814.1457719802856,
+        "pose": {
+          "timestamp": 2814.147906275,
+          "rpy": [
+            0.012115937657654285,
+            0.051466137170791626,
+            -2.9987285137176514
+          ],
+          "waist_q": [
+            0.004044352564960718,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "unix_ns": 1791419844640450724,
+        "monotonic_ns": 2814359278212,
+        "phase": "perception_worker_result",
+        "phase_name": "planning",
+        "worker_ms": 592.9121149997627,
+        "round_trip_ms": 596.006170000237,
+        "error": null
+      },
+      {
+        "unix_ns": 1791419844641574858,
+        "monotonic_ns": 2814360402826,
+        "phase": "observed_can_collision_proxy",
+        "center_m": [
+          0.25735769859435936,
+          0.15088371247765964,
+          0.823
+        ],
+        "source": "camera"
+      },
+      {
+        "unix_ns": 1791419844641903476,
+        "monotonic_ns": 2814360731124,
+        "phase": "primary_failure",
+        "error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+        "source": "execution"
+      },
+      {
+        "unix_ns": 1791419844643653678,
+        "monotonic_ns": 2814362481614,
+        "phase": "error",
+        "error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+        "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 506, in run\n    prepared=prepare(plant,observe,phase_event)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 32, in prepare\n    points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/g1_can_handoff/task.py\", line 15, in plan\n    raise ValueError(\nValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.\n"
+      },
+      {
+        "unix_ns": 1791419844645300677,
+        "monotonic_ns": 2814364128741,
+        "phase": "failure_hold",
+        "grasp_started": false,
+        "control_retained": false,
+        "automatic_release": false
+      }
+    ],
+    "perception_tail": [
+      {
+        "unix_ns": 1791419841014551902,
+        "monotonic_ns": 2810733381086,
+        "phase": "phase_camera_evidence",
+        "phase_name": "scene_refresh",
+        "path": "/data/camera-41836-scene_refresh.npz",
+        "metadata": {
+          "schema": "wendy.g1.rgbd.v1",
+          "raw_received_unix_ns": 1791419840890792006,
+          "raw_received_monotonic_ns": 2810609621126,
+          "aligned_to": "color",
+          "camera_serial": "338622073335",
+          "clock": "host_monotonic",
+          "timestamp_valid": true,
+          "color_time": 2810.5432257652283,
+          "depth_time": 2810.5431048870087,
+          "received_monotonic": 2810.618753748,
+          "color_sensor_ms": 1791419840824.4028,
+          "depth_sensor_ms": 1791419840824.282,
+          "color_timestamp_domain": "timestamp_domain.global_time",
+          "depth_timestamp_domain": "timestamp_domain.global_time",
+          "depth_scale_m": 0.0010000000474974513,
+          "intrinsics": {
+            "width": 640,
+            "height": 480,
+            "fx": 603.59765625,
+            "fy": 603.7045288085938,
+            "ppx": 318.05902099609375,
+            "ppy": 261.0997619628906,
+            "model": "distortion.inverse_brown_conrady",
+            "coeffs": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "frame_id": 41836,
+          "captured_at_unix_ns": 1791419840901081146,
+          "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+        },
+        "color_codec": "jpeg_exact_source_frame"
+      },
+      {
+        "unix_ns": 1791419844640151803,
+        "monotonic_ns": 2814358979515,
+        "phase": "phase_camera_evidence",
+        "phase_name": "planning",
+        "path": "/data/camera-41890-planning.npz",
+        "metadata": {
+          "schema": "wendy.g1.rgbd.v1",
+          "raw_received_unix_ns": 1791419844494101318,
+          "raw_received_monotonic_ns": 2814212930662,
+          "aligned_to": "color",
+          "camera_serial": "338622073335",
+          "clock": "host_monotonic",
+          "timestamp_valid": true,
+          "color_time": 2814.1458928585052,
+          "depth_time": 2814.1457719802856,
+          "received_monotonic": 2814.222144118,
+          "color_sensor_ms": 1791419844427.0696,
+          "depth_sensor_ms": 1791419844426.9487,
+          "color_timestamp_domain": "timestamp_domain.global_time",
+          "depth_timestamp_domain": "timestamp_domain.global_time",
+          "depth_scale_m": 0.0010000000474974513,
+          "intrinsics": {
+            "width": 640,
+            "height": 480,
+            "fx": 603.59765625,
+            "fy": 603.7045288085938,
+            "ppx": 318.05902099609375,
+            "ppy": 261.0997619628906,
+            "model": "distortion.inverse_brown_conrady",
+            "coeffs": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "frame_id": 41890,
+          "captured_at_unix_ns": 1791419844504548862,
+          "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+        },
+        "color_codec": "jpeg_exact_source_frame"
+      },
+      {
+        "unix_ns": 1791419844640301247,
+        "monotonic_ns": 2814359128895,
+        "phase": "perception_result",
+        "phase_name": "planning",
+        "frame_id": 41890,
+        "source": {
+          "frame_id": 41890,
+          "camera_serial": "338622073335",
+          "timestamp": 2814.1457719802856,
+          "shape": [
+            480,
+            640,
+            3
+          ],
+          "image_sha256": "0c3ffaa2345f353a77fa1a0b155b911e204c33297d3daee013f6fa1a5f1eb98b"
+        },
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "detections": [
+          {
+            "xyxy": [
+              76.0,
+              288.5,
+              222.5,
+              443.0
+            ],
+            "confidence": 0.32861328125,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "inference_ms": 19.922,
+        "geometry": {
+          "top_quantile_z_m": 0.8711459397272555,
+          "center_xy_m": [
+            0.25735769859435936,
+            0.15088371247765964
+          ],
+          "fit_error_m": 0.0019603593982439275,
+          "pixels": 1591,
+          "frame_id": 41890,
+          "detector": "coke_yolo",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              76.0,
+              288.5,
+              222.5,
+              443.0
+            ],
+            "confidence": 0.32861328125,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "0c3ffaa2345f353a77fa1a0b155b911e204c33297d3daee013f6fa1a5f1eb98b",
+          "tracking": {
+            "mode": "yolo",
+            "reason": "initial_identity",
+            "semantic_frame_id": 41890
+          }
+        },
+        "error": null,
+        "processing_ms": 72.14417300019704,
+        "exposure_age_ms": 209.9611227145033
+      }
+    ]
+  },
+  "finished_unix_ns": 1791419846314186000
+}

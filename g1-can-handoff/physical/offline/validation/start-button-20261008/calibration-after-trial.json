@@ -1,0 +1,221 @@
+{
+  "recorded_at_unix_ns": 1791480889768706000,
+  "sha256": "5d99f327d9f4c73172a8dc9e1ebd48aef730bec8a1016a47e0f6b04130a4210b",
+  "configuration": {
+    "commissioned": true,
+    "calibration_method": "operator_accepted_factory_table",
+    "camera_serial": "338622073335",
+    "device": "unitree-g1-nx-2.local",
+    "camera_to_world": [
+      [
+        0.002222975486287241,
+        -0.7818392290284801,
+        0.6234761249094782,
+        0.054687923578044514
+      ],
+      [
+        -0.9999828490291868,
+        0.0016403272526482125,
+        0.005622363735537408,
+        0.013465761089094629
+      ],
+      [
+        -0.005418489407374771,
+        -0.6234779300654162,
+        -0.7818221733194102,
+        1.2672936345680181
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "pelvis_to_world": [
+      [
+        0.9999974250760781,
+        0.000020154829250013614,
+        0.0022692366549372563,
+        0
+      ],
+      [
+        0,
+        0.9999605594487142,
+        -0.008881415822623478,
+        0
+      ],
+      [
+        -0.0022693261584119913,
+        0.008881392953653417,
+        0.9999579846263489,
+        0.793408228912797
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "table_height_m": 0.762,
+    "table_center_xy_m": [
+      5.207423144478654,
+      0
+    ],
+    "table_half_size_xy_m": [
+      5,
+      5
+    ],
+    "table_near_edge_conservative_x_m": 0.20742314447865418,
+    "table_extent_source": "conservative extension beyond reachable workspace",
+    "can_radius_m": 0.033,
+    "can_height_m": 0.122,
+    "arm_limits_rad": [
+      [
+        -3.0892,
+        2.6704
+      ],
+      [
+        -1.5882,
+        2.2515
+      ],
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        -1.0472,
+        2.0944
+      ],
+      [
+        -1.97222,
+        1.97222
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -3.0892,
+        2.6704
+      ],
+      [
+        -2.2515,
+        1.5882
+      ],
+      [
+        -2.618,
+        2.618
+      ],
+      [
+        -1.0472,
+        2.0944
+      ],
+      [
+        -1.97222,
+        1.97222
+      ],
+      [
+        -1.61443,
+        1.61443
+      ],
+      [
+        -1.61443,
+        1.61443
+      ]
+    ],
+    "source_frame_id": 4449,
+    "tilt_correction_deg": 3.7053581383571577,
+    "table_plane_rmse_m": 0.0020493525075528356,
+    "independent_validation": false,
+    "assumptions": [
+      "operator confirms factory mount position and stationary base",
+      "camera tilt adjusted; pivot translation not modeled",
+      "horizontal 0.762 m table; nearest yellow tape marks near edge",
+      "factory d435 frame approximates aligned RGB optical origin",
+      "model arm limits; body IMU describes pelvis orientation"
+    ],
+    "operator_accepted": true,
+    "factory_mount_position_confirmed": true,
+    "stationary_base_confirmed": true,
+    "position_validation_rmse_m": null,
+    "accepted_at_unix_s": 1791480747.6010528,
+    "reference_base_q": [
+      -0.15629169344902039,
+      0.029718320816755295,
+      0.0027989062946289778,
+      0.3248886168003082,
+      -0.1454659402370453,
+      -0.010762450285255909,
+      -0.145868182182312,
+      -0.05293085798621178,
+      0.03477875143289566,
+      0.3176192343235016,
+      -0.14273852109909058,
+      0.0246978010982275,
+      0.0027051628567278385,
+      0,
+      0
+    ],
+    "reference_imu_rpy": [
+      0.008881532587110996,
+      0.0022693281061947346,
+      1.713474154472351
+    ],
+    "operator_with_stop": true,
+    "support": "factory_balance",
+    "factory_mount_source": {
+      "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+      "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+      "operator_confirmed_original_mount": true,
+      "parent": "torso_link",
+      "child": "d435_link",
+      "xyz_m": [
+        0.0576235,
+        0.01753,
+        0.41987
+      ],
+      "rpy_rad": [
+        0,
+        0.8307767239493009,
+        0
+      ],
+      "commissioned": false
+    },
+    "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+    "scene_refresh_automatic": true,
+    "calibration_exposure_pose": {
+      "timestamp": 4128.03633653,
+      "frame_timestamp": 4128.0336220264435,
+      "skew_ms": 2.7145035564899445,
+      "rpy": [
+        0.008881532587110996,
+        0.0022693281061947346,
+        1.713474154472351
+      ],
+      "waist_q": [
+        0.0027051628567278385,
+        0,
+        0
+      ]
+    },
+    "table_plane_quality": {
+      "rmse_m": 0.0020493525075528356,
+      "heldout_rmse_m": 0.0020620036415014563,
+      "heldout_normal_angle_deg": 0.009497771006706983,
+      "fitted_points": 16327,
+      "heldout_points": 16372,
+      "axis_spread_m": [
+        0.21184890363639355,
+        0.19408753897793432,
+        0.002049352507552838
+      ],
+      "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+    }
+  }
+}

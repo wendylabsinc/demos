@@ -1,0 +1,26 @@
+test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search (test_planning_acceptance.PlanningAcceptanceTests.test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search) ... FAIL
+
+======================================================================
+FAIL: test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search (test_planning_acceptance.PlanningAcceptanceTests.test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_planning_acceptance.py", line 20, in test_continuous_full_path_validator_selects_branch_without_disconnected_endpoint_search
+    prepare(plant, lambda *args:(observation, {'source':'saved_scene_replay'}), plant.event)
+  File "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/pickup.py", line 35, in prepare
+    try:points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 37, in plan
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.16/Frameworks/Python.framework/Versions/3.11/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+AssertionError: Redundant disconnected endpoint solve
+
+----------------------------------------------------------------------
+Ran 1 test in 0.539s
+
+FAILED (failures=1)

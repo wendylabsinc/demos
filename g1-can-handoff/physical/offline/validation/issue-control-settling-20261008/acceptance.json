@@ -1,0 +1,6588 @@
+{
+  "method": "Actual wait_for_stable_control; original native DDS body/left/right samples, recorder receipt time and preserved recorder feedback ages, 20ms replay reads",
+  "native_feedback_sha256": "45b018d0d16590dc011412aa2d77f4108bbbfc01a06178c75a5db82e36314093",
+  "repeats": 3,
+  "limitations": [
+    "Original controller callback times and exact loop sample selection unavailable; recorder-selected 20ms per-topic subset is used.",
+    "Offline guard behavior only; no physical settling, hardware motion or ownership transition tested."
+  ],
+  "sources": [
+    {
+      "trial": 2,
+      "source_segment": "/records/20261008T162358Z-ab00e585/samples-000086.jsonl.gz",
+      "source_segment_sha256": "0c2416217683eb965b376c731adcf773afb977aad31b4c5a7995426c6e45b7a5",
+      "start_unix_ns": 1791481826783523549,
+      "end_unix_ns": 1791481831809654113
+    },
+    {
+      "trial": 3,
+      "source_segment": "/records/20261008T162358Z-ab00e585/samples-000088.jsonl.gz",
+      "source_segment_sha256": "79bb4623af49cffaea852b8e359b32713ef473740afa89c9417ed3788d8b6045",
+      "start_unix_ns": 1791481957009910278,
+      "end_unix_ns": 1791481962035613145
+    }
+  ],
+  "red_green": [
+    {
+      "repeat": 1,
+      "trial": 2,
+      "red": {
+        "trial": 2,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021753212999999993,
+          "left": 0.021964900999999593,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 2,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.02137182500000001,
+          "left": 0.020647583000000025,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0004900693893432617,
+              0.0019563999958336353,
+              0.00016570091247558594,
+              0.0002276599407196045,
+              0.0001107882708311081,
+              5.356757901608944e-05,
+              0.0012186765670776367,
+              9.523332118988037e-05,
+              0.0001963973045349121,
+              0.0008302927017211914,
+              0.00013635307550430298,
+              2.678378950804472e-05,
+              0.00016191601753234863,
+              0.0009983927011489868,
+              0.0002326667308807373,
+              0.00013391883112490177,
+              0.0,
+              0.0,
+              0.001102536916732788,
+              0.012835085391998291,
+              0.004122577607631683,
+              0.010689914226531982,
+              9.587360545992851e-05,
+              0.0005905833095312119,
+              0.0003758254460990429,
+              0.001402139663696289,
+              0.014273226261138916,
+              0.003259710967540741,
+              0.007370293140411377,
+              5.992117803543806e-05,
+              0.005092816427350044,
+              0.00026844663079828024
+            ],
+            "max_speed_rad_s": 0.07976700365543365,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "red": {
+        "trial": 3,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021571671999999875,
+          "left": 0.02211063400000013,
+          "right": 0.022604646999999867
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 3,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.020293704999999995,
+          "left": 0.020216391,
+          "right": 0.02017642199999997
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0001923171803355217,
+              0.0007533431053161621,
+              0.00016415119171142578,
+              0.0002544522285461426,
+              9.37432050704956e-05,
+              4.0175626054406166e-05,
+              0.0005794763565063477,
+              1.7315149307250977e-05,
+              4.2108818888664246e-05,
+              0.00033479928970336914,
+              6.817653775215149e-05,
+              4.017568426206708e-05,
+              0.0001874864101409912,
+              0.0003124922513961792,
+              0.0001050606369972229,
+              0.00012052711099386215,
+              0.0,
+              0.0,
+              0.0009227842092514038,
+              0.011313110589981079,
+              0.0036432072520256042,
+              0.010989546775817871,
+              7.190532051026821e-05,
+              0.0006366018205881119,
+              0.0003681555390357971,
+              0.0015339553356170654,
+              0.012080103158950806,
+              0.003415502607822418,
+              0.006555378437042236,
+              5.992111982777715e-05,
+              0.005361264571547508,
+              0.00029912625905126333
+            ],
+            "max_speed_rad_s": 0.06902913749217987,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "red": {
+        "trial": 2,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021753212999999993,
+          "left": 0.021964900999999593,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 2,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.02137182500000001,
+          "left": 0.020647583000000025,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0004900693893432617,
+              0.0019563999958336353,
+              0.00016570091247558594,
+              0.0002276599407196045,
+              0.0001107882708311081,
+              5.356757901608944e-05,
+              0.0012186765670776367,
+              9.523332118988037e-05,
+              0.0001963973045349121,
+              0.0008302927017211914,
+              0.00013635307550430298,
+              2.678378950804472e-05,
+              0.00016191601753234863,
+              0.0009983927011489868,
+              0.0002326667308807373,
+              0.00013391883112490177,
+              0.0,
+              0.0,
+              0.001102536916732788,
+              0.012835085391998291,
+              0.004122577607631683,
+              0.010689914226531982,
+              9.587360545992851e-05,
+              0.0005905833095312119,
+              0.0003758254460990429,
+              0.001402139663696289,
+              0.014273226261138916,
+              0.003259710967540741,
+              0.007370293140411377,
+              5.992117803543806e-05,
+              0.005092816427350044,
+              0.00026844663079828024
+            ],
+            "max_speed_rad_s": 0.07976700365543365,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "red": {
+        "trial": 3,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021571671999999875,
+          "left": 0.02211063400000013,
+          "right": 0.022604646999999867
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 3,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.020293704999999995,
+          "left": 0.020216391,
+          "right": 0.02017642199999997
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0001923171803355217,
+              0.0007533431053161621,
+              0.00016415119171142578,
+              0.0002544522285461426,
+              9.37432050704956e-05,
+              4.0175626054406166e-05,
+              0.0005794763565063477,
+              1.7315149307250977e-05,
+              4.2108818888664246e-05,
+              0.00033479928970336914,
+              6.817653775215149e-05,
+              4.017568426206708e-05,
+              0.0001874864101409912,
+              0.0003124922513961792,
+              0.0001050606369972229,
+              0.00012052711099386215,
+              0.0,
+              0.0,
+              0.0009227842092514038,
+              0.011313110589981079,
+              0.0036432072520256042,
+              0.010989546775817871,
+              7.190532051026821e-05,
+              0.0006366018205881119,
+              0.0003681555390357971,
+              0.0015339553356170654,
+              0.012080103158950806,
+              0.003415502607822418,
+              0.006555378437042236,
+              5.992111982777715e-05,
+              0.005361264571547508,
+              0.00029912625905126333
+            ],
+            "max_speed_rad_s": 0.06902913749217987,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "red": {
+        "trial": 2,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021753212999999993,
+          "left": 0.021964900999999593,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 2,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.02137182500000001,
+          "left": 0.020647583000000025,
+          "right": 0.022022139999999968
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0004900693893432617,
+              0.0019563999958336353,
+              0.00016570091247558594,
+              0.0002276599407196045,
+              0.0001107882708311081,
+              5.356757901608944e-05,
+              0.0012186765670776367,
+              9.523332118988037e-05,
+              0.0001963973045349121,
+              0.0008302927017211914,
+              0.00013635307550430298,
+              2.678378950804472e-05,
+              0.00016191601753234863,
+              0.0009983927011489868,
+              0.0002326667308807373,
+              0.00013391883112490177,
+              0.0,
+              0.0,
+              0.001102536916732788,
+              0.012835085391998291,
+              0.004122577607631683,
+              0.010689914226531982,
+              9.587360545992851e-05,
+              0.0005905833095312119,
+              0.0003758254460990429,
+              0.001402139663696289,
+              0.014273226261138916,
+              0.003259710967540741,
+              0.007370293140411377,
+              5.992117803543806e-05,
+              0.005092816427350044,
+              0.00026844663079828024
+            ],
+            "max_speed_rad_s": 0.07976700365543365,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "red": {
+        "trial": 3,
+        "limit_rad_s": 0.03,
+        "settled": false,
+        "error": "Control handover did not settle within 5 seconds",
+        "elapsed_s": 5.0,
+        "reads": 250,
+        "max_recorder_feedback_age_s": {
+          "body": 0.021571671999999875,
+          "left": 0.02211063400000013,
+          "right": 0.022604646999999867
+        },
+        "archive_checks": 19,
+        "events": []
+      },
+      "green": {
+        "trial": 3,
+        "limit_rad_s": 1.0,
+        "settled": true,
+        "error": null,
+        "elapsed_s": 0.52,
+        "reads": 27,
+        "max_recorder_feedback_age_s": {
+          "body": 0.020293704999999995,
+          "left": 0.020216391,
+          "right": 0.02017642199999997
+        },
+        "archive_checks": 2,
+        "events": [
+          {
+            "phase": "control_settled",
+            "duration_s": 0.52,
+            "pose_span_rad": [
+              0.0001923171803355217,
+              0.0007533431053161621,
+              0.00016415119171142578,
+              0.0002544522285461426,
+              9.37432050704956e-05,
+              4.0175626054406166e-05,
+              0.0005794763565063477,
+              1.7315149307250977e-05,
+              4.2108818888664246e-05,
+              0.00033479928970336914,
+              6.817653775215149e-05,
+              4.017568426206708e-05,
+              0.0001874864101409912,
+              0.0003124922513961792,
+              0.0001050606369972229,
+              0.00012052711099386215,
+              0.0,
+              0.0,
+              0.0009227842092514038,
+              0.011313110589981079,
+              0.0036432072520256042,
+              0.010989546775817871,
+              7.190532051026821e-05,
+              0.0006366018205881119,
+              0.0003681555390357971,
+              0.0015339553356170654,
+              0.012080103158950806,
+              0.003415502607822418,
+              0.006555378437042236,
+              5.992111982777715e-05,
+              0.005361264571547508,
+              0.00029912625905126333
+            ],
+            "max_speed_rad_s": 0.06902913749217987,
+            "max_speed_limit_rad_s": 1.0
+          }
+        ]
+      },
+      "accepted": true
+    }
+  ],
+  "negatives": [
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 1,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 2,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 2,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-0--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-0-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-1--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-1-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-2--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-2-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-3--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-3-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-4--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-4-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-5--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-5-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-6--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-6-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-7--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-7-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-8--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-8-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-9--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-9-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-10--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-10-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-11--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-11-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-12--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-12-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-13--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-13-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-14--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-14-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-15--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-15-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-16--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-16-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-17--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-17-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-18--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-18-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-19--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-19-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-20--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-20-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-21--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-21-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-22--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-22-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-23--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-23-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-24--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-24-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-25--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-25-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-26--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-26-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-27--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-27-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-28--1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "body-speed-joint-28-1.01",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "stale-body",
+      "settled": false,
+      "error": "Stale body measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "motor-fault-body",
+      "settled": false,
+      "error": "body motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "stale-left",
+      "settled": false,
+      "error": "Stale left measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "motor-fault-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "stale-right",
+      "settled": false,
+      "error": "Stale right measured feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "motor-fault-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "hand-device-error-left",
+      "settled": false,
+      "error": "left motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "hand-device-error-right",
+      "settled": false,
+      "error": "right motor fault or missing fault feedback",
+      "elapsed_s": 0.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-3",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-4",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-5",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-6",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-7",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-8",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-9",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-10",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-11",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-12",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-13",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-base-joint-14",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-0",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-1",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    },
+    {
+      "repeat": 3,
+      "trial": 3,
+      "scenario": "unstable-imu-axis-2",
+      "settled": false,
+      "error": "Control handover did not settle within 5 seconds",
+      "elapsed_s": 5.0,
+      "accepted": true
+    }
+  ],
+  "accepted": true
+}

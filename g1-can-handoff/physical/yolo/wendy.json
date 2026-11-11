@@ -1,0 +1,23 @@
+{
+  "appId": "DEV-g1-handoff-coke-yolo",
+  "version": "0.2.3-exposure-500ms",
+  "platform": "linux",
+  "env": {
+    "HANDOFF_CAMERA_MAX_AGE_MS": "500"
+  },
+  "entitlements": [
+    {
+      "type": "network",
+      "mode": "host"
+    },
+    {
+      "type": "gpu"
+    }
+  ],
+  "readiness": {
+    "tcpSocket": {
+      "port": 8112
+    },
+    "timeoutSeconds": 180
+  }
+}

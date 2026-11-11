@@ -1,0 +1,76 @@
+{
+  "simulation_only": true,
+  "physical_pickup_verified": false,
+  "noise_scale": 1.0,
+  "limitations": "Observed estimate variability; no independent can ground truth. Includes jitter and persistent drift, which may include actual can movement. Z, depth pixels, camera latency, postgrasp variability and motion-conditioned noise probabilities are not fitted.",
+  "runs": {
+    "ideal": {
+      "lift_verified": true,
+      "error": null,
+      "failure_phase": null,
+      "simulated_time_s": 51.820000000017366,
+      "reach_estimate_displacement_mm": 0.0005620587773441634,
+      "handover_estimate_displacement_mm": 0.01903616924331499,
+      "noise": {
+        "mode": "none",
+        "seed": 7,
+        "scale": 1.0,
+        "trace": null,
+        "profile_sha256": "5f0ff8005162aeb15ca50eebb22884fc0dbecca7953164a23d929b76153df8c6",
+        "model": "seeded whole-trace XY replay at phase boundaries",
+        "interpretation": "Observed estimate variability; no independent can ground truth. Includes jitter and persistent drift, which may include actual can movement.",
+        "unmeasured": "Z, depth pixels, camera latency, postgrasp variability and motion-conditioned noise probabilities are not fitted.",
+        "missing_phase_policy": "hold last offset; explicitly marked extrapolated",
+        "repeated_preflight_policy": "reuse the last recorded occurrence of that phase"
+      },
+      "command_count": 5149,
+      "result_sha256": "91cde6b39c7e6ef5e62709154071650638778209fe3834be5d60be77ab394b41"
+    },
+    "approach-drift": {
+      "lift_verified": false,
+      "error": "Can or table moved during approach; replanning required",
+      "failure_phase": "reach",
+      "simulated_time_s": 25.099999999996967,
+      "reach_estimate_displacement_mm": 11.617027373562737,
+      "handover_estimate_displacement_mm": 0.01903616924331499,
+      "noise": {
+        "mode": "recorded",
+        "seed": 7,
+        "scale": 1.0,
+        "trace": "approach-drift",
+        "profile_sha256": "5f0ff8005162aeb15ca50eebb22884fc0dbecca7953164a23d929b76153df8c6",
+        "model": "seeded whole-trace XY replay at phase boundaries",
+        "interpretation": "Observed estimate variability; no independent can ground truth. Includes jitter and persistent drift, which may include actual can movement.",
+        "unmeasured": "Z, depth pixels, camera latency, postgrasp variability and motion-conditioned noise probabilities are not fitted.",
+        "missing_phase_policy": "hold last offset; explicitly marked extrapolated",
+        "repeated_preflight_policy": "reuse the last recorded occurrence of that phase"
+      },
+      "command_count": 2476,
+      "result_sha256": "e8a35e9a341415ef98e9852c27e2a38c31fa1ab480d1374ca7b321afad4fec50"
+    },
+    "handover": {
+      "lift_verified": true,
+      "error": null,
+      "failure_phase": null,
+      "simulated_time_s": 51.860000000017415,
+      "reach_estimate_displacement_mm": 5.430844723320588,
+      "handover_estimate_displacement_mm": 10.397275132347454,
+      "noise": {
+        "mode": "recorded",
+        "seed": 7,
+        "scale": 1.0,
+        "trace": "handover",
+        "profile_sha256": "5f0ff8005162aeb15ca50eebb22884fc0dbecca7953164a23d929b76153df8c6",
+        "model": "seeded whole-trace XY replay at phase boundaries",
+        "interpretation": "Observed estimate variability; no independent can ground truth. Includes jitter and persistent drift, which may include actual can movement.",
+        "unmeasured": "Z, depth pixels, camera latency, postgrasp variability and motion-conditioned noise probabilities are not fitted.",
+        "missing_phase_policy": "hold last offset; explicitly marked extrapolated",
+        "repeated_preflight_policy": "reuse the last recorded occurrence of that phase"
+      },
+      "command_count": 5153,
+      "result_sha256": "61630e5ae195b2526ebdfa1e35bd72b70660f2eff8ab5942fada9d971b45a5db"
+    }
+  },
+  "recorded_reach_estimate_displacement_mm": 11.616626484265181,
+  "maximum_relative_xy_replay_error_mm": 0.000562058777345353
+}

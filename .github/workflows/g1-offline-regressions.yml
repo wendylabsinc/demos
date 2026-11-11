@@ -1,0 +1,36 @@
+name: G1 offline regressions
+on:
+  pull_request:
+    paths: ['g1-can-handoff/physical/**', '.github/workflows/g1-offline-regressions.yml']
+  push:
+    paths: ['g1-can-handoff/physical/**', '.github/workflows/g1-offline-regressions.yml']
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Regression, ownership acceptance, simulation, or the complete suite'
+        type: choice
+        default: all
+        options: [regression, simulation, open, all]
+permissions:
+  contents: read
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build pinned CPU test environment
+        run: docker build -f g1-can-handoff/physical/offline/Dockerfile -t g1-offline g1-can-handoff/physical
+      - name: Run without network or robot devices
+        env:
+          PROFILE: ${{ inputs.profile || 'all' }}
+        run: |
+          mkdir -p g1-can-handoff/physical/offline/reports
+          docker run --rm --network none --read-only --tmpfs /tmp \
+            -v "$PWD/g1-can-handoff/physical/offline/reports:/reports" \
+            g1-offline --profile "$PROFILE" --timeout 300 --report /reports/results.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: g1-offline-results
+          path: g1-can-handoff/physical/offline/reports/results.json

@@ -1,0 +1,2279 @@
+{
+  "started_unix_ns": 1791421431889966000,
+  "device": "10.10.20.238:50052",
+  "start_requested": true,
+  "before": {
+    "status": {
+      "phase": "PASSIVE",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "motion_commands_sent": 40549,
+      "adapter_initialized": false,
+      "automatic_home": false,
+      "events": "/data/events-20261008T004007Z.jsonl",
+      "calibration_present": true,
+      "lowstate": {
+        "poll_hz": 200.0,
+        "rate_hz": 198.9,
+        "samples": 277769,
+        "age_s": 0.0046,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      },
+      "camera_max_age_ms": 400.0,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth",
+      "tracking_error": null,
+      "tracking_exposure_age_ms": 229245.89948019185,
+      "tracking_vision": {
+        "top_quantile_z_m": 0.8713559815317224,
+        "center_xy_m": [
+          0.35312656224564654,
+          0.16826905602918024
+        ],
+        "fit_error_m": 0.0023073262480817177,
+        "pixels": 1876,
+        "frame_id": 62259,
+        "detector": "coke_yolo",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            75.5,
+            224.25,
+            211.25,
+            372.75
+          ],
+          "confidence": 0.39697265625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "5051bed4400713e683fd9368b3294dd7ca66f640dc43bd626bd9ed6d40843850",
+        "tracking": {
+          "mode": "yolo",
+          "reason": "periodic_recheck",
+          "semantic_frame_id": 62259
+        }
+      },
+      "first_failure": {
+        "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+        "source": "execution"
+      },
+      "demo_running": false,
+      "demo_result": null,
+      "demo_error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "measured": {
+        "body": {
+          "imu_rpy": [
+            0.006980956066399813,
+            0.024924155324697495,
+            -2.9956884384155273
+          ],
+          "q": [
+            -0.0780964195728302,
+            -0.009935082867741585,
+            -0.017717478796839714,
+            0.3115685284137726,
+            -0.2085055112838745,
+            0.010832661762833595,
+            -0.19520393013954163,
+            -0.0009800433181226254,
+            -0.014436463825404644,
+            0.3379189074039459,
+            -0.12517502903938293,
+            -0.03313339874148369,
+            0.0005892434273846447,
+            0.0,
+            0.0,
+            0.23721575736999512,
+            0.2914683520793915,
+            -0.08420116454362869,
+            0.8206078410148621,
+            -0.008293083868920803,
+            0.016613012179732323,
+            -0.003336408408358693,
+            0.26730814576148987,
+            -0.2730845510959625,
+            0.09152352809906006,
+            0.7950215339660645,
+            -0.0004074636672157794,
+            0.015270779840648174,
+            0.0013882527127861977
+          ],
+          "dq": [
+            -0.006856650114059448,
+            0.015271631069481373,
+            0.010284976102411747,
+            -0.006544984877109528,
+            -0.0021782955154776573,
+            0.0036527770571410656,
+            0.020569952204823494,
+            0.004363323096185923,
+            -0.001714162528514862,
+            -0.011999138630926609,
+            -0.0022425507195293903,
+            -0.0035969801247119904,
+            0.003428325057029724,
+            0.0,
+            0.0,
+            0.0015339808305725455,
+            -0.007669903803616762,
+            0.0,
+            0.01073786523193121,
+            -0.01840776950120926,
+            -0.006872233934700489,
+            0.009817477315664291,
+            0.007669903803616762,
+            -0.02147573046386242,
+            0.00920388475060463,
+            0.013805827125906944,
+            0.003067961661145091,
+            0.005890486296266317,
+            0.008835730142891407
+          ],
+          "tau_est": [
+            -6.879438877105713,
+            3.427734375,
+            0.0,
+            -5.44921875,
+            7.869290828704834,
+            -1.8164433240890503,
+            8.389559745788574,
+            -5.712890625,
+            4.698153495788574,
+            -0.52734375,
+            7.03542423248291,
+            0.8379166722297668,
+            -0.1677911877632141,
+            0.0,
+            0.0,
+            0.125,
+            1.6875,
+            0.5,
+            -1.0625,
+            0.25,
+            -0.68359375,
+            0.146484375,
+            0.1875,
+            -2.5,
+            -0.5,
+            -1.4375,
+            -0.0625,
+            -0.556640625,
+            -0.05859375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              43,
+              46
+            ],
+            [
+              39,
+              39
+            ],
+            [
+              40,
+              40
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              53,
+              55
+            ],
+            [
+              55,
+              62
+            ],
+            [
+              43,
+              48
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              42,
+              43
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              53,
+              54
+            ],
+            [
+              52,
+              57
+            ],
+            [
+              40,
+              39
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              57,
+              59
+            ],
+            [
+              51,
+              51
+            ],
+            [
+              50,
+              51
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              48,
+              51
+            ],
+            [
+              50,
+              44
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              56,
+              58
+            ],
+            [
+              56,
+              55
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              54,
+              52
+            ],
+            [
+              56,
+              48
+            ]
+          ],
+          "temperature_max": 62,
+          "time": 4402.30311784
+        },
+        "left": {
+          "imu_rpy": null,
+          "q": [
+            -0.03505520522594452,
+            0.18464350700378418,
+            0.022609306499361992,
+            -0.03206299617886543,
+            -0.021695861592888832,
+            -0.04370487853884697,
+            -0.03404081240296364
+          ],
+          "dq": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "tau_est": [
+            5861.07958984375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            -3349.188232421875,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              44,
+              41
+            ],
+            [
+              44,
+              43
+            ],
+            [
+              40,
+              39
+            ],
+            [
+              43,
+              41
+            ],
+            [
+              39,
+              38
+            ],
+            [
+              44,
+              43
+            ],
+            [
+              41,
+              40
+            ]
+          ],
+          "temperature_max": 44,
+          "time": 4402.256944058
+        },
+        "right": {
+          "imu_rpy": null,
+          "q": [
+            -0.03882220759987831,
+            -0.8941264152526855,
+            -1.5216953754425049,
+            1.0886478424072266,
+            1.6995115280151367,
+            0.7312346696853638,
+            1.6953338384628296
+          ],
+          "dq": [
+            0.0,
+            0.0,
+            -0.11450418829917908,
+            -0.0,
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "tau_est": [
+            -5861.07958984375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            3349.188232421875,
+            -1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              50,
+              46
+            ],
+            [
+              52,
+              49
+            ],
+            [
+              46,
+              45
+            ],
+            [
+              50,
+              49
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              47,
+              46
+            ]
+          ],
+          "temperature_max": 52,
+          "time": 4402.266044761
+        }
+      },
+      "telemetry_healthy": true
+    },
+    "native_event_file": "/data/events-20261008T004007Z.jsonl",
+    "event_counts": {},
+    "events": [],
+    "perception_tail": []
+  },
+  "recorder_before": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261007T235101Z-76f038c2",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4371.536294971001,
+    "received": {
+      "rt/dex3/left/state": 3502648,
+      "rt/lf/dex3/left/state": 39117,
+      "rt/lf/dex3/right/state": 39113,
+      "rt/dex3/right/state": 3498269,
+      "rt/lowstate": 4559033,
+      "rt/arm_sdk": 203190,
+      "rt/dex3/left/cmd": 3752,
+      "rt/dex3/right/cmd": 3752
+    },
+    "written": {
+      "rt/dex3/left/state": 3502648,
+      "rt/lf/dex3/left/state": 39117,
+      "rt/lf/dex3/right/state": 39113,
+      "rt/dex3/right/state": 3498269,
+      "rt/lowstate": 4559033,
+      "rt/arm_sdk": 203190,
+      "rt/dex3/left/cmd": 3752,
+      "rt/dex3/right/cmd": 3752
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.002178204,
+      "rt/dex3/left/state": 0.002151995,
+      "rt/dex3/right/state": 0.002133274,
+      "rt/lf/dex3/left/state": 0.032649341,
+      "rt/lf/dex3/right/state": 0.063190113,
+      "rt/arm_sdk": 215.792724629,
+      "rt/dex3/left/cmd": 216.815687537,
+      "rt/dex3/right/cmd": 216.815678448
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.002151995,
+      "rt/lf/dex3/left/state": 0.032649341,
+      "rt/lf/dex3/right/state": 0.063190113,
+      "rt/dex3/right/state": 0.002133274,
+      "rt/lowstate": 0.002178204,
+      "rt/arm_sdk": 215.792724629,
+      "rt/dex3/left/cmd": 216.815687537,
+      "rt/dex3/right/cmd": 216.815678448
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261007T235101Z-76f038c2/samples-000072.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 16771942,
+        "sha256": "fde4b545d63a3d721b5075887db366614a66dd278beee46ab2bea850055a3db7"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 38389605,
+        "sha256": "9711a4e3058c4a128c3cd63238e7c577d540e9cda37c13a93ca748f8336f8bc0"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 37987376,
+        "sha256": "36f630f89c0e6350f88dac346012a440c3bb3f956cf34b7297e2e5b685b1008f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 39020485,
+        "sha256": "588de0da82ebee84c05ae65b34c220d54da0bcff389307e6689ab30a626c31ea"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 36717913,
+        "sha256": "c53afb52fc595a15fdf5227e2ec25631b4996f0eb0a8ce5116efe17ccd9e1131"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 36910887,
+        "sha256": "848020d440db4ee8a5122a0c6276b38fbd4fc2b85af706ccdd28ac1a84efd72e"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 39412374,
+        "sha256": "827f1bf646b7608c289e16760c61792a0a416702bb9832c7d812c3c2ce52a4ee"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 37421739,
+        "sha256": "bf18935c479d6ab3195cf5511bdbf4bd95d60c87bf25b907cc7dfd5eb9c3ffed"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 38158312,
+        "sha256": "ed9f366c6c95909f79ab30a3b8b1ddfa49380142673ab3bd6940eb197e0feb76"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 38682301,
+        "sha256": "fb855279e1cdd4703a8d62790a4b35db33f80ef22b3ff8d51fb25408abcf44f3"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 38670976,
+        "sha256": "68a2608eeccc9038a24c5a6687823ec2a065982ea8796595566c7dcbc40f51d2"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38587075,
+        "sha256": "79465945146fe7aa91c41608ee809c32da8e035b9ab003ad9bb9e714ff2fa999"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38518991,
+        "sha256": "7c92b83fbc003daa2ac2b5cba53fdeed68a81867b50e740a9b03b3c1b885e667"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38599681,
+        "sha256": "45c0f0c94d9fb4227d02309b07545c3b1386ae5cbbdb8c240bb28dde8ea859e1"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 41426439,
+        "sha256": "6bffcf60888bb0a6cb2cf765fb121a8b5838df45be0895d4a78c0a685a150172"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 40912258,
+        "sha256": "7f7fb267f2790343acb079eb07d257d2d46ab7dcb6f08415303f2a0a8b045028"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 40428208,
+        "sha256": "11328ae6bff1184757874e07600beb6fca56ac3eb8f5fe94ca0d4b1ef6805c21"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 40441093,
+        "sha256": "b3e447795ec96fb207deebe081c7dcd97e82d079cb40b033da59089fd8d9f3f2"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 40253391,
+        "sha256": "d3f6bb736f1e17ecad75897b5bf09b29846b4b3704ac0d0af250660aa3d8f060"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 40241136,
+        "sha256": "172bfb56146828910f8474815b10009ce7f20845fb1a2320d6c98538e4f81c56"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 39648581,
+        "sha256": "28c564e2e792f54bbf55729a4bd0fec06232d92a154a944b6de2a9cb8f23f3d6"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 37118032,
+        "sha256": "fdabb827b6ff910224d02dc667846ebc5e5a7bb01318161327ca2c2ec60058a6"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 39395249,
+        "sha256": "73c5e0957a40a9acc39d9d29ffc1b957d9056b968f5f6e05ebe18f62f1097ba6"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 39182147,
+        "sha256": "6c8b02e6acab41b5b05c8a3a30555ee6c22bf423134a7aa9c355f6a53670b195"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 39731238,
+        "sha256": "0b9585211450ee613db1c8a8397e95cff10b10463cb1c07a8d70da6f4dbb1faa"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 40185526,
+        "sha256": "76217fc1f25c9e80627f4b0513c5273a7bd8de0bf12e962e8a922d01b8f21b42"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 40286126,
+        "sha256": "68083e95055e324893659cfa0ab70e876b69ea3e49d7134443163e84f7189371"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 40680364,
+        "sha256": "9ec1720c1c9216bdfbe36f3cc06d4a259947582663efee771eb19c4b65d215fa"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 40885799,
+        "sha256": "fe643416437d10b3da583c891828423363e441c22de4a86f24dfd1da8a0a5755"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 41476312,
+        "sha256": "73ed5dc722da6fb7a6aa86538f1dd53c35a9037fa739e2112840a5c8ca3211e4"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 40893162,
+        "sha256": "5e6974b4fea11c285f79f5a9391139c8047c486f579ae12f76e117ed7561ae8c"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 42536859,
+        "sha256": "422b048871ab318239add8609f38eb8ea73c49d0806954673837584f3a2c41be"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 42575438,
+        "sha256": "622b1fc0f4b6a0ae87eac37b6140edc499f568f24af5016919df141ba885f42f"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 42123254,
+        "sha256": "97087c247f2c05392bc4c50fb3f05b6260cd14ce01f09b49a3bbf93fdada2f26"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41702960,
+        "sha256": "83f2f39c586eb92f1f0954a51aa5bd31991482271ceb2f4ddfa709732b8eb0df"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41031535,
+        "sha256": "6dc856bf5f4f4ec86b20afa0f2a6c84636aa4cc10eb4eca85e1bd73754a87f9d"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40633663,
+        "sha256": "c2aaeb61ea677d140620427c67db4094ecc084c7b6670d0eb48df36a705df5c5"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 41036833,
+        "sha256": "fe412ce2f56145a5a816590aa76dd8db6a64ff1717fc84b7871bbff788ea34eb"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 41348098,
+        "sha256": "3f37729bd50d43f697f592615cfeb5d800610099fd6d9401a077ebe0e6efba2f"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 41750691,
+        "sha256": "4be18dc8578a688b5514f21b8bd27caa1912bc19cdb9a757e747c8d5a9a4415e"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 41337035,
+        "sha256": "fdbf1f3c589589e7677f79bb0abaa92dd179d951f4bec16345fd645da05efcb3"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 38869905,
+        "sha256": "3f3200e8d003fd34c6c8a256b48ab4aba9e60118cceb664e173fa6fbc8f2d02b"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 38097081,
+        "sha256": "938a3f82251a78c3f16b30c6131b8b8082ce642f8faf6f631c8b5b5a4bc960ea"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 38041693,
+        "sha256": "f37a1e9fa341a67d260658350bca9c11f1440174d57f7d1852d0a9a08756d5a5"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40341343,
+        "sha256": "3504e5062742e3000a7eca980a986ea571ebdeef810a9ae0df07266fcaa77953"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 40689998,
+        "sha256": "14329a5de40bb30235c2fe22377da5963a3caaa82b9ed6e98ce80baf69552dd2"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 39166794,
+        "sha256": "2eaaf718bfc885ac65cf9bd4be833fda18d0907ff14695a34b45e2b66953f35d"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 38815272,
+        "sha256": "71f2e9d2ce8d91198d4fe84bd7e3c87e98b3bf7b5dcd92785647117ac08d8b08"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 39147146,
+        "sha256": "568cc08ade84419bd0f6c490f4f4adcc32630fa5c4a2c419781d02f157fc6940"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 40070476,
+        "sha256": "b0bddef707032e07b40ea2cdbe31ced1581f2a769456c60ac8e3962e17e0953b"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 41153553,
+        "sha256": "3bf3650f9afe5ae496f8ca995e6710c3607d8dad73236d64a55dd5bf23c02fe8"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 40818343,
+        "sha256": "a9da29e72431d12ac0c65f6a8043d769ac36ec328a8415919041951df66db54b"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 40924146,
+        "sha256": "c26bed3b2b411b0d8cf2fdb6b788191bfe584ab7c8e63c791ee0237842838330"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40960976,
+        "sha256": "fc7e22ddd3dbae35c304ff62a81b111f0800c4ed9afdb2f1d40037b74b190edb"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 41127972,
+        "sha256": "92464af81cad293ef74e7b656e41cc17e3a41a6b09b029689fea4c6cf56e6ba4"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 42541322,
+        "sha256": "39c0914652592e2110d02be28dc2e770a997b80ced2e85dc529609647365b2f6"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38849948,
+        "sha256": "aff8aabc4dbbf0ed77d3af7b12e615cef6398a2ca2f53621dfa0032894556c77"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 36754412,
+        "sha256": "fd5c2ab2fbc43d9131528a9247cdd90ce208c79bda1e29b326d22af6c923599b"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 36499409,
+        "sha256": "aa357d87dcfcce93a2dc5196feeb1f4b863da3712b30d8e8e1fddc190b5b5dc7"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 36766896,
+        "sha256": "b6f31df9c108d625d8c6f3efc83798ce8b482a56a12ea63edff92a9e7db1641a"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 37622126,
+        "sha256": "ca4b0086a4aa06b2fe7175eacfd1283684f785d0b516da10f080795e69fdbae4"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 38607499,
+        "sha256": "8601985eef05e0503da3fc392ec0512c2483cd756ffe42a1df1531cb72aa6ee1"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38213806,
+        "sha256": "5b5f2dff40408acd9cadf35da982f7c38e4cfda11d9c4ef0b9a66231d86b478d"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 37681599,
+        "sha256": "35c4eccaf021f276b108008e4d86e2a18e789f9d96ad5019a9d4082293c85c58"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 37221613,
+        "sha256": "a420f9485c206fcef6a1099467a95ed2f3af89cdcda2248685b64066f870bb46"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 36579103,
+        "sha256": "8f90d28aeeacdfb883a0dd32684a5f5e8a965a7ea86792d96220033645cbf2b6"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36628390,
+        "sha256": "273ed3e063db8db287776b6c3a23753d77f86cb2735a6365c896f7669f4fbef9"
+      },
+      {
+        "file": "samples-000067.jsonl.gz",
+        "bytes": 36633304,
+        "sha256": "adddb3488c36953f0927432941e792214bd462fd57ef1093d0a23422a5271482"
+      },
+      {
+        "file": "samples-000068.jsonl.gz",
+        "bytes": 37590073,
+        "sha256": "40505f04086e064a78fa6120c07c2648cdb7ce6925d82786697af6d0a144764e"
+      },
+      {
+        "file": "samples-000069.jsonl.gz",
+        "bytes": 38356825,
+        "sha256": "4299c58708c4f6ef49bed4dd883680385a4e780d524bfb1c969efc0a9856683c"
+      },
+      {
+        "file": "samples-000070.jsonl.gz",
+        "bytes": 38162718,
+        "sha256": "56f46657e653f3af3f85a412183865aa0dbed113ac3a372600fbfa040baf946d"
+      },
+      {
+        "file": "samples-000071.jsonl.gz",
+        "bytes": 39018223,
+        "sha256": "0aecd0df77e05cc0135dc03c618adae5a89fe909e9cc76425d3bb08e74cfc8b5"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "start_response": {
+    "phase": "PASSIVE",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+    "motion_commands_sent": 40549,
+    "adapter_initialized": false,
+    "telemetry_healthy": true,
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "demo_running": true,
+    "demo_result": null,
+    "demo_error": null
+  },
+  "after": {
+    "status": {
+      "phase": "BLOCKED",
+      "error": "RuntimeError: Operator cancelled trial",
+      "motion_commands_sent": 40549,
+      "adapter_initialized": false,
+      "automatic_home": false,
+      "events": "/data/events-20261008T004007Z.jsonl",
+      "calibration_present": true,
+      "lowstate": {
+        "poll_hz": 200.0,
+        "rate_hz": 192.3,
+        "samples": 279269,
+        "age_s": 0.005,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      },
+      "camera_max_age_ms": 400.0,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth",
+      "tracking_error": null,
+      "tracking_exposure_age_ms": 236970.9928281918,
+      "tracking_vision": {
+        "top_quantile_z_m": 0.8713559815317224,
+        "center_xy_m": [
+          0.35312656224564654,
+          0.16826905602918024
+        ],
+        "fit_error_m": 0.0023073262480817177,
+        "pixels": 1876,
+        "frame_id": 62259,
+        "detector": "coke_yolo",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            75.5,
+            224.25,
+            211.25,
+            372.75
+          ],
+          "confidence": 0.39697265625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "5051bed4400713e683fd9368b3294dd7ca66f640dc43bd626bd9ed6d40843850",
+        "tracking": {
+          "mode": "yolo",
+          "reason": "periodic_recheck",
+          "semantic_frame_id": 62259
+        }
+      },
+      "first_failure": {
+        "error": "RuntimeError: Operator cancelled trial",
+        "source": "execution"
+      },
+      "demo_running": false,
+      "demo_result": null,
+      "demo_error": "RuntimeError: Operator cancelled trial",
+      "measured": {
+        "body": {
+          "imu_rpy": [
+            0.0072184475138783455,
+            0.02537715435028076,
+            -2.9969022274017334
+          ],
+          "q": [
+            -0.07808303087949753,
+            -0.009952127002179623,
+            -0.017704086378216743,
+            0.3109123408794403,
+            -0.2085055112838745,
+            0.010832661762833595,
+            -0.19533784687519073,
+            -0.0009629990672692657,
+            -0.01444985531270504,
+            0.33754393458366394,
+            -0.1251707822084427,
+            -0.03314035013318062,
+            0.0006695947959087789,
+            0.0,
+            0.0,
+            0.2373955249786377,
+            0.2914683520793915,
+            -0.08417719602584839,
+            0.8206318020820618,
+            -0.008233162574470043,
+            0.016620682552456856,
+            -0.0033287385012954473,
+            0.26681679487228394,
+            -0.2730845510959625,
+            0.09152352809906006,
+            0.7950215339660645,
+            -0.00035952674807049334,
+            0.015240100212395191,
+            0.0013882527127861977
+          ],
+          "dq": [
+            0.006856650114059448,
+            0.0010908307740464807,
+            0.039425741881132126,
+            -0.03381575644016266,
+            -0.006493670400232077,
+            -0.0054891458712518215,
+            0.020569952204823494,
+            0.009817477315664291,
+            0.011999138630926609,
+            -0.0054541537538170815,
+            -9.368941391585395e-05,
+            -0.008938989602029324,
+            -0.001714162528514862,
+            0.0,
+            0.0,
+            0.003067961661145091,
+            -0.01073786523193121,
+            0.004601942375302315,
+            0.0,
+            -0.0015339808305725455,
+            0.0,
+            0.0,
+            -0.004601942375302315,
+            0.0,
+            -0.00920388475060463,
+            0.007669903803616762,
+            0.007669903803616762,
+            -0.017671460285782814,
+            -0.005890486296266317
+          ],
+          "tau_est": [
+            -6.879438877105713,
+            3.427734375,
+            -0.11186079680919647,
+            -5.2734375,
+            7.86939811706543,
+            -1.9213666915893555,
+            8.333629608154297,
+            -5.712890625,
+            4.698153495788574,
+            -0.52734375,
+            6.948977947235107,
+            0.7851959466934204,
+            -0.22372159361839294,
+            0.0,
+            0.0,
+            0.0625,
+            1.6875,
+            0.5,
+            -1.0625,
+            0.25,
+            -0.673828125,
+            0.166015625,
+            0.25,
+            -2.5625,
+            -0.5,
+            -1.4375,
+            -0.125,
+            -0.556640625,
+            -0.029296875
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              43,
+              46
+            ],
+            [
+              39,
+              39
+            ],
+            [
+              40,
+              40
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              53,
+              55
+            ],
+            [
+              55,
+              62
+            ],
+            [
+              43,
+              48
+            ],
+            [
+              41,
+              41
+            ],
+            [
+              42,
+              43
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              53,
+              54
+            ],
+            [
+              52,
+              57
+            ],
+            [
+              40,
+              39
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              57,
+              59
+            ],
+            [
+              51,
+              51
+            ],
+            [
+              50,
+              51
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              48,
+              51
+            ],
+            [
+              50,
+              44
+            ],
+            [
+              55,
+              54
+            ],
+            [
+              56,
+              58
+            ],
+            [
+              56,
+              55
+            ],
+            [
+              54,
+              54
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              54,
+              52
+            ],
+            [
+              56,
+              48
+            ]
+          ],
+          "temperature_max": 62,
+          "time": 4410.027874343
+        },
+        "left": {
+          "imu_rpy": null,
+          "q": [
+            -0.03505392745137215,
+            0.1846703439950943,
+            0.022609306499361992,
+            -0.03207015246152878,
+            -0.02169407159090042,
+            -0.043699510395526886,
+            -0.03403991833329201
+          ],
+          "dq": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "tau_est": [
+            5861.07958984375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              44,
+              41
+            ],
+            [
+              44,
+              43
+            ],
+            [
+              40,
+              39
+            ],
+            [
+              44,
+              41
+            ],
+            [
+              39,
+              38
+            ],
+            [
+              44,
+              43
+            ],
+            [
+              41,
+              40
+            ]
+          ],
+          "temperature_max": 44,
+          "time": 4409.950084843
+        },
+        "right": {
+          "imu_rpy": null,
+          "q": [
+            -0.03882373869419098,
+            -0.8941236734390259,
+            -1.521690845489502,
+            1.08864164352417,
+            1.6995069980621338,
+            0.7312346696853638,
+            1.6953365802764893
+          ],
+          "dq": [
+            0.0,
+            0.0,
+            -0.0,
+            -0.0,
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "tau_est": [
+            -5861.07958984375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              50,
+              46
+            ],
+            [
+              52,
+              49
+            ],
+            [
+              46,
+              45
+            ],
+            [
+              50,
+              49
+            ],
+            [
+              48,
+              48
+            ],
+            [
+              49,
+              48
+            ],
+            [
+              47,
+              46
+            ]
+          ],
+          "temperature_max": 52,
+          "time": 4409.954669355
+        }
+      },
+      "telemetry_healthy": true
+    },
+    "native_event_file": "/data/events-20261008T004007Z.jsonl",
+    "event_counts": {
+      "phase_camera_evidence": 2,
+      "scene_refreshed": 1,
+      "exposure_pose": 1,
+      "perception_result": 1,
+      "perception_worker_result": 1,
+      "observed_can_collision_proxy": 1,
+      "request_error": 1,
+      "primary_failure": 1,
+      "error": 1,
+      "failure_hold": 1
+    },
+    "events": [
+      {
+        "unix_ns": 1791421434434691881,
+        "monotonic_ns": 4404153520330,
+        "phase": "scene_refreshed",
+        "calibration": {
+          "commissioned": true,
+          "calibration_method": "operator_accepted_factory_table",
+          "camera_serial": "338622073335",
+          "device": "unitree-g1-nx-2.local",
+          "camera_to_world": [
+            [
+              -3.360287820540037e-05,
+              -0.7995184047085495,
+              0.6006415898047203,
+              0.06531738682609177
+            ],
+            [
+              -0.9999847975259586,
+              0.003338770315990932,
+              0.0043883174160946154,
+              0.014310658321030961
+            ],
+            [
+              -0.005513944850460316,
+              -0.6006323111064475,
+              -0.7995063622430487,
+              1.2658279653269702
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "pelvis_to_world": [
+            [
+              0.9996961320041644,
+              0.00016905397093087493,
+              0.0246498494248362,
+              0.0
+            ],
+            [
+              0.0,
+              0.9999764832720143,
+              -0.0068580538737205285,
+              0.0
+            ],
+            [
+              -0.0246504291222726,
+              0.006855969930634589,
+              0.9996726224221597,
+              0.7933151957253123
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "table_height_m": 0.762,
+          "table_center_xy_m": [
+            5.23933244119082,
+            0
+          ],
+          "table_half_size_xy_m": [
+            5,
+            5
+          ],
+          "table_near_edge_conservative_x_m": 0.23933244119081978,
+          "table_extent_source": "conservative extension beyond reachable workspace",
+          "can_radius_m": 0.033,
+          "can_height_m": 0.122,
+          "arm_limits_rad": [
+            [
+              -3.0892,
+              2.6704
+            ],
+            [
+              -1.5882,
+              2.2515
+            ],
+            [
+              -2.618,
+              2.618
+            ],
+            [
+              -1.0472,
+              2.0944
+            ],
+            [
+              -1.97222,
+              1.97222
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -3.0892,
+              2.6704
+            ],
+            [
+              -2.2515,
+              1.5882
+            ],
+            [
+              -2.618,
+              2.618
+            ],
+            [
+              -1.0472,
+              2.0944
+            ],
+            [
+              -1.97222,
+              1.97222
+            ],
+            [
+              -1.61443,
+              1.61443
+            ],
+            [
+              -1.61443,
+              1.61443
+            ]
+          ],
+          "source_frame_id": 65714,
+          "tilt_correction_deg": 4.072496196809498,
+          "table_plane_rmse_m": 0.0021034297595652132,
+          "independent_validation": false,
+          "assumptions": [
+            "operator confirms factory mount position and stationary base",
+            "camera tilt adjusted; pivot translation not modeled",
+            "horizontal 0.762 m table; nearest yellow tape marks near edge",
+            "factory d435 frame approximates aligned RGB optical origin",
+            "model arm limits; body IMU describes pelvis orientation"
+          ],
+          "operator_accepted": true,
+          "factory_mount_position_confirmed": true,
+          "stationary_base_confirmed": true,
+          "position_validation_rmse_m": null,
+          "accepted_at_unix_s": 1791421434.4337296,
+          "reference_base_q": [
+            -0.0780964195728302,
+            -0.009943605400621891,
+            -0.017730869352817535,
+            0.31144922971725464,
+            -0.20850129425525665,
+            0.010839802213013172,
+            -0.19523070752620697,
+            -0.0009715211344882846,
+            -0.01446324773132801,
+            0.33799561858177185,
+            -0.12516216933727264,
+            -0.033140264451503754,
+            0.0005758515326306224,
+            0.0,
+            0.0
+          ],
+          "reference_imu_rpy": [
+            0.0068581076338887215,
+            0.02465292625129223,
+            -2.996206283569336
+          ],
+          "operator_with_stop": true,
+          "support": "factory_balance",
+          "factory_mount_source": {
+            "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+            "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+            "operator_confirmed_original_mount": true,
+            "parent": "torso_link",
+            "child": "d435_link",
+            "xyz_m": [
+              0.0576235,
+              0.01753,
+              0.41987
+            ],
+            "rpy_rad": [
+              0,
+              0.8307767239493009,
+              0
+            ],
+            "commissioned": false
+          },
+          "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+          "scene_refresh_automatic": true,
+          "calibration_exposure_pose": {
+            "timestamp": 4403.563553553,
+            "frame_timestamp": 4403.564009428024,
+            "skew_ms": -0.45587502427224535,
+            "rpy": [
+              0.0068581076338887215,
+              0.02465292625129223,
+              -2.996206283569336
+            ],
+            "waist_q": [
+              0.0005758515326306224,
+              0.0,
+              0.0
+            ]
+          },
+          "table_plane_quality": {
+            "rmse_m": 0.0021034297595652132,
+            "heldout_rmse_m": 0.002100840201595603,
+            "heldout_normal_angle_deg": 0.006459812887939207,
+            "fitted_points": 15775,
+            "heldout_points": 15734,
+            "axis_spread_m": [
+              0.21673618599879832,
+              0.19033223500360866,
+              0.002103429759565219
+            ],
+            "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+          }
+        },
+        "independent_validation": false
+      },
+      {
+        "unix_ns": 1791421437076704277,
+        "monotonic_ns": 4406795532693,
+        "phase": "exposure_pose",
+        "frame_timestamp": 4406.566149711609,
+        "pose": {
+          "timestamp": 4406.567702201,
+          "rpy": [
+            0.007194016594439745,
+            0.024388303980231285,
+            -2.9971742630004883
+          ],
+          "waist_q": [
+            0.0006562029011547565,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "unix_ns": 1791421437077441652,
+        "monotonic_ns": 4406796269204,
+        "phase": "perception_worker_result",
+        "phase_name": "planning",
+        "worker_ms": 585.8715390004363,
+        "round_trip_ms": 588.2638319999387,
+        "error": null
+      },
+      {
+        "unix_ns": 1791421437079370693,
+        "monotonic_ns": 4406798198789,
+        "phase": "observed_can_collision_proxy",
+        "center_m": [
+          0.3537020682593897,
+          0.16791217090527227,
+          0.823
+        ],
+        "source": "camera"
+      },
+      {
+        "unix_ns": 1791421438224503383,
+        "monotonic_ns": 4407943331191,
+        "phase": "request_error",
+        "path": "/release",
+        "error": "Trial cancellation is pending; wait for the operation to finish before release",
+        "exception_type": "RuntimeError"
+      },
+      {
+        "unix_ns": 1791421439148466424,
+        "monotonic_ns": 4408867294872,
+        "phase": "primary_failure",
+        "error": "RuntimeError: Operator cancelled trial",
+        "source": "execution"
+      },
+      {
+        "unix_ns": 1791421439151049477,
+        "monotonic_ns": 4408869877317,
+        "phase": "error",
+        "error": "RuntimeError: Operator cancelled trial",
+        "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 506, in run\n    prepared=prepare(plant,observe,phase_event)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 32, in prepare\n    points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/g1_can_handoff/task.py\", line 38, in plan\n    if validate is not None and not validate(waypoints,rotation):continue\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 15, in validate_candidate\n    plant.preflight(points,rotation)\n  File \"/app/physical_core.py\", line 352, in preflight\n    self.sync(self.check())\n              ^^^^^^^^^^^^\n  File \"/app/physical_core.py\", line 227, in check\n    raise RuntimeError('Operator cancelled trial')\nRuntimeError: Operator cancelled trial\n"
+      },
+      {
+        "unix_ns": 1791421439151293711,
+        "monotonic_ns": 4408870121391,
+        "phase": "failure_hold",
+        "grasp_started": false,
+        "control_retained": false,
+        "automatic_release": false
+      }
+    ],
+    "perception_tail": [
+      {
+        "unix_ns": 1791421434048123446,
+        "monotonic_ns": 4403766951638,
+        "phase": "phase_camera_evidence",
+        "phase_name": "scene_refresh",
+        "path": "/data/camera-65714-scene_refresh.npz",
+        "metadata": {
+          "schema": "wendy.g1.rgbd.v1",
+          "raw_received_unix_ns": 1791421433918169920,
+          "raw_received_monotonic_ns": 4403636998880,
+          "aligned_to": "color",
+          "camera_serial": "338622073335",
+          "clock": "host_monotonic",
+          "timestamp_valid": true,
+          "color_time": 4403.564130306244,
+          "depth_time": 4403.564009428024,
+          "received_monotonic": 4403.651200245,
+          "color_sensor_ms": 1791421433845.307,
+          "depth_sensor_ms": 1791421433845.186,
+          "color_timestamp_domain": "timestamp_domain.global_time",
+          "depth_timestamp_domain": "timestamp_domain.global_time",
+          "depth_scale_m": 0.0010000000474974513,
+          "intrinsics": {
+            "width": 640,
+            "height": 480,
+            "fx": 603.59765625,
+            "fy": 603.7045288085938,
+            "ppx": 318.05902099609375,
+            "ppy": 261.0997619628906,
+            "model": "distortion.inverse_brown_conrady",
+            "coeffs": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "frame_id": 65714,
+          "captured_at_unix_ns": 1791421433935000196,
+          "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+        },
+        "color_codec": "jpeg_exact_source_frame"
+      },
+      {
+        "unix_ns": 1791421437077066948,
+        "monotonic_ns": 4406795894596,
+        "phase": "phase_camera_evidence",
+        "phase_name": "planning",
+        "path": "/data/camera-65759-planning.npz",
+        "metadata": {
+          "schema": "wendy.g1.rgbd.v1",
+          "raw_received_unix_ns": 1791421436914080139,
+          "raw_received_monotonic_ns": 4406632909803,
+          "aligned_to": "color",
+          "camera_serial": "338622073335",
+          "clock": "host_monotonic",
+          "timestamp_valid": true,
+          "color_time": 4406.56627035141,
+          "depth_time": 4406.566149711609,
+          "received_monotonic": 4406.642309462,
+          "color_sensor_ms": 1791421436847.4468,
+          "depth_sensor_ms": 1791421436847.326,
+          "color_timestamp_domain": "timestamp_domain.global_time",
+          "depth_timestamp_domain": "timestamp_domain.global_time",
+          "depth_scale_m": 0.0010000000474974513,
+          "intrinsics": {
+            "width": 640,
+            "height": 480,
+            "fx": 603.59765625,
+            "fy": 603.7045288085938,
+            "ppx": 318.05902099609375,
+            "ppy": 261.0997619628906,
+            "model": "distortion.inverse_brown_conrady",
+            "coeffs": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "frame_id": 65759,
+          "captured_at_unix_ns": 1791421436925370597,
+          "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+        },
+        "color_codec": "jpeg_exact_source_frame"
+      },
+      {
+        "unix_ns": 1791421437077251628,
+        "monotonic_ns": 4406796079180,
+        "phase": "perception_result",
+        "phase_name": "planning",
+        "frame_id": 65759,
+        "source": {
+          "frame_id": 65759,
+          "camera_serial": "338622073335",
+          "timestamp": 4406.566149711609,
+          "shape": [
+            480,
+            640,
+            3
+          ],
+          "image_sha256": "69f3794abf3fae57eb768c0fd22b7ccd14138517c01d94bd717ce05479634244"
+        },
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "detections": [
+          {
+            "xyxy": [
+              74.8125,
+              224.0,
+              215.1875,
+              373.0
+            ],
+            "confidence": 0.37109375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          }
+        ],
+        "inference_ms": 24.375,
+        "geometry": {
+          "top_quantile_z_m": 0.870871240706763,
+          "center_xy_m": [
+            0.3537020682593897,
+            0.16791217090527227
+          ],
+          "fit_error_m": 0.0026944753919273105,
+          "pixels": 1902,
+          "frame_id": 65759,
+          "detector": "coke_yolo",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              74.8125,
+              224.0,
+              215.1875,
+              373.0
+            ],
+            "confidence": 0.37109375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "69f3794abf3fae57eb768c0fd22b7ccd14138517c01d94bd717ce05479634244",
+          "tracking": {
+            "mode": "yolo",
+            "reason": "initial_identity",
+            "semantic_frame_id": 65759
+          }
+        },
+        "error": null,
+        "processing_ms": 88.49885000017821,
+        "exposure_age_ms": 227.59141839105723
+      }
+    ]
+  },
+  "finished_unix_ns": 1791421440569253000,
+  "recorder_after": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261007T235101Z-76f038c2",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4379.520417278,
+    "received": {
+      "rt/dex3/left/state": 3509129,
+      "rt/lf/dex3/left/state": 39189,
+      "rt/lf/dex3/right/state": 39185,
+      "rt/dex3/right/state": 3504710,
+      "rt/lowstate": 4567438,
+      "rt/arm_sdk": 203190,
+      "rt/dex3/left/cmd": 3752,
+      "rt/dex3/right/cmd": 3752
+    },
+    "written": {
+      "rt/dex3/left/state": 3509129,
+      "rt/lf/dex3/left/state": 39189,
+      "rt/lf/dex3/right/state": 39185,
+      "rt/dex3/right/state": 3504709,
+      "rt/lowstate": 4567438,
+      "rt/arm_sdk": 203190,
+      "rt/dex3/left/cmd": 3752,
+      "rt/dex3/right/cmd": 3752
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.001237299,
+      "rt/dex3/left/state": 0.001219859,
+      "rt/dex3/right/state": 0.001188273,
+      "rt/lf/dex3/left/state": 0.026246187,
+      "rt/lf/dex3/right/state": 0.062558332,
+      "rt/arm_sdk": 223.776841303,
+      "rt/dex3/left/cmd": 224.799804211,
+      "rt/dex3/right/cmd": 224.799795122
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.001219859,
+      "rt/lf/dex3/left/state": 0.026246187,
+      "rt/lf/dex3/right/state": 0.062558332,
+      "rt/dex3/right/state": 0.001192145,
+      "rt/lowstate": 0.001237299,
+      "rt/arm_sdk": 223.776841303,
+      "rt/dex3/left/cmd": 224.799804211,
+      "rt/dex3/right/cmd": 224.799795122
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261007T235101Z-76f038c2/samples-000072.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 16771942,
+        "sha256": "fde4b545d63a3d721b5075887db366614a66dd278beee46ab2bea850055a3db7"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 38389605,
+        "sha256": "9711a4e3058c4a128c3cd63238e7c577d540e9cda37c13a93ca748f8336f8bc0"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 37987376,
+        "sha256": "36f630f89c0e6350f88dac346012a440c3bb3f956cf34b7297e2e5b685b1008f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 39020485,
+        "sha256": "588de0da82ebee84c05ae65b34c220d54da0bcff389307e6689ab30a626c31ea"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 36717913,
+        "sha256": "c53afb52fc595a15fdf5227e2ec25631b4996f0eb0a8ce5116efe17ccd9e1131"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 36910887,
+        "sha256": "848020d440db4ee8a5122a0c6276b38fbd4fc2b85af706ccdd28ac1a84efd72e"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 39412374,
+        "sha256": "827f1bf646b7608c289e16760c61792a0a416702bb9832c7d812c3c2ce52a4ee"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 37421739,
+        "sha256": "bf18935c479d6ab3195cf5511bdbf4bd95d60c87bf25b907cc7dfd5eb9c3ffed"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 38158312,
+        "sha256": "ed9f366c6c95909f79ab30a3b8b1ddfa49380142673ab3bd6940eb197e0feb76"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 38682301,
+        "sha256": "fb855279e1cdd4703a8d62790a4b35db33f80ef22b3ff8d51fb25408abcf44f3"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 38670976,
+        "sha256": "68a2608eeccc9038a24c5a6687823ec2a065982ea8796595566c7dcbc40f51d2"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38587075,
+        "sha256": "79465945146fe7aa91c41608ee809c32da8e035b9ab003ad9bb9e714ff2fa999"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38518991,
+        "sha256": "7c92b83fbc003daa2ac2b5cba53fdeed68a81867b50e740a9b03b3c1b885e667"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38599681,
+        "sha256": "45c0f0c94d9fb4227d02309b07545c3b1386ae5cbbdb8c240bb28dde8ea859e1"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 41426439,
+        "sha256": "6bffcf60888bb0a6cb2cf765fb121a8b5838df45be0895d4a78c0a685a150172"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 40912258,
+        "sha256": "7f7fb267f2790343acb079eb07d257d2d46ab7dcb6f08415303f2a0a8b045028"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 40428208,
+        "sha256": "11328ae6bff1184757874e07600beb6fca56ac3eb8f5fe94ca0d4b1ef6805c21"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 40441093,
+        "sha256": "b3e447795ec96fb207deebe081c7dcd97e82d079cb40b033da59089fd8d9f3f2"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 40253391,
+        "sha256": "d3f6bb736f1e17ecad75897b5bf09b29846b4b3704ac0d0af250660aa3d8f060"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 40241136,
+        "sha256": "172bfb56146828910f8474815b10009ce7f20845fb1a2320d6c98538e4f81c56"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 39648581,
+        "sha256": "28c564e2e792f54bbf55729a4bd0fec06232d92a154a944b6de2a9cb8f23f3d6"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 37118032,
+        "sha256": "fdabb827b6ff910224d02dc667846ebc5e5a7bb01318161327ca2c2ec60058a6"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 39395249,
+        "sha256": "73c5e0957a40a9acc39d9d29ffc1b957d9056b968f5f6e05ebe18f62f1097ba6"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 39182147,
+        "sha256": "6c8b02e6acab41b5b05c8a3a30555ee6c22bf423134a7aa9c355f6a53670b195"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 39731238,
+        "sha256": "0b9585211450ee613db1c8a8397e95cff10b10463cb1c07a8d70da6f4dbb1faa"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 40185526,
+        "sha256": "76217fc1f25c9e80627f4b0513c5273a7bd8de0bf12e962e8a922d01b8f21b42"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 40286126,
+        "sha256": "68083e95055e324893659cfa0ab70e876b69ea3e49d7134443163e84f7189371"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 40680364,
+        "sha256": "9ec1720c1c9216bdfbe36f3cc06d4a259947582663efee771eb19c4b65d215fa"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 40885799,
+        "sha256": "fe643416437d10b3da583c891828423363e441c22de4a86f24dfd1da8a0a5755"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 41476312,
+        "sha256": "73ed5dc722da6fb7a6aa86538f1dd53c35a9037fa739e2112840a5c8ca3211e4"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 40893162,
+        "sha256": "5e6974b4fea11c285f79f5a9391139c8047c486f579ae12f76e117ed7561ae8c"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 42536859,
+        "sha256": "422b048871ab318239add8609f38eb8ea73c49d0806954673837584f3a2c41be"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 42575438,
+        "sha256": "622b1fc0f4b6a0ae87eac37b6140edc499f568f24af5016919df141ba885f42f"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 42123254,
+        "sha256": "97087c247f2c05392bc4c50fb3f05b6260cd14ce01f09b49a3bbf93fdada2f26"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41702960,
+        "sha256": "83f2f39c586eb92f1f0954a51aa5bd31991482271ceb2f4ddfa709732b8eb0df"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41031535,
+        "sha256": "6dc856bf5f4f4ec86b20afa0f2a6c84636aa4cc10eb4eca85e1bd73754a87f9d"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40633663,
+        "sha256": "c2aaeb61ea677d140620427c67db4094ecc084c7b6670d0eb48df36a705df5c5"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 41036833,
+        "sha256": "fe412ce2f56145a5a816590aa76dd8db6a64ff1717fc84b7871bbff788ea34eb"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 41348098,
+        "sha256": "3f37729bd50d43f697f592615cfeb5d800610099fd6d9401a077ebe0e6efba2f"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 41750691,
+        "sha256": "4be18dc8578a688b5514f21b8bd27caa1912bc19cdb9a757e747c8d5a9a4415e"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 41337035,
+        "sha256": "fdbf1f3c589589e7677f79bb0abaa92dd179d951f4bec16345fd645da05efcb3"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 38869905,
+        "sha256": "3f3200e8d003fd34c6c8a256b48ab4aba9e60118cceb664e173fa6fbc8f2d02b"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 38097081,
+        "sha256": "938a3f82251a78c3f16b30c6131b8b8082ce642f8faf6f631c8b5b5a4bc960ea"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 38041693,
+        "sha256": "f37a1e9fa341a67d260658350bca9c11f1440174d57f7d1852d0a9a08756d5a5"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40341343,
+        "sha256": "3504e5062742e3000a7eca980a986ea571ebdeef810a9ae0df07266fcaa77953"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 40689998,
+        "sha256": "14329a5de40bb30235c2fe22377da5963a3caaa82b9ed6e98ce80baf69552dd2"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 39166794,
+        "sha256": "2eaaf718bfc885ac65cf9bd4be833fda18d0907ff14695a34b45e2b66953f35d"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 38815272,
+        "sha256": "71f2e9d2ce8d91198d4fe84bd7e3c87e98b3bf7b5dcd92785647117ac08d8b08"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 39147146,
+        "sha256": "568cc08ade84419bd0f6c490f4f4adcc32630fa5c4a2c419781d02f157fc6940"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 40070476,
+        "sha256": "b0bddef707032e07b40ea2cdbe31ced1581f2a769456c60ac8e3962e17e0953b"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 41153553,
+        "sha256": "3bf3650f9afe5ae496f8ca995e6710c3607d8dad73236d64a55dd5bf23c02fe8"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 40818343,
+        "sha256": "a9da29e72431d12ac0c65f6a8043d769ac36ec328a8415919041951df66db54b"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 40924146,
+        "sha256": "c26bed3b2b411b0d8cf2fdb6b788191bfe584ab7c8e63c791ee0237842838330"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40960976,
+        "sha256": "fc7e22ddd3dbae35c304ff62a81b111f0800c4ed9afdb2f1d40037b74b190edb"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 41127972,
+        "sha256": "92464af81cad293ef74e7b656e41cc17e3a41a6b09b029689fea4c6cf56e6ba4"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 42541322,
+        "sha256": "39c0914652592e2110d02be28dc2e770a997b80ced2e85dc529609647365b2f6"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38849948,
+        "sha256": "aff8aabc4dbbf0ed77d3af7b12e615cef6398a2ca2f53621dfa0032894556c77"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 36754412,
+        "sha256": "fd5c2ab2fbc43d9131528a9247cdd90ce208c79bda1e29b326d22af6c923599b"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 36499409,
+        "sha256": "aa357d87dcfcce93a2dc5196feeb1f4b863da3712b30d8e8e1fddc190b5b5dc7"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 36766896,
+        "sha256": "b6f31df9c108d625d8c6f3efc83798ce8b482a56a12ea63edff92a9e7db1641a"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 37622126,
+        "sha256": "ca4b0086a4aa06b2fe7175eacfd1283684f785d0b516da10f080795e69fdbae4"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 38607499,
+        "sha256": "8601985eef05e0503da3fc392ec0512c2483cd756ffe42a1df1531cb72aa6ee1"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38213806,
+        "sha256": "5b5f2dff40408acd9cadf35da982f7c38e4cfda11d9c4ef0b9a66231d86b478d"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 37681599,
+        "sha256": "35c4eccaf021f276b108008e4d86e2a18e789f9d96ad5019a9d4082293c85c58"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 37221613,
+        "sha256": "a420f9485c206fcef6a1099467a95ed2f3af89cdcda2248685b64066f870bb46"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 36579103,
+        "sha256": "8f90d28aeeacdfb883a0dd32684a5f5e8a965a7ea86792d96220033645cbf2b6"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36628390,
+        "sha256": "273ed3e063db8db287776b6c3a23753d77f86cb2735a6365c896f7669f4fbef9"
+      },
+      {
+        "file": "samples-000067.jsonl.gz",
+        "bytes": 36633304,
+        "sha256": "adddb3488c36953f0927432941e792214bd462fd57ef1093d0a23422a5271482"
+      },
+      {
+        "file": "samples-000068.jsonl.gz",
+        "bytes": 37590073,
+        "sha256": "40505f04086e064a78fa6120c07c2648cdb7ce6925d82786697af6d0a144764e"
+      },
+      {
+        "file": "samples-000069.jsonl.gz",
+        "bytes": 38356825,
+        "sha256": "4299c58708c4f6ef49bed4dd883680385a4e780d524bfb1c969efc0a9856683c"
+      },
+      {
+        "file": "samples-000070.jsonl.gz",
+        "bytes": 38162718,
+        "sha256": "56f46657e653f3af3f85a412183865aa0dbed113ac3a372600fbfa040baf946d"
+      },
+      {
+        "file": "samples-000071.jsonl.gz",
+        "bytes": 39018223,
+        "sha256": "0aecd0df77e05cc0135dc03c618adae5a89fe909e9cc76425d3bb08e74cfc8b5"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "artifact": {
+    "path": "/data/trial-exports/20261008T010351Z-85369a28.tar.gz",
+    "bytes": 791549,
+    "sha256": "d6f55cb71a01179b893e64a1248cda31bb19f3f263aec4ce7d1f21aad34799ed",
+    "events": 11,
+    "selected_frames": 2,
+    "primary_failure": {
+      "unix_ns": 1791421439148466424,
+      "monotonic_ns": 4408867294872,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Operator cancelled trial",
+      "source": "execution"
+    },
+    "local_path": ".runtime/demo-attempts/20261008T010351Z-85369a28.tar.gz",
+    "verified": true
+  }
+}

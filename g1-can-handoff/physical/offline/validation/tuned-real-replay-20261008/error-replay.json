@@ -1,0 +1,24 @@
+{
+  "hardware_used": false,
+  "all_errors_reproduced": true,
+  "waist": {
+    "error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+    "captured_error": "RuntimeError: Waist moved beyond the 0.002 rad unmodeled alignment bound",
+    "max_delta_rad": 0.01612384244799614,
+    "scope": "Saved terminal status reproduces guard; exact failing constructor read was not recorded."
+  },
+  "deadline": {
+    "error": "ValueError: Grasp orientation search time limit reached",
+    "captured_error": "ValueError: Grasp orientation search time limit reached",
+    "candidate_seconds": [
+      11.186818629,
+      11.105592557,
+      11.179658815
+    ],
+    "total_validation_seconds": 33.472070001,
+    "budget_seconds": 30.0,
+    "candidate_inputs_identical": true,
+    "scope": "Recorded validation outcomes and durations; numerical replay is separate."
+  },
+  "physical_pickup_verified": false
+}

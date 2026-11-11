@@ -1,0 +1,134 @@
+{
+  "completed": 128,
+  "groups": {
+    "double_noise": {
+      "legacy": {
+        "trials": 16,
+        "lifts": 13,
+        "lift_fraction": 0.8125,
+        "lift_fraction_wilson95": [
+          0.5699111903802586,
+          0.9340840092857187
+        ],
+        "errors": {
+          "Can or table moved during final reach; refusing to close": 3
+        },
+        "failure_phases": {
+          "pre-close": 3
+        },
+        "mean_success_simulated_time_s": 51.73846153847881,
+        "max_tracking_error_rad": 0.02954150100547196,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      },
+      "tuned": {
+        "trials": 16,
+        "lifts": 15,
+        "lift_fraction": 0.9375,
+        "lift_fraction_wilson95": [
+          0.7167126242970107,
+          0.9888806552353576
+        ],
+        "errors": {
+          "Can or table moved during final reach; refusing to close": 1
+        },
+        "failure_phases": {
+          "pre-close": 1
+        },
+        "mean_success_simulated_time_s": 50.15066666668199,
+        "max_tracking_error_rad": 0.029557901535012088,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      }
+    },
+    "fitted_noise": {
+      "legacy": {
+        "trials": 32,
+        "lifts": 32,
+        "lift_fraction": 1.0,
+        "lift_fraction_wilson95": [
+          0.8928208017449293,
+          1
+        ],
+        "errors": {},
+        "failure_phases": {},
+        "mean_success_simulated_time_s": 51.81125000001736,
+        "max_tracking_error_rad": 0.02953656888630731,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      },
+      "tuned": {
+        "trials": 32,
+        "lifts": 32,
+        "lift_fraction": 1.0,
+        "lift_fraction_wilson95": [
+          0.8928208017449293,
+          1
+        ],
+        "errors": {},
+        "failure_phases": {},
+        "mean_success_simulated_time_s": 50.1212500000153,
+        "max_tracking_error_rad": 0.029562570479693615,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      }
+    },
+    "nearby_placement": {
+      "legacy": {
+        "trials": 16,
+        "lifts": 11,
+        "lift_fraction": 0.6875,
+        "lift_fraction_wilson95": [
+          0.44404355834740666,
+          0.8583535614521796
+        ],
+        "errors": {
+          "No reachable grasp and offer path for this can position; preflight rejected: Planned finger trajectory intersects robot/table": 5
+        },
+        "failure_phases": {
+          "planning": 5
+        },
+        "mean_success_simulated_time_s": 51.43454545456235,
+        "max_tracking_error_rad": 0.029555772401882188,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      },
+      "tuned": {
+        "trials": 16,
+        "lifts": 11,
+        "lift_fraction": 0.6875,
+        "lift_fraction_wilson95": [
+          0.44404355834740666,
+          0.8583535614521796
+        ],
+        "errors": {
+          "No reachable grasp and offer path for this can position; preflight rejected: Planned finger trajectory intersects robot/table": 5
+        },
+        "failure_phases": {
+          "planning": 5
+        },
+        "mean_success_simulated_time_s": 50.103636363651624,
+        "max_tracking_error_rad": 0.029560538371825082,
+        "pregrasp_contact_trials": 0,
+        "harness_exceptions": 0
+      }
+    }
+  },
+  "paired_outcomes": {
+    "both_pass": 55,
+    "both_fail": 5,
+    "tuned_only": 3,
+    "legacy_only": 1
+  },
+  "mean_paired_success_duration_change_s": -1.6010909090928658,
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "limitations": [
+    "Same captured posture/calibration and approximate can dynamics across all cases.",
+    "Fitted noise still has longer-lag and jump-tail mismatch; postgrasp noise is extrapolated.",
+    "Equal seeds couple randomness, but different action timing changes sampled noise; not identical exposure sequences.",
+    "Mixed stress/placement cases do not estimate a real-world success rate.",
+    "Wilson intervals are conditional Monte Carlo intervals within this fixed simulation model."
+  ],
+  "wall_time_s": 618.6746916250559
+}

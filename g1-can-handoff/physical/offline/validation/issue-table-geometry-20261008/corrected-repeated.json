@@ -1,0 +1,2429 @@
+{
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "original_full_rgbd": true,
+  "all_tracker_frames_after_semantic_seed": true,
+  "full_trial_tracker_sequence": false,
+  "recorded_semantic_seed": true,
+  "limits": {
+    "table_height_mm": 5,
+    "cylinder_fit_mm": 6,
+    "minimum_target_support": 40,
+    "rgbd_skew_ms": 12,
+    "pose_skew_ms": 20,
+    "attitude_rad": 0.04,
+    "waist_rad": 0.002
+  },
+  "runs": [
+    {
+      "attempt": "20261008T002131Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 27892,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8705041583363075,
+            "center_xy_m": [
+              0.3267596437968739,
+              0.1341915672049842
+            ],
+            "fit_error_m": 0.002433006075881463,
+            "pixels": 2971,
+            "frame_id": 27892,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c0e908817211c65fe4b5214501cc88540a3904aef3b605706eee7a17d5d8df05",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 27892
+            }
+          },
+          "table_support": 91173,
+          "table_median_error_mm": -1.9471456390950381,
+          "pose_skew_ms": 0.07099535309862404
+        },
+        {
+          "frame_id": 27893,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8690526744401185,
+            "center_xy_m": [
+              0.3268358377334369,
+              0.13447677075905612
+            ],
+            "fit_error_m": 0.002941361580667321,
+            "pixels": 2926,
+            "frame_id": 27893,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "847db5f199c6e0bdb3a4eae363929ed3ac608b176937ee255c4f33639ed917e5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.0667424201965332,
+              "visual_agreement": 0.9893677318840579,
+              "support_pixels": 2926,
+              "roi_shape": [
+                138,
+                108
+              ]
+            }
+          },
+          "table_support": 91817,
+          "table_median_error_mm": -2.126452778506538,
+          "pose_skew_ms": 0.6537671565638448
+        },
+        {
+          "frame_id": 27894,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8677733706024516,
+            "center_xy_m": [
+              0.3271890963687753,
+              0.1345737505351737
+            ],
+            "fit_error_m": 0.0030379345104090444,
+            "pixels": 1532,
+            "frame_id": 27894,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8e6627478b59e3cc6cda78962456f54d60baf2ef9ec47dfb8bf579f85893edf2",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.13345789909362793,
+              "visual_agreement": 0.9860723061968695,
+              "support_pixels": 3064,
+              "roi_shape": [
+                139,
+                107
+              ]
+            }
+          },
+          "table_support": 91775,
+          "table_median_error_mm": -1.973518658173412,
+          "pose_skew_ms": 0.652416740422268
+        },
+        {
+          "frame_id": 27896,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8671963550162468,
+            "center_xy_m": [
+              0.3271773544466843,
+              0.134940903566648
+            ],
+            "fit_error_m": 0.002868472320194754,
+            "pixels": 1650,
+            "frame_id": 27896,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "54afef77c5f48e158a10a714f16f23c4ace46f27b167b0f7d3888845f2c9f791",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9883894398838985,
+              "support_pixels": 3299,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90871,
+          "table_median_error_mm": -1.8839521191511555,
+          "pose_skew_ms": 0.8005820698144817
+        },
+        {
+          "frame_id": 27897,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867423580796195,
+            "center_xy_m": [
+              0.32676200993047694,
+              0.13470606111341837
+            ],
+            "fit_error_m": 0.0027642063105145455,
+            "pixels": 2855,
+            "frame_id": 27897,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a939018c20658323e505289d10b08fa81dddc7744fba5f467d72e70002d26b02",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.3336024284362793,
+              "visual_agreement": 0.9930901480684684,
+              "support_pixels": 2855,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90699,
+          "table_median_error_mm": -1.8523888509029973,
+          "pose_skew_ms": 1.0620780831231968
+        },
+        {
+          "frame_id": 27898,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8678567864391529,
+            "center_xy_m": [
+              0.3273128908601739,
+              0.13491713974841593
+            ],
+            "fit_error_m": 0.0028002638304554057,
+            "pixels": 1583,
+            "frame_id": 27898,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965d35bda3a9b6c5245491cd9ed5de5694d5d4466c8614095b36e98f120ca78c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.4003171920776367,
+              "visual_agreement": 0.9862354276433719,
+              "support_pixels": 3166,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 91476,
+          "table_median_error_mm": -2.0376520072333815,
+          "pose_skew_ms": 0.7010242754859064
+        },
+        {
+          "frame_id": 27900,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8673384939792496,
+            "center_xy_m": [
+              0.32662449210639694,
+              0.13475493231262864
+            ],
+            "fit_error_m": 0.0029246629754302,
+            "pixels": 2934,
+            "frame_id": 27900,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "04bb5eacd3c68277df36dcf99453bf3af82cd9219d5de7390398fb16a74eb563",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.5337479114532471,
+              "visual_agreement": 0.9886669127809661,
+              "support_pixels": 2934,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90909,
+          "table_median_error_mm": -1.9811015889187322,
+          "pose_skew_ms": 1.0465041000315978
+        },
+        {
+          "frame_id": 27901,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867575237710826,
+            "center_xy_m": [
+              0.32713679685516983,
+              0.13446490492838728
+            ],
+            "fit_error_m": 0.0028535775070638214,
+            "pixels": 2959,
+            "frame_id": 27901,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6c9b80419cc9872482e1068c5688d0b9da46aa5ef111c94f268f2cf2b18596e1",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.6004600524902344,
+              "visual_agreement": 0.9877416589695225,
+              "support_pixels": 2959,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90902,
+          "table_median_error_mm": -1.9698922564492793,
+          "pose_skew_ms": 0.40538686289437464
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 34004,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8698551451148283,
+            "center_xy_m": [
+              0.3283051615942984,
+              0.13340939315102213
+            ],
+            "fit_error_m": 0.0030667131830477137,
+            "pixels": 2903,
+            "frame_id": 34004,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "0d836e063048b5d53ab2745f1b07036032b05503ed81186a8eedf4cf1df5c962",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 34004
+            }
+          },
+          "table_support": 93162,
+          "table_median_error_mm": 0.06607649941092752,
+          "pose_skew_ms": 0.285068169432634
+        },
+        {
+          "frame_id": 34005,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8688777203554053,
+            "center_xy_m": [
+              0.3286396978612409,
+              0.13327884814852067
+            ],
+            "fit_error_m": 0.0033684873367403898,
+            "pixels": 1574,
+            "frame_id": 34005,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "41fce6721111949a360a385746e2ae740800904c0d0cf99e9c9dfd76f273b0f4",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.06670713424682617,
+              "visual_agreement": 0.9983155678837962,
+              "support_pixels": 3148,
+              "roi_shape": [
+                140,
+                113
+              ]
+            }
+          },
+          "table_support": 92697,
+          "table_median_error_mm": 0.4478312111358962,
+          "pose_skew_ms": 0.9220710771842278
+        },
+        {
+          "frame_id": 34006,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8697785867106619,
+            "center_xy_m": [
+              0.3275699764034021,
+              0.13295602323898317
+            ],
+            "fit_error_m": 0.003257323339383914,
+            "pixels": 2891,
+            "frame_id": 34006,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "aa6aff7f188a5e62ce38d6f6cd237704841dc23042344722b6cfebb8cea84f04",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.13341045379638672,
+              "visual_agreement": 0.9964968755699457,
+              "support_pixels": 2891,
+              "roi_shape": [
+                140,
+                116
+              ]
+            }
+          },
+          "table_support": 92332,
+          "table_median_error_mm": 0.39228229886134613,
+          "pose_skew_ms": 0.9582806269463617
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002131Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 27892,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8705041583363075,
+            "center_xy_m": [
+              0.3267596437968739,
+              0.1341915672049842
+            ],
+            "fit_error_m": 0.002433006075881463,
+            "pixels": 2971,
+            "frame_id": 27892,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c0e908817211c65fe4b5214501cc88540a3904aef3b605706eee7a17d5d8df05",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 27892
+            }
+          },
+          "table_support": 91173,
+          "table_median_error_mm": -1.9471456390950381,
+          "pose_skew_ms": 0.07099535309862404
+        },
+        {
+          "frame_id": 27893,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8690526744401185,
+            "center_xy_m": [
+              0.3268358377334369,
+              0.13447677075905612
+            ],
+            "fit_error_m": 0.002941361580667321,
+            "pixels": 2926,
+            "frame_id": 27893,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "847db5f199c6e0bdb3a4eae363929ed3ac608b176937ee255c4f33639ed917e5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.0667424201965332,
+              "visual_agreement": 0.9893677318840579,
+              "support_pixels": 2926,
+              "roi_shape": [
+                138,
+                108
+              ]
+            }
+          },
+          "table_support": 91817,
+          "table_median_error_mm": -2.126452778506538,
+          "pose_skew_ms": 0.6537671565638448
+        },
+        {
+          "frame_id": 27894,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8677733706024516,
+            "center_xy_m": [
+              0.3271890963687753,
+              0.1345737505351737
+            ],
+            "fit_error_m": 0.0030379345104090444,
+            "pixels": 1532,
+            "frame_id": 27894,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8e6627478b59e3cc6cda78962456f54d60baf2ef9ec47dfb8bf579f85893edf2",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.13345789909362793,
+              "visual_agreement": 0.9860723061968695,
+              "support_pixels": 3064,
+              "roi_shape": [
+                139,
+                107
+              ]
+            }
+          },
+          "table_support": 91775,
+          "table_median_error_mm": -1.973518658173412,
+          "pose_skew_ms": 0.652416740422268
+        },
+        {
+          "frame_id": 27896,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8671963550162468,
+            "center_xy_m": [
+              0.3271773544466843,
+              0.134940903566648
+            ],
+            "fit_error_m": 0.002868472320194754,
+            "pixels": 1650,
+            "frame_id": 27896,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "54afef77c5f48e158a10a714f16f23c4ace46f27b167b0f7d3888845f2c9f791",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9883894398838985,
+              "support_pixels": 3299,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90871,
+          "table_median_error_mm": -1.8839521191511555,
+          "pose_skew_ms": 0.8005820698144817
+        },
+        {
+          "frame_id": 27897,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867423580796195,
+            "center_xy_m": [
+              0.32676200993047694,
+              0.13470606111341837
+            ],
+            "fit_error_m": 0.0027642063105145455,
+            "pixels": 2855,
+            "frame_id": 27897,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a939018c20658323e505289d10b08fa81dddc7744fba5f467d72e70002d26b02",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.3336024284362793,
+              "visual_agreement": 0.9930901480684684,
+              "support_pixels": 2855,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90699,
+          "table_median_error_mm": -1.8523888509029973,
+          "pose_skew_ms": 1.0620780831231968
+        },
+        {
+          "frame_id": 27898,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8678567864391529,
+            "center_xy_m": [
+              0.3273128908601739,
+              0.13491713974841593
+            ],
+            "fit_error_m": 0.0028002638304554057,
+            "pixels": 1583,
+            "frame_id": 27898,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965d35bda3a9b6c5245491cd9ed5de5694d5d4466c8614095b36e98f120ca78c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.4003171920776367,
+              "visual_agreement": 0.9862354276433719,
+              "support_pixels": 3166,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 91476,
+          "table_median_error_mm": -2.0376520072333815,
+          "pose_skew_ms": 0.7010242754859064
+        },
+        {
+          "frame_id": 27900,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8673384939792496,
+            "center_xy_m": [
+              0.32662449210639694,
+              0.13475493231262864
+            ],
+            "fit_error_m": 0.0029246629754302,
+            "pixels": 2934,
+            "frame_id": 27900,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "04bb5eacd3c68277df36dcf99453bf3af82cd9219d5de7390398fb16a74eb563",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.5337479114532471,
+              "visual_agreement": 0.9886669127809661,
+              "support_pixels": 2934,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90909,
+          "table_median_error_mm": -1.9811015889187322,
+          "pose_skew_ms": 1.0465041000315978
+        },
+        {
+          "frame_id": 27901,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867575237710826,
+            "center_xy_m": [
+              0.32713679685516983,
+              0.13446490492838728
+            ],
+            "fit_error_m": 0.0028535775070638214,
+            "pixels": 2959,
+            "frame_id": 27901,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6c9b80419cc9872482e1068c5688d0b9da46aa5ef111c94f268f2cf2b18596e1",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.6004600524902344,
+              "visual_agreement": 0.9877416589695225,
+              "support_pixels": 2959,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90902,
+          "table_median_error_mm": -1.9698922564492793,
+          "pose_skew_ms": 0.40538686289437464
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 34004,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8698551451148283,
+            "center_xy_m": [
+              0.3283051615942984,
+              0.13340939315102213
+            ],
+            "fit_error_m": 0.0030667131830477137,
+            "pixels": 2903,
+            "frame_id": 34004,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "0d836e063048b5d53ab2745f1b07036032b05503ed81186a8eedf4cf1df5c962",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 34004
+            }
+          },
+          "table_support": 93162,
+          "table_median_error_mm": 0.06607649941092752,
+          "pose_skew_ms": 0.285068169432634
+        },
+        {
+          "frame_id": 34005,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8688777203554053,
+            "center_xy_m": [
+              0.3286396978612409,
+              0.13327884814852067
+            ],
+            "fit_error_m": 0.0033684873367403898,
+            "pixels": 1574,
+            "frame_id": 34005,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "41fce6721111949a360a385746e2ae740800904c0d0cf99e9c9dfd76f273b0f4",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.06670713424682617,
+              "visual_agreement": 0.9983155678837962,
+              "support_pixels": 3148,
+              "roi_shape": [
+                140,
+                113
+              ]
+            }
+          },
+          "table_support": 92697,
+          "table_median_error_mm": 0.4478312111358962,
+          "pose_skew_ms": 0.9220710771842278
+        },
+        {
+          "frame_id": 34006,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8697785867106619,
+            "center_xy_m": [
+              0.3275699764034021,
+              0.13295602323898317
+            ],
+            "fit_error_m": 0.003257323339383914,
+            "pixels": 2891,
+            "frame_id": 34006,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "aa6aff7f188a5e62ce38d6f6cd237704841dc23042344722b6cfebb8cea84f04",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.13341045379638672,
+              "visual_agreement": 0.9964968755699457,
+              "support_pixels": 2891,
+              "roi_shape": [
+                140,
+                116
+              ]
+            }
+          },
+          "table_support": 92332,
+          "table_median_error_mm": 0.39228229886134613,
+          "pose_skew_ms": 0.9582806269463617
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002131Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 27892,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8705041583363075,
+            "center_xy_m": [
+              0.3267596437968739,
+              0.1341915672049842
+            ],
+            "fit_error_m": 0.002433006075881463,
+            "pixels": 2971,
+            "frame_id": 27892,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c0e908817211c65fe4b5214501cc88540a3904aef3b605706eee7a17d5d8df05",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 27892
+            }
+          },
+          "table_support": 91173,
+          "table_median_error_mm": -1.9471456390950381,
+          "pose_skew_ms": 0.07099535309862404
+        },
+        {
+          "frame_id": 27893,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8690526744401185,
+            "center_xy_m": [
+              0.3268358377334369,
+              0.13447677075905612
+            ],
+            "fit_error_m": 0.002941361580667321,
+            "pixels": 2926,
+            "frame_id": 27893,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "847db5f199c6e0bdb3a4eae363929ed3ac608b176937ee255c4f33639ed917e5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.0667424201965332,
+              "visual_agreement": 0.9893677318840579,
+              "support_pixels": 2926,
+              "roi_shape": [
+                138,
+                108
+              ]
+            }
+          },
+          "table_support": 91817,
+          "table_median_error_mm": -2.126452778506538,
+          "pose_skew_ms": 0.6537671565638448
+        },
+        {
+          "frame_id": 27894,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8677733706024516,
+            "center_xy_m": [
+              0.3271890963687753,
+              0.1345737505351737
+            ],
+            "fit_error_m": 0.0030379345104090444,
+            "pixels": 1532,
+            "frame_id": 27894,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8e6627478b59e3cc6cda78962456f54d60baf2ef9ec47dfb8bf579f85893edf2",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.13345789909362793,
+              "visual_agreement": 0.9860723061968695,
+              "support_pixels": 3064,
+              "roi_shape": [
+                139,
+                107
+              ]
+            }
+          },
+          "table_support": 91775,
+          "table_median_error_mm": -1.973518658173412,
+          "pose_skew_ms": 0.652416740422268
+        },
+        {
+          "frame_id": 27896,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8671963550162468,
+            "center_xy_m": [
+              0.3271773544466843,
+              0.134940903566648
+            ],
+            "fit_error_m": 0.002868472320194754,
+            "pixels": 1650,
+            "frame_id": 27896,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "54afef77c5f48e158a10a714f16f23c4ace46f27b167b0f7d3888845f2c9f791",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9883894398838985,
+              "support_pixels": 3299,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90871,
+          "table_median_error_mm": -1.8839521191511555,
+          "pose_skew_ms": 0.8005820698144817
+        },
+        {
+          "frame_id": 27897,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867423580796195,
+            "center_xy_m": [
+              0.32676200993047694,
+              0.13470606111341837
+            ],
+            "fit_error_m": 0.0027642063105145455,
+            "pixels": 2855,
+            "frame_id": 27897,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a939018c20658323e505289d10b08fa81dddc7744fba5f467d72e70002d26b02",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.3336024284362793,
+              "visual_agreement": 0.9930901480684684,
+              "support_pixels": 2855,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90699,
+          "table_median_error_mm": -1.8523888509029973,
+          "pose_skew_ms": 1.0620780831231968
+        },
+        {
+          "frame_id": 27898,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8678567864391529,
+            "center_xy_m": [
+              0.3273128908601739,
+              0.13491713974841593
+            ],
+            "fit_error_m": 0.0028002638304554057,
+            "pixels": 1583,
+            "frame_id": 27898,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965d35bda3a9b6c5245491cd9ed5de5694d5d4466c8614095b36e98f120ca78c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.4003171920776367,
+              "visual_agreement": 0.9862354276433719,
+              "support_pixels": 3166,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 91476,
+          "table_median_error_mm": -2.0376520072333815,
+          "pose_skew_ms": 0.7010242754859064
+        },
+        {
+          "frame_id": 27900,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8673384939792496,
+            "center_xy_m": [
+              0.32662449210639694,
+              0.13475493231262864
+            ],
+            "fit_error_m": 0.0029246629754302,
+            "pixels": 2934,
+            "frame_id": 27900,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "04bb5eacd3c68277df36dcf99453bf3af82cd9219d5de7390398fb16a74eb563",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.5337479114532471,
+              "visual_agreement": 0.9886669127809661,
+              "support_pixels": 2934,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90909,
+          "table_median_error_mm": -1.9811015889187322,
+          "pose_skew_ms": 1.0465041000315978
+        },
+        {
+          "frame_id": 27901,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867575237710826,
+            "center_xy_m": [
+              0.32713679685516983,
+              0.13446490492838728
+            ],
+            "fit_error_m": 0.0028535775070638214,
+            "pixels": 2959,
+            "frame_id": 27901,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6c9b80419cc9872482e1068c5688d0b9da46aa5ef111c94f268f2cf2b18596e1",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.6004600524902344,
+              "visual_agreement": 0.9877416589695225,
+              "support_pixels": 2959,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90902,
+          "table_median_error_mm": -1.9698922564492793,
+          "pose_skew_ms": 0.40538686289437464
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 34004,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8698551451148283,
+            "center_xy_m": [
+              0.3283051615942984,
+              0.13340939315102213
+            ],
+            "fit_error_m": 0.0030667131830477137,
+            "pixels": 2903,
+            "frame_id": 34004,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "0d836e063048b5d53ab2745f1b07036032b05503ed81186a8eedf4cf1df5c962",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 34004
+            }
+          },
+          "table_support": 93162,
+          "table_median_error_mm": 0.06607649941092752,
+          "pose_skew_ms": 0.285068169432634
+        },
+        {
+          "frame_id": 34005,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8688777203554053,
+            "center_xy_m": [
+              0.3286396978612409,
+              0.13327884814852067
+            ],
+            "fit_error_m": 0.0033684873367403898,
+            "pixels": 1574,
+            "frame_id": 34005,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "41fce6721111949a360a385746e2ae740800904c0d0cf99e9c9dfd76f273b0f4",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.06670713424682617,
+              "visual_agreement": 0.9983155678837962,
+              "support_pixels": 3148,
+              "roi_shape": [
+                140,
+                113
+              ]
+            }
+          },
+          "table_support": 92697,
+          "table_median_error_mm": 0.4478312111358962,
+          "pose_skew_ms": 0.9220710771842278
+        },
+        {
+          "frame_id": 34006,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8697785867106619,
+            "center_xy_m": [
+              0.3275699764034021,
+              0.13295602323898317
+            ],
+            "fit_error_m": 0.003257323339383914,
+            "pixels": 2891,
+            "frame_id": 34006,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "aa6aff7f188a5e62ce38d6f6cd237704841dc23042344722b6cfebb8cea84f04",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.13341045379638672,
+              "visual_agreement": 0.9964968755699457,
+              "support_pixels": 2891,
+              "roi_shape": [
+                140,
+                116
+              ]
+            }
+          },
+          "table_support": 92332,
+          "table_median_error_mm": 0.39228229886134613,
+          "pose_skew_ms": 0.9582806269463617
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002131Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 27892,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8705041583363075,
+            "center_xy_m": [
+              0.3267596437968739,
+              0.1341915672049842
+            ],
+            "fit_error_m": 0.002433006075881463,
+            "pixels": 2971,
+            "frame_id": 27892,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c0e908817211c65fe4b5214501cc88540a3904aef3b605706eee7a17d5d8df05",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 27892
+            }
+          },
+          "table_support": 91173,
+          "table_median_error_mm": -1.9471456390950381,
+          "pose_skew_ms": 0.07099535309862404
+        },
+        {
+          "frame_id": 27893,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8690526744401185,
+            "center_xy_m": [
+              0.3268358377334369,
+              0.13447677075905612
+            ],
+            "fit_error_m": 0.002941361580667321,
+            "pixels": 2926,
+            "frame_id": 27893,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "847db5f199c6e0bdb3a4eae363929ed3ac608b176937ee255c4f33639ed917e5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.0667424201965332,
+              "visual_agreement": 0.9893677318840579,
+              "support_pixels": 2926,
+              "roi_shape": [
+                138,
+                108
+              ]
+            }
+          },
+          "table_support": 91817,
+          "table_median_error_mm": -2.126452778506538,
+          "pose_skew_ms": 0.6537671565638448
+        },
+        {
+          "frame_id": 27894,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8677733706024516,
+            "center_xy_m": [
+              0.3271890963687753,
+              0.1345737505351737
+            ],
+            "fit_error_m": 0.0030379345104090444,
+            "pixels": 1532,
+            "frame_id": 27894,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8e6627478b59e3cc6cda78962456f54d60baf2ef9ec47dfb8bf579f85893edf2",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.13345789909362793,
+              "visual_agreement": 0.9860723061968695,
+              "support_pixels": 3064,
+              "roi_shape": [
+                139,
+                107
+              ]
+            }
+          },
+          "table_support": 91775,
+          "table_median_error_mm": -1.973518658173412,
+          "pose_skew_ms": 0.652416740422268
+        },
+        {
+          "frame_id": 27896,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8671963550162468,
+            "center_xy_m": [
+              0.3271773544466843,
+              0.134940903566648
+            ],
+            "fit_error_m": 0.002868472320194754,
+            "pixels": 1650,
+            "frame_id": 27896,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "54afef77c5f48e158a10a714f16f23c4ace46f27b167b0f7d3888845f2c9f791",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9883894398838985,
+              "support_pixels": 3299,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90871,
+          "table_median_error_mm": -1.8839521191511555,
+          "pose_skew_ms": 0.8005820698144817
+        },
+        {
+          "frame_id": 27897,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867423580796195,
+            "center_xy_m": [
+              0.32676200993047694,
+              0.13470606111341837
+            ],
+            "fit_error_m": 0.0027642063105145455,
+            "pixels": 2855,
+            "frame_id": 27897,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a939018c20658323e505289d10b08fa81dddc7744fba5f467d72e70002d26b02",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.3336024284362793,
+              "visual_agreement": 0.9930901480684684,
+              "support_pixels": 2855,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90699,
+          "table_median_error_mm": -1.8523888509029973,
+          "pose_skew_ms": 1.0620780831231968
+        },
+        {
+          "frame_id": 27898,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8678567864391529,
+            "center_xy_m": [
+              0.3273128908601739,
+              0.13491713974841593
+            ],
+            "fit_error_m": 0.0028002638304554057,
+            "pixels": 1583,
+            "frame_id": 27898,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965d35bda3a9b6c5245491cd9ed5de5694d5d4466c8614095b36e98f120ca78c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.4003171920776367,
+              "visual_agreement": 0.9862354276433719,
+              "support_pixels": 3166,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 91476,
+          "table_median_error_mm": -2.0376520072333815,
+          "pose_skew_ms": 0.7010242754859064
+        },
+        {
+          "frame_id": 27900,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8673384939792496,
+            "center_xy_m": [
+              0.32662449210639694,
+              0.13475493231262864
+            ],
+            "fit_error_m": 0.0029246629754302,
+            "pixels": 2934,
+            "frame_id": 27900,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "04bb5eacd3c68277df36dcf99453bf3af82cd9219d5de7390398fb16a74eb563",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.5337479114532471,
+              "visual_agreement": 0.9886669127809661,
+              "support_pixels": 2934,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90909,
+          "table_median_error_mm": -1.9811015889187322,
+          "pose_skew_ms": 1.0465041000315978
+        },
+        {
+          "frame_id": 27901,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867575237710826,
+            "center_xy_m": [
+              0.32713679685516983,
+              0.13446490492838728
+            ],
+            "fit_error_m": 0.0028535775070638214,
+            "pixels": 2959,
+            "frame_id": 27901,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6c9b80419cc9872482e1068c5688d0b9da46aa5ef111c94f268f2cf2b18596e1",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.6004600524902344,
+              "visual_agreement": 0.9877416589695225,
+              "support_pixels": 2959,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90902,
+          "table_median_error_mm": -1.9698922564492793,
+          "pose_skew_ms": 0.40538686289437464
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 34004,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8698551451148283,
+            "center_xy_m": [
+              0.3283051615942984,
+              0.13340939315102213
+            ],
+            "fit_error_m": 0.0030667131830477137,
+            "pixels": 2903,
+            "frame_id": 34004,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "0d836e063048b5d53ab2745f1b07036032b05503ed81186a8eedf4cf1df5c962",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 34004
+            }
+          },
+          "table_support": 93162,
+          "table_median_error_mm": 0.06607649941092752,
+          "pose_skew_ms": 0.285068169432634
+        },
+        {
+          "frame_id": 34005,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8688777203554053,
+            "center_xy_m": [
+              0.3286396978612409,
+              0.13327884814852067
+            ],
+            "fit_error_m": 0.0033684873367403898,
+            "pixels": 1574,
+            "frame_id": 34005,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "41fce6721111949a360a385746e2ae740800904c0d0cf99e9c9dfd76f273b0f4",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.06670713424682617,
+              "visual_agreement": 0.9983155678837962,
+              "support_pixels": 3148,
+              "roi_shape": [
+                140,
+                113
+              ]
+            }
+          },
+          "table_support": 92697,
+          "table_median_error_mm": 0.4478312111358962,
+          "pose_skew_ms": 0.9220710771842278
+        },
+        {
+          "frame_id": 34006,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8697785867106619,
+            "center_xy_m": [
+              0.3275699764034021,
+              0.13295602323898317
+            ],
+            "fit_error_m": 0.003257323339383914,
+            "pixels": 2891,
+            "frame_id": 34006,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "aa6aff7f188a5e62ce38d6f6cd237704841dc23042344722b6cfebb8cea84f04",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.13341045379638672,
+              "visual_agreement": 0.9964968755699457,
+              "support_pixels": 2891,
+              "roi_shape": [
+                140,
+                116
+              ]
+            }
+          },
+          "table_support": 92332,
+          "table_median_error_mm": 0.39228229886134613,
+          "pose_skew_ms": 0.9582806269463617
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002131Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 27892,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8705041583363075,
+            "center_xy_m": [
+              0.3267596437968739,
+              0.1341915672049842
+            ],
+            "fit_error_m": 0.002433006075881463,
+            "pixels": 2971,
+            "frame_id": 27892,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c0e908817211c65fe4b5214501cc88540a3904aef3b605706eee7a17d5d8df05",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 27892
+            }
+          },
+          "table_support": 91173,
+          "table_median_error_mm": -1.9471456390950381,
+          "pose_skew_ms": 0.07099535309862404
+        },
+        {
+          "frame_id": 27893,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8690526744401185,
+            "center_xy_m": [
+              0.3268358377334369,
+              0.13447677075905612
+            ],
+            "fit_error_m": 0.002941361580667321,
+            "pixels": 2926,
+            "frame_id": 27893,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "847db5f199c6e0bdb3a4eae363929ed3ac608b176937ee255c4f33639ed917e5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.0667424201965332,
+              "visual_agreement": 0.9893677318840579,
+              "support_pixels": 2926,
+              "roi_shape": [
+                138,
+                108
+              ]
+            }
+          },
+          "table_support": 91817,
+          "table_median_error_mm": -2.126452778506538,
+          "pose_skew_ms": 0.6537671565638448
+        },
+        {
+          "frame_id": 27894,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8677733706024516,
+            "center_xy_m": [
+              0.3271890963687753,
+              0.1345737505351737
+            ],
+            "fit_error_m": 0.0030379345104090444,
+            "pixels": 1532,
+            "frame_id": 27894,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "8e6627478b59e3cc6cda78962456f54d60baf2ef9ec47dfb8bf579f85893edf2",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.13345789909362793,
+              "visual_agreement": 0.9860723061968695,
+              "support_pixels": 3064,
+              "roi_shape": [
+                139,
+                107
+              ]
+            }
+          },
+          "table_support": 91775,
+          "table_median_error_mm": -1.973518658173412,
+          "pose_skew_ms": 0.652416740422268
+        },
+        {
+          "frame_id": 27896,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8671963550162468,
+            "center_xy_m": [
+              0.3271773544466843,
+              0.134940903566648
+            ],
+            "fit_error_m": 0.002868472320194754,
+            "pixels": 1650,
+            "frame_id": 27896,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "54afef77c5f48e158a10a714f16f23c4ace46f27b167b0f7d3888845f2c9f791",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.26688623428344727,
+              "visual_agreement": 0.9883894398838985,
+              "support_pixels": 3299,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90871,
+          "table_median_error_mm": -1.8839521191511555,
+          "pose_skew_ms": 0.8005820698144817
+        },
+        {
+          "frame_id": 27897,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867423580796195,
+            "center_xy_m": [
+              0.32676200993047694,
+              0.13470606111341837
+            ],
+            "fit_error_m": 0.0027642063105145455,
+            "pixels": 2855,
+            "frame_id": 27897,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a939018c20658323e505289d10b08fa81dddc7744fba5f467d72e70002d26b02",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.3336024284362793,
+              "visual_agreement": 0.9930901480684684,
+              "support_pixels": 2855,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90699,
+          "table_median_error_mm": -1.8523888509029973,
+          "pose_skew_ms": 1.0620780831231968
+        },
+        {
+          "frame_id": 27898,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8678567864391529,
+            "center_xy_m": [
+              0.3273128908601739,
+              0.13491713974841593
+            ],
+            "fit_error_m": 0.0028002638304554057,
+            "pixels": 1583,
+            "frame_id": 27898,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "965d35bda3a9b6c5245491cd9ed5de5694d5d4466c8614095b36e98f120ca78c",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.4003171920776367,
+              "visual_agreement": 0.9862354276433719,
+              "support_pixels": 3166,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 91476,
+          "table_median_error_mm": -2.0376520072333815,
+          "pose_skew_ms": 0.7010242754859064
+        },
+        {
+          "frame_id": 27900,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8673384939792496,
+            "center_xy_m": [
+              0.32662449210639694,
+              0.13475493231262864
+            ],
+            "fit_error_m": 0.0029246629754302,
+            "pixels": 2934,
+            "frame_id": 27900,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "04bb5eacd3c68277df36dcf99453bf3af82cd9219d5de7390398fb16a74eb563",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.5337479114532471,
+              "visual_agreement": 0.9886669127809661,
+              "support_pixels": 2934,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90909,
+          "table_median_error_mm": -1.9811015889187322,
+          "pose_skew_ms": 1.0465041000315978
+        },
+        {
+          "frame_id": 27901,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.867575237710826,
+            "center_xy_m": [
+              0.32713679685516983,
+              0.13446490492838728
+            ],
+            "fit_error_m": 0.0028535775070638214,
+            "pixels": 2959,
+            "frame_id": 27901,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                120.0,
+                243.25,
+                250.0,
+                391.25
+              ],
+              "confidence": 0.5224609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6c9b80419cc9872482e1068c5688d0b9da46aa5ef111c94f268f2cf2b18596e1",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 27892,
+              "semantic_age_s": 0.6004600524902344,
+              "visual_agreement": 0.9877416589695225,
+              "support_pixels": 2959,
+              "roi_shape": [
+                139,
+                108
+              ]
+            }
+          },
+          "table_support": 90902,
+          "table_median_error_mm": -1.9698922564492793,
+          "pose_skew_ms": 0.40538686289437464
+        }
+      ],
+      "accepted": true
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "corrected": true,
+      "results": [
+        {
+          "frame_id": 34004,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8698551451148283,
+            "center_xy_m": [
+              0.3283051615942984,
+              0.13340939315102213
+            ],
+            "fit_error_m": 0.0030667131830477137,
+            "pixels": 2903,
+            "frame_id": 34004,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "0d836e063048b5d53ab2745f1b07036032b05503ed81186a8eedf4cf1df5c962",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 34004
+            }
+          },
+          "table_support": 93162,
+          "table_median_error_mm": 0.06607649941092752,
+          "pose_skew_ms": 0.285068169432634
+        },
+        {
+          "frame_id": 34005,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8688777203554053,
+            "center_xy_m": [
+              0.3286396978612409,
+              0.13327884814852067
+            ],
+            "fit_error_m": 0.0033684873367403898,
+            "pixels": 1574,
+            "frame_id": 34005,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "41fce6721111949a360a385746e2ae740800904c0d0cf99e9c9dfd76f273b0f4",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.06670713424682617,
+              "visual_agreement": 0.9983155678837962,
+              "support_pixels": 3148,
+              "roi_shape": [
+                140,
+                113
+              ]
+            }
+          },
+          "table_support": 92697,
+          "table_median_error_mm": 0.4478312111358962,
+          "pose_skew_ms": 0.9220710771842278
+        },
+        {
+          "frame_id": 34006,
+          "accepted": true,
+          "vision": {
+            "top_quantile_z_m": 0.8697785867106619,
+            "center_xy_m": [
+              0.3275699764034021,
+              0.13295602323898317
+            ],
+            "fit_error_m": 0.003257323339383914,
+            "pixels": 2891,
+            "frame_id": 34006,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                113.5,
+                244.125,
+                245.0,
+                390.875
+              ],
+              "confidence": 0.56982421875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "aa6aff7f188a5e62ce38d6f6cd237704841dc23042344722b6cfebb8cea84f04",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 34004,
+              "semantic_age_s": 0.13341045379638672,
+              "visual_agreement": 0.9964968755699457,
+              "support_pixels": 2891,
+              "roi_shape": [
+                140,
+                116
+              ]
+            }
+          },
+          "table_support": 92332,
+          "table_median_error_mm": 0.39228229886134613,
+          "pose_skew_ms": 0.9582806269463617
+        }
+      ],
+      "accepted": true
+    }
+  ],
+  "calibration_table_validation": [
+    {
+      "attempt": "20261008T002131Z",
+      "quality": {
+        "rmse_m": 0.0020844467960725948,
+        "heldout_rmse_m": 0.002076427686358731,
+        "heldout_normal_angle_deg": 0.003856577119277483,
+        "fitted_points": 16797,
+        "heldout_points": 16775,
+        "axis_spread_m": [
+          0.21135472065445535,
+          0.19021178460082527,
+          0.002084446796072595
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    },
+    {
+      "attempt": "20261008T002809Z",
+      "quality": {
+        "rmse_m": 0.002110506407973943,
+        "heldout_rmse_m": 0.002114757140450326,
+        "heldout_normal_angle_deg": 0.006466099340831651,
+        "fitted_points": 16712,
+        "heldout_points": 16702,
+        "axis_spread_m": [
+          0.21227994636003644,
+          0.19443193033402834,
+          0.0021105064079739414
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    }
+  ],
+  "accepted": true
+}

@@ -44,6 +44,8 @@ stages:
       CYCLONEDDS_HOME: /usr/local
       LD_LIBRARY_PATH: /usr/local/lib
       G1_CONTROL_HZ: "100"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
     install:
       pip:
         - packages: ["numpy==2.2.6", "scipy==1.15.3", "mujoco==3.14.0", "pillow==11.3.0"]
@@ -55,7 +57,10 @@ stages:
         paths: [g1_can_handoff]
         dest: /app/g1_can_handoff/
       - from: local
-        paths: [runtime.py, scene_refresh.py, factory_table_candidate.py, physical_core.py, camera_input.py, pickup.py, staging.py, sim_runtime.py, calibration_points.py, fit_camera_calibration.py, test_physical_core.py, diagnose_head_alignment.py, shadow_approach.py, shadow_staging.py, test_camera_input.py]
+        paths: [yolo/frame_limits.py, yolo/confidence.py]
+        dest: /app/yolo/
+      - from: local
+        paths: [harness_replay.py, planning_snapshot.py, table_plane.py, pose_alignment.py, latest_frame.py, perception_policy.py, perception_worker.py, runtime.py, scene_refresh.py, factory_table_candidate.py, physical_core.py, control_settle.py, camera_input.py, target_tracker.py, yolo_client.py, benchmark_perception.py, pickup.py, staging.py, sim_runtime.py, simulation_position_noise.py, stochastic_position_noise.py, planner_tuning.py, calibration_points.py, fit_camera_calibration.py, test_physical_core.py, diagnose_head_alignment.py, shadow_approach.py, shadow_staging.py, test_camera_input.py]
         dest: /app/
       - from: local
         paths: [sdk_native]

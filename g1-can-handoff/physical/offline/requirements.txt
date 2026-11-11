@@ -1,0 +1,15 @@
+# Python 3.12; CPU only. No Wendy CLI, Unitree SDK, Torch, or GPU required.
+numpy==2.2.6
+scipy==1.15.3
+mujoco==3.14.0
+pillow==11.3.0
+opencv-python-headless==4.11.0.86
+# Transitive dependencies pinned from the verified CPU container.
+absl-py==2.5.0
+etils==1.14.0
+fsspec==2026.9.0
+glfw==2.10.2
+PyOpenGL==3.1.10
+typing_extensions==4.16.0
+websockets==17.2
+zipp==4.1.1

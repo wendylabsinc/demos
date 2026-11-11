@@ -1,0 +1,187 @@
+{
+  "passed": true,
+  "waypoints": [
+    [
+      0.3229740640450684,
+      0.2682349827894931,
+      1.003
+    ],
+    [
+      0.3229740640450684,
+      0.2682349827894931,
+      0.843
+    ],
+    [
+      0.3229740640450684,
+      0.16823498278949311,
+      0.843
+    ],
+    [
+      0.3229740640450684,
+      0.16823498278949311,
+      0.993
+    ],
+    [
+      0.3429740640450684,
+      0.16823498278949311,
+      0.993
+    ]
+  ],
+  "rotation": [
+    [
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "elapsed_s": 2.3026309999404475,
+  "rejected": [],
+  "events": [
+    {
+      "phase": "observed_can_collision_proxy",
+      "center_m": [
+        0.3229740640450684,
+        0.16823498278949311,
+        0.823
+      ],
+      "source": "camera"
+    },
+    {
+      "phase": "trajectory_collision",
+      "phase_name": "approach",
+      "collision": {
+        "phase": "approach",
+        "bodies": [
+          "world",
+          "left_hand_index_0_link"
+        ],
+        "geoms": [
+          "table",
+          ""
+        ],
+        "distance_m": 0.008616518418203226,
+        "required_clearance_m": 0.01
+      },
+      "joint_q": [
+        0.20369779947479189,
+        0.36045095973353214,
+        0.01259891861340097,
+        0.633936696829927,
+        -0.1353580062021416,
+        0.08714241343183877,
+        -0.04566891958505544
+      ],
+      "path_fraction": 0.2781456953642384
+    },
+    {
+      "phase": "staging_planned",
+      "start_q": [
+        0.24641963839530945,
+        0.28064659237861633,
+        -0.08810802549123764,
+        0.8249101638793945,
+        0.0017137442482635379,
+        0.01597641035914421,
+        -0.0045175738632678986
+      ],
+      "joint_waypoints": [
+        [
+          0.3115308949656727,
+          0.5839654352942496,
+          1.1354826420200348,
+          0.19241691265073174,
+          -0.6007017339724682,
+          0.6768134633549157,
+          -0.14095715871009465
+        ],
+        [
+          0.02044701207603793,
+          0.7027633115696867,
+          0.4445706518066159,
+          -0.18522369264192512,
+          -0.7233127112159944,
+          0.39240141979989673,
+          -0.22218324332626183
+        ]
+      ],
+      "collision_checks": 3515,
+      "nodes": 28,
+      "seed": 7,
+      "edge_resolution_rad": 0.004,
+      "rejected_candidates": 0
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "align",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.32297406210143104,
+        0.2682349825454165,
+        1.0029999975938606
+      ],
+      "target": [
+        0.3229740640450684,
+        0.2682349827894931,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_transfer_planned",
+      "phase_name": "reach",
+      "waypoints": 10,
+      "ik_attempts": 10,
+      "start": [
+        0.32297404592401957,
+        0.26823495912327705,
+        0.8430000384532954
+      ],
+      "target": [
+        0.3229740640450684,
+        0.16823498278949311,
+        0.843
+      ]
+    },
+    {
+      "phase": "cartesian_lift_planned",
+      "phase_name": "lift",
+      "waypoints": 16,
+      "ik_attempts": 16,
+      "start": [
+        0.322974064070384,
+        0.16823498298314638,
+        0.8429999996549071
+      ],
+      "target": [
+        0.3229740640450684,
+        0.16823498278949311,
+        0.993
+      ]
+    },
+    {
+      "phase": "path_preflight_passed",
+      "waypoints_checked": 4,
+      "hand_paths_checked": 2,
+      "motion_commands_sent": 0
+    }
+  ],
+  "clearance": {
+    "samples": 2444,
+    "min_table_distance_m": 0.0351567701607027,
+    "required_clearance_m": 0.01
+  },
+  "trial": 2,
+  "actuation": false,
+  "physical_lift_verified": false,
+  "provenance": "Recorded accepted calibration and terminal feedback; base/arm replaced by recorded calibration/hold/staging values, receipt times rebased offline"
+}

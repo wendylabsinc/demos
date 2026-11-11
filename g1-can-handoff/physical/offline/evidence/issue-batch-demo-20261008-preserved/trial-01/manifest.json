@@ -1,0 +1,104 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791490338709178666,
+  "end_unix_ns": 1791490401851799130,
+  "native_event_file": "/data/events-20261008T200942Z.jsonl",
+  "events": 2488,
+  "camera_events": 364,
+  "selected_frames": [
+    "/data/camera-96752-scene_refresh.npz",
+    "/data/camera-96808-planning.npz",
+    "/data/camera-97660-motion-tracking.npz",
+    "/data/camera-97661-motion-tracking.npz",
+    "/data/camera-97662-motion-tracking.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 372490,
+      "sha256": "441fb7c138e4b5399e4cde40a6f0f444b406b6d532c317c22a6a30b5e607b69d"
+    },
+    "rgbd/camera-96752-scene_refresh.source.zip": {
+      "bytes": 107150,
+      "sha256": "f535c7a2cf13002cb813ca67ef97d42c1a4bced894915bd8da4ce690de065376"
+    },
+    "rgbd/camera-96752-scene_refresh.timing.npz": {
+      "bytes": 3904,
+      "sha256": "f13cb94d7597a7265a6fc8fbacf0f13ccf42f3e476901edb7b1246127eba0c17"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938109,
+      "sha256": "ce3af55ed2df1fa5c7fc1e26f4d22f7f840c60f80b2cd2ef7a7560df762c472b"
+    },
+    "rgbd/camera-96808-planning.source.zip": {
+      "bytes": 107300,
+      "sha256": "d648d1718ac27989c13c906353a8878efe0ae0e7b31d1655381be854f16897fa"
+    },
+    "rgbd/camera-96808-planning.timing.npz": {
+      "bytes": 3904,
+      "sha256": "5236d7d5bbdc9e83e85eed3144d84619e8cde1c50754bbe28f7b2b355db711b9"
+    },
+    "rgbd/camera-97660-motion-tracking.source.zip": {
+      "bytes": 109492,
+      "sha256": "7166705e4d3c46594d5a198855994678511c83b1d0eb241488e0c06509a67fab"
+    },
+    "rgbd/camera-97660-motion-tracking.timing.npz": {
+      "bytes": 3908,
+      "sha256": "21024f77d9ab2814f1bc3103296cb0b5eeffc20ad1622758a5a111ef826b61ac"
+    },
+    "rgbd/camera-97661-motion-tracking.source.zip": {
+      "bytes": 109280,
+      "sha256": "30ffcae8203591ae23bc5f82b50d94f3d649c9ef2a333c30b7e9ed6e157c0c53"
+    },
+    "rgbd/camera-97661-motion-tracking.timing.npz": {
+      "bytes": 3892,
+      "sha256": "0892c3f67ef17ebe9f7e69e5faa4df200255b7c0bc0fc85e5315dfdb289f5d25"
+    },
+    "rgbd/camera-97662-motion-tracking.source.zip": {
+      "bytes": 109147,
+      "sha256": "9deceeaeda009ce2fc75b5f1e670354e7c614b7dc2a7c614e4ffc898c7dfa6dc"
+    },
+    "rgbd/camera-97662-motion-tracking.timing.npz": {
+      "bytes": 3904,
+      "sha256": "b45ed3de7a2c7cb902a4a2dd1551da63855a8c3e9a3561e1ba99216bbfe52bc0"
+    },
+    "source/runtime.py": {
+      "bytes": 40133,
+      "sha256": "fae7ca0e7198d9b80476fa3cb0b11167c3cd020e27ab879868f1e164de41edf6"
+    },
+    "source/camera_input.py": {
+      "bytes": 23614,
+      "sha256": "d7bc4e2aa695b4c4ada0fbd84d1cd8dcd07f8e39912f67a11ac60f682c5be67e"
+    },
+    "source/physical_core.py": {
+      "bytes": 34205,
+      "sha256": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "fae7ca0e7198d9b80476fa3cb0b11167c3cd020e27ab879868f1e164de41edf6",
+    "camera_input.py": "d7bc4e2aa695b4c4ada0fbd84d1cd8dcd07f8e39912f67a11ac60f682c5be67e",
+    "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791490401110239079,
+    "monotonic_ns": 6535678958183,
+    "phase": "primary_failure",
+    "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "source": "tracking"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "passive": true,
+  "motor_adapters_created": false,
+  "failure": null,
+  "max_age_ms": 367.8688311520091,
+  "over_400": 0,
+  "samples": 1968,
+  "observations": 267,
+  "processing_ms_p50_p95_max": [
+    58.948283000063384,
+    80.56014620001406,
+    94.79670899986559
+  ],
+  "round_trip_ms_p50_p95_max": [
+    61.995827999908215,
+    87.58957679992818,
+    581.8900570000096
+  ],
+  "yolo_checks": 21,
+  "reacquisitions": 0,
+  "notes": [
+    "20-second continuous passive probe; not a physical pickup validation",
+    "Algebraic initializer and analytic Jacobian; unchanged 6 mm cylinder and 400 ms freshness limits",
+    "Camera transport and single-frame prefetch unchanged; alternative transport/reader prototypes did not consistently improve latency"
+  ],
+  "baseline_max_age_ms": 381.28143588164676,
+  "captured_failure": {
+    "old_rmse_m": 0.00668363013083401,
+    "repaired_rmse_m": 0.0029240706726389714,
+    "old_nfev": 14,
+    "repaired_nfev": 8
+  }
+}

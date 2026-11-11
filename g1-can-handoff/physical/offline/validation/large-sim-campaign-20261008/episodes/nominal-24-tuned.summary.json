@@ -1,0 +1,24 @@
+{
+  "case_id": "nominal-24",
+  "condition": "fitted_noise",
+  "seed": 1024,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "tuned",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 50.12000000001529,
+  "wall_time_s": 25.99430491705425,
+  "max_tracking_error_rad": 0.029537099668533323,
+  "command_count": 4979,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 0,
+  "episode": "episodes/nominal-24-tuned.json.gz",
+  "episode_sha256": "6126be034a30aab44bb51d90c7693ecbc6edefa188f6f86bae456e7cc24876e3",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

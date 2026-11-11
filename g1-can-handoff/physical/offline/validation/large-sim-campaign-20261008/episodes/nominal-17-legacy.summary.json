@@ -1,0 +1,24 @@
+{
+  "case_id": "nominal-17",
+  "condition": "fitted_noise",
+  "seed": 1017,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "legacy",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 51.80000000001734,
+  "wall_time_s": 15.315750250010751,
+  "max_tracking_error_rad": 0.029292085933175005,
+  "command_count": 5147,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 1,
+  "episode": "episodes/nominal-17-legacy.json.gz",
+  "episode_sha256": "febff6be82bd928fa04122bfb8e952652bbdf02c503691c4f446ebbc4027d133",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

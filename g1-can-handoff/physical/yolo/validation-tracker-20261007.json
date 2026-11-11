@@ -1,0 +1,3290 @@
+{
+  "date_utc": "2026-10-07",
+  "device": "10.10.20.238:50052",
+  "deployment": {
+    "status": {
+      "phase": "PASSIVE",
+      "adapter_initialized": false,
+      "demo_running": false,
+      "motion_commands_sent": 0,
+      "telemetry_healthy": true,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth"
+    },
+    "hashes": {
+      "runtime.py": "138f84bec98100e476766665b1a94e0b04c398b0c94443d3a04e9cc9ce3af88d",
+      "camera_input.py": "ee884971ce094a5e3865196d16775488b694101181f705a4309c48579ef8113f",
+      "physical_core.py": "03b69f8266c6611f62cd5f36c4eb65fe406c3af3f1fba7145dce1c1cb750ee44",
+      "target_tracker.py": "5bf75871d033eaf8f3a821279d1465fcb03baea4d797946279dee9d2ed8dded7",
+      "yolo_client.py": "39e1a799edd9c47452dea4cd0d152d3ed55ea577e9f43ded9ea5a6e18f9b80a4"
+    }
+  },
+  "passive_probe": {
+    "passive": true,
+    "lease_acquired": false,
+    "motion_commands_sent": 0,
+    "rows": [
+      {
+        "frame_id": 108624,
+        "processing_ms": 168.48531899995578,
+        "exposure_age_ms": 259.97535869828425,
+        "vision": {
+          "top_quantile_z_m": 0.8712366237366459,
+          "center_xy_m": [
+            0.29741933595900794,
+            0.09067964953314644
+          ],
+          "fit_error_m": 0.0019438466720319914,
+          "pixels": 2343,
+          "frame_id": 108624,
+          "detector": "coke_yolo",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "0851b040648c4acfbfc7abe1d3017d7a096c90e8148ea5c7abaaec5bea102310",
+          "tracking": {
+            "mode": "yolo",
+            "reason": "initial_identity",
+            "semantic_frame_id": 108624
+          }
+        }
+      },
+      {
+        "frame_id": 108627,
+        "processing_ms": 161.4954900005614,
+        "exposure_age_ms": 251.46460379528435,
+        "vision": {
+          "top_quantile_z_m": 0.8659275060331191,
+          "center_xy_m": [
+            0.29658574427449425,
+            0.0914461580592917
+          ],
+          "fit_error_m": 0.002184810202120741,
+          "pixels": 1932,
+          "frame_id": 108627,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "c6f5316a3c0a52362ad41160e97295a5d1e246f137440685fe457f0b6d8b239b",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108624,
+            "semantic_age_s": 0.2001209259033203,
+            "visual_agreement": 0.9949899260710507,
+            "support_pixels": 1932
+          }
+        }
+      },
+      {
+        "frame_id": 108629,
+        "processing_ms": 138.81727599982696,
+        "exposure_age_ms": 286.94359623295895,
+        "vision": {
+          "top_quantile_z_m": 0.8659193669213148,
+          "center_xy_m": [
+            0.2966000250985453,
+            0.09128933879313335
+          ],
+          "fit_error_m": 0.002227523211069928,
+          "pixels": 1936,
+          "frame_id": 108629,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "51a4875c54ffdaf826e304656b1ab956c4d9f9bafd81e1f65bbf71db8194f556",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108624,
+            "semantic_age_s": 0.3335437774658203,
+            "visual_agreement": 0.989903111209337,
+            "support_pixels": 1936
+          }
+        }
+      },
+      {
+        "frame_id": 108632,
+        "processing_ms": 158.8996930004214,
+        "exposure_age_ms": 275.7934240753457,
+        "vision": {
+          "top_quantile_z_m": 0.8655023481761253,
+          "center_xy_m": [
+            0.2967682287863182,
+            0.09138007634540755
+          ],
+          "fit_error_m": 0.0021206111844610694,
+          "pixels": 2035,
+          "frame_id": 108632,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "430b829d80a89674b4ae80712edf6151e39f0215d9aebabcec97023972491f45",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108624,
+            "semantic_age_s": 0.5336859226226807,
+            "visual_agreement": 0.9936525784032633,
+            "support_pixels": 2035
+          }
+        }
+      },
+      {
+        "frame_id": 108635,
+        "processing_ms": 169.36605099999724,
+        "exposure_age_ms": 275.108422755693,
+        "vision": {
+          "top_quantile_z_m": 0.8663682875294838,
+          "center_xy_m": [
+            0.2968322289628493,
+            0.09116991352575014
+          ],
+          "fit_error_m": 0.0019564212653719096,
+          "pixels": 2051,
+          "frame_id": 108635,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "22f430e012f55d868acc16577691ff95891bd299e39928d55448c7ed4d7962ec",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108624,
+            "semantic_age_s": 0.7338275909423828,
+            "visual_agreement": 0.9959070766632425,
+            "support_pixels": 2051
+          }
+        }
+      },
+      {
+        "frame_id": 108638,
+        "processing_ms": 171.17775899987464,
+        "exposure_age_ms": 276.2368173434879,
+        "vision": {
+          "top_quantile_z_m": 0.8664823621228572,
+          "center_xy_m": [
+            0.29674820450277634,
+            0.09094366857389123
+          ],
+          "fit_error_m": 0.0020924770012509357,
+          "pixels": 2018,
+          "frame_id": 108638,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262,
+              290.75,
+              405.5
+            ],
+            "confidence": 0.172119140625,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "32a2c77f6cff4c10c527ecd1ea26c2e5357b6fd628dd856104df2c2f58a6b91d",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108624,
+            "semantic_age_s": 0.9339704513549805,
+            "visual_agreement": 0.99196954678648,
+            "support_pixels": 2018
+          }
+        }
+      },
+      {
+        "frame_id": 108641,
+        "processing_ms": 173.69275299915898,
+        "exposure_age_ms": 279.9002059309714,
+        "vision": {
+          "top_quantile_z_m": 0.8715751385785154,
+          "center_xy_m": [
+            0.2971455906292678,
+            0.09110859236930437
+          ],
+          "fit_error_m": 0.0019411603664226157,
+          "pixels": 2333,
+          "frame_id": 108641,
+          "detector": "coke_yolo",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262.75,
+              290.5,
+              405.25
+            ],
+            "confidence": 0.18896484375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "9ca083f136c7eaa9de7c7e15f2d5ab4f773cef25d437d3d78281debd00e9b94c",
+          "tracking": {
+            "mode": "yolo",
+            "reason": "periodic_recheck",
+            "semantic_frame_id": 108641
+          }
+        }
+      },
+      {
+        "frame_id": 108644,
+        "processing_ms": 161.18728800029203,
+        "exposure_age_ms": 271.03508988966496,
+        "vision": {
+          "top_quantile_z_m": 0.8658311995004861,
+          "center_xy_m": [
+            0.29647772670678196,
+            0.0914434795456929
+          ],
+          "fit_error_m": 0.0022086209179136298,
+          "pixels": 1978,
+          "frame_id": 108644,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262.75,
+              290.5,
+              405.25
+            ],
+            "confidence": 0.18896484375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "c7dd4def2e5fc0c4c6820fc21eda34a8a9664e302882f22703ae7715583a94e6",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108641,
+            "semantic_age_s": 0.20013809204101562,
+            "visual_agreement": 0.9922256489531427,
+            "support_pixels": 1978
+          }
+        }
+      },
+      {
+        "frame_id": 108647,
+        "processing_ms": 168.59601000032853,
+        "exposure_age_ms": 269.5978578949507,
+        "vision": {
+          "top_quantile_z_m": 0.8661041287561686,
+          "center_xy_m": [
+            0.2968555517809944,
+            0.09093308098507541
+          ],
+          "fit_error_m": 0.0021281619789602236,
+          "pixels": 2057,
+          "frame_id": 108647,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262.75,
+              290.5,
+              405.25
+            ],
+            "confidence": 0.18896484375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "2e199344476bdd56a65c94a5c92b21bb3f833c753afdfaa45bef6762e9c9afcc",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108641,
+            "semantic_age_s": 0.4002704620361328,
+            "visual_agreement": 0.9933790742505854,
+            "support_pixels": 2057
+          }
+        }
+      },
+      {
+        "frame_id": 108650,
+        "processing_ms": 165.82846300025267,
+        "exposure_age_ms": 265.58359392220154,
+        "vision": {
+          "top_quantile_z_m": 0.8664223049416009,
+          "center_xy_m": [
+            0.2966052584933172,
+            0.09120548688128055
+          ],
+          "fit_error_m": 0.0021179854982388553,
+          "pixels": 1973,
+          "frame_id": 108650,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262.75,
+              290.5,
+              405.25
+            ],
+            "confidence": 0.18896484375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "6811babcbb257a962fa3d31fb1373b52aa5b9fcec500e402984b5e75eb1c0497",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108641,
+            "semantic_age_s": 0.6003999710083008,
+            "visual_agreement": 0.9945479227743698,
+            "support_pixels": 1973
+          }
+        }
+      },
+      {
+        "frame_id": 108653,
+        "processing_ms": 163.48400200058677,
+        "exposure_age_ms": 259.0395294391783,
+        "vision": {
+          "top_quantile_z_m": 0.8658203776178691,
+          "center_xy_m": [
+            0.29664009616138326,
+            0.09120386047622776
+          ],
+          "fit_error_m": 0.0021254888410398506,
+          "pixels": 1985,
+          "frame_id": 108653,
+          "detector": "coke_visual_depth_tracker",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.75,
+              262.75,
+              290.5,
+              405.25
+            ],
+            "confidence": 0.18896484375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "8ec46d4c59232e974f17dc9a946cb526883e8e78e3c7a896f46b94679ef8c058",
+          "tracking": {
+            "mode": "visual_depth",
+            "semantic_frame_id": 108641,
+            "semantic_age_s": 0.8005309104919434,
+            "visual_agreement": 0.9909123490304257,
+            "support_pixels": 1985
+          }
+        }
+      },
+      {
+        "frame_id": 108656,
+        "processing_ms": 163.4999070001868,
+        "exposure_age_ms": 252.52063097832433,
+        "vision": {
+          "top_quantile_z_m": 0.8720170712431082,
+          "center_xy_m": [
+            0.2972155136719675,
+            0.09086011113756781
+          ],
+          "fit_error_m": 0.0020226802470673074,
+          "pixels": 2265,
+          "frame_id": 108656,
+          "detector": "coke_yolo",
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "backend": "pytorch_cuda",
+          "box": {
+            "xyxy": [
+              166.5625,
+              263,
+              290.9375,
+              405.5
+            ],
+            "confidence": 0.17724609375,
+            "class_id": 0,
+            "class_name": "Coca-Cola"
+          },
+          "image_sha256": "edb106d8cdb594e7091703cb75bff70dc48edeb5096660e9786f9765710cd8c4",
+          "tracking": {
+            "mode": "yolo",
+            "reason": "periodic_recheck",
+            "semantic_frame_id": 108656
+          }
+        }
+      }
+    ]
+  },
+  "tests_passed": 84,
+  "physical_pickup_verified": false,
+  "attempts": [
+    {
+      "started_unix_ns": 1791414172275764000,
+      "device": "10.10.20.238:50052",
+      "start_requested": true,
+      "before": {
+        "status": {
+          "phase": "PASSIVE",
+          "error": null,
+          "motion_commands_sent": 0,
+          "adapter_initialized": false,
+          "automatic_home": false,
+          "events": "/data/events-20261007T230205Z.jsonl",
+          "calibration_present": true,
+          "lowstate": {
+            "poll_hz": 200.0,
+            "rate_hz": 200.0,
+            "samples": 9202,
+            "age_s": 0.0015,
+            "listener_errors": 0,
+            "affinity": {
+              "requested": "auto",
+              "cpu": 6,
+              "active": true,
+              "error": null
+            }
+          },
+          "camera_max_age_ms": 400.0,
+          "yolo_confidence_strictly_above": 0.1,
+          "perception_mode": "yolo_visual_depth",
+          "tracking_error": null,
+          "tracking_exposure_age_ms": null,
+          "tracking_vision": null,
+          "demo_running": false,
+          "demo_result": null,
+          "demo_error": null,
+          "measured": {
+            "body": {
+              "imu_rpy": [
+                0.01264580711722374,
+                0.04471198096871376,
+                2.628159523010254
+              ],
+              "q": [
+                -0.12066926062107086,
+                -0.006193874403834343,
+                -0.020757438614964485,
+                0.3140740394592285,
+                -0.17925551533699036,
+                0.00692412443459034,
+                -0.15322034060955048,
+                -0.005275189410895109,
+                0.041742537170648575,
+                0.32406195998191833,
+                -0.1724119484424591,
+                -0.00989067554473877,
+                0.0002946217136923224,
+                0.0,
+                0.0,
+                0.24604812264442444,
+                0.2736597955226898,
+                -0.09010939300060272,
+                0.8273789286613464,
+                0.002972087822854519,
+                0.009211555123329163,
+                -0.004594272468239069,
+                0.2621069848537445,
+                -0.2885441780090332,
+                0.09314139932394028,
+                0.8002226948738098,
+                -0.0006591323763132095,
+                0.009840487502515316,
+                0.0015033012023195624
+              ],
+              "dq": [
+                0.010284976102411747,
+                0.010908307507634163,
+                0.013713300228118896,
+                0.003272492438554764,
+                0.003278844989836216,
+                -0.009063437581062317,
+                0.008570813573896885,
+                -0.02727077156305313,
+                -0.010284976102411747,
+                0.009817477315664291,
+                0.000532426405698061,
+                -0.009966118261218071,
+                0.010284976102411747,
+                0.0,
+                0.0,
+                -0.003067961661145091,
+                -0.01073786523193121,
+                0.01073786523193121,
+                0.01073786523193121,
+                -0.007669903803616762,
+                -0.003926990553736687,
+                0.0019634952768683434,
+                -0.004601942375302315,
+                0.0,
+                -0.004601942375302315,
+                0.004601942375302315,
+                -0.0015339808305725455,
+                0.005890486296266317,
+                -0.004908738657832146
+              ],
+              "tau_est": [
+                0.9508167505264282,
+                2.4609375,
+                0.3355823755264282,
+                -0.966796875,
+                8.985036849975586,
+                -0.832658052444458,
+                2.684659004211426,
+                -3.427734375,
+                0.1677911877632141,
+                -0.703125,
+                10.238350868225098,
+                0.24875080585479736,
+                0.055930398404598236,
+                0.0,
+                0.0,
+                0.25,
+                2.25,
+                1.0,
+                -1.125,
+                -0.25,
+                -0.390625,
+                0.21484375,
+                0.1875,
+                -2.25,
+                -0.5,
+                -1.5,
+                -0.125,
+                -0.3515625,
+                -0.029296875
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  38,
+                  38
+                ],
+                [
+                  37,
+                  37
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  52,
+                  55
+                ],
+                [
+                  51,
+                  58
+                ],
+                [
+                  39,
+                  39
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  39,
+                  39
+                ],
+                [
+                  39,
+                  39
+                ],
+                [
+                  53,
+                  59
+                ],
+                [
+                  51,
+                  59
+                ],
+                [
+                  37,
+                  37
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  53,
+                  53
+                ],
+                [
+                  56,
+                  58
+                ],
+                [
+                  50,
+                  50
+                ],
+                [
+                  49,
+                  49
+                ],
+                [
+                  48,
+                  47
+                ],
+                [
+                  46,
+                  48
+                ],
+                [
+                  48,
+                  42
+                ],
+                [
+                  54,
+                  53
+                ],
+                [
+                  54,
+                  56
+                ],
+                [
+                  55,
+                  54
+                ],
+                [
+                  52,
+                  53
+                ],
+                [
+                  53,
+                  52
+                ],
+                [
+                  52,
+                  49
+                ],
+                [
+                  54,
+                  47
+                ]
+              ],
+              "temperature_max": 59,
+              "time": 7303.926040011
+            },
+            "left": {
+              "imu_rpy": null,
+              "q": [
+                -0.036207523196935654,
+                0.635162889957428,
+                0.6367534399032593,
+                -0.03213277459144592,
+                -0.023173701018095016,
+                -0.7906138300895691,
+                -0.042902447283267975
+              ],
+              "dq": [
+                -0.0,
+                -0.0,
+                0.0,
+                0.0,
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "tau_est": [
+                5861.07958984375,
+                1674.5941162109375,
+                -3349.188232421875,
+                -1674.5941162109375,
+                1674.5941162109375,
+                -1674.5941162109375,
+                3349.188232421875
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  43,
+                  36
+                ],
+                [
+                  43,
+                  41
+                ],
+                [
+                  39,
+                  37
+                ],
+                [
+                  43,
+                  37
+                ],
+                [
+                  39,
+                  35
+                ],
+                [
+                  43,
+                  38
+                ],
+                [
+                  40,
+                  35
+                ]
+              ],
+              "temperature_max": 43,
+              "time": 7303.904301541
+            },
+            "right": {
+              "imu_rpy": null,
+              "q": [
+                -0.03218260407447815,
+                -0.8943920731544495,
+                -1.5224056243896484,
+                1.086864948272705,
+                1.699302077293396,
+                1.2743664979934692,
+                1.698057770729065
+              ],
+              "dq": [
+                0.0,
+                0.0,
+                -0.0,
+                -0.0,
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "tau_est": [
+                -5861.07958984375,
+                -1674.5941162109375,
+                1674.5941162109375,
+                3349.188232421875,
+                -1674.5941162109375,
+                1674.5941162109375,
+                -1674.5941162109375
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  49,
+                  41
+                ],
+                [
+                  52,
+                  42
+                ],
+                [
+                  47,
+                  39
+                ],
+                [
+                  50,
+                  42
+                ],
+                [
+                  48,
+                  41
+                ],
+                [
+                  49,
+                  41
+                ],
+                [
+                  48,
+                  40
+                ]
+              ],
+              "temperature_max": 52,
+              "time": 7303.898631756
+            }
+          },
+          "telemetry_healthy": true
+        },
+        "events": []
+      },
+      "start_response": {
+        "phase": "PASSIVE",
+        "error": null,
+        "motion_commands_sent": 0,
+        "adapter_initialized": false,
+        "telemetry_healthy": true,
+        "camera_max_age_ms": 400.0,
+        "yolo_confidence_strictly_above": 0.1,
+        "demo_running": true,
+        "demo_result": null,
+        "demo_error": null
+      },
+      "after": {
+        "status": {
+          "phase": "BLOCKED",
+          "error": "RuntimeError: Camera could not supply an exposure within the 180 ms acquisition budget",
+          "motion_commands_sent": 0,
+          "adapter_initialized": false,
+          "automatic_home": false,
+          "events": "/data/events-20261007T230205Z.jsonl",
+          "calibration_present": true,
+          "lowstate": {
+            "poll_hz": 200.0,
+            "rate_hz": 194.1,
+            "samples": 12356,
+            "age_s": 0.0059,
+            "listener_errors": 0,
+            "affinity": {
+              "requested": "auto",
+              "cpu": 6,
+              "active": true,
+              "error": null
+            }
+          },
+          "camera_max_age_ms": 400.0,
+          "yolo_confidence_strictly_above": 0.1,
+          "perception_mode": "yolo_visual_depth",
+          "tracking_error": null,
+          "tracking_exposure_age_ms": null,
+          "tracking_vision": null,
+          "demo_running": false,
+          "demo_result": null,
+          "demo_error": "RuntimeError: Camera could not supply an exposure within the 180 ms acquisition budget",
+          "measured": {
+            "body": {
+              "imu_rpy": [
+                0.012793079949915409,
+                0.044697798788547516,
+                2.627326488494873
+              ],
+              "q": [
+                -0.12066926062107086,
+                -0.006193874403834343,
+                -0.020784221589565277,
+                0.3140740394592285,
+                -0.17926399409770966,
+                0.006909969728440046,
+                -0.15322034060955048,
+                -0.005258145276457071,
+                0.04167557880282402,
+                0.32405343651771545,
+                -0.1724119484424591,
+                -0.00989067554473877,
+                0.0002544460294302553,
+                0.0,
+                0.0,
+                0.24603614211082458,
+                0.2736717760562897,
+                -0.09013336151838303,
+                0.8273909091949463,
+                0.002960103563964367,
+                0.009219224564731121,
+                -0.004594272468239069,
+                0.2621069848537445,
+                -0.2885202169418335,
+                0.09312941133975983,
+                0.8002226948738098,
+                -0.0006231797160580754,
+                0.009832817129790783,
+                0.0015033012023195624
+              ],
+              "dq": [
+                0.0,
+                -0.0010908307740464807,
+                0.013713300228118896,
+                0.006544984877109528,
+                -0.004890331532806158,
+                -0.004526094533503056,
+                -0.0051424880512058735,
+                -0.015271631069481373,
+                -0.029140762984752655,
+                0.0,
+                0.0032504296395927668,
+                -0.023554209619760513,
+                0.001714162528514862,
+                0.0,
+                0.0,
+                0.003067961661145091,
+                -0.004601942375302315,
+                0.01073786523193121,
+                -0.003067961661145091,
+                -0.004601942375302315,
+                0.012762719765305519,
+                0.003926990553736687,
+                -0.006135923322290182,
+                0.013805827125906944,
+                0.004601942375302315,
+                0.0,
+                -0.004601942375302315,
+                -0.0019634952768683434,
+                -0.0029452431481331587
+              ],
+              "tau_est": [
+                1.0067471265792847,
+                2.4609375,
+                0.22372159361839294,
+                -0.966796875,
+                8.985036849975586,
+                -0.832658052444458,
+                2.6287286281585693,
+                -3.515625,
+                0.11186079680919647,
+                -0.703125,
+                10.325804710388184,
+                0.301522821187973,
+                0.055930398404598236,
+                0.0,
+                0.0,
+                0.25,
+                2.25,
+                1.0625,
+                -1.125,
+                -0.25,
+                -0.41015625,
+                0.21484375,
+                0.25,
+                -2.25,
+                -0.5,
+                -1.5,
+                -0.0625,
+                -0.341796875,
+                -0.01953125
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  38,
+                  38
+                ],
+                [
+                  37,
+                  37
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  52,
+                  55
+                ],
+                [
+                  51,
+                  58
+                ],
+                [
+                  38,
+                  39
+                ],
+                [
+                  38,
+                  38
+                ],
+                [
+                  39,
+                  39
+                ],
+                [
+                  39,
+                  39
+                ],
+                [
+                  53,
+                  59
+                ],
+                [
+                  51,
+                  59
+                ],
+                [
+                  37,
+                  37
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0
+                ],
+                [
+                  53,
+                  53
+                ],
+                [
+                  56,
+                  58
+                ],
+                [
+                  50,
+                  50
+                ],
+                [
+                  49,
+                  49
+                ],
+                [
+                  48,
+                  47
+                ],
+                [
+                  46,
+                  48
+                ],
+                [
+                  48,
+                  42
+                ],
+                [
+                  54,
+                  53
+                ],
+                [
+                  54,
+                  56
+                ],
+                [
+                  55,
+                  54
+                ],
+                [
+                  52,
+                  53
+                ],
+                [
+                  53,
+                  52
+                ],
+                [
+                  52,
+                  49
+                ],
+                [
+                  54,
+                  47
+                ]
+              ],
+              "temperature_max": 59,
+              "time": 7320.361087744
+            },
+            "left": {
+              "imu_rpy": null,
+              "q": [
+                -0.036207523196935654,
+                0.6351646780967712,
+                0.6367534399032593,
+                -0.03213188052177429,
+                -0.02317817509174347,
+                -0.7906129360198975,
+                -0.04290960356593132
+              ],
+              "dq": [
+                -0.0,
+                -0.0,
+                0.0,
+                0.0,
+                -0.0,
+                0.0,
+                -0.0
+              ],
+              "tau_est": [
+                5861.07958984375,
+                1674.5941162109375,
+                -1674.5941162109375,
+                -1674.5941162109375,
+                1674.5941162109375,
+                -1674.5941162109375,
+                3349.188232421875
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  43,
+                  36
+                ],
+                [
+                  43,
+                  41
+                ],
+                [
+                  39,
+                  37
+                ],
+                [
+                  43,
+                  37
+                ],
+                [
+                  39,
+                  35
+                ],
+                [
+                  43,
+                  38
+                ],
+                [
+                  40,
+                  35
+                ]
+              ],
+              "temperature_max": 43,
+              "time": 7320.278902887
+            },
+            "right": {
+              "imu_rpy": null,
+              "q": [
+                -0.032186947762966156,
+                -0.8943983316421509,
+                -1.522408366203308,
+                1.086869478225708,
+                1.6992976665496826,
+                1.2743664979934692,
+                1.6980730295181274
+              ],
+              "dq": [
+                0.0,
+                0.0,
+                -0.0,
+                -0.0,
+                0.0,
+                -0.0,
+                0.0
+              ],
+              "tau_est": [
+                -5861.07958984375,
+                -1674.5941162109375,
+                1674.5941162109375,
+                1674.5941162109375,
+                -1674.5941162109375,
+                1674.5941162109375,
+                -1674.5941162109375
+              ],
+              "faults": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "temperatures": [
+                [
+                  49,
+                  41
+                ],
+                [
+                  52,
+                  42
+                ],
+                [
+                  47,
+                  39
+                ],
+                [
+                  50,
+                  42
+                ],
+                [
+                  48,
+                  41
+                ],
+                [
+                  49,
+                  41
+                ],
+                [
+                  48,
+                  40
+                ]
+              ],
+              "temperature_max": 52,
+              "time": 7320.279840677
+            }
+          },
+          "telemetry_healthy": true
+        },
+        "events": [
+          {
+            "unix_ns": 1791414174674040140,
+            "monotonic_ns": 7305648187411,
+            "phase": "phase_camera_evidence",
+            "phase_name": "scene_refresh",
+            "path": "/data/camera-109179-scene_refresh.npz",
+            "metadata": {
+              "schema": "wendy.g1.rgbd.v1",
+              "raw_received_unix_ns": 1791414174525645918,
+              "raw_received_monotonic_ns": 7305499793221,
+              "aligned_to": "color",
+              "camera_serial": "338622073335",
+              "clock": "host_monotonic",
+              "timestamp_valid": true,
+              "color_time": 7305.433099746704,
+              "depth_time": 7305.432979106903,
+              "received_monotonic": 7305.511808302,
+              "color_sensor_ms": 1791414174458.958,
+              "depth_sensor_ms": 1791414174458.8372,
+              "color_timestamp_domain": "timestamp_domain.global_time",
+              "depth_timestamp_domain": "timestamp_domain.global_time",
+              "depth_scale_m": 0.0010000000474974513,
+              "intrinsics": {
+                "width": 640,
+                "height": 480,
+                "fx": 603.59765625,
+                "fy": 603.7045288085938,
+                "ppx": 318.05902099609375,
+                "ppy": 261.0997619628906,
+                "model": "distortion.inverse_brown_conrady",
+                "coeffs": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "frame_id": 109179,
+              "captured_at_unix_ns": 1791414174538911631,
+              "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+            },
+            "color_codec": "jpeg_exact_source_frame"
+          },
+          {
+            "unix_ns": 1791414175511498171,
+            "monotonic_ns": 7306485644642,
+            "phase": "scene_refreshed",
+            "calibration": {
+              "commissioned": true,
+              "calibration_method": "operator_accepted_factory_table",
+              "camera_serial": "338622073335",
+              "device": "unitree-g1-nx-2.local",
+              "camera_to_world": [
+                [
+                  -0.0014905058600823784,
+                  -0.8181532766855129,
+                  0.5749982558591291,
+                  0.07467475205625752
+                ],
+                [
+                  -0.9998788736212437,
+                  0.010127477516649847,
+                  0.011818302968845456,
+                  0.011468439050812964
+                ],
+                [
+                  -0.015492465207149237,
+                  -0.5749109931527739,
+                  -0.8180692718064263,
+                  1.2660429830551148
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pelvis_to_world": [
+                [
+                  0.9990115668608484,
+                  0.0005697451417952667,
+                  0.04444732465184289,
+                  0.0
+                ],
+                [
+                  -5.421010862427522e-20,
+                  0.9999178539851873,
+                  -0.012817382012637922,
+                  0.0
+                ],
+                [
+                  -0.04445097612238589,
+                  0.012804712887499464,
+                  0.9989295020418788,
+                  0.7948406595134387
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "table_height_m": 0.762,
+              "table_center_xy_m": [
+                5.205586090193088,
+                0
+              ],
+              "table_half_size_xy_m": [
+                5,
+                5
+              ],
+              "table_near_edge_conservative_x_m": 0.2055860901930883,
+              "table_extent_source": "conservative extension beyond reachable workspace",
+              "can_radius_m": 0.033,
+              "can_height_m": 0.122,
+              "arm_limits_rad": [
+                [
+                  -3.0892,
+                  2.6704
+                ],
+                [
+                  -1.5882,
+                  2.2515
+                ],
+                [
+                  -2.618,
+                  2.618
+                ],
+                [
+                  -1.0472,
+                  2.0944
+                ],
+                [
+                  -1.97222,
+                  1.97222
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -3.0892,
+                  2.6704
+                ],
+                [
+                  -2.2515,
+                  1.5882
+                ],
+                [
+                  -2.618,
+                  2.618
+                ],
+                [
+                  -1.0472,
+                  2.0944
+                ],
+                [
+                  -1.97222,
+                  1.97222
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ]
+              ],
+              "source_frame_id": 109179,
+              "tilt_correction_deg": 4.756048613693106,
+              "table_plane_rmse_m": 0.0015267864800989628,
+              "independent_validation": false,
+              "assumptions": [
+                "operator confirms factory mount position and stationary base",
+                "camera tilt adjusted; pivot translation not modeled",
+                "horizontal 0.762 m table; nearest yellow tape marks near edge",
+                "factory d435 frame approximates aligned RGB optical origin",
+                "model arm limits; body IMU describes pelvis orientation"
+              ],
+              "operator_accepted": true,
+              "factory_mount_position_confirmed": true,
+              "stationary_base_confirmed": true,
+              "position_validation_rmse_m": null,
+              "accepted_at_unix_s": 1791414175.5105543,
+              "reference_base_q": [
+                -0.12065586447715759,
+                -0.006202396471053362,
+                -0.020744046196341515,
+                0.31406551599502563,
+                -0.17925551533699036,
+                0.00692412443459034,
+                -0.15322034060955048,
+                -0.005258145276457071,
+                0.041742537170648575,
+                0.32406195998191833,
+                -0.1724076271057129,
+                -0.009869441390037537,
+                0.0002544460294302553,
+                0.0,
+                0.0
+              ],
+              "reference_imu_rpy": [
+                0.012817732989788055,
+                0.044465627521276474,
+                2.6277053356170654
+              ],
+              "operator_with_stop": true,
+              "support": "factory_balance",
+              "factory_mount_source": {
+                "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+                "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+                "operator_confirmed_original_mount": true,
+                "parent": "torso_link",
+                "child": "d435_link",
+                "xyz_m": [
+                  0.0576235,
+                  0.01753,
+                  0.41987
+                ],
+                "rpy_rad": [
+                  0,
+                  0.8307767239493009,
+                  0
+                ],
+                "commissioned": false
+              },
+              "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+              "scene_refresh_automatic": true
+            },
+            "independent_validation": false
+          },
+          {
+            "unix_ns": 1791414175862420477,
+            "monotonic_ns": 7306836568548,
+            "phase": "phase_camera_evidence",
+            "phase_name": "planning",
+            "path": "/data/camera-109197-planning.npz",
+            "metadata": {
+              "schema": "wendy.g1.rgbd.v1",
+              "raw_received_unix_ns": 1791414175727376643,
+              "raw_received_monotonic_ns": 7306701593581,
+              "aligned_to": "color",
+              "camera_serial": "338622073335",
+              "clock": "host_monotonic",
+              "timestamp_valid": true,
+              "color_time": 7306.634004116058,
+              "depth_time": 7306.63388299942,
+              "received_monotonic": 7306.72135973,
+              "color_sensor_ms": 1791414175659.8635,
+              "depth_sensor_ms": 1791414175659.7424,
+              "color_timestamp_domain": "timestamp_domain.global_time",
+              "depth_timestamp_domain": "timestamp_domain.global_time",
+              "depth_scale_m": 0.0010000000474974513,
+              "intrinsics": {
+                "width": 640,
+                "height": 480,
+                "fx": 603.59765625,
+                "fy": 603.7045288085938,
+                "ppx": 318.05902099609375,
+                "ppy": 261.0997619628906,
+                "model": "distortion.inverse_brown_conrady",
+                "coeffs": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "frame_id": 109197,
+              "captured_at_unix_ns": 1791414175749544599,
+              "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+            },
+            "color_codec": "jpeg_exact_source_frame"
+          },
+          {
+            "unix_ns": 1791414175990462417,
+            "monotonic_ns": 7306964608920,
+            "phase": "perception_result",
+            "phase_name": "planning",
+            "frame_id": 109197,
+            "source": {
+              "frame_id": 109197,
+              "camera_serial": "338622073335",
+              "timestamp": 7306.63388299942,
+              "shape": [
+                480,
+                640,
+                3
+              ],
+              "image_sha256": "8c56aa8d18ee0791450a363c70ce4424b209803d69fdeef838047df18b8f5433"
+            },
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "detections": [
+              {
+                "xyxy": [
+                  165.6875,
+                  262.75,
+                  290.8125,
+                  407.25
+                ],
+                "confidence": 0.1943359375,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              }
+            ],
+            "inference_ms": 24.061,
+            "geometry": {
+              "top_quantile_z_m": 0.8712660304447865,
+              "center_xy_m": [
+                0.30458554891042755,
+                0.09021267762899278
+              ],
+              "fit_error_m": 0.0021904263417210188,
+              "pixels": 2264,
+              "frame_id": 109197,
+              "detector": "coke_yolo",
+              "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+              "backend": "pytorch_cuda",
+              "box": {
+                "xyxy": [
+                  165.6875,
+                  262.75,
+                  290.8125,
+                  407.25
+                ],
+                "confidence": 0.1943359375,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              },
+              "image_sha256": "8c56aa8d18ee0791450a363c70ce4424b209803d69fdeef838047df18b8f5433",
+              "tracking": {
+                "mode": "yolo",
+                "reason": "initial_identity",
+                "semantic_frame_id": 109197
+              }
+            },
+            "error": null,
+            "processing_ms": 150.46280099977594,
+            "exposure_age_ms": 330.71494457999506
+          },
+          {
+            "unix_ns": 1791414175995261902,
+            "monotonic_ns": 7306969408917,
+            "phase": "observed_can_collision_proxy",
+            "center_m": [
+              0.30458554891042755,
+              0.09021267762899278,
+              0.823
+            ],
+            "source": "camera"
+          },
+          {
+            "unix_ns": 1791414177261823445,
+            "monotonic_ns": 7308235969820,
+            "phase": "trajectory_collision",
+            "phase_name": "approach",
+            "collision": {
+              "phase": "approach",
+              "bodies": [
+                "world",
+                "left_hand_index_0_link"
+              ],
+              "geoms": [
+                "table",
+                ""
+              ],
+              "distance_m": -0.0012945571786455038
+            },
+            "joint_q": [
+              0.23653196164480603,
+              0.35393547750314647,
+              -0.036236538447782955,
+              0.5409458579119073,
+              -0.15050788083302005,
+              0.068260390945821,
+              0.032356967618762056
+            ],
+            "path_fraction": 0.2929782082324455
+          },
+          {
+            "unix_ns": 1791414183446577397,
+            "monotonic_ns": 7314420724156,
+            "phase": "staging_planned",
+            "start_q": [
+              0.24606011807918549,
+              0.2736717760562897,
+              -0.09009740501642227,
+              0.8274028897285461,
+              0.002972087822854519,
+              0.009211555123329163,
+              -0.004594272468239069
+            ],
+            "joint_waypoints": [
+              [
+                0.41196938859634946,
+                0.5457020254783086,
+                0.925293697901475,
+                -0.05055786531143311,
+                -0.6250036021040297,
+                0.5924376679651462,
+                0.12574912812927752
+              ],
+              [
+                0.20007755928091436,
+                0.6610216686157879,
+                0.16983330466231664,
+                -0.5550290003650687,
+                -0.7377170194226014,
+                0.29417922792309104,
+                0.17373115508654288
+              ]
+            ],
+            "collision_checks": 3948,
+            "nodes": 29,
+            "seed": 7,
+            "edge_resolution_rad": 0.004,
+            "rejected_candidates": 0
+          },
+          {
+            "unix_ns": 1791414186978041291,
+            "monotonic_ns": 7317952187666,
+            "phase": "cartesian_lift_planned",
+            "waypoints": 16,
+            "ik_attempts": 16,
+            "start": [
+              0.3045855488649824,
+              0.09021267764296036,
+              0.8229999998786258
+            ],
+            "target": [
+              0.30458554891042755,
+              0.09021267762899278,
+              0.973
+            ]
+          },
+          {
+            "unix_ns": 1791414186981525372,
+            "monotonic_ns": 7317955671459,
+            "phase": "path_preflight_passed",
+            "waypoints_checked": 4,
+            "hand_paths_checked": 2,
+            "motion_commands_sent": 0
+          },
+          {
+            "unix_ns": 1791414187051453126,
+            "monotonic_ns": 7318025600909,
+            "phase": "phase_camera_evidence",
+            "phase_name": "plan-refresh",
+            "path": "/data/camera-109365-plan-refresh.npz",
+            "metadata": {
+              "schema": "wendy.g1.rgbd.v1",
+              "raw_received_unix_ns": 1791414186934200852,
+              "raw_received_monotonic_ns": 7317908348603,
+              "aligned_to": "color",
+              "camera_serial": "338622073335",
+              "clock": "host_monotonic",
+              "timestamp_valid": true,
+              "color_time": 7317.841891527176,
+              "depth_time": 7317.841770648956,
+              "received_monotonic": 7317.918890995,
+              "color_sensor_ms": 1791414186867.7505,
+              "depth_sensor_ms": 1791414186867.6296,
+              "color_timestamp_domain": "timestamp_domain.global_time",
+              "depth_timestamp_domain": "timestamp_domain.global_time",
+              "depth_scale_m": 0.0010000000474974513,
+              "intrinsics": {
+                "width": 640,
+                "height": 480,
+                "fx": 603.59765625,
+                "fy": 603.7045288085938,
+                "ppx": 318.05902099609375,
+                "ppy": 261.0997619628906,
+                "model": "distortion.inverse_brown_conrady",
+                "coeffs": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "frame_id": 109365,
+              "captured_at_unix_ns": 1791414186946337120,
+              "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+            },
+            "color_codec": "jpeg_exact_source_frame"
+          },
+          {
+            "unix_ns": 1791414187123114985,
+            "monotonic_ns": 7318097261072,
+            "phase": "perception_result",
+            "phase_name": "plan-refresh",
+            "frame_id": 109365,
+            "source": {
+              "frame_id": 109365,
+              "camera_serial": "338622073335",
+              "timestamp": 7317.841770648956,
+              "shape": [
+                480,
+                640,
+                3
+              ],
+              "image_sha256": "99e1f56dbdded6a4c0b3d3f21d725176ff350cb66e2ac3b93f8689d482fdb11a"
+            },
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "detections": [
+              {
+                "xyxy": [
+                  166.0625,
+                  263.0,
+                  290.9375,
+                  405.5
+                ],
+                "confidence": 0.1632080078125,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              }
+            ],
+            "inference_ms": 24.972,
+            "geometry": {
+              "top_quantile_z_m": 0.8717737752803159,
+              "center_xy_m": [
+                0.30448340845465727,
+                0.09036639174327923
+              ],
+              "fit_error_m": 0.002002903415655294,
+              "pixels": 2333,
+              "frame_id": 109365,
+              "detector": "coke_yolo",
+              "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+              "backend": "pytorch_cuda",
+              "box": {
+                "xyxy": [
+                  166.0625,
+                  263.0,
+                  290.9375,
+                  405.5
+                ],
+                "confidence": 0.1632080078125,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              },
+              "image_sha256": "99e1f56dbdded6a4c0b3d3f21d725176ff350cb66e2ac3b93f8689d482fdb11a",
+              "tracking": {
+                "mode": "yolo",
+                "reason": "periodic_recheck",
+                "semantic_frame_id": 109365
+              }
+            },
+            "error": null,
+            "processing_ms": 94.39616899999237,
+            "exposure_age_ms": 255.48187904405495
+          },
+          {
+            "unix_ns": 1791414187124154923,
+            "monotonic_ns": 7318098300946,
+            "phase": "plan",
+            "waypoints": [
+              [
+                0.30458554891042755,
+                0.1902126776289928,
+                0.983
+              ],
+              [
+                0.30458554891042755,
+                0.1902126776289928,
+                0.823
+              ],
+              [
+                0.30458554891042755,
+                0.09021267762899278,
+                0.823
+              ],
+              [
+                0.30458554891042755,
+                0.09021267762899278,
+                0.973
+              ],
+              [
+                0.32458554891042757,
+                0.09021267762899278,
+                0.973
+              ]
+            ],
+            "rotation": [
+              [
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "observation": {
+              "top_quantile_z_m": 0.8717737752803159,
+              "center_xy_m": [
+                0.30448340845465727,
+                0.09036639174327923
+              ],
+              "fit_error_m": 0.002002903415655294,
+              "pixels": 2333,
+              "frame_id": 109365,
+              "detector": "coke_yolo",
+              "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+              "backend": "pytorch_cuda",
+              "box": {
+                "xyxy": [
+                  166.0625,
+                  263.0,
+                  290.9375,
+                  405.5
+                ],
+                "confidence": 0.1632080078125,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              },
+              "image_sha256": "99e1f56dbdded6a4c0b3d3f21d725176ff350cb66e2ac3b93f8689d482fdb11a",
+              "tracking": {
+                "mode": "yolo",
+                "reason": "periodic_recheck",
+                "semantic_frame_id": 109365
+              }
+            }
+          },
+          {
+            "unix_ns": 1791414187127153485,
+            "monotonic_ns": 7318101299924,
+            "phase": "plan_context",
+            "calibration": {
+              "commissioned": true,
+              "calibration_method": "operator_accepted_factory_table",
+              "camera_serial": "338622073335",
+              "device": "unitree-g1-nx-2.local",
+              "camera_to_world": [
+                [
+                  -0.0014905058600823784,
+                  -0.8181532766855129,
+                  0.5749982558591291,
+                  0.07467475205625752
+                ],
+                [
+                  -0.9998788736212437,
+                  0.010127477516649847,
+                  0.011818302968845456,
+                  0.011468439050812964
+                ],
+                [
+                  -0.015492465207149237,
+                  -0.5749109931527739,
+                  -0.8180692718064263,
+                  1.2660429830551148
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "pelvis_to_world": [
+                [
+                  0.9990115668608484,
+                  0.0005697451417952667,
+                  0.04444732465184289,
+                  0.0
+                ],
+                [
+                  -5.421010862427522e-20,
+                  0.9999178539851873,
+                  -0.012817382012637922,
+                  0.0
+                ],
+                [
+                  -0.04445097612238589,
+                  0.012804712887499464,
+                  0.9989295020418788,
+                  0.7948406595134387
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "table_height_m": 0.762,
+              "table_center_xy_m": [
+                5.205586090193088,
+                0
+              ],
+              "table_half_size_xy_m": [
+                5,
+                5
+              ],
+              "table_near_edge_conservative_x_m": 0.2055860901930883,
+              "table_extent_source": "conservative extension beyond reachable workspace",
+              "can_radius_m": 0.033,
+              "can_height_m": 0.122,
+              "arm_limits_rad": [
+                [
+                  -3.0892,
+                  2.6704
+                ],
+                [
+                  -1.5882,
+                  2.2515
+                ],
+                [
+                  -2.618,
+                  2.618
+                ],
+                [
+                  -1.0472,
+                  2.0944
+                ],
+                [
+                  -1.97222,
+                  1.97222
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -3.0892,
+                  2.6704
+                ],
+                [
+                  -2.2515,
+                  1.5882
+                ],
+                [
+                  -2.618,
+                  2.618
+                ],
+                [
+                  -1.0472,
+                  2.0944
+                ],
+                [
+                  -1.97222,
+                  1.97222
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ],
+                [
+                  -1.61443,
+                  1.61443
+                ]
+              ],
+              "source_frame_id": 109179,
+              "tilt_correction_deg": 4.756048613693106,
+              "table_plane_rmse_m": 0.0015267864800989628,
+              "independent_validation": false,
+              "assumptions": [
+                "operator confirms factory mount position and stationary base",
+                "camera tilt adjusted; pivot translation not modeled",
+                "horizontal 0.762 m table; nearest yellow tape marks near edge",
+                "factory d435 frame approximates aligned RGB optical origin",
+                "model arm limits; body IMU describes pelvis orientation"
+              ],
+              "operator_accepted": true,
+              "factory_mount_position_confirmed": true,
+              "stationary_base_confirmed": true,
+              "position_validation_rmse_m": null,
+              "accepted_at_unix_s": 1791414175.5105543,
+              "reference_base_q": [
+                -0.12065586447715759,
+                -0.006202396471053362,
+                -0.020744046196341515,
+                0.31406551599502563,
+                -0.17925551533699036,
+                0.00692412443459034,
+                -0.15322034060955048,
+                -0.005258145276457071,
+                0.041742537170648575,
+                0.32406195998191833,
+                -0.1724076271057129,
+                -0.009869441390037537,
+                0.0002544460294302553,
+                0.0,
+                0.0
+              ],
+              "reference_imu_rpy": [
+                0.012817732989788055,
+                0.044465627521276474,
+                2.6277053356170654
+              ],
+              "operator_with_stop": true,
+              "support": "factory_balance",
+              "factory_mount_source": {
+                "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+                "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+                "operator_confirmed_original_mount": true,
+                "parent": "torso_link",
+                "child": "d435_link",
+                "xyz_m": [
+                  0.0576235,
+                  0.01753,
+                  0.41987
+                ],
+                "rpy_rad": [
+                  0,
+                  0.8307767239493009,
+                  0
+                ],
+                "commissioned": false
+              },
+              "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+              "scene_refresh_automatic": true
+            },
+            "motion_enabled": true
+          },
+          {
+            "unix_ns": 1791414187471737625,
+            "monotonic_ns": 7318445884640,
+            "phase": "error",
+            "error": "RuntimeError: Camera could not supply an exposure within the 180 ms acquisition budget",
+            "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 432, in run\n    self.start_tracking(config,prepared[0])\n  File \"/app/runtime.py\", line 225, in start_tracking\n    sample();self.tracking_guard()\n    ^^^^^^^^\n  File \"/app/runtime.py\", line 219, in sample\n    observation,vision=self.observe_frame(config,'motion-tracking',require_table,\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/runtime.py\", line 156, in observe_frame\n    return self._observe_frame(config,phase,require_table,expected_center_xy)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/runtime.py\", line 169, in _observe_frame\n    raise RuntimeError('Camera could not supply an exposure within the 180 ms acquisition budget')\nRuntimeError: Camera could not supply an exposure within the 180 ms acquisition budget\n"
+          },
+          {
+            "unix_ns": 1791414187474147912,
+            "monotonic_ns": 7318448295183,
+            "phase": "failure_hold",
+            "grasp_started": false,
+            "control_retained": false,
+            "automatic_release": false
+          }
+        ]
+      },
+      "finished_unix_ns": 1791414189470886000
+    }
+  ],
+  "first_attempt_outcome": "Plan passed; 180 ms acquisition budget rejected the tracking-start frame before arm ownership.",
+  "continuous_probe": {
+    "passive": true,
+    "lease_acquired": false,
+    "motor_adapters_initialized": false,
+    "motion_commands_sent": 0,
+    "failure": null,
+    "max_checked_exposure_age_ms": 382.18558726021,
+    "observation_count": 45,
+    "modes": {
+      "yolo": 4,
+      "visual_depth": 41
+    },
+    "processing_ms": [
+      122.2984539999743,
+      79.97474900002999,
+      61.29708800017397,
+      51.38764699950116,
+      52.093045999754395,
+      50.53472300005524,
+      59.12908200025413,
+      54.71636299989768,
+      61.998581999432645,
+      51.49027499919612,
+      54.736332000175025,
+      51.792588000353135,
+      61.12591400051315,
+      92.83801299989136,
+      66.0892750001949,
+      55.56922199957626,
+      51.46806499942613,
+      61.71739000001253,
+      59.00155800009088,
+      56.83831999976974,
+      57.034550000025774,
+      55.551718000060646,
+      55.3276470000128,
+      54.614758999377955,
+      55.022740999447706,
+      56.790605999594845,
+      80.43962700048723,
+      56.41004900007829,
+      53.668296999603626,
+      58.96046799989563,
+      59.961491999274585,
+      52.08309400040889,
+      51.4292480002041,
+      70.94293600039236,
+      50.61901499993837,
+      61.37622599999304,
+      58.635464999497344,
+      57.969587999650685,
+      61.57466399963596,
+      59.892049999689334,
+      90.46942399982072,
+      52.944658000342315,
+      52.314942000521114,
+      54.81815799976175,
+      56.590375999803655
+    ],
+    "errors": []
+  },
+  "deployed_source_commit": "a863c066670957859f244cdf91e1dc69bc08fed4",
+  "physical_attempts_v031": [
+    {
+      "local_evidence": ".runtime/demo-attempts/20261007T230710Z.json",
+      "event_file": "/data/events-20261007T230614Z.jsonl",
+      "event_counts": {
+        "phase_camera_evidence": 5,
+        "scene_refreshed": 1,
+        "perception_result": 4,
+        "observed_can_collision_proxy": 1,
+        "trajectory_collision": 1,
+        "staging_planned": 1,
+        "cartesian_lift_planned": 1,
+        "path_preflight_passed": 1,
+        "plan": 1,
+        "plan_context": 1,
+        "tracking_failed": 1,
+        "ownership_acquired": 1,
+        "frozen": 1,
+        "error": 1,
+        "failure_hold": 1
+      },
+      "status": {
+        "phase": "FROZEN",
+        "demo_error": "RuntimeError: Visual/depth tracking uncertain: RuntimeError: YOLO RGB-D exposure timestamp invalid/stale after inference (488.1 ms)",
+        "demo_result": null,
+        "adapter_initialized": true,
+        "motion_commands_sent": 129
+      },
+      "failures": [
+        {
+          "unix_ns": 1791414444810783333,
+          "monotonic_ns": 7575784930028,
+          "phase": "tracking_failed",
+          "error": "RuntimeError: YOLO RGB-D exposure timestamp invalid/stale after inference (488.1 ms)"
+        },
+        {
+          "unix_ns": 1791414445301693549,
+          "monotonic_ns": 7576275839701,
+          "phase": "ownership_acquired",
+          "recorder_session": "20261007T210142Z-692fd2b1",
+          "right_arm_hold": [
+            0.26209500432014465,
+            -0.2885441780090332,
+            0.09312941133975983,
+            0.8002346754074097,
+            -0.0007070692954584956,
+            0.009832817129790783,
+            0.0015033012023195624
+          ],
+          "right_hand_hold": [
+            -0.03218260407447815,
+            -0.8943884968757629,
+            -1.5224002599716187,
+            1.2743629217147827,
+            1.698064923286438,
+            1.0868721008300781,
+            1.6992967128753662
+          ],
+          "blend_affects_both_arms": true
+        },
+        {
+          "unix_ns": 1791414445305313091,
+          "monotonic_ns": 7576279459818,
+          "phase": "error",
+          "error": "RuntimeError: Visual/depth tracking uncertain: RuntimeError: YOLO RGB-D exposure timestamp invalid/stale after inference (488.1 ms)",
+          "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 485, in run\n    result=execute(plant,prepared,observe,phase_event)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 44, in execute\n    plant.validate_start()\n  File \"/app/physical_core.py\", line 393, in validate_start\n    snap=self.check()\n         ^^^^^^^^^^^^\n  File \"/app/physical_core.py\", line 219, in check\n    if self.perception_guard is not None:self.perception_guard()\n                                         ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/runtime.py\", line 226, in tracking_guard\n    if error:raise RuntimeError('Visual/depth tracking uncertain: '+error)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Visual/depth tracking uncertain: RuntimeError: YOLO RGB-D exposure timestamp invalid/stale after inference (488.1 ms)\n"
+        },
+        {
+          "unix_ns": 1791414445309033243,
+          "monotonic_ns": 7576283179522,
+          "phase": "failure_hold",
+          "grasp_started": false,
+          "control_retained": true,
+          "automatic_release": false
+        }
+      ],
+      "perception": [
+        {
+          "unix_ns": 1791414433013061057,
+          "monotonic_ns": 7563987208712,
+          "phase": "phase_camera_evidence",
+          "phase_name": "scene_refresh",
+          "path": "/data/camera-113052-scene_refresh.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414432913396040,
+            "raw_received_monotonic_ns": 7563887543919,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7563.819967985153,
+            "depth_time": 7563.819847106934,
+            "received_monotonic": 7563.905679194,
+            "color_sensor_ms": 1791414432845.828,
+            "depth_sensor_ms": 1791414432845.707,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 113052,
+            "captured_at_unix_ns": 1791414432933078981,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414434210048238,
+          "monotonic_ns": 7565184194933,
+          "phase": "phase_camera_evidence",
+          "phase_name": "planning",
+          "path": "/data/camera-113069-planning.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414434047060724,
+            "raw_received_monotonic_ns": 7565021209851,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7564.954161643982,
+            "depth_time": 7564.954040527344,
+            "received_monotonic": 7565.038629614,
+            "color_sensor_ms": 1791414433980.0205,
+            "depth_sensor_ms": 1791414433979.8994,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 113069,
+            "captured_at_unix_ns": 1791414434066107324,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414434299216339,
+          "monotonic_ns": 7565273362266,
+          "phase": "perception_result",
+          "phase_name": "planning",
+          "frame_id": 113069,
+          "source": {
+            "frame_id": 113069,
+            "camera_serial": "338622073335",
+            "timestamp": 7564.954040527344,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "6448af9be2cc0243e08bbe4515715aed484edae967e27c02088a3df0c094b8e2"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                167.0,
+                262.625,
+                291.25,
+                405.375
+              ],
+              "confidence": 0.19677734375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 23.994,
+          "geometry": {
+            "top_quantile_z_m": 0.8716389745775349,
+            "center_xy_m": [
+              0.3057857015716731,
+              0.09068891093916524
+            ],
+            "fit_error_m": 0.0019372228267169422,
+            "pixels": 2397,
+            "frame_id": 113069,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                167.0,
+                262.625,
+                291.25,
+                405.375
+              ],
+              "confidence": 0.19677734375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6448af9be2cc0243e08bbe4515715aed484edae967e27c02088a3df0c094b8e2",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 113069
+            }
+          },
+          "error": null,
+          "processing_ms": 106.22321299979376,
+          "exposure_age_ms": 319.31386665655737
+        },
+        {
+          "unix_ns": 1791414444286795183,
+          "monotonic_ns": 7575260942198,
+          "phase": "phase_camera_evidence",
+          "phase_name": "plan-refresh",
+          "path": "/data/camera-113221-plan-refresh.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414444187131991,
+            "raw_received_monotonic_ns": 7575161280350,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7575.094838619232,
+            "depth_time": 7575.094717502594,
+            "received_monotonic": 7575.171975736,
+            "color_sensor_ms": 1791414444120.6965,
+            "depth_sensor_ms": 1791414444120.5754,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 113221,
+            "captured_at_unix_ns": 1791414444199263039,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414444375168186,
+          "monotonic_ns": 7575349314465,
+          "phase": "perception_result",
+          "phase_name": "plan-refresh",
+          "frame_id": 113221,
+          "source": {
+            "frame_id": 113221,
+            "camera_serial": "338622073335",
+            "timestamp": 7575.094717502594,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "005f244dde0368bc79b38c9c09f904940fb19b3801cedbc33c121844640a6771"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                166.3125,
+                262.5,
+                291.1875,
+                405.5
+              ],
+              "confidence": 0.161865234375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 24.341,
+          "geometry": {
+            "top_quantile_z_m": 0.8714583205829762,
+            "center_xy_m": [
+              0.30571415392796386,
+              0.09078624400742598
+            ],
+            "fit_error_m": 0.0018698784172390117,
+            "pixels": 2304,
+            "frame_id": 113221,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                166.3125,
+                262.5,
+                291.1875,
+                405.5
+              ],
+              "confidence": 0.161865234375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "005f244dde0368bc79b38c9c09f904940fb19b3801cedbc33c121844640a6771",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "periodic_recheck",
+              "semantic_frame_id": 113221
+            }
+          },
+          "error": null,
+          "processing_ms": 114.94794200007163,
+          "exposure_age_ms": 254.58905740561022
+        },
+        {
+          "unix_ns": 1791414444484268707,
+          "monotonic_ns": 7575458416170,
+          "phase": "phase_camera_evidence",
+          "phase_name": "motion-tracking",
+          "path": "/data/camera-113223-motion-tracking.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414444320683927,
+            "raw_received_monotonic_ns": 7575294831582,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7575.228268623352,
+            "depth_time": 7575.228147745132,
+            "received_monotonic": 7575.305832386,
+            "color_sensor_ms": 1791414444254.127,
+            "depth_sensor_ms": 1791414444254.006,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 113223,
+            "captured_at_unix_ns": 1791414444332923523,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414444566592938,
+          "monotonic_ns": 7575540739473,
+          "phase": "perception_result",
+          "phase_name": "motion-tracking",
+          "frame_id": 113223,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.866636527456083,
+            "center_xy_m": [
+              0.30542175925166787,
+              0.09105528740498715
+            ],
+            "fit_error_m": 0.0023292546383515194,
+            "pixels": 2049,
+            "frame_id": 113223,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                166.3125,
+                262.5,
+                291.1875,
+                405.5
+              ],
+              "confidence": 0.161865234375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "6512d6ad176c2004e9d520806e5cd371a5ecae90fa3ee98f245b3face8d91be0",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 113221,
+              "semantic_age_s": 0.13343024253845215,
+              "visual_agreement": 0.9942935048135763,
+              "support_pixels": 2049,
+              "roi_shape": [
+                139,
+                106
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 115.83091499960574,
+          "exposure_age_ms": 312.5810718674984
+        },
+        {
+          "unix_ns": 1791414444655629418,
+          "monotonic_ns": 7575629776785,
+          "phase": "phase_camera_evidence",
+          "phase_name": "motion-tracking",
+          "path": "/data/camera-113224-motion-tracking.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414444387539594,
+            "raw_received_monotonic_ns": 7575361686801,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7575.294984579086,
+            "depth_time": 7575.294863462448,
+            "received_monotonic": 7575.373354634,
+            "color_sensor_ms": 1791414444320.8423,
+            "depth_sensor_ms": 1791414444320.7212,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 113224,
+            "captured_at_unix_ns": 1791414444401591280,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414444809266132,
+          "monotonic_ns": 7575783412731,
+          "phase": "perception_result",
+          "phase_name": "motion-tracking",
+          "frame_id": 113224,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": null,
+          "error": "RuntimeError: YOLO RGB-D exposure timestamp invalid/stale after inference (488.1 ms)",
+          "processing_ms": 200.62108199999784,
+          "exposure_age_ms": 488.5380685518612
+        }
+      ]
+    },
+    {
+      "local_evidence": ".runtime/demo-attempts/20261007T230826Z.json",
+      "event_file": "/data/events-20261007T230614Z.jsonl",
+      "event_counts": {
+        "phase_camera_evidence": 5,
+        "scene_refreshed": 1,
+        "perception_result": 4,
+        "observed_can_collision_proxy": 1,
+        "trajectory_collision": 1,
+        "staging_planned": 1,
+        "cartesian_lift_planned": 1,
+        "path_preflight_passed": 1,
+        "plan": 1,
+        "plan_context": 1,
+        "ownership_reused": 1,
+        "hand_target": 5,
+        "frozen": 2,
+        "error": 1,
+        "failure_hold": 1
+      },
+      "status": {
+        "phase": "FROZEN",
+        "demo_error": "RuntimeError: Operator cancelled trial",
+        "demo_result": null,
+        "adapter_initialized": true,
+        "motion_commands_sent": 7915
+      },
+      "failures": [
+        {
+          "unix_ns": 1791414523202773879,
+          "monotonic_ns": 7654176919998,
+          "phase": "ownership_reused",
+          "recorder_session": "20261007T210142Z-692fd2b1"
+        },
+        {
+          "unix_ns": 1791414523334990692,
+          "monotonic_ns": 7654309137323,
+          "phase": "error",
+          "error": "RuntimeError: Operator cancelled trial",
+          "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 485, in run\n    result=execute(plant,prepared,observe,phase_event)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 46, in execute\n    plant.hand(OPEN, .8)\n  File \"/app/physical_core.py\", line 467, in hand\n    self.check();self.left_hand=start+t*(end-start)\n    ^^^^^^^^^^^^\n  File \"/app/physical_core.py\", line 218, in check\n    raise RuntimeError('Operator cancelled trial')\nRuntimeError: Operator cancelled trial\n"
+        },
+        {
+          "unix_ns": 1791414523336754301,
+          "monotonic_ns": 7654310900420,
+          "phase": "failure_hold",
+          "grasp_started": false,
+          "control_retained": true,
+          "automatic_release": false
+        }
+      ],
+      "perception": [
+        {
+          "unix_ns": 1791414508365735012,
+          "monotonic_ns": 7639339881451,
+          "phase": "phase_camera_evidence",
+          "phase_name": "scene_refresh",
+          "path": "/data/camera-114181-scene_refresh.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414508233782942,
+            "raw_received_monotonic_ns": 7639207931174,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7639.141299009323,
+            "depth_time": 7639.141177892685,
+            "received_monotonic": 7639.226018894,
+            "color_sensor_ms": 1791414508167.1575,
+            "depth_sensor_ms": 1791414508167.0364,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 114181,
+            "captured_at_unix_ns": 1791414508253357047,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414509180377035,
+          "monotonic_ns": 7640154524146,
+          "phase": "phase_camera_evidence",
+          "phase_name": "planning",
+          "path": "/data/camera-114193-planning.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414509034858319,
+            "raw_received_monotonic_ns": 7640009006006,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7639.941850185394,
+            "depth_time": 7639.941729068756,
+            "received_monotonic": 7640.019459112,
+            "color_sensor_ms": 1791414508967.7087,
+            "depth_sensor_ms": 1791414508967.5876,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 114193,
+            "captured_at_unix_ns": 1791414509047412293,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414509347760169,
+          "monotonic_ns": 7640321906320,
+          "phase": "perception_result",
+          "phase_name": "planning",
+          "frame_id": 114193,
+          "source": {
+            "frame_id": 114193,
+            "camera_serial": "338622073335",
+            "timestamp": 7639.941729068756,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "76f8ab1841561d2e5576bde67303ebdd454f0a61cc12515c00db97b9bf7a82e1"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                167.6875,
+                259.625,
+                290.3125,
+                405.375
+              ],
+              "confidence": 0.2998046875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 25.936,
+          "geometry": {
+            "top_quantile_z_m": 0.871369361569051,
+            "center_xy_m": [
+              0.31788217754328973,
+              0.09203657009064539
+            ],
+            "fit_error_m": 0.0023017934304751693,
+            "pixels": 2509,
+            "frame_id": 114193,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                167.6875,
+                259.625,
+                290.3125,
+                405.375
+              ],
+              "confidence": 0.2998046875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "76f8ab1841561d2e5576bde67303ebdd454f0a61cc12515c00db97b9bf7a82e1",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "initial_identity",
+              "semantic_frame_id": 114193
+            }
+          },
+          "error": null,
+          "processing_ms": 203.78504600012093,
+          "exposure_age_ms": 380.1679392436199
+        },
+        {
+          "unix_ns": 1791414522890112265,
+          "monotonic_ns": 7653864259152,
+          "phase": "phase_camera_evidence",
+          "phase_name": "plan-refresh",
+          "path": "/data/camera-114399-plan-refresh.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414522778235180,
+            "raw_received_monotonic_ns": 7653752382739,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7653.685195922852,
+            "depth_time": 7653.6850752830505,
+            "received_monotonic": 7653.761522074,
+            "color_sensor_ms": 1791414522711.0544,
+            "depth_sensor_ms": 1791414522710.9336,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 114399,
+            "captured_at_unix_ns": 1791414522788509688,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414523004216397,
+          "monotonic_ns": 7653978362612,
+          "phase": "perception_result",
+          "phase_name": "plan-refresh",
+          "frame_id": 114399,
+          "source": {
+            "frame_id": 114399,
+            "camera_serial": "338622073335",
+            "timestamp": 7653.6850752830505,
+            "shape": [
+              480,
+              640,
+              3
+            ],
+            "image_sha256": "c60ee9f0668fad74d37d8692f41cbf81767f5dd4e2ae7ca36be38d65d6c87a11"
+          },
+          "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+          "detections": [
+            {
+              "xyxy": [
+                168.25,
+                259.375,
+                291.0,
+                405.625
+              ],
+              "confidence": 0.23583984375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "inference_ms": 24.199,
+          "geometry": {
+            "top_quantile_z_m": 0.8711164207631157,
+            "center_xy_m": [
+              0.3178905212639915,
+              0.09225085057823135
+            ],
+            "fit_error_m": 0.002310314920569721,
+            "pixels": 2581,
+            "frame_id": 114399,
+            "detector": "coke_yolo",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                168.25,
+                259.375,
+                291.0,
+                405.625
+              ],
+              "confidence": 0.23583984375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "c60ee9f0668fad74d37d8692f41cbf81767f5dd4e2ae7ca36be38d65d6c87a11",
+            "tracking": {
+              "mode": "yolo",
+              "reason": "periodic_recheck",
+              "semantic_frame_id": 114399
+            }
+          },
+          "error": null,
+          "processing_ms": 134.60780199966393,
+          "exposure_age_ms": 293.2781439494647
+        },
+        {
+          "unix_ns": 1791414523119537464,
+          "monotonic_ns": 7654093684767,
+          "phase": "phase_camera_evidence",
+          "phase_name": "motion-tracking",
+          "path": "/data/camera-114402-motion-tracking.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414522978303560,
+            "raw_received_monotonic_ns": 7653952450287,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7653.885344028473,
+            "depth_time": 7653.885222911835,
+            "received_monotonic": 7653.96170153,
+            "color_sensor_ms": 1791414522911.2026,
+            "depth_sensor_ms": 1791414522911.0815,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 114402,
+            "captured_at_unix_ns": 1791414522988797339,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414523192515916,
+          "monotonic_ns": 7654166661779,
+          "phase": "perception_result",
+          "phase_name": "motion-tracking",
+          "frame_id": 114402,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8697076540579977,
+            "center_xy_m": [
+              0.3180672994003792,
+              0.09244803117093181
+            ],
+            "fit_error_m": 0.002504248196787145,
+            "pixels": 2545,
+            "frame_id": 114402,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                168.25,
+                259.375,
+                291.0,
+                405.625
+              ],
+              "confidence": 0.23583984375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "a58a52c9ac5b422a0180bc2ed2569b5e3819af5f9b76419d82d31fc33e83bbf5",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 114399,
+              "semantic_age_s": 0.2001476287841797,
+              "visual_agreement": 0.9916528767398908,
+              "support_pixels": 2545,
+              "roi_shape": [
+                141,
+                105
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 112.03888100044423,
+          "exposure_age_ms": 281.43128316514776
+        },
+        {
+          "unix_ns": 1791414523247579102,
+          "monotonic_ns": 7654221726053,
+          "phase": "phase_camera_evidence",
+          "phase_name": "motion-tracking",
+          "path": "/data/camera-114403-motion-tracking.npz",
+          "metadata": {
+            "schema": "wendy.g1.rgbd.v1",
+            "raw_received_unix_ns": 1791414523045009746,
+            "raw_received_monotonic_ns": 7654019156601,
+            "aligned_to": "color",
+            "camera_serial": "338622073335",
+            "clock": "host_monotonic",
+            "timestamp_valid": true,
+            "color_time": 7653.952062368393,
+            "depth_time": 7653.951941490173,
+            "received_monotonic": 7654.03113606,
+            "color_sensor_ms": 1791414522977.9185,
+            "depth_sensor_ms": 1791414522977.7976,
+            "color_timestamp_domain": "timestamp_domain.global_time",
+            "depth_timestamp_domain": "timestamp_domain.global_time",
+            "depth_scale_m": 0.0010000000474974513,
+            "intrinsics": {
+              "width": 640,
+              "height": 480,
+              "fx": 603.59765625,
+              "fy": 603.7045288085938,
+              "ppx": 318.05902099609375,
+              "ppy": 261.0997619628906,
+              "model": "distortion.inverse_brown_conrady",
+              "coeffs": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "frame_id": 114403,
+            "captured_at_unix_ns": 1791414523059686028,
+            "stream_id": "406a152d-4e28-4911-9de0-c67ce2b376ac"
+          },
+          "color_codec": "jpeg_exact_source_frame"
+        },
+        {
+          "unix_ns": 1791414523352363509,
+          "monotonic_ns": 7654326509596,
+          "phase": "perception_result",
+          "phase_name": "motion-tracking",
+          "frame_id": 114403,
+          "source": null,
+          "model_sha256": null,
+          "detections": null,
+          "inference_ms": null,
+          "geometry": {
+            "top_quantile_z_m": 0.8691468400649531,
+            "center_xy_m": [
+              0.3182110243027801,
+              0.0921687638371958
+            ],
+            "fit_error_m": 0.0027062450148089374,
+            "pixels": 2497,
+            "frame_id": 114403,
+            "detector": "coke_visual_depth_tracker",
+            "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+            "backend": "pytorch_cuda",
+            "box": {
+              "xyxy": [
+                168.25,
+                259.375,
+                291.0,
+                405.625
+              ],
+              "confidence": 0.23583984375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            },
+            "image_sha256": "2b767ca132173efe9ccde436cf9f4bcefca102d23965be1884175fadf0a4b24a",
+            "tracking": {
+              "mode": "visual_depth",
+              "semantic_frame_id": 114399,
+              "semantic_age_s": 0.26686620712280273,
+              "visual_agreement": 0.9913276965632165,
+              "support_pixels": 2497,
+              "roi_shape": [
+                141,
+                106
+              ]
+            }
+          },
+          "error": null,
+          "processing_ms": 144.08721200015862,
+          "exposure_age_ms": 374.56135382672073
+        }
+      ]
+    }
+  ],
+  "focused_tests": 86,
+  "deployment_v031": {
+    "hashes": {
+      "runtime.py": "a7e8eb2bff539b9a4e1971ba6d8e3d98fcf020afda6185371af6900581596bdb",
+      "camera_input.py": "ee884971ce094a5e3865196d16775488b694101181f705a4309c48579ef8113f",
+      "target_tracker.py": "5e5f18090b4a97b1a01de77e10b4a35aa4712893d0f678718c6f98b1a364af97",
+      "physical_core.py": "03b69f8266c6611f62cd5f36c4eb65fe406c3af3f1fba7145dce1c1cb750ee44",
+      "yolo_client.py": "39e1a799edd9c47452dea4cd0d152d3ed55ea577e9f43ded9ea5a6e18f9b80a4"
+    },
+    "local_matches_deployed": true,
+    "phase": "FROZEN",
+    "demo_running": false,
+    "adapter_initialized": true,
+    "camera_max_age_ms": 400,
+    "yolo_confidence_strictly_above": 0.1
+  }
+}

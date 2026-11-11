@@ -1,0 +1,24 @@
+{
+  "case_id": "placement-12",
+  "condition": "nearby_placement",
+  "seed": 2012,
+  "noise_scale": 1.0,
+  "offset_xy_m": [
+    0.015,
+    -0.015
+  ],
+  "policy": "tuned",
+  "lift_verified": true,
+  "error": null,
+  "failure_phase": null,
+  "simulated_time_s": 50.020000000015166,
+  "wall_time_s": 28.739877540967427,
+  "max_tracking_error_rad": 0.02938954011247072,
+  "command_count": 4969,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 1,
+  "episode": "episodes/placement-12-tuned.json.gz",
+  "episode_sha256": "19d11322b29d4e807b5230b6fd00679e14d2a069330b558a428fba18a13d4ade",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

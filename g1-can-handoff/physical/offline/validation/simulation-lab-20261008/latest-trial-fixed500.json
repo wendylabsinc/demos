@@ -1,0 +1,38 @@
+{
+  "profile": "today",
+  "tests_run": 2,
+  "successful": true,
+  "seconds": 0.511429583071731,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_latest_trial_replay",
+      "tests_run": 2,
+      "seconds": 0.03643512504640967,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_latest_trial_replay.LatestTrialTests.test_latest_rgb_depth_gap_fits_500ms_without_disabling_uncertainty_or_future_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_latest_trial_replay.LatestTrialTests.test_recorded_recheck_arrives_after_timeout_and_cannot_resume_motor_writes",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..\n----------------------------------------------------------------------\nRan 2 tests in 0.036s\n\nOK\n"
+    }
+  ],
+  "simulation_artifact_dir": "simulations/1791492646703077000"
+}

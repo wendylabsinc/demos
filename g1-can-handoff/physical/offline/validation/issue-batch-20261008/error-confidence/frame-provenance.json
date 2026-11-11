@@ -1,0 +1,8 @@
+{
+  "frame_id": 97662,
+  "jpeg_sha256": "2260246123241b4b5cf90072e8f3071d4247853ba563790b8a4de301475cb20f",
+  "decoded_bgr_sha256": "7f51c48b76ce86524910819dc33b98e1789a8f497ff7bbbacd22174405291b04",
+  "matches_original_failed_model_input": true,
+  "pixels_modified": false,
+  "time_basis": "Native parent perception_result receipt monotonic minus primary_failure monotonic; not image exposure time"
+}

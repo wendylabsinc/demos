@@ -1,0 +1,62 @@
+{
+  "profile": "regression",
+  "tests_run": 7,
+  "successful": true,
+  "seconds": 5.799223624984734,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_pickup_area_acceptance",
+      "tests_run": 7,
+      "seconds": 5.256027790950611,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_controls_read_and_project_actual_deployed_task_bounds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_far_capture_remains_outside_bounded_admission",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_original_three_captures_reproduce_area_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup_area_acceptance.PickupAreaAcceptanceTests.test_two_reachable_captures_pass_complete_real_clock_preflight",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_hides_active_stale_mismatched_and_unsupported_projection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_projects_all_four_workspace_corners_on_table",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_placement_overlay.PickupAreaTests.test_uses_camera_translation_and_current_attitude",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".......\n----------------------------------------------------------------------\nRan 7 tests in 5.256s\n\nOK\n"
+    }
+  ]
+}

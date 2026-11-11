@@ -1,0 +1,24 @@
+{
+  "case_id": "stress-08",
+  "condition": "double_noise",
+  "seed": 3008,
+  "noise_scale": 2.0,
+  "offset_xy_m": [
+    0.0,
+    0.0
+  ],
+  "policy": "legacy",
+  "lift_verified": false,
+  "error": "Can or table moved during final reach; refusing to close",
+  "failure_phase": "pre-close",
+  "simulated_time_s": 33.679999999995196,
+  "wall_time_s": 9.020541374920867,
+  "max_tracking_error_rad": 0.029331351284399614,
+  "command_count": 3335,
+  "pregrasp_contact_steps": 0,
+  "generated_jump_count": 1,
+  "episode": "episodes/stress-08-legacy.json.gz",
+  "episode_sha256": "1a774d9aad9129e24887033d3bafc64060c98b44844e62bf159d1cc887d64773",
+  "hardware_used": false,
+  "physical_pickup_verified": false
+}

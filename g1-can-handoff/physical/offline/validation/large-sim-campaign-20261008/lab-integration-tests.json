@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 0.07747020898386836,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_offline_today",
+      "tests_run": 3,
+      "seconds": 0.002250958001241088,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_offline_today.TodayReportTests.test_catalog_has_no_duplicate_suites",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_today.TodayReportTests.test_failure_and_custom_report_name_remain_visible",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_offline_today.TodayReportTests.test_old_animations_are_not_used_by_a_new_run",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.002s\n\nOK\n"
+    }
+  ]
+}

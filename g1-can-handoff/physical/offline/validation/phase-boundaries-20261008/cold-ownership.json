@@ -1,0 +1,47 @@
+{
+  "profile": "open",
+  "tests_run": 4,
+  "successful": true,
+  "seconds": 0.4823822909966111,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "offline.open_cases",
+      "tests_run": 4,
+      "seconds": 0.019284000038169324,
+      "successful": true,
+      "cases": [
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_cancel_after_settling_cannot_start_owned_replanning",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_failed_owned_perception_cannot_execute_the_preview_plan",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_pickup_execution_uses_a_plan_measured_after_sdk_ownership",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "offline.open_cases.ColdOwnershipAcceptance.test_unstable_ownership_holds_without_executing_or_releasing",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.019s\n\nOK\n"
+    }
+  ]
+}

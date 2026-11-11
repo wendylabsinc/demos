@@ -1,0 +1,7 @@
+{
+  "file": "fixtures/sim-head-color-depth-20261008.npz",
+  "sha256": "15831e7b3e3bee3be110733f6f257a4978a702db12b6b97e6e884f4215530506",
+  "synthetic_fixture": true,
+  "physical_recording": false,
+  "source": "offline/reports/today/simulations/1791492326010178000/head-camera-pickup/result.frame.npz"
+}

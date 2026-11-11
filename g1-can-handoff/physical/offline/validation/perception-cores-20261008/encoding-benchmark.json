@@ -1,0 +1,1 @@
+{"encoding": [{"workers": 1, "median_ms": 15.823218500031544, "p95_ms": 16.02427965002562, "max_ms": 16.03694000004907, "byte_exact": true}, {"workers": 2, "median_ms": 13.474949000055858, "p95_ms": 16.920903200093562, "max_ms": 17.506064999906812, "byte_exact": true}]}

@@ -1,0 +1,52 @@
+{
+  "recorded_utc": "2026-10-08T18:21:55.119829+00:00",
+  "hardware_used": false,
+  "deployed": false,
+  "physical_pickup_verified": false,
+  "source_sha256": {
+    "physical_core.py": "6e2c7229fd6b8a88d9cd04000f74ac1044361767dcacadd3de8f6607d9c59048",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "staging.py": "be3d0bad370f05b31c4f5a111a258a2ef82075d3fea59d4c764e086331bab9bf",
+    "control_settle.py": "bad0f13b7b15230143864da43a72314204b0a6d00ea1cea15e4448333ef261f4",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "sim_runtime.py": "e768c9d138ae66fd77e0b07c1bdc305248bbd49e9a10ce304b594d86aedc50f1",
+    "g1_can_handoff/sim.py": "b11f4fae01a3234fa2853b0de39fe7b3726c6de4119acdc012f0f69759a60f5b",
+    "g1_can_handoff/task.py": "423f2c27debc8529427ee8d9854954063f916db7f62359baf0db099d489d40d7",
+    "test_clearance_planning.py": "6126cc9a8848f13b8f577e6e06375c8d7f1be48fdda718e42ebff75035f5987a",
+    "test_cartesian_lift.py": "694472f4c3936004b1bc58859de55116fa2ba5a90cfe7e140cb3e2ac66240557",
+    "test_control_settle.py": "fd08d01d3dc36e721d994fc692b1ef27751447190fedf7a26cf7f12b4acc76d6",
+    "offline/planner_replay.py": "ac3dc2ffb25d9ae4661702f00eb4db081dda56f41b695b907166971e2762b260"
+  },
+  "reports": {
+    "offline-regression-final.json": {
+      "sha256": "6926385fa65b77df72ca80c38b180929ed70d6df96dab5981fb2281346924816",
+      "passed": true
+    },
+    "offline-simulation-final.json": {
+      "sha256": "e16fea6ae3963fb362c96640d0862440c02d3ad98b530a5c6a096eec9e1ffc81",
+      "passed": true
+    },
+    "planner-final-01.json": {
+      "sha256": "d860c3368e750c1162e7eae07452ed71f30704abaa86a9735e6d060cf268ee03",
+      "passed": true
+    },
+    "planner-final-02.json": {
+      "sha256": "f7fdcc08897c3b80e6e88faee666e8f8db37cc7328123791080352714f910cb7",
+      "passed": true
+    },
+    "planner-final-03.json": {
+      "sha256": "c8bf80a6ac1de9857f5e1caafa4a2a925480fb2495c8ad249c41579c1f623211",
+      "passed": true
+    }
+  },
+  "regression_tests": 262,
+  "simulation_tests": 13,
+  "local_only_viewer_tests": 3,
+  "archived_supervised_trials": 3,
+  "archived_native_events": 130,
+  "archived_exact_rgbd_frames": 15,
+  "table_clearance_required_m": 0.01,
+  "remaining": [
+    "Physical pickup and live Jetson planning timing require supervised validation; no hardware commands were issued during offline repair."
+  ]
+}

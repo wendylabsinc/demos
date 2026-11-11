@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 6.532857417012565,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_control_settling_acceptance",
+      "tests_run": 3,
+      "seconds": 6.398785667028278,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_control_settling_acceptance.NativeControlSettlingAcceptanceTests.test_native_feedback_negative_controls_reject_each_body_joint_and_all_existing_guards",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settling_acceptance.NativeControlSettlingAcceptanceTests.test_original_two_failures_reject_at_point_zero_three_and_settle_at_one_three_times",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_control_settling_acceptance.NativeControlSettlingAcceptanceTests.test_real_hand_feedback_includes_motor_and_device_fault_words",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 6.399s\n\nOK\n"
+    }
+  ]
+}

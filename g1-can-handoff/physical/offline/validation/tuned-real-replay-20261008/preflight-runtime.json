@@ -1,0 +1,36 @@
+{
+  "platform": "local Mac arm64",
+  "results": [
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506819232003999-0001-preflight.json",
+      "wall_seconds": 2.4759935409529135,
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506830436424708-0090-preflight.json",
+      "wall_seconds": 2.2253540829988196,
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    },
+    {
+      "path": "offline/validation/tuned-real-replay-20261008/trial-02/planning/1791506841557170811-0179-preflight.json",
+      "wall_seconds": 2.028152667102404,
+      "kind": "preflight",
+      "identical": false,
+      "max_abs_error_rad": null,
+      "error": null,
+      "captured_error": null,
+      "hardware_used": false
+    }
+  ],
+  "total_wall_seconds": 6.729500291054137
+}

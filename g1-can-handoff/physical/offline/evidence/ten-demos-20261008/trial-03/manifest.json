@@ -1,0 +1,104 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791481929001349585,
+  "end_unix_ns": 1791481963682741775,
+  "native_event_file": "/data/events-20261008T173130Z.jsonl",
+  "events": 34,
+  "camera_events": 5,
+  "selected_frames": [
+    "/data/camera-22177-scene_refresh.npz",
+    "/data/camera-22227-planning.npz",
+    "/data/camera-22568-plan-refresh.npz",
+    "/data/camera-22569-motion-tracking.npz",
+    "/data/camera-22570-motion-tracking.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 6621,
+      "sha256": "45008702a8ffcc598d16681f4f10dc2a0f322823cb3bfabe92743c1c3cb473dc"
+    },
+    "rgbd/camera-22177-scene_refresh.source.zip": {
+      "bytes": 106362,
+      "sha256": "1689d60c96a67189470b77f05927ac61593965b2cad319782d021565d82f5218"
+    },
+    "rgbd/camera-22177-scene_refresh.timing.npz": {
+      "bytes": 3900,
+      "sha256": "fe9ac91bd2526471688b5beb661b8b9a3faf747aafde49d6df8772af7ccd4135"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938117,
+      "sha256": "3a7e52181409b9089ce93eaf729986de07939aa06bdd7544214265d0dfddbd6f"
+    },
+    "rgbd/camera-22227-planning.source.zip": {
+      "bytes": 106744,
+      "sha256": "6a6a55a3e7735fb8e6f89cc8d6c7ba4d39347d792a1c3712888544db2c9f24d5"
+    },
+    "rgbd/camera-22227-planning.timing.npz": {
+      "bytes": 3904,
+      "sha256": "8b78bfb548f7647bf4e96e5741e2fd48a77379f55f6e62c04ba53a236f39c176"
+    },
+    "rgbd/camera-22568-plan-refresh.source.zip": {
+      "bytes": 106567,
+      "sha256": "a52d9fa00cd9047b60d195d65d1778e7b5b022f55a4f20be458aade3017cf50e"
+    },
+    "rgbd/camera-22568-plan-refresh.timing.npz": {
+      "bytes": 3904,
+      "sha256": "a67a1cb8dd65822c8b5282728ccc1550938525e141460bf1f0a2f291310096a4"
+    },
+    "rgbd/camera-22569-motion-tracking.source.zip": {
+      "bytes": 107084,
+      "sha256": "4dc967048013db3265061917218fcb6da41ad7815da2ec291bbb4b441d534815"
+    },
+    "rgbd/camera-22569-motion-tracking.timing.npz": {
+      "bytes": 3896,
+      "sha256": "b2af55d55ac50044012eec4be4a124db8dd3dc648a0b5287cee27af65df4875f"
+    },
+    "rgbd/camera-22570-motion-tracking.source.zip": {
+      "bytes": 105979,
+      "sha256": "ba7395f44170d66da2c5943077c18bf2f5bae0dcbecc831ea49ca5f92ca2d24e"
+    },
+    "rgbd/camera-22570-motion-tracking.timing.npz": {
+      "bytes": 3904,
+      "sha256": "b4bafaa4f7a50548999737bdd9454fd5304c8a77d95711b3627433affec7f27b"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 31191,
+      "sha256": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791481962035613145,
+    "monotonic_ns": 5343126349634,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Control handover did not settle within 5 seconds",
+    "source": "execution"
+  }
+}

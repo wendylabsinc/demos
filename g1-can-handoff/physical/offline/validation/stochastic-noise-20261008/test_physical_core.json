@@ -1,0 +1,67 @@
+{
+  "profile": "regression",
+  "tests_run": 8,
+  "successful": true,
+  "seconds": 0.17834450001828372,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_physical_core",
+      "tests_run": 8,
+      "seconds": 0.00943120801821351,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_physical_core.PhysicalGuards.test_all_motors_accept_below_75_but_reject_at_75",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_calibration_uses_held_out_points_and_rejects_bad_measurement",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_finger_mapping_is_not_hidden_by_symmetric_grip",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_missing_or_stale_feedback_fails_before_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_motor_fault_and_heat_fail_before_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_nonfinite_temperature_velocity_and_attitude_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_nonrigid_and_reflected_camera_frames_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_physical_core.PhysicalGuards.test_uncommissioned_and_other_camera_calibration_rejected",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.009s\n\nOK\n"
+    }
+  ]
+}

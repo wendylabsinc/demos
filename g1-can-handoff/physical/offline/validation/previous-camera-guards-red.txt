@@ -1,0 +1,65 @@
+FFFFFF
+======================================================================
+FAIL: test_camera_http_rejects_compact_calibration_serial_mismatch (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_calibration_serial_mismatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 186, in test_camera_http_rejects_compact_calibration_serial_mismatch
+    self.assert_bundle_rejected(http,'identity|serial|calibration')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_camera_http_rejects_compact_depth_scale_mismatch (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch) (scale=0.002)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 192, in test_camera_http_rejects_compact_depth_scale_mismatch
+    self.assert_bundle_rejected(http,'scale|calibration')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_camera_http_rejects_compact_depth_scale_mismatch (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch) (scale=0.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 192, in test_camera_http_rejects_compact_depth_scale_mismatch
+    self.assert_bundle_rejected(http,'scale|calibration')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_camera_http_rejects_compact_depth_scale_mismatch (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch) (scale=-0.001)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 192, in test_camera_http_rejects_compact_depth_scale_mismatch
+    self.assert_bundle_rejected(http,'scale|calibration')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_camera_http_rejects_compact_depth_scale_mismatch (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch) (scale=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 192, in test_camera_http_rejects_compact_depth_scale_mismatch
+    self.assert_bundle_rejected(http,'scale|calibration')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_camera_http_rejects_positive_and_negative_rgb_depth_skew (test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_positive_and_negative_rgb_depth_skew) (skew=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_camera_pipeline.py", line 162, in test_camera_http_rejects_positive_and_negative_rgb_depth_skew
+    self.assert_bundle_rejected(http,'skew|timestamp')
+  File "physical/test_camera_pipeline.py", line 137, in assert_bundle_rejected
+    with self.assertRaisesRegex(RuntimeError,pattern):camera.frame(materialize=False)
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.047s
+
+FAILED (failures=6)

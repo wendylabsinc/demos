@@ -1,0 +1,17 @@
+test_archive_escape_rejected (test_offline_yolo_build.OfflineBuildTests.test_archive_escape_rejected) ... ok
+test_cached_artifact_reuses_bytes_without_network (test_offline_yolo_build.OfflineBuildTests.test_cached_artifact_reuses_bytes_without_network) ... ok
+test_corrupted_cache_rejected_before_unpack_or_build (test_offline_yolo_build.OfflineBuildTests.test_corrupted_cache_rejected_before_unpack_or_build) ... ok
+test_missing_cache_does_not_try_vm_package_network (test_offline_yolo_build.OfflineBuildTests.test_missing_cache_does_not_try_vm_package_network) ... ok
+test_no_cpu_torch_or_cuda_replacement_allowed (test_offline_yolo_build.OfflineBuildTests.test_no_cpu_torch_or_cuda_replacement_allowed) ... ok
+test_original_rpc_failure_has_distinct_native_workaround (test_offline_yolo_build.OfflineBuildTests.test_original_rpc_failure_has_distinct_native_workaround) ... ok
+test_source_pins_match_real_saved_configuration (test_offline_yolo_build.OfflineBuildTests.test_source_pins_match_real_saved_configuration) ... ok
+test_source_version_change_requires_new_lock (test_offline_yolo_build.OfflineBuildTests.test_source_version_change_requires_new_lock) ... ok
+test_ubuntu_package_version_checked_without_running_maintainer_scripts (test_offline_yolo_build.OfflineBuildTests.test_ubuntu_package_version_checked_without_running_maintainer_scripts) ... ok
+test_unapproved_source_rejected (test_offline_yolo_build.OfflineBuildTests.test_unapproved_source_rejected) ... ok
+test_wheel_metadata_version_must_match_lock (test_offline_yolo_build.OfflineBuildTests.test_wheel_metadata_version_must_match_lock) ... ok
+test_wheel_unpack_promotes_exact_arm64_bytes_and_metadata (test_offline_yolo_build.OfflineBuildTests.test_wheel_unpack_promotes_exact_arm64_bytes_and_metadata) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.129s
+
+OK

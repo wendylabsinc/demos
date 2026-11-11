@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 20.89156295801513,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_stochastic_sim_runtime",
+      "tests_run": 1,
+      "seconds": 20.329559291014448,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_stochastic_sim_runtime.StochasticRuntimeTests.test_tuned_full_simulation_lifts_with_fresh_noise_without_yolo_or_hardware",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n.\n----------------------------------------------------------------------\nRan 1 test in 20.329s\n\nOK\n"
+    }
+  ]
+}

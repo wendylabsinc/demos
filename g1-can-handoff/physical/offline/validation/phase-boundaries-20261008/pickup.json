@@ -1,0 +1,102 @@
+{
+  "profile": "regression",
+  "tests_run": 15,
+  "successful": true,
+  "seconds": 0.14495370804797858,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_pickup",
+      "tests_run": 15,
+      "seconds": 0.014178458019159734,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_pickup.SharedPickupTests.test_can_motion_aborts_before_first_arm_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_can_pushed_during_reach_stops_before_closing",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_each_motion_phase_has_a_fresh_checkpoint_and_no_mid_motion_queries",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_failed_checkpoint_prevents_its_next_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_full_path_rejection_searches_another_orientation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_lift_requires_camera_evidence_even_with_finger_obstructions",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_missing_obstruction_aborts_before_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_orientation_candidates_are_bounded",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_orientation_search_never_swallows_operational_faults",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_pre_lift_uses_postgrasp_tracking_bound_without_requiring_table_contact",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_replayed_camera_frame_does_not_report_held_can",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_shifted_grip_outside_40mm_fails_shared_hold_verifier",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_slip_after_initial_lift_does_not_report_success",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_transient_finger_obstructions_do_not_authorize_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_pickup.SharedPickupTests.test_verified_lift_holds_without_offer_or_release",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.014s\n\nOK\n"
+    }
+  ]
+}

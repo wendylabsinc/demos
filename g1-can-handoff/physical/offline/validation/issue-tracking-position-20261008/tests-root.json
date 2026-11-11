@@ -1,0 +1,47 @@
+{
+  "profile": "regression",
+  "tests_run": 4,
+  "successful": true,
+  "seconds": 27.346344833029434,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_tracking_position_replay",
+      "tests_run": 4,
+      "seconds": 26.650774625013582,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_genuine_displacement_after_owned_preflight_blocks_pickup_sink",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_native_shift_rejects_old_sequence_but_owned_replan_reaches_checked_sink",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_new_samples_never_rebase_and_invalid_position_never_publishes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_tracking_position_replay.TrackingPositionReplayTests.test_start_tracking_copies_the_path_reference",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 26.651s\n\nOK\n"
+    }
+  ]
+}

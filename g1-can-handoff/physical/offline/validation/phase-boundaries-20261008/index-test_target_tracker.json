@@ -1,0 +1,82 @@
+{
+  "profile": "regression",
+  "tests_run": 11,
+  "successful": true,
+  "seconds": 0.48345824994612485,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_target_tracker",
+      "tests_run": 11,
+      "seconds": 0.039761958993040025,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_target_tracker.TrackerTests.test_acceptance_rejects_unchecked_frame_and_large_center_shift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_clipped_tracking_forces_semantic_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_initial_semantic_identity_and_pending_commit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_periodic_identity_recheck_uses_current_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_still_reacquires_uncertain_identity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_stale_future_or_repeated_frame_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_uncertain_empty_or_ambiguous_identity_never_returns_old_mask",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_depth_frames_do_not_requery_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_uncertainty_forces_same_frame_semantic_confirmation",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...........\n----------------------------------------------------------------------\nRan 11 tests in 0.040s\n\nOK\n"
+    }
+  ]
+}

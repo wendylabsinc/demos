@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 0.11228837503585964,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_campaign",
+      "tests_run": 3,
+      "seconds": 0.0003957500448450446,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_sim_campaign.CampaignTests.test_all_pass_interval_retains_nonzero_failure_uncertainty",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_campaign.CampaignTests.test_design_has_unique_fresh_seeds_and_separate_stress_cases",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_campaign.CampaignTests.test_missing_pair_is_not_counted_as_a_paired_win",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n"
+    }
+  ]
+}

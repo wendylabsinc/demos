@@ -1,0 +1,77 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791421431889966000,
+  "end_unix_ns": 1791421440569253000,
+  "native_event_file": "/data/events-20261008T004007Z.jsonl",
+  "events": 11,
+  "camera_events": 2,
+  "selected_frames": [
+    "/data/camera-65714-scene_refresh.npz",
+    "/data/camera-65759-planning.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 3564,
+      "sha256": "36e728ef975ef8b467ceaeb704eb6c9bca4c07c218de9727af71e97c3e87871e"
+    },
+    "rgbd/camera-65714-scene_refresh.source.zip": {
+      "bytes": 107777,
+      "sha256": "c1f599e54cf7a664f1d58215259dac06c0c2c25d4ef68000f0a82c8ccdd0e319"
+    },
+    "rgbd/camera-65714-scene_refresh.timing.npz": {
+      "bytes": 541992,
+      "sha256": "fab31dd9c525918c16198ab77b7e1b38296ae497aeb63f76775bb9b891d732c8"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938102,
+      "sha256": "7d65849effaff58209ff8a98b5a04408c6af31ba060a22f7ec7e5f3e75606336"
+    },
+    "rgbd/camera-65759-planning.source.zip": {
+      "bytes": 106870,
+      "sha256": "895a27f23e0aa9fbbcf4b5bd9f3cd938ceb89e0a2d62ecff1f0a5052cc892468"
+    },
+    "rgbd/camera-65759-planning.timing.npz": {
+      "bytes": 541992,
+      "sha256": "1d9f7926e677a15d42d222c9b9cd99ef4a886c3f1711624860be115da009b6d3"
+    },
+    "source/runtime.py": {
+      "bytes": 37410,
+      "sha256": "909ee14e25ee6f0b79b2124eb7cd37929216a594d806cb5e35ff9ce29d21bd2e"
+    },
+    "source/camera_input.py": {
+      "bytes": 17528,
+      "sha256": "b9d6b15f68706645c97b13d36fb4b0a7df8fd1d32bec1d5cd13d37aa97ae6a62"
+    },
+    "source/physical_core.py": {
+      "bytes": 29527,
+      "sha256": "acbd40b6d053ce9d600ea72bdffe45e84ad65dfbf8e21765557a9c30c34e9db5"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 4732,
+      "sha256": "ed430eea7d9423a20e00f0f9b48e0bb7b9a684981b1369e0ac531467ae07a379"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "909ee14e25ee6f0b79b2124eb7cd37929216a594d806cb5e35ff9ce29d21bd2e",
+    "camera_input.py": "b9d6b15f68706645c97b13d36fb4b0a7df8fd1d32bec1d5cd13d37aa97ae6a62",
+    "physical_core.py": "acbd40b6d053ce9d600ea72bdffe45e84ad65dfbf8e21765557a9c30c34e9db5",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "ed430eea7d9423a20e00f0f9b48e0bb7b9a684981b1369e0ac531467ae07a379",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791421439148466424,
+    "monotonic_ns": 4408867294872,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Operator cancelled trial",
+    "source": "execution"
+  }
+}

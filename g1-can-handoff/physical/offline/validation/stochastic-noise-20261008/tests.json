@@ -1,0 +1,78 @@
+{
+  "tests_run": 66,
+  "successful": true,
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "evidence_verified": 143,
+  "modules": [
+    {
+      "report": "test_clearance_planning.json",
+      "tests_run": 11,
+      "successful": true
+    },
+    {
+      "report": "test_offline_today.json",
+      "tests_run": 3,
+      "successful": true
+    },
+    {
+      "report": "test_physical_core.json",
+      "tests_run": 8,
+      "successful": true
+    },
+    {
+      "report": "test_planner_tuning.json",
+      "tests_run": 5,
+      "successful": true
+    },
+    {
+      "report": "test_planning_acceptance.json",
+      "tests_run": 4,
+      "successful": true
+    },
+    {
+      "report": "test_planning_deadline.json",
+      "tests_run": 1,
+      "successful": true
+    },
+    {
+      "report": "test_planning_snapshot.json",
+      "tests_run": 2,
+      "successful": true
+    },
+    {
+      "report": "test_sim_position_noise.json",
+      "tests_run": 1,
+      "successful": true
+    },
+    {
+      "report": "test_sim_runtime.json",
+      "tests_run": 13,
+      "successful": true
+    },
+    {
+      "report": "test_simulation_position_noise.json",
+      "tests_run": 7,
+      "successful": true
+    },
+    {
+      "report": "test_stochastic_position_noise.json",
+      "tests_run": 10,
+      "successful": true
+    },
+    {
+      "report": "test_stochastic_sim_runtime.json",
+      "tests_run": 1,
+      "successful": true
+    }
+  ],
+  "unresolved": [
+    "Longer-lag correlation mismatch",
+    "Sparse jump evidence",
+    "No independent can ground truth",
+    "Real servo tracking gap",
+    "Known head-camera target-loss simulation not rerun"
+  ],
+  "profile_refit_byte_identical": true,
+  "profile_sha256": "78496431c23c0ca6d5146d684bf6c903d076700268d99bed17f1d7f283cf19f6"
+}

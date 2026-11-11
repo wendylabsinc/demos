@@ -1,0 +1,16 @@
+{
+  "kind": "native-build-only CPU fixture qualification; no robot execution",
+  "observed_run_exit_code": 0,
+  "native_run_seconds": 4.4,
+  "fixture_count": 10,
+  "qualified": true,
+  "torch": "2.7.0",
+  "torch_cuda": "12.8",
+  "numpy": "2.2.6",
+  "opencv": "4.11.0",
+  "motion_commands": 0,
+  "evidence_method": "Native RUN completed successfully after exact imports/version assertions and qualification loop; successful stdout is summarized by Wendy progress renderer",
+  "verification_script_sha256": "61d840c9e82c37ad6c74d0504dcd3014a994573a41d0cb1feeb8e3bc632873ac",
+  "robot_gpu_qualification_verified": false,
+  "robot_deployment_verified": false
+}

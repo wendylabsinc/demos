@@ -1,0 +1,107 @@
+{
+  "profile": "regression",
+  "tests_run": 16,
+  "successful": true,
+  "seconds": 0.5004529160214588,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_target_tracker",
+      "tests_run": 16,
+      "seconds": 0.06216054200194776,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_target_tracker.LowYoloDependenceTests.test_color_depth_geometry_acquires_and_tracks_without_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.LowYoloDependenceTests.test_color_mode_does_not_accept_a_missing_red_target",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.LowYoloDependenceTests.test_color_mode_works_through_default_geometry_without_yolo_service",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.LowYoloDependenceTests.test_yolo_once_stops_uncertain_tracking_without_reclassifying",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_acceptance_rejects_unchecked_frame_and_large_center_shift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_clipped_tracking_forces_semantic_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_initial_semantic_identity_and_pending_commit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_periodic_identity_recheck_uses_current_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_geometry_path_does_not_schedule_none_interval",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_still_reacquires_uncertain_identity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_stale_future_or_repeated_frame_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_uncertain_empty_or_ambiguous_identity_never_returns_old_mask",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_depth_frames_do_not_requery_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_uncertainty_forces_same_frame_semantic_confirmation",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.062s\n\nOK\n"
+    }
+  ]
+}

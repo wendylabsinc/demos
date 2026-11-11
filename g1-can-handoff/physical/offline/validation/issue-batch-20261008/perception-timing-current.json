@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 0.4792405000189319,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_perception_timing",
+      "tests_run": 3,
+      "seconds": 0.007132124970667064,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_contended_phase_observation_refreshes_watchdog_before_next_background_response",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_parked_prefetch_is_discarded_using_exposure_age_before_geometry",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_timing.PerceptionTimingTests.test_repeated_frames_abort_after_bounded_attempts_without_inference_or_archive",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.007s\n\nOK\n"
+    }
+  ]
+}

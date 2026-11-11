@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": false,
+  "seconds": 13.944668334093876,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_clearance_planning.ClearancePlanningTests.test_near_centre_hardware_failure_replans_without_elbow_torso_collision",
+      "tests_run": 1,
+      "seconds": 13.414509791997261,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_clearance_planning.ClearancePlanningTests.test_near_centre_hardware_failure_replans_without_elbow_torso_collision",
+          "status": "error",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/pickup.py\", line 35, in prepare\n    try:points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/g1_can_handoff/task.py\", line 42, in plan\n    raise ValueError(\"No reachable grasp and offer path for this can position\")\nValueError: No reachable grasp and offer path for this can position\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_clearance_planning.py\", line 114, in test_near_centre_hardware_failure_replans_without_elbow_torso_collision\n    prepare(plant,lambda *args:(observation,dict(source='saved_scene_replay')),plant.event)\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/pickup.py\", line 37, in prepare\n    if rejected:raise ValueError(str(exc)+'; preflight rejected: '+'; '.join(rejected)) from exc\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: No reachable grasp and offer path for this can position; preflight rejected: Interpolated physical trajectory intersects robot/table\n"
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "E\n======================================================================\nERROR: test_near_centre_hardware_failure_replans_without_elbow_torso_collision (test_clearance_planning.ClearancePlanningTests.test_near_centre_hardware_failure_replans_without_elbow_torso_collision)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/pickup.py\", line 35, in prepare\n    try:points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/g1_can_handoff/task.py\", line 42, in plan\n    raise ValueError(\"No reachable grasp and offer path for this can position\")\nValueError: No reachable grasp and offer path for this can position\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_clearance_planning.py\", line 114, in test_near_centre_hardware_failure_replans_without_elbow_torso_collision\n    prepare(plant,lambda *args:(observation,dict(source='saved_scene_replay')),plant.event)\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/pickup.py\", line 37, in prepare\n    if rejected:raise ValueError(str(exc)+'; preflight rejected: '+'; '.join(rejected)) from exc\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: No reachable grasp and offer path for this can position; preflight rejected: Interpolated physical trajectory intersects robot/table\n\n----------------------------------------------------------------------\nRan 1 test in 13.414s\n\nFAILED (errors=1)\n"
+    }
+  ]
+}

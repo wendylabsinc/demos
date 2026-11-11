@@ -1,0 +1,104 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791481436978188979,
+  "end_unix_ns": 1791481516828545442,
+  "native_event_file": "/data/events-20261008T173130Z.jsonl",
+  "events": 58,
+  "camera_events": 7,
+  "selected_frames": [
+    "/data/camera-14802-scene_refresh.npz",
+    "/data/camera-14845-planning.npz",
+    "/data/camera-15368-motion-tracking.npz",
+    "/data/camera-15419-scene_refresh.npz",
+    "/data/camera-15465-planning.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 10771,
+      "sha256": "edb5e03b6c38d29889b4fa15da1258e06094a0f0def255474cff278130f467da"
+    },
+    "rgbd/camera-14802-scene_refresh.source.zip": {
+      "bytes": 106373,
+      "sha256": "93f8627184b34c79622a8af84c6d9af0ef303790f69610ce01611964d6a3fb23"
+    },
+    "rgbd/camera-14802-scene_refresh.timing.npz": {
+      "bytes": 3904,
+      "sha256": "f0be6bb5a9f8c71b6e2cea3e4eda41be66220eb2d164d068c9758452f6e6ba33"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938098,
+      "sha256": "1e8259bdab2fb369d94dbd1ef352c6bef08a01b9c08b2d1cca10b7f184d5a0a0"
+    },
+    "rgbd/camera-14845-planning.source.zip": {
+      "bytes": 105868,
+      "sha256": "eca9866f4911a6cb6c7bcc59eaf26f05f6633133b3d2578cea674868263b1123"
+    },
+    "rgbd/camera-14845-planning.timing.npz": {
+      "bytes": 3904,
+      "sha256": "e49dd0ad6101a3e5bab367d71097dcd3e26d465b42bf31fc46bcc6b168591b9c"
+    },
+    "rgbd/camera-15368-motion-tracking.source.zip": {
+      "bytes": 106464,
+      "sha256": "433a4e216ff14196bf6fa6e94ee80e503a93c2ce8871517da716a3528b6907df"
+    },
+    "rgbd/camera-15368-motion-tracking.timing.npz": {
+      "bytes": 3900,
+      "sha256": "bb5a66f1017e8b32c55a40499d48253ba8947fea11dc7e342983b47a6c6d9cfd"
+    },
+    "rgbd/camera-15419-scene_refresh.source.zip": {
+      "bytes": 108793,
+      "sha256": "b2ce41372a7919bc35b3a4638d778f81ad450671f5d756b64de2618deb27aa3b"
+    },
+    "rgbd/camera-15419-scene_refresh.timing.npz": {
+      "bytes": 3900,
+      "sha256": "b115fee33eaaf36c256a4ea963519a171f0f9f5a317f9d4f8af40b203b92c42e"
+    },
+    "rgbd/camera-15465-planning.source.zip": {
+      "bytes": 108792,
+      "sha256": "972b6e7d8229d46c22e9e604a24141c19d87db61ab266b4f53ad45ad447bb7ee"
+    },
+    "rgbd/camera-15465-planning.timing.npz": {
+      "bytes": 3900,
+      "sha256": "7072e823c05f6a9b6010f42e27b815eca9082940fe5bf71ebd13df63a84680a2"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 31191,
+      "sha256": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791481514123084107,
+    "monotonic_ns": 4895213820308,
+    "phase": "primary_failure",
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+    "source": "execution"
+  }
+}

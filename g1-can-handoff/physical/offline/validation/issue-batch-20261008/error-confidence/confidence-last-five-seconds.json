@@ -1,0 +1,844 @@
+{
+  "failure": {
+    "unix_ns": 1791490401110239079,
+    "monotonic_ns": 6535678958183,
+    "phase": "primary_failure",
+    "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "source": "tracking"
+  },
+  "frame_id": 97662,
+  "threshold_strictly_above_pct": 10,
+  "time_basis": "Native parent perception_result receipt monotonic minus primary_failure monotonic; not image exposure time",
+  "points": [
+    {
+      "seconds_before_error": -4.941968745,
+      "frame_id": 97588,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.04207231670371
+    },
+    {
+      "seconds_before_error": -4.876617719,
+      "frame_id": 97589,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.4621424064396
+    },
+    {
+      "seconds_before_error": -4.804592416,
+      "frame_id": 97590,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.04999942880343
+    },
+    {
+      "seconds_before_error": -4.715832939,
+      "frame_id": 97591,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.8497565006116
+    },
+    {
+      "seconds_before_error": -4.639992758,
+      "frame_id": 97592,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.20672423247865
+    },
+    {
+      "seconds_before_error": -4.56961204,
+      "frame_id": 97593,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.0431537846849
+    },
+    {
+      "seconds_before_error": -4.49856161,
+      "frame_id": 97594,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.01636114146174
+    },
+    {
+      "seconds_before_error": -4.434549849,
+      "frame_id": 97595,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.82211523334557
+    },
+    {
+      "seconds_before_error": -4.356021538,
+      "frame_id": 97596,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.3458574015049
+    },
+    {
+      "seconds_before_error": -4.291538694,
+      "frame_id": 97597,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.37358571655692
+    },
+    {
+      "seconds_before_error": -4.210787991,
+      "frame_id": 97598,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.49391925875499
+    },
+    {
+      "seconds_before_error": -4.135464879,
+      "frame_id": 97600,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.28263311918768
+    },
+    {
+      "seconds_before_error": -4.066864908,
+      "frame_id": 97601,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97587,
+      "confidence_pct": 14.12353515625,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.98702805905509
+    },
+    {
+      "seconds_before_error": -3.971954557,
+      "frame_id": 97602,
+      "mode": "yolo",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": 17.138671875,
+      "detections": [
+        {
+          "xyxy": [
+            90.5,
+            260.0,
+            226.5,
+            400.0
+          ],
+          "confidence": 0.17138671875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ],
+      "error": null,
+      "visual_agreement_pct": null
+    },
+    {
+      "seconds_before_error": -3.906208897,
+      "frame_id": 97603,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.40098713072325
+    },
+    {
+      "seconds_before_error": -3.845708358,
+      "frame_id": 97604,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.38522499939297
+    },
+    {
+      "seconds_before_error": -3.762347765,
+      "frame_id": 97605,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.36669970834782
+    },
+    {
+      "seconds_before_error": -3.671031648,
+      "frame_id": 97607,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.236736756328
+    },
+    {
+      "seconds_before_error": -3.604700309,
+      "frame_id": 97608,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.20503249086497
+    },
+    {
+      "seconds_before_error": -3.529757268,
+      "frame_id": 97609,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.91462688143217
+    },
+    {
+      "seconds_before_error": -3.441524971,
+      "frame_id": 97610,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.11649963499282
+    },
+    {
+      "seconds_before_error": -3.377909635,
+      "frame_id": 97611,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.92644732100166
+    },
+    {
+      "seconds_before_error": -3.301438109,
+      "frame_id": 97612,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.01982144664211
+    },
+    {
+      "seconds_before_error": -3.232716471,
+      "frame_id": 97613,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.87676941982704
+    },
+    {
+      "seconds_before_error": -3.175073699,
+      "frame_id": 97614,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.97210446516294
+    },
+    {
+      "seconds_before_error": -3.108927197,
+      "frame_id": 97615,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.77184915081719
+    },
+    {
+      "seconds_before_error": -3.033337355,
+      "frame_id": 97616,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97602,
+      "confidence_pct": 17.138671875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.50786840946452
+    },
+    {
+      "seconds_before_error": -2.929888583,
+      "frame_id": 97617,
+      "mode": "yolo",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": 20.88623046875,
+      "detections": [
+        {
+          "xyxy": [
+            93.75,
+            259.75,
+            227.25,
+            400.75
+          ],
+          "confidence": 0.2088623046875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ],
+      "error": null,
+      "visual_agreement_pct": null
+    },
+    {
+      "seconds_before_error": -2.869955802,
+      "frame_id": 97619,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.97054925102167
+    },
+    {
+      "seconds_before_error": -2.799895441,
+      "frame_id": 97620,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.78330606347691
+    },
+    {
+      "seconds_before_error": -2.725933992,
+      "frame_id": 97621,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.16414916193324
+    },
+    {
+      "seconds_before_error": -2.66276449,
+      "frame_id": 97622,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.96187680560634
+    },
+    {
+      "seconds_before_error": -2.591522597,
+      "frame_id": 97623,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.38856602814346
+    },
+    {
+      "seconds_before_error": -2.526897283,
+      "frame_id": 97624,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.92376145924226
+    },
+    {
+      "seconds_before_error": -2.463077717,
+      "frame_id": 97625,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.74000188124883
+    },
+    {
+      "seconds_before_error": -2.395464809,
+      "frame_id": 97626,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.54559400887732
+    },
+    {
+      "seconds_before_error": -2.332282091,
+      "frame_id": 97627,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.919494461938
+    },
+    {
+      "seconds_before_error": -2.271196353,
+      "frame_id": 97628,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.81682225647911
+    },
+    {
+      "seconds_before_error": -2.201798121,
+      "frame_id": 97629,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.92456573557494
+    },
+    {
+      "seconds_before_error": -2.127638075,
+      "frame_id": 97630,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.76860430846425
+    },
+    {
+      "seconds_before_error": -2.058276642,
+      "frame_id": 97631,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97617,
+      "confidence_pct": 20.88623046875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.04607433794612
+    },
+    {
+      "seconds_before_error": -1.977554576,
+      "frame_id": 97632,
+      "mode": "yolo",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": 16.10107421875,
+      "detections": [
+        {
+          "xyxy": [
+            93.5,
+            260.0,
+            227.25,
+            403.5
+          ],
+          "confidence": 0.1610107421875,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ],
+      "error": null,
+      "visual_agreement_pct": null
+    },
+    {
+      "seconds_before_error": -1.907676043,
+      "frame_id": 97633,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.65158523348742
+    },
+    {
+      "seconds_before_error": -1.851829858,
+      "frame_id": 97634,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.4193382147669
+    },
+    {
+      "seconds_before_error": -1.787571464,
+      "frame_id": 97635,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.19639709359046
+    },
+    {
+      "seconds_before_error": -1.721597828,
+      "frame_id": 97636,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.40423738981772
+    },
+    {
+      "seconds_before_error": -1.656862014,
+      "frame_id": 97637,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.52899196663078
+    },
+    {
+      "seconds_before_error": -1.597069299,
+      "frame_id": 97638,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.31867424236542
+    },
+    {
+      "seconds_before_error": -1.536243918,
+      "frame_id": 97639,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.72882246902506
+    },
+    {
+      "seconds_before_error": -1.464806626,
+      "frame_id": 97640,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.20155025762453
+    },
+    {
+      "seconds_before_error": -1.396962991,
+      "frame_id": 97641,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.26633688171378
+    },
+    {
+      "seconds_before_error": -1.319591664,
+      "frame_id": 97642,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.12763158825099
+    },
+    {
+      "seconds_before_error": -1.256266126,
+      "frame_id": 97643,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.57189467545463
+    },
+    {
+      "seconds_before_error": -1.196106041,
+      "frame_id": 97644,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.09270514073832
+    },
+    {
+      "seconds_before_error": -1.13532111,
+      "frame_id": 97645,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.31236621997927
+    },
+    {
+      "seconds_before_error": -1.07328565,
+      "frame_id": 97646,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97632,
+      "confidence_pct": 16.10107421875,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.43367654422482
+    },
+    {
+      "seconds_before_error": -0.991357313,
+      "frame_id": 97647,
+      "mode": "yolo",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": 10.48583984375,
+      "detections": [
+        {
+          "xyxy": [
+            90.5625,
+            260.0,
+            229.4375,
+            409.0
+          ],
+          "confidence": 0.1048583984375,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        }
+      ],
+      "error": null,
+      "visual_agreement_pct": null
+    },
+    {
+      "seconds_before_error": -0.915200191,
+      "frame_id": 97648,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.45626602343177
+    },
+    {
+      "seconds_before_error": -0.849610979,
+      "frame_id": 97649,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.4216798090581
+    },
+    {
+      "seconds_before_error": -0.778160309,
+      "frame_id": 97650,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.44512135478637
+    },
+    {
+      "seconds_before_error": -0.70778877,
+      "frame_id": 97651,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.1578220947673
+    },
+    {
+      "seconds_before_error": -0.646389934,
+      "frame_id": 97652,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 99.20794486450463
+    },
+    {
+      "seconds_before_error": -0.582427739,
+      "frame_id": 97653,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 98.65753582214141
+    },
+    {
+      "seconds_before_error": -0.50674698,
+      "frame_id": 97654,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 97.92946180471027
+    },
+    {
+      "seconds_before_error": -0.440162576,
+      "frame_id": 97655,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.52907555270083
+    },
+    {
+      "seconds_before_error": -0.367287807,
+      "frame_id": 97656,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.38006507066818
+    },
+    {
+      "seconds_before_error": -0.301365947,
+      "frame_id": 97657,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.18094445604852
+    },
+    {
+      "seconds_before_error": -0.224106717,
+      "frame_id": 97658,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.23612448788418
+    },
+    {
+      "seconds_before_error": -0.143889014,
+      "frame_id": 97660,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.22794503348399
+    },
+    {
+      "seconds_before_error": -0.074467706,
+      "frame_id": 97661,
+      "mode": "visual_depth",
+      "semantic_frame_id": 97647,
+      "confidence_pct": 10.48583984375,
+      "fresh_yolo_confidence_pct": null,
+      "detections": null,
+      "error": null,
+      "visual_agreement_pct": 96.1773225750977
+    },
+    {
+      "seconds_before_error": -0.00732751,
+      "frame_id": 97662,
+      "mode": null,
+      "semantic_frame_id": null,
+      "confidence_pct": null,
+      "fresh_yolo_confidence_pct": null,
+      "detections": [],
+      "error": "RuntimeError: Coke YOLO target absent/ambiguous",
+      "visual_agreement_pct": null
+    }
+  ],
+  "failure_confidence": "Unknown exact raw score; no detection survived 10% decoding threshold. This is not a recorded 0% probability."
+}

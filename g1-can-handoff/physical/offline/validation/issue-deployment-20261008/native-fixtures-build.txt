@@ -1,0 +1,15 @@
+Building Apple Container image dev-g1-handoff-coke-yolo:latest for linux/arm64...
+  done    preparing buildx builder  0.0s
+  done    load build definition  0.5s
+  done    load build context  6.4s
+  cached  [linux/arm64 fixtures 1/1] COPY fixtures/ /fixtures/
+  cached  [linux/arm64 dependencies 1/3] WORKDIR /app
+  cached  [linux/arm64 dependencies 2/3] COPY root/ /
+  cached  [linux/arm64 weights 1/1] COPY model/coke-can.pt /models/coke-can.pt
+  cached  [linux/arm64 inference 1/3] COPY service.py preprocessing.py postprocessing.py qualification.py frame_limits.py confidence.py /app/
+  done    [linux/arm64 inference 2/3] COPY verify_build.py /tmp/verify_build.py  0.1s
+  done    [linux/arm64 inference 3/3] RUN python3 /tmp/verify_build.py  4.4s
+  ...     exporting + pushing layers  (17.8s)
+  ...     exporting + pushing layers  (47.8s)
+  ...     exporting + pushing layers  (77.8s)
+✓ Built & pushed (5 cached, 2 rebuilt) in 1m55.784s

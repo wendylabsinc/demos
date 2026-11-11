@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "axes": "world XY metres",
+  "interpretation": "Observed estimate variability; no independent can ground truth. Includes jitter and persistent drift, which may include actual can movement.",
+  "unmeasured": "Z, depth pixels, camera latency, postgrasp variability and motion-conditioned noise probabilities are not fitted.",
+  "traces": [
+    {
+      "name": "handover",
+      "source_archive_sha256": "b8397ce076247fe66c0fde3a3343c7fcab0349bb6f4060537ce67c1032486b58",
+      "source_events_sha256": "84ee3ec85d6050e6f8d345ac83d66c23c1f06e311cb72610cef3f819a113bad8",
+      "samples": [
+        {
+          "phase": "planning",
+          "frame_id": 141719,
+          "unix_ns": 1791493340417499605,
+          "center_xy_m": [
+            0.29925639737053356,
+            0.1613105240751348
+          ],
+          "exposure_age_ms": 256.6228389623575,
+          "fit_error_m": 0.0023235738707789205
+        },
+        {
+          "phase": "plan-refresh",
+          "frame_id": 141893,
+          "unix_ns": 1791493351981286640,
+          "center_xy_m": [
+            0.2986544193842213,
+            0.15999018838078938
+          ],
+          "exposure_age_ms": 215.23102641367586,
+          "fit_error_m": 0.0016377060484481425
+        },
+        {
+          "phase": "planning",
+          "frame_id": 141977,
+          "unix_ns": 1791493357702922769,
+          "center_xy_m": [
+            0.3096330857088188,
+            0.1605712849307928
+          ],
+          "exposure_age_ms": 332.8216873433121,
+          "fit_error_m": 0.002421911583066373
+        },
+        {
+          "phase": "plan-refresh",
+          "frame_id": 142197,
+          "unix_ns": 1791493372256074942,
+          "center_xy_m": [
+            0.30848099485964514,
+            0.1592710028723347
+          ],
+          "exposure_age_ms": 207.3017827115109,
+          "fit_error_m": 0.0023308247306635323
+        },
+        {
+          "phase": "pre-open",
+          "frame_id": 142198,
+          "unix_ns": 1791493372323649826,
+          "center_xy_m": [
+            0.3079872002512469,
+            0.1595806552661796
+          ],
+          "exposure_age_ms": 210.26100583731022,
+          "fit_error_m": 0.002399028962609875
+        },
+        {
+          "phase": "pre-stage",
+          "frame_id": 142222,
+          "unix_ns": 1791493373956477254,
+          "center_xy_m": [
+            0.308529091971592,
+            0.15928135641475447
+          ],
+          "exposure_age_ms": 240.0988891840825,
+          "fit_error_m": 0.0022853015411969236
+        },
+        {
+          "phase": "approach",
+          "frame_id": 142410,
+          "unix_ns": 1791493386482220042,
+          "center_xy_m": [
+            0.3067006456489538,
+            0.15968711288442314
+          ],
+          "exposure_age_ms": 221.808020834942,
+          "fit_error_m": 0.0025795633580854844
+        },
+        {
+          "phase": "align",
+          "frame_id": 142448,
+          "unix_ns": 1791493389005293663,
+          "center_xy_m": [
+            0.30691277839420295,
+            0.15865512918183275
+          ],
+          "exposure_age_ms": 211.90584791293077,
+          "fit_error_m": 0.002417369593312798
+        },
+        {
+          "phase": "reach",
+          "frame_id": 142717,
+          "unix_ns": 1791493406968057425,
+          "center_xy_m": [
+            0.3062271840601602,
+            0.1563410493372769
+          ],
+          "exposure_age_ms": 229.17483657874982,
+          "fit_error_m": 0.002333880501273373
+        }
+      ]
+    },
+    {
+      "name": "approach-drift",
+      "source_archive_sha256": "4b4c78966acaed1bbf7511db77de255b8c1b60943def604ef024664a743b954e",
+      "source_events_sha256": "977b407ead007b5684f84c4e5decb9183597ec48e1142ba3ccba4aa3deaf2cb4",
+      "samples": [
+        {
+          "phase": "planning",
+          "frame_id": 146461,
+          "unix_ns": 1791493656793667049,
+          "center_xy_m": [
+            0.3125899654674895,
+            0.15596017795727296
+          ],
+          "exposure_age_ms": 274.2137982877466,
+          "fit_error_m": 0.001673137428296901
+        },
+        {
+          "phase": "plan-refresh",
+          "frame_id": 146604,
+          "unix_ns": 1791493666272083978,
+          "center_xy_m": [
+            0.3116618024051274,
+            0.1549299275662065
+          ],
+          "exposure_age_ms": 209.25209236884257,
+          "fit_error_m": 0.0021605564861177486
+        },
+        {
+          "phase": "pre-open",
+          "frame_id": 146605,
+          "unix_ns": 1791493666340137926,
+          "center_xy_m": [
+            0.312248680331017,
+            0.15497881104184938
+          ],
+          "exposure_age_ms": 212.80994914559415,
+          "fit_error_m": 0.002120811441207041
+        },
+        {
+          "phase": "pre-stage",
+          "frame_id": 146627,
+          "unix_ns": 1791493667846220978,
+          "center_xy_m": [
+            0.3104453709841012,
+            0.15594386877245633
+          ],
+          "exposure_age_ms": 250.91717152645288,
+          "fit_error_m": 0.002186734483612108
+        },
+        {
+          "phase": "approach",
+          "frame_id": 146629,
+          "unix_ns": 1791493667923216791,
+          "center_xy_m": [
+            0.31174283885729404,
+            0.15504862466196778
+          ],
+          "exposure_age_ms": 194.9315771289548,
+          "fit_error_m": 0.002225939977080325
+        },
+        {
+          "phase": "align",
+          "frame_id": 146744,
+          "unix_ns": 1791493675596231811,
+          "center_xy_m": [
+            0.3168737231760215,
+            0.1640381728045196
+          ],
+          "exposure_age_ms": 196.63990883418592,
+          "fit_error_m": 0.003656341793010644
+        },
+        {
+          "phase": "reach",
+          "frame_id": 147029,
+          "unix_ns": 1791493694662921410,
+          "center_xy_m": [
+            0.31813969355094684,
+            0.16616539863468197
+          ],
+          "exposure_age_ms": 245.79590300527343,
+          "fit_error_m": 0.0031251973820192887
+        }
+      ]
+    }
+  ]
+}

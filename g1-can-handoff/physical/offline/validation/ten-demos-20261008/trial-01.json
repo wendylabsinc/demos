@@ -1,0 +1,3331 @@
+{
+  "index": 1,
+  "requested_trials": 10,
+  "reset_confirmed": true,
+  "started_unix_ns": 1791481436978188979,
+  "controller_before": {
+    "phase": "PASSIVE",
+    "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "motion_commands_sent": 6628,
+    "adapter_initialized": false,
+    "automatic_home": false,
+    "events": "/data/events-20261008T173130Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200.0,
+      "rate_hz": 195.1,
+      "samples": 143332,
+      "age_s": 0.0048,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": 640764.7431201312,
+    "tracking_vision": {
+      "top_quantile_z_m": 0.8666090243348751,
+      "center_xy_m": [
+        0.3148380153442004,
+        0.17930299748652778
+      ],
+      "fit_error_m": 0.0023734112847045206,
+      "pixels": 1773,
+      "frame_id": 5188,
+      "detector": "coke_visual_depth_tracker",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          53.25,
+          268.625,
+          200.0,
+          433.375
+        ],
+        "confidence": 0.285400390625,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "d6c9fba4e9310150349e2e87bffec1f08117240d8f855fd30d92a29af9b75617",
+      "tracking": {
+        "mode": "visual_depth",
+        "semantic_frame_id": 5182,
+        "semantic_age_s": 0.40029239654541016,
+        "visual_agreement": 0.9876985568502018,
+        "support_pixels": 3545,
+        "roi_shape": [
+          138,
+          122
+        ]
+      }
+    },
+    "first_failure": {
+      "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+      "source": "execution"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.021234694868326187,
+          0.02116035670042038,
+          1.660632848739624
+        ],
+        "q": [
+          -0.1267090141773224,
+          -0.009398190304636955,
+          0.0016873788554221392,
+          0.299322247505188,
+          -0.1298268437385559,
+          0.009318232536315918,
+          -0.17305372655391693,
+          0.012834305875003338,
+          -0.0018748653819784522,
+          0.3309648633003235,
+          -0.16528107225894928,
+          -0.03729352727532387,
+          0.002089135814458132,
+          0.0,
+          0.0,
+          0.2461559921503067,
+          0.28143754601478577,
+          -0.08160059154033661,
+          0.8254374861717224,
+          0.0011744541116058826,
+          0.007984369993209839,
+          -0.0033287385012954473,
+          0.26319754123687744,
+          -0.2842777967453003,
+          0.08856342732906342,
+          0.7862130999565125,
+          -0.0009347695740871131,
+          0.011926701292395592,
+          0.0014726216904819012
+        ],
+        "dq": [
+          0.020569952204823494,
+          -0.003272492438554764,
+          0.0051424880512058735,
+          0.006544984877109528,
+          0.0016532846493646502,
+          -0.006262892857193947,
+          -0.0051424880512058735,
+          -0.003272492438554764,
+          -0.001714162528514862,
+          -0.0021816615480929613,
+          -0.005427154246717691,
+          0.0035757317673414946,
+          -0.006856650114059448,
+          0.0,
+          0.0,
+          0.015339807607233524,
+          -0.01073786523193121,
+          0.019941750913858414,
+          -0.01073786523193121,
+          -0.006135923322290182,
+          -0.0009817476384341717,
+          -0.005890486296266317,
+          0.0015339808305725455,
+          0.007669903803616762,
+          0.004601942375302315,
+          0.00920388475060463,
+          0.004601942375302315,
+          0.0,
+          0.006872233934700489
+        ],
+        "tau_est": [
+          2.6287286281585693,
+          4.21875,
+          -1.1745383739471436,
+          1.40625,
+          6.278655052185059,
+          0.0041570053435862064,
+          -1.342329502105713,
+          -8.61328125,
+          4.194779872894287,
+          -8.525390625,
+          2.4394242763519287,
+          2.308253288269043,
+          -0.3355823755264282,
+          0.0,
+          0.0,
+          0.0,
+          2.4375,
+          0.6875,
+          -1.0625,
+          -0.1875,
+          -0.341796875,
+          0.166015625,
+          0.0625,
+          -2.0625,
+          -0.25,
+          -1.25,
+          -0.0625,
+          -0.419921875,
+          -0.01953125
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            33,
+            34
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            42,
+            44
+          ],
+          [
+            40,
+            42
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            33,
+            35
+          ],
+          [
+            33,
+            34
+          ],
+          [
+            35,
+            37
+          ],
+          [
+            45,
+            45
+          ],
+          [
+            41,
+            43
+          ],
+          [
+            31,
+            31
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            44
+          ],
+          [
+            47,
+            49
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            40,
+            39
+          ],
+          [
+            41,
+            35
+          ],
+          [
+            47,
+            46
+          ],
+          [
+            48,
+            50
+          ],
+          [
+            49,
+            47
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            43
+          ],
+          [
+            49,
+            41
+          ]
+        ],
+        "temperature_max": 50,
+        "time": 4818.097506824
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.017439525574445724,
+          0.666505753993988,
+          -0.01574789360165596,
+          -1.4800219535827637,
+          -1.680490255355835,
+          -1.4702292680740356,
+          -1.7493834495544434
+        ],
+        "dq": [
+          -0.0,
+          -0.0,
+          0.0,
+          0.0,
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "tau_est": [
+          5861.07958984375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            37,
+            29
+          ],
+          [
+            37,
+            36
+          ],
+          [
+            33,
+            28
+          ],
+          [
+            36,
+            28
+          ],
+          [
+            33,
+            26
+          ],
+          [
+            37,
+            30
+          ],
+          [
+            34,
+            27
+          ]
+        ],
+        "temperature_max": 37,
+        "time": 4818.042690947
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.03907882422208786,
+          -0.8964307904243469,
+          -1.5200108289718628,
+          1.072171688079834,
+          1.7010608911514282,
+          0.6911224126815796,
+          1.6256473064422607
+        ],
+        "dq": [
+          0.0,
+          0.0,
+          0.11450418829917908,
+          -0.0,
+          0.0,
+          0.11450418829917908,
+          0.0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            43,
+            35
+          ],
+          [
+            45,
+            36
+          ],
+          [
+            40,
+            32
+          ],
+          [
+            44,
+            36
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            43,
+            35
+          ],
+          [
+            41,
+            33
+          ]
+        ],
+        "temperature_max": 45,
+        "time": 4818.071922182
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_before": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T162358Z-ab00e585",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4799.554696894,
+    "received": {
+      "rt/dex3/left/state": 3787000,
+      "rt/lf/dex3/left/state": 42800,
+      "rt/dex3/right/state": 3775144,
+      "rt/lf/dex3/right/state": 42760,
+      "rt/lowstate": 4995932,
+      "rt/arm_sdk": 232814,
+      "rt/dex3/left/cmd": 512,
+      "rt/dex3/right/cmd": 512
+    },
+    "written": {
+      "rt/dex3/left/state": 3786998,
+      "rt/lf/dex3/left/state": 42800,
+      "rt/dex3/right/state": 3775142,
+      "rt/lf/dex3/right/state": 42760,
+      "rt/lowstate": 4995929,
+      "rt/arm_sdk": 232814,
+      "rt/dex3/left/cmd": 512,
+      "rt/dex3/right/cmd": 512
+    },
+    "dropped": {},
+    "queue_depth": 7,
+    "age_s": {
+      "rt/lowstate": 0.000330476,
+      "rt/dex3/left/state": 0.000302827,
+      "rt/dex3/right/state": 0.000282506,
+      "rt/lf/dex3/left/state": 0.022465205,
+      "rt/lf/dex3/right/state": 0.11249208,
+      "rt/arm_sdk": 623.407263773,
+      "rt/dex3/left/cmd": 624.420638712,
+      "rt/dex3/right/cmd": 624.420624823
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.002851524,
+      "rt/lf/dex3/left/state": 0.022465205,
+      "rt/dex3/right/state": 0.002840036,
+      "rt/lf/dex3/right/state": 0.11249208,
+      "rt/lowstate": 0.002877381,
+      "rt/arm_sdk": 623.407263773,
+      "rt/dex3/left/cmd": 624.420638712,
+      "rt/dex3/right/cmd": 624.420624823
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T162358Z-ab00e585/samples-000079.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 8325045,
+        "sha256": "a7afa91872571469624b664dccc4253afbb7d8d8f91ee55b852fa9296ce76b9b"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 37434308,
+        "sha256": "6afdd3528b65fd0de55eff7eb51f13ffa748bc076b8bb206e27803f5409eea96"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 36322753,
+        "sha256": "0ed28f64d60cc974ec5c584edcfb0da578c132eaa146eff6dba5bbaaf9dd422f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 35613128,
+        "sha256": "8b5f3422d6789d5feb7f75bf2c2fc9d0e86fa17031dd15c9e01de6e80f9787e3"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 35327273,
+        "sha256": "f7ded4f0e2435fb1a98c822cc1a9e0a4f72114e3a273d55578b89210ae4380b1"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35578389,
+        "sha256": "cc1160b056e2db1037ac144ae18afd83645ea08e1aedec7fa208a7b3504ff368"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 35543372,
+        "sha256": "51d60086cf0c34da7f3708981364707aa07ac74b9daa5f436df22944faf9e37a"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 35647176,
+        "sha256": "e823a199e80bde33b6b76239d76d1bae4e19bf82463213bc7e18c2785189a91f"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 35794718,
+        "sha256": "80c74b4e33f020a5c69e01c9f1ae8934e637f631e44294701e4b5834ccc24c4b"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 37465924,
+        "sha256": "aca3a1c7d27efd546703458da658d18f33b3e6bfd8e8d9ffc354c6baebec57ab"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39558719,
+        "sha256": "6bd95181e258b1f4a5e4a04ad1c93a8fa3f56d0b954ccd1766133fc09d81c494"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38484102,
+        "sha256": "883caa344e245945d86d00e88b337f61ab74b3f8b632ee7a9454322622693f11"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38554713,
+        "sha256": "82712c4d529922c99f06affdf3c199402f858bc9704e33d69e6273bbfdac79cf"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38212003,
+        "sha256": "2f42e4ffe2da714db0cab1d52cd2db2c1a5139ae98d4b279c435f8ab4db29920"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 38179835,
+        "sha256": "e4257e5c18abf1a8426a980e09cd75bebdab358a8d50cd36207711e0ef5dd9db"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37866061,
+        "sha256": "23a9891114a81d94e118cc75efbadfd9ef356d313db81444bb209d64915b72c4"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37373264,
+        "sha256": "d5849ae6e81235fb14efce268f1a609e7e6d4a99aa1777eb7ad0c8e3f94e1703"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36987630,
+        "sha256": "8f84638b5bd9942dff880213b7bda734810e32f048d7a0c7952bb621ddef5e4d"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 36777965,
+        "sha256": "26d20bd6d219cfff654d05f7b3bc5cebb21737ca3bc13be07f7c25bea3103225"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 36851208,
+        "sha256": "6f5810df33c0d5abb1a3f2ff6f5a7c3704f43a45ae8235197877e149388f27f2"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 38639503,
+        "sha256": "b53c428109491ebaa77f3033311301b9c26c896f5d9d0c70f8949bfcf9994886"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 39102550,
+        "sha256": "125d414d50deaa0943645294e49798474513dd323ac0b1646c0ce6fe2c66cf22"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 38741128,
+        "sha256": "3a4a9724865dd3848c74a8af07aadefa08b300ce188dfb9ba0e633402f57b158"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 38911627,
+        "sha256": "bd7b92490b9c5417af9b30be3fe740b0aa665b698852962736c95ce1dcc02ca7"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 38969495,
+        "sha256": "a359d7148e60471c6353b2822433bfa415bd145bc776ab0d54b00b192b89a419"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 39115639,
+        "sha256": "8aa2c27e3a68809084075e74747e4e5ca3e56d0d1b0d2cd98424749d0788b6a4"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 39050267,
+        "sha256": "e69501049d567f5d5b0a4bb7ff580b825a3b3c17c1a6f5cca26629723c925042"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 39487646,
+        "sha256": "466146af1fc822b52fa7df98ae91c5b7a7dc2b35137d64c00a78600d27d79eb7"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 39411191,
+        "sha256": "28bac50cc290dc6462958c6c86a45e13a4e8ba4eb737a10210ca2e043e822aa9"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 39426815,
+        "sha256": "b1fb89d5674f01d7ee139a5924018b6362930f7c67c83afefd82e1984aecedc2"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 39660269,
+        "sha256": "db62abb29e2664a1c84aaf5074c127047b469f4f2ee25bbf6b4700c2f89272aa"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 40036055,
+        "sha256": "0366bfeae03d7ca1b61c4855d97f176c4479c455088c561e8cfe6c7bba9a5883"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 40446395,
+        "sha256": "f2ca30931eb7fb4a2d391151bd606f314fff5cd7309af43fe500f29fdd084daf"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 40898193,
+        "sha256": "cdb248f7e60739d4e005c8f7b276b1c4b78eb035686ca3cb311a6e0205f33deb"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41199145,
+        "sha256": "0b682b3408f47da639ec97ab342d16e07f8b00faa83bed6fd0b820f721a759ef"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41273961,
+        "sha256": "d9be064864dbd972d252094e8a1ddff2a39809e4ddb1d5cecb75d3b5859f9b94"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40911150,
+        "sha256": "25441b87724dbb784b8e30aef8044e859688f7ed904203dc40e1bb1a830eb05c"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 40185253,
+        "sha256": "8b4b5fd53312e87cad7770cc74ddf902e59a7dac857366d69a53c8832c7d12ab"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 39541001,
+        "sha256": "5164b0ee314e7e88f8a4b5f1332b87d097cb2dc2fd0f04d059cae3e285fc9aaf"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 39329044,
+        "sha256": "925a4b83563a03a2e17c38f847d1f60b60b0dd215013b2c08c2b42d07f594a6f"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 39397236,
+        "sha256": "95c11ef9abe7ef291e0ee64edab2159adff75e31a34be089951ea1d044512641"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 39110320,
+        "sha256": "ab9b63a267ae0efdf1fab66516cbc2a9a172fab03244f99ef881d5b6c2b142c9"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 39371741,
+        "sha256": "ecb816aefc31968531dda5cd50b82a52c4932aa6b63429ebb7dea8f5c1c94b23"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 39686504,
+        "sha256": "0faa71f09e6a1b2e4bf86d2890b4ec205dbf6f7508b1ea9949edb0e00112d061"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40633960,
+        "sha256": "13446759b986c25b81690db8fef5ad44770d32af0587ad8e9ee0ccf1c830f463"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 41385399,
+        "sha256": "a2dea2303d165c9acef39ec95b54e7ebd431c7221beafdf7173711a12007ff7c"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 41664850,
+        "sha256": "d43ef5443282566974b87b4e134b990cc6d629b6f236d846fd4d89e4c295dd9f"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 41176610,
+        "sha256": "85a14a4069adbf719f2fd079687a1cbc660460c10ce5bd27d59deced06119b2c"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 40188357,
+        "sha256": "ab3f667e5bd996ca5f71941bd6021a30bb4525480162e78984351b2e2f457a15"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 39365474,
+        "sha256": "184609a1487482d2149b577ef69fefcb151d5bda55ff9c8a34c90a993b00eb70"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 39240758,
+        "sha256": "f9108c6d485b5c45e2d0c8ea2303e5b583960699001d9d127ea560875fef7070"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 39174361,
+        "sha256": "90456e6dae3fe4bd0dafb22cb4c0b96c775ce75d131e2f8e4b712737d482a7b7"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 39414841,
+        "sha256": "a734f9f37722c158fd28af7cd4ae65df13646d5bbb6a4c21c2eca7d5f7373a95"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40280795,
+        "sha256": "c96c988ca70b37f55f94c6ca859154ef3ac56c52d75396f5d46de2d065d6fba3"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 40986379,
+        "sha256": "27e77b0b229a8160a9368ce4333295c16f5730fc2ee5419b68bb0ea51faad63f"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 41107807,
+        "sha256": "556a2794f045e6a06c43673a2d6bbd8459744c38b6e3f8595f2b360498e4ffa7"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38583192,
+        "sha256": "d1ee4c5a0b27fce23363ad02821040fbb6355e345bcc1b1c1affc9b307e7f9d5"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 39928906,
+        "sha256": "99a0969080aec0f01be504815cae63e14058f36f105b372ac19706c41d020fec"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 39264116,
+        "sha256": "426ec88e774ef51fabee7aed9bf26b37bb331a5e27e1778fc2b716da5f9063fa"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 35849107,
+        "sha256": "1b386f9baec9b56754d6a2cffa1d896efbd3ca2f685d3653f69804eb3f37c9b8"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 36194949,
+        "sha256": "04a4fca636cf61059f4da9c3190625149236d7d1bdee74101bb7bada356d3f30"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 37120705,
+        "sha256": "589c6f7b0c920443da6253bf5093045d51424107d7ea82cd831faea2f3fa5587"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38160166,
+        "sha256": "106951bc95f1695ae8ce0adb0e2178be8a2c6e1361b801458342cbb6d52e8517"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 38447670,
+        "sha256": "1c1d165d0d0417ef9393b4b7873c2c99734f472de1218aabe7b21f0ff78b7128"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 38075846,
+        "sha256": "045f74dc734dfbf5cebbe5dd7fd746cf9216a7c37b5338ec12e1a3715248d64e"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 37094576,
+        "sha256": "952543a3692b1ef9b82b5e711174731c5c6132065941498e8f14a764803e9280"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36646709,
+        "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+      },
+      {
+        "file": "samples-000067.jsonl.gz",
+        "bytes": 36217651,
+        "sha256": "29171d4e8e766ab14ca6c37013b3c83a5896ca740badfb06410d5b77408e8e39"
+      },
+      {
+        "file": "samples-000068.jsonl.gz",
+        "bytes": 37805845,
+        "sha256": "2bc45b09ac34ec0c2ced83af08f86d0ff03cb0388ef8d799d4f7f32a5f7acf4d"
+      },
+      {
+        "file": "samples-000069.jsonl.gz",
+        "bytes": 38992608,
+        "sha256": "95be5c902fdce13d1a6a68e57bba3289b1873a55cdf5ee9f6c7bce7d696ac821"
+      },
+      {
+        "file": "samples-000070.jsonl.gz",
+        "bytes": 36753742,
+        "sha256": "819c066f11c7f51d28e2c5ee53652225cf60c29409706bfd890426680d86d501"
+      },
+      {
+        "file": "samples-000071.jsonl.gz",
+        "bytes": 37096917,
+        "sha256": "d8e4dc3c46ec5b2ac9cb7b6b13d6ddcac84ed2571d974b13007573413ff21b5f"
+      },
+      {
+        "file": "samples-000072.jsonl.gz",
+        "bytes": 37908553,
+        "sha256": "c187dd95c9e7c13aab6d84f2c43503efca5d115250ec63b7528027383ef45c15"
+      },
+      {
+        "file": "samples-000073.jsonl.gz",
+        "bytes": 38395143,
+        "sha256": "05cb9bcf51acc496d081972f4b85a700be77d7f4e573062b5090a10ffa8d90be"
+      },
+      {
+        "file": "samples-000074.jsonl.gz",
+        "bytes": 38534750,
+        "sha256": "3618e7f26d1bb033f926781717cab4e50434153cbd2269a421cfb080a16bfb66"
+      },
+      {
+        "file": "samples-000075.jsonl.gz",
+        "bytes": 38678310,
+        "sha256": "10ee1ccdeef867297bb02ca865802a07111ec720bb105fa8a071c94d613aedfd"
+      },
+      {
+        "file": "samples-000076.jsonl.gz",
+        "bytes": 37295419,
+        "sha256": "1d1b050b265709478ee5cea94d6e87c83108de496fefc18ea09f65890e44cc61"
+      },
+      {
+        "file": "samples-000077.jsonl.gz",
+        "bytes": 36973937,
+        "sha256": "a18d41e7b8c56c1ffd879b5de994cacac4485f1d0796eda281140a38c3ab7876"
+      },
+      {
+        "file": "samples-000078.jsonl.gz",
+        "bytes": 36687311,
+        "sha256": "002af14251e498d6f8ff0164b43002a1cf79176c8a494dc60a8b28cdf924d8e0"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "preflight": {
+    "unix_ns": 1791481436978188979,
+    "status": {
+      "phase": "PASSIVE",
+      "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+      "motion_commands_sent": 6628,
+      "adapter_initialized": false,
+      "automatic_home": false,
+      "events": "/data/events-20261008T173130Z.jsonl",
+      "calibration_present": true,
+      "lowstate": {
+        "poll_hz": 200.0,
+        "rate_hz": 195.1,
+        "samples": 143332,
+        "age_s": 0.0048,
+        "listener_errors": 0,
+        "affinity": {
+          "requested": "auto",
+          "cpu": 6,
+          "active": true,
+          "error": null
+        }
+      },
+      "camera_max_age_ms": 400.0,
+      "yolo_confidence_strictly_above": 0.1,
+      "perception_mode": "yolo_visual_depth",
+      "tracking_error": null,
+      "tracking_exposure_age_ms": 640764.7431201312,
+      "tracking_vision": {
+        "top_quantile_z_m": 0.8666090243348751,
+        "center_xy_m": [
+          0.3148380153442004,
+          0.17930299748652778
+        ],
+        "fit_error_m": 0.0023734112847045206,
+        "pixels": 1773,
+        "frame_id": 5188,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            53.25,
+            268.625,
+            200.0,
+            433.375
+          ],
+          "confidence": 0.285400390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "d6c9fba4e9310150349e2e87bffec1f08117240d8f855fd30d92a29af9b75617",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 5182,
+          "semantic_age_s": 0.40029239654541016,
+          "visual_agreement": 0.9876985568502018,
+          "support_pixels": 3545,
+          "roi_shape": [
+            138,
+            122
+          ]
+        }
+      },
+      "first_failure": {
+        "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+        "source": "execution"
+      },
+      "demo_running": false,
+      "demo_result": null,
+      "demo_error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+      "measured": {
+        "body": {
+          "imu_rpy": [
+            0.021234694868326187,
+            0.02116035670042038,
+            1.660632848739624
+          ],
+          "q": [
+            -0.1267090141773224,
+            -0.009398190304636955,
+            0.0016873788554221392,
+            0.299322247505188,
+            -0.1298268437385559,
+            0.009318232536315918,
+            -0.17305372655391693,
+            0.012834305875003338,
+            -0.0018748653819784522,
+            0.3309648633003235,
+            -0.16528107225894928,
+            -0.03729352727532387,
+            0.002089135814458132,
+            0.0,
+            0.0,
+            0.2461559921503067,
+            0.28143754601478577,
+            -0.08160059154033661,
+            0.8254374861717224,
+            0.0011744541116058826,
+            0.007984369993209839,
+            -0.0033287385012954473,
+            0.26319754123687744,
+            -0.2842777967453003,
+            0.08856342732906342,
+            0.7862130999565125,
+            -0.0009347695740871131,
+            0.011926701292395592,
+            0.0014726216904819012
+          ],
+          "dq": [
+            0.020569952204823494,
+            -0.003272492438554764,
+            0.0051424880512058735,
+            0.006544984877109528,
+            0.0016532846493646502,
+            -0.006262892857193947,
+            -0.0051424880512058735,
+            -0.003272492438554764,
+            -0.001714162528514862,
+            -0.0021816615480929613,
+            -0.005427154246717691,
+            0.0035757317673414946,
+            -0.006856650114059448,
+            0.0,
+            0.0,
+            0.015339807607233524,
+            -0.01073786523193121,
+            0.019941750913858414,
+            -0.01073786523193121,
+            -0.006135923322290182,
+            -0.0009817476384341717,
+            -0.005890486296266317,
+            0.0015339808305725455,
+            0.007669903803616762,
+            0.004601942375302315,
+            0.00920388475060463,
+            0.004601942375302315,
+            0.0,
+            0.006872233934700489
+          ],
+          "tau_est": [
+            2.6287286281585693,
+            4.21875,
+            -1.1745383739471436,
+            1.40625,
+            6.278655052185059,
+            0.0041570053435862064,
+            -1.342329502105713,
+            -8.61328125,
+            4.194779872894287,
+            -8.525390625,
+            2.4394242763519287,
+            2.308253288269043,
+            -0.3355823755264282,
+            0.0,
+            0.0,
+            0.0,
+            2.4375,
+            0.6875,
+            -1.0625,
+            -0.1875,
+            -0.341796875,
+            0.166015625,
+            0.0625,
+            -2.0625,
+            -0.25,
+            -1.25,
+            -0.0625,
+            -0.419921875,
+            -0.01953125
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              33,
+              34
+            ],
+            [
+              32,
+              32
+            ],
+            [
+              33,
+              33
+            ],
+            [
+              33,
+              33
+            ],
+            [
+              42,
+              44
+            ],
+            [
+              40,
+              42
+            ],
+            [
+              33,
+              33
+            ],
+            [
+              33,
+              35
+            ],
+            [
+              33,
+              34
+            ],
+            [
+              35,
+              37
+            ],
+            [
+              45,
+              45
+            ],
+            [
+              41,
+              43
+            ],
+            [
+              31,
+              31
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              44,
+              44
+            ],
+            [
+              47,
+              49
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              42,
+              42
+            ],
+            [
+              41,
+              40
+            ],
+            [
+              40,
+              39
+            ],
+            [
+              41,
+              35
+            ],
+            [
+              47,
+              46
+            ],
+            [
+              48,
+              50
+            ],
+            [
+              49,
+              47
+            ],
+            [
+              46,
+              46
+            ],
+            [
+              47,
+              45
+            ],
+            [
+              47,
+              43
+            ],
+            [
+              49,
+              41
+            ]
+          ],
+          "temperature_max": 50,
+          "time": 4818.097506824
+        },
+        "left": {
+          "imu_rpy": null,
+          "q": [
+            -0.017439525574445724,
+            0.666505753993988,
+            -0.01574789360165596,
+            -1.4800219535827637,
+            -1.680490255355835,
+            -1.4702292680740356,
+            -1.7493834495544434
+          ],
+          "dq": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            0.0,
+            -0.0
+          ],
+          "tau_est": [
+            5861.07958984375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              37,
+              29
+            ],
+            [
+              37,
+              36
+            ],
+            [
+              33,
+              28
+            ],
+            [
+              36,
+              28
+            ],
+            [
+              33,
+              26
+            ],
+            [
+              37,
+              30
+            ],
+            [
+              34,
+              27
+            ]
+          ],
+          "temperature_max": 37,
+          "time": 4818.042690947
+        },
+        "right": {
+          "imu_rpy": null,
+          "q": [
+            -0.03907882422208786,
+            -0.8964307904243469,
+            -1.5200108289718628,
+            1.072171688079834,
+            1.7010608911514282,
+            0.6911224126815796,
+            1.6256473064422607
+          ],
+          "dq": [
+            0.0,
+            0.0,
+            0.11450418829917908,
+            -0.0,
+            0.0,
+            0.11450418829917908,
+            0.0
+          ],
+          "tau_est": [
+            -5861.07958984375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375,
+            1674.5941162109375,
+            -1674.5941162109375
+          ],
+          "faults": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "temperatures": [
+            [
+              43,
+              35
+            ],
+            [
+              45,
+              36
+            ],
+            [
+              40,
+              32
+            ],
+            [
+              44,
+              36
+            ],
+            [
+              42,
+              34
+            ],
+            [
+              43,
+              35
+            ],
+            [
+              41,
+              33
+            ]
+          ],
+          "temperature_max": 45,
+          "time": 4818.071922182
+        }
+      },
+      "telemetry_healthy": true
+    },
+    "recorder": {
+      "schema": "g1-handoff-recorder/1",
+      "session": "20261008T162358Z-ab00e585",
+      "read_only": true,
+      "motion_commands_sent": 0,
+      "recording": true,
+      "error": null,
+      "uptime_s": 4799.554696894,
+      "received": {
+        "rt/dex3/left/state": 3787000,
+        "rt/lf/dex3/left/state": 42800,
+        "rt/dex3/right/state": 3775144,
+        "rt/lf/dex3/right/state": 42760,
+        "rt/lowstate": 4995932,
+        "rt/arm_sdk": 232814,
+        "rt/dex3/left/cmd": 512,
+        "rt/dex3/right/cmd": 512
+      },
+      "written": {
+        "rt/dex3/left/state": 3786998,
+        "rt/lf/dex3/left/state": 42800,
+        "rt/dex3/right/state": 3775142,
+        "rt/lf/dex3/right/state": 42760,
+        "rt/lowstate": 4995929,
+        "rt/arm_sdk": 232814,
+        "rt/dex3/left/cmd": 512,
+        "rt/dex3/right/cmd": 512
+      },
+      "dropped": {},
+      "queue_depth": 7,
+      "age_s": {
+        "rt/lowstate": 0.000330476,
+        "rt/dex3/left/state": 0.000302827,
+        "rt/dex3/right/state": 0.000282506,
+        "rt/lf/dex3/left/state": 0.022465205,
+        "rt/lf/dex3/right/state": 0.11249208,
+        "rt/arm_sdk": 623.407263773,
+        "rt/dex3/left/cmd": 624.420638712,
+        "rt/dex3/right/cmd": 624.420624823
+      },
+      "missing_or_stale_required": [],
+      "last_written_age_s": {
+        "rt/dex3/left/state": 0.002851524,
+        "rt/lf/dex3/left/state": 0.022465205,
+        "rt/dex3/right/state": 0.002840036,
+        "rt/lf/dex3/right/state": 0.11249208,
+        "rt/lowstate": 0.002877381,
+        "rt/arm_sdk": 623.407263773,
+        "rt/dex3/left/cmd": 624.420638712,
+        "rt/dex3/right/cmd": 624.420624823
+      },
+      "latest_nonzero_raw_fault_fields": {},
+      "raw_faults_live_decoded": false,
+      "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+      "current_file": "/records/20261008T162358Z-ab00e585/samples-000079.jsonl.gz",
+      "closed_segments": [
+        {
+          "file": "samples-000000.jsonl.gz",
+          "bytes": 8325045,
+          "sha256": "a7afa91872571469624b664dccc4253afbb7d8d8f91ee55b852fa9296ce76b9b"
+        },
+        {
+          "file": "samples-000001.jsonl.gz",
+          "bytes": 37434308,
+          "sha256": "6afdd3528b65fd0de55eff7eb51f13ffa748bc076b8bb206e27803f5409eea96"
+        },
+        {
+          "file": "samples-000002.jsonl.gz",
+          "bytes": 36322753,
+          "sha256": "0ed28f64d60cc974ec5c584edcfb0da578c132eaa146eff6dba5bbaaf9dd422f"
+        },
+        {
+          "file": "samples-000003.jsonl.gz",
+          "bytes": 35613128,
+          "sha256": "8b5f3422d6789d5feb7f75bf2c2fc9d0e86fa17031dd15c9e01de6e80f9787e3"
+        },
+        {
+          "file": "samples-000004.jsonl.gz",
+          "bytes": 35327273,
+          "sha256": "f7ded4f0e2435fb1a98c822cc1a9e0a4f72114e3a273d55578b89210ae4380b1"
+        },
+        {
+          "file": "samples-000005.jsonl.gz",
+          "bytes": 35578389,
+          "sha256": "cc1160b056e2db1037ac144ae18afd83645ea08e1aedec7fa208a7b3504ff368"
+        },
+        {
+          "file": "samples-000006.jsonl.gz",
+          "bytes": 35543372,
+          "sha256": "51d60086cf0c34da7f3708981364707aa07ac74b9daa5f436df22944faf9e37a"
+        },
+        {
+          "file": "samples-000007.jsonl.gz",
+          "bytes": 35647176,
+          "sha256": "e823a199e80bde33b6b76239d76d1bae4e19bf82463213bc7e18c2785189a91f"
+        },
+        {
+          "file": "samples-000008.jsonl.gz",
+          "bytes": 35794718,
+          "sha256": "80c74b4e33f020a5c69e01c9f1ae8934e637f631e44294701e4b5834ccc24c4b"
+        },
+        {
+          "file": "samples-000009.jsonl.gz",
+          "bytes": 37465924,
+          "sha256": "aca3a1c7d27efd546703458da658d18f33b3e6bfd8e8d9ffc354c6baebec57ab"
+        },
+        {
+          "file": "samples-000010.jsonl.gz",
+          "bytes": 39558719,
+          "sha256": "6bd95181e258b1f4a5e4a04ad1c93a8fa3f56d0b954ccd1766133fc09d81c494"
+        },
+        {
+          "file": "samples-000011.jsonl.gz",
+          "bytes": 38484102,
+          "sha256": "883caa344e245945d86d00e88b337f61ab74b3f8b632ee7a9454322622693f11"
+        },
+        {
+          "file": "samples-000012.jsonl.gz",
+          "bytes": 38554713,
+          "sha256": "82712c4d529922c99f06affdf3c199402f858bc9704e33d69e6273bbfdac79cf"
+        },
+        {
+          "file": "samples-000013.jsonl.gz",
+          "bytes": 38212003,
+          "sha256": "2f42e4ffe2da714db0cab1d52cd2db2c1a5139ae98d4b279c435f8ab4db29920"
+        },
+        {
+          "file": "samples-000014.jsonl.gz",
+          "bytes": 38179835,
+          "sha256": "e4257e5c18abf1a8426a980e09cd75bebdab358a8d50cd36207711e0ef5dd9db"
+        },
+        {
+          "file": "samples-000015.jsonl.gz",
+          "bytes": 37866061,
+          "sha256": "23a9891114a81d94e118cc75efbadfd9ef356d313db81444bb209d64915b72c4"
+        },
+        {
+          "file": "samples-000016.jsonl.gz",
+          "bytes": 37373264,
+          "sha256": "d5849ae6e81235fb14efce268f1a609e7e6d4a99aa1777eb7ad0c8e3f94e1703"
+        },
+        {
+          "file": "samples-000017.jsonl.gz",
+          "bytes": 36987630,
+          "sha256": "8f84638b5bd9942dff880213b7bda734810e32f048d7a0c7952bb621ddef5e4d"
+        },
+        {
+          "file": "samples-000018.jsonl.gz",
+          "bytes": 36777965,
+          "sha256": "26d20bd6d219cfff654d05f7b3bc5cebb21737ca3bc13be07f7c25bea3103225"
+        },
+        {
+          "file": "samples-000019.jsonl.gz",
+          "bytes": 36851208,
+          "sha256": "6f5810df33c0d5abb1a3f2ff6f5a7c3704f43a45ae8235197877e149388f27f2"
+        },
+        {
+          "file": "samples-000020.jsonl.gz",
+          "bytes": 38639503,
+          "sha256": "b53c428109491ebaa77f3033311301b9c26c896f5d9d0c70f8949bfcf9994886"
+        },
+        {
+          "file": "samples-000021.jsonl.gz",
+          "bytes": 39102550,
+          "sha256": "125d414d50deaa0943645294e49798474513dd323ac0b1646c0ce6fe2c66cf22"
+        },
+        {
+          "file": "samples-000022.jsonl.gz",
+          "bytes": 38741128,
+          "sha256": "3a4a9724865dd3848c74a8af07aadefa08b300ce188dfb9ba0e633402f57b158"
+        },
+        {
+          "file": "samples-000023.jsonl.gz",
+          "bytes": 38911627,
+          "sha256": "bd7b92490b9c5417af9b30be3fe740b0aa665b698852962736c95ce1dcc02ca7"
+        },
+        {
+          "file": "samples-000024.jsonl.gz",
+          "bytes": 38969495,
+          "sha256": "a359d7148e60471c6353b2822433bfa415bd145bc776ab0d54b00b192b89a419"
+        },
+        {
+          "file": "samples-000025.jsonl.gz",
+          "bytes": 39115639,
+          "sha256": "8aa2c27e3a68809084075e74747e4e5ca3e56d0d1b0d2cd98424749d0788b6a4"
+        },
+        {
+          "file": "samples-000026.jsonl.gz",
+          "bytes": 39050267,
+          "sha256": "e69501049d567f5d5b0a4bb7ff580b825a3b3c17c1a6f5cca26629723c925042"
+        },
+        {
+          "file": "samples-000027.jsonl.gz",
+          "bytes": 39487646,
+          "sha256": "466146af1fc822b52fa7df98ae91c5b7a7dc2b35137d64c00a78600d27d79eb7"
+        },
+        {
+          "file": "samples-000028.jsonl.gz",
+          "bytes": 39411191,
+          "sha256": "28bac50cc290dc6462958c6c86a45e13a4e8ba4eb737a10210ca2e043e822aa9"
+        },
+        {
+          "file": "samples-000029.jsonl.gz",
+          "bytes": 39426815,
+          "sha256": "b1fb89d5674f01d7ee139a5924018b6362930f7c67c83afefd82e1984aecedc2"
+        },
+        {
+          "file": "samples-000030.jsonl.gz",
+          "bytes": 39660269,
+          "sha256": "db62abb29e2664a1c84aaf5074c127047b469f4f2ee25bbf6b4700c2f89272aa"
+        },
+        {
+          "file": "samples-000031.jsonl.gz",
+          "bytes": 40036055,
+          "sha256": "0366bfeae03d7ca1b61c4855d97f176c4479c455088c561e8cfe6c7bba9a5883"
+        },
+        {
+          "file": "samples-000032.jsonl.gz",
+          "bytes": 40446395,
+          "sha256": "f2ca30931eb7fb4a2d391151bd606f314fff5cd7309af43fe500f29fdd084daf"
+        },
+        {
+          "file": "samples-000033.jsonl.gz",
+          "bytes": 40898193,
+          "sha256": "cdb248f7e60739d4e005c8f7b276b1c4b78eb035686ca3cb311a6e0205f33deb"
+        },
+        {
+          "file": "samples-000034.jsonl.gz",
+          "bytes": 41199145,
+          "sha256": "0b682b3408f47da639ec97ab342d16e07f8b00faa83bed6fd0b820f721a759ef"
+        },
+        {
+          "file": "samples-000035.jsonl.gz",
+          "bytes": 41273961,
+          "sha256": "d9be064864dbd972d252094e8a1ddff2a39809e4ddb1d5cecb75d3b5859f9b94"
+        },
+        {
+          "file": "samples-000036.jsonl.gz",
+          "bytes": 40911150,
+          "sha256": "25441b87724dbb784b8e30aef8044e859688f7ed904203dc40e1bb1a830eb05c"
+        },
+        {
+          "file": "samples-000037.jsonl.gz",
+          "bytes": 40185253,
+          "sha256": "8b4b5fd53312e87cad7770cc74ddf902e59a7dac857366d69a53c8832c7d12ab"
+        },
+        {
+          "file": "samples-000038.jsonl.gz",
+          "bytes": 39541001,
+          "sha256": "5164b0ee314e7e88f8a4b5f1332b87d097cb2dc2fd0f04d059cae3e285fc9aaf"
+        },
+        {
+          "file": "samples-000039.jsonl.gz",
+          "bytes": 39329044,
+          "sha256": "925a4b83563a03a2e17c38f847d1f60b60b0dd215013b2c08c2b42d07f594a6f"
+        },
+        {
+          "file": "samples-000040.jsonl.gz",
+          "bytes": 39397236,
+          "sha256": "95c11ef9abe7ef291e0ee64edab2159adff75e31a34be089951ea1d044512641"
+        },
+        {
+          "file": "samples-000041.jsonl.gz",
+          "bytes": 39110320,
+          "sha256": "ab9b63a267ae0efdf1fab66516cbc2a9a172fab03244f99ef881d5b6c2b142c9"
+        },
+        {
+          "file": "samples-000042.jsonl.gz",
+          "bytes": 39371741,
+          "sha256": "ecb816aefc31968531dda5cd50b82a52c4932aa6b63429ebb7dea8f5c1c94b23"
+        },
+        {
+          "file": "samples-000043.jsonl.gz",
+          "bytes": 39686504,
+          "sha256": "0faa71f09e6a1b2e4bf86d2890b4ec205dbf6f7508b1ea9949edb0e00112d061"
+        },
+        {
+          "file": "samples-000044.jsonl.gz",
+          "bytes": 40633960,
+          "sha256": "13446759b986c25b81690db8fef5ad44770d32af0587ad8e9ee0ccf1c830f463"
+        },
+        {
+          "file": "samples-000045.jsonl.gz",
+          "bytes": 41385399,
+          "sha256": "a2dea2303d165c9acef39ec95b54e7ebd431c7221beafdf7173711a12007ff7c"
+        },
+        {
+          "file": "samples-000046.jsonl.gz",
+          "bytes": 41664850,
+          "sha256": "d43ef5443282566974b87b4e134b990cc6d629b6f236d846fd4d89e4c295dd9f"
+        },
+        {
+          "file": "samples-000047.jsonl.gz",
+          "bytes": 41176610,
+          "sha256": "85a14a4069adbf719f2fd079687a1cbc660460c10ce5bd27d59deced06119b2c"
+        },
+        {
+          "file": "samples-000048.jsonl.gz",
+          "bytes": 40188357,
+          "sha256": "ab3f667e5bd996ca5f71941bd6021a30bb4525480162e78984351b2e2f457a15"
+        },
+        {
+          "file": "samples-000049.jsonl.gz",
+          "bytes": 39365474,
+          "sha256": "184609a1487482d2149b577ef69fefcb151d5bda55ff9c8a34c90a993b00eb70"
+        },
+        {
+          "file": "samples-000050.jsonl.gz",
+          "bytes": 39240758,
+          "sha256": "f9108c6d485b5c45e2d0c8ea2303e5b583960699001d9d127ea560875fef7070"
+        },
+        {
+          "file": "samples-000051.jsonl.gz",
+          "bytes": 39174361,
+          "sha256": "90456e6dae3fe4bd0dafb22cb4c0b96c775ce75d131e2f8e4b712737d482a7b7"
+        },
+        {
+          "file": "samples-000052.jsonl.gz",
+          "bytes": 39414841,
+          "sha256": "a734f9f37722c158fd28af7cd4ae65df13646d5bbb6a4c21c2eca7d5f7373a95"
+        },
+        {
+          "file": "samples-000053.jsonl.gz",
+          "bytes": 40280795,
+          "sha256": "c96c988ca70b37f55f94c6ca859154ef3ac56c52d75396f5d46de2d065d6fba3"
+        },
+        {
+          "file": "samples-000054.jsonl.gz",
+          "bytes": 40986379,
+          "sha256": "27e77b0b229a8160a9368ce4333295c16f5730fc2ee5419b68bb0ea51faad63f"
+        },
+        {
+          "file": "samples-000055.jsonl.gz",
+          "bytes": 41107807,
+          "sha256": "556a2794f045e6a06c43673a2d6bbd8459744c38b6e3f8595f2b360498e4ffa7"
+        },
+        {
+          "file": "samples-000056.jsonl.gz",
+          "bytes": 38583192,
+          "sha256": "d1ee4c5a0b27fce23363ad02821040fbb6355e345bcc1b1c1affc9b307e7f9d5"
+        },
+        {
+          "file": "samples-000057.jsonl.gz",
+          "bytes": 39928906,
+          "sha256": "99a0969080aec0f01be504815cae63e14058f36f105b372ac19706c41d020fec"
+        },
+        {
+          "file": "samples-000058.jsonl.gz",
+          "bytes": 39264116,
+          "sha256": "426ec88e774ef51fabee7aed9bf26b37bb331a5e27e1778fc2b716da5f9063fa"
+        },
+        {
+          "file": "samples-000059.jsonl.gz",
+          "bytes": 35849107,
+          "sha256": "1b386f9baec9b56754d6a2cffa1d896efbd3ca2f685d3653f69804eb3f37c9b8"
+        },
+        {
+          "file": "samples-000060.jsonl.gz",
+          "bytes": 36194949,
+          "sha256": "04a4fca636cf61059f4da9c3190625149236d7d1bdee74101bb7bada356d3f30"
+        },
+        {
+          "file": "samples-000061.jsonl.gz",
+          "bytes": 37120705,
+          "sha256": "589c6f7b0c920443da6253bf5093045d51424107d7ea82cd831faea2f3fa5587"
+        },
+        {
+          "file": "samples-000062.jsonl.gz",
+          "bytes": 38160166,
+          "sha256": "106951bc95f1695ae8ce0adb0e2178be8a2c6e1361b801458342cbb6d52e8517"
+        },
+        {
+          "file": "samples-000063.jsonl.gz",
+          "bytes": 38447670,
+          "sha256": "1c1d165d0d0417ef9393b4b7873c2c99734f472de1218aabe7b21f0ff78b7128"
+        },
+        {
+          "file": "samples-000064.jsonl.gz",
+          "bytes": 38075846,
+          "sha256": "045f74dc734dfbf5cebbe5dd7fd746cf9216a7c37b5338ec12e1a3715248d64e"
+        },
+        {
+          "file": "samples-000065.jsonl.gz",
+          "bytes": 37094576,
+          "sha256": "952543a3692b1ef9b82b5e711174731c5c6132065941498e8f14a764803e9280"
+        },
+        {
+          "file": "samples-000066.jsonl.gz",
+          "bytes": 36646709,
+          "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+        },
+        {
+          "file": "samples-000067.jsonl.gz",
+          "bytes": 36217651,
+          "sha256": "29171d4e8e766ab14ca6c37013b3c83a5896ca740badfb06410d5b77408e8e39"
+        },
+        {
+          "file": "samples-000068.jsonl.gz",
+          "bytes": 37805845,
+          "sha256": "2bc45b09ac34ec0c2ced83af08f86d0ff03cb0388ef8d799d4f7f32a5f7acf4d"
+        },
+        {
+          "file": "samples-000069.jsonl.gz",
+          "bytes": 38992608,
+          "sha256": "95be5c902fdce13d1a6a68e57bba3289b1873a55cdf5ee9f6c7bce7d696ac821"
+        },
+        {
+          "file": "samples-000070.jsonl.gz",
+          "bytes": 36753742,
+          "sha256": "819c066f11c7f51d28e2c5ee53652225cf60c29409706bfd890426680d86d501"
+        },
+        {
+          "file": "samples-000071.jsonl.gz",
+          "bytes": 37096917,
+          "sha256": "d8e4dc3c46ec5b2ac9cb7b6b13d6ddcac84ed2571d974b13007573413ff21b5f"
+        },
+        {
+          "file": "samples-000072.jsonl.gz",
+          "bytes": 37908553,
+          "sha256": "c187dd95c9e7c13aab6d84f2c43503efca5d115250ec63b7528027383ef45c15"
+        },
+        {
+          "file": "samples-000073.jsonl.gz",
+          "bytes": 38395143,
+          "sha256": "05cb9bcf51acc496d081972f4b85a700be77d7f4e573062b5090a10ffa8d90be"
+        },
+        {
+          "file": "samples-000074.jsonl.gz",
+          "bytes": 38534750,
+          "sha256": "3618e7f26d1bb033f926781717cab4e50434153cbd2269a421cfb080a16bfb66"
+        },
+        {
+          "file": "samples-000075.jsonl.gz",
+          "bytes": 38678310,
+          "sha256": "10ee1ccdeef867297bb02ca865802a07111ec720bb105fa8a071c94d613aedfd"
+        },
+        {
+          "file": "samples-000076.jsonl.gz",
+          "bytes": 37295419,
+          "sha256": "1d1b050b265709478ee5cea94d6e87c83108de496fefc18ea09f65890e44cc61"
+        },
+        {
+          "file": "samples-000077.jsonl.gz",
+          "bytes": 36973937,
+          "sha256": "a18d41e7b8c56c1ffd879b5de994cacac4485f1d0796eda281140a38c3ab7876"
+        },
+        {
+          "file": "samples-000078.jsonl.gz",
+          "bytes": 36687311,
+          "sha256": "002af14251e498d6f8ff0164b43002a1cf79176c8a494dc60a8b28cdf924d8e0"
+        }
+      ],
+      "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+      "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+      "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+      "interface": "enP8p1s0",
+      "domain": 0
+    },
+    "source_sha256": {
+      "shadow_staging.py": "c968abc615942a049d5e636cee4d1945a7123059a3e90b560f079c2f54903ffa",
+      "factory_table_candidate.py": "95bf4098d65bfe9d273357f565e7274aacef1a5fec853a07b3d4809f23fab9d1",
+      "fit_camera_calibration.py": "c739f022740f56a6f8b94e08f18be2b9269a6e1a1768906658008b0485012b67",
+      "benchmark_perception.py": "99a1d707799bae4b312730b9891e57a9190e9069d869620d0ccfd88a9cd86764",
+      "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+      "control_settle.py": "c8efc295be7a286e3c76a7d0f345f97ebfef0f762d72ac9765e01fed6423d552",
+      "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+      "scene_refresh.py": "3f831db65bb522f42cc10b0b44353608539bf053241deddab0e701776fbd9c84",
+      "perception_worker.py": "76335163767fcd3383de0f86cc7a5b7a14d8c991080e78324587660fa04e3d5a",
+      "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+      "diagnose_head_alignment.py": "5b9e16afa35ca766ad815f92b0eb2b0727b4a9cef663623d55fc87ec07f987ab",
+      "test_camera_input.py": "3d9ac165ed64f9ce376ade3166d16d8f6307cb0e30f9fc5238e63788ff71cd4e",
+      "yolo_client.py": "39e1a799edd9c47452dea4cd0d152d3ed55ea577e9f43ded9ea5a6e18f9b80a4",
+      "pose_alignment.py": "668e9ee3f1f0689ba8795768a109438d9c79d8d4a11a78117782cf1c584c6583",
+      "sim_runtime.py": "70ac20a42e5b92f63c17f9524cde0e4d663fd1afd459dd43fecf4576a69d7a50",
+      "test_physical_core.py": "6ac56c655e39bd3ffac4349e1bc953334c95e2914a4819cd22e76deb03d63e7b",
+      "calibration_points.py": "7d57a7cb7263af535915af107b77d0118e10b4866ff5aa5195bfa3fab574e7fb",
+      "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2",
+      "staging.py": "be3d0bad370f05b31c4f5a111a258a2ef82075d3fea59d4c764e086331bab9bf",
+      "physical_core.py": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d",
+      "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+      "shadow_approach.py": "fc6d06526fdd87c1c4fb3470b0d76f8363638d6118e7e3af7cc1592d5d72e9e7",
+      "latest_frame.py": "051276ac960a560f9af561761e3b0a88d759d86a2239aee3c25c2968989bab81",
+      "adapter/dex3_stall.py": "d5e3c0fe8994d865ac9ddb737a67cb56aba7feb0ee4fc8e7a68ff631aa792c08",
+      "adapter/g1_dex3.py": "c2aa205de11acc5711ecd0b8bc23552b57949239390f7efaaeeb284a27dc7a57",
+      "adapter/lowstate_hub.py": "2bdfe97ed235d1616c5ea423802d03d0de41e860a635936f0976e85577f5e576",
+      "adapter/dex3_thermal.py": "0adde92b3c6f07ee827a56757639baa13079c10f328c315ebb2c3cb77aff11b5",
+      "adapter/arm_reference.py": "bfc6829336e036fcef3796a1d77e9fdf15e7d19fc49316a360fe4999765525f7",
+      "adapter/g1_arm.py": "8daba626841ed910922e6ce9b8e8af581f0f727001b391da18af9b9ee27e29f6",
+      "adapter/fast_crc.py": "9ec6f126ab4726c7c6529f715d78226b717eeb70006327c971da24b8af53a36e",
+      "adapter/hotpath.py": "2adde96fcf28fbd5570c9d98939b628e1b520b216b86c3fd006f7e01a9cf5207",
+      "g1_can_handoff/bar_film.py": "6cc8f8dd8b01009b40686ff21f14ea9e193156f2d1b9df77f0a6f408aef206fe",
+      "g1_can_handoff/task.py": "c38edf240bd93c5bc3ca6ec37ee9e2dedc6682d15a645d5f05e6f421dd518263",
+      "g1_can_handoff/sim.py": "7c75f60b37f374bb5b85d9da1697ad9a48c61e485192d5da52589280f8d54580",
+      "g1_can_handoff/generalization_full.py": "045c43b22aa5e050260037eced257e67b21dff61505f756cef6a3f30cd6e6fa1",
+      "g1_can_handoff/__init__.py": "c27dcb07b01a756daf232855912f836ed54a9dddc707c5d74c47ff52fa59aa11",
+      "g1_can_handoff/generalization_report.py": "c369f5ded3a87c0315b075a25a627a99e308a11fadf8cda6833b0603be1a0b98",
+      "g1_can_handoff/whole_body.py": "b39afd610408e7c2e280bb06ca7c47c6dff25d53848063950165beda763bc337",
+      "g1_can_handoff/cli.py": "8d5f9d9daab50640c58dbd7189b5b8f76d41aca2b5f04760928267ac10554194",
+      "g1_can_handoff/generalization.py": "cd72ea0a4fe8c937957c404c2b06bf1d414efbfe4689b32c6783d90eca342422",
+      "g1_can_handoff/hardware.py": "cdbb20cba0fd84fdc256a6173579fa23fba8a74a2f9c8652363e084cd2cd6ffa",
+      "g1_can_handoff/generalization_video.py": "da1af75dbc1471aa8b57097e3abfced1a4a18dd441f5a02cb4a14ced59d56a45",
+      "g1_can_handoff/perception.py": "8a9ba55263b26be4bffa23e7f51c5698430cf29813947df891f0e93853872407",
+      "g1_can_handoff/bar_delivery_physics.py": "7b7156436793f41cb750fe9924f16b815f559836f768e1d109fe59485bb7197b",
+      "g1_can_handoff/bar_delivery.py": "202959b410218eb901f03fe3d8243cd650faf2f9fd9fbcb588762d7507f4ebbd",
+      "g1_can_handoff/walking_policy.py": "0a63172fa7f99d1be3840df26dfbda6801192f7d0c6ad5fe68d894dda314973f",
+      "yolo/frame_limits.py": "5a149f883a910c1b888bc9013ff80482c1500af99e547202f510f43d0b29c663",
+      "yolo/confidence.py": "191ed274fa3b7345fbfc385212c0c5daef2f7b678eec41a2979fc47baddd397f"
+    },
+    "camera": {
+      "healthy": true,
+      "pipeline_started": true,
+      "serial": "338622073335",
+      "frame_id": 14791,
+      "frame_age_s": 0.0254,
+      "last_error": null,
+      "restart_count": 0,
+      "hardware_reset_count": 0,
+      "hardware_reset_enabled": false,
+      "width": 640,
+      "height": 480,
+      "fps": 15,
+      "rgbd_enabled": true,
+      "rgbd_buffered_frames": 16,
+      "rgbd_stream_id": "aedcd63a-944c-44f6-bb3e-70c94899238f",
+      "rgbd_frame_ids": [
+        14776,
+        14777,
+        14778,
+        14779,
+        14780,
+        14781,
+        14782,
+        14783,
+        14784,
+        14785,
+        14786,
+        14787,
+        14788,
+        14789,
+        14790,
+        14791
+      ],
+      "raw_recording_schema": "wendy.realsense.raw-rgbd.v1",
+      "tracking_rgbd_schema": "wendy.g1.compact-tracking.v1"
+    },
+    "yolo": {
+      "healthy": true,
+      "backend": "pytorch_cuda",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "class_names": {
+        "0": "Coca-Cola"
+      },
+      "gpu": "Orin",
+      "camera_owned": false,
+      "motion_commands_sent": 0,
+      "execution": "cuda_graph_fp16",
+      "input_size": 640,
+      "qualification": [
+        {
+          "image": "g1-coke-raw.jpg",
+          "role": "held_out_archived",
+          "detections": [
+            {
+              "xyxy": [
+                249.875,
+                70.5,
+                329.125,
+                207.0
+              ],
+              "confidence": 0.6435546875,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "iou": 0.7618123201719417
+        },
+        {
+          "image": "nx2-missed.jpg",
+          "role": "training_positive",
+          "detections": [
+            {
+              "xyxy": [
+                169.4375,
+                240.625,
+                290.5625,
+                386.375
+              ],
+              "confidence": 0.4853515625,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "iou": 0.6882305147390725
+        },
+        {
+          "image": "nx2-rotated.jpg",
+          "role": "held_out_rotated",
+          "detections": [
+            {
+              "xyxy": [
+                163.0,
+                232.25,
+                283.0,
+                377.25
+              ],
+              "confidence": 0.5126953125,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "iou": 0.7162068965517241
+        },
+        {
+          "image": "g1-calibration.jpg",
+          "role": "held_out_archived",
+          "detections": [
+            {
+              "xyxy": [
+                202.25,
+                219.0,
+                316.75,
+                361.0
+              ],
+              "confidence": 0.1683349609375,
+              "class_id": 0,
+              "class_name": "Coca-Cola"
+            }
+          ],
+          "iou": 0.7116058798204071
+        },
+        {
+          "image": "nx2-empty-0.jpg",
+          "role": "training_negative_crop",
+          "detections": [],
+          "iou": null
+        },
+        {
+          "image": "nx2-empty-1.jpg",
+          "role": "training_negative_crop",
+          "detections": [],
+          "iou": null
+        },
+        {
+          "image": "nx2-heldout-empty-95373-right.png",
+          "role": "held_out_same_scene_negative_crop",
+          "detections": [],
+          "iou": null
+        },
+        {
+          "image": "nx2-heldout-empty-95373-top.png",
+          "role": "held_out_same_scene_negative_crop",
+          "detections": [],
+          "iou": null
+        },
+        {
+          "image": "nx2-heldout-empty-99003-right.png",
+          "role": "held_out_same_scene_negative_crop",
+          "detections": [],
+          "iou": null
+        },
+        {
+          "image": "nx2-heldout-empty-99003-top.png",
+          "role": "held_out_same_scene_negative_crop",
+          "detections": [],
+          "iou": null
+        }
+      ],
+      "camera_max_age_ms": 400.0,
+      "confidence_strictly_above": 0.1
+    },
+    "camera_exposure_age_ms": 136.25922504797927,
+    "camera_source_metadata": {
+      "schema": "wendy.g1.rgbd.v1",
+      "raw_received_unix_ns": 1791481436987415159,
+      "raw_received_monotonic_ns": 4818078152640,
+      "aligned_to": "color",
+      "camera_serial": "338622073335",
+      "clock": "host_monotonic",
+      "timestamp_valid": true,
+      "color_time": 4818.01185464859,
+      "depth_time": 4818.011733531952,
+      "received_monotonic": 4818.087371076,
+      "color_sensor_ms": 1791481436921.1226,
+      "depth_sensor_ms": 1791481436921.0015,
+      "color_timestamp_domain": "timestamp_domain.global_time",
+      "depth_timestamp_domain": "timestamp_domain.global_time",
+      "depth_scale_m": 0.0010000000474974513,
+      "intrinsics": {
+        "width": 640,
+        "height": 480,
+        "fx": 603.59765625,
+        "fy": 603.7045288085938,
+        "ppx": 318.05902099609375,
+        "ppy": 261.0997619628906,
+        "model": "distortion.inverse_brown_conrady",
+        "coeffs": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "frame_id": 14791,
+      "captured_at_unix_ns": 1791481436997844870,
+      "stream_id": "aedcd63a-944c-44f6-bb3e-70c94899238f"
+    },
+    "calibration": {
+      "commissioned": true,
+      "calibration_method": "operator_accepted_factory_table",
+      "camera_serial": "338622073335",
+      "device": "unitree-g1-nx-2.local",
+      "camera_to_world": [
+        [
+          0.002222975486287241,
+          -0.7818392290284801,
+          0.6234761249094782,
+          0.054687923578044514
+        ],
+        [
+          -0.9999828490291868,
+          0.0016403272526482125,
+          0.005622363735537408,
+          0.013465761089094629
+        ],
+        [
+          -0.005418489407374771,
+          -0.6234779300654162,
+          -0.7818221733194102,
+          1.2672936345680181
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "pelvis_to_world": [
+        [
+          0.9999974250760781,
+          2.0154829250013614e-05,
+          0.0022692366549372563,
+          0.0
+        ],
+        [
+          0.0,
+          0.9999605594487142,
+          -0.008881415822623478,
+          0.0
+        ],
+        [
+          -0.0022693261584119913,
+          0.008881392953653417,
+          0.9999579846263489,
+          0.793408228912797
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "table_height_m": 0.762,
+      "table_center_xy_m": [
+        5.207423144478654,
+        0
+      ],
+      "table_half_size_xy_m": [
+        5,
+        5
+      ],
+      "table_near_edge_conservative_x_m": 0.20742314447865418,
+      "table_extent_source": "conservative extension beyond reachable workspace",
+      "can_radius_m": 0.033,
+      "can_height_m": 0.122,
+      "arm_limits_rad": [
+        [
+          -3.0892,
+          2.6704
+        ],
+        [
+          -1.5882,
+          2.2515
+        ],
+        [
+          -2.618,
+          2.618
+        ],
+        [
+          -1.0472,
+          2.0944
+        ],
+        [
+          -1.97222,
+          1.97222
+        ],
+        [
+          -1.61443,
+          1.61443
+        ],
+        [
+          -1.61443,
+          1.61443
+        ],
+        [
+          -3.0892,
+          2.6704
+        ],
+        [
+          -2.2515,
+          1.5882
+        ],
+        [
+          -2.618,
+          2.618
+        ],
+        [
+          -1.0472,
+          2.0944
+        ],
+        [
+          -1.97222,
+          1.97222
+        ],
+        [
+          -1.61443,
+          1.61443
+        ],
+        [
+          -1.61443,
+          1.61443
+        ]
+      ],
+      "source_frame_id": 4449,
+      "tilt_correction_deg": 3.7053581383571577,
+      "table_plane_rmse_m": 0.0020493525075528356,
+      "independent_validation": false,
+      "assumptions": [
+        "operator confirms factory mount position and stationary base",
+        "camera tilt adjusted; pivot translation not modeled",
+        "horizontal 0.762 m table; nearest yellow tape marks near edge",
+        "factory d435 frame approximates aligned RGB optical origin",
+        "model arm limits; body IMU describes pelvis orientation"
+      ],
+      "operator_accepted": true,
+      "factory_mount_position_confirmed": true,
+      "stationary_base_confirmed": true,
+      "position_validation_rmse_m": null,
+      "accepted_at_unix_s": 1791480747.6010528,
+      "reference_base_q": [
+        -0.15629169344902039,
+        0.029718320816755295,
+        0.0027989062946289778,
+        0.3248886168003082,
+        -0.1454659402370453,
+        -0.010762450285255909,
+        -0.145868182182312,
+        -0.05293085798621178,
+        0.03477875143289566,
+        0.3176192343235016,
+        -0.14273852109909058,
+        0.0246978010982275,
+        0.0027051628567278385,
+        0.0,
+        0.0
+      ],
+      "reference_imu_rpy": [
+        0.008881532587110996,
+        0.0022693281061947346,
+        1.713474154472351
+      ],
+      "operator_with_stop": true,
+      "support": "factory_balance",
+      "factory_mount_source": {
+        "source_url": "https://raw.githubusercontent.com/unitreerobotics/unitree_ros/master/robots/g1_description/g1_29dof_with_hand.urdf",
+        "source_sha256": "553bf05fe09513d374d2133421ef3e122b41aba1a6a4781477c3926d88406fd7",
+        "operator_confirmed_original_mount": true,
+        "parent": "torso_link",
+        "child": "d435_link",
+        "xyz_m": [
+          0.0576235,
+          0.01753,
+          0.41987
+        ],
+        "rpy_rad": [
+          0,
+          0.8307767239493009,
+          0
+        ],
+        "commissioned": false
+      },
+      "acceptance_evidence": "User requested another trial using previously accepted factory/table calibration method; fresh scene and posture recomputed and passive path checked.",
+      "scene_refresh_automatic": true,
+      "calibration_exposure_pose": {
+        "timestamp": 4128.03633653,
+        "frame_timestamp": 4128.0336220264435,
+        "skew_ms": 2.7145035564899445,
+        "rpy": [
+          0.008881532587110996,
+          0.0022693281061947346,
+          1.713474154472351
+        ],
+        "waist_q": [
+          0.0027051628567278385,
+          0.0,
+          0.0
+        ]
+      },
+      "table_plane_quality": {
+        "rmse_m": 0.0020493525075528356,
+        "heldout_rmse_m": 0.0020620036415014563,
+        "heldout_normal_angle_deg": 0.009497771006706983,
+        "fitted_points": 16327,
+        "heldout_points": 16372,
+        "axis_spread_m": [
+          0.21184890363639355,
+          0.19408753897793432,
+          0.002049352507552838
+        ],
+        "method": "tape_associated_broad_tabletop_with_disjoint_pixel_validation"
+      }
+    }
+  },
+  "state": "terminal",
+  "acknowledgement": {
+    "phase": "PASSIVE",
+    "error": "RuntimeError: RuntimeError: Coke YOLO target absent/ambiguous",
+    "motion_commands_sent": 6628,
+    "adapter_initialized": false,
+    "telemetry_healthy": true,
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "demo_running": true,
+    "demo_result": null,
+    "demo_error": null,
+    "deployment_in_progress": false
+  },
+  "finished_unix_ns": 1791481516828545442,
+  "controller_after": {
+    "phase": "FROZEN",
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+    "motion_commands_sent": 10491,
+    "adapter_initialized": true,
+    "automatic_home": false,
+    "events": "/data/events-20261008T173130Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200.0,
+      "rate_hz": 196.0,
+      "samples": 156568,
+      "age_s": 0.0001,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400.0,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": 41447.27338638404,
+    "tracking_vision": {
+      "top_quantile_z_m": 0.8678371919052644,
+      "center_xy_m": [
+        0.32037703845862203,
+        0.17198287921310162
+      ],
+      "fit_error_m": 0.0029883141850844492,
+      "pixels": 2897,
+      "frame_id": 15368,
+      "detector": "coke_visual_depth_tracker",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          60.5625,
+          256.375,
+          208.9375,
+          421.625
+        ],
+        "confidence": 0.1248779296875,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "0a7ee6ef618edf5349d21efd9d98275d0ebce57b01343fc13b060abe2855107e",
+      "tracking": {
+        "mode": "visual_depth",
+        "semantic_frame_id": 15366,
+        "semantic_age_s": 0.13342547416687012,
+        "visual_agreement": 0.9953776363672721,
+        "support_pixels": 2897,
+        "roi_shape": [
+          139,
+          119
+        ]
+      }
+    },
+    "first_failure": {
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "source": "execution"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.017886264249682426,
+          0.0011861000675708055,
+          1.6572599411010742
+        ],
+        "q": [
+          -0.12415114790201187,
+          -0.011486108414828777,
+          0.0017141626449301839,
+          0.31333261728286743,
+          -0.13305629789829254,
+          0.014528175815939903,
+          -0.16034482419490814,
+          0.010567422956228256,
+          -0.0018480815924704075,
+          0.3308540880680084,
+          -0.1590757966041565,
+          -0.032586295157670975,
+          0.0024507169146090746,
+          0.0,
+          0.0,
+          0.2447059005498886,
+          0.24749821424484253,
+          -0.09223059564828873,
+          0.8391594290733337,
+          0.002205097349360585,
+          0.016858449205756187,
+          -0.005668059457093477,
+          0.2635570764541626,
+          -0.2535981833934784,
+          0.09285377711057663,
+          0.8080004453659058,
+          -0.0009707222343422472,
+          0.024229228496551514,
+          0.001587670180015266
+        ],
+        "dq": [
+          0.013713300228118896,
+          -0.004363323096185923,
+          0.0051424880512058735,
+          -0.011999138630926609,
+          -0.0010830160463228822,
+          -0.001784543041139841,
+          -0.010284976102411747,
+          0.009817477315664291,
+          0.013713300228118896,
+          0.0021816615480929613,
+          -0.004949633963406086,
+          -0.0027438548859208822,
+          0.029140762984752655,
+          0.0,
+          0.0,
+          0.00920388475060463,
+          0.0015339808305725455,
+          0.003067961661145091,
+          0.003067961661145091,
+          0.004601942375302315,
+          0.008835730142891407,
+          0.013744467869400978,
+          0.004601942375302315,
+          -0.0015339808305725455,
+          -0.007669903803616762,
+          0.00920388475060463,
+          0.0,
+          0.0,
+          0.007853981107473373
+        ],
+        "tau_est": [
+          2.349076747894287,
+          3.955078125,
+          -1.2863991260528564,
+          -0.3515625,
+          5.429091453552246,
+          -0.2862696051597595,
+          -1.845703125,
+          -8.173828125,
+          4.082919120788574,
+          -8.96484375,
+          1.0413991212844849,
+          1.5806089639663696,
+          -0.2796519994735718,
+          0.0,
+          0.0,
+          -0.1875,
+          1.9375,
+          0.75,
+          -1.1875,
+          -0.125,
+          -0.3125,
+          0.068359375,
+          0.0,
+          -1.875,
+          -0.125,
+          -0.8125,
+          -0.125,
+          -0.29296875,
+          0.01953125
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            33,
+            34
+          ],
+          [
+            31,
+            32
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            33,
+            32
+          ],
+          [
+            42,
+            44
+          ],
+          [
+            41,
+            42
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            33,
+            35
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            35,
+            37
+          ],
+          [
+            44,
+            45
+          ],
+          [
+            41,
+            42
+          ],
+          [
+            31,
+            31
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            44
+          ],
+          [
+            47,
+            48
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            39,
+            39
+          ],
+          [
+            41,
+            35
+          ],
+          [
+            47,
+            46
+          ],
+          [
+            48,
+            50
+          ],
+          [
+            49,
+            47
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            44
+          ],
+          [
+            49,
+            41
+          ]
+        ],
+        "temperature_max": 50,
+        "time": 4897.953478472
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.017438502982258797,
+          0.6665039658546448,
+          -0.015753261744976044,
+          -1.4800299406051636,
+          -1.680490255355835,
+          -1.470219373703003,
+          -1.7493816614151
+        ],
+        "dq": [
+          -0.0,
+          -0.0,
+          0.0,
+          0.0,
+          -0.0,
+          0.0,
+          -0.0
+        ],
+        "tau_est": [
+          5861.07958984375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          -3349.188232421875,
+          1674.5941162109375,
+          -3349.188232421875,
+          1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            37,
+            29
+          ],
+          [
+            37,
+            36
+          ],
+          [
+            33,
+            28
+          ],
+          [
+            36,
+            28
+          ],
+          [
+            33,
+            26
+          ],
+          [
+            37,
+            30
+          ],
+          [
+            34,
+            27
+          ]
+        ],
+        "temperature_max": 37,
+        "time": 4897.88940944
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.03907626494765282,
+          -0.8964307904243469,
+          -1.5200386047363281,
+          1.0720769166946411,
+          1.7010626792907715,
+          0.69111168384552,
+          1.6256518363952637
+        ],
+        "dq": [
+          0.0,
+          0.0,
+          -0.11450418829917908,
+          -0.0,
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          3349.188232421875,
+          -1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            43,
+            35
+          ],
+          [
+            45,
+            36
+          ],
+          [
+            40,
+            32
+          ],
+          [
+            44,
+            36
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            43,
+            35
+          ],
+          [
+            40,
+            33
+          ]
+        ],
+        "temperature_max": 45,
+        "time": 4897.891219261
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_after": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T162358Z-ab00e585",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4879.405466625,
+    "received": {
+      "rt/dex3/left/state": 3849561,
+      "rt/lf/dex3/left/state": 43516,
+      "rt/dex3/right/state": 3837161,
+      "rt/lf/dex3/right/state": 43475,
+      "rt/lowstate": 5079983,
+      "rt/arm_sdk": 236678,
+      "rt/dex3/left/cmd": 512,
+      "rt/dex3/right/cmd": 512
+    },
+    "written": {
+      "rt/dex3/left/state": 3849559,
+      "rt/lf/dex3/left/state": 43516,
+      "rt/dex3/right/state": 3837159,
+      "rt/lf/dex3/right/state": 43475,
+      "rt/lowstate": 5079981,
+      "rt/arm_sdk": 236677,
+      "rt/dex3/left/cmd": 512,
+      "rt/dex3/right/cmd": 512
+    },
+    "dropped": {},
+    "queue_depth": 7,
+    "age_s": {
+      "rt/lowstate": 0.000370732,
+      "rt/dex3/left/state": 0.000345003,
+      "rt/dex3/right/state": 0.000327691,
+      "rt/lf/dex3/left/state": 0.060523473,
+      "rt/lf/dex3/right/state": 0.027248403,
+      "rt/arm_sdk": 0.000272489,
+      "rt/dex3/left/cmd": 704.271406811,
+      "rt/dex3/right/cmd": 704.271392922
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.002755772,
+      "rt/lf/dex3/left/state": 0.060523473,
+      "rt/dex3/right/state": 0.002737628,
+      "rt/lf/dex3/right/state": 0.027248403,
+      "rt/lowstate": 0.002785565,
+      "rt/arm_sdk": 0.009390395,
+      "rt/dex3/left/cmd": 704.271406811,
+      "rt/dex3/right/cmd": 704.271392922
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T162358Z-ab00e585/samples-000081.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 8325045,
+        "sha256": "a7afa91872571469624b664dccc4253afbb7d8d8f91ee55b852fa9296ce76b9b"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 37434308,
+        "sha256": "6afdd3528b65fd0de55eff7eb51f13ffa748bc076b8bb206e27803f5409eea96"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 36322753,
+        "sha256": "0ed28f64d60cc974ec5c584edcfb0da578c132eaa146eff6dba5bbaaf9dd422f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 35613128,
+        "sha256": "8b5f3422d6789d5feb7f75bf2c2fc9d0e86fa17031dd15c9e01de6e80f9787e3"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 35327273,
+        "sha256": "f7ded4f0e2435fb1a98c822cc1a9e0a4f72114e3a273d55578b89210ae4380b1"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35578389,
+        "sha256": "cc1160b056e2db1037ac144ae18afd83645ea08e1aedec7fa208a7b3504ff368"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 35543372,
+        "sha256": "51d60086cf0c34da7f3708981364707aa07ac74b9daa5f436df22944faf9e37a"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 35647176,
+        "sha256": "e823a199e80bde33b6b76239d76d1bae4e19bf82463213bc7e18c2785189a91f"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 35794718,
+        "sha256": "80c74b4e33f020a5c69e01c9f1ae8934e637f631e44294701e4b5834ccc24c4b"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 37465924,
+        "sha256": "aca3a1c7d27efd546703458da658d18f33b3e6bfd8e8d9ffc354c6baebec57ab"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39558719,
+        "sha256": "6bd95181e258b1f4a5e4a04ad1c93a8fa3f56d0b954ccd1766133fc09d81c494"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38484102,
+        "sha256": "883caa344e245945d86d00e88b337f61ab74b3f8b632ee7a9454322622693f11"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38554713,
+        "sha256": "82712c4d529922c99f06affdf3c199402f858bc9704e33d69e6273bbfdac79cf"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38212003,
+        "sha256": "2f42e4ffe2da714db0cab1d52cd2db2c1a5139ae98d4b279c435f8ab4db29920"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 38179835,
+        "sha256": "e4257e5c18abf1a8426a980e09cd75bebdab358a8d50cd36207711e0ef5dd9db"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37866061,
+        "sha256": "23a9891114a81d94e118cc75efbadfd9ef356d313db81444bb209d64915b72c4"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37373264,
+        "sha256": "d5849ae6e81235fb14efce268f1a609e7e6d4a99aa1777eb7ad0c8e3f94e1703"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36987630,
+        "sha256": "8f84638b5bd9942dff880213b7bda734810e32f048d7a0c7952bb621ddef5e4d"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 36777965,
+        "sha256": "26d20bd6d219cfff654d05f7b3bc5cebb21737ca3bc13be07f7c25bea3103225"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 36851208,
+        "sha256": "6f5810df33c0d5abb1a3f2ff6f5a7c3704f43a45ae8235197877e149388f27f2"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 38639503,
+        "sha256": "b53c428109491ebaa77f3033311301b9c26c896f5d9d0c70f8949bfcf9994886"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 39102550,
+        "sha256": "125d414d50deaa0943645294e49798474513dd323ac0b1646c0ce6fe2c66cf22"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 38741128,
+        "sha256": "3a4a9724865dd3848c74a8af07aadefa08b300ce188dfb9ba0e633402f57b158"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 38911627,
+        "sha256": "bd7b92490b9c5417af9b30be3fe740b0aa665b698852962736c95ce1dcc02ca7"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 38969495,
+        "sha256": "a359d7148e60471c6353b2822433bfa415bd145bc776ab0d54b00b192b89a419"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 39115639,
+        "sha256": "8aa2c27e3a68809084075e74747e4e5ca3e56d0d1b0d2cd98424749d0788b6a4"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 39050267,
+        "sha256": "e69501049d567f5d5b0a4bb7ff580b825a3b3c17c1a6f5cca26629723c925042"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 39487646,
+        "sha256": "466146af1fc822b52fa7df98ae91c5b7a7dc2b35137d64c00a78600d27d79eb7"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 39411191,
+        "sha256": "28bac50cc290dc6462958c6c86a45e13a4e8ba4eb737a10210ca2e043e822aa9"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 39426815,
+        "sha256": "b1fb89d5674f01d7ee139a5924018b6362930f7c67c83afefd82e1984aecedc2"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 39660269,
+        "sha256": "db62abb29e2664a1c84aaf5074c127047b469f4f2ee25bbf6b4700c2f89272aa"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 40036055,
+        "sha256": "0366bfeae03d7ca1b61c4855d97f176c4479c455088c561e8cfe6c7bba9a5883"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 40446395,
+        "sha256": "f2ca30931eb7fb4a2d391151bd606f314fff5cd7309af43fe500f29fdd084daf"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 40898193,
+        "sha256": "cdb248f7e60739d4e005c8f7b276b1c4b78eb035686ca3cb311a6e0205f33deb"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41199145,
+        "sha256": "0b682b3408f47da639ec97ab342d16e07f8b00faa83bed6fd0b820f721a759ef"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41273961,
+        "sha256": "d9be064864dbd972d252094e8a1ddff2a39809e4ddb1d5cecb75d3b5859f9b94"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40911150,
+        "sha256": "25441b87724dbb784b8e30aef8044e859688f7ed904203dc40e1bb1a830eb05c"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 40185253,
+        "sha256": "8b4b5fd53312e87cad7770cc74ddf902e59a7dac857366d69a53c8832c7d12ab"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 39541001,
+        "sha256": "5164b0ee314e7e88f8a4b5f1332b87d097cb2dc2fd0f04d059cae3e285fc9aaf"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 39329044,
+        "sha256": "925a4b83563a03a2e17c38f847d1f60b60b0dd215013b2c08c2b42d07f594a6f"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 39397236,
+        "sha256": "95c11ef9abe7ef291e0ee64edab2159adff75e31a34be089951ea1d044512641"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 39110320,
+        "sha256": "ab9b63a267ae0efdf1fab66516cbc2a9a172fab03244f99ef881d5b6c2b142c9"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 39371741,
+        "sha256": "ecb816aefc31968531dda5cd50b82a52c4932aa6b63429ebb7dea8f5c1c94b23"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 39686504,
+        "sha256": "0faa71f09e6a1b2e4bf86d2890b4ec205dbf6f7508b1ea9949edb0e00112d061"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40633960,
+        "sha256": "13446759b986c25b81690db8fef5ad44770d32af0587ad8e9ee0ccf1c830f463"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 41385399,
+        "sha256": "a2dea2303d165c9acef39ec95b54e7ebd431c7221beafdf7173711a12007ff7c"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 41664850,
+        "sha256": "d43ef5443282566974b87b4e134b990cc6d629b6f236d846fd4d89e4c295dd9f"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 41176610,
+        "sha256": "85a14a4069adbf719f2fd079687a1cbc660460c10ce5bd27d59deced06119b2c"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 40188357,
+        "sha256": "ab3f667e5bd996ca5f71941bd6021a30bb4525480162e78984351b2e2f457a15"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 39365474,
+        "sha256": "184609a1487482d2149b577ef69fefcb151d5bda55ff9c8a34c90a993b00eb70"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 39240758,
+        "sha256": "f9108c6d485b5c45e2d0c8ea2303e5b583960699001d9d127ea560875fef7070"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 39174361,
+        "sha256": "90456e6dae3fe4bd0dafb22cb4c0b96c775ce75d131e2f8e4b712737d482a7b7"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 39414841,
+        "sha256": "a734f9f37722c158fd28af7cd4ae65df13646d5bbb6a4c21c2eca7d5f7373a95"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40280795,
+        "sha256": "c96c988ca70b37f55f94c6ca859154ef3ac56c52d75396f5d46de2d065d6fba3"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 40986379,
+        "sha256": "27e77b0b229a8160a9368ce4333295c16f5730fc2ee5419b68bb0ea51faad63f"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 41107807,
+        "sha256": "556a2794f045e6a06c43673a2d6bbd8459744c38b6e3f8595f2b360498e4ffa7"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38583192,
+        "sha256": "d1ee4c5a0b27fce23363ad02821040fbb6355e345bcc1b1c1affc9b307e7f9d5"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 39928906,
+        "sha256": "99a0969080aec0f01be504815cae63e14058f36f105b372ac19706c41d020fec"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 39264116,
+        "sha256": "426ec88e774ef51fabee7aed9bf26b37bb331a5e27e1778fc2b716da5f9063fa"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 35849107,
+        "sha256": "1b386f9baec9b56754d6a2cffa1d896efbd3ca2f685d3653f69804eb3f37c9b8"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 36194949,
+        "sha256": "04a4fca636cf61059f4da9c3190625149236d7d1bdee74101bb7bada356d3f30"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 37120705,
+        "sha256": "589c6f7b0c920443da6253bf5093045d51424107d7ea82cd831faea2f3fa5587"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38160166,
+        "sha256": "106951bc95f1695ae8ce0adb0e2178be8a2c6e1361b801458342cbb6d52e8517"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 38447670,
+        "sha256": "1c1d165d0d0417ef9393b4b7873c2c99734f472de1218aabe7b21f0ff78b7128"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 38075846,
+        "sha256": "045f74dc734dfbf5cebbe5dd7fd746cf9216a7c37b5338ec12e1a3715248d64e"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 37094576,
+        "sha256": "952543a3692b1ef9b82b5e711174731c5c6132065941498e8f14a764803e9280"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36646709,
+        "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+      },
+      {
+        "file": "samples-000067.jsonl.gz",
+        "bytes": 36217651,
+        "sha256": "29171d4e8e766ab14ca6c37013b3c83a5896ca740badfb06410d5b77408e8e39"
+      },
+      {
+        "file": "samples-000068.jsonl.gz",
+        "bytes": 37805845,
+        "sha256": "2bc45b09ac34ec0c2ced83af08f86d0ff03cb0388ef8d799d4f7f32a5f7acf4d"
+      },
+      {
+        "file": "samples-000069.jsonl.gz",
+        "bytes": 38992608,
+        "sha256": "95be5c902fdce13d1a6a68e57bba3289b1873a55cdf5ee9f6c7bce7d696ac821"
+      },
+      {
+        "file": "samples-000070.jsonl.gz",
+        "bytes": 36753742,
+        "sha256": "819c066f11c7f51d28e2c5ee53652225cf60c29409706bfd890426680d86d501"
+      },
+      {
+        "file": "samples-000071.jsonl.gz",
+        "bytes": 37096917,
+        "sha256": "d8e4dc3c46ec5b2ac9cb7b6b13d6ddcac84ed2571d974b13007573413ff21b5f"
+      },
+      {
+        "file": "samples-000072.jsonl.gz",
+        "bytes": 37908553,
+        "sha256": "c187dd95c9e7c13aab6d84f2c43503efca5d115250ec63b7528027383ef45c15"
+      },
+      {
+        "file": "samples-000073.jsonl.gz",
+        "bytes": 38395143,
+        "sha256": "05cb9bcf51acc496d081972f4b85a700be77d7f4e573062b5090a10ffa8d90be"
+      },
+      {
+        "file": "samples-000074.jsonl.gz",
+        "bytes": 38534750,
+        "sha256": "3618e7f26d1bb033f926781717cab4e50434153cbd2269a421cfb080a16bfb66"
+      },
+      {
+        "file": "samples-000075.jsonl.gz",
+        "bytes": 38678310,
+        "sha256": "10ee1ccdeef867297bb02ca865802a07111ec720bb105fa8a071c94d613aedfd"
+      },
+      {
+        "file": "samples-000076.jsonl.gz",
+        "bytes": 37295419,
+        "sha256": "1d1b050b265709478ee5cea94d6e87c83108de496fefc18ea09f65890e44cc61"
+      },
+      {
+        "file": "samples-000077.jsonl.gz",
+        "bytes": 36973937,
+        "sha256": "a18d41e7b8c56c1ffd879b5de994cacac4485f1d0796eda281140a38c3ab7876"
+      },
+      {
+        "file": "samples-000078.jsonl.gz",
+        "bytes": 36687311,
+        "sha256": "002af14251e498d6f8ff0164b43002a1cf79176c8a494dc60a8b28cdf924d8e0"
+      },
+      {
+        "file": "samples-000079.jsonl.gz",
+        "bytes": 36325934,
+        "sha256": "1b3e5405de2a7a43d234a2e281ccde99724ac7f00313d7fe3cca8473630d0360"
+      },
+      {
+        "file": "samples-000080.jsonl.gz",
+        "bytes": 37323347,
+        "sha256": "ce696070e6ec41774433405a2ce97e9ae0bd8127581b38df0510b0eee43ce285"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "native_event_file": "/data/events-20261008T173130Z.jsonl",
+  "demo_running_after": false,
+  "physical_lift_verified": false,
+  "primary_failure": {
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+    "source": "execution"
+  },
+  "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+  "attention_beep": [
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    },
+    {
+      "exit_code": 0,
+      "error": ""
+    }
+  ],
+  "artifact": {
+    "path": "/data/trial-exports/trial-01.tar.gz",
+    "bytes": 853597,
+    "sha256": "63578a2b1bd1a43d498d7c5efa2a1e7910f9ee431d10d4fa61cd2ecc4b0229ec",
+    "events": 58,
+    "selected_frames": 5,
+    "primary_failure": {
+      "unix_ns": 1791481514123084107,
+      "monotonic_ns": 4895213820308,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "source": "execution"
+    },
+    "local_path": "offline/validation/ten-demos-20261008/trial-01.tar.gz",
+    "verified": true
+  },
+  "perception_summary": {
+    "accepted": 5,
+    "exposure_age_ms": {
+      "min": 194.8955695506811,
+      "median": 207.87224651394354,
+      "max": 261.6674548762603
+    }
+  },
+  "reset_confirmed_after": true
+}

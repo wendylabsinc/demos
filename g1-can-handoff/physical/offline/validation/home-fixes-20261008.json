@@ -1,0 +1,174 @@
+{
+  "schema": "wendy.g1.offline-home-fixes.v1",
+  "date_utc": "2026-10-08",
+  "base_commit": "a138cee",
+  "last_hardware_deployed_commit": "1538fd1",
+  "hardware_used": false,
+  "physical_pickup_verified": false,
+  "results": {
+    "home-simulation-before": {
+      "tests_run": 13,
+      "successful": false,
+      "seconds": 53.03185843700339,
+      "evidence_verified": 76
+    },
+    "home-open-before": {
+      "tests_run": 1,
+      "successful": false,
+      "seconds": 0.5888318330980837,
+      "evidence_verified": 76
+    },
+    "home-hand-arm-historical-red": {
+      "tests_run": 3,
+      "successful": false,
+      "seconds": 0.7370841669617221,
+      "evidence_verified": 76
+    },
+    "home-cancel-ik-red": {
+      "tests_run": 1,
+      "successful": false,
+      "seconds": 1.057536166976206,
+      "evidence_verified": 76
+    },
+    "home-all-after": {
+      "tests_run": 226,
+      "successful": true,
+      "seconds": 136.7542230340041,
+      "evidence_verified": 76
+    },
+    "home-regression-after": {
+      "tests_run": 213,
+      "successful": true,
+      "seconds": 19.944465750013478,
+      "evidence_verified": 76
+    },
+    "home-model-before": {
+      "tests_run": 10,
+      "successful": true,
+      "seconds": 2.516948416014202,
+      "evidence_verified": 76
+    },
+    "home-pickup-diagnostics-after": {
+      "tests_run": 12,
+      "successful": true,
+      "seconds": 0.13613070896826684,
+      "evidence_verified": 76
+    }
+  },
+  "baseline_failures": [
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 123, in test_75cm_scene_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 128, in test_head_camera_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 115, in test_measured_arms_down_stages_then_lifts_and_holds\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Can or table moved during final reach; refusing to close\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_start_rejects_interpolated_collision",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 107, in test_measured_arms_down_start_rejects_interpolated_collision\n    self.assertIn('trajectory intersects',result['error'])\nAssertionError: 'trajectory intersects' not found in 'No reachable grasp and offer path for this can position'\n"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/work/physical/test_sim_runtime.py\", line 92, in test_shared_physical_sequence_lifts_with_measured_table_height\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Measured starting arm posture changed after planning; replan required\n"
+    },
+    {
+      "test": "offline.open_cases.ColdOwnershipAcceptance.test_pickup_execution_uses_a_plan_measured_after_sdk_ownership",
+      "status": "failed",
+      "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/offline/open_cases.py\", line 41, in test_pickup_execution_uses_a_plan_measured_after_sdk_ownership\n    self.assertTrue(planned[-1],'Final plan was measured before cold SDK ownership changed robot pose')\nAssertionError: False is not true : Final plan was measured before cold SDK ownership changed robot pose\n"
+    }
+  ],
+  "repaired_cases": [
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold",
+      "after": "passed"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold",
+      "after": "passed"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds",
+      "after": "passed"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_start_rejects_interpolated_collision",
+      "after": "passed"
+    },
+    {
+      "test": "test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height",
+      "after": "passed"
+    },
+    {
+      "test": "offline.open_cases.ColdOwnershipAcceptance.test_pickup_execution_uses_a_plan_measured_after_sdk_ownership",
+      "after": "passed"
+    }
+  ],
+  "fixes": [
+    "Stable measured ownership hold before calibration refresh and final planning",
+    "Bounded arm gravity compensation maintained during hand commands and hold steps",
+    "Hold reference and torque slew state preserved when recreating calibrated plant",
+    "Cancellation rejected before IK entry and owned replanning or execution",
+    "Candidate collision rejection retained when bounded orientation search is exhausted"
+  ],
+  "test_contract_change": "Arms-down staging now asserts executed waypoints equal validated planner waypoints, at least one segment, and zero pregrasp contacts, instead of requiring exactly three segments.",
+  "historical_red_sources": {
+    "home-hand-arm-historical-red": "a138cee:physical_core.py",
+    "home-cancel-ik-red": "working source immediately before solve cancellation repair"
+  },
+  "guards_preserved": [
+    "400 ms exposure",
+    "12 ms RGB/depth skew",
+    "10 mm pregrasp target movement",
+    "40 mm tracking bound",
+    "0.04 rad start posture",
+    "0.15 rad arm tracking",
+    "75 C motor guard",
+    "collision and joint limits",
+    "gravity torque caps and 5 Nm/s slew",
+    "recording and ownership checks"
+  ],
+  "report_notes": [
+    "Full all-profile run validates production sources; the test_pickup collision-message assertion was subsequently strengthened and all 12 focused tests passed.",
+    "CPU model report was recorded before controller changes; checkpoint and preprocessing were unchanged.",
+    "Before reports preserve original failures. Historical arm regression ran against the base commit source. Cancellation red report ran against the then-current source before changing solve.",
+    "Original captured artifacts and manifest remain unchanged. No model retraining or hardware deployment occurred."
+  ],
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "report_archive_sha256": {
+    "home-fixes-20261008/home-simulation-before.json.gz": "5016bf88b89549ba3ec1a9967ce2384cb97a783d1d321a90a5ca6d58fff28cf7",
+    "home-fixes-20261008/home-open-before.json.gz": "92cb5043efdf96cc73303e3d5e35d135b959f15d318ed536d147d911ffb6f883",
+    "home-fixes-20261008/home-hand-arm-historical-red.json.gz": "38e9ac5fe0a5ae4aa9dc0acd070e339a90f78cd03f9d79fcdb6acc0e1043a30b",
+    "home-fixes-20261008/home-cancel-ik-red.json.gz": "60ee475cfc94b2c889d5f714a6f9941e3219a00bcea5a2f95292d5e988b8ab6f",
+    "home-fixes-20261008/home-all-after.json.gz": "ef740fa127cfa99e8a456ff891ed5d0cc74784c7301c641e746fbb7f501b91ed",
+    "home-fixes-20261008/home-regression-after.json.gz": "4994b5d13814beecc8daa29bdcc1349e192c5b43eef42fd6ae22ff6df29412af",
+    "home-fixes-20261008/home-model-before.json.gz": "772ac6e1d62f2ae6454c29f181fb589234cdecbae5209975ff06b68d5f135928",
+    "home-fixes-20261008/home-pickup-diagnostics-after.json.gz": "be1e20ea96629209eee836ddba7ea254d680c3f4e94944c7f05b06a881b626a1"
+  },
+  "source_sha256": {
+    "runtime.py": "c0cabf2190c26c54df558619ac95cf2fd462b50fac3ceeacebab72e00617cb75",
+    "physical_core.py": "5be02d74ed64351650d7cc28ebb5ea53f2609827ab7be712ba585ee07842d96d",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "sim_runtime.py": "70ac20a42e5b92f63c17f9524cde0e4d663fd1afd459dd43fecf4576a69d7a50",
+    "control_settle.py": "c8efc295be7a286e3c76a7d0f345f97ebfef0f762d72ac9765e01fed6423d552",
+    "offline/run.py": "bf458abe2af76f457ebf90446287ed55054e7f426074014052b9004cb5c777e9",
+    "offline/open_cases.py": "19e53b27f2fd2488e209b66eb6854300a598b7b68c03030697082181f9fa83ad",
+    "test_arm_gravity.py": "f05b96af2003cd87580e6d150abe075415a87db701cdf2306a4d98b39913e9f5",
+    "test_control_settle.py": "9b39aa98653f92d96e61e58ec45658c3960ccaef57066e5ccafae974b816da53",
+    "test_sim_runtime.py": "4857ac0d2f65bdfab10d3323a2e21c0ca67b1e9d283378aa5630f6d99ec3b3a5",
+    "test_pickup.py": "ff5911082534da17050b09952c4945e2de51d1e1742ffbcd71d2745570cbe666"
+  }
+}

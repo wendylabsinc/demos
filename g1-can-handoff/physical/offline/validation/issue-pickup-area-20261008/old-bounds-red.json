@@ -1,0 +1,161 @@
+{
+  "results": [
+    {
+      "name": "far-forward-20261008T003403Z",
+      "center_m": [
+        0.5024502737500371,
+        0.1257381188097357,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "input_files": {
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77",
+        "offline/attempts/20261008T003403Z.json": "62cf17415da11c23f918a90b14ec9b04b81cb6a9c86dcd4d62a26a1d5241f31a"
+      },
+      "original_failure": "ValueError: Can is outside the left-hand pickup area: measured forward=50.2 cm, robot-left=12.6 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "feedback_source": "captured terminal snapshot; base joints/IMU replaced by recorded exposure calibration",
+      "missing_fields": [
+        "feedback at exact planning instant",
+        "independent physical calibration metrology"
+      ],
+      "receipt_times_rebased_offline": true,
+      "passed": false,
+      "error": "Can is outside the left-hand pickup area: measured forward=50.2 cm, robot-left=12.6 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "elapsed_s": 0.0003138749161735177,
+      "clearance": {
+        "samples": 0,
+        "min_table_distance_m": 1.0,
+        "min_elbow_torso_distance_m": 1.0,
+        "required_clearance_m": 0.01
+      },
+      "events": [
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.5024502737500371,
+            0.1257381188097357,
+            0.823
+          ],
+          "source": "camera"
+        },
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.5024502737500371,
+            0.1257381188097357,
+            0.823
+          ],
+          "source": "camera"
+        }
+      ],
+      "actuation": false,
+      "physical_lift_verified": false,
+      "diagnostic_bounds": false
+    },
+    {
+      "name": "near-forward-20261008T003718Z",
+      "center_m": [
+        0.25735769859435936,
+        0.15088371247765964,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "input_files": {
+        "offline/trial-events.json.gz": "14331f01a6e9cef85f03c5db308439301b8ee59f8363d57be87307dcefab5b77",
+        "offline/attempts/20261008T003718Z.json": "ecab2913389927b6e102fc5bcff04ccf0233dfb5db0276b2df2032a6d21c4b18"
+      },
+      "original_failure": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "feedback_source": "captured terminal snapshot; base joints/IMU replaced by recorded exposure calibration",
+      "missing_fields": [
+        "feedback at exact planning instant",
+        "independent physical calibration metrology"
+      ],
+      "receipt_times_rebased_offline": true,
+      "passed": false,
+      "error": "Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "elapsed_s": 0.0001692919759079814,
+      "clearance": {
+        "samples": 0,
+        "min_table_distance_m": 1.0,
+        "min_elbow_torso_distance_m": 1.0,
+        "required_clearance_m": 0.01
+      },
+      "events": [
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.25735769859435936,
+            0.15088371247765964,
+            0.823
+          ],
+          "source": "camera"
+        },
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.25735769859435936,
+            0.15088371247765964,
+            0.823
+          ],
+          "source": "camera"
+        }
+      ],
+      "actuation": false,
+      "physical_lift_verified": false,
+      "diagnostic_bounds": false
+    },
+    {
+      "name": "near-midline-clearance-trial02",
+      "center_m": [
+        0.3684416482671213,
+        0.06832062319953616,
+        0.823
+      ],
+      "table_height_m": 0.762,
+      "input_files": {
+        "offline/evidence/clearance-demos-20261008-preserved/trial-02/trial.json": "ab73018056a71da2f4a3f0ebf5c47ad1feae4fabe706ac88f0242b9f66cd1539",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-02/events.jsonl.gz": "d15325eaab2946fbcc1edeb7ab49d0343ad53632ffbab3e893ed7129f106577d"
+      },
+      "original_failure": "ValueError: Can is outside the left-hand pickup area: measured forward=36.8 cm, robot-left=6.8 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "feedback_source": "captured terminal snapshot; base joints/IMU replaced by recorded exposure calibration",
+      "missing_fields": [
+        "feedback at exact planning instant",
+        "independent physical calibration metrology"
+      ],
+      "receipt_times_rebased_offline": true,
+      "passed": false,
+      "error": "Can is outside the left-hand pickup area: measured forward=36.8 cm, robot-left=6.8 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "elapsed_s": 0.0001516659976914525,
+      "clearance": {
+        "samples": 0,
+        "min_table_distance_m": 1.0,
+        "min_elbow_torso_distance_m": 1.0,
+        "required_clearance_m": 0.01
+      },
+      "events": [
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.3684416482671213,
+            0.06832062319953616,
+            0.823
+          ],
+          "source": "camera"
+        },
+        {
+          "phase": "observed_can_collision_proxy",
+          "center_m": [
+            0.3684416482671213,
+            0.06832062319953616,
+            0.823
+          ],
+          "source": "camera"
+        }
+      ],
+      "actuation": false,
+      "physical_lift_verified": false,
+      "diagnostic_bounds": false
+    }
+  ],
+  "passed": false
+}

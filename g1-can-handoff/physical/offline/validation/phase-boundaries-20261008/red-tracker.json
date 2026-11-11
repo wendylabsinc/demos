@@ -1,0 +1,82 @@
+{
+  "profile": "regression",
+  "tests_run": 11,
+  "successful": false,
+  "seconds": 0.5028590000001714,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_target_tracker",
+      "tests_run": 11,
+      "seconds": 0.03213366703130305,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_target_tracker.TrackerTests.test_acceptance_rejects_unchecked_frame_and_large_center_shift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_clipped_tracking_forces_semantic_rejection",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_initial_semantic_identity_and_pending_commit",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_periodic_identity_recheck_uses_current_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes",
+          "status": "error",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_target_tracker.py\", line 63, in test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes\n    self.tracker=TargetTracker(self.detector,recheck_interval_s=None)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/target_tracker.py\", line 26, in __init__\n    if not 0<recheck_interval_s<=1.0:raise ValueError('Semantic recheck interval must be within0..1s')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'int' and 'NoneType'\n"
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_phase_tracking_still_reacquires_uncertain_identity",
+          "status": "error",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_target_tracker.py\", line 75, in test_phase_tracking_still_reacquires_uncertain_identity\n    self.tracker=TargetTracker(self.detector,recheck_interval_s=None)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/target_tracker.py\", line 26, in __init__\n    if not 0<recheck_interval_s<=1.0:raise ValueError('Semantic recheck interval must be within0..1s')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'int' and 'NoneType'\n"
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_stale_future_or_repeated_frame_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_uncertain_empty_or_ambiguous_identity_never_returns_old_mask",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_depth_frames_do_not_requery_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_target_tracker.TrackerTests.test_visual_uncertainty_forces_same_frame_semantic_confirmation",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": ".....EE....\n======================================================================\nERROR: test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes (test_target_tracker.TrackerTests.test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_target_tracker.py\", line 63, in test_phase_tracking_does_not_reclassify_a_confident_track_after_time_passes\n    self.tracker=TargetTracker(self.detector,recheck_interval_s=None)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/target_tracker.py\", line 26, in __init__\n    if not 0<recheck_interval_s<=1.0:raise ValueError('Semantic recheck interval must be within0..1s')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'int' and 'NoneType'\n\n======================================================================\nERROR: test_phase_tracking_still_reacquires_uncertain_identity (test_target_tracker.TrackerTests.test_phase_tracking_still_reacquires_uncertain_identity)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_target_tracker.py\", line 75, in test_phase_tracking_still_reacquires_uncertain_identity\n    self.tracker=TargetTracker(self.detector,recheck_interval_s=None)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/target_tracker.py\", line 26, in __init__\n    if not 0<recheck_interval_s<=1.0:raise ValueError('Semantic recheck interval must be within0..1s')\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '<' not supported between instances of 'int' and 'NoneType'\n\n----------------------------------------------------------------------\nRan 11 tests in 0.032s\n\nFAILED (errors=2)\n"
+    }
+  ]
+}

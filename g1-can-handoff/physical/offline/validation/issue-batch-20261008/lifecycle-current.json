@@ -1,0 +1,92 @@
+{
+  "profile": "regression",
+  "tests_run": 13,
+  "successful": true,
+  "seconds": 0.4896968340035528,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_runtime_lifecycle",
+      "tests_run": 13,
+      "seconds": 0.022634999942965806,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_active_or_invalid_camera_limit_does_not_mutate_runtime",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_camera_limit_tuning_preserves_hold_and_persists_without_resume",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_cancelled_async_demo_cannot_reacquire_camera_or_arm",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_demo_start_is_single_job_and_stop_remains_latched_before_worker",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failed_geometry_retains_exact_detection_and_archives_frame",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failure_holds_measured_pose_and_retains_control",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_first_failure_survives_later_cancellation",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_frame_evidence_is_persisted_without_stdout_or_state_lock",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_plan_refresh_is_saved_only_after_success_without_adapter",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_cancels_but_never_relaxes_while_trial_running",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_requires_supported_can_and_finishes_after_trial",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_refuses_possible_held_can_or_active_motion",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_reuses_held_controller_and_never_releases",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".............\n----------------------------------------------------------------------\nRan 13 tests in 0.023s\n\nOK\n"
+    }
+  ]
+}

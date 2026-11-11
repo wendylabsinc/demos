@@ -1,0 +1,114 @@
+[
+  {
+    "file": "startup-abba-0-deployed.json",
+    "startup_ms": 1908.2357009997395,
+    "first_round_trip_ms": 615.5860999997458,
+    "errors": [],
+    "before": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "after": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "age_percentiles_ms": [
+      211.3370557988219,
+      253.23230617675563,
+      269.92698539515914
+    ],
+    "roundtrip_percentiles_ms": [
+      60.702273500055526,
+      78.11349174990028,
+      615.5860999997458
+    ]
+  },
+  {
+    "file": "startup-abba-1-warm-ready.json",
+    "startup_ms": 2396.007735999774,
+    "first_round_trip_ms": 93.50354600019273,
+    "errors": [],
+    "before": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "after": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "age_percentiles_ms": [
+      218.58972426775836,
+      245.4314832023556,
+      260.5803796291184
+    ],
+    "roundtrip_percentiles_ms": [
+      61.86503450021519,
+      81.58692525009882,
+      93.50354600019273
+    ]
+  },
+  {
+    "file": "startup-abba-2-warm-ready.json",
+    "startup_ms": 2366.287449000083,
+    "first_round_trip_ms": 95.39830399990024,
+    "errors": [],
+    "before": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "after": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "age_percentiles_ms": [
+      224.72502601135602,
+      259.6291788473991,
+      272.1538159235024
+    ],
+    "roundtrip_percentiles_ms": [
+      63.03043849993628,
+      92.09665845010022,
+      95.39830399990024
+    ]
+  },
+  {
+    "file": "startup-abba-3-deployed.json",
+    "startup_ms": 1888.5241909997603,
+    "first_round_trip_ms": 569.4812719998481,
+    "errors": [],
+    "before": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "after": {
+      "phase": "PASSIVE",
+      "demo_running": false,
+      "adapter_initialized": false,
+      "motion_commands_sent": 10322
+    },
+    "age_percentiles_ms": [
+      207.82217426904026,
+      242.39025992462757,
+      254.63511443649622
+    ],
+    "roundtrip_percentiles_ms": [
+      66.63341899979969,
+      77.09730104995742,
+      569.4812719998481
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "profile": "regression",
+  "tests_run": 10,
+  "successful": true,
+  "seconds": 0.8472347080241889,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_stochastic_position_noise",
+      "tests_run": 10,
+      "seconds": 0.43507520796265453,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_conditional_regimes_change_from_arm_motion_and_occlusion_proxy",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_data_audit_keeps_unverified_stationarity_and_excludes_postgrasp",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_fitted_jumps_persist_across_subsequent_observations",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_invalid_profile_and_settings_are_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_large_noise_still_hits_existing_40mm_tracking_gate",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_noise_does_not_move_truth_or_change_exposure_and_geometry_quality",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_ou_and_jitter_variance_matches_transition_distribution",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_repeated_frame_reuses_jitter_and_nonadvancing_ids_are_rejected",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_seeds_generate_new_sequences_and_same_seed_repeats",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_stochastic_position_noise.StochasticNoiseTests.test_validation_gate_retains_displacement_across_long_unobserved_gap",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "..........\n----------------------------------------------------------------------\nRan 10 tests in 0.435s\n\nOK\n"
+    }
+  ]
+}

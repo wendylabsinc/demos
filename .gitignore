@@ -64,3 +64,7 @@ recordings/
 # Local hardware configuration. Commit the example configurations instead.
 /sassy-rosmaster/hardware.json
 /sassy-rosmaster/perception.json
+
+# Small, deliberate offline regression fixtures; never full live recordings.
+!g1-can-handoff/physical/offline/evidence/
+!g1-can-handoff/physical/offline/evidence/**

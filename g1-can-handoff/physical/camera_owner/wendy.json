@@ -1,0 +1,38 @@
+{
+  "appId": "g1-can-camera",
+  "version": "0.1.1-compact-tracking",
+  "platform": "linux",
+  "env": {
+    "CAMERA_PORT": "8001",
+    "G1_REALSENSE_FPS": "15",
+    "G1_REALSENSE_FRAME_TIMEOUT_LIMIT": "3",
+    "G1_REALSENSE_FRESHNESS_LIMIT_S": "1.5",
+    "G1_REALSENSE_HARDWARE_RESET_AFTER_FAILURES": "0",
+    "G1_REALSENSE_HEIGHT": "480",
+    "G1_REALSENSE_JPEG_QUALITY": "90",
+    "G1_REALSENSE_LEASE_TIMEOUT_S": "5.0",
+    "G1_REALSENSE_RETRY_DELAY_S": "2.0",
+    "G1_REALSENSE_RGBD_ENABLED": "1",
+    "G1_REALSENSE_SERIAL": "338622073335",
+    "G1_REALSENSE_WIDTH": "640",
+    "SEGMENTATION_URL": "http://127.0.0.1:8003"
+  },
+  "entitlements": [
+    {
+      "type": "network",
+      "mode": "host"
+    },
+    {
+      "type": "usb"
+    },
+    {
+      "type": "camera"
+    }
+  ],
+  "readiness": {
+    "tcpSocket": {
+      "port": 8001
+    },
+    "timeoutSeconds": 180
+  }
+}

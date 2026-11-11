@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 0.10933225008193403,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_runtime_packaging",
+      "tests_run": 1,
+      "seconds": 0.0396329159848392,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_runtime_packaging.RuntimePackagingTests.test_stagefile_copies_every_transitive_local_runtime_module",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.040s\n\nOK\n"
+    }
+  ]
+}

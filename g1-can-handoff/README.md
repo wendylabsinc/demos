@@ -1,10 +1,15 @@
 # G1 Dex3 can pickup and supervised handoff
 
-A Wendy application that detects an upright red can and its tabletop from
+A Wendy application that detects an upright can and its tabletop from
 calibrated RGB-D images, chooses a reachable left-hand grasp, closes the Dex3,
 checks that the can remains held during lifting, and offers it above the table.
 The release operation requires explicit confirmation that the recipient supports
 the can. The demo stops in `waiting_for_acceptance` with the hand closed.
+
+The G1 NX2 [physical runtime](physical/README.md#coke-trained-yolo-on-g1-nx2)
+uses the trained Coca-Cola YOLOv8n model from the older G1 bartending demo,
+then fits aligned depth for grasp geometry. The original simulation commands
+below retain their synthetic red-cylinder detector.
 
 ## Run locally
 
@@ -277,6 +282,6 @@ all 39 short-trial outcomes.
 
 ## Physical controller and shared simulation
 
-The physical pickup work is in [physical/](physical/README.md), on this checkout's current branch. Its MuJoCo replay uses the same `PhysicalPlant`, pickup sequence, perception, and staging planner as the robot. The original demo commands above continue to use the original package.
+The physical pickup work is in [physical/](physical/README.md), on this checkout's current branch. Its MuJoCo replay uses the same `PhysicalPlant`, pickup sequence, depth geometry, and staging planner as the robot. Its synthetic color mask does not exercise the physical Coke-trained YOLO model. The original demo commands above continue to use the original package.
 
 Use [physical/DEVELOPMENT_STATUS.md](physical/DEVELOPMENT_STATUS.md) for the deployed version, current blocker, test commands, and where work continues. Passive DDS recording is in `recorder/`; captured validation results are in `evidence/`.

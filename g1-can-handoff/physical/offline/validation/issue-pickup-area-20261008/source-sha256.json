@@ -1,0 +1,9 @@
+{
+  "g1_can_handoff/task.py": "7c3131d774075fcae8b0843f0a13a4f5e4edaa9cfc2cc2c26968d2d30b8a9ce2",
+  "placement_overlay.py": "e07e8c9117e68f69a49b3baa95940a91f0805fa9a6091b6efb6034ba0168d9b5",
+  "test_pickup_workspace.py": "6704284a3810fe51f1ff80853f5709d830bd55ac679cdb0869ef67070a203b28",
+  "test_pickup_area_acceptance.py": "1bd46c991232b8efdbe43a6989ce8729dd0ba68ed9ee00d5a87e7953a26169b4",
+  "offline/pickup_area_replay.py": "44a2224786b34f812e736a578b2a823f6f7b5b03e76a05bc5954955e6fb0a318",
+  "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+  "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+}

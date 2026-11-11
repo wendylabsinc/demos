@@ -1,0 +1,11 @@
+{
+  "offline_only": true,
+  "hardware_commands_sent": 0,
+  "commands": 418,
+  "fixture_sha256": "29a6ec9df2be0b5778fe51d1764f3dec8012602f092413a98b059450cce6583f",
+  "collision_preflight_passed": true,
+  "workspace_absence_assumption": true,
+  "operator_confirmation_required_for_motion": true,
+  "seed_captured_unix_s": 1791495061.5857008,
+  "events": []
+}

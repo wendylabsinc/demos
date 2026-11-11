@@ -46,26 +46,9 @@ def candidate(frame, measured):
     cloud = points[yellow][::3]
     if len(cloud) < 100:
         raise ValueError('Too few yellow tape depth points')
-    rng = np.random.default_rng(17)
-    best = np.zeros(len(cloud), dtype=bool)
-    for _ in range(200):
-        a, b, c = cloud[rng.choice(len(cloud), 3, replace=False)]
-        normal = np.cross(b-a, c-a)
-        norm = np.linalg.norm(normal)
-        if norm < 1e-9:
-            continue
-        normal /= norm
-        inside = np.abs((cloud-a) @ normal) < .006
-        if inside.sum() > best.sum():
-            best = inside
-    fitted = cloud[best]
-    if len(fitted) < 100 or best.mean() < .7:
-        raise ValueError('Yellow tape does not establish one dominant plane')
-    center = fitted.mean(axis=0)
-    _, _, vt = np.linalg.svd(fitted-center, full_matrices=False)
-    up = vt[-1]
-    if up[2] > 0:
-        up = -up
+    from table_plane import fit_table_plane
+    up, center, fitted, plane_quality = fit_table_plane(
+        cloud, points[::4,::4].reshape(-1,3), points[2::4,2::4].reshape(-1,3))
     predicted = (base_rotation @ camera_rotation).T @ np.array([0., 0., 1.])
     axis = np.cross(up, predicted)
     angle = np.arctan2(np.linalg.norm(axis), up @ predicted)
@@ -94,7 +77,7 @@ def candidate(frame, measured):
                 table_extent_source='conservative extension beyond reachable workspace',
                 can_radius_m=.033, can_height_m=.122, arm_limits_rad=arm_limits.tolist(),
                 source_frame_id=frame['meta']['frame_id'], tilt_correction_deg=float(np.degrees(angle)),
-                table_plane_rmse_m=float(np.sqrt(np.mean(((fitted-center) @ up)**2))),
+                table_plane_rmse_m=plane_quality['rmse_m'], table_plane_quality=plane_quality,
                 independent_validation=False,
                 assumptions=['operator confirms factory mount position and stationary base',
                              'camera tilt adjusted; pivot translation not modeled',

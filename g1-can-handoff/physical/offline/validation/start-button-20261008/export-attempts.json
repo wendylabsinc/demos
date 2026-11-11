@@ -1,0 +1,13 @@
+{
+  "failed_attempts": [
+    {
+      "error": "Trial recording interval is not fully sealed yet",
+      "recorded_at_utc": null
+    },
+    {
+      "error": "KeyError: topic on periodic recorder_status row",
+      "recorded_at_utc": null
+    }
+  ],
+  "repair": "Preserve known status rows separately from DDS sample counts; reject unknown row types."
+}

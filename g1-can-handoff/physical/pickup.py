@@ -10,6 +10,7 @@ from g1_can_handoff.task import plan, OPEN, CLOSED
 def prepare(plant, observe, event):
     observation, baseline = observe('planning', True)
     plant.observe_can(observation)
+    rejected=[]
     def validate_candidate(points,rotation):
         try:
             plant.preflight(points,rotation)
@@ -27,9 +28,14 @@ def prepare(plant, observe, event):
                        'Staging planning node limit reached',
                        'No staging path within bounded search')
             if not str(exc).startswith(geometric):raise
+            reason=str(exc).split(':',1)[0]
+            if reason not in rejected:rejected.append(reason)
             event('grasp_candidate_rejected',rotation=rotation.tolist(),reason=str(exc))
             return False
-    points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
+    try:points, rotation = plan(plant, observation,validate=validate_candidate,include_offer=False)
+    except ValueError as exc:
+        if rejected:raise ValueError(str(exc)+'; preflight rejected: '+'; '.join(rejected)) from exc
+        raise
     refreshed, track = observe('plan-refresh', True)
     if (np.linalg.norm(refreshed.center-observation.center) > .01 or
             abs(refreshed.table_height-observation.table_height) > .005):
@@ -43,22 +49,22 @@ def execute(plant, prepared, observe, event):
     observation, baseline, points, rotation = prepared
     plant.validate_start()
     plant.set_contact_phase('pregrasp')
-    plant.hand(OPEN, .8)
-    plant.stage()
-    for phase, point in zip(('approach', 'align', 'reach'), points[:3]):
-        fresh, vision = observe(phase, True)
+    def checkpoint(phase,message):
+        fresh,vision=observe(phase,True)
         if (np.linalg.norm(fresh.center-observation.center) > .01 or
                 abs(fresh.table_height-observation.table_height) > .005):
-            raise RuntimeError('Can or table moved during approach; replanning required')
+            raise RuntimeError(message)
         plant.observe_can(fresh)
+    checkpoint('pre-open','Can or table moved before opening; replanning required')
+    plant.hand(OPEN, .8)
+    checkpoint('pre-stage','Can or table moved before staging; replanning required')
+    plant.stage()
+    for phase, point in zip(('approach', 'align', 'reach'), points[:3]):
+        checkpoint(phase,'Can or table moved during approach; replanning required')
         plant.set_contact_phase(phase)
         event(phase)
         plant.move(point, rotation=rotation)
-    fresh, vision = observe('pre-close', True)
-    if (np.linalg.norm(fresh.center-observation.center) > .01 or
-            abs(fresh.table_height-observation.table_height) > .005):
-        raise RuntimeError('Can or table moved during final reach; refusing to close')
-    plant.observe_can(fresh)
+    checkpoint('pre-close','Can or table moved during final reach; refusing to close')
     plant.set_contact_phase('close')
     event('close')
     plant.hand(CLOSED, 1.2)
@@ -72,6 +78,13 @@ def execute(plant, prepared, observe, event):
         if stationary >= 3:break
         if attempt < 20:plant.step(.1)
     else:raise RuntimeError('Insufficient stable finger obstruction candidates')
+    # Once the fingers close, use the existing post-grasp tracking contract:
+    # the can may rise/settle in the fingers, but must remain within 40 mm in XY.
+    # The pregrasp 10 mm full-position/table check no longer describes this state.
+    fresh,vision=observe('pre-lift',False,expected_center_xy=observation.center[:2])
+    if np.linalg.norm(fresh.center[:2]-observation.center[:2]) > .04:
+        raise RuntimeError('Grasped can moved outside the checked pickup path before lifting')
+    plant.observe_can(fresh)
     plant.set_contact_phase('lift')
     event('lift')
     plant.move(points[3], rotation=rotation)

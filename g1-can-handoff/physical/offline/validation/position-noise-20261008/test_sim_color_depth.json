@@ -1,0 +1,47 @@
+{
+  "profile": "regression",
+  "tests_run": 4,
+  "successful": false,
+  "seconds": 47.49136570899282,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_color_depth",
+      "tests_run": 4,
+      "seconds": 46.806243749917485,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_sim_color_depth.ColorDepthSimulationTests.test_current_color_depth_path_lifts_and_holds_without_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_color_depth.ColorDepthSimulationTests.test_head_camera_color_depth_lifts_without_yolo",
+          "status": "failed",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_color_depth.py\", line 41, in test_head_camera_color_depth_lifts_without_yolo\n    self.assertTrue(result['lift_verified'], result.get('error'))\nAssertionError: False is not true : Color/depth can target absent/ambiguous\n"
+        },
+        {
+          "test": "test_sim_color_depth.ColorDepthSimulationTests.test_lost_can_stops_before_alignment_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_color_depth.ColorDepthSimulationTests.test_stale_alignment_frame_stops_before_alignment_commands",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n.F..\n======================================================================\nFAIL: test_head_camera_color_depth_lifts_without_yolo (test_sim_color_depth.ColorDepthSimulationTests.test_head_camera_color_depth_lifts_without_yolo)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_color_depth.py\", line 41, in test_head_camera_color_depth_lifts_without_yolo\n    self.assertTrue(result['lift_verified'], result.get('error'))\nAssertionError: False is not true : Color/depth can target absent/ambiguous\n\n----------------------------------------------------------------------\nRan 4 tests in 46.806s\n\nFAILED (failures=1)\n"
+    }
+  ]
+}

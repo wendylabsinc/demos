@@ -1,0 +1,22 @@
+FROM python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f AS stagefile-pip-deps-0
+ENV PYTHONDONTWRITEBYTECODE="1"
+ENV PYTHONPATH="/app/src"
+ENV PYTHONUNBUFFERED="1"
+WORKDIR /app
+RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-f1b62b9b6fdbaaa0,target=/var/lib/apt/lists \
+    --mount=type=cache,sharing=locked,id=stagefile-apt-archives-f1b62b9b6fdbaaa0,target=/var/cache/apt \
+    rm -f /etc/apt/apt.conf.d/docker-clean && command -v pip >/dev/null 2>&1 || (apt-get update && apt-get install -y --no-install-recommends 'python3-pip')
+RUN --mount=type=cache,sharing=locked,id=stagefile-pip-96a296d224f285c6,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' 'fastapi==0.115.6' 'numpy==2.2.6' 'opencv-python-headless==4.11.0.86' 'pyrealsense2==2.58.3.10794' 'uvicorn[standard]==0.34.0'
+
+FROM python:3.12-slim@sha256:05cda9777409a9c3ffddd94a4c476b79f0769a0b4857f0c7ed9226b6800b0d6f AS camera
+ENV PYTHONDONTWRITEBYTECODE="1"
+ENV PYTHONPATH="/app/src"
+ENV PYTHONUNBUFFERED="1"
+WORKDIR /app
+RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-f1b62b9b6fdbaaa0,target=/var/lib/apt/lists \
+    --mount=type=cache,sharing=locked,id=stagefile-apt-archives-f1b62b9b6fdbaaa0,target=/var/cache/apt \
+    rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1' 'libusb-1.0-0'
+COPY --link --from=stagefile-pip-deps-0 /opt/stagefile/pip/root/ /
+COPY s[r]c/coke_detector/__init__.py s[r]c/coke_detector/settings.py s[r]c/coke_detector/lease.py s[r]c/coke_detector/camera_service.py /app/src/coke_detector/
+CMD ["python3", "-m", "coke_detector.camera_service"]
+USER root

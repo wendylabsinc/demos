@@ -1,0 +1,346 @@
+{
+  "scope": "Preserved October 7-8 native primary trial failures; not a complete lifetime error count",
+  "deduplication": "Same error and primary failure Unix timestamps within 1ms merge; snapshots may round integer nanoseconds",
+  "technical_trial_failures": 23,
+  "operator_cancellations": 1,
+  "counts": {
+    "Stale RGB-D observation": 9,
+    "Table-height disagreement": 2,
+    "Can outside pickup area": 3,
+    "Tracked position outside checked path": 1,
+    "Planning / collision": 6,
+    "Operator cancellation": 1,
+    "Control handover not settled": 2
+  },
+  "faults": [
+    {
+      "unix_ns": 1791418391519362340,
+      "monotonic_ns": 1361238190180,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (478.3 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/attempts/20261008T001246Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791418459297127433,
+      "monotonic_ns": 1429015955305,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (407.1 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/attempts/20261008T001402Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791418911352662432,
+      "monotonic_ns": 1881071490112,
+      "phase": "primary_failure",
+      "error": "RuntimeError: RuntimeError: Table plane differs by over 5 mm",
+      "source": "tracking",
+      "sources": [
+        "offline/attempts/20261008T002131Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Table-height disagreement"
+    },
+    {
+      "unix_ns": 1791419318679087543,
+      "monotonic_ns": 2288397915511,
+      "phase": "primary_failure",
+      "error": "RuntimeError: RuntimeError: Table plane differs by over 5 mm",
+      "source": "tracking",
+      "sources": [
+        "offline/attempts/20261008T002809Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Table-height disagreement"
+    },
+    {
+      "unix_ns": 1791419650114553238,
+      "monotonic_ns": 2619833380854,
+      "phase": "primary_failure",
+      "error": "ValueError: Can is outside the left-hand pickup area: measured forward=50.2 cm, robot-left=12.6 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "source": "execution",
+      "sources": [
+        "offline/attempts/20261008T003403Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Can outside pickup area"
+    },
+    {
+      "unix_ns": 1791419692388857489,
+      "monotonic_ns": 2662107685425,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (405.4 ms)",
+      "source": "execution",
+      "sources": [
+        "offline/attempts/20261008T003433Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791419742630551834,
+      "monotonic_ns": 2712349379642,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (410.8 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/attempts/20261008T003513Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791419844641903476,
+      "monotonic_ns": 2814360731124,
+      "phase": "primary_failure",
+      "error": "ValueError: Can is outside the left-hand pickup area: measured forward=25.7 cm, robot-left=15.1 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "source": "execution",
+      "sources": [
+        "offline/attempts/20261008T003718Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Can outside pickup area"
+    },
+    {
+      "unix_ns": 1791420033827920310,
+      "monotonic_ns": 3003546747990,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Tracked can moved outside the checked pickup path",
+      "source": "tracking",
+      "sources": [
+        "offline/attempts/20261008T004012Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Tracked position outside checked path"
+    },
+    {
+      "unix_ns": 1791420091950808153,
+      "monotonic_ns": 3061669636537,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (411.8 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/attempts/20261008T004101Z.json",
+        "offline/trial-events.json.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791420491931119918,
+      "monotonic_ns": 3461649947694,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/latest-planner-stop.json.gz"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791421203611555246,
+      "monotonic_ns": 4173330383598,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "source": "execution",
+      "sources": [
+        "offline/attempts/20261008T005915Z.json",
+        "offline/attempts/20261008T005915Z.json",
+        "offline/evidence/20261008T005915Z/events.jsonl.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791421439148466424,
+      "monotonic_ns": 4408867294872,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Operator cancelled trial",
+      "source": "execution",
+      "sources": [
+        "offline/attempts/20261008T010351Z-85369a28.json",
+        "offline/attempts/20261008T010351Z-85369a28.json",
+        "offline/evidence/20261008T010351Z-85369a28/events.jsonl.gz"
+      ],
+      "category": "Operator cancellation"
+    },
+    {
+      "unix_ns": 1791480796375861108,
+      "monotonic_ns": 4177466597725,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/20261008T173157Z/events.jsonl.gz"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791481514123084000,
+      "monotonic_ns": 4895213820308,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/ten-demos-20261008/trial-01/events.jsonl.gz",
+        "offline/validation/ten-demos-20261008/additional-attempt-observed.json",
+        "offline/validation/ten-demos-20261008/trial-01.json"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791481831809654000,
+      "monotonic_ns": 5212900390954,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Control handover did not settle within 5 seconds",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/ten-demos-20261008/trial-02/events.jsonl.gz",
+        "offline/validation/ten-demos-20261008/additional-attempt-observed.json",
+        "offline/validation/ten-demos-20261008/trial-02.json"
+      ],
+      "category": "Control handover not settled"
+    },
+    {
+      "unix_ns": 1791481962035613145,
+      "monotonic_ns": 5343126349634,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Control handover did not settle within 5 seconds",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/ten-demos-20261008/trial-03/events.jsonl.gz",
+        "offline/validation/ten-demos-20261008/additional-attempt-observed.json",
+        "offline/validation/ten-demos-20261008/trial-03.json"
+      ],
+      "category": "Control handover not settled"
+    },
+    {
+      "unix_ns": 1791482264290305000,
+      "monotonic_ns": 5645381041440,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Continuous Cartesian lift IK cannot preserve the grasp pose; Interpolated physical trajectory intersects robot/table",
+      "source": "execution",
+      "sources": [
+        "offline/validation/ten-demos-20261008/additional-attempt-observed.json"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791484488277726750,
+      "monotonic_ns": 622846445726,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/clearance-demos-20261008/trial-01.json",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-01/events.jsonl.gz"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791484564068583775,
+      "monotonic_ns": 698637303071,
+      "phase": "primary_failure",
+      "error": "ValueError: Can is outside the left-hand pickup area: measured forward=36.8 cm, robot-left=6.8 cm; requires forward=27\u201345 cm and robot-left=9\u201329 cm. Reposition the can inside that area and recheck perception before starting.",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/clearance-demos-20261008/trial-02.json",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-02/events.jsonl.gz"
+      ],
+      "category": "Can outside pickup area"
+    },
+    {
+      "unix_ns": 1791484662118959983,
+      "monotonic_ns": 796687679343,
+      "phase": "primary_failure",
+      "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/clearance-demos-20261008/trial-03.json",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-03/events.jsonl.gz"
+      ],
+      "category": "Planning / collision"
+    },
+    {
+      "unix_ns": 1791485393286738419,
+      "monotonic_ns": 1527855457331,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/evidence/clearance-demos-20261008/trial-04.json",
+        "offline/evidence/clearance-demos-20261008-preserved/trial-04/events.jsonl.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791486678345985793,
+      "monotonic_ns": 2812914704769,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (401.7 ms)",
+      "source": "execution",
+      "sources": [
+        "offline/evidence/exposure-failure-20261008/trial-01.json",
+        "offline/evidence/exposure-failure-20261008-preserved/trial-01/events.jsonl.gz"
+      ],
+      "category": "Stale RGB-D observation"
+    },
+    {
+      "unix_ns": 1791488082039628214,
+      "monotonic_ns": 4216608347606,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (404.1 ms)",
+      "source": "watchdog",
+      "sources": [
+        "offline/evidence/exposure-restart-20261008/trial-01.json"
+      ],
+      "category": "Stale RGB-D observation"
+    }
+  ],
+  "recent_deployment_failed_attempts": 7,
+  "deployment_attempts": [
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-mac-default-builder-unavailable.json",
+      "deployment_id": "e8ea36e0-d4fb-4450-b836-97381cfcfa02",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-apple-builder-reset-failure.json",
+      "deployment_id": "e03a3bf9-245f-449e-a38f-9ad52457de0f",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-transfer-failure.json",
+      "deployment_id": "d05a051d-c381-44a7-b065-094e72784ac6",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-ondevice-build-unavailable.json",
+      "deployment_id": "9f9cfb47-f456-43f4-8c8e-00773071dfad",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-apple-https-build-failure.json",
+      "deployment_id": "ae5d893c-bb81-4840-8d3d-ea440300684d",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-apple-mirror-build-failure.json",
+      "deployment_id": "b043c89e-5750-48fb-b42d-25e73ef27e3a",
+      "exit_code": 1
+    },
+    {
+      "file": "offline/validation/exposure-500ms-20261008/yolo-apple-http-build-failure.json",
+      "deployment_id": "3d13c971-a865-483a-a9cb-e4f5ef91c241",
+      "exit_code": 1
+    }
+  ],
+  "current_exposure_limit_ms": 400,
+  "proposed_tested_not_deployed_limit_ms": 500
+}

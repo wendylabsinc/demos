@@ -1,0 +1,1766 @@
+{
+  "schema": "wendy.g1.operator-button-trial.v1",
+  "device": "10.10.20.238:50052",
+  "source_commit": "24e124949be3eb1450b35a38589ffe68653741fa",
+  "controller_version": "0.3.8-latest-frame",
+  "camera_version": "0.1.1-compact-tracking",
+  "button": "regular Start demo",
+  "ui_acknowledgement": "Start accepted \u2014 one pickup attempt requested.",
+  "started_unix_ns": 1791480707218000000,
+  "finished_unix_ns": 1791480796980565200,
+  "native_event_file": "/data/events-20261008T173130Z.jsonl",
+  "controller_before": {
+    "phase": "PASSIVE",
+    "error": null,
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "automatic_home": false,
+    "events": "/data/events-20261008T173130Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200,
+      "rate_hz": 191.2,
+      "samples": 1996,
+      "age_s": 0.0012,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": null,
+    "tracking_vision": null,
+    "first_failure": null,
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": null,
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.009833800606429577,
+          0.012224775739014149,
+          1.7153829336166382
+        ],
+        "q": [
+          -0.16128689050674438,
+          0.029420044273138046,
+          0.0034952848218381405,
+          0.31878677010536194,
+          -0.1448664367198944,
+          -0.011694383807480335,
+          -0.1523900330066681,
+          -0.053220611065626144,
+          0.0348055362701416,
+          0.31557393074035645,
+          -0.14357590675354004,
+          0.023649031296372414,
+          0.0028926494996994734,
+          0,
+          0,
+          0.24568860232830048,
+          0.29879069328308105,
+          -0.07509315758943558,
+          0.8242270946502686,
+          -0.009036106057465076,
+          0.0031830102670937777,
+          -0.0047783502377569675,
+          0.25782862305641174,
+          -0.2868903577327728,
+          0.08776047825813293,
+          0.7957046031951904,
+          -0.0009707222343422472,
+          0.015984080731868744,
+          0.0009127185912802815
+        ],
+        "dq": [
+          0.018855789676308632,
+          -0.007635815534740686,
+          -0.0051424880512058735,
+          -0.010908307507634163,
+          -0.0005308195832185447,
+          0.0026940430980175734,
+          0,
+          0,
+          0.022284114733338356,
+          0.008726646192371845,
+          0.006700816564261913,
+          -0.010830319486558437,
+          -0.008570813573896885,
+          0,
+          0,
+          0,
+          0.015339807607233524,
+          0.004601942375302315,
+          -0.003067961661145091,
+          -0.004601942375302315,
+          0.0019634952768683434,
+          0.004908738657832146,
+          -0.006135923322290182,
+          0.016873788088560104,
+          0.004601942375302315,
+          0.01073786523193121,
+          -0.006135923322290182,
+          0,
+          0.009817477315664291
+        ],
+        "tau_est": [
+          -1.118607997894287,
+          -4.39453125,
+          0.4474431872367859,
+          -7.03125,
+          -0.17982110381126404,
+          0.8542523384094238,
+          2.1253552436828613,
+          4.921875,
+          -0.39151278138160706,
+          -2.63671875,
+          4.613244533538818,
+          -2.882067918777466,
+          0,
+          0,
+          0,
+          0.375,
+          1.25,
+          0.375,
+          -0.875,
+          0.25,
+          -0.13671875,
+          0.224609375,
+          0.125,
+          -2.625,
+          -0.5,
+          -1.4375,
+          -0.0625,
+          -0.5859375,
+          0
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            34,
+            34
+          ],
+          [
+            32,
+            33
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            40,
+            40
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            33,
+            34
+          ],
+          [
+            33,
+            34
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            47,
+            52
+          ],
+          [
+            41,
+            39
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            43
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            40,
+            38
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            50
+          ],
+          [
+            48,
+            47
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            43
+          ],
+          [
+            49,
+            41
+          ]
+        ],
+        "temperature_max": 52,
+        "time": 4082.647435709
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.017642974853515625,
+          -0.8434743881225586,
+          -0.029025012627243996,
+          -0.027462059631943703,
+          -0.022305911406874657,
+          -0.047467298805713654,
+          -0.040127504616975784
+        ],
+        "dq": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          5861.07958984375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375,
+          1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            37,
+            29
+          ],
+          [
+            37,
+            31
+          ],
+          [
+            33,
+            28
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            37,
+            30
+          ],
+          [
+            33,
+            27
+          ]
+        ],
+        "temperature_max": 37,
+        "time": 4082.548309697
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.039077289402484894,
+          -0.8890283107757568,
+          -1.5201700925827026,
+          1.1861785650253296,
+          1.7013461589813232,
+          0.7200445532798767,
+          1.6259738206863403
+        ],
+        "dq": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          1674.5941162109375,
+          3349.188232421875,
+          -1674.5941162109375,
+          1674.5941162109375,
+          -1674.5941162109375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            43,
+            35
+          ],
+          [
+            45,
+            36
+          ],
+          [
+            40,
+            32
+          ],
+          [
+            44,
+            36
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            43,
+            35
+          ],
+          [
+            41,
+            33
+          ]
+        ],
+        "temperature_max": 45,
+        "time": 4082.552387409
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "controller_after": {
+    "phase": "FROZEN",
+    "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+    "motion_commands_sent": 4988,
+    "adapter_initialized": true,
+    "automatic_home": false,
+    "events": "/data/events-20261008T173130Z.jsonl",
+    "calibration_present": true,
+    "lowstate": {
+      "poll_hz": 200,
+      "rate_hz": 145.7,
+      "samples": 18343,
+      "age_s": 0.0024,
+      "listener_errors": 0,
+      "affinity": {
+        "requested": "auto",
+        "cpu": 6,
+        "active": true,
+        "error": null
+      }
+    },
+    "camera_max_age_ms": 400,
+    "yolo_confidence_strictly_above": 0.1,
+    "perception_mode": "yolo_visual_depth",
+    "tracking_error": null,
+    "tracking_exposure_age_ms": 731.8669231308377,
+    "tracking_vision": {
+      "top_quantile_z_m": 0.8666090243348751,
+      "center_xy_m": [
+        0.3148380153442004,
+        0.17930299748652778
+      ],
+      "fit_error_m": 0.0023734112847045206,
+      "pixels": 1773,
+      "frame_id": 5188,
+      "detector": "coke_visual_depth_tracker",
+      "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+      "backend": "pytorch_cuda",
+      "box": {
+        "xyxy": [
+          53.25,
+          268.625,
+          200,
+          433.375
+        ],
+        "confidence": 0.285400390625,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "image_sha256": "d6c9fba4e9310150349e2e87bffec1f08117240d8f855fd30d92a29af9b75617",
+      "tracking": {
+        "mode": "visual_depth",
+        "semantic_frame_id": 5182,
+        "semantic_age_s": 0.40029239654541016,
+        "visual_agreement": 0.9876985568502018,
+        "support_pixels": 3545,
+        "roi_shape": [
+          138,
+          122
+        ]
+      }
+    },
+    "first_failure": {
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+      "source": "execution"
+    },
+    "demo_running": false,
+    "demo_result": null,
+    "demo_error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+    "measured": {
+      "body": {
+        "imu_rpy": [
+          0.008704863488674164,
+          -0.0032117734663188457,
+          1.7132396697998047
+        ],
+        "q": [
+          -0.1523410975933075,
+          0.029846150428056717,
+          0.002691771136596799,
+          0.325510710477829,
+          -0.14553050696849823,
+          -0.010783767327666283,
+          -0.14189079403877258,
+          -0.05283711478114128,
+          0.034698400646448135,
+          0.3182498812675476,
+          -0.14257821440696716,
+          0.02493569254875183,
+          0.0027453387156128883,
+          0,
+          0,
+          0.6949412822723389,
+          0.5214576125144958,
+          0.10467022657394409,
+          0.17921210825443268,
+          -0.22560304403305054,
+          -0.0743367150425911,
+          -0.38197657465934753,
+          0.25658226013183594,
+          -0.2594584822654724,
+          0.09262607991695404,
+          0.8141003847122192,
+          -0.0009946906939148903,
+          0.025410393252968788,
+          0.0015953400870785117
+        ],
+        "dq": [
+          -0.01714162714779377,
+          -0.003272492438554764,
+          0.008570813573896885,
+          0.01745329238474369,
+          -0.005019266624003649,
+          -0.013524473644793034,
+          -0.008570813573896885,
+          -0.0010908307740464807,
+          0.011999138630926609,
+          0,
+          0.004447786137461662,
+          -0.005421696230769157,
+          -0.008570813573896885,
+          0,
+          0,
+          0,
+          0.004601942375302315,
+          -0.007669903803616762,
+          0.006135923322290182,
+          0,
+          0.0009817476384341717,
+          -0.011780972592532635,
+          0.0015339808305725455,
+          0.00920388475060463,
+          0,
+          0.015339807607233524,
+          0,
+          -0.0019634952768683434,
+          0.006872233934700489
+        ],
+        "tau_est": [
+          -1.6779119968414307,
+          -4.21875,
+          0.1677911877632141,
+          -8.0859375,
+          -0.9620388746261597,
+          1.0163052082061768,
+          2.1812856197357178,
+          5.2734375,
+          -0.5593039989471436,
+          -2.4609375,
+          4.70029878616333,
+          -2.9344348907470703,
+          -0.1677911877632141,
+          0,
+          0,
+          0.9375,
+          2.6875,
+          2,
+          -1.5625,
+          -0.1875,
+          -0.68359375,
+          0.048828125,
+          0,
+          -2.0625,
+          -0.25,
+          -0.75,
+          -0.0625,
+          -0.25390625,
+          0
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            34,
+            33
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            34,
+            35
+          ],
+          [
+            41,
+            41
+          ],
+          [
+            40,
+            40
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            33,
+            34
+          ],
+          [
+            33,
+            33
+          ],
+          [
+            34,
+            34
+          ],
+          [
+            47,
+            52
+          ],
+          [
+            41,
+            39
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            44,
+            44
+          ],
+          [
+            46,
+            48
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            42,
+            42
+          ],
+          [
+            41,
+            40
+          ],
+          [
+            40,
+            39
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            47,
+            46
+          ],
+          [
+            48,
+            50
+          ],
+          [
+            48,
+            47
+          ],
+          [
+            46,
+            46
+          ],
+          [
+            47,
+            45
+          ],
+          [
+            47,
+            43
+          ],
+          [
+            49,
+            41
+          ]
+        ],
+        "temperature_max": 52,
+        "time": 4178.067002005
+      },
+      "left": {
+        "imu_rpy": null,
+        "q": [
+          -0.0173666812479496,
+          -0.006948849651962519,
+          -0.015656648203730583,
+          -0.026724938303232193,
+          -0.02223971299827099,
+          -0.04610666632652283,
+          -0.03921862691640854
+        ],
+        "dq": [
+          0,
+          0,
+          -0.11450418829917908,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          46888.63671875,
+          15908.64453125,
+          27630.802734375,
+          50237.82421875,
+          46051.33984375,
+          88753.4921875,
+          80380.5234375
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            37,
+            29
+          ],
+          [
+            41,
+            53
+          ],
+          [
+            33,
+            28
+          ],
+          [
+            36,
+            27
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            37,
+            30
+          ],
+          [
+            33,
+            27
+          ]
+        ],
+        "temperature_max": 53,
+        "time": 4177.994596517
+      },
+      "right": {
+        "imu_rpy": null,
+        "q": [
+          -0.039077289402484894,
+          -0.8890515565872192,
+          -1.5201754570007324,
+          1.1861463785171509,
+          1.701348900794983,
+          0.7200409770011902,
+          1.6259640455245972
+        ],
+        "dq": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "tau_est": [
+          -5861.07958984375,
+          -1674.5941162109375,
+          3349.188232421875,
+          4186.4853515625,
+          -4186.4853515625,
+          4186.4853515625,
+          -3349.188232421875
+        ],
+        "faults": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "temperatures": [
+          [
+            43,
+            35
+          ],
+          [
+            45,
+            36
+          ],
+          [
+            40,
+            32
+          ],
+          [
+            44,
+            36
+          ],
+          [
+            42,
+            34
+          ],
+          [
+            43,
+            35
+          ],
+          [
+            41,
+            33
+          ]
+        ],
+        "temperature_max": 45,
+        "time": 4178.018459525
+      }
+    },
+    "telemetry_healthy": true
+  },
+  "recorder_before": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T162358Z-ab00e585",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4064.100178995,
+    "received": {
+      "rt/dex3/left/state": 3206772,
+      "rt/lf/dex3/left/state": 36204,
+      "rt/dex3/right/state": 3196523,
+      "rt/lf/dex3/right/state": 36168,
+      "rt/lowstate": 4221795,
+      "rt/arm_sdk": 226186,
+      "rt/dex3/left/cmd": 270,
+      "rt/dex3/right/cmd": 270
+    },
+    "written": {
+      "rt/dex3/left/state": 3206772,
+      "rt/lf/dex3/left/state": 36204,
+      "rt/dex3/right/state": 3196522,
+      "rt/lf/dex3/right/state": 36168,
+      "rt/lowstate": 4221795,
+      "rt/arm_sdk": 226186,
+      "rt/dex3/left/cmd": 270,
+      "rt/dex3/right/cmd": 270
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.001517086,
+      "rt/dex3/left/state": 0.001503997,
+      "rt/dex3/right/state": 0.001484381,
+      "rt/lf/dex3/left/state": 0.038718585,
+      "rt/lf/dex3/right/state": 0.121682231,
+      "rt/arm_sdk": 530.703985211,
+      "rt/dex3/left/cmd": 531.724222114,
+      "rt/dex3/right/cmd": 531.72420349
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.001503997,
+      "rt/lf/dex3/left/state": 0.038718585,
+      "rt/dex3/right/state": 0.001489213,
+      "rt/lf/dex3/right/state": 0.121682231,
+      "rt/lowstate": 0.001517086,
+      "rt/arm_sdk": 530.703985211,
+      "rt/dex3/left/cmd": 531.724222114,
+      "rt/dex3/right/cmd": 531.72420349
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T162358Z-ab00e585/samples-000067.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 8325045,
+        "sha256": "a7afa91872571469624b664dccc4253afbb7d8d8f91ee55b852fa9296ce76b9b"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 37434308,
+        "sha256": "6afdd3528b65fd0de55eff7eb51f13ffa748bc076b8bb206e27803f5409eea96"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 36322753,
+        "sha256": "0ed28f64d60cc974ec5c584edcfb0da578c132eaa146eff6dba5bbaaf9dd422f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 35613128,
+        "sha256": "8b5f3422d6789d5feb7f75bf2c2fc9d0e86fa17031dd15c9e01de6e80f9787e3"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 35327273,
+        "sha256": "f7ded4f0e2435fb1a98c822cc1a9e0a4f72114e3a273d55578b89210ae4380b1"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35578389,
+        "sha256": "cc1160b056e2db1037ac144ae18afd83645ea08e1aedec7fa208a7b3504ff368"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 35543372,
+        "sha256": "51d60086cf0c34da7f3708981364707aa07ac74b9daa5f436df22944faf9e37a"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 35647176,
+        "sha256": "e823a199e80bde33b6b76239d76d1bae4e19bf82463213bc7e18c2785189a91f"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 35794718,
+        "sha256": "80c74b4e33f020a5c69e01c9f1ae8934e637f631e44294701e4b5834ccc24c4b"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 37465924,
+        "sha256": "aca3a1c7d27efd546703458da658d18f33b3e6bfd8e8d9ffc354c6baebec57ab"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39558719,
+        "sha256": "6bd95181e258b1f4a5e4a04ad1c93a8fa3f56d0b954ccd1766133fc09d81c494"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38484102,
+        "sha256": "883caa344e245945d86d00e88b337f61ab74b3f8b632ee7a9454322622693f11"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38554713,
+        "sha256": "82712c4d529922c99f06affdf3c199402f858bc9704e33d69e6273bbfdac79cf"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38212003,
+        "sha256": "2f42e4ffe2da714db0cab1d52cd2db2c1a5139ae98d4b279c435f8ab4db29920"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 38179835,
+        "sha256": "e4257e5c18abf1a8426a980e09cd75bebdab358a8d50cd36207711e0ef5dd9db"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37866061,
+        "sha256": "23a9891114a81d94e118cc75efbadfd9ef356d313db81444bb209d64915b72c4"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37373264,
+        "sha256": "d5849ae6e81235fb14efce268f1a609e7e6d4a99aa1777eb7ad0c8e3f94e1703"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36987630,
+        "sha256": "8f84638b5bd9942dff880213b7bda734810e32f048d7a0c7952bb621ddef5e4d"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 36777965,
+        "sha256": "26d20bd6d219cfff654d05f7b3bc5cebb21737ca3bc13be07f7c25bea3103225"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 36851208,
+        "sha256": "6f5810df33c0d5abb1a3f2ff6f5a7c3704f43a45ae8235197877e149388f27f2"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 38639503,
+        "sha256": "b53c428109491ebaa77f3033311301b9c26c896f5d9d0c70f8949bfcf9994886"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 39102550,
+        "sha256": "125d414d50deaa0943645294e49798474513dd323ac0b1646c0ce6fe2c66cf22"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 38741128,
+        "sha256": "3a4a9724865dd3848c74a8af07aadefa08b300ce188dfb9ba0e633402f57b158"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 38911627,
+        "sha256": "bd7b92490b9c5417af9b30be3fe740b0aa665b698852962736c95ce1dcc02ca7"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 38969495,
+        "sha256": "a359d7148e60471c6353b2822433bfa415bd145bc776ab0d54b00b192b89a419"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 39115639,
+        "sha256": "8aa2c27e3a68809084075e74747e4e5ca3e56d0d1b0d2cd98424749d0788b6a4"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 39050267,
+        "sha256": "e69501049d567f5d5b0a4bb7ff580b825a3b3c17c1a6f5cca26629723c925042"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 39487646,
+        "sha256": "466146af1fc822b52fa7df98ae91c5b7a7dc2b35137d64c00a78600d27d79eb7"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 39411191,
+        "sha256": "28bac50cc290dc6462958c6c86a45e13a4e8ba4eb737a10210ca2e043e822aa9"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 39426815,
+        "sha256": "b1fb89d5674f01d7ee139a5924018b6362930f7c67c83afefd82e1984aecedc2"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 39660269,
+        "sha256": "db62abb29e2664a1c84aaf5074c127047b469f4f2ee25bbf6b4700c2f89272aa"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 40036055,
+        "sha256": "0366bfeae03d7ca1b61c4855d97f176c4479c455088c561e8cfe6c7bba9a5883"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 40446395,
+        "sha256": "f2ca30931eb7fb4a2d391151bd606f314fff5cd7309af43fe500f29fdd084daf"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 40898193,
+        "sha256": "cdb248f7e60739d4e005c8f7b276b1c4b78eb035686ca3cb311a6e0205f33deb"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41199145,
+        "sha256": "0b682b3408f47da639ec97ab342d16e07f8b00faa83bed6fd0b820f721a759ef"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41273961,
+        "sha256": "d9be064864dbd972d252094e8a1ddff2a39809e4ddb1d5cecb75d3b5859f9b94"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40911150,
+        "sha256": "25441b87724dbb784b8e30aef8044e859688f7ed904203dc40e1bb1a830eb05c"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 40185253,
+        "sha256": "8b4b5fd53312e87cad7770cc74ddf902e59a7dac857366d69a53c8832c7d12ab"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 39541001,
+        "sha256": "5164b0ee314e7e88f8a4b5f1332b87d097cb2dc2fd0f04d059cae3e285fc9aaf"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 39329044,
+        "sha256": "925a4b83563a03a2e17c38f847d1f60b60b0dd215013b2c08c2b42d07f594a6f"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 39397236,
+        "sha256": "95c11ef9abe7ef291e0ee64edab2159adff75e31a34be089951ea1d044512641"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 39110320,
+        "sha256": "ab9b63a267ae0efdf1fab66516cbc2a9a172fab03244f99ef881d5b6c2b142c9"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 39371741,
+        "sha256": "ecb816aefc31968531dda5cd50b82a52c4932aa6b63429ebb7dea8f5c1c94b23"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 39686504,
+        "sha256": "0faa71f09e6a1b2e4bf86d2890b4ec205dbf6f7508b1ea9949edb0e00112d061"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40633960,
+        "sha256": "13446759b986c25b81690db8fef5ad44770d32af0587ad8e9ee0ccf1c830f463"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 41385399,
+        "sha256": "a2dea2303d165c9acef39ec95b54e7ebd431c7221beafdf7173711a12007ff7c"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 41664850,
+        "sha256": "d43ef5443282566974b87b4e134b990cc6d629b6f236d846fd4d89e4c295dd9f"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 41176610,
+        "sha256": "85a14a4069adbf719f2fd079687a1cbc660460c10ce5bd27d59deced06119b2c"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 40188357,
+        "sha256": "ab3f667e5bd996ca5f71941bd6021a30bb4525480162e78984351b2e2f457a15"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 39365474,
+        "sha256": "184609a1487482d2149b577ef69fefcb151d5bda55ff9c8a34c90a993b00eb70"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 39240758,
+        "sha256": "f9108c6d485b5c45e2d0c8ea2303e5b583960699001d9d127ea560875fef7070"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 39174361,
+        "sha256": "90456e6dae3fe4bd0dafb22cb4c0b96c775ce75d131e2f8e4b712737d482a7b7"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 39414841,
+        "sha256": "a734f9f37722c158fd28af7cd4ae65df13646d5bbb6a4c21c2eca7d5f7373a95"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40280795,
+        "sha256": "c96c988ca70b37f55f94c6ca859154ef3ac56c52d75396f5d46de2d065d6fba3"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 40986379,
+        "sha256": "27e77b0b229a8160a9368ce4333295c16f5730fc2ee5419b68bb0ea51faad63f"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 41107807,
+        "sha256": "556a2794f045e6a06c43673a2d6bbd8459744c38b6e3f8595f2b360498e4ffa7"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38583192,
+        "sha256": "d1ee4c5a0b27fce23363ad02821040fbb6355e345bcc1b1c1affc9b307e7f9d5"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 39928906,
+        "sha256": "99a0969080aec0f01be504815cae63e14058f36f105b372ac19706c41d020fec"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 39264116,
+        "sha256": "426ec88e774ef51fabee7aed9bf26b37bb331a5e27e1778fc2b716da5f9063fa"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 35849107,
+        "sha256": "1b386f9baec9b56754d6a2cffa1d896efbd3ca2f685d3653f69804eb3f37c9b8"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 36194949,
+        "sha256": "04a4fca636cf61059f4da9c3190625149236d7d1bdee74101bb7bada356d3f30"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 37120705,
+        "sha256": "589c6f7b0c920443da6253bf5093045d51424107d7ea82cd831faea2f3fa5587"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38160166,
+        "sha256": "106951bc95f1695ae8ce0adb0e2178be8a2c6e1361b801458342cbb6d52e8517"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 38447670,
+        "sha256": "1c1d165d0d0417ef9393b4b7873c2c99734f472de1218aabe7b21f0ff78b7128"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 38075846,
+        "sha256": "045f74dc734dfbf5cebbe5dd7fd746cf9216a7c37b5338ec12e1a3715248d64e"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 37094576,
+        "sha256": "952543a3692b1ef9b82b5e711174731c5c6132065941498e8f14a764803e9280"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36646709,
+        "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "recorder_after": {
+    "schema": "g1-handoff-recorder/1",
+    "session": "20261008T162358Z-ab00e585",
+    "read_only": true,
+    "motion_commands_sent": 0,
+    "recording": true,
+    "error": null,
+    "uptime_s": 4159.521085397,
+    "received": {
+      "rt/dex3/left/state": 3283157,
+      "rt/lf/dex3/left/state": 37063,
+      "rt/dex3/right/state": 3272612,
+      "rt/lf/dex3/right/state": 37027,
+      "rt/lowstate": 4322233,
+      "rt/arm_sdk": 231174,
+      "rt/dex3/left/cmd": 511,
+      "rt/dex3/right/cmd": 511
+    },
+    "written": {
+      "rt/dex3/left/state": 3283157,
+      "rt/lf/dex3/left/state": 37063,
+      "rt/dex3/right/state": 3272612,
+      "rt/lf/dex3/right/state": 37027,
+      "rt/lowstate": 4322233,
+      "rt/arm_sdk": 231174,
+      "rt/dex3/left/cmd": 511,
+      "rt/dex3/right/cmd": 511
+    },
+    "dropped": {},
+    "queue_depth": 0,
+    "age_s": {
+      "rt/lowstate": 0.001983642,
+      "rt/dex3/left/state": 0.001962105,
+      "rt/dex3/right/state": 0.001929687,
+      "rt/lf/dex3/left/state": 0.020407146,
+      "rt/lf/dex3/right/state": 0.081390106,
+      "rt/arm_sdk": 0.006465262,
+      "rt/dex3/left/cmd": 0.714511411,
+      "rt/dex3/right/cmd": 0.714500242
+    },
+    "missing_or_stale_required": [],
+    "last_written_age_s": {
+      "rt/dex3/left/state": 0.001962105,
+      "rt/lf/dex3/left/state": 0.020407146,
+      "rt/dex3/right/state": 0.001929687,
+      "rt/lf/dex3/right/state": 0.081390106,
+      "rt/lowstate": 0.001983642,
+      "rt/arm_sdk": 0.006465262,
+      "rt/dex3/left/cmd": 0.714511411,
+      "rt/dex3/right/cmd": 0.714500242
+    },
+    "latest_nonzero_raw_fault_fields": {},
+    "raw_faults_live_decoded": false,
+    "storage_codec": "dds-cdr-base64/1; decode using export_cdr.py",
+    "current_file": "/records/20261008T162358Z-ab00e585/samples-000069.jsonl.gz",
+    "closed_segments": [
+      {
+        "file": "samples-000000.jsonl.gz",
+        "bytes": 8325045,
+        "sha256": "a7afa91872571469624b664dccc4253afbb7d8d8f91ee55b852fa9296ce76b9b"
+      },
+      {
+        "file": "samples-000001.jsonl.gz",
+        "bytes": 37434308,
+        "sha256": "6afdd3528b65fd0de55eff7eb51f13ffa748bc076b8bb206e27803f5409eea96"
+      },
+      {
+        "file": "samples-000002.jsonl.gz",
+        "bytes": 36322753,
+        "sha256": "0ed28f64d60cc974ec5c584edcfb0da578c132eaa146eff6dba5bbaaf9dd422f"
+      },
+      {
+        "file": "samples-000003.jsonl.gz",
+        "bytes": 35613128,
+        "sha256": "8b5f3422d6789d5feb7f75bf2c2fc9d0e86fa17031dd15c9e01de6e80f9787e3"
+      },
+      {
+        "file": "samples-000004.jsonl.gz",
+        "bytes": 35327273,
+        "sha256": "f7ded4f0e2435fb1a98c822cc1a9e0a4f72114e3a273d55578b89210ae4380b1"
+      },
+      {
+        "file": "samples-000005.jsonl.gz",
+        "bytes": 35578389,
+        "sha256": "cc1160b056e2db1037ac144ae18afd83645ea08e1aedec7fa208a7b3504ff368"
+      },
+      {
+        "file": "samples-000006.jsonl.gz",
+        "bytes": 35543372,
+        "sha256": "51d60086cf0c34da7f3708981364707aa07ac74b9daa5f436df22944faf9e37a"
+      },
+      {
+        "file": "samples-000007.jsonl.gz",
+        "bytes": 35647176,
+        "sha256": "e823a199e80bde33b6b76239d76d1bae4e19bf82463213bc7e18c2785189a91f"
+      },
+      {
+        "file": "samples-000008.jsonl.gz",
+        "bytes": 35794718,
+        "sha256": "80c74b4e33f020a5c69e01c9f1ae8934e637f631e44294701e4b5834ccc24c4b"
+      },
+      {
+        "file": "samples-000009.jsonl.gz",
+        "bytes": 37465924,
+        "sha256": "aca3a1c7d27efd546703458da658d18f33b3e6bfd8e8d9ffc354c6baebec57ab"
+      },
+      {
+        "file": "samples-000010.jsonl.gz",
+        "bytes": 39558719,
+        "sha256": "6bd95181e258b1f4a5e4a04ad1c93a8fa3f56d0b954ccd1766133fc09d81c494"
+      },
+      {
+        "file": "samples-000011.jsonl.gz",
+        "bytes": 38484102,
+        "sha256": "883caa344e245945d86d00e88b337f61ab74b3f8b632ee7a9454322622693f11"
+      },
+      {
+        "file": "samples-000012.jsonl.gz",
+        "bytes": 38554713,
+        "sha256": "82712c4d529922c99f06affdf3c199402f858bc9704e33d69e6273bbfdac79cf"
+      },
+      {
+        "file": "samples-000013.jsonl.gz",
+        "bytes": 38212003,
+        "sha256": "2f42e4ffe2da714db0cab1d52cd2db2c1a5139ae98d4b279c435f8ab4db29920"
+      },
+      {
+        "file": "samples-000014.jsonl.gz",
+        "bytes": 38179835,
+        "sha256": "e4257e5c18abf1a8426a980e09cd75bebdab358a8d50cd36207711e0ef5dd9db"
+      },
+      {
+        "file": "samples-000015.jsonl.gz",
+        "bytes": 37866061,
+        "sha256": "23a9891114a81d94e118cc75efbadfd9ef356d313db81444bb209d64915b72c4"
+      },
+      {
+        "file": "samples-000016.jsonl.gz",
+        "bytes": 37373264,
+        "sha256": "d5849ae6e81235fb14efce268f1a609e7e6d4a99aa1777eb7ad0c8e3f94e1703"
+      },
+      {
+        "file": "samples-000017.jsonl.gz",
+        "bytes": 36987630,
+        "sha256": "8f84638b5bd9942dff880213b7bda734810e32f048d7a0c7952bb621ddef5e4d"
+      },
+      {
+        "file": "samples-000018.jsonl.gz",
+        "bytes": 36777965,
+        "sha256": "26d20bd6d219cfff654d05f7b3bc5cebb21737ca3bc13be07f7c25bea3103225"
+      },
+      {
+        "file": "samples-000019.jsonl.gz",
+        "bytes": 36851208,
+        "sha256": "6f5810df33c0d5abb1a3f2ff6f5a7c3704f43a45ae8235197877e149388f27f2"
+      },
+      {
+        "file": "samples-000020.jsonl.gz",
+        "bytes": 38639503,
+        "sha256": "b53c428109491ebaa77f3033311301b9c26c896f5d9d0c70f8949bfcf9994886"
+      },
+      {
+        "file": "samples-000021.jsonl.gz",
+        "bytes": 39102550,
+        "sha256": "125d414d50deaa0943645294e49798474513dd323ac0b1646c0ce6fe2c66cf22"
+      },
+      {
+        "file": "samples-000022.jsonl.gz",
+        "bytes": 38741128,
+        "sha256": "3a4a9724865dd3848c74a8af07aadefa08b300ce188dfb9ba0e633402f57b158"
+      },
+      {
+        "file": "samples-000023.jsonl.gz",
+        "bytes": 38911627,
+        "sha256": "bd7b92490b9c5417af9b30be3fe740b0aa665b698852962736c95ce1dcc02ca7"
+      },
+      {
+        "file": "samples-000024.jsonl.gz",
+        "bytes": 38969495,
+        "sha256": "a359d7148e60471c6353b2822433bfa415bd145bc776ab0d54b00b192b89a419"
+      },
+      {
+        "file": "samples-000025.jsonl.gz",
+        "bytes": 39115639,
+        "sha256": "8aa2c27e3a68809084075e74747e4e5ca3e56d0d1b0d2cd98424749d0788b6a4"
+      },
+      {
+        "file": "samples-000026.jsonl.gz",
+        "bytes": 39050267,
+        "sha256": "e69501049d567f5d5b0a4bb7ff580b825a3b3c17c1a6f5cca26629723c925042"
+      },
+      {
+        "file": "samples-000027.jsonl.gz",
+        "bytes": 39487646,
+        "sha256": "466146af1fc822b52fa7df98ae91c5b7a7dc2b35137d64c00a78600d27d79eb7"
+      },
+      {
+        "file": "samples-000028.jsonl.gz",
+        "bytes": 39411191,
+        "sha256": "28bac50cc290dc6462958c6c86a45e13a4e8ba4eb737a10210ca2e043e822aa9"
+      },
+      {
+        "file": "samples-000029.jsonl.gz",
+        "bytes": 39426815,
+        "sha256": "b1fb89d5674f01d7ee139a5924018b6362930f7c67c83afefd82e1984aecedc2"
+      },
+      {
+        "file": "samples-000030.jsonl.gz",
+        "bytes": 39660269,
+        "sha256": "db62abb29e2664a1c84aaf5074c127047b469f4f2ee25bbf6b4700c2f89272aa"
+      },
+      {
+        "file": "samples-000031.jsonl.gz",
+        "bytes": 40036055,
+        "sha256": "0366bfeae03d7ca1b61c4855d97f176c4479c455088c561e8cfe6c7bba9a5883"
+      },
+      {
+        "file": "samples-000032.jsonl.gz",
+        "bytes": 40446395,
+        "sha256": "f2ca30931eb7fb4a2d391151bd606f314fff5cd7309af43fe500f29fdd084daf"
+      },
+      {
+        "file": "samples-000033.jsonl.gz",
+        "bytes": 40898193,
+        "sha256": "cdb248f7e60739d4e005c8f7b276b1c4b78eb035686ca3cb311a6e0205f33deb"
+      },
+      {
+        "file": "samples-000034.jsonl.gz",
+        "bytes": 41199145,
+        "sha256": "0b682b3408f47da639ec97ab342d16e07f8b00faa83bed6fd0b820f721a759ef"
+      },
+      {
+        "file": "samples-000035.jsonl.gz",
+        "bytes": 41273961,
+        "sha256": "d9be064864dbd972d252094e8a1ddff2a39809e4ddb1d5cecb75d3b5859f9b94"
+      },
+      {
+        "file": "samples-000036.jsonl.gz",
+        "bytes": 40911150,
+        "sha256": "25441b87724dbb784b8e30aef8044e859688f7ed904203dc40e1bb1a830eb05c"
+      },
+      {
+        "file": "samples-000037.jsonl.gz",
+        "bytes": 40185253,
+        "sha256": "8b4b5fd53312e87cad7770cc74ddf902e59a7dac857366d69a53c8832c7d12ab"
+      },
+      {
+        "file": "samples-000038.jsonl.gz",
+        "bytes": 39541001,
+        "sha256": "5164b0ee314e7e88f8a4b5f1332b87d097cb2dc2fd0f04d059cae3e285fc9aaf"
+      },
+      {
+        "file": "samples-000039.jsonl.gz",
+        "bytes": 39329044,
+        "sha256": "925a4b83563a03a2e17c38f847d1f60b60b0dd215013b2c08c2b42d07f594a6f"
+      },
+      {
+        "file": "samples-000040.jsonl.gz",
+        "bytes": 39397236,
+        "sha256": "95c11ef9abe7ef291e0ee64edab2159adff75e31a34be089951ea1d044512641"
+      },
+      {
+        "file": "samples-000041.jsonl.gz",
+        "bytes": 39110320,
+        "sha256": "ab9b63a267ae0efdf1fab66516cbc2a9a172fab03244f99ef881d5b6c2b142c9"
+      },
+      {
+        "file": "samples-000042.jsonl.gz",
+        "bytes": 39371741,
+        "sha256": "ecb816aefc31968531dda5cd50b82a52c4932aa6b63429ebb7dea8f5c1c94b23"
+      },
+      {
+        "file": "samples-000043.jsonl.gz",
+        "bytes": 39686504,
+        "sha256": "0faa71f09e6a1b2e4bf86d2890b4ec205dbf6f7508b1ea9949edb0e00112d061"
+      },
+      {
+        "file": "samples-000044.jsonl.gz",
+        "bytes": 40633960,
+        "sha256": "13446759b986c25b81690db8fef5ad44770d32af0587ad8e9ee0ccf1c830f463"
+      },
+      {
+        "file": "samples-000045.jsonl.gz",
+        "bytes": 41385399,
+        "sha256": "a2dea2303d165c9acef39ec95b54e7ebd431c7221beafdf7173711a12007ff7c"
+      },
+      {
+        "file": "samples-000046.jsonl.gz",
+        "bytes": 41664850,
+        "sha256": "d43ef5443282566974b87b4e134b990cc6d629b6f236d846fd4d89e4c295dd9f"
+      },
+      {
+        "file": "samples-000047.jsonl.gz",
+        "bytes": 41176610,
+        "sha256": "85a14a4069adbf719f2fd079687a1cbc660460c10ce5bd27d59deced06119b2c"
+      },
+      {
+        "file": "samples-000048.jsonl.gz",
+        "bytes": 40188357,
+        "sha256": "ab3f667e5bd996ca5f71941bd6021a30bb4525480162e78984351b2e2f457a15"
+      },
+      {
+        "file": "samples-000049.jsonl.gz",
+        "bytes": 39365474,
+        "sha256": "184609a1487482d2149b577ef69fefcb151d5bda55ff9c8a34c90a993b00eb70"
+      },
+      {
+        "file": "samples-000050.jsonl.gz",
+        "bytes": 39240758,
+        "sha256": "f9108c6d485b5c45e2d0c8ea2303e5b583960699001d9d127ea560875fef7070"
+      },
+      {
+        "file": "samples-000051.jsonl.gz",
+        "bytes": 39174361,
+        "sha256": "90456e6dae3fe4bd0dafb22cb4c0b96c775ce75d131e2f8e4b712737d482a7b7"
+      },
+      {
+        "file": "samples-000052.jsonl.gz",
+        "bytes": 39414841,
+        "sha256": "a734f9f37722c158fd28af7cd4ae65df13646d5bbb6a4c21c2eca7d5f7373a95"
+      },
+      {
+        "file": "samples-000053.jsonl.gz",
+        "bytes": 40280795,
+        "sha256": "c96c988ca70b37f55f94c6ca859154ef3ac56c52d75396f5d46de2d065d6fba3"
+      },
+      {
+        "file": "samples-000054.jsonl.gz",
+        "bytes": 40986379,
+        "sha256": "27e77b0b229a8160a9368ce4333295c16f5730fc2ee5419b68bb0ea51faad63f"
+      },
+      {
+        "file": "samples-000055.jsonl.gz",
+        "bytes": 41107807,
+        "sha256": "556a2794f045e6a06c43673a2d6bbd8459744c38b6e3f8595f2b360498e4ffa7"
+      },
+      {
+        "file": "samples-000056.jsonl.gz",
+        "bytes": 38583192,
+        "sha256": "d1ee4c5a0b27fce23363ad02821040fbb6355e345bcc1b1c1affc9b307e7f9d5"
+      },
+      {
+        "file": "samples-000057.jsonl.gz",
+        "bytes": 39928906,
+        "sha256": "99a0969080aec0f01be504815cae63e14058f36f105b372ac19706c41d020fec"
+      },
+      {
+        "file": "samples-000058.jsonl.gz",
+        "bytes": 39264116,
+        "sha256": "426ec88e774ef51fabee7aed9bf26b37bb331a5e27e1778fc2b716da5f9063fa"
+      },
+      {
+        "file": "samples-000059.jsonl.gz",
+        "bytes": 35849107,
+        "sha256": "1b386f9baec9b56754d6a2cffa1d896efbd3ca2f685d3653f69804eb3f37c9b8"
+      },
+      {
+        "file": "samples-000060.jsonl.gz",
+        "bytes": 36194949,
+        "sha256": "04a4fca636cf61059f4da9c3190625149236d7d1bdee74101bb7bada356d3f30"
+      },
+      {
+        "file": "samples-000061.jsonl.gz",
+        "bytes": 37120705,
+        "sha256": "589c6f7b0c920443da6253bf5093045d51424107d7ea82cd831faea2f3fa5587"
+      },
+      {
+        "file": "samples-000062.jsonl.gz",
+        "bytes": 38160166,
+        "sha256": "106951bc95f1695ae8ce0adb0e2178be8a2c6e1361b801458342cbb6d52e8517"
+      },
+      {
+        "file": "samples-000063.jsonl.gz",
+        "bytes": 38447670,
+        "sha256": "1c1d165d0d0417ef9393b4b7873c2c99734f472de1218aabe7b21f0ff78b7128"
+      },
+      {
+        "file": "samples-000064.jsonl.gz",
+        "bytes": 38075846,
+        "sha256": "045f74dc734dfbf5cebbe5dd7fd746cf9216a7c37b5338ec12e1a3715248d64e"
+      },
+      {
+        "file": "samples-000065.jsonl.gz",
+        "bytes": 37094576,
+        "sha256": "952543a3692b1ef9b82b5e711174731c5c6132065941498e8f14a764803e9280"
+      },
+      {
+        "file": "samples-000066.jsonl.gz",
+        "bytes": 36646709,
+        "sha256": "2e82a2789ca73ff4401fc25ca72a10f66e99c6992bf9671b22ecc5a00829f892"
+      },
+      {
+        "file": "samples-000067.jsonl.gz",
+        "bytes": 36217651,
+        "sha256": "29171d4e8e766ab14ca6c37013b3c83a5896ca740badfb06410d5b77408e8e39"
+      },
+      {
+        "file": "samples-000068.jsonl.gz",
+        "bytes": 37805845,
+        "sha256": "2bc45b09ac34ec0c2ced83af08f86d0ff03cb0388ef8d799d4f7f32a5f7acf4d"
+      }
+    ],
+    "coverage": "all callback-delivered messages; upstream DDS loss is not proven absent",
+    "application_phase_and_exceptions": "not available: handoff hardware controller is absent",
+    "source_sha256": "50bc6bbbd9e562ec6eab127e7b58d987863bb6d9043e91244791fd186c0f135c",
+    "interface": "enP8p1s0",
+    "domain": 0
+  },
+  "persisted_sha256": {
+    "calibration.json": "ab36bc98aac85bb2491020a89171dd1b0021c0e7a262d1984af5113d4ec944ad",
+    "perception-config.json": "edc7a887979f5a187a3b3a189f04e072837a995bf0182606a6cdc210648a465b"
+  },
+  "physical_lift_verified": false,
+  "artifact": {
+    "path": "/data/trial-exports/trial.tar.gz",
+    "bytes": 955311,
+    "sha256": "1628c29e22e9cbdd3d910b45aa0ecfc2adc000eaab012363242969f7acfbb4d8",
+    "events": 651,
+    "selected_frames": 5,
+    "primary_failure": {
+      "unix_ns": 1791480796375861108,
+      "monotonic_ns": 4177466597725,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Interpolated physical trajectory intersects robot/table: {'phase': 'staging', 'bodies': ['world', 'left_hand_index_1_link'], 'geoms': ['table', ''], 'distance_m': -0.0016223160950049169}",
+      "source": "execution"
+    },
+    "local_path": "offline/validation/start-button-20261008/trial.tar.gz",
+    "verified": true
+  },
+  "dds_artifact": {
+    "path": "/records/trial-exports/trial.dds.tar.gz",
+    "bytes": 53717247,
+    "sha256": "3cb072e1cb253afeec597f7fcbc5e9fbe3bc4e6849046898f375a7251f18d265",
+    "records": 245009,
+    "topics": {
+      "rt/lowstate": 94483,
+      "rt/dex3/left/state": 71852,
+      "rt/dex3/right/state": 71589,
+      "rt/lf/dex3/left/state": 808,
+      "rt/lf/dex3/right/state": 807,
+      "rt/arm_sdk": 4988,
+      "rt/dex3/left/cmd": 241,
+      "rt/dex3/right/cmd": 241
+    },
+    "session": "20261008T162358Z-ab00e585",
+    "local_path": "offline/validation/start-button-20261008/trial.dds.tar.gz",
+    "verified": true
+  },
+  "git_replay_fixture": "g1-can-handoff/physical/offline/evidence/20261008T173157Z",
+  "final_passive": {
+    "verified_passive": true,
+    "cumulative_commands": 6628,
+    "observation_interval_s": 0.5
+  }
+}

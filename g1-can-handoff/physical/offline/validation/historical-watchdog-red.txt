@@ -1,0 +1,15 @@
+======================================================================
+ERROR: test_contended_phase_observation_refreshes_watchdog_before_next_background_response (test_perception_timing.PerceptionTimingTests.test_contended_phase_observation_refreshes_watchdog_before_next_background_response)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "physical/test_perception_timing.py", line 140, in test_contended_phase_observation_refreshes_watchdog_before_next_background_response
+    try:result.tracking_guard()
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/g1-offline-old-runtime.py", line 265, in tracking_guard
+    raise RuntimeError(f'Visual/depth tracking exposure stale ({age*1000:.1f} ms)')
+RuntimeError: Visual/depth tracking exposure stale (460.0 ms)
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+FAILED (errors=1)

@@ -1,0 +1,64 @@
+[
+  {
+    "source": "offline/validation/recognition-overlay-20261008/camera-115503-planning.source",
+    "timestamp_rewritten": false,
+    "passed": true,
+    "observation": {
+      "center": [
+        0.31590008148605087,
+        0.16522913258109598,
+        0.823
+      ],
+      "timestamp": 7725.731428146362
+    },
+    "vision": {
+      "top_quantile_z_m": 0.8785822781812404,
+      "center_xy_m": [
+        0.31590008148605087,
+        0.16522913258109598
+      ],
+      "fit_error_m": 0.002363807480556996,
+      "pixels": 2968,
+      "frame_id": 115503,
+      "detector": "color_depth",
+      "image_sha256": "218cdc11f0e089da5a1e45ea15576e32f11deb1fcb0ab156c59f3bff0ddf58e5",
+      "tracking": {
+        "mode": "color_depth_acquisition",
+        "reason": "initial_identity",
+        "identity_source": "color_depth",
+        "semantic_frame_id": null
+      }
+    }
+  },
+  {
+    "source": "offline/validation/recognition-overlay-20261008/camera-115616-planning.source",
+    "timestamp_rewritten": false,
+    "passed": true,
+    "observation": {
+      "center": [
+        0.31605485723878496,
+        0.16526754022291715,
+        0.823
+      ],
+      "timestamp": 7733.269871234894
+    },
+    "vision": {
+      "top_quantile_z_m": 0.8784290497198313,
+      "center_xy_m": [
+        0.31605485723878496,
+        0.16526754022291715
+      ],
+      "fit_error_m": 0.00241640257867125,
+      "pixels": 2916,
+      "frame_id": 115616,
+      "detector": "color_depth",
+      "image_sha256": "e43381346b586c80033e29f4a0bfdf396af184c29054e397d61dbe1f91e2205f",
+      "tracking": {
+        "mode": "color_depth_acquisition",
+        "reason": "initial_identity",
+        "identity_source": "color_depth",
+        "semantic_frame_id": null
+      }
+    }
+  }
+]

@@ -1,0 +1,210 @@
+{
+  "date_utc": "2026-10-07",
+  "device": "unitree-g1-nx-2",
+  "address": "10.10.20.238:50052",
+  "camera_serial": "338622073335",
+  "motion_scope": "operator-authorized single pickup attempts",
+  "required_confidence_strictly_above": 0.1,
+  "prior_confidence_strictly_above": 0.3,
+  "camera_max_age_ms": 400,
+  "model_before_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+  "events_sha256": "92410ae9f0b6ed4966212b24401b7426dc23c22cc1adafa55a67b4febb2b4c13",
+  "errors": [
+    {
+      "unix_ns": 1791413071934758942,
+      "error": "ValueError: Can is outside the left-hand pickup area"
+    },
+    {
+      "unix_ns": 1791413097894311856,
+      "error": "RuntimeError: Can or table moved during planning"
+    },
+    {
+      "unix_ns": 1791413101373178832,
+      "error": "RuntimeError: Physical target cylinder fit exceeds 6 mm"
+    },
+    {
+      "unix_ns": 1791413206756581178,
+      "error": "ValueError: Can is outside the left-hand pickup area"
+    },
+    {
+      "unix_ns": 1791413246409014098,
+      "error": "RuntimeError: Coke YOLO target absent/ambiguous"
+    },
+    {
+      "unix_ns": 1791413253568732273,
+      "error": "RuntimeError: Coke YOLO target absent/ambiguous"
+    },
+    {
+      "unix_ns": 1791413495771767031,
+      "error": "RuntimeError: Coke YOLO target absent/ambiguous"
+    }
+  ],
+  "latest_preupdate_motion_commands_sent": 0,
+  "latest_preupdate_adapter_initialized": false,
+  "offline_diagnosis": {
+    "schema": "wendy.handoff.archived-diagnosis.v1",
+    "backend": "cpu_fp32_offline",
+    "deterministic_repeat_passed": true,
+    "physical_readiness_verified": false,
+    "timestamp_rewritten": false,
+    "hardware_io": false,
+    "models": {
+      "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862": {
+        "weights": "/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-yolo/g1-can-handoff/physical/yolo/model/coke-can.pt",
+        "frames": [
+          {
+            "archive": ".runtime/demo-debug/camera-95265-plan-refresh.npz",
+            "npz_sha256": "9345612f6982a88f70b432bbf4c502ae49c24c3374c5aa2c6b3635cd3bb37b10",
+            "frame_id": 95265,
+            "phase": "plan-refresh",
+            "source_zip_pixel_identity_verified": true,
+            "exposure_timestamp_original": 6377.159430980682,
+            "timestamp_valid": true,
+            "rgb_depth_skew_ms": 0.12111663818359375,
+            "scene_source_frame_id": 95105,
+            "preview": ".runtime/demo-debug/camera-95265-plan-refresh.png",
+            "detections": [
+              {
+                "xyxy": [
+                  166.64453125,
+                  262.31597900390625,
+                  291.3267822265625,
+                  405.2850341796875
+                ],
+                "confidence": 0.29411470890045166,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              }
+            ],
+            "truncated": false,
+            "max_raw_confidence": 0.29411470890045166,
+            "top_raw_confidences": [
+              0.29411470890045166,
+              0.19254477322101593,
+              0.16924472153186798,
+              0.14362530410289764,
+              0.030943384394049644,
+              0.02546307072043419,
+              0.01023897621780634,
+              0.006895617116242647
+            ],
+            "eligible_box_count": 0,
+            "depth": {
+              "error": "Coke YOLO target absent/ambiguous"
+            }
+          },
+          {
+            "archive": ".runtime/demo-debug/camera-95373-planning.npz",
+            "npz_sha256": "0a48b1a82c7b43287ed8dcdbf9d1fe7349f1800ad5657fdd4a8fd0f926aab3b1",
+            "frame_id": 95373,
+            "phase": "planning",
+            "source_zip_pixel_identity_verified": true,
+            "exposure_timestamp_original": 6384.3648290634155,
+            "timestamp_valid": true,
+            "rgb_depth_skew_ms": 0.12111663818359375,
+            "scene_source_frame_id": 95362,
+            "preview": ".runtime/demo-debug/camera-95373-planning.png",
+            "detections": [
+              {
+                "xyxy": [
+                  167.00225830078125,
+                  262.2459411621094,
+                  290.550048828125,
+                  405.5895080566406
+                ],
+                "confidence": 0.28653156757354736,
+                "class_id": 0,
+                "class_name": "Coca-Cola"
+              }
+            ],
+            "truncated": false,
+            "max_raw_confidence": 0.28653156757354736,
+            "top_raw_confidences": [
+              0.28653156757354736,
+              0.18271435797214508,
+              0.16105036437511444,
+              0.13040542602539062,
+              0.0321001373231411,
+              0.029991716146469116,
+              0.010222338140010834,
+              0.007493433076888323
+            ],
+            "eligible_box_count": 0,
+            "depth": {
+              "error": "Coke YOLO target absent/ambiguous"
+            }
+          }
+        ]
+      },
+      "87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7": {
+        "weights": ".runtime/yolo-repair/parent.pt",
+        "frames": [
+          {
+            "archive": ".runtime/demo-debug/camera-95265-plan-refresh.npz",
+            "npz_sha256": "9345612f6982a88f70b432bbf4c502ae49c24c3374c5aa2c6b3635cd3bb37b10",
+            "frame_id": 95265,
+            "phase": "plan-refresh",
+            "source_zip_pixel_identity_verified": true,
+            "exposure_timestamp_original": 6377.159430980682,
+            "timestamp_valid": true,
+            "rgb_depth_skew_ms": 0.12111663818359375,
+            "scene_source_frame_id": 95105,
+            "preview": ".runtime/demo-debug/camera-95265-plan-refresh.png",
+            "detections": [],
+            "truncated": false,
+            "max_raw_confidence": 0.05384177342057228,
+            "top_raw_confidences": [
+              0.05384177342057228,
+              0.04140537977218628,
+              0.03568660840392113,
+              0.03227976709604263,
+              0.028155604377388954,
+              0.02566266991198063,
+              0.01626615598797798,
+              0.012162153609097004
+            ],
+            "eligible_box_count": 0,
+            "depth": {
+              "error": "Coke YOLO target absent/ambiguous"
+            }
+          },
+          {
+            "archive": ".runtime/demo-debug/camera-95373-planning.npz",
+            "npz_sha256": "0a48b1a82c7b43287ed8dcdbf9d1fe7349f1800ad5657fdd4a8fd0f926aab3b1",
+            "frame_id": 95373,
+            "phase": "planning",
+            "source_zip_pixel_identity_verified": true,
+            "exposure_timestamp_original": 6384.3648290634155,
+            "timestamp_valid": true,
+            "rgb_depth_skew_ms": 0.12111663818359375,
+            "scene_source_frame_id": 95362,
+            "preview": ".runtime/demo-debug/camera-95373-planning.png",
+            "detections": [],
+            "truncated": false,
+            "max_raw_confidence": 0.05460454523563385,
+            "top_raw_confidences": [
+              0.05460454523563385,
+              0.04447094723582268,
+              0.03763306513428688,
+              0.03545947000384331,
+              0.030202755704522133,
+              0.026996605098247528,
+              0.015370139852166176,
+              0.011616919189691544
+            ],
+            "eligible_box_count": 0,
+            "depth": {
+              "error": "Coke YOLO target absent/ambiguous"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "empty_crop_at_10_percent": {
+    "image": "nx2-empty-0.jpg",
+    "false_positive_confidence": 0.11889857053756714,
+    "qualification_passed": false
+  },
+  "physical_pickup_verified": false
+}

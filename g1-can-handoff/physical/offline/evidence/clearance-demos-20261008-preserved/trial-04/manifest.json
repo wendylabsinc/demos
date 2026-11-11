@@ -1,0 +1,104 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791485324766877693,
+  "end_unix_ns": 1791485413680231747,
+  "native_event_file": "/data/events-20261008T184723Z.jsonl",
+  "events": 2470,
+  "camera_events": 341,
+  "selected_frames": [
+    "/data/camera-21572-scene_refresh.npz",
+    "/data/camera-21623-planning.npz",
+    "/data/camera-22594-motion-tracking.npz",
+    "/data/camera-22596-motion-tracking.npz",
+    "/data/camera-22598-motion-tracking.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 380633,
+      "sha256": "58ea0a540b1488d3ba8ece247d6e821efeb5a2688590713d60b5aff855bf7c7e"
+    },
+    "rgbd/camera-21572-scene_refresh.source.zip": {
+      "bytes": 108302,
+      "sha256": "ec184e431b71b733727dcc6cc137caf7a59ea9e31785d14f378468ae7b9dd97f"
+    },
+    "rgbd/camera-21572-scene_refresh.timing.npz": {
+      "bytes": 3912,
+      "sha256": "5c4edf89f03f84735a4ef2cc0204e83d6be022dc08ed3b0141fdf62787f42432"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938112,
+      "sha256": "a9126d193f5609f78a3c54fecb688ad0054062530a3f208dedb7ec919f963494"
+    },
+    "rgbd/camera-21623-planning.source.zip": {
+      "bytes": 109492,
+      "sha256": "1005c57ad97955bba385dc7a49c38cb0439d3e234aa7753b3e7825b22788d2f2"
+    },
+    "rgbd/camera-21623-planning.timing.npz": {
+      "bytes": 3908,
+      "sha256": "f28d7daec2f958c32c9a92730eda04490209b0c539519787e6fef29657255382"
+    },
+    "rgbd/camera-22594-motion-tracking.source.zip": {
+      "bytes": 115906,
+      "sha256": "569b48bf1c003975b0d70aa99afbc40f9c9df65fbf608812758e63c824ad18ab"
+    },
+    "rgbd/camera-22594-motion-tracking.timing.npz": {
+      "bytes": 3912,
+      "sha256": "e6d4c352bb1f690e1fe0f549432b47503200650293d0e715c35ee6e560a5a06f"
+    },
+    "rgbd/camera-22596-motion-tracking.source.zip": {
+      "bytes": 116120,
+      "sha256": "d08dbd2792a847096a3040f0272b1c60f53a06f7580637981d636594fd5713b8"
+    },
+    "rgbd/camera-22596-motion-tracking.timing.npz": {
+      "bytes": 3908,
+      "sha256": "716ad609cf426780631e60fb1e49af74c6d7b3cf3d179c51e28f32dcd87abe53"
+    },
+    "rgbd/camera-22598-motion-tracking.source.zip": {
+      "bytes": 116956,
+      "sha256": "38c9238b8d7d448789b2332adede8e59730402e3cb829959297ca8f26981b32f"
+    },
+    "rgbd/camera-22598-motion-tracking.timing.npz": {
+      "bytes": 3912,
+      "sha256": "718bc9a567db92ea45fa0f46652097baa7d797996d65ba804e1135b1c3ddd1d3"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 34205,
+      "sha256": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "77bffe83316b9469317830572de3d7b3ace92e062eb7803a9f624f53ffa29990",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791485393286738419,
+    "monotonic_ns": 1527855457331,
+    "phase": "primary_failure",
+    "error": "RuntimeError: Visual/depth tracking exposure stale (409.0 ms)",
+    "source": "watchdog"
+  }
+}

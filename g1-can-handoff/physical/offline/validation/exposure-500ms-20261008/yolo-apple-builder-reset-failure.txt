@@ -1,0 +1,24 @@
+Registered DEV-g1-handoff-coke-yolo in Cloud Apps (organization 76).
+Notifications for DEV-g1-handoff-coke-yolo are disabled; an owner or admin can enable its grant in the Cloud app settings.
+Warning: disk / is 85% full. Free cached container data with 'wendy device cache prune'.
+Building and pushing image for linux/arm64...
+  done    preparing buildx builder  6.3s
+  done    load build definition  0.0s
+  cached  [linux/arm64 stagefile-pip-deps-0 2/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && command -v pip >/dev/null 2>&1 || (apt-get update && apt-get install -y --no-install-recommends 'python3-pip')
+  cached  [linux/arm64 stagefile-pip-deps-0 1/4] WORKDIR /app
+  done    load build context  0.1s
+  ...     [linux/arm64 dependencies 2/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1'  (23.3s)
+  ...     [linux/arm64 stagefile-pip-deps-0 3/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  Using pip 25.0.1 from /opt/venv/lib/python3.12/site-packages/pip (pytho…  (16.9s)
+  ...     [linux/arm64 dependencies 2/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1'  Ign:3 http://ports.ubuntu.com/ubuntu-ports noble-backports InRelease  (38.3s)
+  ...     [linux/arm64 stagefile-pip-deps-0 3/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  Using pip 25.0.1 from /opt/venv/lib/python3.12/site-packages/pip (pytho…  (31.9s)
+  ...     [linux/arm64 dependencies 2/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1'  gir1.2-glib-2.0 libdrm-amdgpu1 libdrm-common libdrm2 libgbm1 libgl1-mes…  (68.3s)
+  ...     [linux/arm64 stagefile-pip-deps-0 3/4] RUN --mount=type=cache,sharing=locked,id=stagefile-pip-8eb6417d9c128e6a,target=/root/.cache/pip pip install --root '/opt/stagefile/pip/root' --index-url 'https://pypi.org/simple/' 'numpy==2.2.6' 'opencv-python==4.11.0.86' 'ultralytics==8.4.123'  Using pip 25.0.1 from /opt/venv/lib/python3.12/site-packages/pip (pytho…  (61.9s)
+  FAILED  [linux/arm64 dependencies 2/4] RUN --mount=type=cache,sharing=locked,id=stagefile-apt-lists-e330f35a06a75ecf,target=/var/lib/apt/lists     --mount=type=cache,sharing=locked,id=stagefile-apt-archives-e330f35a06a75ecf,target=/var/cache/apt     rm -f /etc/apt/apt.conf.d/docker-clean && apt-get update && apt-get install -y --no-install-recommends 'libglib2.0-0' 'libgl1'
+
+Build failure details
+  Step: linux/arm64 dependencies 2/4 — RUN apt-get …
+  Cause: container build failed: exit status 1
+  Build log: /var/folders/kr/0hdcd1cx5yjd7c4vpdqkjl1h0000gn/T/wendy-build-image-2459683101.log
+✗ building and pushing image: container build failed: exit status 1
+Deployment timing appended to global ledger /Users/olivertaylor/Documents/Wendy/benchmarks/results/deployment-timings.jsonl
+Deployment timing mirrored to /Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/yolo/benchmarks/results/deployment-timings.jsonl

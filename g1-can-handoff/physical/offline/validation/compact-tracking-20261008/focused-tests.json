@@ -1,0 +1,373 @@
+{
+  "tests_run": 73,
+  "successful": true,
+  "seconds": 2.153023457969539,
+  "hardware_used": false,
+  "cases": [
+    {
+      "test": "test_compact_tracking.CompactTrackingTests.test_all_world_points_match_previous_arithmetic_exactly",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_compact_tracking.CompactTrackingTests.test_mismatched_identity_scale_and_calibration_still_fail",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_compact_tracking.CompactTrackingTests.test_next_request_demands_a_newer_frame_in_the_same_stream",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_compact_tracking.CompactTrackingTests.test_single_bundle_preserves_decoded_pixels_and_original_exposure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_compact_tracking.CompactTrackingTests.test_stale_future_invalid_and_skewed_frames_still_fail",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_latest_frame.LatestFrameTests.test_processing_pause_consumes_newest_not_parked_frame",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_latest_frame.LatestFrameTests.test_reader_failure_is_latched_even_with_a_cached_frame",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_newest_bundle_contains_unchanged_exposure_metadata_and_depth",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_same_frame_waits_for_capture_notification_instead_of_replaying",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_tracking_camera_owner.TrackingCameraOwnerTests.test_stream_restart_and_missing_progress_fail",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_both_decoders_run_before_either_is_joined",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_accepts_configured_freshness_boundary_without_retimestamping",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_invalidates_ray_cache_on_timing_calibration_change",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_calibration_serial_mismatch",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_depth_scale_mismatch",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_compact_intrinsics_and_dimensions_mismatch",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_policy_frame_and_capture_time_mismatch",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_positive_and_negative_rgb_depth_skew",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_camera_http_rejects_stale_future_and_invalid_exposure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_paired_decode_matches_original_pixels_and_reuses_workers",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_pipeline.CameraPipelineTests.test_parallel_decode_retains_exact_frame_rejection",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_child_can_request_exact_exposure_pose_without_another_dds_reader",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_error_is_not_converted_to_success",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_publish_checked_result_before_event_relay_but_never_publish_stale",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_spawn_round_trip_and_shutdown",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_stale_and_future_observations_are_rejected_in_parent",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_worker.WorkerTests.test_stalled_request_expires_before_tracking_join_deadline",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_motion_tracking.MotionTrackingTests.test_fresh_observation_passes_and_stale_future_or_uncertain_blocks",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_motion_tracking.MotionTrackingTests.test_one_frame_prefetch_overlaps_processing_without_rewriting_exposure",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_motion_tracking.MotionTrackingTests.test_stale_tracking_blocks_arm_and_finger_writes_at_next_command_tick",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_motion_tracking.MotionTrackingTests.test_synchronous_phase_observation_updates_watchdog_after_full_validation",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_timing.PerceptionTimingTests.test_contended_phase_observation_refreshes_watchdog_before_next_background_response",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_timing.PerceptionTimingTests.test_parked_prefetch_is_discarded_using_exposure_age_before_geometry",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_perception_timing.PerceptionTimingTests.test_repeated_frames_abort_after_bounded_attempts_without_inference_or_archive",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_passive_deployment.PassiveDeploymentTests.test_persistent_transport_failure_stops_at_the_attempt_limit",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_passive_deployment.PassiveDeploymentTests.test_startup_transport_gap_retries_then_accepts_the_verified_read",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_recorded_failures.RecordedFailureTests.test_153_measured_table_frames_reproduce_uncorrected_drift_and_corrected_stability",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_recorded_failures.RecordedFailureTests.test_all_ten_trial_traces_retain_primary_error_and_never_claim_lift",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_recorded_failures.RecordedFailureTests.test_captured_jpeg_depth_rays_yolo_identity_and_cylinder_reproduce_planning",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_recorded_failures.RecordedFailureTests.test_cold_ownership_shift_is_reproduced_and_rejected_without_moving_baseline",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_recorded_failures.RecordedFailureTests.test_recorded_411ms_gap_blocks_next_arm_and_finger_tick",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_acceptance_rejects_unchecked_frame_and_large_center_shift",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_bad_tracked_cylinder_reacquires_same_frame_without_old_mask_fallback",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_clipped_tracking_forces_semantic_rejection",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_initial_semantic_identity_and_pending_commit",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_periodic_identity_recheck_uses_current_frame",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_stale_future_or_repeated_frame_rejected",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_uncertain_empty_or_ambiguous_identity_never_returns_old_mask",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_visual_depth_frames_do_not_requery_yolo",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_target_tracker.TrackerTests.test_visual_uncertainty_forces_same_frame_semantic_confirmation",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_active_or_invalid_camera_limit_does_not_mutate_runtime",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_camera_limit_tuning_preserves_hold_and_persists_without_resume",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_cancelled_async_demo_cannot_reacquire_camera_or_arm",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_demo_start_is_single_job_and_stop_remains_latched_before_worker",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failed_geometry_retains_exact_detection_and_archives_frame",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_failure_holds_measured_pose_and_retains_control",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_first_failure_survives_later_cancellation",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_frame_evidence_is_persisted_without_stdout_or_state_lock",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_plan_refresh_is_saved_only_after_success_without_adapter",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_cancels_but_never_relaxes_while_trial_running",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_release_requires_supported_can_and_finishes_after_trial",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_refuses_possible_held_can_or_active_motion",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_runtime_lifecycle.RuntimeLifecycleTests.test_retry_reuses_held_controller_and_never_releases",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.RedLabelTests.test_fast_closing_matches_original_on_edges_and_random_masks",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.RedLabelTests.test_partially_offscreen_red_can_is_rejected",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.RedLabelTests.test_separate_cans_remain_ambiguous",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.RedLabelTests.test_unrelated_boundary_speckles_do_not_clip_the_can",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.RedLabelTests.test_white_label_stripes_preserve_only_red_measurements",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.TrackedCylinderTests.test_candidate_roi_accepts_shifted_cylinder_but_not_wider_grip",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.TrackedCylinderTests.test_finger_split_label_merges_only_with_expected_cylinder",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.TrackedCylinderTests.test_fragment_tracking_cannot_enable_initial_detection",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.TrackedCylinderTests.test_off_target_red_is_rejected",
+      "status": "passed",
+      "detail": null
+    },
+    {
+      "test": "test_camera_input.TrackedCylinderTests.test_tracking_preserves_clipped_label_guard",
+      "status": "passed",
+      "detail": null
+    }
+  ]
+}

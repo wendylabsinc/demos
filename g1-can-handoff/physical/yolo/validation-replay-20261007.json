@@ -1,0 +1,85 @@
+{
+  "checkpoint_sha256": "74b62f016b7a5aeb50c52422e3ee6dd76472456bf731935d2263fa000b96a862",
+  "offline_fixture_passed": true,
+  "backend": "cpu_offline_replay",
+  "fixtures": [
+    {
+      "image": "g1-coke-raw.jpg",
+      "role": "held_out_archived",
+      "detections": [
+        {
+          "xyxy": [
+            249.7158203125,
+            70.49530029296875,
+            328.94232177734375,
+            206.97906494140625
+          ],
+          "confidence": 0.7098994851112366
+        }
+      ],
+      "iou": 0.762128921117624
+    },
+    {
+      "image": "nx2-missed.jpg",
+      "role": "training_positive",
+      "detections": [
+        {
+          "xyxy": [
+            169.32095336914062,
+            240.53744506835938,
+            290.5921630859375,
+            386.3234558105469
+          ],
+          "confidence": 0.4963020384311676
+        }
+      ],
+      "iou": 0.6872309593051698
+    },
+    {
+      "image": "nx2-rotated.jpg",
+      "role": "held_out_rotated",
+      "detections": [
+        {
+          "xyxy": [
+            163.03738403320312,
+            232.2838134765625,
+            283.0622253417969,
+            377.20538330078125
+          ],
+          "confidence": 0.5734165906906128
+        }
+      ],
+      "iou": 0.7164461887410921
+    },
+    {
+      "image": "g1-calibration.jpg",
+      "role": "held_out_archived",
+      "detections": [
+        {
+          "xyxy": [
+            202.9482421875,
+            218.06512451171875,
+            317.34588623046875,
+            361.35504150390625
+          ],
+          "confidence": 0.34505796432495117
+        }
+      ],
+      "iou": 0.7058308679882781
+    },
+    {
+      "image": "nx2-empty-0.jpg",
+      "role": "training_negative_crop",
+      "detections": [],
+      "iou": null
+    },
+    {
+      "image": "nx2-empty-1.jpg",
+      "role": "training_negative_crop",
+      "detections": [],
+      "iou": null
+    }
+  ],
+  "optimized_decoder_parity_passed": true,
+  "physical_pickup_verified": false
+}

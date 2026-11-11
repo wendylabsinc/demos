@@ -1,0 +1,69 @@
+{
+  "date_utc": "2026-10-07",
+  "device": "unitree-g1-nx-2",
+  "address": "10.10.20.238:50052",
+  "camera_serial": "338622073335",
+  "apps": {
+    "physical": "0.2.13-coke-yolo",
+    "detector": "0.1.2"
+  },
+  "health": {
+    "healthy": true,
+    "backend": "pytorch_cuda",
+    "model_sha256": "87fe92dc461f56077e007974045d67acd7a0acdaab00530b9e2fe0c5ec35bfc7",
+    "class_names": {
+      "0": "Coca-Cola"
+    },
+    "gpu": "Orin",
+    "camera_owned": false,
+    "motion_commands_sent": 0
+  },
+  "live_samples": [
+    {
+      "frame_id": 23980,
+      "inference_ms": 28.074,
+      "exposure_age_s": 0.2753399335981612,
+      "qualified_detections": 0
+    },
+    {
+      "frame_id": 23983,
+      "inference_ms": 39.122,
+      "exposure_age_s": 0.20764972590677644,
+      "qualified_detections": 0
+    },
+    {
+      "frame_id": 23985,
+      "inference_ms": 39.477,
+      "exposure_age_s": 0.23170067378691783,
+      "qualified_detections": 0
+    }
+  ],
+  "preflight": {
+    "http_status": 409,
+    "error": "Coke YOLO target absent/ambiguous",
+    "motion_commands_sent": 0,
+    "adapter_initialized": false
+  },
+  "final_status": {
+    "phase": "PASSIVE",
+    "motion_commands_sent": 0,
+    "adapter_initialized": false,
+    "telemetry_healthy": true
+  },
+  "sources": {
+    "physical": {
+      "camera_input.py": "9c3c30a426cb3885867debf9b197716802b494cbc728b8af2820fe2b7317887a",
+      "yolo_client.py": "b83f3d577e6ed3fa4c79e0bfe9486eedec03de149469e086c148af7a8714dac7",
+      "diagnose_head_alignment.py": "5b9e16afa35ca766ad815f92b0eb2b0727b4a9cef663623d55fc87ec07f987ab",
+      "runtime.py": "2dae58eabfc924765a5d72c35c440b3b1a76b2263471b74e16cc0b38103fae90"
+    },
+    "detector": {
+      "service.py": "de9fd75fb94a56132b08a7e1da5f34d0731134a76227d24d91cf55facfe47ba5",
+      "preprocessing.py": "a0aa7fc2b6511db0638886e4788ffbce281022cd9b26651d50e01eca7a228dc4",
+      "postprocessing.py": "cb18f2b44614b925eabf1372ff941df3436f49790086f8b6566f50ae93c0ff3a"
+    }
+  },
+  "physical_trial_requested": true,
+  "physical_trial_started": false,
+  "physical_pickup_verified": false
+}

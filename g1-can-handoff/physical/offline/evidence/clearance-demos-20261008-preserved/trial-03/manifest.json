@@ -1,0 +1,77 @@
+{
+  "schema": "wendy.g1.trial-export.v1",
+  "start_unix_ns": 1791484623141562012,
+  "end_unix_ns": 1791484662123600994,
+  "native_event_file": "/data/events-20261008T182744Z.jsonl",
+  "events": 29,
+  "camera_events": 2,
+  "selected_frames": [
+    "/data/camera-11056-scene_refresh.npz",
+    "/data/camera-11098-planning.npz"
+  ],
+  "files": {
+    "events.jsonl.gz": {
+      "bytes": 5301,
+      "sha256": "170cc61c5243de7a5d73035349387385bf5bb776a80badd10fb1ceb27282f9ff"
+    },
+    "rgbd/camera-11056-scene_refresh.source.zip": {
+      "bytes": 108729,
+      "sha256": "e2ba33392a568a0c9e11ac67c98dbf1b21d5311896696a4230d829980e8a3bc7"
+    },
+    "rgbd/camera-11056-scene_refresh.timing.npz": {
+      "bytes": 3896,
+      "sha256": "1e83f5fd4fff4841b0a15a695d750cc3598eb62d832229f28d6d52a66f291b87"
+    },
+    "rgbd/rays.npz": {
+      "bytes": 938119,
+      "sha256": "161f3a9e4e157f8a1c52cc11a3eb7682dda62072e7da3edec4c332bec350701f"
+    },
+    "rgbd/camera-11098-planning.source.zip": {
+      "bytes": 108945,
+      "sha256": "9c605bbcd6df6424b6678bda55cee0c73817f1bdcfeff4247b077a2356f19f36"
+    },
+    "rgbd/camera-11098-planning.timing.npz": {
+      "bytes": 3896,
+      "sha256": "b664fbec30ebc3eb67fd456c51ff6af0b1055d6b4015b0240fd176ab749f51e0"
+    },
+    "source/runtime.py": {
+      "bytes": 39486,
+      "sha256": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121"
+    },
+    "source/camera_input.py": {
+      "bytes": 22224,
+      "sha256": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9"
+    },
+    "source/physical_core.py": {
+      "bytes": 32970,
+      "sha256": "6e2c7229fd6b8a88d9cd04000f74ac1044361767dcacadd3de8f6607d9c59048"
+    },
+    "source/table_plane.py": {
+      "bytes": 3665,
+      "sha256": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77"
+    },
+    "source/pickup.py": {
+      "bytes": 5003,
+      "sha256": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7"
+    },
+    "source/target_tracker.py": {
+      "bytes": 8360,
+      "sha256": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+    }
+  },
+  "source_hashes": {
+    "runtime.py": "15de4e1ae982076b275153835248bdaa65907b2a37cf1689efb6af8be7610121",
+    "camera_input.py": "654430efc83af6659cbfbe3b0346d4fc7a50ff3a81ae329e3b4dfeffd77e9ef9",
+    "physical_core.py": "6e2c7229fd6b8a88d9cd04000f74ac1044361767dcacadd3de8f6607d9c59048",
+    "table_plane.py": "7c32708d680fe6ff1477ec2c2cdf3a00854a5c66db7f3f4ec57d973e3ab81a77",
+    "pickup.py": "f34e502d4e347eb23cb3e25f867ff7ed921f63b530b7157e975e8a98162987c7",
+    "target_tracker.py": "8b1befd232c6cc5977308203bf56bcf566c59801523c76fea57bfed143305ec2"
+  },
+  "primary_failure": {
+    "unix_ns": 1791484662118959983,
+    "monotonic_ns": 796687679343,
+    "phase": "primary_failure",
+    "error": "ValueError: Grasp orientation search time limit reached; preflight rejected: Interpolated physical trajectory intersects robot/table",
+    "source": "execution"
+  }
+}

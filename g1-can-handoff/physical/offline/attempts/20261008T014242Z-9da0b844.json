@@ -1,0 +1,11 @@
+{
+  "started_unix_ns": 1791423762567467000,
+  "device": "10.10.20.238:50052",
+  "start_requested": false,
+  "runner_error": "RuntimeError: [{'type': 'text', 'text': '[DEVICE_UNREACHABLE] connecting to 10.10.20.238:50052: device \"10.10.20.238\" is pinned to an enrolled identity and no authenticated endpoint answered at any address it resolves to: 10.10.20.238 (no response before the handshake budget elapsed) (each tried on both its plaintext and mTLS port). The pin is intact and no device identity was compared, so this is a reachability problem rather than an identity one \u2014 unpinning the device is not the fix. Tried 1 IPv4 address; if the device is only reachable over one address family, check that its agent is listening and that stale DNS/mDNS records are not holding the CLI to an address the device no longer has.'}]",
+  "start_attempted": false,
+  "snapshot_error": "Native Wendy connection was not established",
+  "finished_unix_ns": 1791423790603774000,
+  "recording_error": "Native Wendy connection was not established",
+  "artifact_error": "Native Wendy connection was not established"
+}

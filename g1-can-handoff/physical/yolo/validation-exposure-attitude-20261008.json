@@ -1,0 +1,109 @@
+{
+  "deployed_commit": "a217a77fbb4ab63009892f688fe3750e215de762",
+  "passive": {
+    "failure": null,
+    "motion_commands_sent": 0,
+    "motor_adapters_created": false,
+    "max_age_ms": 382.1627069710303,
+    "observations": 164,
+    "exposure_pose_samples": 164,
+    "max_pose_skew_ms": 8.475974434077216
+  },
+  "replay": {
+    "frames": 153,
+    "max_pose_skew_ms": 1.861339,
+    "old_table_range_mm": [
+      -0.6254179466,
+      5.1666340083
+    ],
+    "corrected_table_range_mm": [
+      -0.8931813947,
+      0.4560215591
+    ]
+  },
+  "trial": {
+    "file": ".runtime/demo-attempts/20261008T003403Z.json",
+    "result": "blocked_before_motion",
+    "error": "Can outside left-hand pickup area",
+    "can_xyz_m": [
+      0.50245027375,
+      0.12573811881,
+      0.823
+    ],
+    "motion_commands_sent": 0,
+    "physical_lift_verified": false
+  },
+  "limitations": [
+    "Attitude correction assumes stationary pelvis position and fixed waist.",
+    "Operator-accepted factory/table calibration remains an estimate."
+  ],
+  "motion_trials": [
+    {
+      "attempt": "20261008T003433Z",
+      "first_failure": {
+        "error": "RuntimeError: Visual/depth tracking exposure stale (405.4 ms)",
+        "source": "execution"
+      },
+      "event_counts": {
+        "phase_camera_evidence": 54,
+        "scene_refreshed": 1,
+        "exposure_pose": 53,
+        "perception_result": 53,
+        "perception_worker_result": 53,
+        "observed_can_collision_proxy": 1,
+        "trajectory_collision": 1,
+        "staging_planned": 1,
+        "cartesian_lift_planned": 1,
+        "path_preflight_passed": 1,
+        "plan": 1,
+        "plan_context": 1,
+        "ownership_acquired": 1,
+        "hand_target": 40,
+        "staging_segment": 1,
+        "target": 84,
+        "primary_failure": 1,
+        "frozen": 1,
+        "error": 1,
+        "failure_hold": 1
+      },
+      "physical_lift_verified": false,
+      "phase": "FROZEN",
+      "temperature_max": 64,
+      "native_events": "/data/events-20261008T003401Z.jsonl"
+    },
+    {
+      "attempt": "20261008T003513Z",
+      "first_failure": {
+        "error": "RuntimeError: Visual/depth tracking exposure stale (410.8 ms)",
+        "source": "watchdog"
+      },
+      "event_counts": {
+        "phase_camera_evidence": 167,
+        "scene_refreshed": 1,
+        "exposure_pose": 166,
+        "perception_result": 166,
+        "perception_worker_result": 166,
+        "observed_can_collision_proxy": 2,
+        "trajectory_collision": 1,
+        "staging_planned": 1,
+        "cartesian_lift_planned": 1,
+        "path_preflight_passed": 1,
+        "plan": 1,
+        "plan_context": 1,
+        "ownership_reused": 1,
+        "hand_target": 40,
+        "staging_segment": 2,
+        "target": 532,
+        "approach": 1,
+        "primary_failure": 1,
+        "frozen": 2,
+        "error": 1,
+        "failure_hold": 1
+      },
+      "physical_lift_verified": false,
+      "phase": "FROZEN",
+      "temperature_max": 65,
+      "native_events": "/data/events-20261008T003401Z.jsonl"
+    }
+  ]
+}

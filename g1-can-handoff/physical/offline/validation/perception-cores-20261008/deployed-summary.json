@@ -1,0 +1,28 @@
+{
+  "accepted": 32,
+  "errors": [],
+  "startup_ms": 2326.0305560002053,
+  "first_request_ms": 104.23177199982092,
+  "age_percentiles_ms": [
+    215.42970266227712,
+    246.52491344538703,
+    267.99866902365466
+  ],
+  "roundtrip_percentiles_ms": [
+    62.7405010000075,
+    78.72415369979535,
+    104.23177199982092
+  ],
+  "before": {
+    "phase": "PASSIVE",
+    "demo_running": false,
+    "adapter_initialized": false,
+    "motion_commands_sent": 0
+  },
+  "after": {
+    "phase": "PASSIVE",
+    "demo_running": false,
+    "adapter_initialized": false,
+    "motion_commands_sent": 0
+  }
+}

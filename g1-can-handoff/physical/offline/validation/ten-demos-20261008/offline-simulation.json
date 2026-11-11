@@ -1,0 +1,92 @@
+{
+  "profile": "simulation",
+  "tests_run": 13,
+  "successful": false,
+  "seconds": 102.11373008298688,
+  "evidence_verified": 136,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_runtime",
+      "tests_run": 13,
+      "seconds": 101.5316246659495,
+      "successful": false,
+      "cases": [
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_75cm_scene_tracks_finger_split_label_during_hold",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_arm_servo_reuses_bounded_adapter_reference",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_arm_servo_uses_commanded_torque_without_hidden_gravity",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_cancelled_hand_open_sends_no_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_freeze_prevents_subsequent_watchdog_hand_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_freeze_serializes_with_inflight_command",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold",
+          "status": "failed",
+          "detail": "Traceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_runtime.py\", line 132, in test_head_camera_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Tracked target center differs by over 40 mm\n"
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_stages_then_lifts_and_holds",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_measured_arms_down_start_rejects_interpolated_collision",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_shared_physical_sequence_lifts_with_measured_table_height",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_staging_rejects_changed_measured_start_before_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_staging_requires_completed_preflight",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_runtime.PhysicalSimulationTests.test_stale_hand_feedback_sends_no_commands",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n......F......\n======================================================================\nFAIL: test_head_camera_tracks_finger_split_label_during_hold (test_sim_runtime.PhysicalSimulationTests.test_head_camera_tracks_finger_split_label_during_hold)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/olivertaylor/Documents/Wendy/demos-g1-nx2-trial-fixes/g1-can-handoff/physical/test_sim_runtime.py\", line 132, in test_head_camera_tracks_finger_split_label_during_hold\n    self.assertTrue(result['lift_verified'],result.get('error'))\nAssertionError: False is not true : Tracked target center differs by over 40 mm\n\n----------------------------------------------------------------------\nRan 13 tests in 101.532s\n\nFAILED (failures=1)\n"
+    }
+  ]
+}

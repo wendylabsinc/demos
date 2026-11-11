@@ -1,0 +1,16 @@
+{
+  "path": "/data/trial-exports/1791506814734591200-trial-02.tar.gz",
+  "bytes": 61142824,
+  "sha256": "65d8c381f995ed373da7b77bf11a39af28a6bf27b8f40df684b86d11113e5ae4",
+  "events": 563,
+  "selected_frames": 2,
+  "primary_failure": {
+    "unix_ns": 1791506852747753386,
+    "monotonic_ns": 467907530282,
+    "phase": "primary_failure",
+    "error": "ValueError: Grasp orientation search time limit reached",
+    "source": "execution"
+  },
+  "local_path": "offline/validation/tuned-real-replay-20261008/trial-02.tar.gz",
+  "verified": true
+}

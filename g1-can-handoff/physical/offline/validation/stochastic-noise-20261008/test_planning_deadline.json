@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 0.12815983302425593,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_planning_deadline",
+      "tests_run": 1,
+      "seconds": 0.0014947080053389072,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_planning_deadline.PlanningDeadlineTests.test_recorded_orientation_timeout_is_bounded_before_any_motion",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n"
+    }
+  ]
+}

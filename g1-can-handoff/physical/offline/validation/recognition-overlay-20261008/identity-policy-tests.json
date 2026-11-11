@@ -1,0 +1,57 @@
+{
+  "profile": "regression",
+  "tests_run": 6,
+  "successful": true,
+  "seconds": 0.5098249589791521,
+  "evidence_verified": 140,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_perception_policy",
+      "tests_run": 6,
+      "seconds": 0.03147208399605006,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_captured_recognition_failure_is_no_longer_a_mid_phase_command_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_color_and_once_modes_never_schedule_periodic_yolo",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_continuous_rollback_retains_original_tracking_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_default_phase_policy_and_explicit_continuous_rollback",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_phase_policy_starts_no_background_perception_and_detaches_old_guard",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_perception_policy.PerceptionPolicyTests.test_spawned_worker_uses_same_policy_as_parent",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.031s\n\nOK\n"
+    }
+  ]
+}

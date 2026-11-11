@@ -1,0 +1,112 @@
+{
+  "rows": [
+    {
+      "frame_id": 44504,
+      "decoded_identity": {
+        "frame_id": 44504,
+        "camera_serial": "338622073335",
+        "timestamp": 2988.5384590625763,
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "image_sha256": "23b1f7669f648f86a5217715881bddc4a2098d07c474b3954288c06e0946e341"
+      },
+      "native_center_xy_m": [
+        0.38627160279489575,
+        0.11810893954873561
+      ],
+      "corrected_center_xy_m": [
+        0.38627160279489575,
+        0.11810893954873561
+      ],
+      "fit_error_m": 0.003450591673471564,
+      "exposure_pose": {
+        "timestamp": 2988.538075999,
+        "rpy": [
+          0.019960185512900352,
+          0.01859934628009796,
+          -2.8585879802703857
+        ],
+        "waist_q": [
+          -0.00735215051099658,
+          0.0,
+          0.0
+        ]
+      },
+      "box": {
+        "xyxy": [
+          141.4375,
+          197.75,
+          261.0625,
+          343.25
+        ],
+        "confidence": 0.60400390625,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "input_sha256": {
+        "camera-44504-planning.timing.npz": "3648ba469d509c3902500f6e4c2bbfe2ba49feaff25e0db396fa103cf62ce97a",
+        "camera-44504-planning.source.zip": "1fe9a78a9e3defa19fa3eb71b1555ee92eef16e5a28af7a983e04962e3fcbe4c"
+      }
+    },
+    {
+      "frame_id": 44725,
+      "decoded_identity": {
+        "frame_id": 44725,
+        "camera_serial": "338622073335",
+        "timestamp": 3003.2825524806976,
+        "shape": [
+          480,
+          640,
+          3
+        ],
+        "image_sha256": "71e14f632122f789435da8c31fba031e2518573e3137c9894a903cddfad26d93"
+      },
+      "native_center_xy_m": [
+        0.39628538856252044,
+        0.11678556025777771
+      ],
+      "corrected_center_xy_m": [
+        0.3959255189945867,
+        0.116966704372196
+      ],
+      "fit_error_m": 0.002727030505165895,
+      "exposure_pose": {
+        "timestamp": 3003.279887965,
+        "rpy": [
+          0.018165668472647667,
+          -0.0023343239445239305,
+          -2.8599302768707275
+        ],
+        "waist_q": [
+          -0.007539637386798859,
+          0.0,
+          0.0
+        ]
+      },
+      "box": {
+        "xyxy": [
+          148.5,
+          196.125,
+          264.75,
+          339.875
+        ],
+        "confidence": 0.7216796875,
+        "class_id": 0,
+        "class_name": "Coca-Cola"
+      },
+      "input_sha256": {
+        "camera-44725-motion-tracking.timing.npz": "c1a1df6e6efc24647ae8ba5842b9783fa1fa055bbbd03006dc85122d46d95036",
+        "camera-44725-motion-tracking.source.zip": "512b54957ce1681a9d5500ef151808427bb9eb3c5610c49e8622fda905471e10"
+      }
+    }
+  ],
+  "native_shift_m": 0.010100853337595734,
+  "corrected_shift_m": 0.00972125502130153,
+  "actuation": false,
+  "physical_lift_verified": false,
+  "semantic_inference_replayed": false,
+  "limitation": "44504 saved YOLO box and44725 saved visual tracking box drive geometry on original decoded JPEG/depth/rays. No44723 semantic-recheck RGB-D frame or full tracker sequence preserved; this is exposure-aligned geometry diagnostic, not semantic/runtime acceptance replay."
+}

@@ -1,0 +1,32 @@
+{
+  "profile": "regression",
+  "tests_run": 1,
+  "successful": true,
+  "seconds": 1.1771516249282286,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_trajectory_parity",
+      "tests_run": 1,
+      "seconds": 0.9902286659926176,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_trajectory_parity.TrajectoryParityTests.test_captured_command_samples_replay_exactly",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ".\n----------------------------------------------------------------------\nRan 1 test in 0.990s\n\nOK\n"
+    }
+  ]
+}

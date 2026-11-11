@@ -1,0 +1,42 @@
+{
+  "profile": "regression",
+  "tests_run": 3,
+  "successful": true,
+  "seconds": 24.28915154200513,
+  "evidence_verified": 143,
+  "hardware_used": false,
+  "physical_success_verified": false,
+  "unresolved": [
+    "live_camera_headroom",
+    "live_control_handover",
+    "physical_pickup"
+  ],
+  "modules": [
+    {
+      "module": "test_sim_campaign_failures",
+      "tests_run": 3,
+      "seconds": 23.6863529169932,
+      "successful": true,
+      "cases": [
+        {
+          "test": "test_sim_campaign_failures.CampaignFailureTests.test_initial_wrist_clearance_rejected_before_any_commands",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_campaign_failures.CampaignFailureTests.test_legacy_double_noise_stop_does_not_close_or_lift",
+          "status": "passed",
+          "detail": null
+        },
+        {
+          "test": "test_sim_campaign_failures.CampaignFailureTests.test_tuned_double_noise_stop_does_not_close_or_lift",
+          "status": "passed",
+          "detail": null
+        }
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "WARNING: ARB_clip_control unavailable while mjDEPTH_ZEROFAR requested, depth accuracy will be limited\n\n...\n----------------------------------------------------------------------\nRan 3 tests in 23.686s\n\nOK\n"
+    }
+  ]
+}

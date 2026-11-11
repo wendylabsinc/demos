@@ -1,0 +1,423 @@
+{
+  "deployed_commit": "3e3c771",
+  "device": "10.10.20.238:50052",
+  "native_event_file": "/data/events-20261008T001244Z.jsonl",
+  "physical_lift_verified": false,
+  "first_failure": {
+    "error": "RuntimeError: Visual/depth tracking exposure stale (478.3 ms)",
+    "source": "watchdog"
+  },
+  "state": {
+    "phase": "FROZEN",
+    "motion_commands_sent": 1146,
+    "adapter_initialized": true,
+    "camera_max_age_ms": 400.0,
+    "telemetry_healthy": true
+  },
+  "event_counts": {
+    "phase_camera_evidence": 115,
+    "scene_refreshed": 1,
+    "perception_result": 114,
+    "perception_worker_result": 114,
+    "observed_can_collision_proxy": 1,
+    "trajectory_collision": 1,
+    "staging_planned": 1,
+    "cartesian_lift_planned": 1,
+    "path_preflight_passed": 1,
+    "plan": 1,
+    "plan_context": 1,
+    "ownership_acquired": 1,
+    "hand_target": 40,
+    "staging_segment": 2,
+    "target": 350,
+    "primary_failure": 1,
+    "frozen": 2,
+    "error": 1,
+    "failure_hold": 1
+  },
+  "failure_events": [
+    {
+      "unix_ns": 1791418384153048954,
+      "monotonic_ns": 1353871877306,
+      "phase": "staging_segment",
+      "index": 0,
+      "goal_q": [
+        0.32691533826633146,
+        0.4863628946822035,
+        1.0822034489982855,
+        0.10496958606510434,
+        -0.5334448638573863,
+        0.669967555010462,
+        -0.08214144367517656
+      ]
+    },
+    {
+      "unix_ns": 1791418391519362340,
+      "monotonic_ns": 1361238190180,
+      "phase": "primary_failure",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (478.3 ms)",
+      "source": "watchdog"
+    },
+    {
+      "unix_ns": 1791418391648347963,
+      "monotonic_ns": 1361367176443,
+      "phase": "staging_segment",
+      "index": 1,
+      "goal_q": [
+        0.04869331618347524,
+        0.5507946881310962,
+        0.3703519149175782,
+        -0.3307784843553048,
+        -0.6065805370250933,
+        0.3943464797836928,
+        -0.1420411187644835
+      ]
+    },
+    {
+      "unix_ns": 1791418391653667945,
+      "monotonic_ns": 1361372496105,
+      "phase": "error",
+      "error": "RuntimeError: Visual/depth tracking exposure stale (478.3 ms)",
+      "traceback": "Traceback (most recent call last):\n  File \"/app/runtime.py\", line 507, in run\n    result=execute(plant,prepared,observe,phase_event)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/app/pickup.py\", line 47, in execute\n    plant.stage()\n  File \"/app/physical_core.py\", line 407, in stage\n    self._execute_poses(goal,poses)\n  File \"/app/physical_core.py\", line 420, in _execute_poses\n    snap=self.check()\n         ^^^^^^^^^^^^\n  File \"/app/physical_core.py\", line 218, in check\n    raise RuntimeError('Operator cancelled trial')\nRuntimeError: Operator cancelled trial\n"
+    },
+    {
+      "unix_ns": 1791418391655528358,
+      "monotonic_ns": 1361374356326,
+      "phase": "failure_hold",
+      "grasp_started": false,
+      "control_retained": true,
+      "automatic_release": false
+    }
+  ],
+  "worker_tail": [
+    {
+      "unix_ns": 1791418391137889968,
+      "monotonic_ns": 1360856717680,
+      "phase": "perception_worker_result",
+      "phase_name": "motion-tracking",
+      "worker_ms": 96.43748700000287,
+      "round_trip_ms": 98.76489199996286,
+      "error": null
+    },
+    {
+      "unix_ns": 1791418391227918703,
+      "monotonic_ns": 1360946746319,
+      "phase": "perception_worker_result",
+      "phase_name": "motion-tracking",
+      "worker_ms": 75.87895999995453,
+      "round_trip_ms": 77.61661700010336,
+      "error": null
+    },
+    {
+      "unix_ns": 1791418391298410799,
+      "monotonic_ns": 1361017238351,
+      "phase": "perception_worker_result",
+      "phase_name": "motion-tracking",
+      "worker_ms": 58.5878029999094,
+      "round_trip_ms": 59.95859999984532,
+      "error": null
+    },
+    {
+      "unix_ns": 1791418391520782738,
+      "monotonic_ns": 1361239610770,
+      "phase": "perception_worker_result",
+      "phase_name": "motion-tracking",
+      "worker_ms": 135.8290149998993,
+      "round_trip_ms": 211.5016640000249,
+      "error": null
+    },
+    {
+      "unix_ns": 1791418391673346412,
+      "monotonic_ns": 1361392173996,
+      "phase": "perception_worker_result",
+      "phase_name": "motion-tracking",
+      "worker_ms": 124.78468699987388,
+      "round_trip_ms": 130.27580900006797,
+      "error": null
+    }
+  ],
+  "perception_tail": [
+    {
+      "unix_ns": 1791418391297929855,
+      "monotonic_ns": 1361016757503,
+      "phase": "phase_camera_evidence",
+      "phase_name": "motion-tracking",
+      "path": "/data/camera-20105-motion-tracking.npz",
+      "metadata": {
+        "schema": "wendy.g1.rgbd.v1",
+        "raw_received_unix_ns": 1791418391108408205,
+        "raw_received_monotonic_ns": 1360827237933,
+        "aligned_to": "color",
+        "camera_serial": "338622073335",
+        "clock": "host_monotonic",
+        "timestamp_valid": true,
+        "color_time": 1360.7599165439606,
+        "depth_time": 1360.759795665741,
+        "received_monotonic": 1360.843062866,
+        "color_sensor_ms": 1791418391041.0935,
+        "depth_sensor_ms": 1791418391040.9727,
+        "color_timestamp_domain": "timestamp_domain.global_time",
+        "depth_timestamp_domain": "timestamp_domain.global_time",
+        "depth_scale_m": 0.0010000000474974513,
+        "intrinsics": {
+          "width": 640,
+          "height": 480,
+          "fx": 603.59765625,
+          "fy": 603.7045288085938,
+          "ppx": 318.05902099609375,
+          "ppy": 261.0997619628906,
+          "model": "distortion.inverse_brown_conrady",
+          "coeffs": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "frame_id": 20105,
+        "captured_at_unix_ns": 1791418391125620607,
+        "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+      },
+      "color_codec": "jpeg_exact_source_frame"
+    },
+    {
+      "unix_ns": 1791418391298213416,
+      "monotonic_ns": 1361017041128,
+      "phase": "perception_result",
+      "phase_name": "motion-tracking",
+      "frame_id": 20105,
+      "source": null,
+      "model_sha256": null,
+      "detections": null,
+      "inference_ms": null,
+      "geometry": {
+        "top_quantile_z_m": 0.8648919304670823,
+        "center_xy_m": [
+          0.3272227014101299,
+          0.13417518201498127
+        ],
+        "fit_error_m": 0.0026210772032907387,
+        "pixels": 2818,
+        "frame_id": 20105,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            119.5,
+            243.375,
+            250.25,
+            390.625
+          ],
+          "confidence": 0.57275390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "a2292ae7c0d8ba3f16cd4342ee365db02a6b7538f7556fbd8263901e3d57de44",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 20102,
+          "semantic_age_s": 0.20014214515686035,
+          "visual_agreement": 0.9925330308712742,
+          "support_pixels": 2818,
+          "roi_shape": [
+            137,
+            108
+          ]
+        }
+      },
+      "error": null,
+      "processing_ms": 57.8260180000143,
+      "exposure_age_ms": 255.79031125903384
+    },
+    {
+      "unix_ns": 1791418391447867395,
+      "monotonic_ns": 1361166695075,
+      "phase": "phase_camera_evidence",
+      "phase_name": "motion-tracking",
+      "path": "/data/camera-20107-motion-tracking.npz",
+      "metadata": {
+        "schema": "wendy.g1.rgbd.v1",
+        "raw_received_unix_ns": 1791418391242180545,
+        "raw_received_monotonic_ns": 1360961008257,
+        "aligned_to": "color",
+        "camera_serial": "338622073335",
+        "clock": "host_monotonic",
+        "timestamp_valid": true,
+        "color_time": 1360.8933408260345,
+        "depth_time": 1360.893219947815,
+        "received_monotonic": 1360.971087754,
+        "color_sensor_ms": 1791418391174.5173,
+        "depth_sensor_ms": 1791418391174.3965,
+        "color_timestamp_domain": "timestamp_domain.global_time",
+        "depth_timestamp_domain": "timestamp_domain.global_time",
+        "depth_scale_m": 0.0010000000474974513,
+        "intrinsics": {
+          "width": 640,
+          "height": 480,
+          "fx": 603.59765625,
+          "fy": 603.7045288085938,
+          "ppx": 318.05902099609375,
+          "ppy": 261.0997619628906,
+          "model": "distortion.inverse_brown_conrady",
+          "coeffs": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "frame_id": 20107,
+        "captured_at_unix_ns": 1791418391253617591,
+        "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+      },
+      "color_codec": "jpeg_exact_source_frame"
+    },
+    {
+      "unix_ns": 1791418391515460644,
+      "monotonic_ns": 1361234288836,
+      "phase": "perception_result",
+      "phase_name": "motion-tracking",
+      "frame_id": 20107,
+      "source": null,
+      "model_sha256": null,
+      "detections": null,
+      "inference_ms": null,
+      "geometry": {
+        "top_quantile_z_m": 0.864557783018881,
+        "center_xy_m": [
+          0.3275889493899683,
+          0.13448375332893406
+        ],
+        "fit_error_m": 0.0024248105618927276,
+        "pixels": 1507,
+        "frame_id": 20107,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            119.5,
+            243.375,
+            250.25,
+            390.625
+          ],
+          "confidence": 0.57275390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "0f319b13aedef0d55a4cc9259b995abac779148235168a0aebaa86f26d4c9a40",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 20102,
+          "semantic_age_s": 0.33356642723083496,
+          "visual_agreement": 0.9923449040543185,
+          "support_pixels": 3014,
+          "roi_shape": [
+            136,
+            106
+          ]
+        }
+      },
+      "error": null,
+      "processing_ms": 134.59195100017496,
+      "exposure_age_ms": 270.03459918500994
+    },
+    {
+      "unix_ns": 1791418391669677333,
+      "monotonic_ns": 1361388505013,
+      "phase": "phase_camera_evidence",
+      "phase_name": "motion-tracking",
+      "path": "/data/camera-20111-motion-tracking.npz",
+      "metadata": {
+        "schema": "wendy.g1.rgbd.v1",
+        "raw_received_unix_ns": 1791418391507637957,
+        "raw_received_monotonic_ns": 1361226467717,
+        "aligned_to": "color",
+        "camera_serial": "338622073335",
+        "clock": "host_monotonic",
+        "timestamp_valid": true,
+        "color_time": 1361.1601881980896,
+        "depth_time": 1361.1600670814514,
+        "received_monotonic": 1361.235945051,
+        "color_sensor_ms": 1791418391441.3647,
+        "depth_sensor_ms": 1791418391441.2437,
+        "color_timestamp_domain": "timestamp_domain.global_time",
+        "depth_timestamp_domain": "timestamp_domain.global_time",
+        "depth_scale_m": 0.0010000000474974513,
+        "intrinsics": {
+          "width": 640,
+          "height": 480,
+          "fx": 603.59765625,
+          "fy": 603.7045288085938,
+          "ppx": 318.05902099609375,
+          "ppy": 261.0997619628906,
+          "model": "distortion.inverse_brown_conrady",
+          "coeffs": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "frame_id": 20111,
+        "captured_at_unix_ns": 1791418391518324994,
+        "stream_id": "9ac141e4-c78e-48be-bf66-606fe81de495"
+      },
+      "color_codec": "jpeg_exact_source_frame"
+    },
+    {
+      "unix_ns": 1791418391671999648,
+      "monotonic_ns": 1361390827424,
+      "phase": "perception_result",
+      "phase_name": "motion-tracking",
+      "frame_id": 20111,
+      "source": null,
+      "model_sha256": null,
+      "detections": null,
+      "inference_ms": null,
+      "geometry": {
+        "top_quantile_z_m": 0.8646435137048182,
+        "center_xy_m": [
+          0.3275242040421941,
+          0.1338526919663444
+        ],
+        "fit_error_m": 0.002435428612121527,
+        "pixels": 2828,
+        "frame_id": 20111,
+        "detector": "coke_visual_depth_tracker",
+        "model_sha256": "fab6252b0abc0613ef39c36ea2d75a061d80bb087f5eb9034ca33614c26301e9",
+        "backend": "pytorch_cuda",
+        "box": {
+          "xyxy": [
+            119.5,
+            243.375,
+            250.25,
+            390.625
+          ],
+          "confidence": 0.57275390625,
+          "class_id": 0,
+          "class_name": "Coca-Cola"
+        },
+        "image_sha256": "8d8e1d8358b501c998f59164064d2db399edfe6111be1a84424a3eb5b91cab4a",
+        "tracking": {
+          "mode": "visual_depth",
+          "semantic_frame_id": 20102,
+          "semantic_age_s": 0.6004135608673096,
+          "visual_agreement": 0.9951296652884091,
+          "support_pixels": 2828,
+          "roi_shape": [
+            136,
+            106
+          ]
+        }
+      },
+      "error": null,
+      "processing_ms": 61.75670700008595,
+      "exposure_age_ms": 226.7546125485751
+    }
+  ]
+}
